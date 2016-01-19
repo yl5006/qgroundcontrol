@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
  
  QGroundControl Open Source Ground Control Station
  
@@ -45,9 +45,9 @@ const char* HomePositionManager::_altitudeKey =     "Altitude";
 
 HomePositionManager::HomePositionManager(QGCApplication* app)
     : QGCTool(app)
-    , homeLat(47.3769)
-    , homeLon(8.549444)
-    , homeAlt(470.0)
+    , homeLat(114.31)
+    , homeLon(30.52)
+    , homeAlt(100.0)
 {
     qmlRegisterUncreatableType<HomePositionManager> ("QGroundControl", 1, 0, "HomePositionManager", "Reference only");
 }

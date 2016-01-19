@@ -30,10 +30,11 @@
 
 #include "QGCConfig.h"
 
-
+#pragma execution_character_set("utf-8")
 /* Windows fixes */
 #ifdef _MSC_VER
 #if (_MSC_VER < 1800)	/* only PRIOR to Visual Studio 2013 */
+
 /* Needed define for Eigen */
 //#define NOMINMAX
 #include <limits>

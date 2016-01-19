@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -34,6 +34,7 @@ This file is part of the QGROUNDCONTROL project
 #include <QProcessEnvironment>
 
 #include "QGCApplication.h"
+
 
 #ifndef __mobile__
     #include "QGCSerialPortInfo.h"
