@@ -344,8 +344,8 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
     if (versionString.length() > 8) {
         versionString.append(" (Development)");
     }
-    this->setApplicationVersion(versionString);
-
+//    this->setApplicationVersion(versionString);
+      this->setApplicationVersion(tr("EWT 2.0"));
     // Set settings format
     QSettings::setDefaultFormat(QSettings::IniFormat);
     QSettings settings;

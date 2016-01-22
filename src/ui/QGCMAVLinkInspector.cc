@@ -1,4 +1,4 @@
-#include <QList>
+﻿#include <QList>
 
 #include "QGCMAVLink.h"
 #include "QGCMAVLinkInspector.h"
@@ -543,8 +543,8 @@ void QGCMAVLinkInspector::updateField(int sysid, int msgid, int fieldid, QTreeWi
         return;
     }
 
-    uint8_t* m = ((uint8_t*)uasMessage)+8;
-
+//    uint8_t* m = ((uint8_t*)uasMessage)+8;
+    uint8_t* m = ((uint8_t*)uasMessage)+9;
 
     switch (messageInfo[msgid].fields[fieldid].type)
     {

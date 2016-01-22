@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -88,7 +88,16 @@ enum MapType
         GoogleLabelsKorea       = 4003,
         GoogleHybridKorea       = 4005,
 
-        YandexMapRu             = 5000
+        YandexMapRu             = 5000,
+
+        BaiduMap                 = 6001,
+        BaiduSatellite           = 6002,
+        BaiduHybrid              = 6003,
+
+        GaodeMap                 = 7001,
+        GaodeSatellite           = 7002,
+        GaodeHybrid              = 7003,
+
 };
 
 class ProviderStrings : public QObject {
