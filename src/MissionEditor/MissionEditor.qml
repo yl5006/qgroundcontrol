@@ -503,8 +503,7 @@ QGCView {
 
                                         onClicked: {
                                             centerMapButton.hideDropDown()
-                                            editorMap.latitude = activeVehicle.latitude
-                                            editorMap.longitude = activeVehicle.longitude
+                                            editorMap.center = activeVehicle.coordinate
                                         }
                                     }
                                 }
