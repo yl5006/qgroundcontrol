@@ -185,7 +185,7 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
 #endif
     , _toolbox(NULL)
     , _bluetoothAvailable(false)
-    , _defaultMapPosition(37.803784, -122.462276)
+    , _defaultMapPosition(30.5386437,114.3662806)
 {
     Q_ASSERT(_app == NULL);
     _app = this;
@@ -370,8 +370,8 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
         settings.setValue(_settingsVersionKey, QGC_SETTINGS_VERSION);
     }
 
-    _defaultMapPosition.setLatitude(settings.value(_defaultMapPositionLatKey, 37.803784).toDouble());
-    _defaultMapPosition.setLongitude(settings.value(_defaultMapPositionLonKey, -122.462276).toDouble());
+    _defaultMapPosition.setLatitude(settings.value(_defaultMapPositionLatKey, 30.5386437).toDouble());
+    _defaultMapPosition.setLongitude(settings.value(_defaultMapPositionLonKey, 114.3662806).toDouble());
 
     // Initialize Bluetooth
 #ifdef QGC_ENABLE_BLUETOOTH

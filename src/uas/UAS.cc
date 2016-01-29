@@ -1,4 +1,4 @@
-/*===================================================================
+﻿/*===================================================================
 ======================================================================*/
 
 /**
@@ -567,12 +567,14 @@ void UAS::receiveMessage(mavlink_message_t message)
                 emit attitudeChanged(this, getRoll(), getPitch(), getYaw(), time);
             }
 
-            setAltitudeAMSL(hud.alt);
+//          setAltitudeAMSL(hud.alt);
+            setAltitudeRelative(hud.alt);
             setGroundSpeed(hud.groundspeed);
             if (!isnan(hud.airspeed))
                 setAirSpeed(hud.airspeed);
             speedZ = -hud.climb;
             emit altitudeChanged(this, altitudeAMSL, altitudeWGS84, altitudeRelative, -speedZ, time);
+//          qDebug()<< altitudeAMSL;
             emit speedChanged(this, groundSpeed, airSpeed, time);
         }
             break;
@@ -628,8 +630,8 @@ void UAS::receiveMessage(mavlink_message_t message)
             // We had some frame mess here, global and local axes were mixed.
             emit velocityChanged_NED(this, speedX, speedY, speedZ, time);
 
-            setGroundSpeed(qSqrt(speedX*speedX+speedY*speedY));
-            emit speedChanged(this, groundSpeed, airSpeed, time);
+//            setGroundSpeed(qSqrt(speedX*speedX+speedY*speedY));
+//            emit speedChanged(this, groundSpeed, airSpeed, time);
 
             isGlobalPositionKnown = true;
         }
@@ -668,8 +670,8 @@ void UAS::receiveMessage(mavlink_message_t message)
                     float vel = pos.vel/100.0f;
                     // Smaller than threshold and not NaN
                     if ((vel < 1000000) && !isnan(vel) && !isinf(vel)) {
-                        setGroundSpeed(vel);
-                        emit speedChanged(this, groundSpeed, airSpeed, time);
+ //                       setGroundSpeed(vel);
+ //                       emit speedChanged(this, groundSpeed, airSpeed, time);
                     } else {
                         emit textMessageReceived(uasId, message.compid, MAV_SEVERITY_NOTICE, QString("GCS ERROR: RECEIVED INVALID SPEED OF %1 m/s").arg(vel));
                     }

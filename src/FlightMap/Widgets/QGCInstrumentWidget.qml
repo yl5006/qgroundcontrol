@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -62,7 +62,8 @@ Item {
         width:                  root.size
         radius:                 root.size / 2
         color:                  isSatellite ? Qt.rgba(1,1,1,0.75) : Qt.rgba(0,0,0,0.75)
-        anchors.right:          parent.right
+//      anchors.right:          parent.right
+        anchors.left:          parent.left
         anchors.verticalCenter: parent.verticalCenter
         Column {
             id:                 instruments
@@ -92,8 +93,9 @@ Item {
                 horizontalAlignment: TextEdit.AlignHCenter
             }
             QGCLabel {
-                text:           altitude < 10000 ? altitude.toFixed(1) : altitude.toFixed(0)
-                font.pixelSize: _bigFontSize
+//                text:           altitude < 10000 ? altitude.toFixed(1) : altitude.toFixed(0)
+                text:           altitude.toFixed(2)
+                font.pixelSize: _normalFontSize
                 font.weight:    Font.DemiBold
                 width:          parent.width
                 color:          isSatellite ? "black" : "white"
@@ -108,7 +110,8 @@ Item {
                 visible:        airSpeed <= 0 && !ScreenTools.isTinyScreen
             }
             QGCLabel {
-                text:           "Ground Speed (km/h)"
+//              text:           "Ground Speed (km/h)"
+                text:           "Ground Speed (m/s)"
                 font.pixelSize: _labelFontSize
                 width:          parent.width
                 height:         _labelFontSize
@@ -117,7 +120,8 @@ Item {
                 visible:        airSpeed <= 0 && !ScreenTools.isTinyScreen
             }
             QGCLabel {
-                text:           (groundSpeed * 3.6).toFixed(1)
+//                text:           (groundSpeed * 3.6).toFixed(1)
+                text:           (groundSpeed).toFixed(2)
                 font.pixelSize: _normalFontSize
                 font.weight:    Font.DemiBold
                 width:          parent.width

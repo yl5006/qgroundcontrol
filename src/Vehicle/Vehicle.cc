@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -39,8 +39,8 @@
 QGC_LOGGING_CATEGORY(VehicleLog, "VehicleLog")
 
 #define UPDATE_TIMER 50
-#define DEFAULT_LAT  38.965767f
-#define DEFAULT_LON -120.083923f
+#define DEFAULT_LAT  30.5386437f
+#define DEFAULT_LON  114.3662806f
 
 const char* Vehicle::_settingsGroup =               "Vehicle%1";        // %1 replaced with mavlink system id
 const char* Vehicle::_joystickModeSettingsKey =     "JoystickMode";
@@ -62,7 +62,8 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _joystickMode(JoystickModeRC)
     , _joystickEnabled(false)
     , _uas(NULL)
-    , _coordinate(37.803784, -122.462276)
+//    , _coordinate(37.803784, -122.462276)
+    , _coordinate(30.5386437,114.3662806)
     , _coordinateValid(false)
     , _homePositionAvailable(false)
     , _mav(NULL)
@@ -75,10 +76,10 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _roll(0.0f)
     , _pitch(0.0f)
     , _heading(0.0f)
-    , _altitudeAMSL(0.0f)
+    , _altitudeAMSL(0.00f)
     , _altitudeWGS84(0.0f)
     , _altitudeRelative(0.0f)
-    , _groundSpeed(0.0f)
+    , _groundSpeed(0.00f)
     , _airSpeed(0.0f)
     , _climbRate(0.0f)
     , _navigationAltitudeError(0.0f)
@@ -572,38 +573,41 @@ void Vehicle::_updateAttitude(UASInterface* uas, int, double roll, double pitch,
 
 void Vehicle::_updateSpeed(UASInterface*, double groundSpeed, double airSpeed, quint64)
 {
-    groundSpeed = _oneDecimal(groundSpeed);
-    if (fabs(_groundSpeed - groundSpeed) > 0.5) {
+//   groundSpeed = _oneDecimal(groundSpeed);
+//   if (fabs(_groundSpeed - groundSpeed) > 0.5) {
         _groundSpeed = groundSpeed;
-        if(_refreshTimer->isActive()) {
-            emit groundSpeedChanged();
-        }
-    }
-    airSpeed = _oneDecimal(airSpeed);
-    if (fabs(_airSpeed - airSpeed) > 0.5) {
+//        _addChange(GROUNDSPEED_CHANGED);
+//        if(_refreshTimer->isActive()) {
+//        emit groundSpeedChanged();
+//        }
+//  }
+//    airSpeed = _oneDecimal(airSpeed);
+//    if (fabs(_airSpeed - airSpeed) > 0.5) {
         _airSpeed = airSpeed;
-        if(_refreshTimer->isActive()) {
-            emit airSpeedChanged();
-        }
-    }
-    if(_groundSpeed != groundSpeed) {
-        _groundSpeed = groundSpeed;
-        _addChange(GROUNDSPEED_CHANGED);
-    }
-    if(_airSpeed != airSpeed) {
-        _airSpeed = airSpeed;
-        _addChange(AIRSPEED_CHANGED);
-    }
+//        _addChange(AIRSPEED_CHANGED);
+//        if(_refreshTimer->isActive()) {
+//            emit airSpeedChanged();
+//        }
+//    }
+//    if(_groundSpeed != groundSpeed) {
+//        _groundSpeed = groundSpeed;
+//        _addChange(GROUNDSPEED_CHANGED);
+//    }
+//    if(_airSpeed != airSpeed) {
+//        _airSpeed = airSpeed;
+//        _addChange(AIRSPEED_CHANGED);
+//    }
 }
 
 void Vehicle::_updateAltitude(UASInterface*, double altitudeAMSL, double altitudeWGS84, double altitudeRelative, double climbRate, quint64) {
-    altitudeAMSL = _oneDecimal(altitudeAMSL);
-    if (fabs(_altitudeAMSL - altitudeAMSL) > 0.5) {
-        _altitudeAMSL = altitudeAMSL;
-        if(_refreshTimer->isActive()) {
-            emit altitudeAMSLChanged();
-        }
-    }
+//    altitudeAMSL = _oneDecimal(altitudeAMSL);
+//    if (fabs(_altitudeAMSL - altitudeAMSL) > 0.5) {
+           _altitudeAMSL = altitudeAMSL;
+//        if(_refreshTimer->isActive()) {
+//            emit altitudeAMSLChanged();
+//            _addChange(ALTITUDEAMSL_CHANGED);
+//        }
+//    }
     altitudeWGS84 = _oneDecimal(altitudeWGS84);
     if (fabs(_altitudeWGS84 - altitudeWGS84) > 0.5) {
         _altitudeWGS84 = altitudeWGS84;
@@ -611,13 +615,13 @@ void Vehicle::_updateAltitude(UASInterface*, double altitudeAMSL, double altitud
             emit altitudeWGS84Changed();
         }
     }
-    altitudeRelative = _oneDecimal(altitudeRelative);
-    if (fabs(_altitudeRelative - altitudeRelative) > 0.5) {
+//    altitudeRelative = _oneDecimal(altitudeRelative);
+//    if (fabs(_altitudeRelative - altitudeRelative) > 0.5) {
         _altitudeRelative = altitudeRelative;
-        if(_refreshTimer->isActive()) {
-            emit altitudeRelativeChanged();
-        }
-    }
+//        if(_refreshTimer->isActive()) {
+//            emit altitudeRelativeChanged();
+//        }
+//    }
     climbRate = _oneDecimal(climbRate);
     if (fabs(_climbRate - climbRate) > 0.5) {
         _climbRate = climbRate;
@@ -625,18 +629,18 @@ void Vehicle::_updateAltitude(UASInterface*, double altitudeAMSL, double altitud
             emit climbRateChanged();
         }
     }
-    if(_altitudeAMSL != altitudeAMSL) {
-        _altitudeAMSL = altitudeAMSL;
-        _addChange(ALTITUDEAMSL_CHANGED);
-    }
+//    if(_altitudeAMSL != altitudeAMSL) {
+//        _altitudeAMSL = altitudeAMSL;
+//        _addChange(ALTITUDEAMSL_CHANGED);
+//    }
     if(_altitudeWGS84 != altitudeWGS84) {
         _altitudeWGS84 = altitudeWGS84;
         _addChange(ALTITUDEWGS84_CHANGED);
     }
-    if(_altitudeRelative != altitudeRelative) {
-        _altitudeRelative = altitudeRelative;
-        _addChange(ALTITUDERELATIVE_CHANGED);
-    }
+//    if(_altitudeRelative != altitudeRelative) {
+//        _altitudeRelative = altitudeRelative;
+//        _addChange(ALTITUDERELATIVE_CHANGED);
+//    }
     if(_climbRate != climbRate) {
         _climbRate = climbRate;
         _addChange(CLIMBRATE_CHANGED);
@@ -691,40 +695,40 @@ void Vehicle::_checkUpdate()
         // Significant changes, that is, whole number changes, are updated immediatelly.
         // For every message however, we set a flag for what changed and this timer updates
         // them to bring everything up-to-date. This prevents an avalanche of UI updates.
-        foreach(int i, _changes) {
-            switch (i) {
-                case ROLL_CHANGED:
+//        foreach(int i, _changes) {
+//            switch (i) {
+//                case ROLL_CHANGED:
                     emit rollChanged();
-                    break;
-                case PITCH_CHANGED:
+//                    break;
+//                case PITCH_CHANGED:
                     emit pitchChanged();
-                    break;
-                case HEADING_CHANGED:
+//                    break;
+//                case HEADING_CHANGED:
                     emit headingChanged();
-                    break;
-                case GROUNDSPEED_CHANGED:
+//                    break;
+//                case GROUNDSPEED_CHANGED:
                     emit groundSpeedChanged();
-                    break;
-                case AIRSPEED_CHANGED:
+//                    break;
+//                case AIRSPEED_CHANGED:
                     emit airSpeedChanged();
-                    break;
-                case CLIMBRATE_CHANGED:
+//                    break;
+//                case CLIMBRATE_CHANGED:
                     emit climbRateChanged();
-                    break;
-                case ALTITUDERELATIVE_CHANGED:
+//                    break;
+//                case ALTITUDERELATIVE_CHANGED:
                     emit altitudeRelativeChanged();
-                    break;
-                case ALTITUDEWGS84_CHANGED:
+//                    break;
+//                case ALTITUDEWGS84_CHANGED:
                     emit altitudeWGS84Changed();
-                    break;
-                case ALTITUDEAMSL_CHANGED:
+//                    break;
+//                case ALTITUDEAMSL_CHANGED:
                     emit altitudeAMSLChanged();
-                    break;
-                default:
-                    break;
-            }
-        }
-        _changes.clear();
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//        _changes.clear();
     }
 }
 

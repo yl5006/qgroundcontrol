@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -32,6 +32,8 @@ This file is part of the QGROUNDCONTROL project
 #include <QApplication>
 #include <QSslSocket>
 #include <QProcessEnvironment>
+
+#include <QSplashScreen>
 
 #include "QGCApplication.h"
 
@@ -209,6 +211,12 @@ int main(int argc, char *argv[])
 
     QGCApplication* app = new QGCApplication(argc, argv, runUnitTests);
     Q_CHECK_PTR(app);
+    //显示启动界面信息
+    QSplashScreen *splash = new QSplashScreen;
+    splash->setPixmap(QPixmap(":/res/startpage.png"));
+    splash->show();
+    Qt::Alignment topRight = Qt::AlignRight | Qt::AlignTop;
+    splash->showMessage(QObject::tr("初始化窗口..."),topRight, Qt::white);
 
     // There appears to be a threading issue in qRegisterMetaType which can cause it to throw a qWarning
     // about duplicate type converters. This is caused by a race condition in the Qt code. Still working
@@ -218,7 +226,6 @@ int main(int argc, char *argv[])
     qRegisterMetaType<QList<QPair<QByteArray,QByteArray> > >();
 
     app->_initCommon();
-
     int exitCode = 0;
 
 #ifndef __mobile__
@@ -244,9 +251,11 @@ int main(int argc, char *argv[])
 #endif
 #endif
     {
+        Sleep(500);
         if (!app->_initForNormalAppBoot()) {
             return -1;
         }
+        delete splash;
         exitCode = app->exec();
     }
 

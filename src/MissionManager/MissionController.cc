@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -511,7 +511,8 @@ void MissionController::_initAllMissionItems(void)
     homeItem->setFrame(MAV_FRAME_GLOBAL);
     if (!homeItem->homePositionValid()) {
         // Set a bogus home position, the important value is 0.0 Altitude
-        homeItem->setCoordinate(QGeoCoordinate(37.803784, -122.462276, 0.0));
+//        homeItem->setCoordinate(QGeoCoordinate(37.803784, -122.462276, 0.0));
+        homeItem->setCoordinate(QGeoCoordinate(30.5386437,114.3662806, 0.0));
     }
 
     qDebug() << "home item" << homeItem->homePositionValid() << homeItem->coordinate();

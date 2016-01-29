@@ -97,7 +97,7 @@ contains(DEFINES, QGC_NOTIFY_TUNES_ENABLED) {
 }
 
 #  testlib is needed even in release flavor for QSignalSpy support
-QT += testlib
+#QT += testlib
 
 #
 # OS Specific settings

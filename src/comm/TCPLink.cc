@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -30,7 +30,7 @@
 #include "LinkManager.h"
 #include "QGC.h"
 #include <QHostInfo>
-#include <QSignalSpy>
+//#include <QSignalSpy>
 
 /// @file
 ///     @brief TCP link type for SITL support
@@ -157,7 +157,7 @@ bool TCPLink::_hardwareConnect()
     Q_ASSERT(_socket == NULL);
     _socket = new QTcpSocket();
 
-    QSignalSpy errorSpy(_socket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error));
+//    QSignalSpy errorSpy(_socket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error));
     _socket->connectToHost(_config->address(), _config->port());
     QObject::connect(_socket, &QTcpSocket::readyRead, this, &TCPLink::readBytes);
 
@@ -169,9 +169,9 @@ bool TCPLink::_hardwareConnect()
     {
         // Whether a failed connection emits an error signal or not is platform specific.
         // So in cases where it is not emitted, we emit one ourselves.
-        if (errorSpy.count() == 0) {
-            emit communicationError(tr("Link Error"), QString("Error on link %1. Connection failed").arg(getName()));
-        }
+//        if (errorSpy.count() == 0) {
+//            emit communicationError(tr("Link Error"), QString("Error on link %1. Connection failed").arg(getName()));
+//        }
         delete _socket;
         _socket = NULL;
         return false;

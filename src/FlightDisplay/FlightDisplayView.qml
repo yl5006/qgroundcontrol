@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -53,6 +53,7 @@ Item {
     readonly property real _defaultPitch:               0
     readonly property real _defaultHeading:             0
     readonly property real _defaultAltitudeWGS84:       0
+    readonly property real _defaultAltitudeRelative:    0
     readonly property real _defaultGroundSpeed:         0
     readonly property real _defaultAirSpeed:            0
     readonly property real _defaultClimbRate:           0
@@ -69,10 +70,11 @@ Item {
     property real _pitch:               _activeVehicle ? (isNaN(_activeVehicle.pitch)   ? _defaultPitch   : _activeVehicle.pitch)   : _defaultPitch
     property real _heading:             _activeVehicle ? (isNaN(_activeVehicle.heading) ? _defaultHeading : _activeVehicle.heading) : _defaultHeading
 
-    property real _altitudeWGS84:       _activeVehicle ? _activeVehicle.altitudeWGS84 : _defaultAltitudeWGS84
-    property real _groundSpeed:         _activeVehicle ? _activeVehicle.groundSpeed   : _defaultGroundSpeed
-    property real _airSpeed:            _activeVehicle ? _activeVehicle.airSpeed      : _defaultAirSpeed
-    property real _climbRate:           _activeVehicle ? _activeVehicle.climbRate     : _defaultClimbRate
+    property real _altitudeWGS84:       _activeVehicle ? _activeVehicle.altitudeWGS84       : _defaultAltitudeWGS84
+    property real _altitudeRelative:    _activeVehicle ? _activeVehicle.altitudeRelative    : _defaultAltitudeRelative
+    property real _groundSpeed:         _activeVehicle ? _activeVehicle.groundSpeed         : _defaultGroundSpeed
+    property real _airSpeed:            _activeVehicle ? _activeVehicle.airSpeed            : _defaultAirSpeed
+    property real _climbRate:           _activeVehicle ? _activeVehicle.climbRate           : _defaultClimbRate
 
     property bool activeVehicleJoystickEnabled: _activeVehicle ? _activeVehicle.joystickEnabled : false
 

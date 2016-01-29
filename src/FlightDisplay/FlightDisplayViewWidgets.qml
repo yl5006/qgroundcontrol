@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -93,7 +93,8 @@ Item {
     QGCInstrumentWidget {
         id:                     instrumentGadget
         anchors.margins:        ScreenTools.defaultFontPixelHeight
-        anchors.right:          parent.right
+//      anchors.right:          parent.right
+        anchors.left:           parent.left
         anchors.verticalCenter: parent.verticalCenter
         visible:                _isInstrumentVisible && !QGroundControl.virtualTabletJoystick
         size:                   getGadgetWidth()
@@ -101,7 +102,8 @@ Item {
         heading:                _heading
         rollAngle:              _roll
         pitchAngle:             _pitch
-        altitude:               _altitudeWGS84
+//      altitude:               _altitudeWGS84
+        altitude:               _altitudeRelative
         groundSpeed:            _groundSpeed
         airSpeed:               _airSpeed
         isSatellite:            _mainIsMap ? _flightMap ? _flightMap.isSatelliteMap : true : true
@@ -116,7 +118,8 @@ Item {
     Rectangle {
         visible:            QGroundControl.virtualTabletJoystick
         anchors.margins:    ScreenTools.defaultFontPixelHeight
-        anchors.right:      parent.right
+//      anchors.right:      parent.right
+        anchors.left:       parent.left
         anchors.bottom:     parent.bottom
         width:              pipSize
         height:             pipSize * (9/16)
@@ -135,15 +138,17 @@ Item {
                 horizontalAlignment: TextEdit.AlignHCenter
             }
             QGCLabel {
-                text:           _altitudeWGS84 < 10000 ? _altitudeWGS84.toFixed(1) : _altitudeWGS84.toFixed(0)
-                font.pixelSize: ScreenTools.defaultFontPixelSize * 1.5
+ //             text:           _altitudeWGS84 < 10000 ? _altitudeWGS84.toFixed(1) : _altitudeWGS84.toFixed(0)
+                text:           _altitudeRelative.toFixed(2)
+                font.pixelSize: ScreenTools.defaultFontPixelSize// * 1.5
                 font.weight:    Font.DemiBold
                 width:          parent.width
                 color:          "white"
                 horizontalAlignment: TextEdit.AlignHCenter
             }
             QGCLabel {
-                text:           "Ground Speed (km/h)"
+//              text:           "Ground Speed (km/h)"
+                text:           "Ground Speed (m/s)"
                 font.pixelSize: ScreenTools.defaultFontPixelSize * 0.75
                 width:          parent.width
                 height:         ScreenTools.defaultFontPixelSize * 0.75
@@ -151,7 +156,8 @@ Item {
                 horizontalAlignment: TextEdit.AlignHCenter
             }
             QGCLabel {
-                text:           (_groundSpeed * 3.6).toFixed(1)
+//              text:           (_groundSpeed * 3.6).toFixed(1)
+                text:           (_groundSpeed).toFixed(2)
                 font.pixelSize: ScreenTools.defaultFontPixelSize
                 font.weight:    Font.DemiBold
                 width:          parent.width
@@ -164,7 +170,8 @@ Item {
     //-- Show (Hidden) Instrument Panel
     Rectangle {
         id:                     openButton
-        anchors.right:          parent.right
+//      anchors.right:          parent.right
+        anchors.right:           parent.right
         anchors.bottom:         parent.bottom
         anchors.margins:        ScreenTools.defaultFontPixelHeight
         height:                 ScreenTools.defaultFontPixelSize * 2
@@ -195,14 +202,16 @@ Item {
         id:                         toolColumn
         visible:                    _mainIsMap
         anchors.margins:            ScreenTools.defaultFontPixelHeight
-        anchors.left:               parent.left
+//      anchors.left:               parent.left
+        anchors.right:               parent.right
         anchors.top:                parent.top
         spacing:                    ScreenTools.defaultFontPixelHeight
 
         //-- Map Center Control
         DropButton {
             id:                     centerMapDropButton
-            dropDirection:          dropRight
+ //         dropDirection:          dropRight
+            dropDirection:          dropLeft
             buttonImage:            "/qmlimages/MapCenter.svg"
             viewportMargins:        ScreenTools.defaultFontPixelWidth / 2
             exclusiveGroup:         _dropButtonsExclusiveGroup
@@ -244,7 +253,8 @@ Item {
         //-- Map Type Control
         DropButton {
             id:                     mapTypeButton
-            dropDirection:          dropRight
+//          dropDirection:          dropRight
+            dropDirection:          dropLeft
             buttonImage:            "/qmlimages/MapType.svg"
             viewportMargins:        ScreenTools.defaultFontPixelWidth / 2
             exclusiveGroup:         _dropButtonsExclusiveGroup
@@ -264,6 +274,7 @@ Item {
 
                             onClicked: {
                                 _flightMap.mapType = text
+                                checked = true
                                 _dropButtonsExclusiveGroup.current = null
                             }
                         }

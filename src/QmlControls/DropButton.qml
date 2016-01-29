@@ -1,4 +1,4 @@
-import QtQuick                  2.4
+﻿import QtQuick                  2.4
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.2
 
@@ -109,8 +109,8 @@ Item {
             dropItemHolderRect.y = 0
 
             if (dropDirection == dropLeft) {
-                dropDownItem.x = dropDownItem.width + _dropMargin
-
+//              dropDownItem.x = dropDownItem.width + _dropMargin
+                dropDownItem.x = -(dropDownItem.width + _dropMargin)
                 dropItemHolderRect.x = 0
             } else {
                 dropDownItem.x = button.width + _dropMargin

@@ -45,8 +45,8 @@ const char* HomePositionManager::_altitudeKey =     "Altitude";
 
 HomePositionManager::HomePositionManager(QGCApplication* app)
     : QGCTool(app)
-    , homeLat(114.31)
-    , homeLon(30.52)
+    , homeLat(30.5386437)
+    , homeLon(114.3662806)
     , homeAlt(100.0)
 {
     qmlRegisterUncreatableType<HomePositionManager> ("QGroundControl", 1, 0, "HomePositionManager", "Reference only");

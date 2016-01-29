@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
  
  QGroundControl Open Source Ground Control Station
  
@@ -174,7 +174,8 @@ void MissionControllerTest::_testAddWaypointWorker(MAV_AUTOPILOT firmwareType)
 {
     _initForFirmwareType(firmwareType);
 
-    QGeoCoordinate coordinate(37.803784, -122.462276);
+//    QGeoCoordinate coordinate(37.803784, -122.462276);
+    QGeoCoordinate coordinate(30.5386437,114.3662806);
 
     _missionController->insertMissionItem(coordinate, _missionController->missionItems()->count());
 
@@ -223,7 +224,8 @@ void MissionControllerTest::_testOfflineToOnlineWorker(MAV_AUTOPILOT firmwareTyp
     _missionController = new MissionController();
     Q_CHECK_PTR(_missionController);
     _missionController->start(true /* editMode */);
-    _missionController->insertMissionItem(QGeoCoordinate(37.803784, -122.462276), _missionController->missionItems()->count());
+//    _missionController->insertMissionItem(QGeoCoordinate(37.803784, -122.462276), _missionController->missionItems()->count());
+    _missionController->insertMissionItem(QGeoCoordinate(30.5386437,114.3662806), _missionController->missionItems()->count());
 
     // Go online to empty vehicle
     MissionControllerManagerTest::_initForFirmwareType(firmwareType);

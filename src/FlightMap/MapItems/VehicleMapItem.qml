@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -37,8 +37,11 @@ MapQuickItem {
     property bool   isSatellite:    false  ///< true: satellite map is showing
     property real   size:           ScreenTools.defaultFontPixelHeight * 5
 
-    anchorPoint.x:  vehicleIcon.width  / 2
-    anchorPoint.y:  vehicleIcon.height / 2
+//    anchorPoint.x:  vehicleIcon.width  / 2
+//    anchorPoint.y:  vehicleIcon.height / 2
+
+    anchorPoint.x:  vehicleIcon.width  / 4
+    anchorPoint.y:  vehicleIcon.height / 4
     visible:        vehicle && vehicle.coordinateValid
 
     sourceItem: Image {
@@ -49,8 +52,10 @@ MapQuickItem {
         fillMode:   Image.PreserveAspectFit
 
         transform: Rotation {
-            origin.x:   vehicleIcon.width  / 2
-            origin.y:   vehicleIcon.height / 2
+//            origin.x:   vehicleIcon.width  / 2
+//            origin.y:   vehicleIcon.height / 2
+            origin.x:   vehicleIcon.width  / 4
+            origin.y:   vehicleIcon.height / 4
             angle:      vehicle ? vehicle.heading : 0
         }
     }
