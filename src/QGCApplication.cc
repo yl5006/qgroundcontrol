@@ -97,6 +97,8 @@
 #include "VideoSurface.h"
 #include "VideoReceiver.h"
 #include "LogDownloadController.h"
+#include "PX4AirframeLoader.h"
+#include "ValuesWidgetController.h"
 
 #ifndef __ios__
     #include "SerialLink.h"
@@ -128,8 +130,9 @@ const char* QGCApplication::_settingsVersionKey             = "SettingsVersion";
 const char* QGCApplication::_promptFlightDataSave           = "PromptFLightDataSave";
 const char* QGCApplication::_promptFlightDataSaveNotArmed   = "PromptFLightDataSaveNotArmed";
 const char* QGCApplication::_styleKey                       = "StyleIsDark";
-const char* QGCApplication::_defaultMapPositionLatKey       = "DefaultMapPositionLat";
-const char* QGCApplication::_defaultMapPositionLonKey       = "DefaultMapPositionLon";
+const char* QGCApplication::_lastKnownHomePositionLatKey    = "LastKnownHomePositionLat";
+const char* QGCApplication::_lastKnownHomePositionLonKey    = "LastKnownHomePositionLon";
+const char* QGCApplication::_lastKnownHomePositionAltKey    = "LastKnownHomePositionAlt";
 
 const char* QGCApplication::_darkStyleFile          = ":/res/styles/style-dark.css";
 const char* QGCApplication::_lightStyleFile         = ":/res/styles/style-light.css";
@@ -338,7 +341,7 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
     setOrganizationName(QGC_ORG_NAME);
     setOrganizationDomain(QGC_ORG_DOMAIN);
 
-    QString versionString(GIT_VERSION);
+    QString versionString(GIT_TAG);
     // stable versions are on tags (v1.2.3)
     // development versions are full git describe versions (v1.2.3-18-g879e8b3)
     if (versionString.length() > 8) {
@@ -366,12 +369,18 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
 
     if (fClearSettingsOptions) {
         // User requested settings to be cleared on command line
+
         settings.clear();
         settings.setValue(_settingsVersionKey, QGC_SETTINGS_VERSION);
+
+        QFile::remove(PX4AirframeLoader::aiframeMetaDataFile());
+        QFile::remove(PX4ParameterMetaData::parameterMetaDataFile());
+        QFile::remove(ParameterLoader::parameterCacheFile());
     }
 
-    _defaultMapPosition.setLatitude(settings.value(_defaultMapPositionLatKey, 30.5386437).toDouble());
-    _defaultMapPosition.setLongitude(settings.value(_defaultMapPositionLonKey, 114.3662806).toDouble());
+    _defaultMapPosition.setLatitude(settings.value(_defaultMapPositionLatKey, 37.803784).toDouble());
+    _defaultMapPosition.setLongitude(settings.value(_defaultMapPositionLonKey, -122.462276).toDouble());
+    _lastKnownHomePosition.setAltitude(settings.value(_lastKnownHomePositionAltKey, 0.0).toDouble());
 
     // Initialize Bluetooth
 #ifdef QGC_ENABLE_BLUETOOTH
@@ -438,6 +447,7 @@ void QGCApplication::_initCommon(void)
     qmlRegisterType<MainToolBarController>              ("QGroundControl.Controllers", 1, 0, "MainToolBarController");
     qmlRegisterType<MissionController>                  ("QGroundControl.Controllers", 1, 0, "MissionController");
     qmlRegisterType<FlightDisplayViewController>        ("QGroundControl.Controllers", 1, 0, "FlightDisplayViewController");
+    qmlRegisterType<ValuesWidgetController>             ("QGroundControl.Controllers", 1, 0, "ValuesWidgetController");
 
 #ifndef __mobile__
     qmlRegisterType<ViewWidgetController>           ("QGroundControl.Controllers", 1, 0, "ViewWidgetController");
@@ -768,11 +778,12 @@ void QGCApplication::_showSetupVehicleComponent(VehicleComponent* vehicleCompone
     QMetaObject::invokeMethod(_rootQmlObject(), "showSetupVehicleComponent", Q_RETURN_ARG(QVariant, varReturn), Q_ARG(QVariant, varComponent));
 }
 
-void QGCApplication::setDefaultMapPosition(QGeoCoordinate& defaultMapPosition)
+void QGCApplication::setLastKnownHomePosition(QGeoCoordinate& lastKnownHomePosition)
 {
     QSettings settings;
 
-    settings.setValue(_defaultMapPositionLatKey, defaultMapPosition.latitude());
-    settings.setValue(_defaultMapPositionLonKey, defaultMapPosition.longitude());
-    _defaultMapPosition = defaultMapPosition;
+    settings.setValue(_lastKnownHomePositionLatKey, lastKnownHomePosition.latitude());
+    settings.setValue(_lastKnownHomePositionLonKey, lastKnownHomePosition.longitude());
+    settings.setValue(_lastKnownHomePositionAltKey, lastKnownHomePosition.altitude());
+    _lastKnownHomePosition = lastKnownHomePosition;
 }

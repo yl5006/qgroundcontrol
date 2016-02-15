@@ -36,14 +36,14 @@ import QGroundControl.Vehicle       1.0
 import QGroundControl.FlightMap     1.0
 
 Item {
+    id: _root
 
-    readonly property string _InstrumentVisibleKey: "IsInstrumentPanelVisible"
-
+    property var    _activeVehicle: multiVehicleManager.activeVehicle
     property real   _sizeRatio:     ScreenTools.isTinyScreen ? (size / _defaultSize) * 0.5 : size / _defaultSize
     property real   _bigFontSize:   ScreenTools.defaultFontPixelSize * 2.5  * _sizeRatio
     property real   _normalFontSize:ScreenTools.defaultFontPixelSize * 1.5  * _sizeRatio
     property real   _labelFontSize: ScreenTools.defaultFontPixelSize * 0.75 * _sizeRatio
-    property bool _isInstrumentVisible: QGroundControl.loadBoolGlobalSetting(_InstrumentVisibleKey, true)
+    property bool   _isSatellite:   _mainIsMap ? _flightMap ? _flightMap.isSatelliteMap : true : true
 
     QGCMapPalette { id: mapPal; lightColors: !isBackgroundDark }
 
@@ -280,54 +280,52 @@ Item {
 //        anchors.top:            parent.top
         anchors.top:            info.bottom
 //        anchors.verticalCenter: parent.verticalCenter
-        visible:                _isInstrumentVisible && !QGroundControl.virtualTabletJoystick
+        visible:                !QGroundControl.virtualTabletJoystick
         size:                   getGadgetWidth()
         active:                 _activeVehicle != null
         heading:                _heading
         rollAngle:              _roll
         pitchAngle:             _pitch
-//      altitude:               _altitudeWGS84
-        altitude:               _altitudeRelative
-        groundSpeed:            _groundSpeed
-        airSpeed:               _airSpeed
-        isSatellite:            _mainIsMap ? _flightMap ? _flightMap.isSatelliteMap : true : true
+//      altitudeFact:           _altitudeAMSLFact
+        altitudeFact:           _altitudeRelativeFact
+        groundSpeedFact:        _groundSpeedFact
+        airSpeedFact:           _airSpeedFact
+        isSatellite:            _isSatellite
         z:                      QGroundControl.zOrderWidgets
-        onClicked: {
-            _isInstrumentVisible = false
-            QGroundControl.saveBoolGlobalSetting(_InstrumentVisibleKey, false)
-        }
+        qgcView:                parent.parent.qgcView
+        maxHeight:              parent.height - (ScreenTools.defaultFontPixelHeight * 2)
     }
 
-
-
-    //-- Show (Hidden) Instrument Panel
-    Rectangle {
-        id:                     openButton
-//      anchors.right:          parent.right
-        anchors.right:           parent.right
-        anchors.bottom:         parent.bottom
+    QGCInstrumentWidgetAlternate {
+        id:                     instrumentGadgetAlternate
         anchors.margins:        ScreenTools.defaultFontPixelHeight
-        height:                 ScreenTools.defaultFontPixelSize * 2
-        width:                  ScreenTools.defaultFontPixelSize * 2
-        radius:                 ScreenTools.defaultFontPixelSize / 3
-        visible:                !_isInstrumentVisible && !QGroundControl.virtualTabletJoystick
-        color:                  isBackgroundDark ? Qt.rgba(0,0,0,0.75) : Qt.rgba(0,0,0,0.5)
-        Image {
-            width:              parent.width  * 0.75
-            height:             parent.height * 0.75
-            source:             "/res/buttonLeft.svg"
-            mipmap:             true
-            fillMode:           Image.PreserveAspectFit
-            anchors.verticalCenter:     parent.verticalCenter
-            anchors.horizontalCenter:   parent.horizontalCenter
-        }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                _isInstrumentVisible = true
-                QGroundControl.saveBoolGlobalSetting(_InstrumentVisibleKey, true)
-            }
-        }
+        anchors.top:            parent.top
+        anchors.right:          parent.right
+        visible:                QGroundControl.virtualTabletJoystick
+        width:                  getGadgetWidth()
+        active:                 _activeVehicle != null
+        heading:                _heading
+        rollAngle:              _roll
+        pitchAngle:             _pitch
+        altitudeFact:           _altitudeAMSLFact
+        groundSpeedFact:        _groundSpeedFact
+        airSpeedFact:           _airSpeedFact
+        isSatellite:            _isSatellite
+        z:                      QGroundControl.zOrderWidgets
+    }
+
+    ValuesWidget {
+        anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+        anchors.top:        instrumentGadgetAlternate.bottom
+        anchors.left:       instrumentGadgetAlternate.left
+        width:              getGadgetWidth()
+        qgcView:            parent.parent.qgcView
+        textColor:          _isSatellite ? "white" : "black"
+        visible:            QGroundControl.virtualTabletJoystick
+        maxHeight:          multiTouchItem.y - y
+
+        Component.onCompleted: console.log(y)
+        onHeightChanged: console.log(y, height, multiTouchItem.y)
     }
 
     //-- Vertical Tool Buttons
@@ -406,7 +404,6 @@ Item {
 
                             onClicked: {
                                 _flightMap.mapType = text
-                                checked = true
                                 _dropButtonsExclusiveGroup.current = null
                             }
                         }

@@ -21,34 +21,22 @@
  
  ======================================================================*/
 
-#ifndef PX4COMPONENT_H
-#define PX4COMPONENT_H
+#ifndef JsonHelper_H
+#define JsonHelper_H
 
-#include "VehicleComponent.h"
+#include <QJsonObject>
+#include <QGeoCoordinate>
 
-#include <QStringList>
-
-/// @file
-///     @brief This class is used as an abstract base class for all PX4 VehicleComponent objects.
-///     @author Don Gagne <don@thegagnes.com>
-
-class PX4Component : public VehicleComponent
+class JsonHelper
 {
-    Q_OBJECT
-    
 public:
-    PX4Component(Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent = NULL);
-    
-    /// @brief Returns an list of parameter names for which a change should cause the setupCompleteChanged
-    ///         signal to be emitted. Last element is signalled by NULL.
-    virtual QStringList setupCompleteChangedTriggerList(void) const = 0;
-    
-    /// Should be called after the component is created (but not in constructor) to setup the
-    /// signals which are used to track parameter changes which affect setupComplete state.
-    void setupTriggerSignals(void);
-    
-private slots:
-    void _triggerUpdated(QVariant value);
+    static bool validateRequiredKeys(const QJsonObject& jsonObject, const QStringList& keys, QString& errorString);
+    static bool validateKeyTypes(QJsonObject& jsonObject, const QStringList& keys, const QList<QJsonValue::Type>& types, QString& errorString);
+    static bool toQGeoCoordinate(const QJsonValue& jsonValue, QGeoCoordinate& coordinate, bool altitudeRequired, QString& errorString);
+    static bool parseEnum(QJsonObject& jsonObject, QStringList& enumStrings, QStringList& enumValues, QString& errorString);
+
+    static const char*  _enumStringsJsonKey;
+    static const char*  _enumValuesJsonKey;
 };
 
 #endif

@@ -217,6 +217,11 @@ int APMFirmwarePlugin::manualControlReservedButtonCount(void)
 
 void APMFirmwarePlugin::adjustMavlinkMessage(Vehicle* vehicle, mavlink_message_t* message)
 {
+    //-- Don't process messages to/from UDP Bridge. It doesn't suffer from these issues
+    if (message->compid == MAV_COMP_ID_UDP_BRIDGE) {
+        return;
+    }
+
     if (message->msgid == MAVLINK_MSG_ID_PARAM_VALUE) {
         mavlink_param_value_t paramValue;
         mavlink_param_union_t paramUnion;
@@ -478,8 +483,8 @@ QList<MAV_CMD> APMFirmwarePlugin::supportedMissionCommands(void)
 {
     QList<MAV_CMD> list;
 
-    list << MAV_CMD_NAV_WAYPOINT
-         << MAV_CMD_NAV_LOITER_UNLIM << MAV_CMD_NAV_LOITER_TURNS << MAV_CMD_NAV_LOITER_TIME
+    list << MAV_CMD_NAV_WAYPOINT << MAV_CMD_NAV_SPLINE_WAYPOINT
+         << MAV_CMD_NAV_LOITER_UNLIM << MAV_CMD_NAV_LOITER_TURNS << MAV_CMD_NAV_LOITER_TIME << MAV_CMD_NAV_LOITER_TO_ALT
          << MAV_CMD_NAV_RETURN_TO_LAUNCH << MAV_CMD_NAV_LAND << MAV_CMD_NAV_TAKEOFF
          << MAV_CMD_NAV_GUIDED_ENABLE
          << MAV_CMD_DO_SET_ROI << MAV_CMD_DO_GUIDED_LIMITS << MAV_CMD_DO_JUMP << MAV_CMD_DO_CHANGE_SPEED << MAV_CMD_DO_SET_CAM_TRIGG_DIST
@@ -487,6 +492,19 @@ QList<MAV_CMD> APMFirmwarePlugin::supportedMissionCommands(void)
          << MAV_CMD_DO_SET_SERVO << MAV_CMD_DO_REPEAT_SERVO
          << MAV_CMD_DO_DIGICAM_CONFIGURE << MAV_CMD_DO_DIGICAM_CONTROL
          << MAV_CMD_DO_MOUNT_CONTROL
-         << MAV_CMD_CONDITION_DELAY  << MAV_CMD_CONDITION_CHANGE_ALT << MAV_CMD_CONDITION_DISTANCE << MAV_CMD_CONDITION_YAW;
+         << MAV_CMD_DO_SET_HOME
+         << MAV_CMD_DO_LAND_START
+         << MAV_CMD_DO_FENCE_ENABLE << MAV_CMD_DO_PARACHUTE << MAV_CMD_DO_INVERTED_FLIGHT << MAV_CMD_DO_GRIPPER
+         << MAV_CMD_CONDITION_DELAY  << MAV_CMD_CONDITION_CHANGE_ALT << MAV_CMD_CONDITION_DISTANCE << MAV_CMD_CONDITION_YAW
+         << MAV_CMD_NAV_VTOL_TAKEOFF << MAV_CMD_NAV_VTOL_LAND
+         << MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
+
     return list;
+}
+
+void APMFirmwarePlugin::missionCommandOverrides(QString& commonJsonFilename, QString& fixedWingJsonFilename, QString& multiRotorJsonFilename) const
+{
+    commonJsonFilename = QStringLiteral(":/json/APM/MavCmdInfoCommon.json");
+    fixedWingJsonFilename = QStringLiteral(":/json/APM/MavCmdInfoFixedWing.json");
+    multiRotorJsonFilename = QStringLiteral(":/json/APM/MavCmdInfoMultiRotor.json");
 }

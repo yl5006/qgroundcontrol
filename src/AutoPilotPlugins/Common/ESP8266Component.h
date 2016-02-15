@@ -21,18 +21,18 @@
  
  ======================================================================*/
 
-#ifndef PX4ESP8266Component_H
-#define PX4ESP8266Component_H
+#ifndef ESP8266Component_H
+#define ESP8266Component_H
 
-#include "PX4Component.h"
+#include "VehicleComponent.h"
 
-class PX4ESP8266Component : public PX4Component
+class ESP8266Component : public VehicleComponent
 {
     Q_OBJECT
 public:
-    PX4ESP8266Component         (Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent = NULL);
+    ESP8266Component            (Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent = NULL);
     
-    // Virtuals from PX4Component
+    // Virtuals from VehicleComponent
     QStringList setupCompleteChangedTriggerList() const;
     
     // Virtuals from VehicleComponent

@@ -48,7 +48,7 @@ MapQuickItem {
         id:         vehicleIcon
         source:     isSatellite ? "/qmlimages/airplaneOpaque.svg" : "/qmlimages/airplaneOutline.svg"
         mipmap:     true
-        width:      size / 3 * 2
+        width:      size / 2
         fillMode:   Image.PreserveAspectFit
 
         transform: Rotation {
@@ -56,7 +56,7 @@ MapQuickItem {
 //            origin.y:   vehicleIcon.height / 2
             origin.x:   vehicleIcon.width  / 4
             origin.y:   vehicleIcon.height / 4
-            angle:      vehicle ? vehicle.heading : 0
+            angle:      vehicle ? vehicle.heading.value : 0
         }
     }
 }
