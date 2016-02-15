@@ -48,7 +48,7 @@ MapQuickItem {
         id:         vehicleIcon
         source:     isSatellite ? "/qmlimages/airplaneOpaque.svg" : "/qmlimages/airplaneOutline.svg"
         mipmap:     true
-        width:      size
+        width:      size / 3 * 2
         fillMode:   Image.PreserveAspectFit
 
         transform: Rotation {

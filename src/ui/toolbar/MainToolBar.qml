@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -562,7 +562,7 @@ Rectangle {
         QGCToolBarButton {
             id:                 flyButton
             width:              mainWindow.tbButtonWidth
-            height:             mainWindow.tbCellHeight
+            height:             mainWindow.tbCellHeight*1.2
             exclusiveGroup:     mainActionGroup
             source:             "/qmlimages/PaperPlane.svg"
             onClicked:          toolBar.showFlyView()

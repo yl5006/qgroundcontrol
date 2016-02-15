@@ -51,12 +51,12 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMGround">
     <property name="title">
-     <string>File</string>
+     <string>文件</string>
     </property>
     <addaction name="separator"/>
     <addaction name="actionMuteAudioOutput"/>
@@ -66,7 +66,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>帮助</string>
     </property>
     <addaction name="actionOnline_Documentation"/>
     <addaction name="actionProject_Roadmap"/>
@@ -74,7 +74,7 @@
    </widget>
    <widget class="QMenu" name="menuPerspectives">
     <property name="title">
-     <string>View</string>
+     <string>查看</string>
     </property>
     <addaction name="actionSetup"/>
     <addaction name="actionPlan"/>
@@ -85,7 +85,7 @@
    </widget>
    <widget class="QMenu" name="menuWidgets">
     <property name="title">
-     <string>Widgets</string>
+     <string>工具</string>
     </property>
    </widget>
    <addaction name="menuMGround"/>
@@ -96,7 +96,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>退出</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -127,7 +127,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Plan</string>
+    <string>飞行计划</string>
+   </property>
+   <property name="toolTip">
+    <string>飞行计划</string>
    </property>
   </action>
   <action name="actionFlight">
@@ -135,7 +138,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Fly</string>
+    <string>飞行</string>
+   </property>
+   <property name="toolTip">
+    <string>飞行</string>
    </property>
   </action>
   <action name="actionMuteAudioOutput">
@@ -148,10 +154,10 @@
   </action>
   <action name="actionSettings">
    <property name="text">
-    <string>Settings</string>
+    <string>配置</string>
    </property>
    <property name="toolTip">
-    <string>Application settings</string>
+    <string>配置</string>
    </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
@@ -162,10 +168,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Setup</string>
+    <string>设置</string>
    </property>
    <property name="toolTip">
-    <string>Setup of the vehicle</string>
+    <string>设置飞机参数</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -184,7 +190,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Status Bar</string>
+    <string>显示状态栏</string>
+   </property>
+   <property name="toolTip">
+    <string>显示状态栏</string>
    </property>
   </action>
   <action name="actionMissionEditor">

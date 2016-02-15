@@ -92,14 +92,14 @@ enum DockWidgetTypes {
 };
 
 static const char *rgDockWidgetNames[] = {
-    "MAVLink Inspector",
-    "Custom Command",
-    "Onboard Files",
-    "Status Details",
-    "Info View",
-    "HIL Config",
-    "Analyze",
-    "Log Download"
+    "数据链分析",//MAVLink Inspector
+    "用户命令",//Custom Command
+    "机体文件",//Onboard Files
+    "状态细节",//Status Details
+    "信息显示",//Info View
+    "仿真设置",//HIL Config
+    "波形分析",//Analyze
+    "日志下载"//Log Download
 };
 
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof(ARRAY[0]))
@@ -150,7 +150,7 @@ MainWindow::MainWindow()
 
     _ui.setupUi(this);
     // Make sure tool bar elements all fit before changing minimum width
-    setMinimumWidth(1008);
+    setMinimumWidth(800);
     configureWindowName();
 
     // Setup central widget with a layout to hold the views

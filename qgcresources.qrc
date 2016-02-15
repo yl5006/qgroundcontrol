@@ -1,4 +1,4 @@
-<RCC>
+﻿<RCC>
     <qresource prefix="/qmlimages">
         <file alias="AirframeComponentIcon.png">src/AutoPilotPlugins/Common/Images/AirframeComponentIcon.png</file>
         <file alias="AirframeFlyingWing.png">src/AutoPilotPlugins/Common/Images/FlyingWing.svg</file>
@@ -53,7 +53,7 @@
         <file alias="PowerComponentBattery_06cell.svg">src/AutoPilotPlugins/PX4/Images/PowerComponentBattery_06cell.svg</file>
         <file alias="PowerComponentIcon.png">src/AutoPilotPlugins/PX4/Images/PowerComponentIcon.png</file>
         <file alias="RadioComponentIcon.png">src/AutoPilotPlugins/PX4/Images/RadioComponentIcon.png</file>
-        <file alias="ReturnToHomeAltitude.svg">src/AutoPilotPlugins/PX4/Images/ReturnToHomeAltitude.svg</file>
+        <file alias="ReturnToHome.svg">src/AutoPilotPlugins/PX4/Images/ReturnToHomeAltitude.svg</file>
         <file alias="SafetyComponentIcon.png">src/AutoPilotPlugins/PX4/Images/SafetyComponentIcon.png</file>
         <file alias="SensorsComponentIcon.png">src/AutoPilotPlugins/PX4/Images/SensorsComponentIcon.png</file>
         <file alias="TuningComponentIcon.png">src/AutoPilotPlugins/PX4/Images/TuningComponentIcon.png</file>
@@ -126,6 +126,9 @@
         <file alias="TelemRSSI.svg">src/ui/toolbar/Images/TelemRSSI.svg</file>
         <file alias="Yield.svg">src/ui/toolbar/Images/Yield.svg</file>
         <file alias="CogWheel.svg">src/MissionManager/CogWheel.svg</file>
+        <file alias="Altitude.svg">src/FlightMap/Images/Altitude.svg</file>
+        <file alias="GroundSpeed.svg">src/FlightMap/Images/GroundSpeed.svg</file>
+        <file alias="Throttle.svg">src/FlightMap/Images/Throttle.svg</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="AntennaRC">resources/Antenna_RC.svg</file>

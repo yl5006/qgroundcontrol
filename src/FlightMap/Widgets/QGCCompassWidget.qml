@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -51,7 +51,7 @@ Item {
         id:             borderRect
         anchors.fill:   parent
         radius:         width / 2
-        color:          "black"
+        color:          Qt.rgba(0,0,0,0.75)//"black"
     }
 
     Item {
@@ -63,7 +63,9 @@ Item {
             id:                 pointer
             source:             "/qmlimages/compassInstrumentAirplane.svg"
             mipmap:             true
-            width:              size * 0.75
+            width:              size * 1.2
+            height:             size * 1.2
+//          width:              size * 0.75
             fillMode:           Image.PreserveAspectFit
             anchors.centerIn:   parent
             transform: Rotation {
@@ -82,14 +84,18 @@ Item {
         }
 
         Rectangle {
-            anchors.centerIn:   parent
+            anchors.top:        pointer.top
+            anchors.topMargin:  size * 0.3
+            anchors.left:       pointer.left
+            anchors.right:      pointer.right
             width:              size * 0.35
             height:             size * 0.2
-            border.color:       Qt.rgba(1,1,1,0.15)
-            color:              Qt.rgba(0,0,0,0.65)
+//          anchors.fill:       parent
+//          border.color:       Qt.rgba(1,1,1,0.15)
+            color:              Qt.rgba(0,0,0,0)
 
             QGCLabel {
-                text:           active ? heading.toFixed(0) : "OFF"
+                text:           active ? " "+heading.toFixed(0)+"°" : "OFF"
                 font.weight:    active ? Font.DemiBold : Font.Light
                 font.pixelSize: _fontSize < 1 ? 1 : _fontSize;
                 color:          "white"
@@ -102,7 +108,7 @@ Item {
         id:             mask
         anchors.fill:   instrument
         radius:         width / 2
-        color:          "black"
+        color:          "black"//Qt.rgba(1,1,1,0.75)
         visible:        false
     }
 

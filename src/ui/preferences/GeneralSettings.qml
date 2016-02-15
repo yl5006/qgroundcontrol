@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -58,7 +58,7 @@ Rectangle {
             anchors.margins:    ScreenTools.defaultFontPixelWidth
             spacing:            ScreenTools.defaultFontPixelHeight / 2
             QGCLabel {
-                text:   "General Settings"
+                text:   qsTr("常规设置")//"General Settings"
                 font.pixelSize: ScreenTools.mediumFontPixelSize
             }
             Rectangle {
@@ -140,7 +140,7 @@ Rectangle {
                 spacing:    ScreenTools.defaultFontPixelWidth
                 QGCLabel {
                     width: ScreenTools.defaultFontPixelWidth * 16
-                    text: "Map Providers"
+                    text: qsTr("地图")//"Map Providers"
                 }
                 QGCComboBox {
                     id:     mapProviders
@@ -169,11 +169,11 @@ Rectangle {
                 spacing:    ScreenTools.defaultFontPixelWidth
                 QGCLabel {
                     width: ScreenTools.defaultFontPixelWidth * 16
-                    text: "Style"
+                    text:   qsTr("主题")//"Style"
                 }
                 QGCComboBox {
                     width: ScreenTools.defaultFontPixelWidth * 16
-                    model: [ "Dark", "Light" ]
+                    model: [ qsTr("黑色"), qsTr("亮色") ]//[ "Dark", "Light" ]
                     currentIndex: QGroundControl.isDarkStyle ? 0 : 1
                     onActivated: {
                         if (index != -1) {
@@ -185,45 +185,45 @@ Rectangle {
                 }
             }
 
-            Item {
-                height: ScreenTools.defaultFontPixelHeight / 2
-                width:  parent.width
-            }
+//            Item {
+//                height: ScreenTools.defaultFontPixelHeight / 2
+//                width:  parent.width
+//            }
 
             //-----------------------------------------------------------------
             //-- Autoconnect settings
-            QGCLabel { text: "Autoconnect to the following devices:" }
+//            QGCLabel { text: "Autoconnect to the following devices:" }
 
-            Row {
-                spacing: ScreenTools.defaultFontPixelWidth * 2
+//            Row {
+//                spacing: ScreenTools.defaultFontPixelWidth * 2
 
-                QGCCheckBox {
-                    text:       "Pixhawk"
-                    visible:    !ScreenTools.isiOS
-                    checked:    QGroundControl.linkManager.autoconnectPixhawk
-                    onClicked:  QGroundControl.linkManager.autoconnectPixhawk = checked
-                }
+//                QGCCheckBox {
+//                    text:       "Pixhawk"
+//                    visible:    !ScreenTools.isiOS
+//                    checked:    QGroundControl.linkManager.autoconnectPixhawk
+//                    onClicked:  QGroundControl.linkManager.autoconnectPixhawk = checked
+//                }
 
-                QGCCheckBox {
-                    text:       "3DR Radio"
-                    visible:    !ScreenTools.isiOS
-                    checked:    QGroundControl.linkManager.autoconnect3DRRadio
-                    onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked
-                }
+//                QGCCheckBox {
+//                    text:       "3DR Radio"
+//                    visible:    !ScreenTools.isiOS
+//                    checked:    QGroundControl.linkManager.autoconnect3DRRadio
+//                    onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked
+//                }
 
-                QGCCheckBox {
-                    text:       "PX4 Flow"
-                    visible:    !ScreenTools.isiOS
-                    checked:    QGroundControl.linkManager.autoconnectPX4Flow
-                    onClicked:  QGroundControl.linkManager.autoconnectPX4Flow = checked
-                }
+//                QGCCheckBox {
+//                    text:       "PX4 Flow"
+//                    visible:    !ScreenTools.isiOS
+//                    checked:    QGroundControl.linkManager.autoconnectPX4Flow
+//                    onClicked:  QGroundControl.linkManager.autoconnectPX4Flow = checked
+//                }
 
-                QGCCheckBox {
-                    text:       "UDP"
-                    checked:    QGroundControl.linkManager.autoconnectUDP
-                    onClicked:  QGroundControl.linkManager.autoconnectUDP = checked
-                }
-            }
+//                QGCCheckBox {
+//                    text:       "UDP"
+//                    checked:    QGroundControl.linkManager.autoconnectUDP
+//                    onClicked:  QGroundControl.linkManager.autoconnectUDP = checked
+//                }
+//            }
 
             Item {
                 height: ScreenTools.defaultFontPixelHeight / 2
@@ -233,31 +233,31 @@ Rectangle {
             //-----------------------------------------------------------------
             //-- Virtual joystick settings
             QGCCheckBox {
-                text:       "Virtual Joystick"
+                text:       qsTr("虚拟遥控")//"Virtual Joystick"
                 checked:    QGroundControl.virtualTabletJoystick
                 onClicked:  QGroundControl.virtualTabletJoystick = checked
             }
 
-            Item {
-                height: ScreenTools.defaultFontPixelHeight / 2
-                width:  parent.width
-            }
+//            Item {
+//                height: ScreenTools.defaultFontPixelHeight / 2
+//                width:  parent.width
+//            }
 
-            Row {
-                spacing: ScreenTools.defaultFontPixelWidth
+//            Row {
+//                spacing: ScreenTools.defaultFontPixelWidth
 
-                QGCLabel {
-                    text:               "Offline mission editing vehicle type:"
-                    anchors.baseline:   offlineTypeCombo.baseline
-                }
+//                QGCLabel {
+//                    text:               "Offline mission editing vehicle type:"
+//                    anchors.baseline:   offlineTypeCombo.baseline
+//                }
 
-                FactComboBox {
-                    id:         offlineTypeCombo
-                    width:      ScreenTools.defaultFontPixelWidth * 25
-                    fact:       QGroundControl.offlineEditingFirmwareType
-                    indexModel: false
-                }
-            }
+//                FactComboBox {
+//                    id:         offlineTypeCombo
+//                    width:      ScreenTools.defaultFontPixelWidth * 25
+//                    fact:       QGroundControl.offlineEditingFirmwareType
+//                    indexModel: false
+//                }
+//            }
         }
     }
 }
