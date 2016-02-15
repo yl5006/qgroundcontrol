@@ -665,8 +665,8 @@ void Vehicle::_updateAttitude(UASInterface* uas, int, double roll, double pitch,
 
 void Vehicle::_updateSpeed(UASInterface*, double groundSpeed, double airSpeed, quint64)
 {
-    groundSpeed = _oneDecimal(groundSpeed);
-    airSpeed = _oneDecimal(airSpeed);
+    _groundSpeedFact.setRawValue(groundSpeed);
+    _airSpeedFact.setRawValue(airSpeed);
 }
 
 void Vehicle::_updateAltitude(UASInterface*, double altitudeAMSL, double altitudeRelative, double climbRate, quint64)

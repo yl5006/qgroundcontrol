@@ -188,7 +188,7 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
 #endif
     , _toolbox(NULL)
     , _bluetoothAvailable(false)
-    , _defaultMapPosition(30.5386437,114.3662806)
+    , _lastKnownHomePosition(30.5386437,114.3662806)
 {
     Q_ASSERT(_app == NULL);
     _app = this;
@@ -378,8 +378,8 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
         QFile::remove(ParameterLoader::parameterCacheFile());
     }
 
-    _defaultMapPosition.setLatitude(settings.value(_defaultMapPositionLatKey, 37.803784).toDouble());
-    _defaultMapPosition.setLongitude(settings.value(_defaultMapPositionLonKey, -122.462276).toDouble());
+    _lastKnownHomePosition.setLatitude(settings.value(_lastKnownHomePositionLatKey, 30.5386437).toDouble());
+    _lastKnownHomePosition.setLongitude(settings.value(_lastKnownHomePositionLonKey, 114.3662806).toDouble());
     _lastKnownHomePosition.setAltitude(settings.value(_lastKnownHomePositionAltKey, 0.0).toDouble());
 
     // Initialize Bluetooth
