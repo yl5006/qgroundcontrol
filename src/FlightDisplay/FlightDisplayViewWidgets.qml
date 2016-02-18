@@ -239,7 +239,6 @@ Item {
         heading:                _heading
         rollAngle:              _roll
         pitchAngle:             _pitch
-        altitudeFact:           _altitudeAMSLFact
         groundSpeedFact:        _groundSpeedFact
         airSpeedFact:           _airSpeedFact
         isSatellite:            _isSatellite
@@ -255,9 +254,6 @@ Item {
         textColor:          _isSatellite ? "white" : "black"
         visible:            QGroundControl.virtualTabletJoystick
         maxHeight:          multiTouchItem.y - y
-
-        Component.onCompleted: console.log(y)
-        onHeightChanged: console.log(y, height, multiTouchItem.y)
     }
 */
     //-- Vertical Tool Buttons

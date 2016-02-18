@@ -220,7 +220,6 @@ QGCView {
         QGCViewDialog {
             function accept() {
                 hideDialog()
-                console.log(filenameTextField.text)
                 controller.saveMobileMissionToFile(filenameTextField.text)
             }
 
