@@ -767,3 +767,4 @@ include(QGCSetup.pri)
 #
 
 include(QGCInstaller.pri)
+TRANSLATIONS+=app_zh_CN.ts

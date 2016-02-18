@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
  
  QGroundControl Open Source Ground Control Station
  
@@ -33,7 +33,8 @@
 
 SensorsComponent::SensorsComponent(Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent) :
     VehicleComponent(vehicle, autopilot, parent),
-    _name(tr("Sensors"))
+//    _name(tr("Sensors"))
+      _name(tr("传感器"))
 {
 
 }

@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 
 import QGroundControl.FactSystem 1.0
@@ -25,17 +25,17 @@ FactPanel {
         anchors.margins: 8
 
         VehicleSummaryRow {
-            labelText: "System ID:"
+            labelText: qsTr("系统ID")//"System ID:"
             valueText: sysIdFact ? sysIdFact.valueString : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Airframe type:"
+            labelText: qsTr("飞机类型")//"Airframe type:"
             valueText: autoStartSet ? controller.currentAirframeType : "Setup required"
         }
 
         VehicleSummaryRow {
-            labelText: "Vehicle:"
+            labelText: qsTr("机体名称:")//"Vehicle:"
             valueText: autoStartSet ? controller.currentVehicleName : "Setup required"
         }
     }

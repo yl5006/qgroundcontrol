@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 
 import QGroundControl.FactSystem 1.0
@@ -27,38 +27,38 @@ FactPanel {
         anchors.margins:    8
 
         VehicleSummaryRow {
-            labelText: "Roll:"
-            valueText: mapRollFact ? (mapRollFact.value === 0 ? "Setup required" : mapRollFact.valueString) : ""
+            labelText: qsTr("横滚:")//"Roll:"
+            valueText: mapRollFact ? (mapRollFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapRollFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Pitch:"
-            valueText: mapPitchFact ? (mapPitchFact.value === 0 ? "Setup required" : mapPitchFact.valueString) : ""
+            labelText: qsTr("仰俯:")//"Pitch:"
+            valueText: mapPitchFact ? (mapPitchFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapPitchFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Yaw:"
-            valueText: mapYawFact ? (mapYawFact.value === 0 ? "Setup required" : mapYawFact.valueString) : ""
+            labelText: qsTr("航角:")//"Yaw:"
+            valueText: mapYawFact ? (mapYawFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapYawFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Throttle:"
-            valueText: mapThrottleFact ? (mapThrottleFact.value === 0 ? "Setup required" : mapThrottleFact.valueString) : ""
+            labelText: qsTr("油门:")//"Throttle:"
+            valueText: mapThrottleFact ? (mapThrottleFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapThrottleFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Flaps:"
-            valueText: mapFlapsFact ? (mapFlapsFact.value === 0 ? "Disabled" : mapFlapsFact.valueString) : ""
+            labelText: qsTr("附翼:")//"Flaps:"
+            valueText: mapFlapsFact ? (mapFlapsFact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : mapFlapsFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Aux1:"
-            valueText: mapAux1Fact ? (mapAux1Fact.value === 0 ? "Disabled" : mapAux1Fact.valueString) : ""
+            labelText: qsTr("辅助1:")//"Aux1:"
+            valueText: mapAux1Fact ? (mapAux1Fact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : mapAux1Fact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Aux2:"
-            valueText: mapAux2Fact ? (mapAux2Fact.value === 0 ? "Disabled" : mapAux2Fact.valueString) : ""
+            labelText: qsTr("辅助2:")//"Aux2:"
+            valueText: mapAux2Fact ? (mapAux2Fact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : mapAux2Fact.valueString) : ""
         }
     }
 }

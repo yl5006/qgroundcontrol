@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
  
  QGroundControl Open Source Ground Control Station
  
@@ -70,7 +70,8 @@ static size_t cMavTypes = sizeof(mavTypeInfo) / sizeof(mavTypeInfo[0]);
 
 AirframeComponent::AirframeComponent(Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent) :
     VehicleComponent(vehicle, autopilot, parent),
-    _name(tr("Airframe"))
+//    _name(tr("Airframe"))
+    _name(tr("机体"))
 {
 #if 0
     // Broken by latest mavlink module changes. Not used yet. Comment out for now.

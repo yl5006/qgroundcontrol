@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 
 import QGroundControl.FactSystem 1.0
@@ -25,27 +25,27 @@ FactPanel {
         anchors.margins:    8
 
         VehicleSummaryRow {
-            labelText: "RTL min alt:"
+            labelText: qsTr("返航最低高度")//"RTL min alt:"
             valueText: returnAltFact ? returnAltFact.valueString : ""
         }
 
         VehicleSummaryRow {
-            labelText: "RTL home alt:"
+            labelText: qsTr("返航home点高度")//"RTL home alt:"
             valueText: descendAltFact ? descendAltFact.valueString : ""
         }
 
         VehicleSummaryRow {
-            labelText: "RTL loiter delay:"
-            valueText: landDelayFact ? (landDelayFact.value < 0 ? "Disabled" : landDelayFact.valueString) : ""
+            labelText: qsTr("返航悬停等待")//"RTL loiter delay:"
+            valueText: landDelayFact ? (landDelayFact.value < 0 ? qsTr("未使能")/*"Disabled"*/ : landDelayFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Telemetry loss RTL:"
-            valueText: commDLLossFact ? (commDLLossFact.value != -1 ? "Disabled" : commDLLossFact.valueString) : ""
+            labelText: qsTr("数据链丢失返航")//"Telemetry loss RTL:"
+            valueText: commDLLossFact ? (commDLLossFact.value != -1 ? qsTr("未使能")/*"Disabled"*/ : commDLLossFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "RC loss RTL (seconds):"
+            labelText: qsTr("遥控丢失时间返航")//"RC loss RTL (seconds):"
             valueText: commRCLossFact ? commRCLossFact.valueString : ""
         }
     }

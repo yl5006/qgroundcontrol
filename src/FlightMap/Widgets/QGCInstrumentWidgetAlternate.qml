@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -33,8 +33,8 @@ Rectangle {
     id:     root
     height: _outerRadius * 2
     radius: _outerRadius
-    color:  isSatellite ? Qt.rgba(1,1,1,0.75) : Qt.rgba(0,0,0,0.75)
-
+//  color:  isSatellite ? Qt.rgba(1,1,1,0.75) : Qt.rgba(0,0,0,0.75)
+    color:          Qt.rgba(0,0,0,0.0)
     property alias  heading:        compass.heading
     property alias  rollAngle:      attitude.rollAngle
     property alias  pitchAngle:     attitude.pitchAngle
@@ -61,18 +61,20 @@ Rectangle {
 
     QGCAttitudeWidget {
         id:                 attitude
-        anchors.leftMargin: _topBottomMargin
-        anchors.left:       parent.left
-        size:               _innerRadius * 2
+//      anchors.leftMargin: _topBottomMargin
+//      anchors.left:       parent.left
+        anchors.rightMargin: _topBottomMargin
+        anchors.right:       compass.left
+        size:               _innerRadius * 3
         active:             active
         anchors.verticalCenter: parent.verticalCenter
     }
-
     QGCCompassWidget {
         id:                 compass
         anchors.leftMargin: _spacing
-        anchors.left:       attitude.right
-        size:               _innerRadius * 2
+//      anchors.left:       attitude.right
+        anchors.left:       parent.left
+        size:               _innerRadius * 3
         active:             active
         anchors.verticalCenter: parent.verticalCenter
     }

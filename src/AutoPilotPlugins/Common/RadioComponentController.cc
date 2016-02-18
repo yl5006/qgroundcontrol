@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
  
  QGroundControl Open Source Ground Control Station
  
@@ -986,7 +986,7 @@ void RadioComponentController::_stopCalibration(void)
     
     _statusText->setProperty("text", "");
 
-    _nextButton->setProperty("text", "Calibrate");
+    _nextButton->setProperty("text", tr("校准"));
     _nextButton->setEnabled(true);
     _cancelButton->setEnabled(false);
     _skipButton->setEnabled(false);

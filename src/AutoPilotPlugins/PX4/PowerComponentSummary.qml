@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -50,17 +50,17 @@ FactPanel {
         anchors.margins:    8
 
         VehicleSummaryRow {
-            labelText: "Battery Full:"
+            labelText: qsTr("满电压")//"Battery Full:"
             valueText: batVChargedFact ? batVChargedFact.valueString : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Battery Empty:"
+            labelText: qsTr("空电压")//"Battery Empty:"
             valueText: batVEmptyFact ? batVEmptyFact.valueString : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Number of Cells:"
+            labelText: qsTr("电芯数")//"Number of Cells:"
             valueText: batCellsFact ? batCellsFact.valueString : ""
         }
     }

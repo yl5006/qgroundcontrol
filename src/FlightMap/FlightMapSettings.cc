@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -91,10 +91,13 @@ void FlightMapSettings::_setMapTypesForCurrentProvider(void)
 
     if (_mapProvider == "Bing") {
         _mapTypes << "Street Map" << "Satellite Map" << "Hybrid Map";
+//        _mapTypes << "街道地图" << "Satellite Map" << "混合地图";
     } else if (_mapProvider == "Google") {
         _mapTypes << "Street Map" << "Satellite Map" << "Terrain Map";
+//        _mapTypes << "街道地图" << "卫星地图" << "地形地图";
     } else if (_mapProvider == "OpenStreetMap") {
-        _mapTypes << "Street Map";
+       _mapTypes << "Street Map";
+//        _mapTypes << "街道地图";
     }
 
     emit mapTypesChanged(_mapTypes);

@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -47,7 +47,7 @@ Map {
     property string mapType:            QGroundControl.flightMapSettings.mapTypeForMapName(mapName)
 //  property alias  mapWidgets:         controlWidgets
     property bool   isSatelliteMap:     mapType == "Satellite Map" || mapType == "Hybrid Map"
-
+//mapType == "卫星地图"|| mapType == "混合地图"
     readonly property real maxZoomLevel:    20
 
     zoomLevel:                  18

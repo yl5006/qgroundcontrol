@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -256,26 +256,26 @@ Rectangle {
                     setupIndicator: false
                     checked:        true
                     exclusiveGroup: setupButtonGroup
-                    text:           "Summary"
+                    text:           qsTr("概况")//"Summary"
 
                     onClicked: showSummaryPanel()
                 }
-
+//debug view
                 SubMenuButton {
                     id:             firmwareButton
                     imageResource:  "/qmlimages/FirmwareUpgradeIcon.png"
                     setupIndicator: false
                     exclusiveGroup: setupButtonGroup
-                    visible:        !ScreenTools.isMobile
+                    visible:        !ScreenTools.isMobile&&ScreenTools.isDebug
                     text:           "Firmware"
 
                     onClicked: showFirmwarePanel()
                 }
-
+//debug view
                 SubMenuButton {
                     id:             px4FlowButton
                     exclusiveGroup: setupButtonGroup
-                    visible:        QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.genericFirmware : false
+                    visible:        ScreenTools.isDebug&&QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.genericFirmware : false
                     setupIndicator: false
                     text:           "PX4Flow"
                     onClicked:      showPX4FlowPanel()

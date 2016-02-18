@@ -98,6 +98,9 @@
    <property name="text">
     <string>退出</string>
    </property>
+   <property name="toolTip">
+    <string>退出</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
    </property>
@@ -127,10 +130,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>飞行计划</string>
+    <string>计划</string>
    </property>
    <property name="toolTip">
-    <string>飞行计划</string>
+    <string>计划</string>
    </property>
   </action>
   <action name="actionFlight">
@@ -171,7 +174,7 @@
     <string>设置</string>
    </property>
    <property name="toolTip">
-    <string>设置飞机参数</string>
+    <string>设置</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -190,10 +193,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>显示状态栏</string>
+    <string>状态栏</string>
    </property>
    <property name="toolTip">
-    <string>显示状态栏</string>
+    <string>状态栏</string>
    </property>
   </action>
   <action name="actionMissionEditor">

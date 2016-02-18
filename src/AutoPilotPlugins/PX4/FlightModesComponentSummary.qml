@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 
 import QGroundControl.FactSystem 1.0
@@ -24,23 +24,23 @@ FactPanel {
         anchors.margins:    8
 
         VehicleSummaryRow {
-            labelText: "Mode switch:"
-            valueText: modeSwFact ? (modeSwFact.value === 0 ? "Setup required" : modeSwFact.valueString) : ""
+            labelText: qsTr("模式切换开关")//"Mode switch:"
+            valueText: modeSwFact ? (modeSwFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : modeSwFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Position Ctl switch:"
-            valueText: posCtlSwFact ? (posCtlSwFact.value === 0 ? "Disabled" : posCtlSwFact.valueString) : ""
+            labelText: qsTr("位置控制开关")//"Position Ctl switch:"
+            valueText: posCtlSwFact ? (posCtlSwFact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : posCtlSwFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Loiter switch:"
-            valueText: loiterSwFact ? (loiterSwFact.value === 0 ? "Disabled" : loiterSwFact.valueString) : ""
+            labelText: qsTr("悬停开关")//"Loiter switch:"
+            valueText: loiterSwFact ? (loiterSwFact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : loiterSwFact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Return switch:"
-            valueText: returnSwFact ? (returnSwFact.value === 0 ? "Disabled" : returnSwFact.valueString) : ""
+            labelText: qsTr("返航开关")//"Return switch:"
+            valueText: returnSwFact ? (returnSwFact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : returnSwFact.valueString) : ""
         }
     }
 }

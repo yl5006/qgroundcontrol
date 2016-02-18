@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -145,13 +145,13 @@ Item {
                 height:     ScreenTools.defaultFontPixelHeight * 0.5
             }
             QGCLabel {
-                text:           "Preferences"
+                text:       qsTr("个人设置")//"Preferences"
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             QGCButton {
                 width:      parent.width * 0.85
                 height:     ScreenTools.defaultFontPixelHeight * 2.5
-                text:       "General"
+                text:       qsTr("一般")//"General"
                 exclusiveGroup: panelActionGroup
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
@@ -164,7 +164,7 @@ Item {
             QGCButton {
                 width:      parent.width * 0.85
                 height:     ScreenTools.defaultFontPixelHeight * 2.5
-                text:       "Comm Links"
+                text:       qsTr("连接")//"Comm Links"
                 exclusiveGroup: panelActionGroup
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
@@ -178,6 +178,7 @@ Item {
                 width:      parent.width * 0.85
                 height:     ScreenTools.defaultFontPixelHeight * 2.5
                 text:       "MavLink"
+                visible:    ScreenTools.isDebug
                 exclusiveGroup: panelActionGroup
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {

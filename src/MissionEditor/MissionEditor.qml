@@ -93,7 +93,7 @@ QGCView {
 
     function loadFromFile() {
         if (ScreenTools.isMobile) {
-            _root.showDialog(mobileFilePicker, "Select Mission File", _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+            _root.showDialog(mobileFilePicker, qsTr("选择任务文件")/*"Select Mission File"*/, _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
         } else {
             controller.loadMissionFromFile()
             fitViewportToMissionItems()
@@ -102,7 +102,7 @@ QGCView {
 
     function saveToFile() {
         if (ScreenTools.isMobile) {
-            _root.showDialog(mobileFileSaver, "Save Mission File", _root.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel)
+            _root.showDialog(mobileFileSaver, qsTr("保存任务文件")/*"Save Mission File"*/, _root.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel)
         } else {
             controller.saveToFile()
         }
@@ -230,7 +230,7 @@ QGCView {
                 spacing:        ScreenTools.defaultFontPixelHeight
 
                 QGCLabel {
-                    text: "File name:"
+                    text: qsTr("文件名?")//"File name:"
                 }
 
                 QGCTextField {
@@ -532,13 +532,13 @@ QGCView {
 
                         dropDownComponent: Component {
                             Column {
-                                QGCLabel { text: "Center map:" }
+                                QGCLabel { text: qsTr("中心位置") }// "Center map:" }
 
                                 Row {
                                     spacing: ScreenTools.defaultFontPixelWidth
 
                                     QGCButton {
-                                        text: "Home"
+                                        text: qsTr("Home点")//"Home"
 
                                         onClicked: {
                                             centerMapButton.hideDropDown()
@@ -547,7 +547,7 @@ QGCView {
                                     }
 
                                     QGCButton {
-                                        text: "Mission"
+                                        text: qsTr("任务")//"Mission"
 
                                         onClicked: {
                                             centerMapButton.hideDropDown()
@@ -556,7 +556,7 @@ QGCView {
                                     }
 
                                     QGCButton {
-                                        text:       "Vehicle"
+                                        text:   qsTr("飞机")//  "Vehicle"
                                         enabled:    activeVehicle && activeVehicle.latitude != 0 && activeVehicle.longitude != 0
 
                                         property var activeVehicle: multiVehicleManager.activeVehicle
@@ -581,7 +581,7 @@ QGCView {
 
                         dropDownComponent: Component {
                             Column {
-                                QGCLabel { text: "Map type:" }
+                                QGCLabel { text: qsTr("地图类型")}//"Map type:" }
 
                                 Row {
                                     spacing: ScreenTools.defaultFontPixelWidth
@@ -592,7 +592,7 @@ QGCView {
                                         QGCButton {
                                             checkable:      true
                                             checked:        editorMap.mapType == text
-                                            text:           modelData
+                                            text:           qsTr(modelData)
                                             exclusiveGroup: _mapTypeButtonsExclusiveGroup
 
                                             onClicked: {
@@ -653,7 +653,7 @@ QGCView {
 
         QGCViewMessage {
             id:         syncLoadFromVehicleCheck
-            message:   "You have unsaved/unsent mission changes. Loading the mission from the Vehicle will lose these changes. Are you sure you want to load the mission from the Vehicle?"
+            message:   qsTr("你有未保存或未发送的任务,从飞机载入任务会丢失这些修改，你确认从飞机载入飞行任务?")//"You have unsaved/unsent mission changes. Loading the mission from the Vehicle will lose these changes. Are you sure you want to load the mission from the Vehicle?"
 
             function accept() {
                 hideDialog()
@@ -680,7 +680,7 @@ QGCView {
         id: removeAllPromptDialog
 
         QGCViewMessage {
-            message: "Are you sure you want to delete all mission items?"
+            message: qsTr("确认删除所有任务点?")//"Are you sure you want to delete all mission items?"
 
             function accept() {
                 itemDragger.clearItem()
@@ -701,8 +701,8 @@ QGCView {
                 width:      columnHolder.width
                 wrapMode:   Text.WordWrap
                 text:       syncNeeded && !controller.autoSync ?
-                                "You have unsaved changed to you mission. You should send to your vehicle, or save to a file:" :
-                                "Sync:"
+                                qsTr("你修改了任务，你需要发送给飞机或存为文件:")://"You have unsaved changed to you mission. You should send to your vehicle, or save to a file:" :
+                                qsTr("同步:")//"Sync:"
             }
 
             Row {
@@ -710,7 +710,7 @@ QGCView {
                 spacing:    ScreenTools.defaultFontPixelWidth
 
                 QGCButton {
-                    text:       "Send to vehicle"
+                    text:       qsTr("发送任务..")//"Send to vehicle"
                     enabled:    _activeVehicle && !_activeVehicle.missionManager.inProgress
 
                     onClicked: {
@@ -720,7 +720,7 @@ QGCView {
                 }
 
                 QGCButton {
-                    text:       "Load from vehicle"
+                    text:       qsTr("载入任务..")//"Load from vehicle"
                     enabled:    _activeVehicle && !_activeVehicle.missionManager.inProgress
 
                     onClicked: {
@@ -738,7 +738,7 @@ QGCView {
                 spacing: ScreenTools.defaultFontPixelWidth
 
                 QGCButton {
-                    text:       "Save to file..."
+                    text:       qsTr("存储到文件")//"Save to file..."
 
                     onClicked: {
                         syncButton.hideDropDown()
@@ -747,12 +747,12 @@ QGCView {
                 }
 
                 QGCButton {
-                    text:       "Load from file..."
+                    text:       qsTr("从文件载入")//"Load from file..."
 
                     onClicked: {
                         syncButton.hideDropDown()
                         if (syncNeeded) {
-                            _root.showDialog(syncLoadFromFileOverwrite, "Mission overwrite", _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                            _root.showDialog(syncLoadFromFileOverwrite, qsTr("任务覆盖")/*"Mission overwrite"*/, _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                         } else {
                             loadFromFile()
                         }
@@ -761,10 +761,10 @@ QGCView {
             }
 
             QGCButton {
-                text:       "Remove all"
+                text:       qsTr("删除所有航点")//"Remove all"
                 onClicked:  {
                     syncButton.hideDropDown()
-                    _root.showDialog(removeAllPromptDialog, "Delete all", _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
+                    _root.showDialog(removeAllPromptDialog, qsTr("删除所有航点")/*"Delete all"*/, _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
                 }
             }
 

@@ -5,7 +5,8 @@
     <name>APMAirframeComponent</name>
     <message>
         <location filename="src/AutoPilotPlugins/APM/APMAirframeComponent.cc" line="51"/>
-        <source>The Airframe Component is used to select the airframe which matches your vehicle. This will in turn set up the various tuning values for flight paramters.</source>
+        <source>The Airframe Component is used to select the airframe which matches your vehicle. This will in turn set up the various tuning values for flight parameters.</source>
+        <oldsource>The Airframe Component is used to select the airframe which matches your vehicle. This will in turn set up the various tuning values for flight paramters.</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -59,7 +60,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/APM/APMRemoteParamsDownloader.cc" line="136"/>
+        <location filename="src/AutoPilotPlugins/APM/APMRemoteParamsDownloader.cc" line="135"/>
         <source>Download failed: %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -107,7 +108,8 @@
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.cc" line="129"/>
-        <source>The Airframe Component is used to select the airframe which matches your vehicle. This will in turn set up the various tuning values for flight paramters.</source>
+        <source>The Airframe Component is used to select the airframe which matches your vehicle. This will in turn set up the various tuning values for flight parameters.</source>
+        <oldsource>The Airframe Component is used to select the airframe which matches your vehicle. This will in turn set up the various tuning values for flight paramters.</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -198,118 +200,131 @@
     </message>
 </context>
 <context>
+    <name>ESP8266Component</name>
+    <message>
+        <location filename="src/AutoPilotPlugins/Common/ESP8266Component.cc" line="29"/>
+        <source>WiFi Bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/Common/ESP8266Component.cc" line="41"/>
+        <source>The ESP8266 WiFi Bridge Component is used to setup the WiFi link.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileManager</name>
     <message>
-        <location filename="src/uas/FileManager.cc" line="94"/>
+        <location filename="src/uas/FileManager.cc" line="95"/>
         <source>Unable to open local file for writing (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">不能写入本地文件 (%1)</translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="101"/>
+        <location filename="src/uas/FileManager.cc" line="102"/>
         <source>Unable to write data to local file (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">不能写入数据到本地文件(%1)</translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="139"/>
+        <location filename="src/uas/FileManager.cc" line="140"/>
         <source>Download: Incorrect session returned</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">下载：不同段返回</translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="145"/>
+        <location filename="src/uas/FileManager.cc" line="146"/>
         <source>Download: Offset returned (%1) differs from offset requested/expected (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="179"/>
+        <location filename="src/uas/FileManager.cc" line="180"/>
         <source>List: Offset returned (%1) differs from offset requested (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="196"/>
+        <location filename="src/uas/FileManager.cc" line="197"/>
         <source>Incorrectly formed list entry: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="200"/>
+        <location filename="src/uas/FileManager.cc" line="201"/>
         <source>Missing NULL termination in list entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="258"/>
+        <location filename="src/uas/FileManager.cc" line="259"/>
         <source>Write: Incorrect session returned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="264"/>
+        <location filename="src/uas/FileManager.cc" line="265"/>
         <source>Write: Offset returned (%1) differs from offset requested (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="270"/>
+        <location filename="src/uas/FileManager.cc" line="271"/>
         <source>Write: Returned invalid size of write size data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="277"/>
+        <location filename="src/uas/FileManager.cc" line="278"/>
         <source>Write: Size returned (%1) differs from size requested (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="364"/>
+        <location filename="src/uas/FileManager.cc" line="363"/>
         <source>Bad sequence number on received message: expected(%1) received(%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="420"/>
+        <location filename="src/uas/FileManager.cc" line="419"/>
         <source>Nak received creating file, error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="431"/>
+        <location filename="src/uas/FileManager.cc" line="430"/>
         <source>Nak received, error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="436"/>
+        <location filename="src/uas/FileManager.cc" line="435"/>
         <source>Unknown opcode returned from server: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="443"/>
-        <location filename="src/uas/FileManager.cc" line="481"/>
-        <location filename="src/uas/FileManager.cc" line="492"/>
+        <location filename="src/uas/FileManager.cc" line="442"/>
+        <location filename="src/uas/FileManager.cc" line="486"/>
+        <location filename="src/uas/FileManager.cc" line="503"/>
         <source>Command not sent. Waiting for previous command to complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="536"/>
+        <location filename="src/uas/FileManager.cc" line="553"/>
         <source>UAS File manager busy.  Try again later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="545"/>
+        <location filename="src/uas/FileManager.cc" line="568"/>
         <source>File (%1) is not readable for upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="551"/>
+        <location filename="src/uas/FileManager.cc" line="574"/>
         <source>Unable to open local file for upload (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="561"/>
+        <location filename="src/uas/FileManager.cc" line="584"/>
         <source>Unable to read data from local file (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="659"/>
-        <location filename="src/uas/FileManager.cc" line="665"/>
+        <location filename="src/uas/FileManager.cc" line="682"/>
+        <location filename="src/uas/FileManager.cc" line="688"/>
         <source>Timeout waiting for ack: Download failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/FileManager.cc" line="671"/>
-        <location filename="src/uas/FileManager.cc" line="677"/>
+        <location filename="src/uas/FileManager.cc" line="694"/>
+        <location filename="src/uas/FileManager.cc" line="700"/>
         <source>Timeout waiting for ack: Upload failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -346,111 +361,111 @@
 <context>
     <name>LinechartWidget</name>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="231"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="234"/>
         <source>LOG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="233"/>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="234"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="236"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="237"/>
         <source>Set logarithmic scale for Y axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="239"/>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="240"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="242"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="243"/>
         <source>Sliding window size to calculate mean and variance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="250"/>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="251"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="253"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="254"/>
         <source>Start to log curve data into a CSV or TXT file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="252"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="255"/>
         <source>Start Logging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="258"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="261"/>
         <source>Ground Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="259"/>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="260"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="262"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="263"/>
         <source>Overwrite timestamp of data from vehicle with ground receive time. Helps if the plots are not visible because of missing or invalid onboard time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="445"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="451"/>
         <source>No curves selected for logging.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="446"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="452"/>
         <source>Please check all curves you want to log. Currently no data would be logged. Aborting the logging.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="454"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="460"/>
         <source>Save Log File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="456"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="462"/>
         <source>Log Files (*.log)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="468"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="474"/>
         <source>Stop logging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="487"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="493"/>
         <source>Starting Log Compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="488"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="494"/>
         <source>Should empty fields (e.g. due to packet drops) be filled with the previous value of the same variable (zero order hold)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="503"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="501"/>
         <source>Start logging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="548"/>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="549"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="546"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="547"/>
         <source>Enable the curve in the graph window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="570"/>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="571"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="568"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="569"/>
         <source>Current value of %1 in %2 units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="578"/>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="579"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="576"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="577"/>
         <source>Unit of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="589"/>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="590"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="587"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="588"/>
         <source>Arithmetic mean of %1 in %2 units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="604"/>
-        <location filename="src/ui/linechart/LinechartWidget.cc" line="605"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="602"/>
+        <location filename="src/ui/linechart/LinechartWidget.cc" line="603"/>
         <source>Variance of %1 in (%2)^2 units</source>
         <translation type="unfinished"></translation>
     </message>
@@ -489,45 +504,45 @@
 <context>
     <name>MAVLinkProtocol</name>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="214"/>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="234"/>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="306"/>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="625"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="206"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="226"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="298"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="569"/>
         <source>MAVLink Protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="214"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="206"/>
         <source>There is a MAVLink Version or Baud Rate Mismatch. Your MAVLink device seems to use the deprecated version 0.9, while QGroundControl only supports version 1.0+. Please upgrade the MAVLink version of your autopilot. If your autopilot is using version 1.0, check if the baud rates of QGroundControl and your autopilot are the same.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="234"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="226"/>
         <source>There is a MAVLink Version or Baud Rate Mismatch. Please check if the baud rates of QGroundControl and your autopilot are the same.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="306"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="298"/>
         <source>MAVLink Logging failed. Could not write to file %1, logging disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="401"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="393"/>
         <source>MAVLink protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="625"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="569"/>
         <source>Opening Flight Data file for writing failed. Unable to write to %1. Please choose a different file location.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="676"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="620"/>
         <source>Found unsaved Flight Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="677"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="621"/>
         <source>This can happen if QGroundControl crashes during Flight Data collection. If you want to save the unsaved Flight Data, select the file you want to save it to. If you do not want to keep the Flight Data, select &apos;Cancel&apos; on the next dialog.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -540,118 +555,113 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="46"/>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="49"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="130"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="133"/>
         <source>Time in milliseconds after which a not acknowledged write request is sent again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="52"/>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="75"/>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="110"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="88"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="136"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="284"/>
         <source> ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="68"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="62"/>
         <source>Enter a comma-separated list of allowed packets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="104"/>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="107"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="82"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="85"/>
         <source>Time in milliseconds after which a not acknowledged read request is sent again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="149"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="228"/>
         <source>dronelink.io:14555</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="154"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="233"/>
         <source>localhost:14555</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="175"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="277"/>
         <source>Write request retransmission timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="182"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="41"/>
         <source>Read request retransmission timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="189"/>
-        <source>Emit heartbeat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="196"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="55"/>
         <source>Enable Multiplexing: Forward packets to all other links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="203"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="152"/>
         <source>Action request retransmission timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="223"/>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="226"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="179"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="182"/>
         <source>Set the groundstation number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="239"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="27"/>
         <source>Forward MAVLink packets of all links to the host below</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="246"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="20"/>
         <source>Enable retransmission of actions / commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="253"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="241"/>
         <source>Filter multiplexed packets: Only forward selected IDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="260"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="34"/>
         <source>Only accept MAVs with same protocol version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="283"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="107"/>
         <source>Enter your authentication token</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="293"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="48"/>
         <source>Enable retransmission of parameter read/write requests</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="300"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="172"/>
         <source>MAVLINK_VERSION: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="307"/>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="310"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="159"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="162"/>
         <source>The system ID is the number the MAV associates with this computer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="313"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.ui" line="165"/>
         <source>Groundstation MAVLink System ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MAVLinkSettingsWidget.cc" line="105"/>
+        <location filename="src/ui/MAVLinkSettingsWidget.cc" line="100"/>
         <source>MAVLINK_VERSION: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -665,27 +675,27 @@
     </message>
     <message>
         <location filename="src/ui/MainWindow.ui" line="59"/>
-        <source>File</source>
+        <source>文件</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/ui/MainWindow.ui" line="69"/>
-        <source>Help</source>
+        <source>帮助</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/ui/MainWindow.ui" line="77"/>
-        <source>View</source>
+        <source>查看</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/ui/MainWindow.ui" line="88"/>
-        <source>Widgets</source>
+        <source>工具</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/ui/MainWindow.ui" line="99"/>
-        <source>Exit</source>
+        <source>退出</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -715,122 +725,121 @@
     </message>
     <message>
         <location filename="src/ui/MainWindow.ui" line="130"/>
-        <source>Plan</source>
+        <location filename="src/ui/MainWindow.ui" line="133"/>
+        <source>飞行计划</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.ui" line="138"/>
-        <source>Fly</source>
+        <location filename="src/ui/MainWindow.ui" line="141"/>
+        <location filename="src/ui/MainWindow.ui" line="144"/>
+        <source>飞行</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.ui" line="146"/>
+        <location filename="src/ui/MainWindow.ui" line="157"/>
+        <location filename="src/ui/MainWindow.ui" line="160"/>
+        <source>配置</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/MainWindow.ui" line="171"/>
+        <source>设置</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/MainWindow.ui" line="174"/>
+        <source>设置飞机参数</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/MainWindow.ui" line="193"/>
+        <location filename="src/ui/MainWindow.ui" line="196"/>
+        <source>显示状态栏</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/MainWindow.ui" line="152"/>
         <source>Mute Audio Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.ui" line="151"/>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/MainWindow.ui" line="154"/>
-        <source>Application settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/MainWindow.ui" line="165"/>
-        <source>Setup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/MainWindow.ui" line="168"/>
-        <source>Setup of the vehicle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/MainWindow.ui" line="179"/>
+        <location filename="src/ui/MainWindow.ui" line="185"/>
         <source>Advanced Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.ui" line="187"/>
-        <source>Show Status Bar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/MainWindow.ui" line="195"/>
+        <location filename="src/ui/MainWindow.ui" line="204"/>
         <source>New Mission Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.ui" line="198"/>
+        <location filename="src/ui/MainWindow.ui" line="207"/>
         <source>Mission Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="148"/>
+        <location filename="src/ui/MainWindow.cc" line="149"/>
         <source>Setting up user interface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="193"/>
+        <location filename="src/ui/MainWindow.cc" line="194"/>
         <source>Building common widgets.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="195"/>
+        <location filename="src/ui/MainWindow.cc" line="196"/>
         <source>Building common actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="202"/>
-        <location filename="src/ui/MainWindow.cc" line="208"/>
+        <location filename="src/ui/MainWindow.cc" line="203"/>
+        <location filename="src/ui/MainWindow.cc" line="209"/>
         <source>Initializing 3D mouse interface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="216"/>
+        <location filename="src/ui/MainWindow.cc" line="217"/>
         <source>Restoring last view state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="221"/>
+        <location filename="src/ui/MainWindow.cc" line="222"/>
         <source>Restoring last window size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="249"/>
+        <location filename="src/ui/MainWindow.cc" line="250"/>
         <source>Meta+1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="250"/>
+        <location filename="src/ui/MainWindow.cc" line="251"/>
         <source>Meta+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="251"/>
+        <location filename="src/ui/MainWindow.cc" line="252"/>
         <source>Meta+3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="253"/>
+        <location filename="src/ui/MainWindow.cc" line="254"/>
         <source>Ctrl+1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="254"/>
+        <location filename="src/ui/MainWindow.cc" line="255"/>
         <source>Ctrl+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="255"/>
+        <location filename="src/ui/MainWindow.cc" line="256"/>
         <source>Ctrl+3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="262"/>
+        <location filename="src/ui/MainWindow.cc" line="263"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
@@ -893,18 +902,41 @@
 <context>
     <name>QGCApplication</name>
     <message>
-        <location filename="src/QGCApplication.cc" line="298"/>
+        <location filename="src/QGCApplication.cc" line="339"/>
+        <source>易瓦特</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/QGCApplication.cc" line="351"/>
         <source>EWT 2.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/QGCApplication.cc" line="550"/>
-        <source>Save Flight Data Log</source>
+        <location filename="src/QGCApplication.cc" line="605"/>
+        <source>保存飞行日志</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/QGCApplication.cc" line="552"/>
-        <source>Flight Data Log Files (*.mavlink)</source>
+        <location filename="src/QGCApplication.cc" line="608"/>
+        <source>飞行日志文件 (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/QGCApplication.cc" line="618"/>
+        <location filename="src/QGCApplication.cc" line="623"/>
+        <source>文件错误</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/QGCApplication.cc" line="618"/>
+        <source>不能覆盖存在的文件.
+请提供一个不同文件名来保存</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/QGCApplication.cc" line="623"/>
+        <source>不能创建文件.
+请提供一个不同的文件名来保存</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1086,70 +1118,70 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="142"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="147"/>
         <source>Unsuitable file extension for Plot document type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="143"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="148"/>
         <source>Please choose .pdf or .svg as file extension. Click OK to change the file extension, cancel to not save the file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="174"/>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="219"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="179"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="224"/>
         <source> -- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="282"/>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="286"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="287"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="291"/>
         <source>Load Log File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="302"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="307"/>
         <source>Could not open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="303"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="308"/>
         <source>The file is owned by user %1. Is the file currently used by another program?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="304"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="309"/>
         <source>Could not open %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="308"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="313"/>
         <source>Opened %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="624"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="629"/>
         <source>%1 = %2 * %3 + %4 | R-coefficient: %5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="629"/>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="632"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="634"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="637"/>
         <source>regression %1-%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="636"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="641"/>
         <source>Linear regression failed. (Limit: %1 data points. Try with less)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="639"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="644"/>
         <source>Regression method %1 not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCDataPlot2D.cc" line="646"/>
+        <location filename="src/ui/QGCDataPlot2D.cc" line="651"/>
         <source>Please select different X and Y dimensions, not %1 = %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1181,182 +1213,182 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="165"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="919"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="163"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="905"/>
         <source>FlightGear Failed to Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="168"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="166"/>
         <source>FlightGear Crashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="168"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="166"/>
         <source>This is a FlightGear-related problem. Please upgrade FlightGear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="171"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="169"/>
         <source>FlightGear Start Timed Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="171"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="174"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="177"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="169"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="172"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="175"/>
         <source>Please check if the path and command is correct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="174"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="177"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="172"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="175"/>
         <source>Could not Communicate with FlightGear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="181"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="179"/>
         <source>FlightGear Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="181"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="179"/>
         <source>Please check if the path and command is correct.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="319"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="562"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="652"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="813"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="841"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="304"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="548"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="638"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="799"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="827"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="837"/>
         <location filename="src/comm/QGCFlightGearLink.cc" line="851"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="865"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="872"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="880"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="858"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="866"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="883"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="895"/>
         <location filename="src/comm/QGCFlightGearLink.cc" line="897"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="909"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="911"/>
         <source>FlightGear HIL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="320"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="305"/>
         <source>Flight Gear protocol file &apos;%1&apos; is out of date. Quit QGroundControl. Delete the file and restart QGroundControl to fix.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="562"/>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="652"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="548"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="638"/>
         <source>FlightGear failed to start. There are mismatched quotes in specified command line options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="763"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="749"/>
         <source>FlightGear application not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="764"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="750"/>
         <source>FlightGear application not found at: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="768"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="754"/>
         <source>I&apos;ll specify directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="774"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="760"/>
         <source>Please select directory of FlightGear application : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="809"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="795"/>
         <source>--fg-root directory specified from ui option not found: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="811"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="797"/>
         <source>Unable to automatically determine --fg-root directory location. You will need to specify --fg-root=&lt;directory&gt; as an additional command line parameter from ui.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="837"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="823"/>
         <source>--fg-scenery directory specified from ui option not found: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="839"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="825"/>
         <source>Unable to automatically determine --fg-scenery directory location. You will need to specify --fg-scenery=directory as an additional command line parameter from ui.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="851"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="837"/>
         <source>Incorrect QGroundControl installation. Aircraft directory is missing: &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="865"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="851"/>
         <source>Incorrect FlightGear setup. Protocol directory is missing: &apos;%1&apos;. Command line parameter for --fg-root may be set incorrectly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="872"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="858"/>
         <source>Incorrect QGroundControl installation. Protocol directory is missing (%1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="880"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="866"/>
         <source>Incorrect QGroundControl installation. FlightGear protocol file missing: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="897"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="883"/>
         <source>Unable to verify that protocol file %1 is current. If file is out of date, you may experience problems. Safest approach is to delete the file manually and allow QGroundControl install the latest file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="909"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="895"/>
         <source>FlightGear protocol file %1 is out of date. It will be deleted, which will cause QGroundControl to install the latest version of the file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="911"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="897"/>
         <source>Delete of protocol file failed. You will have to manually delete the file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="920"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="906"/>
         <source>FlightGear Failed to Start. QGroundControl protocol (%1) not installed to FlightGear Protocol directory (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="924"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="910"/>
         <source>Fix it for me</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="940"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="926"/>
         <source>Copy failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="942"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="928"/>
         <source>Copy from (%1) to (%2) failed, possibly due to permissions issue. You will need to perform manually. Try pasting the following command into a Command Prompt which was started with Run as Administrator:
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="944"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="930"/>
         <source>Copy from (%1) to (%2) failed, possibly due to permissions issue. You will need to perform manually. Try pasting the following command into a shell:
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCFlightGearLink.cc" line="949"/>
+        <location filename="src/comm/QGCFlightGearLink.cc" line="935"/>
         <source>Copy to Clipboard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1397,37 +1429,37 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="47"/>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="115"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="54"/>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="108"/>
         <source>Barometer Offset [kPa]:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="61"/>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="91"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="74"/>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="84"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="81"/>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="51"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Additional Options:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="101"/>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="58"/>
         <source>Airframe:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="121"/>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="98"/>
         <source>Sensor HIL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1498,13 +1530,13 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilXPlaneConfiguration.cc" line="20"/>
-        <location filename="src/ui/QGCHilXPlaneConfiguration.cc" line="67"/>
+        <location filename="src/ui/QGCHilXPlaneConfiguration.cc" line="24"/>
+        <location filename="src/ui/QGCHilXPlaneConfiguration.cc" line="72"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilXPlaneConfiguration.cc" line="62"/>
+        <location filename="src/ui/QGCHilXPlaneConfiguration.cc" line="67"/>
         <source>Disconnect</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1517,37 +1549,37 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCJSBSimLink.cc" line="123"/>
+        <location filename="src/comm/QGCJSBSimLink.cc" line="122"/>
         <source>JSBSim failed to start. JSBSim was not found at %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCJSBSimLink.cc" line="130"/>
+        <location filename="src/comm/QGCJSBSimLink.cc" line="129"/>
         <source>JSBSim failed to start. JSBSim data directory was not found at %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCJSBSimLink.cc" line="172"/>
+        <location filename="src/comm/QGCJSBSimLink.cc" line="171"/>
         <source>JSBSim Failed to start. Please check if the path and command is correct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCJSBSimLink.cc" line="176"/>
+        <location filename="src/comm/QGCJSBSimLink.cc" line="175"/>
         <source>JSBSim crashed. This is a JSBSim-related problem, check for JSBSim upgrade.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCJSBSimLink.cc" line="180"/>
+        <location filename="src/comm/QGCJSBSimLink.cc" line="179"/>
         <source>JSBSim start timed out. Please check if the path and command is correct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCJSBSimLink.cc" line="185"/>
+        <location filename="src/comm/QGCJSBSimLink.cc" line="184"/>
         <source>Could not communicate with JSBSim. Please check if the path and command are correct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCJSBSimLink.cc" line="190"/>
+        <location filename="src/comm/QGCJSBSimLink.cc" line="189"/>
         <source>JSBSim error occurred. Please check if the path and command is correct.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1577,7 +1609,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/QGCMAVLinkInspector.cc" line="26"/>
         <location filename="src/ui/QGCMAVLinkInspector.cc" line="27"/>
-        <location filename="src/ui/QGCMAVLinkInspector.cc" line="102"/>
+        <location filename="src/ui/QGCMAVLinkInspector.cc" line="105"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1836,42 +1868,42 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCXPlaneLink.cc" line="275"/>
+        <location filename="src/comm/QGCXPlaneLink.cc" line="272"/>
         <source>X-Plane Failed to start. Please check if the path and command is correct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCXPlaneLink.cc" line="279"/>
+        <location filename="src/comm/QGCXPlaneLink.cc" line="276"/>
         <source>X-Plane crashed. This is an X-Plane-related problem, check for X-Plane upgrade.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCXPlaneLink.cc" line="283"/>
+        <location filename="src/comm/QGCXPlaneLink.cc" line="280"/>
         <source>X-Plane start timed out. Please check if the path and command is correct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCXPlaneLink.cc" line="288"/>
+        <location filename="src/comm/QGCXPlaneLink.cc" line="285"/>
         <source>Could not communicate with X-Plane. Please check if the path and command are correct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCXPlaneLink.cc" line="293"/>
+        <location filename="src/comm/QGCXPlaneLink.cc" line="290"/>
         <source>X-Plane error occurred. Please check if the path and command is correct.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCXPlaneLink.cc" line="298"/>
+        <location filename="src/comm/QGCXPlaneLink.cc" line="295"/>
         <source>X-Plane HIL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCXPlaneLink.cc" line="795"/>
+        <location filename="src/comm/QGCXPlaneLink.cc" line="730"/>
         <source>Receiving from XPlane at %1 Hz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/QGCXPlaneLink.cc" line="864"/>
+        <location filename="src/comm/QGCXPlaneLink.cc" line="799"/>
         <source>Receiving from XPlane.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1946,6 +1978,14 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/QtLocationPlugin/qgeotiledmappingmanagerengineqgc.cpp" line="91"/>
         <source>Open Street map</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="src/main.cc" line="220"/>
+        <source>初始化窗口...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2079,14 +2119,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>SerialConfigurationWindow</name>
-    <message>
-        <location filename="src/ui/SerialConfigurationWindow.cc" line="118"/>
-        <source>Serial Communication Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SerialLink</name>
     <message>
         <location filename="src/comm/SerialLink.cc" line="92"/>
@@ -2094,7 +2126,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/SerialLink.cc" line="372"/>
+        <location filename="src/comm/SerialLink.cc" line="373"/>
         <source>Link Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2109,14 +2141,13 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/SettingsDialog.cc" line="60"/>
         <source>QGroundControl Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">地面站设置</translation>
     </message>
 </context>
 <context>
     <name>TCPLink</name>
     <message>
-        <location filename="src/comm/TCPLink.cc" line="169"/>
-        <location filename="src/comm/TCPLink.cc" line="183"/>
+        <location filename="src/comm/TCPLink.cc" line="187"/>
         <source>Link Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2124,117 +2155,117 @@ Do you want to replace it?</source>
 <context>
     <name>UAS</name>
     <message>
-        <location filename="src/uas/UAS.cc" line="802"/>
+        <location filename="src/uas/UAS.cc" line="743"/>
         <source>FAILURE: Temporarily rejected CMD: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="807"/>
+        <location filename="src/uas/UAS.cc" line="748"/>
         <source>FAILURE: Denied CMD: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="812"/>
+        <location filename="src/uas/UAS.cc" line="753"/>
         <source>FAILURE: Unsupported CMD: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="817"/>
+        <location filename="src/uas/UAS.cc" line="758"/>
         <source>FAILURE: Failed CMD: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1265"/>
+        <location filename="src/uas/UAS.cc" line="1206"/>
         <source>UNINIT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1266"/>
+        <location filename="src/uas/UAS.cc" line="1207"/>
         <source>Unitialized, booting up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1269"/>
+        <location filename="src/uas/UAS.cc" line="1210"/>
         <source>BOOT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1270"/>
+        <location filename="src/uas/UAS.cc" line="1211"/>
         <source>Booting system, please wait.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1273"/>
+        <location filename="src/uas/UAS.cc" line="1214"/>
         <source>CALIBRATING</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1274"/>
+        <location filename="src/uas/UAS.cc" line="1215"/>
         <source>Calibrating sensors, please wait.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1277"/>
+        <location filename="src/uas/UAS.cc" line="1218"/>
         <source>ACTIVE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1278"/>
+        <location filename="src/uas/UAS.cc" line="1219"/>
         <source>Active, normal operation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1281"/>
+        <location filename="src/uas/UAS.cc" line="1222"/>
         <source>STANDBY</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1282"/>
+        <location filename="src/uas/UAS.cc" line="1223"/>
         <source>Standby mode, ready for launch.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1285"/>
+        <location filename="src/uas/UAS.cc" line="1226"/>
         <source>CRITICAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1286"/>
+        <location filename="src/uas/UAS.cc" line="1227"/>
         <source>FAILURE: Continuing operation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1289"/>
+        <location filename="src/uas/UAS.cc" line="1230"/>
         <source>EMERGENCY</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1290"/>
+        <location filename="src/uas/UAS.cc" line="1231"/>
         <source>EMERGENCY: Land Immediately!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1298"/>
+        <location filename="src/uas/UAS.cc" line="1239"/>
         <source>SHUTDOWN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1299"/>
+        <location filename="src/uas/UAS.cc" line="1240"/>
         <source>Powering off system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1303"/>
+        <location filename="src/uas/UAS.cc" line="1244"/>
         <source>UNKNOWN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="1304"/>
+        <location filename="src/uas/UAS.cc" line="1245"/>
         <source>Unknown system state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/uas/UAS.cc" line="2141"/>
+        <location filename="src/uas/UAS.cc" line="2094"/>
         <source>System %1 has low battery</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2293,7 +2324,7 @@ Do you want to replace it?</source>
 <context>
     <name>UASMessageViewWidget</name>
     <message>
-        <location filename="src/ui/uas/UASMessageView.cc" line="65"/>
+        <location filename="src/ui/uas/UASMessageView.cc" line="62"/>
         <source>Clear Messages</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2367,7 +2398,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/Linechart.ui" line="150"/>
         <source>Short names</source>
-        <translation type="unfinished"></translation>
+        <translation>简称</translation>
     </message>
     <message>
         <location filename="src/ui/Linechart.ui" line="157"/>
@@ -2378,7 +2409,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/Linechart.ui" line="163"/>
         <source>Show units</source>
-        <translation type="unfinished"></translation>
+        <translation>显示单位</translation>
     </message>
     <message>
         <location filename="src/ui/Linechart.ui" line="199"/>
@@ -2388,288 +2419,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/Linechart.ui" line="202"/>
         <source>Recolor</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>serialSettings</name>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="22"/>
-        <source>Serial Port:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="35"/>
-        <location filename="src/ui/SerialSettings.ui" line="38"/>
-        <location filename="src/ui/SerialSettings.ui" line="41"/>
-        <source>The serial port to which the system is connected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="66"/>
-        <source>Baud Rate:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="79"/>
-        <location filename="src/ui/SerialSettings.ui" line="82"/>
-        <location filename="src/ui/SerialSettings.ui" line="85"/>
-        <source>The data transmission rate. If unsure 57600 and 115200 are very common rates.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="95"/>
-        <source>50</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="100"/>
-        <source>75</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="105"/>
-        <source>110</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="110"/>
-        <source>134</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="115"/>
-        <source>150</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="120"/>
-        <source>200</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="125"/>
-        <source>300</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="130"/>
-        <source>600</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="135"/>
-        <source>1200</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="140"/>
-        <source>1800</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="145"/>
-        <source>2400</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="150"/>
-        <source>4800</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="155"/>
-        <source>9600</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="160"/>
-        <source>14400</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="165"/>
-        <source>19200</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="170"/>
-        <source>38400</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="175"/>
-        <source>56000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="180"/>
-        <source>57600</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="185"/>
-        <source>76800</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="190"/>
-        <source>115200</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="195"/>
-        <source>128000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="200"/>
-        <source>230400</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="205"/>
-        <source>256000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="210"/>
-        <source>460800</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="215"/>
-        <source>921600</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="225"/>
-        <source>Show Advanced Port Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="234"/>
-        <source>Advanced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="251"/>
-        <source>Flow Control:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="258"/>
-        <location filename="src/ui/SerialSettings.ui" line="261"/>
-        <location filename="src/ui/SerialSettings.ui" line="264"/>
-        <source>Activate / deactivate hardware flow control. Commonly deactivated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="267"/>
-        <source>Active</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="278"/>
-        <source>Parity:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="287"/>
-        <location filename="src/ui/SerialSettings.ui" line="290"/>
-        <location filename="src/ui/SerialSettings.ui" line="293"/>
-        <location filename="src/ui/SerialSettings.ui" line="306"/>
-        <location filename="src/ui/SerialSettings.ui" line="309"/>
-        <location filename="src/ui/SerialSettings.ui" line="312"/>
-        <location filename="src/ui/SerialSettings.ui" line="322"/>
-        <location filename="src/ui/SerialSettings.ui" line="325"/>
-        <location filename="src/ui/SerialSettings.ui" line="328"/>
-        <source>Set the parity. In most cases no parity (None) is used.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="296"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="315"/>
-        <source>Odd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="331"/>
-        <source>Even</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="344"/>
-        <source>Data Bits:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="369"/>
-        <location filename="src/ui/SerialSettings.ui" line="372"/>
-        <location filename="src/ui/SerialSettings.ui" line="375"/>
-        <source>Number of data bits per symbol. This is almost always 8.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="398"/>
-        <source>Stop Bits:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="417"/>
-        <location filename="src/ui/SerialSettings.ui" line="420"/>
-        <location filename="src/ui/SerialSettings.ui" line="423"/>
-        <source>Number of stop bits per symbol. This is almost always 2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="471"/>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="474"/>
-        <location filename="src/ui/SerialSettings.ui" line="477"/>
-        <source>Delete this link</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="480"/>
-        <source>Link delete button</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="485"/>
-        <source>Connect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="488"/>
-        <location filename="src/ui/SerialSettings.ui" line="491"/>
-        <location filename="src/ui/SerialSettings.ui" line="494"/>
-        <source>Connect this link</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="499"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/SerialSettings.ui" line="502"/>
-        <location filename="src/ui/SerialSettings.ui" line="505"/>
-        <location filename="src/ui/SerialSettings.ui" line="508"/>
-        <source>Close the configuration window</source>
-        <translation type="unfinished"></translation>
+        <translation>颜色</translation>
     </message>
 </context>
 <context>
@@ -2677,12 +2427,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/UASInfo.ui" line="14"/>
         <source>Status Details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">状态细节</translation>
     </message>
     <message>
         <location filename="src/ui/UASInfo.ui" line="29"/>
         <source>Battery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">电池</translation>
     </message>
     <message>
         <location filename="src/ui/UASInfo.ui" line="52"/>
@@ -2705,7 +2455,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/UASInfo.ui" line="121"/>
         <source>MAV RX Loss</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">数据链接收丢包率</translation>
     </message>
     <message>
         <location filename="src/ui/UASInfo.ui" line="144"/>
@@ -2726,12 +2476,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/UASInfo.ui" line="207"/>
         <source>MAV TX Loss</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">数据链发射丢包率</translation>
     </message>
     <message>
         <location filename="src/ui/UASInfo.ui" line="293"/>
         <source>MCU Load</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">MCU占用率</translation>
     </message>
     <message>
         <location filename="src/ui/UASInfo.ui" line="402"/>
@@ -2741,7 +2491,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/UASInfo.ui" line="409"/>
         <source>CPU Load</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CPU占用率</translation>
     </message>
 </context>
 </TS>

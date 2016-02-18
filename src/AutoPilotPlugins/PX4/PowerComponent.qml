@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -121,8 +121,9 @@ QGCView {
                 spacing:        ScreenTools.defaultFontPixelHeight * 0.5
 
                 QGCLabel {
-                    text: "Battery"
+                    text: qsTr("电池")//"Battery"
                     font.weight: Font.DemiBold
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Rectangle {
@@ -144,7 +145,7 @@ QGCView {
 
                             QGCLabel {
                                 id:                 cellsLabel
-                                text:               "Number of Cells (in Series)"
+                                text:               qsTr("电池芯数")//"Number of Cells (in Series)"
                                 anchors.baseline:   cellsField.baseline
                             }
 
@@ -162,7 +163,7 @@ QGCView {
 
                             QGCLabel {
                                 id:                 battHighLabel
-                                text:               "Full Voltage (per cell)"
+                                text:               qsTr("单个电芯满电压")//"Full Voltage (per cell)"
                                 anchors.baseline:   battHighField.baseline
                                 }
 
@@ -180,7 +181,7 @@ QGCView {
 
                             QGCLabel {
                                 id:                 battLowLabel
-                                text:               "Empty Voltage (per cell)"
+                                text:               qsTr("单个电芯空电压")//"Empty Voltage (per cell)"
                                 anchors.baseline:   battLowField.baseline
                             }
 
@@ -215,7 +216,7 @@ QGCView {
                         Row {
                             QGCLabel {
                                 width:  ScreenTools.defaultFontPixelWidth * 12
-                                text:   "Battery Max:"
+                                text:   qsTr("最大电池")//"Battery Max:"
                             }
                             QGCLabel {
                                 text:   (battNumCells.value * battHighVolt.value).toFixed(1) + ' V'
@@ -224,7 +225,7 @@ QGCView {
                         Row {
                             QGCLabel {
                                 width:  ScreenTools.defaultFontPixelWidth * 12
-                                text:   "Battery Min:"
+                                text:   qsTr("最小电池")//"Battery Min:"
                             }
                             QGCLabel {
                                 text:   (battNumCells.value * battLowVolt.value).toFixed(1) + ' V'
@@ -234,7 +235,7 @@ QGCView {
                 } // Rectangle - Battery settings
 
                 QGCLabel {
-                    text:           "ESC PWM Minimum and Maximum Calibration"
+                    text:           qsTr("电调PWM最小最大值校准")//"ESC PWM Minimum and Maximum Calibration"
                     font.weight:    Font.DemiBold
                 }
 
@@ -252,15 +253,15 @@ QGCView {
 
                         QGCLabel {
                             color:  palette.warningText
-                            text:   "WARNING: Propellers must be removed from vehicle prior to performing ESC calibration."
+                            text:   qsTr("警告:执行ESC校准之前,螺旋桨必须除去")//"WARNING: Propellers must be removed from vehicle prior to performing ESC calibration."
                         }
 
                         QGCLabel {
-                            text: "You must use USB connection for this operation."
+                            text:   qsTr("你必须在usb连接下进行此操作")//"You must use USB connection for this operation."
                         }
 
                         QGCButton {
-                            text:       "Calibrate"
+                            text:       qsTr("校准")//"Calibrate"
                             width:      ScreenTools.defaultFontPixelWidth * 20
                             onClicked:  controller.calibrateEsc()
                         }
@@ -269,11 +270,11 @@ QGCView {
 
                 QGCCheckBox {
                     id:     showUAVCAN
-                    text:   "Show UAVCAN Settings"
+                    text:   qsTr("显示UAVCAN设置")//"Show UAVCAN Settings"
                 }
 
                 QGCLabel {
-                    text:           "UAVCAN Bus Configuration"
+                    text:           qsTr("UAVCAN总线设置")//"UAVCAN Bus Configuration"
                     font.weight:    Font.DemiBold
                     visible:        showUAVCAN.checked
                 }
@@ -297,13 +298,13 @@ QGCView {
                             fact:               controller.getParameterFact(-1, "UAVCAN_ENABLE")
                             checkedValue:       3
                             uncheckedValue:     0
-                            text:               "Enable UAVCAN as the default MAIN output bus (requires autopilot restart)"
+                            text:               qsTr("使UAVCAN总线为默认输出(需要重启)")//"Enable UAVCAN as the default MAIN output bus (requires autopilot restart)"
                         }
                     }
                 }
 
                 QGCLabel {
-                    text:           "UAVCAN Motor Index and Direction Assignment"
+                    text:           qsTr("UAVCAN电机序号和方向分配")//"UAVCAN Motor Index and Direction Assignment"
                     font.weight:    Font.DemiBold
                     visible:        showUAVCAN.checked
                 }
@@ -351,11 +352,11 @@ QGCView {
 
                 QGCCheckBox {
                     id:     showAdvanced
-                    text:   "Show Advanced Settings"
+                    text:   qsTr("显示高级设置")//"Show Advanced Settings"
                 }
 
                 QGCLabel {
-                    text:           "Advanced Power Settings"
+                    text:           qsTr("高级电源设置")//"Advanced Power Settings"
                     font.weight:    Font.DemiBold
                     visible:        showAdvanced.checked
                 }

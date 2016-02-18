@@ -52,10 +52,10 @@ MapQuickItem {
         fillMode:   Image.PreserveAspectFit
 
         transform: Rotation {
-//            origin.x:   vehicleIcon.width  / 2
-//            origin.y:   vehicleIcon.height / 2
-            origin.x:   vehicleIcon.width  / 4
-            origin.y:   vehicleIcon.height / 4
+//          origin.x:   vehicleIcon.width  / 2
+//          origin.y:   vehicleIcon.height / 2
+            origin.x:   vehicleIcon.width  / 2
+            origin.y:   vehicleIcon.height / 2
             angle:      vehicle ? vehicle.heading.value : 0
         }
     }

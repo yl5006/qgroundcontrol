@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
  
  QGroundControl Open Source Ground Control Station
  
@@ -95,10 +95,12 @@ const QVariantList& PX4AutoPilotPlugin::vehicleComponents(void)
         Q_ASSERT(_vehicle);
         
         if (parametersReady()) {
+
             _airframeComponent = new AirframeComponent(_vehicle, this);
             _airframeComponent->setupTriggerSignals();
+#ifdef QT_DEBUG
             _components.append(QVariant::fromValue((VehicleComponent*)_airframeComponent));
-            
+#endif
             _radioComponent = new PX4RadioComponent(_vehicle, this);
             _radioComponent->setupTriggerSignals();
             _components.append(QVariant::fromValue((VehicleComponent*)_radioComponent));

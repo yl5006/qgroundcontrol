@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
  
  QGroundControl Open Source Ground Control Station
  
@@ -26,7 +26,8 @@
 
 PX4RadioComponent::PX4RadioComponent(Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent) :
     VehicleComponent(vehicle, autopilot, parent),
-    _name(tr("Radio"))
+//    _name(tr("Radio"))
+      _name(tr("遥控"))
 {
 }
 

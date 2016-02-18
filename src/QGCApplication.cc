@@ -601,21 +601,27 @@ void QGCApplication::saveTempFlightDataLogOnMainThread(QString tempLogfile)
         saveError = false;
         QString saveFilename = QGCFileDialog::getSaveFileName(
             MainWindow::instance(),
-            tr("Save Flight Data Log"),
+//          tr("Save Flight Data Log"),
+            tr("保存飞行日志"),
             QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
-            tr("Flight Data Log Files (*.mavlink)"),
-            "mavlink");
+//          tr("Flight Data Log Files (*.mavlink)"),
+            tr("飞行日志文件 (*.log)"),
+//          "mavlink");
+            "log");
 
         if (!saveFilename.isEmpty()) {
             // if file exsits already, try to remove it first to overwrite it
             if(QFile::exists(saveFilename) && !QFile::remove(saveFilename)){
                 // if the file cannot be removed, prompt user and ask new path
                 saveError = true;
-                QGCMessageBox::warning("File Error","Could not overwrite existing file.\nPlease provide a different file name to save to.");
+//              QGCMessageBox::warning("File Error","Could not overwrite existing file.\nPlease provide a different file name to save to.");
+                QGCMessageBox::warning(tr("文件错误"),tr("不能覆盖存在的文件.\n请提供一个不同文件名来保存"));
             } else if(!QFile::copy(tempLogfile, saveFilename)) {
                 // if file could not be copied, prompt user and ask new path
                 saveError = true;
-                QGCMessageBox::warning("File Error","Could not create file.\nPlease provide a different file name to save to.");
+//              QGCMessageBox::warning("File Error","Could not create file.\nPlease provide a different file name to save to.");
+                QGCMessageBox::warning(tr("文件错误"),tr("不能创建文件.\n请提供一个不同的文件名来保存"));
+
             }
         }
     } while(saveError); // if the file could not be overwritten, ask for new file

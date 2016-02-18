@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 
@@ -28,18 +28,18 @@ FactPanel {
         anchors.margins:    8
 
         VehicleSummaryRow {
-            labelText: "Compass:"
-            valueText: mag0IdFact ? (mag0IdFact.value === 0 ? "Setup required" : "Ready") : ""
+            labelText: qsTr("磁罗盘")//"Compass:"
+            valueText: mag0IdFact ? (mag0IdFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : qsTr("已校准")/*"Ready"*/) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Gyro:"
-            valueText: gyro0IdFact ? (gyro0IdFact.value === 0 ? "Setup required" : "Ready") : ""
+            labelText: qsTr("角速度计")//"Gyro:"
+            valueText: gyro0IdFact ? (gyro0IdFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : qsTr("已校准")/*"Ready"*/) : ""
         }
 
         VehicleSummaryRow {
-            labelText: "Accelerometer:"
-            valueText: accel0IdFact ? (accel0IdFact.value === 0 ? "Setup required" : "Ready") : ""
+            labelText: qsTr("加速度计")//"Accelerometer:"
+            valueText: accel0IdFact ? (accel0IdFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : qsTr("已校准")/*"Ready"*/) : ""
         }
     }
 }

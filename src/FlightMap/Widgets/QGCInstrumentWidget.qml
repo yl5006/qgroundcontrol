@@ -29,17 +29,18 @@ This file is part of the QGROUNDCONTROL project
 
 import QtQuick 2.4
 
+import QGroundControl               1.0
 import QGroundControl.Controls      1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.FactSystem    1.0
 import QGroundControl.FlightMap     1.0
-
 Rectangle {
     id:     instrumentPanel
     height: compass.y + compass.height + _topBottomMargin
     width:  size
     radius: size / 2
-    color:  isSatellite ? Qt.rgba(1,1,1,0.75) : Qt.rgba(0,0,0,0.75)
+//  color:  isSatellite ? Qt.rgba(1,1,1,0.75) : Qt.rgba(0,0,0,0.75)
+    color:          Qt.rgba(0,0,0,0.0)
     property alias  heading:        compass.heading
     property alias  rollAngle:      attitude.rollAngle
     property alias  pitchAngle:     attitude.pitchAngle
@@ -62,18 +63,40 @@ Rectangle {
     property real   _labelFontSize: ScreenTools.defaultFontPixelSize * 0.75 * _sizeRatio
     property real   _spacing:       ScreenTools.defaultFontPixelSize * 0.33
     property real   _topBottomMargin: (size * 0.05) / 2
-    property real   _availableValueHeight: maxHeight - (attitude.height + _spacer1.height + _spacer2.height + compass.height + (_spacing * 4))
+//    property real   _availableValueHeight: maxHeight - (attitude.height + _spacer1.height + _spacer2.height + compass.height + (_spacing * 4))
+    property real   _availableValueHeight: maxHeight - (_spacer1.height + _spacer2.height + (_spacing * 4))
 
     MouseArea {
-        anchors.fill: parent
+        anchors.fill:       valuesspacer
         onClicked: _valuesWidget.showPicker()
     }
-
+    Rectangle {
+        id:                 valuesspacer
+        anchors.topMargin:  _spacing*0.3//
+        anchors.top:        parent.top
+        anchors.bottom:     attitude.top
+        anchors.bottomMargin:  _spacing
+        width:              parent.width * 0.9
+        radius:             _spacing*2
+        color:              Qt.rgba(0,0,0,0.65)
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+    ValuesWidget {
+        id:                 _valuesWidget
+        anchors.topMargin:  _spacing*0.3//
+        anchors.top:        parent.top//_spacer1.bottom
+        width:              parent.width
+        qgcView:            instrumentPanel.qgcView
+        textColor:          "white"//isSatellite ? "black" : "white"
+        maxHeight:          _availableValueHeight
+    }
     QGCAttitudeWidget {
         id:             attitude
+        anchors.top:    _valuesWidget.bottom
         y:              _topBottomMargin
         size:           parent.width * 0.95
         active:         active
+        visible:        !QGroundControl.virtualTabletJoystick
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
@@ -81,21 +104,11 @@ Rectangle {
         id:                 _spacer1
         anchors.topMargin:  _spacing
         anchors.top:        attitude.bottom
-        height:             1
+        height:             2
         width:              parent.width * 0.9
 //      color:              isSatellite ? Qt.rgba(0,0,0,0.25) : Qt.rgba(1,1,1,0.25)
-        color:          Qt.rgba(0,0,0,0.0)
+        color:              Qt.rgba(0,0,0,0.0)
         anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-    ValuesWidget {
-        id:                 _valuesWidget
-        anchors.topMargin:  _spacing
-        anchors.top:        _spacer1.bottom
-        width:              parent.width
-        qgcView:            instrumentPanel.qgcView
-        textColor:          isSatellite ? "black" : "white"
-        maxHeight:          _availableValueHeight
     }
 
     Rectangle {
@@ -105,16 +118,17 @@ Rectangle {
         height:             1
         width:              parent.width * 0.9
 //      color:              isSatellite ? Qt.rgba(0,0,0,0.25) : Qt.rgba(1,1,1,0.25)
-        color:          Qt.rgba(0,0,0,0.0)
+        color:              Qt.rgba(0,0,0,0.0)
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
     QGCCompassWidget {
         id:                 compass
         anchors.topMargin:  _spacing
-        anchors.top:        _spacer2.bottom
+        anchors.top:        _spacer1.bottom//_spacer2.bottom
         size:               parent.width * 0.95
         active:             active
+        visible:        !QGroundControl.virtualTabletJoystick
         anchors.horizontalCenter: parent.horizontalCenter
     }
 }

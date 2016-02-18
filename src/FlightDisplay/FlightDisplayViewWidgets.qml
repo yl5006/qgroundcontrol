@@ -92,197 +92,129 @@ Item {
             _dropButtonsExclusiveGroup.current = null
         }
     }
-//    Rectangle {
-//            anchors.top:        parent.top
-//            width:              getGadgetWidth()
-//            color:              Qt.rgba(0,0,0,0.75)
-//            radius:             _labelFontSize*2
-//            Column {
-//                id:                 info
-//                width:              parent.width
-//                spacing:            ScreenTools.defaultFontPixelSize * 0.33
-//     //         anchors.verticalCenter: parent.verticalCenter
-//                QGCLabel {
-//                    text:           qsTr("高度 (m)")   //altitude
-//                    font.pixelSize: _labelFontSize
-//                    width:          parent.width
-//                    height:         _labelFontSize
-//                    color:          isSatellite ? "black" : "white"
-//                    horizontalAlignment: TextEdit.AlignHCenter
-//                }
-//                QGCLabel {
-//                    //                text:           altitude < 10000 ? altitude.toFixed(1) : altitude.toFixed(0)
-//                    text:           altitude.toFixed(2)
-//                    font.pixelSize: _normalFontSize
-//                    font.weight:    Font.DemiBold
-//                    width:          parent.width
-//                    color:          isSatellite ? "black" : "white"
-//                    horizontalAlignment: TextEdit.AlignHCenter
-//                }
-//                QGCLabel {
-//                    //              text:           "Ground Speed (km/h)"
-//                    text:           qsTr("地速 m/s")//"Ground Speed (m/s)"
-//                    font.pixelSize: _labelFontSize
-//                    width:          parent.width
-//                    height:         _labelFontSize
-//                    color:          isSatellite ? "black" : "white"
-//                    horizontalAlignment: TextEdit.AlignHCenter
-//                    visible:        airSpeed <= 0 && !ScreenTools.isTinyScreen
-//                }
-//                QGCLabel {
-//                    //                text:           (groundSpeed * 3.6).toFixed(1)
-//                    text:           (groundSpeed).toFixed(2)
-//                    font.pixelSize: _normalFontSize
-//                    font.weight:    Font.DemiBold
-//                    width:          parent.width
-//                    color:          isSatellite ? "black" : "white"
-//                    horizontalAlignment: TextEdit.AlignHCenter
-//                    visible:        airSpeed <= 0 && !ScreenTools.isTinyScreen
-//                }
-//                //-- Air Speed
-//                QGCLabel {
-//                    text:           "Air Speed (km/h)"
-//                    font.pixelSize: _labelFontSize
-//                    width:          parent.width
-//                    height:         _labelFontSize
-//                    color:          isSatellite ? "black" : "white"
-//                    visible:        airSpeed > 0 && !ScreenTools.isTinyScreen
-//                    horizontalAlignment: TextEdit.AlignHCenter
-//                }
-//                QGCLabel {
-//                    text:           (airSpeed * 3.6).toFixed(1)
-//                    font.pixelSize: _normalFontSize
-//                    font.weight:    Font.DemiBold
-//                    width:          parent.width
-//                    color:          isSatellite ? "black" : "white"
-//                    visible:        airSpeed > 0 && !ScreenTools.isTinyScreen
-//                    horizontalAlignment: TextEdit.AlignHCenter
-//                }
-//            }
-//        }
     //-- Alternate Instrument Panel
-    Rectangle {
-        id:                 info
-        anchors.leftMargin: ScreenTools.defaultFontPixelHeight
-//      anchors.right:      parent.right
-        anchors.left:       parent.left
-        anchors.top:        parent.top
-        width:              getGadgetWidth()
-       // contentHeight:      layout.height
-        height:             getGadgetWidth()* (9/16)
-            //layout.height//getGadgetWidth() * (9/16)
-        color:              Qt.rgba(0,0,0,0.75)
-        radius:             getGadgetWidth()/16
-        Column {
-            id:                 instruments
-            anchors.margins:    ScreenTools.defaultFontPixelHeight
-            anchors.fill: parent
-            spacing:            ScreenTools.defaultFontPixelHeight*0.5
-            Row{
-                spacing:        ScreenTools.defaultFontPixelHeight//   ScreenTools.defaultFontPixelSize
-                Image {
-                    id:         attitude
-                    source:     "/qmlimages/Altitude.svg"
-                    width:      ScreenTools.defaultFontPixelSize*1.5
-                    height:     ScreenTools.defaultFontPixelSize*1.5
-                    mipmap:     true
-                    fillMode:   Image.PreserveAspectFit
-                }
-                QGCLabel {
-     //             text:           _altitudeWGS84 < 10000 ? _altitudeWGS84.toFixed(1) : _altitudeWGS84.toFixed(0)
-                    text:           _altitudeRelative.toFixed(2)+" m"
-                    font.pixelSize: ScreenTools.defaultFontPixelSize* 1.5
-                    font.weight:    Font.DemiBold
-                    color:          "white"
-                    horizontalAlignment: TextEdit.AlignHCenter
-                }
-            }
-            Row{
-                spacing:        ScreenTools.defaultFontPixelSize
-                Image {
-                    id:         groundSpeed
-                    source:     "/qmlimages/GroundSpeed.svg"
-                    width:      ScreenTools.defaultFontPixelSize* 1.5
-                    height:     ScreenTools.defaultFontPixelSize* 1.5
-                    mipmap:     true
-                    fillMode:   Image.PreserveAspectFit
-                }
-                QGCLabel {
-                    text:           (_groundSpeed).toFixed(2)+" m/s"
-                    font.pixelSize: ScreenTools.defaultFontPixelSize* 1.5
-                    font.weight:    Font.DemiBold
-                    color:          "white"
-                    horizontalAlignment: TextEdit.AlignHCenter
-                }
-            }
-            Row{
-                spacing:        ScreenTools.defaultFontPixelSize
-                Image {
-                    id:         throttle
-                    source:     "/qmlimages/Throttle.svg"
-                    width:      ScreenTools.defaultFontPixelSize* 1.5
-                    height:     ScreenTools.defaultFontPixelSize* 1.5
-                    mipmap:     true
-                    fillMode:   Image.PreserveAspectFit
-                }
-                QGCLabel {
-                    text:           (_groundSpeed).toFixed(1)+"  %"
-                    font.pixelSize: ScreenTools.defaultFontPixelSize* 1.5
-                    font.weight:    Font.DemiBold
-                    color:          "white"
-                    horizontalAlignment: TextEdit.AlignHCenter
-                }
-            }
+//    Rectangle {
+//        id:                 info
+//        anchors.leftMargin: ScreenTools.defaultFontPixelHeight
+////      anchors.right:      parent.right
+//        anchors.left:       parent.left
+//        anchors.top:        parent.top
+//        width:              getGadgetWidth()
+//       // contentHeight:      layout.height
+//        height:             getGadgetWidth()* (9/16)
+//            //layout.height//getGadgetWidth() * (9/16)
+//        color:              Qt.rgba(0,0,0,0.75)
+//        radius:             getGadgetWidth()/16
+//        Column {
+//            id:                 instruments
+//            anchors.margins:    ScreenTools.defaultFontPixelHeight
+//            anchors.fill: parent
+//            spacing:            ScreenTools.defaultFontPixelHeight*0.5
+//            Row{
+//                spacing:        ScreenTools.defaultFontPixelHeight//   ScreenTools.defaultFontPixelSize
+//                Image {
+//                    id:         attitude
+//                    source:     "/qmlimages/Altitude.svg"
+//                    width:      ScreenTools.defaultFontPixelSize*1.5
+//                    height:     ScreenTools.defaultFontPixelSize*1.5
+//                    mipmap:     true
+//                    fillMode:   Image.PreserveAspectFit
+//                }
+//                QGCLabel {
+//     //             text:           _altitudeWGS84 < 10000 ? _altitudeWGS84.toFixed(1) : _altitudeWGS84.toFixed(0)
+//                    text:           "123"//_altitudeRelative.toFixed(2)+" m"
+//                    font.pixelSize: ScreenTools.defaultFontPixelSize* 1.5
+//                    font.weight:    Font.DemiBold
+//                    color:          "white"
+//                    horizontalAlignment: TextEdit.AlignHCenter
+//                }
+//            }
+//            Row{
+//                spacing:        ScreenTools.defaultFontPixelSize
+//                Image {
+//                    id:         groundSpeed
+//                    source:     "/qmlimages/GroundSpeed.svg"
+//                    width:      ScreenTools.defaultFontPixelSize* 1.5
+//                    height:     ScreenTools.defaultFontPixelSize* 1.5
+//                    mipmap:     true
+//                    fillMode:   Image.PreserveAspectFit
+//                }
+//                QGCLabel {
+//                    text:           (_groundSpeed).toFixed(2)+" m/s"
+//                    font.pixelSize: ScreenTools.defaultFontPixelSize* 1.5
+//                    font.weight:    Font.DemiBold
+//                    color:          "white"
+//                    horizontalAlignment: TextEdit.AlignHCenter
+//                }
+//            }
+//            Row{
+//                spacing:        ScreenTools.defaultFontPixelSize
+//                Image {
+//                    id:         throttle
+//                    source:     "/qmlimages/Throttle.svg"
+//                    width:      ScreenTools.defaultFontPixelSize* 1.5
+//                    height:     ScreenTools.defaultFontPixelSize* 1.5
+//                    mipmap:     true
+//                    fillMode:   Image.PreserveAspectFit
+//                }
+//                QGCLabel {
+//                    text:           (_groundSpeed).toFixed(1)+"  %"
+//                    font.pixelSize: ScreenTools.defaultFontPixelSize* 1.5
+//                    font.weight:    Font.DemiBold
+//                    color:          "white"
+//                    horizontalAlignment: TextEdit.AlignHCenter
+//                }
+//            }
 
-//            QGCLabel {
-//                text:           qsTr("高度 (m)")   //altitude//"Altitude (m)"
-//                font.pixelSize: ScreenTools.defaultFontPixelSize * 0.75
-//                width:          parent.width
-//                height:         ScreenTools.defaultFontPixelSize * 0.75
-//                color:          "white"
-//                horizontalAlignment: TextEdit.AlignHCenter
-//            }
-//            QGCLabel {
-// //             text:           _altitudeWGS84 < 10000 ? _altitudeWGS84.toFixed(1) : _altitudeWGS84.toFixed(0)
-//                text:           _altitudeRelative.toFixed(2)
-//                font.pixelSize: ScreenTools.defaultFontPixelSize// * 1.5
-//                font.weight:    Font.DemiBold
-//                width:          parent.width
-//                color:          "white"
-//                horizontalAlignment: TextEdit.AlignHCenter
-//            }
-//            QGCLabel {
-////              text:           "Ground Speed (km/h)"
-//                text:           qsTr("地速 m/s")//"Ground Speed (m/s)"
-//                font.pixelSize: ScreenTools.defaultFontPixelSize * 0.75
-//                width:          parent.width
-//                height:         ScreenTools.defaultFontPixelSize * 0.75
-//                color:          "white"
-//                horizontalAlignment: TextEdit.AlignHCenter
-//            }
-//            QGCLabel {
-////              text:           (_groundSpeed * 3.6).toFixed(1)
-//                text:           (_groundSpeed).toFixed(2)
-//                font.pixelSize: ScreenTools.defaultFontPixelSize
-//                font.weight:    Font.DemiBold
-//                width:          parent.width
-//                color:          "white"
-//                horizontalAlignment: TextEdit.AlignHCenter
-//            }
-        }
-    }
+////            QGCLabel {
+////                text:           qsTr("高度 (m)")   //altitude//"Altitude (m)"
+////                font.pixelSize: ScreenTools.defaultFontPixelSize * 0.75
+////                width:          parent.width
+////                height:         ScreenTools.defaultFontPixelSize * 0.75
+////                color:          "white"
+////                horizontalAlignment: TextEdit.AlignHCenter
+////            }
+////            QGCLabel {
+//// //             text:           _altitudeWGS84 < 10000 ? _altitudeWGS84.toFixed(1) : _altitudeWGS84.toFixed(0)
+////                text:           _altitudeRelative.toFixed(2)
+////                font.pixelSize: ScreenTools.defaultFontPixelSize// * 1.5
+////                font.weight:    Font.DemiBold
+////                width:          parent.width
+////                color:          "white"
+////                horizontalAlignment: TextEdit.AlignHCenter
+////            }
+////            QGCLabel {
+//////              text:           "Ground Speed (km/h)"
+////                text:           qsTr("地速 m/s")//"Ground Speed (m/s)"
+////                font.pixelSize: ScreenTools.defaultFontPixelSize * 0.75
+////                width:          parent.width
+////                height:         ScreenTools.defaultFontPixelSize * 0.75
+////                color:          "white"
+////                horizontalAlignment: TextEdit.AlignHCenter
+////            }
+////            QGCLabel {
+//////              text:           (_groundSpeed * 3.6).toFixed(1)
+////                text:           (_groundSpeed).toFixed(2)
+////                font.pixelSize: ScreenTools.defaultFontPixelSize
+////                font.weight:    Font.DemiBold
+////                width:          parent.width
+////                color:          "white"
+////                horizontalAlignment: TextEdit.AlignHCenter
+////            }
+//        }
+//    }
     //-- Instrument Panel
     QGCInstrumentWidget {
         id:                     instrumentGadget
         anchors.margins:        ScreenTools.defaultFontPixelHeight
 //      anchors.right:          parent.right
         anchors.left:           parent.left
-//        anchors.top:            parent.top
-        anchors.top:            info.bottom
-//        anchors.verticalCenter: parent.verticalCenter
-        visible:                !QGroundControl.virtualTabletJoystick
+//      anchors.top:            parent.top
+        anchors.top:            parent.top
+//      anchors.verticalCenter: parent.verticalCenter
+//      visible:                !QGroundControl.virtualTabletJoystick
         size:                   getGadgetWidth()
-        active:                 _activeVehicle != null
+//      active:                 _activeVehicle!= null
         heading:                _heading
         rollAngle:              _roll
         pitchAngle:             _pitch
@@ -303,7 +235,7 @@ Item {
         anchors.right:          parent.right
         visible:                QGroundControl.virtualTabletJoystick
         width:                  getGadgetWidth()
-        active:                 _activeVehicle != null
+        active:                 _activeVehicle!= null
         heading:                _heading
         rollAngle:              _roll
         pitchAngle:             _pitch
@@ -313,7 +245,7 @@ Item {
         isSatellite:            _isSatellite
         z:                      QGroundControl.zOrderWidgets
     }
-
+/*     不显示
     ValuesWidget {
         anchors.topMargin:  ScreenTools.defaultFontPixelHeight
         anchors.top:        instrumentGadgetAlternate.bottom
@@ -327,7 +259,7 @@ Item {
         Component.onCompleted: console.log(y)
         onHeightChanged: console.log(y, height, multiTouchItem.y)
     }
-
+*/
     //-- Vertical Tool Buttons
     Column {
         id:                         toolColumn
@@ -354,7 +286,7 @@ Item {
 
                     QGCCheckBox {
                         id:                 followVehicleCheckBox
-                        text:               "Follow Vehicle"
+                        text:               qsTr("跟随地图")//"Follow Vehicle"
                         checked:            _flightMap ? _flightMap._followVehicle : false
                         anchors.baseline:   centerMapButton.baseline
 
@@ -366,8 +298,8 @@ Item {
 
                     QGCButton {
                         id:         centerMapButton
-                        text:       "Center map on Vehicle"
-                        enabled:    _activeVehicle && !followVehicleCheckBox.checked
+                        text:       qsTr("回到中心")//"Center map on Vehicle"
+                        enabled:    _activeVehicle&& !followVehicleCheckBox.checked
 
                         property var activeVehicle: multiVehicleManager.activeVehicle
 

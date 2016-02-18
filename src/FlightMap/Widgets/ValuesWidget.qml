@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -53,14 +53,13 @@ QGCFlickable {
     }
 
     function showPicker() {
-        qgcView.showDialog(propertyPicker, "Value Widget Setup", qgcView.showDialogDefaultWidth, StandardButton.Ok)
+        qgcView.showDialog(propertyPicker,qsTr("显示值设置")/*"Value Widget Setup"*/, qgcView.showDialogDefaultWidth, StandardButton.Ok)
     }
 
     MouseArea {
         anchors.fill:   parent
         onClicked:      showPicker()
     }
-
     Column {
         id:         _largeColumn
         width:      parent.width
@@ -100,7 +99,6 @@ QGCFlickable {
         anchors.top:        _largeColumn.bottom
         layoutDirection:    Qt.LeftToRight
         spacing:            _margins
-
         Repeater {
             model: _activeVehicle ? controller.smallValues : 0
 
@@ -143,7 +141,7 @@ QGCFlickable {
 
             QGCLabel {
                 id:     _label
-                text:   "Select the values you want to display:"
+                text:   qsTr("选择需要显示的信息")//"Select the values you want to display:"
             }
 
             Loader {
@@ -174,7 +172,7 @@ QGCFlickable {
             QGCLabel {
                 width:      parent.width
                 wrapMode:   Text.WordWrap
-                text:       factGroup ? factGroupName : "Vehicle must be connected to assign values."
+                text:       factGroup ? factGroupName : qsTr("机体需处于连接状态")//"Vehicle must be connected to assign values."
             }
 
             Repeater {
@@ -242,7 +240,7 @@ QGCFlickable {
 
                     QGCCheckBox {
                         id:         _largeCheckBox
-                        text:       "large"
+                        text:       qsTr("大")//"large"
                         checked:    parent.contains(controller.largeValues, propertyName)
                         enabled:    _addCheckBox.checked
                         onClicked:  updateValues()

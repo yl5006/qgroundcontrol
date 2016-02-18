@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -62,7 +62,7 @@ QGCView {
 
             QGCLabel {
                 id:             triggerLabel
-                text:           "Triggers For Return Home"
+                text:           qsTr("触发返航出发点")//"Triggers For Return Home"
                 font.weight:    Font.DemiBold
             }
 
@@ -77,7 +77,7 @@ QGCView {
                 color:                  palette.windowShade
 
                 QGCLabel {
-                    text:               "RC Transmitter Signal Loss: Return Home after"
+                    text:               qsTr("遥控丢失后返航")//"RC Transmitter Signal Loss: Return Home after"
                     anchors.margins:    _margins
                     anchors.left:       parent.left
                     anchors.baseline:   rcLossField.baseline
@@ -100,7 +100,7 @@ QGCView {
                     fact:               controller.getParameterFact(-1, "COM_DL_LOSS_EN")
                     checkedValue:       1
                     uncheckedValue:     0
-                    text:               "Telemetry Signal Timeout: Return Home after"
+                    text:               qsTr("数据链超时返航")//"Telemetry Signal Timeout: Return Home after"
                 }
 
                 FactTextField {
@@ -120,7 +120,7 @@ QGCView {
                 anchors.leftMargin: _margins
                 anchors.left:       triggerSettings.right
                 anchors.top:        parent.top
-                text:               "GeoFence"
+                text:               qsTr("围栏")//"GeoFence"
                 font.weight:        Font.DemiBold
             }
 
@@ -138,7 +138,7 @@ QGCView {
                     anchors.margins:    _margins
                     anchors.left:       parent.left
                     anchors.baseline:   fenceActionCombo.baseline
-                    text:               "Action on breach:"
+                    text:               qsTr("违反设置")//"Action on breach:"
                 }
 
                 FactComboBox {
@@ -147,7 +147,8 @@ QGCView {
                     anchors.left:       fenceActionLabel.right
                     anchors.top:        parent.top
                     width:              fenceAltMaxField.width
-                    model:              [ "None", "Warning", "Loiter", "Return Home", "Flight termination" ]
+//                    model:              [ "None", "Warning", "Loiter", "Return Home", "Flight termination" ]
+                    model:              [ qsTr("None"), qsTr("警告"), qsTr("悬停"), qsTr("回家"), qsTr("飞行终止") ]
                     fact:               _fenceAction
                 }
 
@@ -155,7 +156,7 @@ QGCView {
                     id:                 fenceRadiusCheckBox
                     anchors.left:       fenceActionLabel.left
                     anchors.baseline:   fenceRadiusField.baseline
-                    text:               "Max radius:"
+                    text:               qsTr("最大半径")//"Max radius:"
                     checked:            _fenceRadius.value >= 0
 
                     onClicked: _fenceRadius.value = checked ? 100 : -1
@@ -175,7 +176,7 @@ QGCView {
                     id:                 fenceAltMaxCheckBox
                     anchors.left:       fenceActionLabel.left
                     anchors.baseline:   fenceAltMaxField.baseline
-                    text:               "Max altitude:"
+                    text:               qsTr("最大高度")//"Max altitude:"
                     checked:            _fenceAlt.value >= 0
 
                     onClicked: _fenceAlt.value = checked ? 100 : -1
@@ -196,7 +197,7 @@ QGCView {
                 id:                 rtlLabel
                 anchors.topMargin:  _margins
                 anchors.top:        triggerSettings.bottom
-                text:               "Return Home Settings"
+                text:               qsTr("返航设置")//"Return Home Settings"
                 font.weight:        Font.DemiBold
             }
 
@@ -233,7 +234,7 @@ QGCView {
                     anchors.margins:    _margins
                     anchors.left:       icon.right
                     anchors.baseline:   climbField.baseline
-                    text:               "Climb to altitude of"
+                    text:               qsTr("爬升高度")//"Climb to altitude of"
                 }
 
                 FactTextField {
@@ -250,7 +251,7 @@ QGCView {
                     anchors.baseline:   landDelayField.baseline
                     anchors.left:       climbLabel.left
                     checked:            fact.value > 0
-                    text:               "Loiter at Home altitude for"
+                    text:               qsTr("在Home点悬停等待时间")//"Loiter at Home altitude for"
 
                     property Fact fact: controller.getParameterFact(-1, "RTL_LAND_DELAY")
 
@@ -268,7 +269,7 @@ QGCView {
                 }
 
                 QGCLabel {
-                    text:               "Home loiter altitude"
+                    text:               qsTr("Home点悬停高度")//"Home loiter altitude"
                     anchors.baseline:   descendField.baseline
                     anchors.left:       climbLabel.left
                     color:              palette.text
@@ -293,7 +294,7 @@ QGCView {
                 anchors.left:       parent.left
                 anchors.right:      parent.right
                 font.pixelSize:     ScreenTools.mediumFontPixelSize
-                text:               "Warning: You have an advanced safety configuration set using the NAV_RCL_OBC parameter. The above settings may not apply.";
+                text:               qsTr("警告:你使用高级安全设置参数NAV_RCL_OBC，上面的设置不会生效")//"Warning: You have an advanced safety configuration set using the NAV_RCL_OBC parameter. The above settings may not apply.";
                 visible:            fact.value !== 0
                 wrapMode:           Text.Wrap
 
@@ -307,7 +308,7 @@ QGCView {
                 anchors.left:       parent.left
                 anchors.right:      parent.right
                 font.pixelSize:     ScreenTools.mediumFontPixelSize
-                text:               "Warning: You have an advanced safety configuration set using the NAV_DLL_OBC parameter. The above settings may not apply.";
+                text:               qsTr("警告:你使用高级安全设置参数NAV_DLL_OBC，上面的设置不会生效")//"Warning: You have an advanced safety configuration set using the NAV_DLL_OBC parameter. The above settings may not apply.";
                 visible:            fact.value !== 0
                 wrapMode:           Text.Wrap
 

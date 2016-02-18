@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -39,7 +39,7 @@ QGCView {
 
     QGCPalette { id: qgcPal; colorGroupEnabled: panel.enabled }
 
-    readonly property string    dialogTitle:            "Radio"
+    readonly property string    dialogTitle:            qsTr("遥控")//"Radio"
     readonly property real      labelToMonitorMargin:   defaultTextWidth * 3
 
     property bool controllerCompleted:      false
@@ -95,7 +95,8 @@ QGCView {
             id: copyTrimsDialogComponent
 
             QGCViewMessage {
-                message: "Center your sticks and move throttle all the way down, then press Ok to copy trims. After pressing Ok, reset the trims on your radio back to zero."
+//              message: "Center your sticks and move throttle all the way down, then press Ok to copy trims. After pressing Ok, reset the trims on your radio back to zero."
+                message: qsTr("使摇杆回到中位，油门到最低，然后按OK。复位你的遥控回零。")
 
                 function accept() {
                     hideDialog()
@@ -122,7 +123,7 @@ QGCView {
             id: channelCountDialogComponent
 
             QGCViewMessage {
-                message: controller.channelCount == 0 ? "Please turn on transmitter." : controller.minChannelCount + " channels or more are needed to fly."
+                message: controller.channelCount == 0 ? qsTr("请打开传输，至少")/*"Please turn on transmitter."*/ : controller.minChannelCount + qsTr("通道飞行")//" channels or more are needed to fly."
             }
         }
 
@@ -147,21 +148,22 @@ QGCView {
                     QGCLabel {
                         width:      parent.width
                         wrapMode:   Text.WordWrap
-                        text:       "Click Ok to place your Spektrum receiver in the bind mode. Select the specific receiver type below:"
+//                        text:       "Click Ok to place your Spektrum receiver in the bind mode. Select the specific receiver type below:"
+                        text:       qsTr("点击OK使接收机在绑定模式，选择具体接收器类型")
                     }
 
                     ExclusiveGroup { id: radioGroup }
 
                     QGCRadioButton {
                         exclusiveGroup: radioGroup
-                        text:           "DSM2 Mode"
+                        text:           qsTr("DSM2 模式")//"DSM2 Mode"
 
                         property int bindMode: RadioComponentController.DSM2
                     }
 
                     QGCRadioButton {
                         exclusiveGroup: radioGroup
-                        text:           "DSMX (7 channels or less)"
+                        text:           qsTr("DSMX 至少7通道")//"DSMX (7 channels or less)"
 
                         property int bindMode: RadioComponentController.DSMX7
                     }
@@ -169,7 +171,7 @@ QGCView {
                     QGCRadioButton {
                         exclusiveGroup: radioGroup
                         checked:        true
-                        text:           "DSMX (8 channels or more)"
+                        text:           qsTr("DSMX 至少8通道")//"DSMX (8 channels or more)"
 
                         property int bindMode: RadioComponentController.DSMX8
                     }
@@ -221,7 +223,7 @@ QGCView {
                     anchors.fill:           parent
                     horizontalAlignment:    Text.AlignHCenter
                     verticalAlignment:      Text.AlignVCenter
-                    text:                   "Not Mapped"
+                    text:                   qsTr("未配置")//"Not Mapped"
                     visible:                !mapped
                 }
 
@@ -267,8 +269,9 @@ QGCView {
                 width:      parent.width
                 spacing:    5
 
-                QGCLabel { text: "Attitude Controls" }
-
+//                QGCLabel { text: "Attitude Controls" }
+                QGCLabel { text: qsTr("姿态控制")
+                           anchors.horizontalCenter: parent.horizontalCenter}
                 Item {
                     width:  parent.width
                     height: defaultTextHeight * 2
@@ -276,7 +279,7 @@ QGCView {
                     QGCLabel {
                         id:     rollLabel
                         width:  defaultTextWidth * 10
-                        text:   "Roll"
+                        text:   qsTr("横滚")//"Roll"
                     }
 
                     Loader {
@@ -306,7 +309,7 @@ QGCView {
                     QGCLabel {
                         id:     pitchLabel
                         width:  defaultTextWidth * 10
-                        text:   "Pitch"
+                        text:   qsTr("仰俯")//"Pitch"
                     }
 
                     Loader {
@@ -336,7 +339,7 @@ QGCView {
                     QGCLabel {
                         id:     yawLabel
                         width:  defaultTextWidth * 10
-                        text:   "Yaw"
+                        text:   qsTr("航向")//"Yaw"
                     }
 
                     Loader {
@@ -366,7 +369,7 @@ QGCView {
                     QGCLabel {
                         id:     throttleLabel
                         width:  defaultTextWidth * 10
-                        text:   "Throttle"
+                        text:   qsTr("油门")//"Throttle"
                     }
 
                     Loader {
@@ -397,7 +400,7 @@ QGCView {
                 QGCButton {
                     id:         skipButton
                     showBorder: true
-                    text:       "Skip"
+                    text:       qsTr("跳过")//"Skip"
 
                     onClicked: controller.skipButtonClicked()
                 }
@@ -405,7 +408,7 @@ QGCView {
                 QGCButton {
                     id:         cancelButton
                     showBorder: true
-                    text:       "Cancel"
+                    text:       qsTr("取消")//"Cancel"
 
                     onClicked: controller.cancelButtonClicked()
                 }
@@ -414,11 +417,11 @@ QGCView {
                     id:         nextButton
                     primary:    true
                     showBorder: true
-                    text:       "Calibrate"
+                    text:       qsTr("校准")//"Calibrate"
 
                     onClicked: {
-                        if (text == "Calibrate") {
-                            showDialog(zeroTrimsDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
+                        if (text == qsTr("校准")) {//qsTr("校准")
+                            showDialog(zeroTrimsDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.OK | StandardButton.Cancel)
                         } else {
                             controller.nextButtonClicked()
                         }
@@ -445,20 +448,21 @@ QGCView {
                 border.width:   1
             }
 
-            QGCLabel { text: "Additional Radio setup:" }
+//            QGCLabel { text: "Additional Radio setup:" }
+            QGCLabel { text: qsTr("更多遥控设置") }
 
             Row {
                 spacing: 10
 
                 QGCLabel {
                     anchors.baseline:   bindButton.baseline
-                    text:               "Place Spektrum satellite receiver in bind mode:"
+                    text:               qsTr("开启遥控对频")//"Place Spektrum satellite receiver in bind mode:"
                 }
 
                 QGCButton {
                     id:         bindButton
                     showBorder: true
-                    text:       "Spektrum Bind"
+                    text:       qsTr("遥控对频")//"Spektrum Bind"
 
                     onClicked: showDialog(spektrumBindDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                 }
@@ -466,7 +470,7 @@ QGCView {
 
             QGCButton {
                 showBorder: true
-                text:       "Copy Trims"
+                text:       qsTr("拷贝修正")//"Copy Trims"
                 visible:    QGroundControl.multiVehicleManager.activeVehicle.px4Firmware
                 onClicked:  showDialog(copyTrimsDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
             }
@@ -493,7 +497,7 @@ QGCView {
 
                 QGCRadioButton {
                     exclusiveGroup: modeGroup
-                    text:           "Mode 1"
+                    text:           qsTr("模式 1")//"Mode 1"
                     checked:        controller.transmitterMode == 1
 
                     onClicked: controller.transmitterMode = 1
@@ -501,7 +505,7 @@ QGCView {
 
                 QGCRadioButton {
                     exclusiveGroup: modeGroup
-                    text:           "Mode 2"
+                    text:           qsTr("模式 2")//"Mode 2"
                     checked:        controller.transmitterMode == 2
 
                     onClicked: controller.transmitterMode = 2
@@ -521,8 +525,8 @@ QGCView {
                 width:      parent.width
                 spacing:    5
 
-                QGCLabel { text: "Channel Monitor" }
-
+//                QGCLabel { text: "Channel Monitor" }
+                QGCLabel { text: qsTr("通道监控") }
                 Connections {
                     target: controller
 

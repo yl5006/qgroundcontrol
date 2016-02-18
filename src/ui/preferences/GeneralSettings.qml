@@ -60,6 +60,7 @@ Rectangle {
             QGCLabel {
                 text:   qsTr("常规设置")//"General Settings"
                 font.pixelSize: ScreenTools.mediumFontPixelSize
+                anchors.horizontalCenter: parent.horizontalCenter
             }
             Rectangle {
                 height: 1
@@ -74,7 +75,7 @@ Rectangle {
             //-----------------------------------------------------------------
             //-- Audio preferences
             QGCCheckBox {
-                text:       "Mute all audio output"
+                text:       qsTr("消除音频输出")//"Mute all audio output"
                 checked:    QGroundControl.isAudioMuted
                 onClicked: {
                     QGroundControl.isAudioMuted = checked
@@ -84,7 +85,7 @@ Rectangle {
             //-- Prompt Save Log
             QGCCheckBox {
                 id:         promptSaveLog
-                text:       "Prompt to save Flight Data Log after each flight"
+                text:       qsTr("在每次飞行中存储飞行日志")//"Prompt to save Flight Data Log after each flight"
                 checked:    QGroundControl.isSaveLogPrompt
                 visible:    !ScreenTools.isMobile
                 onClicked: {
@@ -94,7 +95,7 @@ Rectangle {
             //-----------------------------------------------------------------
             //-- Prompt Save even if not armed
             QGCCheckBox {
-                text:       "Prompt to save Flight Data Log even if vehicle was not armed"
+                text:       qsTr("即使未解锁也存储飞行日志")//"Prompt to save Flight Data Log even if vehicle was not armed"
                 checked:    QGroundControl.isSaveLogPromptNotArmed
                 visible:    !ScreenTools.isMobile
                 enabled:    promptSaveLog.checked
@@ -106,7 +107,7 @@ Rectangle {
             //-- Clear settings
             QGCCheckBox {
                 id:         clearCheck
-                text:       "Clear all settings on next start"
+                text:       qsTr("每次启动清除配置文件")//"Clear all settings on next start"
                 checked:    false
                 onClicked: {
                     checked ? clearDialog.visible = true : QGroundControl.clearDeleteAllSettingsNextBoot()
@@ -116,8 +117,8 @@ Rectangle {
                     visible:    false
                     icon:       StandardIcon.Warning
                     standardButtons: StandardButton.Yes | StandardButton.No
-                    title:      "Clear Settings"
-                    text:       "All saved settings will be reset the next time you start QGroundControl. Is this really what you want?"
+                    title:      qsTr("清除设置")//"Clear Settings"
+                    text:       qsTr("所有保持设置会在下次重启都清除,你确认要这样做？")//"All saved settings will be reset the next time you start QGroundControl. Is this really what you want?"
                     onYes: {
                         QGroundControl.deleteAllSettingsNextBoot()
                         clearDialog.visible = false
