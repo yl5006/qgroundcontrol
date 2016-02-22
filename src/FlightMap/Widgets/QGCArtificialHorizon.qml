@@ -68,7 +68,7 @@ Item {
             gradient: Gradient {
 //                GradientStop { position: 0.0;  color: Qt.hsla(0.25,  0.5, 0.   ) }
 //                GradientStop { position: 0.25; color: Qt.hsla(0.25, 0.75, 0.25) }
-                  GradientStop { position: 0.0;  color:  Qt.rgba(0,0,0,0.75) }
+                  GradientStop { position: 0.1;  color:  Qt.rgba(0,0,0,0.75) }
                   GradientStop { position: 0.25; color:  Qt.rgba(0,0,0,0.75) }
             }
         }

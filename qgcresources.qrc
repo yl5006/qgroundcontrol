@@ -129,6 +129,8 @@
         <file alias="Altitude.svg">src/FlightMap/Images/Altitude.svg</file>
         <file alias="GroundSpeed.svg">src/FlightMap/Images/GroundSpeed.svg</file>
         <file alias="Throttle.svg">src/FlightMap/Images/Throttle.svg</file>
+        <file alias="Waypoint0.svg">src/FlightMap/Images/Waypoint0.svg</file>
+        <file alias="Waypoint.svg">src/FlightMap/Images/Waypoint.svg</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="AntennaRC">resources/Antenna_RC.svg</file>

@@ -71,7 +71,7 @@ Rectangle {
     }
     Rectangle {
         id:                 valuesspacer
-        anchors.topMargin:  _spacing*0.3//
+//      anchors.topMargin:  _spacing*0.3//
         anchors.top:        parent.top
         anchors.bottom:     attitude.top
         anchors.bottomMargin:  _spacing
@@ -82,7 +82,7 @@ Rectangle {
     }
     ValuesWidget {
         id:                 _valuesWidget
-        anchors.topMargin:  _spacing*0.3//
+        anchors.topMargin:  _spacing//
         anchors.top:        parent.top//_spacer1.bottom
         width:              parent.width
         qgcView:            instrumentPanel.qgcView
@@ -92,9 +92,10 @@ Rectangle {
     QGCAttitudeWidget {
         id:             attitude
         anchors.top:    _valuesWidget.bottom
+        anchors.topMargin:  _spacing//
         y:              _topBottomMargin
         size:           parent.width * 0.95
-        active:         active
+        active:         true//active
         visible:        !QGroundControl.virtualTabletJoystick
         anchors.horizontalCenter: parent.horizontalCenter
     }

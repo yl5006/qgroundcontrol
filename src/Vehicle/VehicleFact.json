@@ -7,7 +7,7 @@
             "shortDescription": "Roll",
             "type":             "double",
             "decimalPlaces":    1,
-            "units":            "度"
+            "units":            "degrees"
         },
         {
             "name":             "pitch",
@@ -25,35 +25,35 @@
         },
         {
             "name":             "groundSpeed",
-            "shortDescription": "Ground Speed",
+            "shortDescription": "地速",
             "type":             "double",
             "decimalPlaces":    1,
             "units":            "m/s"
         },
         {
             "name":             "airSpeed",
-            "shortDescription": "Air Speed",
+            "shortDescription": "空速",
             "type":             "double",
             "decimalPlaces":    1,
             "units":            "m/s"
         },
         {
             "name":             "climbRate",
-            "shortDescription": "Climb Rate",
+            "shortDescription": "爬升率",
             "type":             "double",
             "decimalPlaces":    1,
             "units":            "m/s"
         },
         {
             "name":             "altitudeRelative",
-            "shortDescription": "Altitude (home)",
+            "shortDescription": "高度",
             "type":             "double",
             "decimalPlaces":    1,
             "units":            "m"
         },
         {
             "name":             "altitudeAMSL",
-            "shortDescription": "Altitude",
+            "shortDescription": "海拔",
             "type":             "double",
             "decimalPlaces":    1,
             "units":            "m"

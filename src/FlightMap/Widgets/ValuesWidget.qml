@@ -68,25 +68,28 @@ QGCFlickable {
         Repeater {
             model: _activeVehicle ? controller.largeValues : 0
 
-            Column {
+//           Column {
+             Row {
                 id:     valueColumn
-                width:  _largeColumn.width
-
+                width:  parent.width*0.8//_largeColumn.width
+                spacing:    _margins*2
+                anchors.horizontalCenter:  parent.horizontalCenter
                 property Fact fact: _activeVehicle.getFact(modelData.replace("Vehicle.", ""))
-
                 QGCLabel {
-                    width:                  parent.width
-                    horizontalAlignment:    Text.AlignHCenter
-                    color:                  textColor
-                    text:                   fact.shortDescription + (fact.units ? " (" + fact.units + ")" : "")
-                }
-                QGCLabel {
-                    width:                  parent.width
-                    horizontalAlignment:    Text.AlignHCenter
+        //          width:                  parent.width
                     font.pixelSize:         ScreenTools.largeFontPixelSize
                     font.weight:            Font.DemiBold
                     color:                  textColor
-                    text:                   fact.valueString
+                    text:                   fact.shortDescription
+                }
+                QGCLabel {
+        //          width:                  parent.width
+ //                 horizontalAlignment:    Text.AlignHCenter
+                    font.pixelSize:         ScreenTools.largeFontPixelSize
+                    font.weight:            Font.DemiBold
+                    color:                  textColor
+                    text:                   fact.valueString+ (fact.units ? " (" + fact.units + ")" : "")
+                    style: Text.Outline
                 }
             }
         } // Repeater - Large

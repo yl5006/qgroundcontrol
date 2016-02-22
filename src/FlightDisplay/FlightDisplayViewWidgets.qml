@@ -75,7 +75,7 @@ Item {
                 width:                  gpsLockColumn.width
                 horizontalAlignment:    Text.AlignHCenter
                 visible:                !object.coordinateValid
-                text:                   "No GPS Lock for Vehicle #" + object.id
+                text:                   qsTr("GPS未锁定")/*"No GPS Lock for Vehicle #"*/ + object.id
                 z:                      QGroundControl.zOrderMapItems - 2
                 color:                  mapPal.text
             }
@@ -106,7 +106,7 @@ Item {
         heading:                _heading
         rollAngle:              _roll
         pitchAngle:             _pitch
-        altitudeFact:           _altitudeRelativeFact
+//      altitudeFact:           _altitudeRelativeFact
         groundSpeedFact:        _groundSpeedFact
         airSpeedFact:           _airSpeedFact
         isSatellite:            _isSatellite

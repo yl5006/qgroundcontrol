@@ -214,20 +214,23 @@ Vehicle::Vehicle(LinkInterface*             link,
     connect(&_mapTrajectoryTimer, &QTimer::timeout, this, &Vehicle::_addNewMapTrajectoryPoint);
 
     // Build FactGroup object model
-
+#ifdef QT_DEBUG
     _addFact(&_rollFact,                _rollFactName);
     _addFact(&_pitchFact,               _pitchFactName);
     _addFact(&_headingFact,             _headingFactName);
+#endif
     _addFact(&_groundSpeedFact,         _groundSpeedFactName);
     _addFact(&_airSpeedFact,            _airSpeedFactName);
     _addFact(&_climbRateFact,           _climbRateFactName);
     _addFact(&_altitudeRelativeFact,    _altitudeRelativeFactName);
     _addFact(&_altitudeAMSLFact,        _altitudeAMSLFactName);
-
+#ifdef QT_DEBUG
     _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
     _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
+
     _gpsFactGroup.setVehicle(this);
     _batteryFactGroup.setVehicle(this);
+#endif
 }
 
 Vehicle::~Vehicle()

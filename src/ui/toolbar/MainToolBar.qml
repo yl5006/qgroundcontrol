@@ -210,7 +210,7 @@ Rectangle {
                 anchors.centerIn:   parent
                 QGCLabel {
                     id:         gpsLabel
-                    text:       (activeVehicle && activeVehicle.gps.count.value >= 0) ? "GPS Status" : "GPS Data Unavailable"
+                    text:       (activeVehicle && activeVehicle.gps.count.value >= 0) ? qsTr("GPS状态:")/*"GPS Status"*/ : qsTr("无GPS信息")/*"GPS Data Unavailable"*/
                     font.weight:Font.DemiBold
                     color:      colorWhite
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -223,7 +223,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
                     QGCLabel {
-                        text:   "GPS Count:"
+                        text:   qsTr("卫星颗数:")//"GPS Count:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -231,7 +231,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "GPS Lock:"
+                        text:   qsTr("GPS锁定:")//"GPS Lock:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -239,7 +239,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "HDOP:"
+                        text:   qsTr("水平精度")//"HDOP:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -247,7 +247,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "VDOP:"
+                        text:   qsTr("垂直精度")//"VDOP:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -255,7 +255,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "Course Over Ground:"
+                        text:   qsTr("地面航线")//"Course Over Ground:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -292,7 +292,7 @@ Rectangle {
 
                 QGCLabel {
                     id:         battLabel
-                    text:       "Battery Status"
+                    text:       qsTr("电池状态")//"Battery Status"
                     color:      colorWhite
                     font.weight:Font.DemiBold
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -304,7 +304,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
                     QGCLabel {
-                        text:   "Voltage:"
+                        text:   qsTr("电压:")//"Voltage:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -312,7 +312,7 @@ Rectangle {
                         color:  getBatteryColor()
                     }
                     QGCLabel {
-                        text:   "Accumulated Consumption:"
+                        text:   qsTr("累计消耗:")//"Accumulated Consumption:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -347,7 +347,7 @@ Rectangle {
                 anchors.centerIn:   parent
                 QGCLabel {
                     id:         rssiLabel
-                    text:       activeVehicle ? (activeVehicle.rcRSSI > 0 ? "RC RSSI Status" : "RC RSSI Data Unavailable") : "N/A"
+                    text:       activeVehicle ? (activeVehicle.rcRSSI > 0 ? qsTr("遥控信号状态:")/*"RC RSSI Status"*/ : qsTr("无遥控信号")/*"RC RSSI Data Unavailable"*/) : "N/A"
                     color:      colorWhite
                     font.weight:Font.DemiBold
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -360,7 +360,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
                     QGCLabel {
-                        text:   "RSSI:"
+                        text:   qsTr("信号质量:")//"RSSI:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -394,7 +394,7 @@ Rectangle {
                 anchors.centerIn:   parent
                 QGCLabel {
                     id:         telemLabel
-                    text:       "Telemetry RSSI Status"
+                    text:       qsTr("数传信号状态:")//"Telemetry RSSI Status"
                     color:      colorWhite
                     font.weight:Font.DemiBold
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -406,7 +406,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
                     QGCLabel {
-                        text:   "Local RSSI:"
+                        text:   qsTr("本地数传信号:")//"Local RSSI:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -414,7 +414,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "Remote RSSI:"
+                        text:   qsTr("远端数传信号:")//"Remote RSSI:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -422,7 +422,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "RX Errors:"
+                        text:   qsTr("接收错误:")//"RX Errors:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -430,7 +430,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "Errors Fixed:"
+                        text:   qsTr("错误解决:")//"Errors Fixed:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -438,7 +438,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "TX Buffer:"
+                        text:   qsTr("传输缓存:")//"TX Buffer:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -446,7 +446,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "Local Noise:"
+                        text:   qsTr("本地噪声:")//"Local Noise:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -454,7 +454,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   "Remote Noise:"
+                        text:   qsTr("远端噪声:")//"Remote Noise:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -565,7 +565,7 @@ Rectangle {
 
         QGCLabel {
             id:                     connectionLost
-            text:                   "CONNECTION LOST"
+            text:                   qsTr("丢失连接:")//"CONNECTION LOST"
             font.pixelSize:         tbFontLarge
             font.weight:            Font.DemiBold
             color:                  colorRed
@@ -579,7 +579,7 @@ Rectangle {
             anchors.rightMargin:     mainWindow.tbSpacing * 2
             anchors.right:          parent.right
             anchors.verticalCenter: parent.verticalCenter
-            text:                   "Disconnect"
+            text:                   qsTr("断开连接:")//"Disconnect"
             visible:                parent.vehicleConnectionLost
             onClicked:              activeVehicle.disconnectInactiveVehicle()
         }

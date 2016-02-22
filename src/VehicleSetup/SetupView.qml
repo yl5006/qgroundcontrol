@@ -47,9 +47,9 @@ Rectangle {
     readonly property real      _defaultTextWidth:  ScreenTools.defaultFontPixelWidth
     readonly property real      _margin:            Math.round(_defaultTextHeight / 2)
     readonly property real      _buttonWidth:       Math.round(_defaultTextWidth * 18)
-    readonly property string    _armedVehicleText:  "This operation cannot be performed while vehicle is armed."
+    readonly property string    _armedVehicleText:  qsTr("不能再解锁情况下操作")//"This operation cannot be performed while vehicle is armed."
 
-    property string _messagePanelText:              "missing message panel text"
+    property string _messagePanelText:              qsTr("任务消息")//"missing message panel text"
     property bool   _fullParameterVehicleAvailable: multiVehicleManager.parameterReadyVehicleAvailable && !multiVehicleManager.activeVehicle.missingParameters
 
     function showSummaryPanel()
@@ -165,7 +165,7 @@ Rectangle {
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
                 font.pixelSize:         ScreenTools.largeFontPixelSize
-                text:                   "Connect vehicle to your device and QGroundControl will automatically detect to it. Click Firmware on the left to upgrade your vehicle."
+                text:                   qsTr("连接你的飞控系统，地面会自动连接")//"Connect vehicle to your device and QGroundControl will automatically detect to it. Click Firmware on the left to upgrade your vehicle."
 
                 onLinkActivated: Qt.openUrlExternally(link)
             }

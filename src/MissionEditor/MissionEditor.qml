@@ -319,7 +319,7 @@ QGCView {
                 Rectangle {
                     id:             itemDragger
                     x:              missionItemIndicator ? (missionItemIndicator.x + missionItemIndicator.anchorPoint.x - (itemDragger.width / 2)) : 100
-                    y:              missionItemIndicator ? (missionItemIndicator.y + missionItemIndicator.anchorPoint.y - (itemDragger.height / 2)) : 100
+                    y:              missionItemIndicator ? (missionItemIndicator.y + missionItemIndicator.anchorPoint.y/2 - (itemDragger.height / 2)) : 100
                     width:          ScreenTools.defaultFontPixelHeight * 2
                     height:         ScreenTools.defaultFontPixelHeight * 2
                     color:          "transparent"
@@ -335,14 +335,15 @@ QGCView {
 
                     function liveDrag() {
                         if (!itemDragger.preventCoordinateBindingLoop && Drag.active) {
-                            var point = Qt.point(itemDragger.x + (itemDragger.width  / 2), itemDragger.y + (itemDragger.height / 2))
+//                          var point = Qt.point(itemDragger.x + (itemDragger.width  / 2), itemDragger.y + (itemDragger.height/2))
+                            var point = Qt.point(itemDragger.x + (itemDragger.width  / 2), itemDragger.y + (itemDragger.height))
                             var coordinate = editorMap.toCoordinate(point)
                             coordinate.altitude = itemDragger.missionItem.coordinate.altitude
                             itemDragger.preventCoordinateBindingLoop = true
                             itemDragger.missionItem.coordinate = coordinate
                             itemDragger.preventCoordinateBindingLoop = false
                         }
-                    }
+                    }          
 
                     function clearItem() {
                         itemDragger.visible = false

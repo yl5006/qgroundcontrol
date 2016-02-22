@@ -456,7 +456,7 @@ Row {
                 anchors.verticalCenter: parent.verticalCenter
             }
             QGCLabel {
-                text:           activeVehicle ? (activeVehicle.armed ? "Armed" : "Disarmed") : ""
+                text:           activeVehicle ? (activeVehicle.armed ? qsTr("起飞")/*"Armed"*/ : qsTr("锁定")/*"Disarmed"*/) : ""
                 font.pixelSize: tbFontLarge
                 color:          colorWhite
                 anchors.verticalCenter: parent.verticalCenter
@@ -473,8 +473,8 @@ Row {
             visible:    false
             icon:       StandardIcon.Warning
             standardButtons: StandardButton.Yes | StandardButton.No
-            title:      activeVehicle ? (activeVehicle.armed ? "Disarming Vehicle" : "Arming Vehicle") : ""
-            text:       activeVehicle ? (activeVehicle.armed ? "Do you want to disarm? This will cut power to all motors." : "Do you want to arm? This will enable all motors.") : ""
+            title:      activeVehicle ? (activeVehicle.armed ? qsTr("锁定飞机")/*"Disarming Vehicle"*/ : qsTr("解锁飞机")/*"Arming Vehicle"*/) : ""
+            text:       activeVehicle ? (activeVehicle.armed ? qsTr("确认锁定飞机？所有电机将关闭")/*"Do you want to disarm? This will cut power to all motors."*/ : qsTr("确认解锁飞机？所有电机将启动")/*"Do you want to arm? This will enable all motors."*/) : ""
             onYes: {
                 activeVehicle.armed = !activeVehicle.armed
                 armDialog.visible = false

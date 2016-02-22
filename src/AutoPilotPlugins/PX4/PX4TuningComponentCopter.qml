@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -31,8 +31,8 @@ FactSliderPanel {
 
     sliderModel: ListModel {
         ListElement {
-            title:          "Roll sensitivity"
-            description:    "Slide to the left to make roll control faster and more accurate. Slide to the right if roll oscillates or is too twitchy."
+            title:          qsTr("横滚控制感度")//"Roll sensitivity"
+            description:    qsTr("向左滑动，控制更快，更准确。滑动到右侧，如果振荡或太颠簸")//"Slide to the left to make roll control faster and more accurate. Slide to the right if roll oscillates or is too twitchy."
             param:          "MC_ROLL_TC"
             min:            0.15
             max:            0.25
@@ -40,8 +40,8 @@ FactSliderPanel {
         }
 
         ListElement {
-            title:          "Pitch sensitivity"
-            description:    "Slide to the left to make pitch control faster and more accurate. Slide to the right if pitch oscillates or is too twitchy."
+            title:          qsTr("仰俯控制感度")//"Pitch sensitivity"
+            description:    qsTr("向左滑动，控制更快，更准确。滑动到右侧，如果振荡或太颠簸")//"Slide to the left to make pitch control faster and more accurate. Slide to the right if pitch oscillates or is too twitchy."
             param:          "MC_PITCH_TC"
             min:            0.15
             max:            0.25
@@ -49,8 +49,8 @@ FactSliderPanel {
         }
 
         ListElement {
-            title:          "Altitude control sensitivity"
-            description:    "Slide to the left to make altitude control smoother and less twitchy. Slide to the right to make altitude control more accurate and more aggressive."
+            title:          qsTr("高度控制感度")//"Altitude control sensitivity"
+            description:    qsTr("向左滑动，以使高度控制更顺畅，减少颠簸。向右滑动，以使高度控制更准确，更灵敏")//"Slide to the left to make altitude control smoother and less twitchy. Slide to the right to make altitude control more accurate and more aggressive."
             param:          "MPC_Z_FF"
             min:            0
             max:            1.0
@@ -58,8 +58,8 @@ FactSliderPanel {
         }
 
         ListElement {
-            title:          "Position control sensitivity"
-            description:    "Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
+            title:          qsTr("位移控制感度")//"Position control sensitivity"
+            description:    qsTr("向左滑动，以使在位置控制模式顺畅，减少颠簸的飞行。向右滑动，使位置控制更准确，更灵敏")//"Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
             param:          "MPC_XY_FF"
             min:            0
             max:            1.0
@@ -67,8 +67,8 @@ FactSliderPanel {
         }
 
         ListElement {
-            title:          "Manual minimum throttle"
-            description:    "Slide to the left to start the motors with less idle power. Slide to the right if descending in manual flight becomes unstable."
+            title:          qsTr("手动最小油门")//"Manual minimum throttle"
+            description:    qsTr("滑到左边开始用更少的闲置功耗电机。滑动到右侧，如果在手动飞行不稳定")//"Slide to the left to start the motors with less idle power. Slide to the right if descending in manual flight becomes unstable."
             param:          "MPC_MANTHR_MIN"
             min:            0
             max:            0.15

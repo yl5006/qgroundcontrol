@@ -1,4 +1,4 @@
-import QtQuick                  2.2
+﻿import QtQuick                  2.2
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.2
 import QtQuick.Dialogs          1.2
@@ -67,7 +67,7 @@ Rectangle {
                         width:      parent.width
                         wrapMode:   Text.WordWrap
                         text:       missionItem.sequenceNumber == 0 ?
-                                        "Planned home position." :
+                                        qsTr("Home点")://"Planned home position." :
                                         (missionItem.rawEdit ?
                                             "Provides advanced access to all commands/parameters. Be very careful!" :
                                             missionItem.commandDescription)
@@ -139,7 +139,7 @@ Rectangle {
                     }
 
                     QGCButton {
-                        text:       "Move Home to map center"
+                        text:       qsTr("Home回地图中")//"Move Home to map center"
                         visible:    missionItem.homePosition
                         onClicked:  moveHomeToMapCenter()
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -190,19 +190,19 @@ Rectangle {
                     id: hamburgerMenu
 
                     MenuItem {
-                        text:           "Insert"
+                        text:           qsTr("插入")//"Insert"
                         onTriggered:    insert(missionItem.sequenceNumber)
                     }
 
                     MenuItem {
-                        text:           "Delete"
+                        text:           qsTr("删除")//"Delete"
                         onTriggered:    remove()
                     }
 
                     MenuSeparator { }
 
                     MenuItem {
-                        text:       "Show all values"
+                        text:       qsTr("详细设置")//"Show all values"
                         checkable:  true
                         checked:    missionItem.rawEdit
 
