@@ -28,8 +28,6 @@ This file is part of the QGROUNDCONTROL project
 #include "QGCApplication.h"
 #include "JsonHelper.h"
 
-QGC_LOGGING_CATEGORY(MissionItemLog, "MissionItemLog")
-
 const double MissionItem::defaultAltitude =             25.0;
 
 FactMetaData* MissionItem::_altitudeMetaData =          NULL;
@@ -70,22 +68,6 @@ static const struct EnumInfo_s _rgMavFrameInfo[] = {
 { "MAV_FRAME_GLOBAL_TERRAIN_ALT",       MAV_FRAME_GLOBAL_TERRAIN_ALT },
 { "MAV_FRAME_GLOBAL_TERRAIN_ALT_INT",   MAV_FRAME_GLOBAL_TERRAIN_ALT_INT },
 };
-
-QDebug operator<<(QDebug dbg, const MissionItem& missionItem)
-{
-    QDebugStateSaver saver(dbg);
-    dbg.nospace() << "MissionItem(" << missionItem.coordinate() << ")";
-    
-    return dbg;
-}
-
-QDebug operator<<(QDebug dbg, const MissionItem* missionItem)
-{
-    QDebugStateSaver saver(dbg);
-    dbg.nospace() << "MissionItem(" << missionItem->coordinate() << ")";
-    
-    return dbg;
-}
 
 MissionItem::MissionItem(Vehicle* vehicle, QObject* parent)
     : QObject(parent)
@@ -329,7 +311,7 @@ void MissionItem::_setupMetaData(void)
     if (!_altitudeMetaData) {
         _altitudeMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
         _altitudeMetaData->setRawUnits("meters");
-        _altitudeMetaData->setDecimalPlaces(3);
+        _altitudeMetaData->setDecimalPlaces(2);
 
         enumStrings.clear();
         enumValues.clear();
@@ -620,6 +602,7 @@ QmlObjectListModel* MissionItem::textFieldFacts(void)
         Fact*           rgParamFacts[7] =       { &_param1Fact, &_param2Fact, &_param3Fact, &_param4Fact, &_param5Fact, &_param6Fact, &_param7Fact };
         FactMetaData*   rgParamMetaData[7] =    { &_param1MetaData, &_param2MetaData, &_param3MetaData, &_param4MetaData, &_param5MetaData, &_param6MetaData, &_param7MetaData };
 
+        bool altitudeAdded = false;
         for (int i=1; i<=7; i++) {
             const QMap<int, MavCmdParamInfo*>& paramInfoMap = _missionCommands->getMavCmdInfo(command, _vehicle)->paramInfoMap();
 
@@ -634,10 +617,14 @@ QmlObjectListModel* MissionItem::textFieldFacts(void)
                 paramMetaData->setRawUnits(paramInfo->units());
                 paramFact->setMetaData(paramMetaData);
                 model->append(paramFact);
+
+                if (i == 7) {
+                    altitudeAdded = true;
+                }
             }
         }
 
-        if (specifiesCoordinate()) {
+        if (specifiesCoordinate() && !altitudeAdded) {
             _param7Fact._setName("Altitude:");
             _param7Fact.setMetaData(_altitudeMetaData);
             model->append(&_param7Fact);

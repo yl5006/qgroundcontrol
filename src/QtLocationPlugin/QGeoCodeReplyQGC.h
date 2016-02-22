@@ -44,31 +44,28 @@
 **
 ****************************************************************************/
 
-#ifndef QGEOMAPREPLYGOOGLE_H
-#define QGEOMAPREPLYGOOGLE_H
+#ifndef QGEOCODEREPLYQGC_H
+#define QGEOCODEREPLYQGC_H
 
 #include <QtNetwork/QNetworkReply>
-#include <QtLocation/private/qgeotiledmapreply_p.h>
+#include <QtLocation/QGeoCodeReply>
 
-class QGeoMapReplyQGC : public QGeoTiledMapReply
+class QGeoCodeReplyQGC : public QGeoCodeReply
 {
     Q_OBJECT
 
 public:
-    explicit QGeoMapReplyQGC(QNetworkReply *reply, const QGeoTileSpec &spec, QObject *parent = 0);
-    ~QGeoMapReplyQGC();
+    explicit QGeoCodeReplyQGC(QNetworkReply *reply, QObject *parent = 0);
+    ~QGeoCodeReplyQGC();
 
     void abort();
 
-    QNetworkReply *networkReply() const;
-
 private Q_SLOTS:
-    void replyDestroyed         ();
-    void networkReplyFinished   ();
-    void networkReplyError      (QNetworkReply::NetworkError error);
+    void networkReplyFinished();
+    void networkReplyError(QNetworkReply::NetworkError error);
 
 private:
-    QNetworkReply*  m_reply;
+    QNetworkReply *m_reply;
 };
 
-#endif // QGEOMAPREPLYGOOGLE_H
+#endif // QGEOCODEREPLYQGC_H

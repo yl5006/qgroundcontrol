@@ -34,6 +34,7 @@ import QGroundControl.Controls      1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.FactSystem    1.0
 import QGroundControl.FlightMap     1.0
+
 Rectangle {
     id:     instrumentPanel
     height: compass.y + compass.height + _topBottomMargin
@@ -95,7 +96,7 @@ Rectangle {
         anchors.topMargin:  _spacing//
         y:              _topBottomMargin
         size:           parent.width * 0.95
-        active:         true//active
+        active:         instrumentPanel.active
         visible:        !QGroundControl.virtualTabletJoystick
         anchors.horizontalCenter: parent.horizontalCenter
     }
@@ -127,7 +128,7 @@ Rectangle {
         anchors.topMargin:  _spacing
         anchors.top:        _spacer1.bottom//_spacer2.bottom
         size:               parent.width * 0.95
-        active:             active
+        active:             instrumentPanel.active
         visible:        !QGroundControl.virtualTabletJoystick
         anchors.horizontalCenter: parent.horizontalCenter
     }

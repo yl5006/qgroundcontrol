@@ -44,41 +44,52 @@
 **
 ****************************************************************************/
 
-#ifndef QGEOTILEDMAPPINGMANAGERENGINEGOOGLE_H
-#define QGEOTILEDMAPPINGMANAGERENGINEGOOGLE_H
+#include "QGeoServiceProviderPluginQGC.h"
+#include "QGeoTiledMappingManagerEngineQGC.h"
+#include "QGeoCodingManagerEngineQGC.h"
 
-#include <QtLocation/QGeoServiceProvider>
-#if QT_VERSION >= 0x050500
-#include <QtLocation/private/qgeotiledmap_p.h>
-#endif
 #include <QtLocation/private/qgeotiledmappingmanagerengine_p.h>
 
-#if QT_VERSION >= 0x050500
-class QGeoTiledMapQGC : public QGeoTiledMap
-{
-    Q_OBJECT
-public:
-    QGeoTiledMapQGC(QGeoTiledMappingManagerEngine *engine, QObject *parent = 0);
-};
-#endif
+Q_EXTERN_C Q_DECL_EXPORT const char *qt_plugin_query_metadata();
+Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) *qt_plugin_instance();
 
-class QGeoTiledMappingManagerEngineQGC : public QGeoTiledMappingManagerEngine
+//-----------------------------------------------------------------------------
+const QT_PREPEND_NAMESPACE(QStaticPlugin) qt_static_plugin_QGeoServiceProviderFactoryQGC()
 {
-    Q_OBJECT
-public:
-    QGeoTiledMappingManagerEngineQGC(const QVariantMap &parameters, QGeoServiceProvider::Error *error, QString *errorString);
-    ~QGeoTiledMappingManagerEngineQGC();
-#if QT_VERSION < 0x050500
-    QGeoMapData *createMapData();
-#else
-    QGeoMap *createMap();
-    QString customCopyright() const;
-#endif
-private:
-#if QT_VERSION >= 0x050500
-    QString m_customCopyright;
-    void _setCache(const QVariantMap &parameters);
-#endif
-};
+    QT_PREPEND_NAMESPACE(QStaticPlugin) plugin = { qt_plugin_instance, qt_plugin_query_metadata};
+    return plugin;
+}
 
-#endif // QGEOTILEDMAPPINGMANAGERENGINEGOOGLE_H
+//-----------------------------------------------------------------------------
+QGeoCodingManagerEngine*
+QGeoServiceProviderFactoryQGC::createGeocodingManagerEngine(
+    const QVariantMap &parameters, QGeoServiceProvider::Error *error, QString *errorString) const
+{
+    return new QGeoCodingManagerEngineQGC(parameters, error, errorString);
+}
+
+//-----------------------------------------------------------------------------
+QGeoMappingManagerEngine*
+QGeoServiceProviderFactoryQGC::createMappingManagerEngine(
+    const QVariantMap &parameters, QGeoServiceProvider::Error *error, QString *errorString) const
+{
+    return new QGeoTiledMappingManagerEngineQGC(parameters, error, errorString);
+}
+
+//-----------------------------------------------------------------------------
+QGeoRoutingManagerEngine*
+QGeoServiceProviderFactoryQGC::createRoutingManagerEngine(
+    const QVariantMap &, QGeoServiceProvider::Error *, QString *) const
+{
+    // Not implemented for QGC
+    return NULL;
+}
+
+//-----------------------------------------------------------------------------
+QPlaceManagerEngine*
+QGeoServiceProviderFactoryQGC::createPlaceManagerEngine(
+    const QVariantMap &, QGeoServiceProvider::Error *, QString *) const
+{
+    // Not implemented for QGC
+    return NULL;
+}

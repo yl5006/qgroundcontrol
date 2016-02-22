@@ -51,7 +51,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMGround">
@@ -60,6 +60,7 @@
     </property>
     <addaction name="separator"/>
     <addaction name="actionMuteAudioOutput"/>
+    <addaction name="actionStatusBar"/>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -72,24 +73,13 @@
     <addaction name="actionProject_Roadmap"/>
     <addaction name="actionDeveloper_Credits"/>
    </widget>
-   <widget class="QMenu" name="menuPerspectives">
-    <property name="title">
-     <string>查看</string>
-    </property>
-    <addaction name="actionSetup"/>
-    <addaction name="actionPlan"/>
-    <addaction name="actionFlight"/>
-    <addaction name="separator"/>
-    <addaction name="separator"/>
-    <addaction name="actionStatusBar"/>
-   </widget>
+     <string>View</string>
    <widget class="QMenu" name="menuWidgets">
     <property name="title">
      <string>工具</string>
     </property>
    </widget>
    <addaction name="menuMGround"/>
-   <addaction name="menuPerspectives"/>
    <addaction name="menuWidgets"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -125,28 +115,14 @@
     <string>Developer Credits</string>
    </property>
   </action>
-  <action name="actionPlan">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>计划</string>
-   </property>
+    <string>Plan</string>
    <property name="toolTip">
     <string>计划</string>
    </property>
-  </action>
-  <action name="actionFlight">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>飞行</string>
+    <string>Fly</string>
    </property>
    <property name="toolTip">
     <string>飞行</string>
-   </property>
-  </action>
   <action name="actionMuteAudioOutput">
    <property name="checkable">
     <bool>true</bool>
@@ -166,20 +142,8 @@
     <enum>QAction::PreferencesRole</enum>
    </property>
   </action>
-  <action name="actionSetup">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>设置</string>
-   </property>
-   <property name="toolTip">
-    <string>设置</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
+    <string>Setup</string>
+    <string>Setup of the vehicle</string>
   <action name="actionAdvanced_Mode">
    <property name="checkable">
     <bool>true</bool>
@@ -197,17 +161,6 @@
    </property>
    <property name="toolTip">
     <string>状态栏</string>
-   </property>
-  </action>
-  <action name="actionMissionEditor">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>New Mission Editor</string>
-   </property>
-   <property name="toolTip">
-    <string>Mission Editor</string>
    </property>
   </action>
  </widget>

@@ -104,7 +104,7 @@ QGCView {
         if (ScreenTools.isMobile) {
             _root.showDialog(mobileFileSaver, qsTr("保存任务文件")/*"Save Mission File"*/, _root.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel)
         } else {
-            controller.saveToFile()
+            controller.saveMissionToFile()
         }
     }
 
@@ -286,6 +286,8 @@ QGCView {
                 anchors.fill:   parent
                 mapName:        "MissionEditor"
 
+                signal mapClicked(var coordinate)
+
                 readonly property real animationDuration: 500
 
                 // Initial map position duplicates Fly view position
@@ -302,15 +304,15 @@ QGCView {
                     anchors.fill: parent
 
                     onClicked: {
+                        var coordinate = editorMap.toCoordinate(Qt.point(mouse.x, mouse.y))
+                        coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
+                        coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
+                        coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
                         if (addMissionItemsButton.checked) {
-                            var coordinate = editorMap.toCoordinate(Qt.point(mouse.x, mouse.y))
-                            coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
-                            coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
-                            coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
-                            var index = controller.insertMissionItem(coordinate, controller.missionItems.count)
+                            var index = controller.insertSimpleMissionItem(coordinate, controller.missionItems.count)
                             setCurrentItem(index)
                         } else {
-                            editorMap.zoomLevel = editorMap.maxZoomLevel - 2
+                            editorMap.mapClicked(coordinate)
                         }
                     }
                 }
@@ -366,7 +368,7 @@ QGCView {
                     }
                 }
 
-                // Add the mission items to the map
+                // Add the simple mission items to the map
                 MapItemView {
                     model:          controller.missionItems
                     delegate:       missionItemComponent
@@ -423,9 +425,38 @@ QGCView {
                     }
                 }
 
+                // Add the complex mission items to the map
+                MapItemView {
+                    model:          controller.complexMissionItems
+                    delegate:       polygonItemComponent
+                }
+
+                Component {
+                    id: polygonItemComponent
+
+                    MapPolygon {
+                        color:      'green'
+                        path:       object.polygonPath
+                        opacity:    0.5
+                    }
+                }
+
                 // Add lines between waypoints
                 MissionLineView {
                     model:          controller.waypointLines
+                }
+
+                // Add the vehicles to the map
+                MapItemView {
+                    model: multiVehicleManager.vehicles
+                    delegate:
+                        VehicleMapItem {
+                                vehicle:        object
+                                coordinate:     object.coordinate
+                                isSatellite:    editorMap.isSatelliteMap
+                                size:           ScreenTools.defaultFontPixelHeight * 5
+                                z:              QGroundControl.zOrderMapItems - 1
+                        }
                 }
 
                 // Mission Item Editor
@@ -471,7 +502,7 @@ QGCView {
                             }
 
                             onInsert: {
-                                controller.insertMissionItem(editorMap.center, i)
+                                controller.insertSimpleMissionItem(editorMap.center, i)
                                 setCurrentItem(i)
                             }
 
@@ -511,6 +542,23 @@ QGCView {
                         z:                  QGroundControl.zOrderWidgets
                     }
 
+                    RoundButton {
+                        id:                 addShapeButton
+                        buttonImage:        "/qmlimages/MapDrawShape.svg"
+                        z:                  QGroundControl.zOrderWidgets
+                        visible:            QGroundControl.experimentalSurvey
+
+                        onClicked: {
+                            var coordinate = editorMap.center
+                            coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
+                            coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
+                            coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
+                            var index = controller.insertComplexMissionItem(coordinate, controller.missionItems.count)
+                            setCurrentItem(index)
+                            checked = false
+                        }
+                    }
+
                     DropButton {
                         id:                 syncButton
                         dropDirection:      dropRight
@@ -520,6 +568,7 @@ QGCView {
                         z:                  QGroundControl.zOrderWidgets
                         dropDownComponent:  syncDropDownComponent
                         enabled:            !_syncInProgress
+                        rotateImage:        _syncInProgress
                     }
 
                     DropButton {

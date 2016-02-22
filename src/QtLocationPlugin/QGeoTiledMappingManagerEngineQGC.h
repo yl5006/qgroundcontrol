@@ -44,38 +44,43 @@
 **
 ****************************************************************************/
 
-#ifndef QGEOCODINGMANAGERENGINEGOOGLE_H
-#define QGEOCODINGMANAGERENGINEGOOGLE_H
+#ifndef QGEOTILEDMAPPINGMANAGERENGINEQGC_H
+#define QGEOTILEDMAPPINGMANAGERENGINEQGC_H
 
 #include <QtLocation/QGeoServiceProvider>
-#include <QtLocation/QGeoCodingManagerEngine>
-#include <QtLocation/QGeoCodeReply>
+#if QT_VERSION >= 0x050500
+#include <QtLocation/private/qgeotiledmap_p.h>
+#endif
+#include <QtLocation/private/qgeotiledmappingmanagerengine_p.h>
 
-QT_BEGIN_NAMESPACE
-
-class QNetworkAccessManager;
-
-class QGeoCodingManagerEngineQGC : public QGeoCodingManagerEngine
+#if QT_VERSION >= 0x050500
+class QGeoTiledMapQGC : public QGeoTiledMap
 {
     Q_OBJECT
-
 public:
-    QGeoCodingManagerEngineQGC(const QVariantMap &parameters, QGeoServiceProvider::Error *error, QString *errorString);
-    ~QGeoCodingManagerEngineQGC();
+    QGeoTiledMapQGC(QGeoTiledMappingManagerEngine *engine, QObject *parent = 0);
+};
+#endif
 
-    QGeoCodeReply* geocode          (const QGeoAddress &address, const QGeoShape &bounds) Q_DECL_OVERRIDE;
-    QGeoCodeReply* geocode          (const QString &address, int limit, int offset, const QGeoShape &bounds) Q_DECL_OVERRIDE;
-    QGeoCodeReply* reverseGeocode   (const QGeoCoordinate &coordinate, const QGeoShape &bounds) Q_DECL_OVERRIDE;
+class QGeoTileFetcherQGC;
 
-private Q_SLOTS:
-    void replyFinished  ();
-    void replyError     (QGeoCodeReply::Error errorCode, const QString &errorString);
-
+class QGeoTiledMappingManagerEngineQGC : public QGeoTiledMappingManagerEngine
+{
+    Q_OBJECT
+public:
+    QGeoTiledMappingManagerEngineQGC(const QVariantMap &parameters, QGeoServiceProvider::Error *error, QString *errorString);
+    ~QGeoTiledMappingManagerEngineQGC();
+#if QT_VERSION < 0x050500
+    QGeoMapData *createMapData();
+#else
+    QGeoMap *createMap();
+    QString customCopyright() const;
+#endif
 private:
-    QNetworkAccessManager *m_networkManager;
-    QByteArray m_userAgent;
+#if QT_VERSION >= 0x050500
+    QString m_customCopyright;
+    void _setCache(const QVariantMap &parameters);
+#endif
 };
 
-QT_END_NAMESPACE
-
-#endif // QGEOCODINGMANAGERENGINEGOOGLE_H
+#endif // QGEOTILEDMAPPINGMANAGERENGINEQGC_H

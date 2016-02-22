@@ -44,43 +44,26 @@
 **
 ****************************************************************************/
 
-#include <QtLocation/private/qgeotiledmappingmanagerengine_p.h>
+#ifndef QGEOTILEFETCHERQGC_H
+#define QGEOTILEFETCHERQGC_H
 
-#include "qdebug.h"
-#include "qgeoserviceproviderpluginqgc.h"
-#include "qgeotiledmappingmanagerengineqgc.h"
-#include "qgeocodingmanagerengineqgc.h"
+#include <QtLocation/private/qgeotilefetcher_p.h>
+#include <QtLocation/private/qgeotilecache_p.h>
+#include "QGCMapUrlEngine.h"
 
-Q_EXTERN_C Q_DECL_EXPORT const char *qt_plugin_query_metadata();
-Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) *qt_plugin_instance();
-const QT_PREPEND_NAMESPACE(QStaticPlugin) qt_static_plugin_QGeoServiceProviderFactoryQGC()
+class QGeoTiledMappingManagerEngine;
+class QNetworkAccessManager;
+
+class QGeoTileFetcherQGC : public QGeoTileFetcher
 {
-    QT_PREPEND_NAMESPACE(QStaticPlugin) plugin = { qt_plugin_instance, qt_plugin_query_metadata};
-    return plugin;
-}
+    Q_OBJECT
+public:
+    explicit QGeoTileFetcherQGC             (QGeoTiledMappingManagerEngine *parent = 0);
+    ~QGeoTileFetcherQGC();
+private:
+    QGeoTiledMapReply*      getTileImage    (const QGeoTileSpec &spec);
+private:
+    QNetworkAccessManager*  _networkManager;
+};
 
-QGeoCodingManagerEngine *QGeoServiceProviderFactoryQGC::createGeocodingManagerEngine(
-    const QVariantMap &parameters, QGeoServiceProvider::Error *error, QString *errorString) const
-{
-    return new QGeoCodingManagerEngineQGC(parameters, error, errorString);
-}
-
-QGeoMappingManagerEngine *QGeoServiceProviderFactoryQGC::createMappingManagerEngine(
-    const QVariantMap &parameters, QGeoServiceProvider::Error *error, QString *errorString) const
-{
-    return new QGeoTiledMappingManagerEngineQGC(parameters, error, errorString);
-}
-
-QGeoRoutingManagerEngine *QGeoServiceProviderFactoryQGC::createRoutingManagerEngine(
-    const QVariantMap &, QGeoServiceProvider::Error *, QString *) const
-{
-    // Not implemented for QGC
-    return NULL;
-}
-
-QPlaceManagerEngine *QGeoServiceProviderFactoryQGC::createPlaceManagerEngine(
-    const QVariantMap &, QGeoServiceProvider::Error *, QString *) const
-{
-    // Not implemented for QGC
-    return NULL;
-}
+#endif // QGEOTILEFETCHERQGC_H

@@ -44,32 +44,32 @@
 **
 ****************************************************************************/
 
-#ifndef QGEOTILEFETCHERGOOGLE_H
-#define QGEOTILEFETCHERGOOGLE_H
+#include "QGCMapEngine.h"
+#include "QGeoTileFetcherQGC.h"
+#include "QGeoMapReplyQGC.h"
 
-#include <QtLocation/private/qgeotilefetcher_p.h>
-#include <QtLocation/private/qgeotilecache_p.h>
-#include "OpenPilotMaps.h"
+#include <QtCore/QLocale>
+#include <QtNetwork/QNetworkRequest>
+#include <QtLocation/private/qgeotilespec_p.h>
 
-class QGeoTiledMappingManagerEngine;
-class QNetworkAccessManager;
-
-class QGeoTileFetcherQGC : public QGeoTileFetcher
+//-----------------------------------------------------------------------------
+QGeoTileFetcherQGC::QGeoTileFetcherQGC(QGeoTiledMappingManagerEngine *parent)
+    : QGeoTileFetcher(parent)
+    , _networkManager(new QNetworkAccessManager(this))
 {
-    Q_OBJECT
+}
 
-public:
-    explicit QGeoTileFetcherQGC(QGeoTiledMappingManagerEngine *parent = 0);
-    ~QGeoTileFetcherQGC();
+//-----------------------------------------------------------------------------
+QGeoTileFetcherQGC::~QGeoTileFetcherQGC()
+{
 
-    void setUserAgent(const QByteArray &userAgent);
+}
 
-private:
-    QGeoTiledMapReply* getTileImage(const QGeoTileSpec &spec);
-    QNetworkAccessManager*  m_networkManager;
-    QByteArray              m_userAgent;
-    OpenPilot::UrlFactory*  m_UrlFactory;
-    QString                 m_Language;
-};
-
-#endif // QGEOTILEFETCHERGOOGLE_H
+//-----------------------------------------------------------------------------
+QGeoTiledMapReply*
+QGeoTileFetcherQGC::getTileImage(const QGeoTileSpec &spec)
+{
+    //-- Build URL
+    QNetworkRequest request = getQGCMapEngine()->urlFactory()->getTileURL((UrlFactory::MapType)spec.mapId(), spec.x(), spec.y(), spec.zoom(), _networkManager);
+    return new QGeoTiledMapReplyQGC(_networkManager, request, spec);
+}

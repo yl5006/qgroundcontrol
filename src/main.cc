@@ -32,6 +32,9 @@ This file is part of the QGROUNDCONTROL project
 #include <QApplication>
 #include <QSslSocket>
 #include <QProcessEnvironment>
+#include <QHostAddress>
+#include <QUdpSocket>
+#include <QtPlugin>
 
 #include <QSplashScreen>
 
@@ -58,6 +61,7 @@ This file is part of the QGROUNDCONTROL project
 #endif
 
 #include <iostream>
+#include "QGCMapEngine.h"
 
 /* SDL does ugly things to main() */
 #ifdef main
@@ -243,6 +247,8 @@ int main(int argc, char *argv[])
     qRegisterMetaType<QList<QPair<QByteArray,QByteArray> > >();
 
     app->_initCommon();
+    //-- Initialize Cache System
+    getQGCMapEngine()->init();
     int exitCode = 0;
 
 #ifndef __mobile__
@@ -279,6 +285,8 @@ int main(int argc, char *argv[])
     }
 
     delete app;
+    //-- Shutdown Cache System
+    destroyMapEngine();
 
     qDebug() << "After app delete";
 
