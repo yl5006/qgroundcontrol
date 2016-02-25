@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -55,8 +55,8 @@ Item {
         anchors.left:   parent.left
         anchors.bottom: parent.bottom
         visible:        !isHidden
-        height:         ScreenTools.defaultFontPixelSize * 2.5
-        width:          ScreenTools.defaultFontPixelSize * 2.5
+        height:         ScreenTools.defaultFontPixelSize * 3//2.5
+        width:          ScreenTools.defaultFontPixelSize * 4//2.5
         MouseArea {
             anchors.fill: parent
             onClicked: {

@@ -197,8 +197,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     // Now connect the new UAS
     connect(_mav, SIGNAL(attitudeChanged                    (UASInterface*,double,double,double,quint64)),              this, SLOT(_updateAttitude(UASInterface*, double, double, double, quint64)));
     connect(_mav, SIGNAL(attitudeChanged                    (UASInterface*,int,double,double,double,quint64)),          this, SLOT(_updateAttitude(UASInterface*,int,double, double, double, quint64)));
-    connect(_mav, SIGNAL(statusChanged                      (UASInterface*,QString,QString)),
-            this, SLOT(_updateState(UASInterface*, QString,QString)));
+    connect(_mav, SIGNAL(statusChanged                      (UASInterface*,QString,QString)),                           this, SLOT(_updateState(UASInterface*, QString,QString)));
 
     connect(_mav, &UASInterface::throttleChanged, this, &Vehicle::_updatethrust);  //add yaoling
     connect(_mav, &UASInterface::speedChanged, this, &Vehicle::_updateSpeed);
@@ -235,15 +234,16 @@ Vehicle::Vehicle(LinkInterface*             link,
     _addFact(&_altitudeRelativeFact,    _altitudeRelativeFactName);
     _addFact(&_altitudeAMSLFact,        _altitudeAMSLFactName);
     _addFact(&_throttleFact,            _throttleFactName); //add yaoling
+
 #ifdef QT_DEBUG
     _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
     _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
     _addFactGroup(&_windFactGroup,      _windFactGroupName);
 
     _gpsFactGroup.setVehicle(this);
-    _batteryFactGroup.setVehicle(this);
-#endif	
+    _batteryFactGroup.setVehicle(this);	
     _windFactGroup.setVehicle(this);
+#endif
 }
 
 Vehicle::~Vehicle()

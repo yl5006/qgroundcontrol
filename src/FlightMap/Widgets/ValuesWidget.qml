@@ -216,6 +216,7 @@ QGCFlickable {
             QGCLabel {
                 width:      parent.width
                 wrapMode:   Text.WordWrap
+                visible:    !factGroup     //add  yaoling
                 text:       factGroup ? factGroupName : qsTr("机体需处于连接状态")//"Vehicle must be connected to assign values."
             }
 

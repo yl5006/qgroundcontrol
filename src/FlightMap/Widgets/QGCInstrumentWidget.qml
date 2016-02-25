@@ -72,7 +72,7 @@ Rectangle {
     }
     Rectangle {
         id:                 valuesspacer
-//      anchors.topMargin:  _spacing*0.3//
+//      anchors.topMargin:  _spacing//
         anchors.top:        parent.top
         anchors.bottom:     attitude.top
         anchors.bottomMargin:  _spacing
@@ -80,6 +80,7 @@ Rectangle {
         radius:             _spacing*2
         color:              Qt.rgba(0,0,0,0.65)
         anchors.horizontalCenter: parent.horizontalCenter
+        visible:            QGroundControl.multiVehicleManager.activeVehicle
     }
     ValuesWidget {
         id:                 _valuesWidget
@@ -110,6 +111,7 @@ Rectangle {
         opacity:            0.5
         width:              attitude.width * 0.15
         fillMode:           Image.PreserveAspectFit
+        visible:            false                //do not use yaoling
         MouseArea {
             anchors.fill:   parent
             hoverEnabled:   true

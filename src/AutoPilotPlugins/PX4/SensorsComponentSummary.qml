@@ -30,20 +30,20 @@ FactPanel {
         anchors.margins:    8
 
         VehicleSummaryRow {
-            labelText: "Compass:"
+            labelText: qsTr("磁罗盘")//"Compass:"
             valueText: mag0IdFact ? (mag0IdFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : qsTr("已校准")/*"Ready"*/) : ""
         }
 
         VehicleSummaryRow {
-            labelText:  "Compass 1:"
+            labelText:  qsTr("磁罗盘1")//"Compass 1:"
             visible:    mag1IdFact.value !== 0
-            valueText:  "Ready"
+            valueText:  qsTr("已校准")//"Ready"
         }
 
         VehicleSummaryRow {
-            labelText:  "Compass 2:"
+            labelText:  qsTr("磁罗盘2")//"Compass 2:"
             visible:    mag2IdFact.value !== 0
-            valueText:  "Ready"
+            valueText:  qsTr("已校准")//"Ready"
         }
 
         VehicleSummaryRow {
