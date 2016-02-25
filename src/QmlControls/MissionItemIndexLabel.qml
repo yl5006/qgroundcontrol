@@ -21,7 +21,7 @@ Item {
 //  border.color:   "white"
 //  color:          isCurrentItem ? "green" : qgcPal.mapButtonHighlight
 
-    property real _width: small ? ScreenTools.smallFontPixelSize * 1.5 : ScreenTools.mediumFontPixelSize * 1.5
+    property real _width: small ? ScreenTools.smallFontPixelSize * 1.2 : ScreenTools.mediumFontPixelSize * 1.2
 
     QGCPalette { id: qgcPal }
 
