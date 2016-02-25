@@ -58,6 +58,7 @@ const char* Vehicle::_throttleFactName =            "thrust";
 
 const char* Vehicle::_gpsFactGroupName =        "gps";
 const char* Vehicle::_batteryFactGroupName =    "battery";
+const char* Vehicle::_windFactGroupName =       "wind";
 
 const char* VehicleGPSFactGroup::_hdopFactName =                "hdop";
 const char* VehicleGPSFactGroup::_vdopFactName =                "vdop";
@@ -78,6 +79,10 @@ const int    VehicleBatteryFactGroup::_mahConsumedUnavailable =       -1;
 const int    VehicleBatteryFactGroup::_currentUnavailable =           -1;
 const double VehicleBatteryFactGroup::_temperatureUnavailable =       -1.0;
 const int    VehicleBatteryFactGroup::_cellCountUnavailable =         -1.0;
+
+const char* VehicleWindFactGroup::_directionFactName =      "direction";
+const char* VehicleWindFactGroup::_speedFactName =          "speed";
+const char* VehicleWindFactGroup::_verticalSpeedFactName =  "verticalSpeed";
 
 Vehicle::Vehicle(LinkInterface*             link,
                  int                        vehicleId,
@@ -147,6 +152,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeDouble)   //add  yaoling
     , _gpsFactGroup(this)
     , _batteryFactGroup(this)
+    , _windFactGroup(this)
 {
     _addLink(link);
 
@@ -232,10 +238,12 @@ Vehicle::Vehicle(LinkInterface*             link,
 #ifdef QT_DEBUG
     _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
     _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
+    _addFactGroup(&_windFactGroup,      _windFactGroupName);
 
     _gpsFactGroup.setVehicle(this);
     _batteryFactGroup.setVehicle(this);
-#endif
+#endif	
+    _windFactGroup.setVehicle(this);
 }
 
 Vehicle::~Vehicle()
@@ -333,11 +341,27 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_SCALED_IMU3:
         emit mavlinkScaledImu3(message);
         break;
+
+    // Following are ArduPilot dialect messages
+
+    case MAVLINK_MSG_ID_WIND:
+        _handleWind(message);
+        break;
     }
 
     emit mavlinkMessageReceived(message);
 
     _uas->receiveMessage(message);
+}
+
+void Vehicle::_handleWind(mavlink_message_t& message)
+{
+    mavlink_wind_t wind;
+    mavlink_msg_wind_decode(&message, &wind);
+
+    _windFactGroup.direction()->setRawValue(wind.direction);
+    _windFactGroup.speed()->setRawValue(wind.speed);
+    _windFactGroup.verticalSpeed()->setRawValue(wind.speed_z);
 }
 
 void Vehicle::_handleSysStatus(mavlink_message_t& message)
@@ -938,11 +962,6 @@ void Vehicle::setActive(bool active)
     _startJoystick(_active);
 }
 
-QmlObjectListModel* Vehicle::missionItemsModel(void)
-{
-    return missionManager()->missionItems();
-}
-
 bool Vehicle::homePositionAvailable(void)
 {
     return _homePositionAvailable;
@@ -1327,6 +1346,28 @@ VehicleBatteryFactGroup::VehicleBatteryFactGroup(QObject* parent)
 }
 
 void VehicleBatteryFactGroup::setVehicle(Vehicle* vehicle)
+{
+    _vehicle = vehicle;
+}
+
+VehicleWindFactGroup::VehicleWindFactGroup(QObject* parent)
+    : FactGroup(1000, ":/json/Vehicle/WindFact.json", parent)
+    , _vehicle(NULL)
+    , _directionFact    (0, _directionFactName,     FactMetaData::valueTypeDouble)
+    , _speedFact        (0, _speedFactName,         FactMetaData::valueTypeDouble)
+    , _verticalSpeedFact(0, _verticalSpeedFactName, FactMetaData::valueTypeDouble)
+{
+    _addFact(&_directionFact,       _directionFactName);
+    _addFact(&_speedFact,           _speedFactName);
+    _addFact(&_verticalSpeedFact,   _verticalSpeedFactName);
+
+    // Start out as not available "--.--"
+    _directionFact.setRawValue      (std::numeric_limits<float>::quiet_NaN());
+    _speedFact.setRawValue          (std::numeric_limits<float>::quiet_NaN());
+    _verticalSpeedFact.setRawValue  (std::numeric_limits<float>::quiet_NaN());
+}
+
+void VehicleWindFactGroup::setVehicle(Vehicle* vehicle)
 {
     _vehicle = vehicle;
 }

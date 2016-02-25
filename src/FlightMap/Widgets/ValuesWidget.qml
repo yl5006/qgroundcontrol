@@ -111,6 +111,7 @@ QGCFlickable {
                     font.pixelSize:         ScreenTools.largeFontPixelSize
                     font.weight:            Font.DemiBold
                     color:                  textColor
+                    fontSizeMode:           Text.HorizontalFit
                     text:                   fact.valueString
                 }
                 QGCLabel {
@@ -118,6 +119,7 @@ QGCFlickable {
  //                 horizontalAlignment:    Text.AlignHCenter
                     font.pixelSize:         ScreenTools.largeFontPixelSize// ScreenTools.largeFontPixelSize * (largeValue ? 1.3 : 1.0)
                     font.weight:            Font.DemiBold//largeValue ? Font.ExtraBold : Font.Normal
+                    fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
                     text:                   fact.units ? fact.units  : ""
                 }
@@ -146,6 +148,7 @@ QGCFlickable {
                     width:                  parent.width
                     horizontalAlignment:    Text.AlignHCenter
                     font.pixelSize:         ScreenTools.smallFontPixelSize
+                    fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
                     text:                   fact.shortDescription
                 }
@@ -153,12 +156,14 @@ QGCFlickable {
                     width:                  parent.width
                     horizontalAlignment:    Text.AlignHCenter
                     color:                  textColor
+                    fontSizeMode:           Text.HorizontalFit
                     text:                   fact.enumOrValueString
                 }
                 QGCLabel {
                     width:                  parent.width
                     horizontalAlignment:    Text.AlignHCenter
                     font.pixelSize:         ScreenTools.smallFontPixelSize
+                    fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
                     text:                   fact.units
                 }
@@ -172,21 +177,27 @@ QGCFlickable {
         QGCViewDialog {
             id: _propertyPickerDialog
 
-            QGCLabel {
-                id:     _label
+            QGCFlickable {
+                anchors.fill:       parent
+                contentHeight:      _loader.y + _loader.height
+                flickableDirection: Flickable.VerticalFlick
+
+                QGCLabel {
+                    id:     _label
                 text:   qsTr("选择需要显示的信息")//"Select the values you want to display:"
-            }
+                }
 
-            Loader {
-                anchors.left:       parent.left
-                anchors.right:      parent.right
-                anchors.topMargin:  _margins
-                anchors.top:        _label.bottom
-                anchors.bottom:     parent.bottom
-                sourceComponent:    factGroupList
+                Loader {
+                    id:                 _loader
+                    anchors.left:       parent.left
+                    anchors.right:      parent.right
+                    anchors.topMargin:  _margins
+                    anchors.top:        _label.bottom
+                    sourceComponent:    factGroupList
 
-                property var factGroup:     _activeVehicle
-                property var factGroupName: "Vehicle"
+                    property var factGroup:     _activeVehicle
+                    property var factGroupName: "Vehicle"
+                }
             }
         }
     }

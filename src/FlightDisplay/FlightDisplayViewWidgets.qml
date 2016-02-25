@@ -39,10 +39,6 @@ Item {
     id: _root
 
     property var    _activeVehicle: multiVehicleManager.activeVehicle
-    property real   _sizeRatio:     ScreenTools.isTinyScreen ? (size / _defaultSize) * 0.5 : size / _defaultSize
-    property real   _bigFontSize:   ScreenTools.defaultFontPixelSize * 2.5  * _sizeRatio
-    property real   _normalFontSize:ScreenTools.defaultFontPixelSize * 1.5  * _sizeRatio
-    property real   _labelFontSize: ScreenTools.defaultFontPixelSize * 0.75 * _sizeRatio
     property bool   _isSatellite:   _mainIsMap ? _flightMap ? _flightMap.isSatelliteMap : true : true
 
     QGCMapPalette { id: mapPal; lightColors: !isBackgroundDark }
@@ -95,7 +91,7 @@ Item {
     //-- Instrument Panel
     QGCInstrumentWidget {
         id:                     instrumentGadget
-        anchors.margins:        ScreenTools.defaultFontPixelHeight
+        anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
 //      anchors.right:          parent.right
         anchors.left:           parent.left
         anchors.top:            parent.top
@@ -112,12 +108,12 @@ Item {
         isSatellite:            _isSatellite
         z:                      QGroundControl.zOrderWidgets
         qgcView:                parent.parent.qgcView
-        maxHeight:              parent.height - (ScreenTools.defaultFontPixelHeight * 2)
+        maxHeight:              parent.height - (anchors.margins * 2)
     }
 
     QGCInstrumentWidgetAlternate {
         id:                     instrumentGadgetAlternate
-        anchors.margins:        ScreenTools.defaultFontPixelHeight
+        anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
         anchors.top:            parent.top
         anchors.right:          parent.right
         visible:                QGroundControl.virtualTabletJoystick
