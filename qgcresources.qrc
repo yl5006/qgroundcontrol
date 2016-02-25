@@ -127,9 +127,12 @@
         <file alias="TelemRSSI.svg">src/ui/toolbar/Images/TelemRSSI.svg</file>
         <file alias="Yield.svg">src/ui/toolbar/Images/Yield.svg</file>
         <file alias="CogWheel.svg">src/MissionManager/CogWheel.svg</file>
-        <file alias="Altitude.svg">src/FlightMap/Images/Altitude.svg</file>
-        <file alias="GroundSpeed.svg">src/FlightMap/Images/GroundSpeed.svg</file>
+        <file alias="altitudeRelative.svg">src/FlightMap/Images/altitudeRelative.svg</file>
+        <file alias="altitudeAMSL.svg">src/FlightMap/Images/altitudeAMSL.svg</file>
+        <file alias="groundSpeed.svg">src/FlightMap/Images/groundSpeed.svg</file>
         <file alias="Throttle.svg">src/FlightMap/Images/Throttle.svg</file>
+        <file alias="airSpeed.svg">src/FlightMap/Images/airSpeed.svg</file>
+        <file alias="climbRate.svg">src/FlightMap/Images/climbRate.svg</file>
         <file alias="Waypoint0.svg">src/FlightMap/Images/Waypoint0.svg</file>
         <file alias="Waypoint.svg">src/FlightMap/Images/Waypoint.svg</file>
     </qresource>

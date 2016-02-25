@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -94,6 +94,8 @@ public:
     Q_PROPERTY(double   altitudeAMSL            READ getAltitudeAMSL        WRITE setAltitudeAMSL       NOTIFY altitudeAMSLChanged)
     Q_PROPERTY(double   altitudeAMSLFT          READ getAltitudeAMSLFT                                  NOTIFY altitudeAMSLFTChanged)
     Q_PROPERTY(double   altitudeRelative        READ getAltitudeRelative    WRITE setAltitudeRelative   NOTIFY altitudeRelativeChanged)
+//yaoling
+    Q_PROPERTY(double   thrust                  READ getThrust              WRITE setThrust             NOTIFY thrustChanged)
     Q_PROPERTY(double   satRawHDOP              READ getSatRawHDOP                                      NOTIFY satRawHDOPChanged)
     Q_PROPERTY(double   satRawVDOP              READ getSatRawVDOP                                      NOTIFY satRawVDOPChanged)
     Q_PROPERTY(double   satRawCOG               READ getSatRawCOG                                       NOTIFY satRawCOGChanged)
@@ -212,6 +214,18 @@ public:
     double getAltitudeRelative() const
     {
         return altitudeRelative;
+    }
+
+    void setThrust(double val)
+    {
+        thrust = val;
+        emit thrustChanged(val, "thrust");
+        emit valueChanged(this->uasId,"thrust","%",QVariant(val),getUnixTime());
+    }
+
+    double getThrust() const
+    {
+        return thrust;
     }
 
     double getSatRawHDOP() const
@@ -418,6 +432,7 @@ protected: //COMMENTS FOR TEST UNIT
     double altitudeAMSL;        ///< Global altitude as estimated by position estimator, AMSL
     double altitudeAMSLFT;      ///< Global altitude as estimated by position estimator, AMSL
     double altitudeRelative;    ///< Altitude above home as estimated by position estimator
+    double thrust;              //yaoling
 
     double satRawHDOP;
     double satRawVDOP;
@@ -600,6 +615,7 @@ signals:
     void altitudeAMSLChanged(double val,QString name);
     void altitudeAMSLFTChanged(double val,QString name);
     void altitudeRelativeChanged(double val,QString name);
+    void thrustChanged(double val,QString name);   //yaoling
 
     void satRawHDOPChanged  (double value);
     void satRawVDOPChanged  (double value);

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+﻿<?xml version='1.0' encoding='UTF-8'?>
 <parameters>
   <version>3</version>
   <group name="UAVCAN Motor Parameters" no_code_generation="true">
@@ -3944,6 +3944,28 @@ FW_AIRSPD_MIN * RWTO_AIRSPD_SCL</short_desc>
       <min>0</min>
     </parameter>
   </group>
+  <group name="Throwtofly">
+      <parameter default="0.12" name="THROW_ACC_TIME" type="FLOAT">
+        <short_desc>acc time constant</short_desc>
+        <long_desc>Reduce if the system is too twitchy, increase if the response is too slow and sluggish.</long_desc>
+        <min>0.04</min>
+        <max>1</max>
+        <decimal>3</decimal>
+      </parameter>
+      <parameter default="1.2" name="THROW_POWER" type="FLOAT">
+        <short_desc>throw power acc  constant</short_desc>
+        <long_desc>Reduce if the system is too twitchy, increase if the response is too slow and sluggish.</long_desc>
+        <min>0.5</min>
+        <max>2</max>
+        <decimal>2</decimal>
+      </parameter>
+      <parameter default="1" name="THROW_ENABLE" type="INT32">
+        <short_desc>throw enable</short_desc>
+        <long_desc>throw enable</long_desc>
+        <min>0.0</min>
+        <decimal>2</decimal>
+      </parameter>
+    </group>
   <group name="UAVCAN">
     <parameter default="0" name="UAVCAN_ENABLE" type="INT32">
       <short_desc>Enable UAVCAN</short_desc>

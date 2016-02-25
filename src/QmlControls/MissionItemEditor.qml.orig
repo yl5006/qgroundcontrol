@@ -177,7 +177,7 @@ Rectangle {
                         width:      parent.width
                         wrapMode:   Text.WordWrap
                         text:       missionItem.sequenceNumber == 0 ?
-                                        "Planned home position." :
+                                        qsTr("Home点")://"Planned home position." :
                                         (missionItem.rawEdit ?
                                              "Provides advanced access to all commands/parameters. Be very careful!" :
                                              missionItem.commandDescription)
@@ -249,7 +249,7 @@ Rectangle {
                     }
 
                     QGCButton {
-                        text:       "Move Home to map center"
+                        text:       qsTr("Home回地图中")//"Move Home to map center"
                         visible:    missionItem.homePosition
                         onClicked:  moveHomeToMapCenter()
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -279,6 +279,34 @@ Rectangle {
         } // Item
     } // Component - simpleMissionItemEditor
 
+<<<<<<< HEAD
+        Image {
+            id:                     hamburger
+            anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
+            anchors.right:          parent.right
+            anchors.verticalCenter: commandPicker.verticalCenter
+            width:                  commandPicker.height
+            height:                 commandPicker.height
+            source:                 "qrc:/qmlimages/Hamburger.svg"
+            visible:                missionItem.isCurrentItem && missionItem.sequenceNumber != 0
+
+            MouseArea {
+                anchors.fill:   parent
+                onClicked:      hamburgerMenu.popup()
+
+                Menu {
+                    id: hamburgerMenu
+
+                    MenuItem {
+                        text:           qsTr("插入")//"Insert"
+                        onTriggered:    insert(missionItem.sequenceNumber)
+                    }
+
+                    MenuItem {
+                        text:           qsTr("删除")//"Delete"
+                        onTriggered:    remove()
+                    }
+=======
     Component {
         id: complexMissionItemEditor
 
@@ -288,9 +316,16 @@ Rectangle {
             width:      availableWidth
             color:      qgcPal.windowShadeDark
             radius:     _radius
+>>>>>>> master
 
             property bool addPointsMode: false
 
+<<<<<<< HEAD
+                    MenuItem {
+                        text:       qsTr("详细设置")//"Show all values"
+                        checkable:  true
+                        checked:    missionItem.rawEdit
+=======
             Column {
                 id:                 editorColumn
                 anchors.margins:    _margin
@@ -298,6 +333,7 @@ Rectangle {
                 anchors.left:       parent.left
                 width:              availableWidth
                 spacing:            _margin
+>>>>>>> master
 
                 Connections {
                     target: editorMap

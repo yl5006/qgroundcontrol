@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -211,6 +211,7 @@ public:
     Q_PROPERTY(Fact* climbRate          READ climbRate          CONSTANT)
     Q_PROPERTY(Fact* altitudeRelative   READ altitudeRelative   CONSTANT)
     Q_PROPERTY(Fact* altitudeAMSL       READ altitudeAMSL       CONSTANT)
+    Q_PROPERTY(Fact* throttle           READ throttle           CONSTANT)   //add yaoling
 
     Q_PROPERTY(FactGroup* gps       READ gpsFactGroup       CONSTANT)
     Q_PROPERTY(FactGroup* battery   READ batteryFactGroup   CONSTANT)
@@ -360,6 +361,7 @@ public:
     Fact* climbRate         (void) { return &_climbRateFact; }
     Fact* altitudeRelative  (void) { return &_altitudeRelativeFact; }
     Fact* altitudeAMSL      (void) { return &_altitudeAMSLFact; }
+    Fact* throttle          (void) { return &_throttleFact; }   //add yaoling
 
     FactGroup* gpsFactGroup     (void) { return &_gpsFactGroup; }
     FactGroup* batteryFactGroup (void) { return &_batteryFactGroup; }
@@ -445,6 +447,8 @@ private slots:
     void _updateAttitude                    (UASInterface* uas, int component, double roll, double pitch, double yaw, quint64 timestamp);
     void _updateSpeed                       (UASInterface* uas, double _groundSpeed, double _airSpeed, quint64 timestamp);
     void _updateAltitude                    (UASInterface* uas, double _altitudeAMSL, double _altitudeRelative, double _climbRate, quint64 timestamp);
+ //add yaoling
+    void _updatethrust                      (UASInterface* uas, double _thrust);
     void _updateNavigationControllerErrors  (UASInterface* uas, double altitudeError, double speedError, double xtrackError);
     void _updateNavigationControllerData    (UASInterface *uas, float navRoll, float navPitch, float navBearing, float targetBearing, float targetDistance);
     void _checkUpdate                       ();
@@ -574,6 +578,7 @@ private:
     Fact _climbRateFact;
     Fact _altitudeRelativeFact;
     Fact _altitudeAMSLFact;
+    Fact _throttleFact;         //add yaoling
 
     VehicleGPSFactGroup     _gpsFactGroup;
     VehicleBatteryFactGroup _batteryFactGroup;
@@ -586,6 +591,8 @@ private:
     static const char* _climbRateFactName;
     static const char* _altitudeRelativeFactName;
     static const char* _altitudeAMSLFactName;
+    static const char* _throttleFactName;   //yaoling
+
     static const char* _gpsFactGroupName;
     static const char* _batteryFactGroupName;
 

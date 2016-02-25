@@ -61,6 +61,10 @@ Item {
             rollAngle:      _rollAngle
             pitchAngle:     _pitchAngle
             anchors.fill:   parent
+//            anchors.topMargin:      width*3/20
+//            anchors.top:    parent.top
+//            anchors.bottomMargin:   width*3/20
+//            anchors.bottom:   parent.bottom
         }
         //----------------------------------------------------
         //-- Pointer

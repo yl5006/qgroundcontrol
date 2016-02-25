@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -67,6 +67,7 @@ public:
     virtual double getLongitude() const = 0;
     virtual double getAltitudeAMSL() const = 0;
     virtual double getAltitudeRelative() const = 0;
+    virtual double getThrust() const = 0; //yaoling
     virtual bool globalPositionKnown() const = 0;
 
     virtual double getRoll() const = 0;
@@ -254,7 +255,7 @@ signals:
      */
     void batteryChanged(UASInterface* uas, double voltage, double current, double percent, int seconds);
     void statusChanged(UASInterface* uas, QString status);
-    void thrustChanged(UASInterface*, double thrust);
+    void throttleChanged(UASInterface*, double thrust);  //yaoling
     void attitudeChanged(UASInterface*, double roll, double pitch, double yaw, quint64 usec);
     void attitudeChanged(UASInterface*, int component, double roll, double pitch, double yaw, quint64 usec);
     void attitudeRotationRatesChanged(int uas, double rollrate, double pitchrate, double yawrate, quint64 usec);

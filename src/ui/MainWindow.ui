@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
@@ -73,7 +73,6 @@
     <addaction name="actionProject_Roadmap"/>
     <addaction name="actionDeveloper_Credits"/>
    </widget>
-     <string>View</string>
    <widget class="QMenu" name="menuWidgets">
     <property name="title">
      <string>工具</string>
@@ -86,9 +85,6 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
    <property name="text">
-    <string>退出</string>
-   </property>
-   <property name="toolTip">
     <string>退出</string>
    </property>
    <property name="shortcut">
@@ -115,14 +111,6 @@
     <string>Developer Credits</string>
    </property>
   </action>
-    <string>Plan</string>
-   <property name="toolTip">
-    <string>计划</string>
-   </property>
-    <string>Fly</string>
-   </property>
-   <property name="toolTip">
-    <string>飞行</string>
   <action name="actionMuteAudioOutput">
    <property name="checkable">
     <bool>true</bool>
@@ -142,8 +130,6 @@
     <enum>QAction::PreferencesRole</enum>
    </property>
   </action>
-    <string>Setup</string>
-    <string>Setup of the vehicle</string>
   <action name="actionAdvanced_Mode">
    <property name="checkable">
     <bool>true</bool>

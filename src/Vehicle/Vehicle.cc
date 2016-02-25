@@ -54,6 +54,7 @@ const char* Vehicle::_groundSpeedFactName =         "groundSpeed";
 const char* Vehicle::_climbRateFactName =           "climbRate";
 const char* Vehicle::_altitudeRelativeFactName =    "altitudeRelative";
 const char* Vehicle::_altitudeAMSLFactName =        "altitudeAMSL";
+const char* Vehicle::_throttleFactName =            "thrust";
 
 const char* Vehicle::_gpsFactGroupName =        "gps";
 const char* Vehicle::_batteryFactGroupName =    "battery";
@@ -143,6 +144,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _climbRateFact        (0, _climbRateFactName,         FactMetaData::valueTypeDouble)
     , _altitudeRelativeFact (0, _altitudeRelativeFactName,  FactMetaData::valueTypeDouble)
     , _altitudeAMSLFact     (0, _altitudeAMSLFactName,      FactMetaData::valueTypeDouble)
+    , _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeDouble)   //add  yaoling
     , _gpsFactGroup(this)
     , _batteryFactGroup(this)
 {
@@ -189,8 +191,10 @@ Vehicle::Vehicle(LinkInterface*             link,
     // Now connect the new UAS
     connect(_mav, SIGNAL(attitudeChanged                    (UASInterface*,double,double,double,quint64)),              this, SLOT(_updateAttitude(UASInterface*, double, double, double, quint64)));
     connect(_mav, SIGNAL(attitudeChanged                    (UASInterface*,int,double,double,double,quint64)),          this, SLOT(_updateAttitude(UASInterface*,int,double, double, double, quint64)));
-    connect(_mav, SIGNAL(statusChanged                      (UASInterface*,QString,QString)),                           this, SLOT(_updateState(UASInterface*, QString,QString)));
+    connect(_mav, SIGNAL(statusChanged                      (UASInterface*,QString,QString)),
+            this, SLOT(_updateState(UASInterface*, QString,QString)));
 
+    connect(_mav, &UASInterface::throttleChanged, this, &Vehicle::_updatethrust);  //add yaoling
     connect(_mav, &UASInterface::speedChanged, this, &Vehicle::_updateSpeed);
     connect(_mav, &UASInterface::altitudeChanged, this, &Vehicle::_updateAltitude);
     connect(_mav, &UASInterface::navigationControllerErrorsChanged,this, &Vehicle::_updateNavigationControllerErrors);
@@ -224,6 +228,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     _addFact(&_climbRateFact,           _climbRateFactName);
     _addFact(&_altitudeRelativeFact,    _altitudeRelativeFactName);
     _addFact(&_altitudeAMSLFact,        _altitudeAMSLFactName);
+    _addFact(&_throttleFact,            _throttleFactName); //add yaoling
 #ifdef QT_DEBUG
     _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
     _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
@@ -678,6 +683,11 @@ void Vehicle::_updateAltitude(UASInterface*, double altitudeAMSL, double altitud
     _altitudeAMSLFact.setRawValue(altitudeAMSL);
     _altitudeRelativeFact.setRawValue(altitudeRelative);
     _climbRateFact.setRawValue(climbRate);
+}
+//add yaoling 油门显示
+void Vehicle::_updatethrust(UASInterface*, double _throttle)
+{
+    _throttleFact.setRawValue(_throttle);
 }
 
 void Vehicle::_updateNavigationControllerErrors(UASInterface*, double altitudeError, double speedError, double xtrackError) {

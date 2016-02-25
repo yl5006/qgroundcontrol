@@ -57,6 +57,13 @@
             "type":             "double",
             "decimalPlaces":    1,
             "units":            "m"
+        },
+        {
+            "name":             "thrust",
+            "shortDescription": "油门",
+            "type":             "double",
+            "decimalPlaces":    0,
+            "units":            "%"
         }
     ]
 }

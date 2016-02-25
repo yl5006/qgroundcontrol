@@ -93,6 +93,7 @@ UAS::UAS(MAVLinkProtocol* protocol, Vehicle* vehicle, FirmwarePluginManager * fi
     altitudeAMSL(0.0),
     altitudeAMSLFT(0.0),
     altitudeRelative(0.0),
+    thrust(0.0),   //yaoling
 
     satRawHDOP(1e10f),
     satRawVDOP(1e10f),
@@ -548,8 +549,9 @@ void UAS::receiveMessage(mavlink_message_t message)
             mavlink_msg_vfr_hud_decode(&message, &hud);
             quint64 time = getUnixTime();
             // Display updated values
-            emit thrustChanged(this, hud.throttle/100.0);
-
+//yaoling
+            setThrust(hud.throttle);
+            emit throttleChanged(this,thrust);
             if (!attitudeKnown)
             {
                 setYaw(QGC::limitAngleToPMPId((((double)hud.heading)/180.0)*M_PI));

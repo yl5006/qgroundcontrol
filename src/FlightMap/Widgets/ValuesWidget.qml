@@ -64,7 +64,20 @@ QGCFlickable {
         }
         return false
     }
-
+    function getIcon(name) {
+        if(name== "altitudeRelative")
+           return "/qmlimages/altitudeRelative.svg"
+        if(name== "altitudeAMSL")
+           return "/qmlimages/altitudeAMSL.svg"
+        if(name== "climbRate")
+           return "/qmlimages/climbRate.svg"
+        if(name== "airSpeed")
+           return "/qmlimages/airSpeed.svg"
+        if(name== "groundSpeed")
+           return "/qmlimages/groundSpeed.svg"
+        if(name== "thrust")
+           return "/qmlimages/Throttle.svg"
+    }
     MouseArea {
         anchors.fill:   parent
         onClicked:      showPicker()
@@ -72,7 +85,7 @@ QGCFlickable {
     Column {
         id:         _largeColumn
         width:      parent.width
-        spacing:    _margins
+        spacing:    _margins*1.2
 
         Repeater {
             model: _activeVehicle ? controller.largeValues : 0
@@ -85,20 +98,28 @@ QGCFlickable {
                 anchors.horizontalCenter:  parent.horizontalCenter
                 property Fact fact: _activeVehicle.getFact(modelData.replace("Vehicle.", ""))
                 property bool largeValue: _root.listContains(controller.altitudeProperties, fact.name)
+
+                Image{
+                    width:    ScreenTools.largeFontPixelSize
+                    height:   ScreenTools.largeFontPixelSize
+                    source:   getIcon(fact.name)
+                }
+
                 QGCLabel {
-        //          width:                  parent.width
+                    width:                  parent.width*0.3
+                    horizontalAlignment:    Text.AlignHCenter
                     font.pixelSize:         ScreenTools.largeFontPixelSize
                     font.weight:            Font.DemiBold
                     color:                  textColor
-                    text:                   fact.shortDescription
+                    text:                   fact.valueString
                 }
                 QGCLabel {
         //          width:                  parent.width
  //                 horizontalAlignment:    Text.AlignHCenter
-                    font.pixelSize:         ScreenTools.largeFontPixelSize * (largeValue ? 1.3 : 1.0)
-                    font.weight:            largeValue ? Font.ExtraBold : Font.Normal
+                    font.pixelSize:         ScreenTools.largeFontPixelSize// ScreenTools.largeFontPixelSize * (largeValue ? 1.3 : 1.0)
+                    font.weight:            Font.DemiBold//largeValue ? Font.ExtraBold : Font.Normal
                     color:                  textColor
-                    text:                   fact.valueString+ (fact.units ? " (" + fact.units + ")" : "")
+                    text:                   fact.units ? fact.units  : ""
                 }
             }
         } // Repeater - Large
