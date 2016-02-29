@@ -460,10 +460,12 @@ QGCView {
                 // Mission Item Editor
                 Item {
                     id:             missionItemEditor
-                    height:         mainWindow.availableHeight
+                    height:         mainWindow.availableHeight/5  //change by yaoling
                     anchors.bottom: parent.bottom
-                    anchors.right:  parent.right
-                    width:          _rightPanelWidth
+//                  anchors.right:  parent.right
+                    anchors.left:   parent.left
+//                  width:          _rightPanelWidth
+                    width:          mainWindow.availableWidth   //change by yaoling
                     opacity:        _rightPanelOpacity
                     z:              QGroundControl.zOrderTopMost
 
@@ -478,17 +480,19 @@ QGCView {
                     ListView {
                         id:             editorListView
                         anchors.left:   parent.left
-                        anchors.right:  parent.right
+//                       anchors.right:  parent.right
                         anchors.top:    parent.top
+//                        anchors.bottom: parent.bottom
                         height:         parent.height
+                        width:          parent.width   //add yaoling
                         spacing:        _margin / 2
-                        orientation:    ListView.Vertical
+//                      orientation:    ListView.Vertical   //change by yaoling
+                        orientation:    ListView.Horizontal
                         model:          controller.visualItems
-                        cacheBuffer:    height * 2
-
+                        cacheBuffer:    width*2//height * 2
                         delegate: MissionItemEditor {
                             missionItem:    object
-                            width:          parent.width
+                            width:          _rightPanelWidth//parent.width
                             qgcView:        _root
                             readOnly:       false
 
@@ -680,17 +684,17 @@ QGCView {
                         }
                     }
                 }
-
-                MissionItemStatus {
-                    id:                 waypointValuesDisplay
-                    anchors.margins:    ScreenTools.defaultFontPixelWidth
-                    anchors.left:       parent.left
-                    anchors.bottom:     parent.bottom
-                    z:                  QGroundControl.zOrderTopMost
-                    currentMissionItem: _currentMissionItem
-                    missionItems:       controller.visualItems
-                    expandedWidth:      missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
-                }
+//   change by yaoling do not use this
+//                MissionItemStatus {
+//                    id:                 waypointValuesDisplay
+//                    anchors.margins:    ScreenTools.defaultFontPixelWidth
+//                    anchors.left:       parent.left
+//                    anchors.bottom:     parent.bottom
+//                    z:                  QGroundControl.zOrderTopMost
+//                    currentMissionItem: _currentMissionItem
+//                    missionItems:       controller.visualItems
+//                    expandedWidth:      missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
+//                }
             } // FlightMap
         } // Item - split view container
     } // QGCViewPanel

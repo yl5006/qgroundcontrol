@@ -92,14 +92,14 @@ enum DockWidgetTypes {
 };
 
 static const char *rgDockWidgetNames[] = {
-    "数据链分析",//MAVLink Inspector
-    "用户命令",//Custom Command
-    "机体文件",//Onboard Files
-    "状态细节",//Status Details
-    "信息显示",//Info View
-    "仿真设置",//HIL Config
-    "波形分析",//Analyze
-    "日志下载"//Log Download
+    QT_TR_NOOP("数据链分析"),//MAVLink Inspector
+    QT_TR_NOOP("用户命令"),//Custom Command
+    QT_TR_NOOP("机体文件"),//Onboard Files
+    QT_TR_NOOP("状态细节"),//Status Details
+    QT_TR_NOOP("信息显示"),//Info View
+    QT_TR_NOOP("仿真设置"),//HIL Config
+    QT_TR_NOOP("波形分析"),//Analyze
+    QT_TR_NOOP("日志下载")//Log Download
 };
 
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof(ARRAY[0]))

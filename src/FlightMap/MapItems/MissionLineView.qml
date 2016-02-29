@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -36,7 +36,7 @@ MapItemView {
 
     delegate: MapPolyline {
         line.width: 3
-        line.color: "#be781c"                           // Hack, can't get palette to work in here
+        line.color: "#00ffff"  // "#be781c"                           // Hack, can't get palette to work in here
         z:          QGroundControl.zOrderMapItems - 1   // Under item indicators
 
         path: [

@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -49,6 +49,7 @@ Item {
     property real   tbSpacing:          ScreenTools.isMobile ? width * 0.00824 : 9.54
     property real   tbButtonWidth:      tbCellHeight * 1.35
     property real   availableHeight:    height - tbHeight
+    property real   availableWidth:     width   //add yaoling
     property real   menuButtonWidth:    (tbButtonWidth * 2) + (tbSpacing * 4) + 1
     property var    gcsPosition:        QtPositioning.coordinate()  // Starts as invalid coordinate
     property var    currentPopUp:       null
