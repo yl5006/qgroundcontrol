@@ -101,30 +101,29 @@ public:
     QString         commandName             (void) const final;
     QGeoCoordinate  coordinate              (void) const final { return _missionItem.coordinate(); }
     QGeoCoordinate  exitCoordinate          (void) const final { return coordinate(); }
+    int             sequenceNumber          (void) const final { return _missionItem.sequenceNumber(); }
 
     bool coordinateHasRelativeAltitude      (void) const final { return _missionItem.relativeAltitude(); }
     bool exitCoordinateHasRelativeAltitude  (void) const final { return coordinateHasRelativeAltitude(); }
     bool exitCoordinateSameAsEntry          (void) const final { return true; }
 
     void setDirty           (bool dirty) final;
-    void setCoordinate      (const QGeoCoordinate& coordinate);
-    bool save               (QJsonObject& missionObject, QJsonArray& missionItems, QString& errorString) final;
+    void setCoordinate      (const QGeoCoordinate& coordinate) final;
+    void setSequenceNumber  (int sequenceNumber) final;
+    void save               (QJsonObject& saveObject) const final;
 
 public slots:
     void setDefaultsForCommand(void);
 
 signals:
     void commandChanged             (int command);
-    void coordinateChanged          (const QGeoCoordinate& coordinate);
-    void exitCoordinateChanged      (const QGeoCoordinate& exitCoordinate);
-    //void dirtyChanged               (bool dirty);
     void frameChanged               (int frame);
     void friendlyEditAllowedChanged (bool friendlyEditAllowed);
     void headingDegreesChanged      (double heading);
     void rawEditChanged             (bool rawEdit);
     void uiModelChanged             (void);
     void showHomePositionChanged    (bool showHomePosition);
-    
+
 private slots:
     void _setDirtyFromSignal(void);
     void _sendCommandChanged(void);

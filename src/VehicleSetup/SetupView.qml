@@ -165,7 +165,8 @@ Rectangle {
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
                 font.pixelSize:         ScreenTools.largeFontPixelSize
-                text:                   qsTr("连接你的飞控系统，地面会自动连接")//"Connect vehicle to your device and QGroundControl will automatically detect to it. Click Firmware on the left to upgrade your vehicle."
+                text:                   qsTr("连接你的飞控系统，地面会自动连接")//"Connect vehicle to your device and QGroundControl will automatically detect to it." +
+                                            (ScreenTools.isMobile ? "" : " Click Firmware on the left to upgrade your vehicle.")
 
                 onLinkActivated: Qt.openUrlExternally(link)
             }

@@ -190,6 +190,9 @@ void SimpleMissionItem::_connectSignals(void)
     // These fact signals must alway signal out through SimpleMissionItem signals
     connect(&_missionItem._commandFact,     &Fact::valueChanged, this, &SimpleMissionItem::_sendCommandChanged);
     connect(&_missionItem._frameFact,       &Fact::valueChanged, this, &SimpleMissionItem::_sendFrameChanged);
+
+    // Sequence number is kept in mission iteem, so we need to propogate signal up as well
+    connect(&_missionItem, &MissionItem::sequenceNumberChanged, this, &SimpleMissionItem::sequenceNumberChanged);
 }
 
 void SimpleMissionItem::_setupMetaData(void)
@@ -244,16 +247,9 @@ SimpleMissionItem::~SimpleMissionItem()
 {    
 }
 
-bool SimpleMissionItem::save(QJsonObject& missionObject, QJsonArray& missionItems, QString& errorString)
+void SimpleMissionItem::save(QJsonObject& saveObject) const
 {
-    Q_UNUSED(missionObject);
-    Q_UNUSED(errorString);
-
-    QJsonObject itemObject;
-    _missionItem.save(itemObject);
-    missionItems.append(itemObject);
-
-    return true;
+    _missionItem.save(saveObject);
 }
 
 bool SimpleMissionItem::load(QTextStream &loadStream)
@@ -581,7 +577,11 @@ void SimpleMissionItem::setCommand(MavlinkQmlSingleton::Qml_MAV_CMD command)
 void SimpleMissionItem::setCoordinate(const QGeoCoordinate& coordinate)
 {
     if (_missionItem.coordinate() != coordinate) {
-        qDebug() << _missionItem.coordinate() << coordinate;
         _missionItem.setCoordinate(coordinate);
     }
+}
+
+void SimpleMissionItem::setSequenceNumber(int sequenceNumber)
+{
+    _missionItem.setSequenceNumber(sequenceNumber);
 }
