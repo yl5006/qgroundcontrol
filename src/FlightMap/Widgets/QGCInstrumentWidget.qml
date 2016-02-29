@@ -105,15 +105,16 @@ Rectangle {
 
     Image {
         id:                 gearThingy
-        anchors.bottom:     attitude.bottom
+//      anchors.bottom:     attitude.bottom
+        anchors.top:     attitude.top
         anchors.right:      attitude.right
         source:             "/res/gear.svg"
         mipmap:             true
         opacity:            0.5
         width:              attitude.width * 0.15
         fillMode:           Image.PreserveAspectFit
-//        visible:            QGroundControl.multiVehicleManager.activeVehicle
-        visible:            false                //do not use yaoling
+        visible:            QGroundControl.multiVehicleManager.activeVehicle
+//      visible:            false                //do not use yaoling
         MouseArea {
             anchors.fill:   parent
             hoverEnabled:   true
@@ -133,17 +134,17 @@ Rectangle {
         color:              Qt.rgba(0,0,0,0.0)
         anchors.horizontalCenter: parent.horizontalCenter
     }
-
-    InstrumentSwipeView {
-        id:                 _valuesWidget
-        anchors.topMargin:  _spacing
-        anchors.top:        _spacer1.bottom
-        width:              parent.width
-        qgcView:            instrumentPanel.qgcView
-        textColor:          isSatellite ? "black" : "white"
-        backgroundColor:    _backgroundColor
-        maxHeight:          _availableValueHeight
-    }
+//do not use
+//    InstrumentSwipeView {
+//        id:                 _valuesWidget1
+//        anchors.topMargin:  _spacing
+//        anchors.top:        _spacer1.bottom
+//        width:              parent.width
+//        qgcView:            instrumentPanel.qgcView
+//        textColor:          isSatellite ? "black" : "white"
+//        backgroundColor:    _backgroundColor
+//        maxHeight:          _availableValueHeight
+//    }
 
     Component {
         id: valuesPage

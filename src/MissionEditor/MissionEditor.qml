@@ -507,9 +507,9 @@ QGCView {
                     ListView {
                         id:             editorListView
                         anchors.left:   parent.left
-//                       anchors.right:  parent.right
+//                      anchors.right:  parent.right
                         anchors.top:    parent.top
-//                        anchors.bottom: parent.bottom
+//                      anchors.bottom: parent.bottom
                         height:         parent.height
                         width:          parent.width   //add yaoling
                         spacing:        _margin / 2

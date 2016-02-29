@@ -131,7 +131,7 @@ Row {
             Image {
                 id:             messageIcon
                 source:         "/qmlimages/Megaphone.svg"
-                height:         mainWindow.tbCellHeight * 0.5
+                height:         mainWindow.tbCellHeight * 0.6//0.5
                 fillMode:       Image.PreserveAspectFit
                 mipmap:         true
                 smooth:         true
@@ -212,8 +212,8 @@ Row {
                 fillMode:       Image.PreserveAspectFit
                 mipmap:         true
                 smooth:         true
-                width:          mainWindow.tbCellHeight * 0.65
-                height:         mainWindow.tbCellHeight * 0.5
+                width:          mainWindow.tbCellHeight * 0.7//0.65
+                height:         mainWindow.tbCellHeight * 0.65//0.5
                 opacity:        activeVehicle ? (activeVehicle.rcRSSI < 1 ? 0.5 : 1) : 0.5
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -281,7 +281,7 @@ Row {
                 fillMode:       Image.PreserveAspectFit
                 mipmap:         true
                 smooth:         true
-                height:         mainWindow.tbCellHeight * 0.65
+                height:         mainWindow.tbCellHeight * 0.6//0.65
                 anchors.verticalCenter: parent.verticalCenter
             }
             QGCLabel {
