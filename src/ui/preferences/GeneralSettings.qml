@@ -40,6 +40,8 @@ Rectangle {
     anchors.fill:       parent
     anchors.margins:    ScreenTools.defaultFontPixelWidth
 
+    property Fact _percentRemainingAnnounce: QGroundControl.multiVehicleManager.disconnectedVehicle.battery.percentRemainingAnnounce
+
     QGCPalette {
         id:                 qgcPal
         colorGroupEnabled:  enabled
@@ -49,14 +51,13 @@ Rectangle {
         clip:               true
         anchors.fill:       parent
         contentHeight:      settingsColumn.height
-        contentWidth:       _generalRoot.width
-        flickableDirection: Flickable.VerticalFlick
+        contentWidth:       settingsColumn.width
 
         Column {
             id:                 settingsColumn
-            width:              _generalRoot.width
             anchors.margins:    ScreenTools.defaultFontPixelWidth
             spacing:            ScreenTools.defaultFontPixelHeight / 2
+
             QGCLabel {
                 text:   qsTr("常规设置")//"General Settings"
                 font.pixelSize: ScreenTools.mediumFontPixelSize
@@ -127,6 +128,32 @@ Rectangle {
                         clearCheck.checked  = false
                         clearDialog.visible = false
                     }
+                }
+            }
+            //-----------------------------------------------------------------
+            //-- Battery talker
+            Row {
+                spacing: ScreenTools.defaultFontPixelWidth
+
+                QGCCheckBox {
+                    id:                 announcePercentCheckbox
+                    anchors.baseline:   announcePercent.baseline
+                    text:               "Announce battery percent lower than:"
+                    checked:            _percentRemainingAnnounce.value != 0
+
+                    onClicked: {
+                        if (checked) {
+                            _percentRemainingAnnounce.value = _percentRemainingAnnounce.defaultValueString
+                        } else {
+                            _percentRemainingAnnounce.value = 0
+                        }
+                    }
+                }
+
+                FactTextField {
+                    id:         announcePercent
+                    fact:       _percentRemainingAnnounce
+                    enabled:    announcePercentCheckbox.checked
                 }
             }
 

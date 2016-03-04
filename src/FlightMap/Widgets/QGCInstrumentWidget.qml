@@ -35,16 +35,15 @@ import QGroundControl.ScreenTools   1.0
 import QGroundControl.FactSystem    1.0
 import QGroundControl.FlightMap     1.0
 
-Rectangle {
+Item {
     id:     instrumentPanel
-    height: compass.y + compass.height + _topBottomMargin
+    height: instrumentColumn.y + instrumentColumn.height + _topBottomMargin
     width:  size
-    radius: size / 2
-//    color:  _backgroundColor
+ //   color:  _backgroundColor
     color:          Qt.rgba(0,0,0,0.0)
     property alias  heading:        compass.heading
-    property alias  rollAngle:      attitude.rollAngle
-    property alias  pitchAngle:     attitude.pitchAngle
+    property alias  rollAngle:      attitudeWidget.rollAngle
+    property alias  pitchAngle:     attitudeWidget.pitchAngle
     property real   size:           _defaultSize
     property bool   isSatellite:    false
     property bool   active:         false
@@ -58,14 +57,20 @@ Rectangle {
     property real   _defaultSize:   ScreenTools.defaultFontPixelSize * (9)
 
     property color  _backgroundColor:   isSatellite ? Qt.rgba(1,1,1,0.75) : Qt.rgba(0,0,0,0.75)
-    property real   _sizeRatio:         ScreenTools.isTinyScreen ? (size / _defaultSize) * 0.5 : size / _defaultSize
-    property real   _bigFontSize:       ScreenTools.defaultFontPixelSize * 2.5  * _sizeRatio
-    property real   _normalFontSize:    ScreenTools.defaultFontPixelSize * 1.5  * _sizeRatio
-    property real   _labelFontSize:     ScreenTools.defaultFontPixelSize * 0.75 * _sizeRatio
     property real   _spacing:           ScreenTools.defaultFontPixelSize * 0.33
     property real   _topBottomMargin:   (size * 0.05) / 2
-//  property real   _availableValueHeight: maxHeight - (attitude.height + _spacer1.height + _spacer2.height + compass.height + (_spacing * 4))
+ //   property real   _availableValueHeight: maxHeight - (attitudeWidget.height + _spacer1.height + _spacer2.height + (_spacing * 4)) - (_showCompass ? compass.height : 0)
     property real   _availableValueHeight: maxHeight - (_spacer1.height + _spacer2.height + (_spacing * 4))
+    property var    _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
+    readonly property bool _showCompass:    !ScreenTools.isShortScreen
+
+    Rectangle {
+        anchors.left:   parent.left
+        anchors.right:  parent.right
+        height:         (_showCompass ? instrumentColumn.height : attitudeWidget.height) + (_topBottomMargin * 2)
+        radius:         size / 2
+        color:          _backgroundColor
+    }
 
     MouseArea {
         anchors.fill:       valuesspacer
@@ -82,7 +87,6 @@ Rectangle {
         color:              Qt.rgba(0,0,0,0.65)
         anchors.horizontalCenter: parent.horizontalCenter
         visible:            QGroundControl.multiVehicleManager.activeVehicle
-    }
     ValuesWidget {
         id:                 _valuesWidget
         anchors.topMargin:  _spacing//
@@ -92,88 +96,88 @@ Rectangle {
         textColor:          "white"//isSatellite ? "black" : "white"
         maxHeight:          _availableValueHeight
     }
-    QGCAttitudeWidget {
-        id:             attitude
+            QGCAttitudeWidget {
+                id:             attitudeWidget
         anchors.top:    _valuesWidget.bottom
         anchors.topMargin:  _spacing//
         y:              _topBottomMargin
-        size:           parent.width * 0.95
-        active:         instrumentPanel.active
+                size:           parent.width * 0.95
+                active:         instrumentPanel.active
         visible:        !QGroundControl.virtualTabletJoystick
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
 
-    Image {
-        id:                 gearThingy
-//      anchors.bottom:     attitude.bottom
+            Image {
+                id:                 gearThingy
+        anchors.bottom:     attitude.bottom
         anchors.top:     attitude.top
-        anchors.right:      attitude.right
-        source:             "/res/gear.svg"
-        mipmap:             true
-        opacity:            0.5
-        width:              attitude.width * 0.15
-        fillMode:           Image.PreserveAspectFit
-        visible:            QGroundControl.multiVehicleManager.activeVehicle
+                anchors.right:      attitudeWidget.right
+                source:             "/res/gear.svg"
+                mipmap:             true
+                opacity:            0.5
+                width:              attitudeWidget.width * 0.15
+                fillMode:           Image.PreserveAspectFit
+                visible:            QGroundControl.multiVehicleManager.activeVehicle
 //      visible:            false                //do not use yaoling
-        MouseArea {
-            anchors.fill:   parent
-            hoverEnabled:   true
-            onEntered:      gearThingy.opacity = 0.85
-            onExited:       gearThingy.opacity = 0.5
-            onClicked:      _valuesWidget.showPicker()
+                MouseArea {
+                    anchors.fill:   parent
+                    hoverEnabled:   true
+                    onEntered:      gearThingy.opacity = 0.85
+                    onExited:       gearThingy.opacity = 0.5
+                    onClicked:      _valuesWidget.showPicker()
+                }
+            }
         }
-    }
 
-    Rectangle {
-        id:                 _spacer1
-        anchors.topMargin:  _spacing
-        anchors.top:        attitude.bottom
+        Rectangle {
+            id:                 _spacer1
         height:             2
-        width:              parent.width * 0.9
+            width:              parent.width * 0.9
 //      color:              isSatellite ? Qt.rgba(0,0,0,0.25) : Qt.rgba(1,1,1,0.25)
         color:              Qt.rgba(0,0,0,0.0)
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
 //do not use
+//        Item {
+//            width:  parent.width
+//            height: _valuesWidget.height
+
+//            Rectangle {
+//                anchors.fill:   _valuesWidget
+//                color:          _backgroundColor
+//                visible:        !_showCompass
+//                radius:         _spacing
+//            }
+
 //    InstrumentSwipeView {
 //        id:                 _valuesWidget1
-//        anchors.topMargin:  _spacing
-//        anchors.top:        _spacer1.bottom
 //        width:              parent.width
 //        qgcView:            instrumentPanel.qgcView
 //        textColor:          isSatellite ? "black" : "white"
 //        backgroundColor:    _backgroundColor
 //        maxHeight:          _availableValueHeight
 //    }
-
-    Component {
-        id: valuesPage
+//       }
 
         Rectangle {
-            width: 100
-            height: 100
-            color: index == 0 ? "red" : "blue"
-        }
-    }
-
-    Rectangle {
-        id:                 _spacer2
+            id:                 _spacer2
         anchors.topMargin:  _spacing
         anchors.top:        _valuesWidget.bottom
-        height:             1
-        width:              parent.width * 0.9
+            height:             1
+            width:              parent.width * 0.9
 //      color:              isSatellite ? Qt.rgba(0,0,0,0.25) : Qt.rgba(1,1,1,0.25)
         color:              Qt.rgba(0,0,0,0.0)
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
 
-    QGCCompassWidget {
-        id:                 compass
+        QGCCompassWidget {
+            id:                 compass
         anchors.topMargin:  _spacing
-        anchors.top:        _spacer1.bottom//_spacer2.bottom
-        size:               parent.width * 0.95
-        active:             instrumentPanel.active
-        visible:        !QGroundControl.virtualTabletJoystick
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
+        anchors.top:        _spacer2.bottom
+            size:               parent.width * 0.95
+            active:             instrumentPanel.active
+            visible:            _showCompass
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
 }
