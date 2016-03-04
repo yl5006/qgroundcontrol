@@ -1,4 +1,4 @@
-Module QGroundControl.Controls
+﻿Module QGroundControl.Controls
 
 ClickableColor          1.0 ClickableColor.qml
 DropButton              1.0 DropButton.qml
@@ -9,6 +9,7 @@ JoystickThumbPad        1.0 JoystickThumbPad.qml
 MainToolBar             1.0 MainToolBar.qml
 MissionCommandDialog    1.0 MissionCommandDialog.qml
 MissionItemEditor       1.0 MissionItemEditor.qml
+MissionItemIndex        1.0 MissionItemIndex.qml
 MissionItemIndexLabel   1.0 MissionItemIndexLabel.qml
 MissionItemStatus       1.0 MissionItemStatus.qml
 ModeSwitchDisplay       1.0 ModeSwitchDisplay.qml

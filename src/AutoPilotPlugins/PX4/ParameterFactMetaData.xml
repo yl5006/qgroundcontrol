@@ -4383,6 +4383,13 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
         <max>2</max>
         <decimal>2</decimal>
       </parameter>
+      <parameter default="1" name="THROW_DERECTION" type="INT32">
+        <short_desc>throw derection</short_desc>
+        <long_desc>0 for xy derection 1 for z derection</long_desc>
+        <min>0</min>
+        <max>2</max>
+        <decimal>1</decimal>
+      </parameter>
       <parameter default="1" name="THROW_ENABLE" type="INT32">
         <short_desc>throw enable</short_desc>
         <long_desc>throw enable</long_desc>

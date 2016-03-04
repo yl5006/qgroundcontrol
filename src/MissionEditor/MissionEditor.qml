@@ -486,7 +486,7 @@ QGCView {
 
                 // Mission Item Editor
                 Item {
-                    id:             missionItemEditor
+                    id:             missionItem//Index//missionItemEditor
                     height:         mainWindow.availableHeight/5  //change by yaoling
                     anchors.bottom: parent.bottom
 //                  anchors.right:  parent.right
@@ -517,7 +517,7 @@ QGCView {
                         orientation:    ListView.Horizontal
                         model:          controller.visualItems
                         cacheBuffer:    width*2//height * 2
-                        delegate: MissionItemEditor {
+                        delegate:       MissionItemIndex {//MissionItemEditor {
                             missionItem:    object
                             width:          _rightPanelWidth//parent.width
                             qgcView:        _root
