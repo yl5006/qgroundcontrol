@@ -46,6 +46,8 @@ enum PX4_CUSTOM_MAIN_MODE {
     PX4_CUSTOM_MAIN_MODE_AUTO,
     PX4_CUSTOM_MAIN_MODE_ACRO,
     PX4_CUSTOM_MAIN_MODE_OFFBOARD,
+    PX4_CUSTOM_MAIN_MODE_STABILIZED,
+    PX4_CUSTOM_MAIN_MODE_RATTITUDE
 };
 
 enum PX4_CUSTOM_SUB_MODE_AUTO {
@@ -119,11 +121,6 @@ MockLink::MockLink(MockConfiguration* config)
 MockLink::~MockLink(void)
 {
     _disconnect();
-}
-
-void MockLink::readBytes(void)
-{
-    // FIXME: This is a bad virtual from LinkInterface?
 }
 
 bool MockLink::_connect(void)

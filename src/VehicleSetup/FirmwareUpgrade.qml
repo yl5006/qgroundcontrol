@@ -42,7 +42,7 @@ QGCView {
     readonly property string title:             "FIRMWARE"
     readonly property string highlightPrefix:   "<font color=\"" + qgcPal.warningText + "\">"
     readonly property string highlightSuffix:   "</font>"
-    readonly property string welcomeText:       "QGroundControl can upgrade the firmware on Pixhawk devices, 3DR Radios and PX4 Flow Smart Cameras."
+    readonly property string welcomeText:       "QGroundControl can upgrade the firmware on Pixhawk devices, SiK Radios and PX4 Flow Smart Cameras."
     readonly property string plugInText:        "<big>" + highlightPrefix + "Plug in your device" + highlightSuffix + " via USB to " + highlightPrefix + "start" + highlightSuffix + " firmware upgrade.</big>"
     readonly property string flashFailText:     "If upgrade failed, make sure to connect " + highlightPrefix + "directly" + highlightSuffix + " to a powered USB port on your computer, not through a USB hub. " +
                                                 "Also make sure you are only powered via USB " + highlightPrefix + "not battery" + highlightSuffix + "."
@@ -102,7 +102,7 @@ QGCView {
                 // Board was found right away, so something is already plugged in before we've started upgrade
                 statusTextArea.append(qgcUnplugText1)
                 statusTextArea.append(qgcUnplugText2)
-                multiVehicleManager.activeVehicle.autoDisconnect = true
+                QGroundControl.multiVehicleManager.activeVehicle.autoDisconnect = true
             } else {
                 // We end up here when we detect a board plugged in after we've started upgrade
                 statusTextArea.append(highlightPrefix + "Found device" + highlightSuffix + ": " + controller.boardType)

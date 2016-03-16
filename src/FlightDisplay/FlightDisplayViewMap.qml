@@ -40,12 +40,22 @@ FlightMap {
     anchors.fill:   parent
     mapName:        _mapName
 
-    property bool   _followVehicle:                 true
-    property bool   _activeVehicleCoordinateValid:  multiVehicleManager.activeVehicle ? multiVehicleManager.activeVehicle.coordinateValid : false
-    property var    activeVehicleCoordinate:        multiVehicleManager.activeVehicle ? multiVehicleManager.activeVehicle.coordinate : QtPositioning.coordinate()
+    property alias  missionController: _missionController
+    property var    flightWidgets
 
-    Component.onCompleted: QGroundControl.flightMapPosition = center
+    property bool   _followVehicle:                 true
+    property var    _activeVehicle:                 QGroundControl.multiVehicleManager.activeVehicle
+    property bool   _activeVehicleCoordinateValid:  _activeVehicle ? _activeVehicle.coordinateValid : false
+    property var    activeVehicleCoordinate:        _activeVehicle ? _activeVehicle.coordinate : QtPositioning.coordinate()
+    property var    _gotoHereCoordinate:            QtPositioning.coordinate()
+    property int    _retaskSequence:                0
+
+    Component.onCompleted: {
+        QGroundControl.flightMapPosition = center
+        QGroundControl.flightMapZoom = zoomLevel
+    }
     onCenterChanged: QGroundControl.flightMapPosition = center
+    onZoomLevelChanged: QGroundControl.flightMapZoom = zoomLevel
 
     onActiveVehicleCoordinateChanged: {
         if (_followVehicle && _activeVehicleCoordinateValid && activeVehicleCoordinate.isValid) {
@@ -54,6 +64,8 @@ FlightMap {
         }
     }
 
+    QGCPalette { id: qgcPal; colorGroupEnabled: true }
+
     MissionController {
         id: _missionController
         Component.onCompleted: start(false /* editMode */)
@@ -61,30 +73,30 @@ FlightMap {
 
     // Add trajectory points to the map
     MapItemView {
-        model: _mainIsMap ? multiVehicleManager.activeVehicle ? multiVehicleManager.activeVehicle.trajectoryPoints : 0 : 0
+        model: _mainIsMap ? _activeVehicle ? _activeVehicle.trajectoryPoints : 0 : 0
         delegate:
             MapPolyline {
-                line.width: 3
-                line.color: "red"
-                z:          QGroundControl.zOrderMapItems - 1
-                path: [
-                    { latitude: object.coordinate1.latitude, longitude: object.coordinate1.longitude },
-                    { latitude: object.coordinate2.latitude, longitude: object.coordinate2.longitude },
-                ]
-            }
+            line.width: 3
+            line.color: "red"
+            z:          QGroundControl.zOrderMapItems - 1
+            path: [
+                { latitude: object.coordinate1.latitude, longitude: object.coordinate1.longitude },
+                { latitude: object.coordinate2.latitude, longitude: object.coordinate2.longitude },
+            ]
+        }
     }
 
     // Add the vehicles to the map
     MapItemView {
-        model: multiVehicleManager.vehicles
+        model: QGroundControl.multiVehicleManager.vehicles
         delegate:
             VehicleMapItem {
-                    vehicle:        object
-                    coordinate:     object.coordinate
-                    isSatellite:    flightMap.isSatelliteMap
-                    size:           _mainIsMap ? ScreenTools.defaultFontPixelHeight * 5 : ScreenTools.defaultFontPixelHeight * 2
-                    z:              QGroundControl.zOrderMapItems
-            }
+            vehicle:        object
+            coordinate:     object.coordinate
+            isSatellite:    flightMap.isSatelliteMap
+            size:           _mainIsMap ? ScreenTools.defaultFontPixelHeight * 5 : ScreenTools.defaultFontPixelHeight * 2
+            z:              QGroundControl.zOrderMapItems
+        }
     }
 
     // Add the mission items to the map
@@ -97,8 +109,29 @@ FlightMap {
         model: _mainIsMap ? _missionController.waypointLines : 0
     }
 
-    // Used to make pinch zoom work
+    // GoTo here waypoint
+    MapQuickItem {
+        coordinate:     _gotoHereCoordinate
+        visible:        _vehicle.guidedMode && _gotoHereCoordinate.isValid
+        z:              QGroundControl.zOrderMapItems
+        anchorPoint.x:  sourceItem.width  / 2
+        anchorPoint.y:  sourceItem.height / 2
+
+        sourceItem: MissionItemIndexLabel {
+            isCurrentItem:  true
+            label:          "G"
+        }
+    }
+
+    // Handle guided mode clicks
     MouseArea {
         anchors.fill: parent
+
+        onClicked: {
+            if (_activeVehicle && _activeVehicle.guidedMode) {
+                _gotoHereCoordinate = flightMap.toCoordinate(Qt.point(mouse.x, mouse.y))
+                flightWidgets.guidedModeBar.confirmAction(flightWidgets.guidedModeBar.confirmGoTo)
+            }
+        }
     }
 }

@@ -47,23 +47,9 @@ QGCView {
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
 
     property real availableHeight: parent.height
+    property var _activeVehicle:    QGroundControl.multiVehicleManager.activeVehicle
 
-    readonly property bool isBackgroundDark: _mainIsMap ? (_flightMap ? _flightMap.isSatelliteMap : true) : true
-
-    property var _activeVehicle:    multiVehicleManager.activeVehicle
-
-    readonly property real _defaultRoll:                0
-    readonly property real _defaultPitch:               0
-    readonly property real _defaultHeading:             0
-    readonly property real _defaultAltitudeAMSL:        0
     readonly property real _defaultAltitudeRelative:    0
-    readonly property real _defaultGroundSpeed:         0
-    readonly property real _defaultAirSpeed:            0
-
-    readonly property string _mapName:                  "FlightDisplayView"
-    readonly property string _showMapBackgroundKey:     "/showMapBackground"
-    readonly property string _mainIsMapKey:             "MainFlyWindowIsMap"
-    readonly property string _PIPVisibleKey:            "IsPIPVisible"
 
     property bool _mainIsMap:           QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true)
     property bool _isPipVisible:        QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true)
@@ -83,6 +69,18 @@ QGCView {
     property real _savedZoomLevel:      0
 
     property real pipSize:              mainWindow.width * 0.2
+
+    readonly property bool      isBackgroundDark:       _mainIsMap ? (_flightMap ? _flightMap.isSatelliteMap : true) : true
+    readonly property real      _defaultRoll:           0
+    readonly property real      _defaultPitch:          0
+    readonly property real      _defaultHeading:        0
+    readonly property real      _defaultAltitudeAMSL:   0
+    readonly property real      _defaultGroundSpeed:    0
+    readonly property real      _defaultAirSpeed:       0
+    readonly property string    _mapName:               "FlightDisplayView"
+    readonly property string    _showMapBackgroundKey:  "/showMapBackground"
+    readonly property string    _mainIsMapKey:          "MainFlyWindowIsMap"
+    readonly property string    _PIPVisibleKey:         "IsPIPVisible"
 
     FlightDisplayViewController { id: _controller }
 
@@ -125,7 +123,7 @@ QGCView {
     }
 
     Connections {
-        target: multiVehicleManager
+        target: QGroundControl.multiVehicleManager
         onActiveVehicleChanged: px4JoystickCheck()
     }
 
@@ -176,6 +174,7 @@ QGCView {
             FlightDisplayViewMap {
                 id:             _flightMap
                 anchors.fill:   parent
+                flightWidgets:  widgetsLoader.item
             }
         }
 

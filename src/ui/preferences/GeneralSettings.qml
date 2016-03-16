@@ -74,6 +74,54 @@ Rectangle {
             }
 
             //-----------------------------------------------------------------
+            //-- Units
+
+            Row {
+                spacing:    ScreenTools.defaultFontPixelWidth
+
+                QGCLabel {
+                    id:                 distanceUnitsLabel
+                    anchors.baseline:   distanceUnitsCombo.baseline
+                    text:               "Distance units:"
+                }
+
+                FactComboBox {
+                    id:         distanceUnitsCombo
+                    width:      ScreenTools.defaultFontPixelWidth * 10
+                    fact:       QGroundControl.distanceUnits
+                    indexModel: false
+                }
+
+                QGCLabel {
+                    anchors.baseline:   distanceUnitsCombo.baseline
+                    text:               "(requires reboot to take affect)"
+                }
+
+            }
+
+            Row {
+                spacing:    ScreenTools.defaultFontPixelWidth
+
+                QGCLabel {
+                    anchors.baseline:   speedUnitsCombo.baseline
+                    width:              distanceUnitsLabel.width
+                    text:               "Speed units:"
+                }
+
+                FactComboBox {
+                    id:         speedUnitsCombo
+                    width:      ScreenTools.defaultFontPixelWidth * 20
+                    fact:       QGroundControl.speedUnits
+                    indexModel: false
+                }
+
+                QGCLabel {
+                    anchors.baseline:   distanceUnitsCombo.baseline
+                    text:               "(requires reboot to take affect)"
+                }
+            }
+
+            //-----------------------------------------------------------------
             //-- Audio preferences
             QGCCheckBox {
                 text:       qsTr("消除音频输出")//"Mute all audio output"
@@ -166,8 +214,9 @@ Rectangle {
             Row {
                 spacing:    ScreenTools.defaultFontPixelWidth
                 QGCLabel {
-                    width: ScreenTools.defaultFontPixelWidth * 16
-                    text: qsTr("地图")//"Map Providers"
+                    anchors.baseline:   mapProviders.baseline
+                    width:              ScreenTools.defaultFontPixelWidth * 16
+                    text: "Map Providers"
                 }
                 QGCComboBox {
                     id:     mapProviders
@@ -195,10 +244,12 @@ Rectangle {
             Row {
                 spacing:    ScreenTools.defaultFontPixelWidth
                 QGCLabel {
-                    width: ScreenTools.defaultFontPixelWidth * 16
+                    anchors.baseline:   paletteCombo.baseline
+                    width:              ScreenTools.defaultFontPixelWidth * 16
                     text:   qsTr("主题")//"Style"
                 }
                 QGCComboBox {
+                    id: paletteCombo
                     width: ScreenTools.defaultFontPixelWidth * 16
                     model: [ qsTr("黑色"), qsTr("亮色") ]//[ "Dark", "Light" ]
                     currentIndex: QGroundControl.isDarkStyle ? 0 : 1
@@ -232,7 +283,7 @@ Rectangle {
 //                }
 
 //                QGCCheckBox {
-//                    text:       "3DR Radio"
+//                    text:       "SiK Radio"
 //                    visible:    !ScreenTools.isiOS
 //                    checked:    QGroundControl.linkManager.autoconnect3DRRadio
 //                    onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked

@@ -322,10 +322,10 @@ Row {
 
             MenuItem {
                 checkable:      true
-                onTriggered:    multiVehicleManager.activeVehicle = vehicle
+                onTriggered:    QGroundControl.multiVehicleManager.activeVehicle = vehicle
 
                 property int vehicleId: Number(text.split(" ")[1])
-                property var vehicle:   multiVehicleManager.getVehicleById(vehicleId)
+                property var vehicle:   QGroundControl.multiVehicleManager.getVehicleById(vehicleId)
             }
         }
 
@@ -339,8 +339,8 @@ Row {
             vehicleMenuItems.length = 0
 
             // Add new items
-            for (var i=0; i<multiVehicleManager.vehicles.count; i++) {
-                var vehicle = multiVehicleManager.vehicles.get(i)
+            for (var i=0; i<QGroundControl.multiVehicleManager.vehicles.count; i++) {
+                var vehicle = QGroundControl.multiVehicleManager.vehicles.get(i)
                 var menuItem = vehicleMenuItemComponent.createObject(null, { "text": "Vehicle " + vehicle.id })
                 vehicleMenuItems.push(menuItem)
                 vehicleMenu.insertItem(i, menuItem)
@@ -350,7 +350,7 @@ Row {
         Component.onCompleted: updateVehicleMenu()
 
         Connections {
-            target:         multiVehicleManager.vehicles
+            target:         QGroundControl.multiVehicleManager.vehicles
             onCountChanged: vehicleSelectorButton.updateVehicleMenu()
         }
     }
@@ -422,7 +422,7 @@ Row {
         Component.onCompleted: updateFlightModesMenu()
 
         Connections {
-            target:                 multiVehicleManager
+            target:                 QGroundControl.multiVehicleManager
             onActiveVehicleChanged: flightModeSelector.updateFlightModesMenu
         }
 
@@ -431,53 +431,9 @@ Row {
             anchors.fill:   parent
             onClicked: {
                 flightModesMenu.popup()
-            }
-        }
-    }
-
-    //-------------------------------------------------------------------------
-    //-- Arm/Disarm
-
-    Item {
-        width:  armCol.width * 1.1
-        height: mainWindow.tbCellHeight
-        anchors.verticalCenter: parent.verticalCenter
-        Row {
-            id:                 armCol
-            spacing:            tbSpacing * 0.5
-            anchors.verticalCenter: parent.verticalCenter
-            Image {
-                width:          mainWindow.tbCellHeight * 0.5
-                height:         mainWindow.tbCellHeight * 0.5
-                fillMode:       Image.PreserveAspectFit
-                mipmap:         true
-                smooth:         true
-                source:         activeVehicle ? (activeVehicle.armed ? "/qmlimages/Disarmed.svg" : "/qmlimages/Armed.svg") : "/qmlimages/Disarmed.svg"
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            QGCLabel {
-                text:           activeVehicle ? (activeVehicle.armed ? qsTr("起飞")/*"Armed"*/ : qsTr("锁定")/*"Disarmed"*/) : ""
-                font.pixelSize: tbFontLarge
-                color:          colorWhite
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
-        MouseArea {
-            anchors.fill:   parent
-            onClicked: {
-                armDialog.visible = true
-            }
-        }
-        MessageDialog {
-            id:         armDialog
-            visible:    false
-            icon:       StandardIcon.Warning
-            standardButtons: StandardButton.Yes | StandardButton.No
-            title:      activeVehicle ? (activeVehicle.armed ? qsTr("锁定飞机")/*"Disarming Vehicle"*/ : qsTr("解锁飞机")/*"Arming Vehicle"*/) : ""
-            text:       activeVehicle ? (activeVehicle.armed ? qsTr("确认锁定飞机？所有电机将关闭")/*"Do you want to disarm? This will cut power to all motors."*/ : qsTr("确认解锁飞机？所有电机将启动")/*"Do you want to arm? This will enable all motors."*/) : ""
-            onYes: {
-                activeVehicle.armed = !activeVehicle.armed
-                armDialog.visible = false
+                text:           activeVehicle ? (activeVehicle.armed ? "Armed" : "Disarmed") : ""
+            title:      activeVehicle ? (activeVehicle.armed ? "Disarming Vehicle" : "Arming Vehicle") : ""
+            text:       activeVehicle ? (activeVehicle.armed ? "Do you want to disarm? This will cut power to all motors." : "Do you want to arm? This will enable all motors.") : ""
             }
         }
     }

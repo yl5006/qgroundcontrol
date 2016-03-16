@@ -21,6 +21,7 @@ QGCColoredImage         1.0 QGCColoredImage.qml
 QGCComboBox             1.0 QGCComboBox.qml
 QGCFlickable            1.0 QGCFlickable.qml
 QGCLabel                1.0 QGCLabel.qml
+QGCMobileFileDialog     1.0 QGCMobileFileDialog.qml
 QGCMovableItem          1.0 QGCMovableItem.qml
 QGCPipable              1.0 QGCPipable.qml
 QGCRadioButton          1.0 QGCRadioButton.qml
@@ -32,6 +33,7 @@ QGCViewMessage          1.0 QGCViewMessage.qml
 QGCViewPanel            1.0 QGCViewPanel.qml
 RoundButton             1.0 RoundButton.qml
 SignalStrength          1.0 SignalStrength.qml
+SliderSwitch            1.0 SliderSwitch.qml
 SubMenuButton           1.0 SubMenuButton.qml
 VehicleRotationCal      1.0 VehicleRotationCal.qml
 VehicleSummaryRow       1.0 VehicleSummaryRow.qml

@@ -51,14 +51,13 @@ QGCView {
     readonly property int       _decimalPlaces:     8
     readonly property real      _horizontalMargin:  ScreenTools.defaultFontPixelWidth  / 2
     readonly property real      _margin:            ScreenTools.defaultFontPixelHeight / 2
-    readonly property var       _activeVehicle:     multiVehicleManager.activeVehicle
+    readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
     readonly property real      _editFieldWidth:    ScreenTools.defaultFontPixelWidth * 16
     readonly property real      _rightPanelWidth:   Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 30)
     readonly property real      _rightPanelOpacity: 0.8
     readonly property int       _toolButtonCount:   6
     readonly property string    _autoSyncKey:       "AutoSync"
     readonly property int       _addMissionItemsButtonAutoOffTimeout:   10000
-//    readonly property var       _defaultVehicleCoordinate:   QtPositioning.coordinate(37.803784, -122.462276)
     readonly property var       _defaultVehicleCoordinate:   QtPositioning.coordinate(30.5386437,114.3662806)
 
     property var    _visualItems:          controller.visualItems
@@ -69,7 +68,7 @@ QGCView {
     onActiveVehiclePositionChanged: updateMapToVehiclePosition()
 
     Connections {
-        target: multiVehicleManager
+        target: QGroundControl.multiVehicleManager
 
         onActiveVehicleChanged: {
             // When the active vehicle changes we need to allow the first vehicle position to move the map again
@@ -93,7 +92,7 @@ QGCView {
         if (ScreenTools.isMobile) {
             _root.showDialog(mobileFilePicker, qsTr("选择任务文件")/*"Select Mission File"*/, _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
         } else {
-            controller.loadMissionFromFile()
+            controller.loadMissionFromFilePicker()
             fitViewportToMissionItems()
         }
     }
@@ -102,7 +101,7 @@ QGCView {
         if (ScreenTools.isMobile) {
             _root.showDialog(mobileFileSaver, qsTr("保存任务文件")/*"Save Mission File"*/, _root.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel)
         } else {
-            controller.saveMissionToFile()
+            controller.saveMissionToFilePicker()
         }
     }
 
@@ -192,23 +191,13 @@ QGCView {
     Component {
         id: mobileFilePicker
 
-        QGCViewDialog {
-            ListView {
-                anchors.margins:    _margin
-                anchors.fill:       parent
-                spacing:            _margin / 2
-                orientation:    ListView.Vertical
-                model: controller.getMobileMissionFiles()
+        QGCMobileFileDialog {
+            openDialog:     true
+            fileExtension:  QGroundControl.missionFileExtension
 
-                delegate: QGCButton {
-                    text: modelData
-
-                    onClicked: {
-                        hideDialog()
-                        controller.loadMobileMissionFromFile(modelData)
-                        fitViewportToMissionItems()
-                    }
-                }
+            onFilenameReturned: {
+                controller.loadMissionFromFile(filename)
+                fitViewportToMissionItems()
             }
         }
     }
@@ -216,24 +205,12 @@ QGCView {
     Component {
         id: mobileFileSaver
 
-        QGCViewDialog {
-            function accept() {
-                hideDialog()
-                controller.saveMobileMissionToFile(filenameTextField.text)
-            }
+        QGCMobileFileDialog {
+            openDialog:     false
+            fileExtension:  QGroundControl.missionFileExtension
 
-            Column {
-                anchors.left:   parent.left
-                anchors.right:  parent.right
-                spacing:        ScreenTools.defaultFontPixelHeight
-
-                QGCLabel {
-                    text: qsTr("文件名?")//"File name:"
-                }
-
-                QGCTextField {
-                    id: filenameTextField
-                }
+            onFilenameReturned: {
+                controller.saveMissionToFile(filename)
             }
         }
     }
@@ -467,7 +444,7 @@ QGCView {
 
                 // Add the vehicles to the map
                 MapItemView {
-                    model: multiVehicleManager.vehicles
+                    model: QGroundControl.multiVehicleManager.vehicles
                     delegate:
                         VehicleMapItem {
                                 vehicle:        object
@@ -624,7 +601,7 @@ QGCView {
                                         text:   qsTr("飞机")//  "Vehicle"
                                         enabled:    activeVehicle && activeVehicle.latitude != 0 && activeVehicle.longitude != 0
 
-                                        property var activeVehicle: multiVehicleManager.activeVehicle
+                                        property var activeVehicle: _activeVehicle
 
                                         onClicked: {
                                             centerMapButton.hideDropDown()
@@ -764,7 +741,7 @@ QGCView {
             spacing:    _margin
 
             QGCLabel {
-                width:      columnHolder.width
+                width:      sendSaveRow.width
                 wrapMode:   Text.WordWrap
                 text:       syncNeeded && !controller.autoSync ?
                                 qsTr("你修改了任务，你需要发送给飞机或存为文件:")://"You have unsaved changed to you mission. You should send to your vehicle, or save to a file:" :
@@ -772,6 +749,7 @@ QGCView {
             }
 
             Row {
+                id:         sendSaveRow
                 visible:    true //autoSyncCheckBox.enabled && autoSyncCheckBox.checked
                 spacing:    ScreenTools.defaultFontPixelWidth
 

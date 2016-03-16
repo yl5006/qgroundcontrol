@@ -118,8 +118,8 @@ Rectangle {
         opacity:            0.5
         width:              attitudeWidget.width * 0.15
         fillMode:           Image.PreserveAspectFit
-        visible:            QGroundControl.multiVehicleManager.activeVehicle
-//      visible:            false                //do not use yaoling
+//      visible:            _activeVehicle
+        visible:            false                //do not use yaoling
                 MouseArea {
                     anchors.fill:   parent
                     hoverEnabled:   true

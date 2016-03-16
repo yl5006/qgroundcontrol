@@ -25,6 +25,7 @@
 ///     @author Don Gagne <don@thegagnes.com>
 
 #include "PX4FirmwarePlugin.h"
+#include "PX4ParameterMetaData.h"
 #include "AutoPilotPlugins/PX4/PX4AutoPilotPlugin.h"    // FIXME: Hack
 
 #include <QDebug>
@@ -98,6 +99,7 @@ static const struct Modes2Name rgModes2Name[] = {
     { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,   QT_TR_NOOP("自动:任务"),               true },
     { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,       QT_TR_NOOP("自动:返航"),               true },
     { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,      QT_TR_NOOP("自动:降落"),               false },
+    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,      "Return, Link Loss", false },
 };
 
 QList<VehicleComponent*> PX4FirmwarePlugin::componentsForVehicle(AutoPilotPlugin* vehicle)
@@ -124,7 +126,7 @@ QStringList PX4FirmwarePlugin::flightModes(void)
     return flightModes;
 }
 
-QString PX4FirmwarePlugin::flightMode(uint8_t base_mode, uint32_t custom_mode)
+QString PX4FirmwarePlugin::flightMode(uint8_t base_mode, uint32_t custom_mode) const
 {
     QString flightMode = "Unknown";
 
@@ -191,17 +193,10 @@ int PX4FirmwarePlugin::manualControlReservedButtonCount(void)
     return 0;   // 0 buttons reserved for rc switch simulation
 }
 
-void PX4FirmwarePlugin::adjustMavlinkMessage(Vehicle* vehicle, mavlink_message_t* message)
-{
-    Q_UNUSED(vehicle);
-    Q_UNUSED(message);
-
-    // PX4 Flight Stack plugin does no message adjustment
-}
-
 bool PX4FirmwarePlugin::isCapable(FirmwareCapabilities capabilities)
 {
-    return (capabilities & (MavCmdPreflightStorageCapability | SetFlightModeCapability)) == capabilities;
+    qDebug() << (capabilities & (MavCmdPreflightStorageCapability | SetFlightModeCapability | PauseVehicleCapability)) << capabilities;
+    return (capabilities & (MavCmdPreflightStorageCapability | SetFlightModeCapability | PauseVehicleCapability)) == capabilities;
 }
 
 void PX4FirmwarePlugin::initializeVehicle(Vehicle* vehicle)
@@ -218,9 +213,15 @@ bool PX4FirmwarePlugin::sendHomePositionToVehicle(void)
     return false;
 }
 
-void PX4FirmwarePlugin::addMetaDataToFact(Fact* fact, MAV_TYPE vehicleType)
+void PX4FirmwarePlugin::addMetaDataToFact(QObject* parameterMetaData, Fact* fact, MAV_TYPE vehicleType)
 {
-    _parameterMetaData.addMetaDataToFact(fact, vehicleType);
+    PX4ParameterMetaData* px4MetaData = qobject_cast<PX4ParameterMetaData*>(parameterMetaData);
+
+    if (px4MetaData) {
+        px4MetaData->addMetaDataToFact(fact, vehicleType);
+    } else {
+        qWarning() << "Internal error: pointer passed to PX4FirmwarePlugin::addMetaDataToFact not PX4ParameterMetaData";
+    }
 }
 
 QList<MAV_CMD> PX4FirmwarePlugin::supportedMissionCommands(void)
@@ -246,4 +247,16 @@ void PX4FirmwarePlugin::missionCommandOverrides(QString& commonJsonFilename, QSt
     commonJsonFilename = QStringLiteral(":/json/PX4/MavCmdInfoCommon.json");
     fixedWingJsonFilename = QStringLiteral(":/json/PX4/MavCmdInfoFixedWing.json");
     multiRotorJsonFilename = QStringLiteral(":/json/PX4/MavCmdInfoMultiRotor.json");
+}
+
+QObject* PX4FirmwarePlugin::loadParameterMetaData(const QString& metaDataFile)
+{
+    PX4ParameterMetaData* metaData = new PX4ParameterMetaData;
+    metaData->loadParameterFactMetaDataFile(metaDataFile);
+    return metaData;
+}
+
+void PX4FirmwarePlugin::pauseVehicle(Vehicle* vehicle)
+{
+    vehicle->setFlightMode("Auto: Pause");
 }

@@ -34,6 +34,7 @@
 #include "FlightMapSettings.h"
 #include "MissionCommands.h"
 #include "SettingsFact.h"
+#include "FactMetaData.h"
 
 #ifdef QT_DEBUG
 #include "MockLink.h"
@@ -49,6 +50,21 @@ public:
     QGroundControlQmlGlobal(QGCApplication* app);
     ~QGroundControlQmlGlobal();
 
+    enum DistanceUnits {
+        DistanceUnitsFeet = 0,
+        DistanceUnitsMeters
+    };
+
+    enum SpeedUnits {
+        SpeedUnitsFeetPerSecond = 0,
+        SpeedUnitsMetersPerSecond,
+        SpeedUnitsMilesPerHour,
+        SpeedUnitsKilometersPerHour,
+        SpeedUnitsKnots,
+    };
+
+    Q_ENUMS(DistanceUnits)
+    Q_ENUMS(SpeedUnits)
 
     Q_PROPERTY(FlightMapSettings*   flightMapSettings   READ flightMapSettings      CONSTANT)
     Q_PROPERTY(HomePositionManager* homePositionManager READ homePositionManager    CONSTANT)
@@ -74,13 +90,23 @@ public:
     Q_PROPERTY(bool     isVersionCheckEnabled   READ isVersionCheckEnabled      WRITE setIsVersionCheckEnabled      NOTIFY isVersionCheckEnabledChanged)
     Q_PROPERTY(int      mavlinkSystemID         READ mavlinkSystemID            WRITE setMavlinkSystemID            NOTIFY mavlinkSystemIDChanged)
 
-    Q_PROPERTY(Fact*    offlineEditingFirmwareType READ offlineEditingFirmwareType CONSTANT)
+    Q_PROPERTY(Fact*    offlineEditingFirmwareType  READ offlineEditingFirmwareType CONSTANT)
+    Q_PROPERTY(Fact*    distanceUnits               READ distanceUnits              CONSTANT)
+    Q_PROPERTY(Fact*    speedUnits                  READ speedUnits                 CONSTANT)
 
-    Q_PROPERTY(QGeoCoordinate lastKnownHomePosition READ lastKnownHomePosition CONSTANT)
-    Q_PROPERTY(QGeoCoordinate flightMapPosition MEMBER _flightMapPosition NOTIFY flightMapPositionChanged)
+    Q_PROPERTY(QGeoCoordinate lastKnownHomePosition READ lastKnownHomePosition  CONSTANT)
+    Q_PROPERTY(QGeoCoordinate flightMapPosition     MEMBER _flightMapPosition   NOTIFY flightMapPositionChanged)
+    Q_PROPERTY(double         flightMapZoom         MEMBER _flightMapZoom       NOTIFY flightMapZoomChanged)
+
+    Q_PROPERTY(QString  parameterFileExtension  READ parameterFileExtension CONSTANT)
+    Q_PROPERTY(QString  missionFileExtension    READ missionFileExtension   CONSTANT)
+    Q_PROPERTY(QString  telemetryFileExtension  READ telemetryFileExtension CONSTANT)
 
     /// @ return: true: experimental survey ip code is turned on
     Q_PROPERTY(bool experimentalSurvey READ experimentalSurvey WRITE setExperimentalSurvey NOTIFY experimentalSurveyChanged)
+
+    /// Returns the string for distance units which has configued by user
+    Q_PROPERTY(QString appSettingsDistanceUnitsString READ appSettingsDistanceUnitsString CONSTANT)
 
     Q_INVOKABLE void    saveGlobalSetting       (const QString& key, const QString& value);
     Q_INVOKABLE QString loadGlobalSetting       (const QString& key, const QString& defaultValue);
@@ -95,6 +121,14 @@ public:
     Q_INVOKABLE void    startAPMArduCopterMockLink  (bool sendStatusText);
     Q_INVOKABLE void    startAPMArduPlaneMockLink   (bool sendStatusText);
     Q_INVOKABLE void    stopAllMockLinks            (void);
+
+    /// Converts from meters to the user specified distance unit
+    Q_INVOKABLE QVariant metersToAppSettingsDistanceUnits(const QVariant& meters) const { return FactMetaData::metersToAppSettingsDistanceUnits(meters); }
+
+    /// Converts from user specified distance unit to meters
+    Q_INVOKABLE QVariant appSettingsDistanceUnitsToMeters(const QVariant& distance) const { return FactMetaData::appSettingsDistanceUnitsToMeters(distance); }
+
+    QString appSettingsDistanceUnitsString(void) const { return FactMetaData::appSettingsDistanceUnitsString(); }
 
     // Property accesors
 
@@ -121,7 +155,9 @@ public:
 
     QGeoCoordinate lastKnownHomePosition() { return qgcApp()->lastKnownHomePosition(); }
 
-    Fact*   offlineEditingFirmwareType () { return &_offlineEditingFirmwareTypeFact; }
+    static Fact* offlineEditingFirmwareType (void);
+    static Fact* distanceUnits              (void);
+    static Fact* speedUnits                 (void);
 
     //-- TODO: Make this into an actual preference.
     bool    isAdvancedMode          () { return false; }
@@ -139,6 +175,10 @@ public:
     bool experimentalSurvey(void) const;
     void setExperimentalSurvey(bool experimentalSurvey);
 
+    QString parameterFileExtension(void) const  { return QGCApplication::parameterFileExtension; }
+    QString missionFileExtension(void) const    { return QGCApplication::missionFileExtension; }
+    QString telemetryFileExtension(void) const  { return QGCApplication::telemetryFileExtension; }
+
     // Overrides from QGCTool
     virtual void setToolbox(QGCToolbox* toolbox);
 
@@ -152,6 +192,7 @@ signals:
     void isVersionCheckEnabledChanged   (bool enabled);
     void mavlinkSystemIDChanged         (int id);
     void flightMapPositionChanged       (QGeoCoordinate flightMapPosition);
+    void flightMapZoomChanged           (double flightMapZoom);
     void experimentalSurveyChanged      (bool experimentalSurvey);
 
 private:
@@ -160,14 +201,20 @@ private:
     LinkManager*            _linkManager;
     MissionCommands*        _missionCommands;
     MultiVehicleManager*    _multiVehicleManager;
-    QGCMapEngineManager*     _mapEngineManager;
+    QGCMapEngineManager*    _mapEngineManager;
 
     bool _virtualTabletJoystick;
 
-    QGeoCoordinate _flightMapPosition;
+    QGeoCoordinate  _flightMapPosition;
+    double          _flightMapZoom;
 
-    SettingsFact    _offlineEditingFirmwareTypeFact;
-    FactMetaData    _offlineEditingFirmwareTypeMetaData;
+    // These are static so they are available to C++ code as well as Qml
+    static SettingsFact*    _offlineEditingFirmwareTypeFact;
+    static FactMetaData*    _offlineEditingFirmwareTypeMetaData;
+    static SettingsFact*    _distanceUnitsFact;
+    static FactMetaData*    _distanceUnitsMetaData;
+    static SettingsFact*    _speedUnitsFact;
+    static FactMetaData*    _speedUnitsMetaData;
 
     static const char*  _virtualTabletJoystickKey;
 };

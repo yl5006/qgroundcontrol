@@ -25,6 +25,7 @@ import QtQuick                  2.2
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.2
 
+import QGroundControl                       1.0
 import QGroundControl.FactSystem            1.0
 import QGroundControl.Controls              1.0
 import QGroundControl.ScreenTools           1.0
@@ -98,7 +99,7 @@ Rectangle {
                 qsTr("设置预览"):
                 qsTr("警告:你的机体未设置完全，请设置标红的那些栏")
                 horizontalAlignment: TextEdit.AlignHCenter
-                property bool setupComplete: multiVehicleManager.activeVehicle ? multiVehicleManager.activeVehicle.autopilot.setupComplete : false
+                property bool setupComplete: QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.autopilot.setupComplete : false
             }
 
             Flow {
@@ -107,7 +108,7 @@ Rectangle {
                 spacing:    _summaryBoxSpace
 
                 Repeater {
-                    model: multiVehicleManager.activeVehicle ? multiVehicleManager.activeVehicle.autopilot.vehicleComponents : undefined
+                    model: QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.autopilot.vehicleComponents : undefined
 
                     // Outer summary item rectangle
                     Rectangle {
