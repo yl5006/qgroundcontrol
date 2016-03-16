@@ -260,6 +260,9 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
 #ifdef __mobile__
     QLoggingCategory::setFilterRules(QStringLiteral("*Log.debug=false"));
 #else
+#ifdef  __rasp_pi2__
+    QLoggingCategory::setFilterRules(QStringLiteral("*Log.debug=false"));
+#else
     QString filterRules;
 
     // Turn off bogus ssl warning
@@ -323,7 +326,7 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
     qDebug() << "Filter rules" << filterRules;
     QLoggingCategory::setFilterRules(filterRules);
 #endif
-
+#endif
     // Set up timer for delayed missing fact display
     _missingParamsDelayedDisplayTimer.setSingleShot(true);
     _missingParamsDelayedDisplayTimer.setInterval(_missingParamsDelayedDisplayTimerTimeout);

@@ -446,7 +446,7 @@ QString MissionManager::_ackTypeToString(AckType_t ackType)
         case AckMissionRequest: ///< MISSION_REQUEST is expected, or MISSION_ACK to end sequence
             return QString("MISSION_REQUEST");
         default:
-            qWarning(MissionManagerLog) << "Fell off end of switch statement";
+            qCWarning(MissionManagerLog) << "Fell off end of switch statement";
             return QString("QGC Internal Error");
     }    
 }
@@ -500,7 +500,7 @@ QString MissionManager::_missionResultToString(MAV_MISSION_RESULT result)
             return QString("Not accepting any mission commands (MAV_MISSION_DENIED)");
             break;
         default:
-            qWarning(MissionManagerLog) << "Fell off end of switch statement";
+            qCWarning(MissionManagerLog) << "Fell off end of switch statement";
             return QString("QGC Internal Error");
     }
 }

@@ -35,7 +35,7 @@
 #include <QJsonArray>
 #include <QCryptographicHash>
 #include <QApplication>
-
+#include <QDebug>
 #include "APMRemoteParamsDownloader.h"
 
 #define FRAME_PARAMS_LIST QUrl("https://api.github.com/repos/diydrones/ardupilot/contents/Tools/Frame_params")

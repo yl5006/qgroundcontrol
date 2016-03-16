@@ -124,6 +124,9 @@ iOSBuild {
 
 LinuxBuild {
     CONFIG += qesp_linux_udev
+    INCLUDEPATH += $$[QT_SYSROOT]/usr/include
+    LIBS += -L$$[QT_SYSROOT]/usr/lib/arm-linux-gnueabihf
+    LIBS += -L$$[QT_SYSROOT]/lib/arm-linux-gnueabihf
 }
 
 RC_ICONS = resources/icons/qgroundcontrol.ico

@@ -35,6 +35,8 @@ linux {
         message("Linux R-Pi2 build")
         CONFIG += LinuxBuild
         DEFINES += __STDC_LIMIT_MACROS __rasp_pi2__
+        target.path = /opt
+        INSTALLS += target
     } else : android-g++ {
         message("Android build")
         CONFIG += AndroidBuild MobileBuild
@@ -175,6 +177,8 @@ WindowsBuild {
 
 ReleaseBuild {
     DEFINES += QT_NO_DEBUG
+    DEFINES += QT_NO_WARNING_OUTPUT
+    DEFINES += QT_NO_DEBUG_OUTPUT
     WindowsBuild {
         # Use link time code generation for better optimization (I believe this is supported in MSVC Express, but not 100% sure)
         QMAKE_LFLAGS_LTCG = /LTCG
