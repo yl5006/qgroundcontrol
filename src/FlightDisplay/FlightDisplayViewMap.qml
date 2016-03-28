@@ -112,7 +112,7 @@ FlightMap {
     // GoTo here waypoint
     MapQuickItem {
         coordinate:     _gotoHereCoordinate
-        visible:        _vehicle.guidedMode && _gotoHereCoordinate.isValid
+        visible:        _activeVehicle && _activeVehicle.guidedMode && _gotoHereCoordinate.isValid
         z:              QGroundControl.zOrderMapItems
         anchorPoint.x:  sourceItem.width  / 2
         anchorPoint.y:  sourceItem.height / 2
@@ -128,9 +128,13 @@ FlightMap {
         anchors.fill: parent
 
         onClicked: {
-            if (_activeVehicle && _activeVehicle.guidedMode) {
-                _gotoHereCoordinate = flightMap.toCoordinate(Qt.point(mouse.x, mouse.y))
-                flightWidgets.guidedModeBar.confirmAction(flightWidgets.guidedModeBar.confirmGoTo)
+            if (_activeVehicle) {
+                if (_activeVehicle.guidedMode && flightWidgets.guidedModeBar.state == "Shown") {
+                    _gotoHereCoordinate = flightMap.toCoordinate(Qt.point(mouse.x, mouse.y))
+                    flightWidgets.guidedModeBar.confirmAction(flightWidgets.guidedModeBar.confirmGoTo)
+                } else {
+                    flightWidgets.guidedModeBar.state = "Shown"
+                }
             }
         }
     }

@@ -70,7 +70,7 @@ LinkManager::LinkManager(QGCApplication* app)
     , _configUpdateSuspended(false)
     , _configurationsLoaded(false)
     , _connectionsSuspended(false)
-    , _mavlinkChannelsUsedBitMask(0)
+    , _mavlinkChannelsUsedBitMask(1)    // We never use channel 0 to avoid sequence numbering problems
     , _mavlinkProtocol(NULL)
     , _autoconnectUDP(true)
     , _autoconnectPixhawk(true)
@@ -537,7 +537,7 @@ void LinkManager::_updateAutoConnectLinks(void)
                         pSerialConfig = new SerialConfiguration(QString("PX4Flow on %1").arg(portInfo.portName().trimmed()));
                     }
                     break;
-                case QGCSerialPortInfo::BoardType3drRadio:
+                case QGCSerialPortInfo::BoardTypeSikRadio:
                     if (_autoconnect3DRRadio) {
                         pSerialConfig = new SerialConfiguration(QString("SiK Radio on %1").arg(portInfo.portName().trimmed()));
                     }
@@ -549,7 +549,7 @@ void LinkManager::_updateAutoConnectLinks(void)
 
                 if (pSerialConfig) {
                     qCDebug(LinkManagerLog) << "New auto-connect port added: " << pSerialConfig->name() << portInfo.systemLocation();
-                    pSerialConfig->setBaud(boardType == QGCSerialPortInfo::BoardType3drRadio ? 57600 : 115200);
+                    pSerialConfig->setBaud(boardType == QGCSerialPortInfo::BoardTypeSikRadio ? 57600 : 115200);
                     pSerialConfig->setDynamic(true);
                     pSerialConfig->setPortName(portInfo.systemLocation());
                     _autoconnectConfigurations.append(pSerialConfig);
@@ -882,7 +882,7 @@ void LinkManager::_activeLinkCheck(void)
     if (!found && link) {
         // See if we can get an NSH prompt on this link
         bool foundNSHPrompt = false;
-        link->writeBytes("\r", 1);
+        link->writeBytesSafe("\r", 1);
 //      QSignalSpy spy(link, SIGNAL(bytesReceived(LinkInterface*, QByteArray)));
 //        if (spy.wait(100)) {
 //            QList<QVariant> arguments = spy.takeFirst();

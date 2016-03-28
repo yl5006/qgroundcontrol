@@ -48,7 +48,8 @@ enum PX4_CUSTOM_SUB_MODE_AUTO {
     PX4_CUSTOM_SUB_MODE_AUTO_MISSION,
     PX4_CUSTOM_SUB_MODE_AUTO_RTL,
     PX4_CUSTOM_SUB_MODE_AUTO_LAND,
-    PX4_CUSTOM_SUB_MODE_AUTO_RTGS
+    PX4_CUSTOM_SUB_MODE_AUTO_RTGS,
+    PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_ME
 };
 
 union px4_custom_mode {
@@ -68,6 +69,22 @@ struct Modes2Name {
     bool        canBeSet;   ///< true: Vehicle can be set to this flight mode
 };
 
+const char* PX4FirmwarePlugin::manualFlightMode =       QT_TR_NOOP("手动");
+const char* PX4FirmwarePlugin::acroFlightMode =         QT_TR_NOOP("运动");
+const char* PX4FirmwarePlugin::stabilizedFlightMode =   QT_TR_NOOP("自稳");
+const char* PX4FirmwarePlugin::rattitudeFlightMode =    QT_TR_NOOP("速率");
+const char* PX4FirmwarePlugin::altCtlFlightMode =       QT_TR_NOOP("定高");
+const char* PX4FirmwarePlugin::posCtlFlightMode =       QT_TR_NOOP("位置");
+const char* PX4FirmwarePlugin::offboardFlightMode =     QT_TR_NOOP("离线");
+const char* PX4FirmwarePlugin::readyFlightMode =        QT_TR_NOOP("准备");
+const char* PX4FirmwarePlugin::takeoffFlightMode =      QT_TR_NOOP("起飞");
+const char* PX4FirmwarePlugin::pauseFlightMode =        QT_TR_NOOP("暂停");
+const char* PX4FirmwarePlugin::missionFlightMode =      QT_TR_NOOP("任务");
+const char* PX4FirmwarePlugin::rtlFlightMode =          QT_TR_NOOP("返航");
+const char* PX4FirmwarePlugin::landingFlightMode =      QT_TR_NOOP("降落");
+const char* PX4FirmwarePlugin::rtgsFlightMode =         "Return, Link Loss";
+const char* PX4FirmwarePlugin::followMeFlightMode =     QT_TR_NOOP("跟随");
+
 /// Tranlates from PX4 custom modes to flight mode names
 
 //static const struct Modes2Name rgModes2Name[] = {
@@ -86,20 +103,21 @@ struct Modes2Name {
 //    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,      "Auto: Landing",          false },
 //};
 static const struct Modes2Name rgModes2Name[] = {
-    { PX4_CUSTOM_MAIN_MODE_MANUAL,      0,                                  QT_TR_NOOP("手动"),               true },
-    { PX4_CUSTOM_MAIN_MODE_ACRO,        0,                                  QT_TR_NOOP("运动"),               true },
-    { PX4_CUSTOM_MAIN_MODE_STABILIZED,  0,                                  QT_TR_NOOP("自稳"),               false },
-    { PX4_CUSTOM_MAIN_MODE_RATTITUDE,   0,                                  QT_TR_NOOP("速率"),               false },
-    { PX4_CUSTOM_MAIN_MODE_ALTCTL,      0,                                  QT_TR_NOOP("定高"),               false },
-    { PX4_CUSTOM_MAIN_MODE_POSCTL,      0,                                  QT_TR_NOOP("位置"),               true },
-    { PX4_CUSTOM_MAIN_MODE_OFFBOARD,    0,                                  QT_TR_NOOP("离线"),               false },
-    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_READY,     QT_TR_NOOP("自动:准备"),               false },
-    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,   QT_TR_NOOP("自动:起飞"),               false },
-    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LOITER,    QT_TR_NOOP("自动:暂停"),               true },
-    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,   QT_TR_NOOP("自动:任务"),               true },
-    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,       QT_TR_NOOP("自动:返航"),               true },
-    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,      QT_TR_NOOP("自动:降落"),               false },
-    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,      "Return, Link Loss", false },
+    { PX4_CUSTOM_MAIN_MODE_MANUAL,      0,                                  PX4FirmwarePlugin::manualFlightMode,        true },
+    { PX4_CUSTOM_MAIN_MODE_ACRO,        0,                                  PX4FirmwarePlugin::acroFlightMode,          true },
+    { PX4_CUSTOM_MAIN_MODE_STABILIZED,  0,                                  PX4FirmwarePlugin::stabilizedFlightMode,    true },
+    { PX4_CUSTOM_MAIN_MODE_RATTITUDE,   0,                                  PX4FirmwarePlugin::rattitudeFlightMode,     true },
+    { PX4_CUSTOM_MAIN_MODE_ALTCTL,      0,                                  PX4FirmwarePlugin::altCtlFlightMode,        true },
+    { PX4_CUSTOM_MAIN_MODE_POSCTL,      0,                                  PX4FirmwarePlugin::posCtlFlightMode,        true },
+    { PX4_CUSTOM_MAIN_MODE_OFFBOARD,    0,                                  PX4FirmwarePlugin::offboardFlightMode,      true },
+    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_READY,     PX4FirmwarePlugin::readyFlightMode,         false },
+    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,   PX4FirmwarePlugin::takeoffFlightMode,       false },
+    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LOITER,    PX4FirmwarePlugin::pauseFlightMode,         true },
+    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,   PX4FirmwarePlugin::missionFlightMode,       true },
+    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,       PX4FirmwarePlugin::rtlFlightMode,           true },
+    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,      PX4FirmwarePlugin::landingFlightMode,       false },
+    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,      PX4FirmwarePlugin::rtgsFlightMode,          false },
+    { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_ME, PX4FirmwarePlugin::followMeFlightMode,      true },
 };
 
 QList<VehicleComponent*> PX4FirmwarePlugin::componentsForVehicle(AutoPilotPlugin* vehicle)
@@ -258,5 +276,5 @@ QObject* PX4FirmwarePlugin::loadParameterMetaData(const QString& metaDataFile)
 
 void PX4FirmwarePlugin::pauseVehicle(Vehicle* vehicle)
 {
-    vehicle->setFlightMode("Auto: Pause");
+    vehicle->setFlightMode(pauseFlightMode);
 }

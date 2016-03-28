@@ -51,8 +51,8 @@ QGCView {
 
     readonly property real _defaultAltitudeRelative:    0
 
-    property bool _mainIsMap:           QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true)
-    property bool _isPipVisible:        QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true)
+    property bool _mainIsMap:           _controller.hasVideo ? QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true) : true
+    property bool _isPipVisible:        _controller.hasVideo ? QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true) : false
 
     property real _roll:                _activeVehicle ? _activeVehicle.roll.value    : _defaultRoll
     property real _pitch:               _activeVehicle ? _activeVehicle.pitch.value   : _defaultPitch
@@ -213,6 +213,7 @@ QGCView {
             anchors.left:       _panel.left
             anchors.bottom:     _panel.bottom
             anchors.margins:    ScreenTools.defaultFontPixelHeight
+            visible:            _controller.hasVideo
             isHidden:           !_isPipVisible
             isDark:             isBackgroundDark
             onActivated: {

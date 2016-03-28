@@ -29,9 +29,12 @@
 #include "QGCMAVLink.h"
 #include "QGCApplication.h"
 
+#include <QTcpSocket>
+
 QGC_LOGGING_CATEGORY(APMFirmwarePluginLog, "APMFirmwarePluginLog")
 
 static const QRegExp APM_COPTER_REXP("^(ArduCopter|APM:Copter)");
+static const QRegExp APM_SOLO_REXP("^(APM:Copter solo-)");
 static const QRegExp APM_PLANE_REXP("^(ArduPlane|APM:Plane)");
 static const QRegExp APM_ROVER_REXP("^(ArduRover|APM:Rover)");
 static const QRegExp APM_PX4NUTTX_REXP("^PX4: .*NuttX: .*");
@@ -43,10 +46,13 @@ static const QRegExp VERSION_REXP("^(APM:Copter|APM:Plane|APM:Rover|ArduCopter|A
 
 // minimum firmware versions that don't suffer from mavlink severity inversion bug.
 // https://github.com/diydrones/apm_planner/issues/788
+static const QString MIN_SOLO_VERSION_WITH_CORRECT_SEVERITY_MSGS("APM:Copter solo-1.2.0");
 static const QString MIN_COPTER_VERSION_WITH_CORRECT_SEVERITY_MSGS("APM:Copter V3.4.0");
 static const QString MIN_PLANE_VERSION_WITH_CORRECT_SEVERITY_MSGS("APM:Plane V3.4.0");
 static const QString MIN_ROVER_VERSION_WITH_CORRECT_SEVERITY_MSGS("APM:Rover V2.6.0");
 
+const char* APMFirmwarePlugin::_artooIP =                   "10.1.1.1"; ///< IP address of ARTOO controller
+const int   APMFirmwarePlugin::_artooVideoHandshakePort =   5502;       ///< Port for video handshake on ARTOO controller
 
 /*
  * @brief APMFirmwareVersion is a small class to represent the firmware version
@@ -300,7 +306,7 @@ void APMFirmwarePlugin::_handleParamSet(Vehicle* vehicle, mavlink_message_t* mes
     mavlink_msg_param_set_encode(message->sysid, message->compid, message, &paramSet);
 }
 
-void APMFirmwarePlugin::_handleStatusText(Vehicle* vehicle, mavlink_message_t* message)
+bool APMFirmwarePlugin::_handleStatusText(Vehicle* vehicle, mavlink_message_t* message)
 {
     QString messageText;
 
@@ -311,7 +317,7 @@ void APMFirmwarePlugin::_handleStatusText(Vehicle* vehicle, mavlink_message_t* m
         messageText = _getMessageText(message);
         qCDebug(APMFirmwarePluginLog) << messageText;
 
-        if (!_firmwareVersion.isValid()) {
+        if (!_firmwareVersion.isValid() && !messageText.contains(APM_SOLO_REXP)) {
             // if don't know firmwareVersion yet, try and see if this message contains it
             if (messageText.contains(APM_COPTER_REXP) || messageText.contains(APM_PLANE_REXP) || messageText.contains(APM_ROVER_REXP)) {
                 // found version string
@@ -355,7 +361,7 @@ void APMFirmwarePlugin::_handleStatusText(Vehicle* vehicle, mavlink_message_t* m
 
         if (messageText.contains("Place vehicle") || messageText.contains("Calibration successful")) {
             _adjustCalibrationMessageSeverity(message);
-            return;
+            return true;
         }
     }
 
@@ -374,6 +380,29 @@ void APMFirmwarePlugin::_handleStatusText(Vehicle* vehicle, mavlink_message_t* m
             messageText.contains(APM_PX4NUTTX_REXP) || messageText.contains(APM_FRAME_REXP) || messageText.contains(APM_SYSID_REXP)) {
         _setInfoSeverity(message);
     }
+
+    if (messageText.contains(APM_SOLO_REXP)) {
+        qDebug() << "Found Solo";
+
+        // Fix up severity
+        _setInfoSeverity(message);
+
+        // Start TCP video handshake with ARTOO
+        _soloVideoHandshake(vehicle);
+    }
+
+    if (messageText.startsWith("PreArm")) {
+        // ArduPilot PreArm messages can come across very frequently especially on Solo, which seems to send them once a second.
+        // Filter them out if they come too quickly.
+        if (_noisyPrearmMap.contains(messageText) && _noisyPrearmMap[messageText].msecsTo(QTime::currentTime()) < (10 * 1000)) {
+            return false;
+        }
+        _noisyPrearmMap[messageText] = QTime::currentTime();
+
+        vehicle->setPrearmError(messageText);
+    }
+
+    return true;
 }
 
 void APMFirmwarePlugin::_handleHeartbeat(Vehicle* vehicle, mavlink_message_t* message)
@@ -396,11 +425,11 @@ void APMFirmwarePlugin::_handleHeartbeat(Vehicle* vehicle, mavlink_message_t* me
     vehicle->setFlying(flying);
 }
 
-void APMFirmwarePlugin::adjustIncomingMavlinkMessage(Vehicle* vehicle, mavlink_message_t* message)
+bool APMFirmwarePlugin::adjustIncomingMavlinkMessage(Vehicle* vehicle, mavlink_message_t* message)
 {
     //-- Don't process messages to/from UDP Bridge. It doesn't suffer from these issues
     if (message->compid == MAV_COMP_ID_UDP_BRIDGE) {
-        return;
+        return true;
     }
 
     switch (message->msgid) {
@@ -408,12 +437,13 @@ void APMFirmwarePlugin::adjustIncomingMavlinkMessage(Vehicle* vehicle, mavlink_m
         _handleParamValue(vehicle, message);
         break;
     case MAVLINK_MSG_ID_STATUSTEXT:
-        _handleStatusText(vehicle, message);
-        break;
+        return _handleStatusText(vehicle, message);
     case MAVLINK_MSG_ID_HEARTBEAT:
         _handleHeartbeat(vehicle, message);
         break;
     }
+
+    return true;
 }
 
 void APMFirmwarePlugin::adjustOutgoingMavlinkMessage(Vehicle* vehicle, mavlink_message_t* message)
@@ -584,4 +614,19 @@ void APMFirmwarePlugin::pauseVehicle(Vehicle* vehicle)
 {
     // Best we can do in this case
     vehicle->setFlightMode("Loiter");
+}
+
+void APMFirmwarePlugin::_soloVideoHandshake(Vehicle* vehicle)
+{
+    Q_UNUSED(vehicle);
+
+    QTcpSocket* socket = new QTcpSocket();
+
+    socket->connectToHost(_artooIP, _artooVideoHandshakePort);
+    QObject::connect(socket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &APMFirmwarePlugin::_artooSocketError);
+}
+
+void APMFirmwarePlugin::_artooSocketError(QAbstractSocket::SocketError socketError)
+{
+    qgcApp()->showMessage(tr("Error during Solo video link setup: %1").arg(socketError));
 }

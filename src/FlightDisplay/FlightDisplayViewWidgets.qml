@@ -40,7 +40,7 @@ Item {
 
     property alias guidedModeBar: _guidedModeBar
 
-    property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
+    property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
     property bool   _isSatellite:   _mainIsMap ? _flightMap ? _flightMap.isSatelliteMap : true : true
 
     readonly property real _margins: ScreenTools.defaultFontPixelHeight / 2
@@ -61,24 +61,28 @@ Item {
         id: _dropButtonsExclusiveGroup
     }
 
-    //-- Vehicle GPS lock display
+    //-- Map warnings
     Column {
-        id:     gpsLockColumn
-        y:      (parent.height - height) / 2
-        width:  parent.width
+        anchors.horizontalCenter:   parent.horizontalCenter
+        anchors.verticalCenter:     parent.verticalCenter
+        spacing:                    ScreenTools.defaultFontPixelHeight
 
-        Repeater {
-            model: QGroundControl.multiVehicleManager.vehicles
+        QGCLabel {
+            anchors.horizontalCenter:   parent.horizontalCenter
+            visible:                    _activeVehicle && !_activeVehicle.coordinateValid
+            z:                          QGroundControl.zOrderTopMost
+            color:                      mapPal.text
+            font.pixelSize:             ScreenTools.largeFontPixelSize
+            text:                       qsTr("GPS未锁定")//"No GPS Lock for Vehicle"
+        }
 
-            delegate:
-            QGCLabel {
-                width:                  gpsLockColumn.width
-                horizontalAlignment:    Text.AlignHCenter
-                visible:                !object.coordinateValid
-                text:                   qsTr("GPS未锁定")/*"No GPS Lock for Vehicle #"*/ + object.id
-                z:                      QGroundControl.zOrderMapItems - 2
-                color:                  mapPal.text
-            }
+        QGCLabel {
+            anchors.horizontalCenter:   parent.horizontalCenter
+            visible:                    _activeVehicle && !_activeVehicle.coordinateValid
+            z:                          QGroundControl.zOrderTopMost
+            color:                      mapPal.text
+            font.pixelSize:             ScreenTools.largeFontPixelSize
+            text:                       _activeVehicle ? _activeVehicle.prearmError : ""
         }
     }
 
@@ -272,15 +276,56 @@ Item {
     //-- Guided mode buttons
     Rectangle {
         id:                         _guidedModeBar
-        anchors.margins:            _margins
+        anchors.margins:            _barMargin
         anchors.bottom:             parent.bottom
         anchors.horizontalCenter:   parent.horizontalCenter
-        width:                      guidedModeButtons.width + (_margins * 2)
-        height:                     guidedModeButtons.height + (_margins * 2)
+        width:                      guidedModeColumn.width + (_margins * 2)
+        height:                     guidedModeColumn.height + (_margins * 2)
+        radius:                     _margins
         color:                      qgcPal.window
         visible:                    _activeVehicle
         opacity:                    0.9
         z:                          QGroundControl.zOrderWidgets
+        state:                      "Shown"
+
+        states: [
+            State {
+                name: "Shown"
+                PropertyChanges { target: showAnimation; running: true  }
+                PropertyChanges { target: guidedModeHideTimer; running: true }
+            },
+            State {
+                name: "Hidden"
+                PropertyChanges { target: hideAnimation; running: true  }
+            }
+        ]
+
+        PropertyAnimation {
+            id:             hideAnimation
+            target:         _guidedModeBar
+            property:       "_barMargin"
+            duration:       1000
+            easing.type:    Easing.InOutQuad
+            from:           _guidedModeBar._showMargin
+            to:             _guidedModeBar._hideMargin
+        }
+
+        PropertyAnimation {
+            id:             showAnimation
+            target:         _guidedModeBar
+            property:       "_barMargin"
+            duration:       250
+            easing.type:    Easing.InOutQuad
+            from:           _guidedModeBar._hideMargin
+            to:             _guidedModeBar._showMargin
+        }
+
+        Timer {
+            id:             guidedModeHideTimer
+            interval:       7000
+            running:        true
+            onTriggered:    _guidedModeBar.state = "Hidden"
+        }
 
         readonly property int confirmHome:          1
         readonly property int confirmLand:          2
@@ -293,6 +338,9 @@ Item {
         readonly property int confirmRetask:        9
 
         property int    confirmActionCode
+        property real   _showMargin:    _margins
+        property real   _hideMargin:    _margins - _guidedModeBar.height
+        property real   _barMargin:     _showMargin
 
         function actionConfirmed() {
             switch (confirmActionCode) {
@@ -334,7 +382,16 @@ Item {
             }
         }
 
+        function rejectGuidedModeConfirm() {
+            guidedModeConfirm.visible = false
+            guidedModeBar.visible = true
+            altitudeSlider.visible = false
+            _flightMap._gotoHereCoordinate = QtPositioning.coordinate()
+            guidedModeHideTimer.restart()
+        }
+
         function confirmAction(actionCode) {
+            guidedModeHideTimer.stop()
             confirmActionCode = actionCode
             switch (confirmActionCode) {
             case confirmArm:
@@ -354,6 +411,9 @@ Item {
             case confirmLand:
                 guidedModeConfirm.confirmText = "land"
                 break;
+            case confirmHome:
+                guidedModeConfirm.confirmText = "return to launch"
+                break;
             case confirmChangeAlt:
                 altitudeSlider.visible = true
                 altitudeSlider.setInitialValueAppSettingsDistanceUnits(_activeVehicle.altitudeAMSL.value)
@@ -370,85 +430,70 @@ Item {
             guidedModeConfirm.visible = true
         }
 
-        Row {
-            id:                 guidedModeButtons
+        Column {
+            id:                 guidedModeColumn
             anchors.margins:    _margins
             anchors.top:        parent.top
             anchors.left:       parent.left
             spacing:            _margins
 
-            QGCButton {
-                text:       _activeVehicle.armed ? (_activeVehicle.flying ? "Emergency Stop" : "Disarm") : "Arm"
-                onClicked:  _guidedModeBar.confirmAction(_activeVehicle.armed ? (_activeVehicle.flying ? _guidedModeBar.confirmEmergencyStop : _guidedModeBar.confirmDisarm) : _guidedModeBar.confirmArm)
-            }
+            Row {
+                spacing: _margins
 
-            QGCButton {
-                text:       "RTL"
-                visible:    _activeVehicle.guidedModeSupported && _activeVehicle.flying
-                onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmHome)
-            }
+                QGCButton {
+                    text:       _activeVehicle.armed ? (_activeVehicle.flying ? "Emergency Stop" : "Disarm") : "Arm"
+                    onClicked:  _guidedModeBar.confirmAction(_activeVehicle.armed ? (_activeVehicle.flying ? _guidedModeBar.confirmEmergencyStop : _guidedModeBar.confirmDisarm) : _guidedModeBar.confirmArm)
+                }
 
-            QGCButton {
-                text:        _activeVehicle.flying ? "Land" : "Takeoff"
-                visible:    _activeVehicle.guidedModeSupported && _activeVehicle.armed
-                onClicked:  _guidedModeBar.confirmAction(_activeVehicle.flying ? _guidedModeBar.confirmLand : _guidedModeBar.confirmTakeoff)
-            }
+                QGCButton {
+                    text:       "RTL"
+                    visible:    _activeVehicle.guidedModeSupported && _activeVehicle.flying
+                    onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmHome)
+                }
 
-            QGCButton {
-                text:       "Pause"
-                visible:    _activeVehicle.pauseVehicleSupported && _activeVehicle.flying
-                onClicked:  _activeVehicle.pauseVehicle()
-            }
+                QGCButton {
+                    text:        _activeVehicle.flying ? "Land" : "Takeoff"
+                    visible:    _activeVehicle.guidedModeSupported && _activeVehicle.armed
+                    onClicked:  _guidedModeBar.confirmAction(_activeVehicle.flying ? _guidedModeBar.confirmLand : _guidedModeBar.confirmTakeoff)
+                }
 
-            QGCButton {
-                text:       "Change Altitude"
-                visible:    _activeVehicle.guidedModeSupported && _activeVehicle.armed
-                onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmChangeAlt)
-            }
-        }
+                QGCButton {
+                    text:       "Pause"
+                    visible:    _activeVehicle.pauseVehicleSupported && _activeVehicle.flying
+                    onClicked:  {
+                        guidedModeHideTimer.restart()
+                        _activeVehicle.pauseVehicle()
+                    }
+                }
 
-        /*
-        Row {
-            id:                 guidedModeConfirm
-            anchors.margins:    _margins
-            anchors.top:        parent.top
-            anchors.left:       parent.left
-            spacing:            _margins
-            visible:            false
+                QGCButton {
+                    text:       "Change Altitude"
+                    visible:    _activeVehicle.guidedModeSupported && _activeVehicle.armed
+                    onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmChangeAlt)
+                }
+            } // Row
 
             QGCLabel {
-                text: "Confirm " + _guidedModeBar.confirmText + " :"
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                text:       "Click in map to move vehicle"
+                visible:    _activeVehicle && _activeVehicle.guidedMode && _activeVehicle.flying
             }
-
-            QGCButton {
-                text: "Yes"
-                onClicked: {
-                    guidedModeConfirm.visible = false
-                    guidedModeButtons.visible = true
-                    _guidedModeBar.actionConfirmed()
-                    altitudeSlider.visible = false
-                }
-            }
-
-            QGCButton {
-                text: "No"
-                onClicked: {
-                    guidedModeConfirm.visible = false
-                    guidedModeButtons.visible = true
-                    altitudeSlider.visible = false
-                    _flightMap._gotoHereCoordinate = QtPositioning.coordinate()
-                }
-            }
-        }*/
+        } // Column
     } // Rectangle - Guided mode buttons
+
+    MouseArea {
+        anchors.fill:   parent
+        enabled:        guidedModeConfirm.visible
+        onClicked:      _guidedModeBar.rejectGuidedModeConfirm()
+    }
 
     // Action confirmation control
     SliderSwitch {
         id:                         guidedModeConfirm
-        anchors.top:                _guidedModeBar.top
-        anchors.bottom:             _guidedModeBar.bottom
+        anchors.bottomMargin:       _margins
+        anchors.bottom:             parent.bottom
         anchors.horizontalCenter:   parent.horizontalCenter
+        height:                     ScreenTools.defaultFontPixelHeight * 3
         visible:                    false
         z:                          QGroundControl.zOrderWidgets
 
@@ -457,14 +502,10 @@ Item {
             guidedModeBar.visible = true
             _guidedModeBar.actionConfirmed()
             altitudeSlider.visible = false
+            guidedModeHideTimer.restart()
         }
 
-        onReject: {
-            guidedModeConfirm.visible = false
-            guidedModeBar.visible = true
-            altitudeSlider.visible = false
-            _flightMap._gotoHereCoordinate = QtPositioning.coordinate()
-        }
+        onReject: _guidedModeBar.rejectGuidedModeConfirm()
     }
 
     //-- Altitude slider

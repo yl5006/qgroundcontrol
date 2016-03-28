@@ -8,7 +8,7 @@ import QGroundControl.Palette       1.0
 /// control on an iPhone.
 Rectangle {
     id:     _root
-    width:  label.contentWidth + (_diameter * 2) + (_border * 4)
+    width:  label.contentWidth + (_diameter * 2.5) + (_border * 4)
     radius: height /2
     color:  qgcPal.window
 
@@ -39,10 +39,16 @@ Rectangle {
         color:      qgcPal.windowShade
         opacity:    0.8
 
-        QGCLabel {
-            anchors.horizontalCenter:   parent.horizontalCenter
-            anchors.verticalCenter:     parent.verticalCenter
-            text: ">"
+        QGCColoredImage {
+            anchors.centerIn:       parent
+            width:                  parent.width  * 0.8
+            height:                 parent.height * 0.8
+            fillMode:               Image.PreserveAspectFit
+            smooth:                 false
+            mipmap:                 false
+            color:                  qgcPal.text
+            cache:                  false
+            source:                 "/res/ArrowRight.svg"
         }
 
         MouseArea {
@@ -54,7 +60,7 @@ Rectangle {
             drag.minimumX:  _border
             drag.maximumX:  _maxXDrag
 
-            property real _maxXDrag:    _root.width - ((_diameter + _border) * 2)
+            property real _maxXDrag:    _root.width - (_diameter + _border)
             property bool dragActive:   drag.active
 
             onDragActiveChanged: {
@@ -65,29 +71,6 @@ Rectangle {
                     slider.x = _border
                 }
             }
-        }
-    }
-
-    Rectangle {
-        id:                     cancel
-        anchors.rightMargin:    _border
-        anchors.right:          parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        height:                 _diameter
-        width:                  _diameter
-        radius:                 _diameter / 2
-        color:                  qgcPal.windowShade
-        opacity:                0.8
-
-        QGCLabel {
-            anchors.horizontalCenter:   parent.horizontalCenter
-            anchors.verticalCenter:     parent.verticalCenter
-            text: "X"
-        }
-
-        MouseArea {
-            anchors.fill:   parent
-            onClicked:      _root.reject()
         }
     }
 }

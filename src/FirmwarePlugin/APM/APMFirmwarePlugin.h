@@ -31,6 +31,8 @@
 #include "QGCLoggingCategory.h"
 #include "APMParameterMetaData.h"
 
+#include <QAbstractSocket>
+
 Q_DECLARE_LOGGING_CATEGORY(APMFirmwarePluginLog)
 
 class APMFirmwareVersion
@@ -91,7 +93,7 @@ public:
     bool        isGuidedMode(const Vehicle* vehicle) const final;
     void        pauseVehicle(Vehicle* vehicle);
     int         manualControlReservedButtonCount(void) final;
-    void        adjustIncomingMavlinkMessage(Vehicle* vehicle, mavlink_message_t* message) final;
+    bool        adjustIncomingMavlinkMessage(Vehicle* vehicle, mavlink_message_t* message) final;
     void        adjustOutgoingMavlinkMessage(Vehicle* vehicle, mavlink_message_t* message) final;
     void        initializeVehicle(Vehicle* vehicle) final;
     bool        sendHomePositionToVehicle(void) final;
@@ -107,6 +109,9 @@ protected:
     /// All access to singleton is through stack specific implementation
     APMFirmwarePlugin(void);
     void setSupportedModes(QList<APMCustomMode> supportedModes);
+
+private slots:
+    void _artooSocketError(QAbstractSocket::SocketError socketError);
     
 private:
     void _adjustSeverity(mavlink_message_t* message) const;
@@ -116,12 +121,18 @@ private:
     QString _getMessageText(mavlink_message_t* message) const;
     void _handleParamValue(Vehicle* vehicle, mavlink_message_t* message);
     void _handleParamSet(Vehicle* vehicle, mavlink_message_t* message);
-    void _handleStatusText(Vehicle* vehicle, mavlink_message_t* message);
+    bool _handleStatusText(Vehicle* vehicle, mavlink_message_t* message);
     void _handleHeartbeat(Vehicle* vehicle, mavlink_message_t* message);
+    void _soloVideoHandshake(Vehicle* vehicle);
 
     APMFirmwareVersion      _firmwareVersion;
     bool                    _textSeverityAdjustmentNeeded;
     QList<APMCustomMode>    _supportedModes;
+    QMap<QString, QTime>    _noisyPrearmMap;
+
+    static const char*  _artooIP;
+    static const int    _artooVideoHandshakePort;
+
 };
 
 #endif

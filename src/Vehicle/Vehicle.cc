@@ -35,6 +35,7 @@
 #include "QGCApplication.h"
 #include "QGCImageProvider.h"
 #include "GAudioOutput.h"
+#include "FollowMe.h"
 
 QGC_LOGGING_CATEGORY(VehicleLog, "VehicleLog")
 
@@ -146,7 +147,6 @@ Vehicle::Vehicle(LinkInterface*             link,
     connect(this, &Vehicle::_sendMessageOnLinkOnThread, this, &Vehicle::_sendMessageOnLink, Qt::QueuedConnection);
     connect(this, &Vehicle::flightModeChanged,          this, &Vehicle::_handleFlightModeChanged);
     connect(this, &Vehicle::armedChanged,               this, &Vehicle::_announceArmedChanged);
-
     _uas = new UAS(_mavlink, this, _firmwarePluginManager);
 
     setLatitude(_uas->getLatitude());
@@ -163,10 +163,18 @@ Vehicle::Vehicle(LinkInterface*             link,
     connect(_autopilotPlugin, &AutoPilotPlugin::parametersReadyChanged,     this, &Vehicle::_parametersReady);
     connect(_autopilotPlugin, &AutoPilotPlugin::missingParametersChanged,   this, &Vehicle::missingParametersChanged);
 
+    // connect this vehicle to the follow me handle manager
+    connect(this, &Vehicle::flightModeChanged,qgcApp()->toolbox()->followMe(), &FollowMe::followMeHandleManager);
+
     // Refresh timer
     connect(_refreshTimer, &QTimer::timeout, this, &Vehicle::_checkUpdate);
     _refreshTimer->setInterval(UPDATE_TIMER);
     _refreshTimer->start(UPDATE_TIMER);
+
+    // PreArm Error self-destruct timer
+    connect(&_prearmErrorTimer, &QTimer::timeout, this, &Vehicle::_prearmErrorTimeout);
+    _prearmErrorTimer.setInterval(_prearmErrorTimeoutMSecs);
+    _prearmErrorTimer.setSingleShot(true);
 
     // Connection Lost time
     _connectionLostTimer.setInterval(Vehicle::_connectionLostTimeoutMSecs);
@@ -387,7 +395,9 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     }
 
     // Give the plugin a change to adjust the message contents
-    _firmwarePlugin->adjustIncomingMavlinkMessage(this, &message);
+    if (!_firmwarePlugin->adjustIncomingMavlinkMessage(this, &message)) {
+        return;
+    }
 
     switch (message.msgid) {
     case MAVLINK_MSG_ID_HOME_POSITION:
@@ -743,7 +753,7 @@ void Vehicle::_sendMessageOnLink(LinkInterface* link, mavlink_message_t message)
     uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
     int len = mavlink_msg_to_send_buffer(buffer, &message);
 
-    link->writeBytes((const char*)buffer, len);
+    link->writeBytesSafe((const char*)buffer, len);
     _messagesSent++;
     emit messagesSentChanged();
 }
@@ -793,17 +803,17 @@ void Vehicle::setLongitude(double longitude){
 
 void Vehicle::_updateAttitude(UASInterface*, double roll, double pitch, double yaw, quint64)
 {
-    if (isinf(roll)) {
+    if (qIsInf(roll)) {
         _rollFact.setRawValue(0);
     } else {
         _rollFact.setRawValue(roll * (180.0 / M_PI));
     }
-    if (isinf(pitch)) {
+    if (qIsInf(pitch)) {
         _pitchFact.setRawValue(0);
     } else {
         _pitchFact.setRawValue(pitch * (180.0 / M_PI));
     }
-    if (isinf(yaw)) {
+    if (qIsInf(yaw)) {
         _headingFact.setRawValue(0);
     } else {
         yaw = yaw * (180.0 / M_PI);
@@ -1537,6 +1547,19 @@ void Vehicle::doCommandLong(int component, MAV_CMD command, float param1, float 
     sendMessage(msg);
 }
 
+void Vehicle::setPrearmError(const QString& prearmError)
+{
+    _prearmError = prearmError;
+    emit prearmErrorChanged(_prearmError);
+    if (!_prearmError.isEmpty()) {
+        _prearmErrorTimer.start();
+    }
+}
+
+void Vehicle::_prearmErrorTimeout(void)
+{
+    setPrearmError(QString());
+}
 
 const char* VehicleGPSFactGroup::_hdopFactName =                "hdop";
 const char* VehicleGPSFactGroup::_vdopFactName =                "vdop";
