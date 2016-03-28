@@ -97,7 +97,6 @@ Item {
         id:                     instrumentGadget
         anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
 //	anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
-        anchors.right:          parent.right
         anchors.left:           parent.left
         anchors.top:            parent.top
 //      anchors.verticalCenter: parent.verticalCenter

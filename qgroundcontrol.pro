@@ -1,4 +1,4 @@
-# -------------------------------------------------
+#ifdef QT_DEBUG# -------------------------------------------------
 # QGroundControl - Micro Air Vehicle Groundstation
 # Please see our website at <http://qgroundcontrol.org>
 # Maintainer:
@@ -93,8 +93,9 @@ QT += \
 }
 
 #  testlib is needed even in release flavor for QSignalSpy support
-#QT += testlib
-
+DebugBuild {
+QT += testlib
+}
 #
 # OS Specific settings
 #

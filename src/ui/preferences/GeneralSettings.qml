@@ -263,45 +263,45 @@ Rectangle {
                 }
             }
 
-//            Item {
-//                height: ScreenTools.defaultFontPixelHeight / 2
-//                width:  parent.width
-//            }
+            Item {
+                height: ScreenTools.defaultFontPixelHeight / 2
+                width:  parent.width
+            }
 
-            //-----------------------------------------------------------------
-            //-- Autoconnect settings
-//            QGCLabel { text: "Autoconnect to the following devices:" }
+//            -----------------------------------------------------------------
+//            -- Autoconnect settings
+            QGCLabel { text: "Autoconnect to the following devices:" }
 
-//            Row {
-//                spacing: ScreenTools.defaultFontPixelWidth * 2
+            Row {
+                spacing: ScreenTools.defaultFontPixelWidth * 2
 
-//                QGCCheckBox {
-//                    text:       "Pixhawk"
-//                    visible:    !ScreenTools.isiOS
-//                    checked:    QGroundControl.linkManager.autoconnectPixhawk
-//                    onClicked:  QGroundControl.linkManager.autoconnectPixhawk = checked
-//                }
+                QGCCheckBox {
+                    text:       "Pixhawk"
+                    visible:    !ScreenTools.isiOS
+                    checked:    QGroundControl.linkManager.autoconnectPixhawk
+                    onClicked:  QGroundControl.linkManager.autoconnectPixhawk = checked
+                }
 
-//                QGCCheckBox {
-//                    text:       "SiK Radio"
-//                    visible:    !ScreenTools.isiOS
-//                    checked:    QGroundControl.linkManager.autoconnect3DRRadio
-//                    onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked
-//                }
+                QGCCheckBox {
+                    text:       "SiK Radio"
+                    visible:    !ScreenTools.isiOS
+                    checked:    QGroundControl.linkManager.autoconnect3DRRadio
+                    onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked
+                }
 
-//                QGCCheckBox {
-//                    text:       "PX4 Flow"
-//                    visible:    !ScreenTools.isiOS
-//                    checked:    QGroundControl.linkManager.autoconnectPX4Flow
-//                    onClicked:  QGroundControl.linkManager.autoconnectPX4Flow = checked
-//                }
+                QGCCheckBox {
+                    text:       "PX4 Flow"
+                    visible:    !ScreenTools.isiOS
+                    checked:    QGroundControl.linkManager.autoconnectPX4Flow
+                    onClicked:  QGroundControl.linkManager.autoconnectPX4Flow = checked
+                }
 
-//                QGCCheckBox {
-//                    text:       "UDP"
-//                    checked:    QGroundControl.linkManager.autoconnectUDP
-//                    onClicked:  QGroundControl.linkManager.autoconnectUDP = checked
-//                }
-//            }
+                QGCCheckBox {
+                    text:       "UDP"
+                    checked:    QGroundControl.linkManager.autoconnectUDP
+                    onClicked:  QGroundControl.linkManager.autoconnectUDP = checked
+                }
+            }
 
             Item {
                 height: ScreenTools.defaultFontPixelHeight / 2

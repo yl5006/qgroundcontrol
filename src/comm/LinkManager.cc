@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -32,8 +32,9 @@ This file is part of the QGROUNDCONTROL project
 #include <QList>
 #include <QApplication>
 #include <QDebug>
+#ifdef QT_DEBUG
 #include <QSignalSpy>
-
+#endif
 #ifndef __ios__
 #include "QGCSerialPortInfo.h"
 #endif
@@ -882,13 +883,13 @@ void LinkManager::_activeLinkCheck(void)
         // See if we can get an NSH prompt on this link
         bool foundNSHPrompt = false;
         link->writeBytes("\r", 1);
-        QSignalSpy spy(link, SIGNAL(bytesReceived(LinkInterface*, QByteArray)));
-        if (spy.wait(100)) {
-            QList<QVariant> arguments = spy.takeFirst();
-            if (arguments[1].value<QByteArray>().contains("nsh>")) {
-                foundNSHPrompt = true;
-            }
-        }
+//      QSignalSpy spy(link, SIGNAL(bytesReceived(LinkInterface*, QByteArray)));
+//        if (spy.wait(100)) {
+//            QList<QVariant> arguments = spy.takeFirst();
+//            if (arguments[1].value<QByteArray>().contains("nsh>")) {
+//                foundNSHPrompt = true;
+//            }
+//        }
 
         qgcApp()->showMessage(foundNSHPrompt ?
                                   QStringLiteral("Please check to make sure you have an SD Card inserted in your Vehicle and try again.") :
