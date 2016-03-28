@@ -480,7 +480,7 @@ QGCView {
                         orientation:    ListView.Horizontal
                         model:          controller.visualItems
                         cacheBuffer:    width*2//height * 2
-                        delegate:       MissionItemIndex {//MissionItemEditor {
+                        delegate:       MissionItemEditor {//MissionItemEditor {
                             missionItem:    object
                             width:          _rightPanelWidth//parent.width
                             qgcView:        _root
