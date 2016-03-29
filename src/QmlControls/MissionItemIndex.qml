@@ -8,15 +8,15 @@ import QGroundControl.Vehicle       1.0
 import QGroundControl.Controls      1.0
 import QGroundControl.FactControls  1.0
 import QGroundControl.Palette       1.0
-
+import QGroundControl               1.0
 
 /// Mission item edit control
 Rectangle {
     id: _root
 
-    height: editorLoader.y + editorLoader.height + (_margin * 2)
-    color:  _currentItem ? qgcPal.buttonHighlight : qgcPal.windowShade
-    radius: _radius
+//    height: editorLoader.y + editorLoader.height + (_margin * 2)
+//    color:  _currentItem ? qgcPal.buttonHighlight : qgcPal.windowShade
+//    radius: _radius
 
     property var    missionItem ///< MissionItem associated with this editor
     property bool   readOnly    ///< true: read only view, false: full editing view
@@ -33,6 +33,10 @@ Rectangle {
     readonly property real  _editFieldWidth:    ScreenTools.defaultFontPixelWidth * 16
     readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
     readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
+    readonly property real  _PointFieldWidth:   ScreenTools.defaultFontPixelWidth * 10
+    property real   _distance:          _statusValid ? missionItem.distance : 0
+    property bool   _statusValid:       missionItem.command==16&&missionItem.sequenceNumber != 0
+    property string _distanceText:      _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(0) + " " + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(1) + "k" + QGroundControl.appSettingsDistanceUnitsString
 
     QGCPalette {
         id: qgcPal
@@ -41,8 +45,8 @@ Rectangle {
 
 
     MouseArea {
-        anchors.fill:   parent
-        visible:        !missionItem.isCurrentItem
+        anchors.fill:   waypoint
+ //     visible:        !missionItem.isCurrentItem
         onClicked:      _root.clicked()
     }
 
@@ -51,10 +55,80 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.leftMargin:     _margin
         anchors.top:            parent.top
-        anchors.left:           parent.left
-        text:                   missionItem.sequenceNumber == 0 ? "H" : missionItem.sequenceNumber
+//      anchors.left:           parent.left
+        text:                   missionItem.sequenceNumber == 0 ? "Home" : missionItem.commandName
         color:                  _outerTextColor
     }
+    Rectangle {
+        id:                     waypoint
+        width:                  parent.width
+        height:                 parent.width
+        radius:                 _radius*2
+        anchors.top:            label.bottom
+        color:                  _currentItem ? Qt.rgba(1,0.52,0,0.85):Qt.rgba(0.1133,0.5664,0.9063,0.85)
+
+
+        QGCLabel {
+            id:                  number
+            anchors.top:            parent.top
+            width:                  parent.width
+            horizontalAlignment:    Text.AlignHCenter
+            font.pixelSize:         ScreenTools.defaultFontPixelHeight*2
+            font.bold:              true
+            fontSizeMode:           Text.HorizontalFit
+            color:                  "white"
+            text:                   missionItem.sequenceNumber
+        }
+        Row {
+           anchors.bottom:          waypoint.bottom
+           anchors.bottomMargin:    _margin
+           id:     altitudedisplay
+           width:  parent.width*0.9//_largeColumn.width
+           spacing:    _margin*2
+           anchors.horizontalCenter:  parent.horizontalCenter
+           Image{
+               width:    ScreenTools.largeFontPixelSize
+               height:   ScreenTools.largeFontPixelSize
+               source:   "/qmlimages/altitudeRelativewhite.svg"
+           }
+
+           QGCLabel {
+               width:                  parent.width*0.5
+               horizontalAlignment:    Text.AlignHCenter
+               font.pixelSize:         ScreenTools.largeFontPixelSize
+               font.weight:            Font.DemiBold
+               color:                  "white"
+//             fontSizeMode:           Text.HorizontalFit
+               text:                   missionItem.coordinate.altitude+" m"
+           }
+        }
+           Row {
+              anchors.bottom:           altitudedisplay.top
+              anchors.bottomMargin:     _margin
+              id:                       distancedisplay
+              width:                    parent.width*0.9//_largeColumn.width
+              spacing:                  _margin*2
+              anchors.horizontalCenter:  parent.horizontalCenter
+              visible:                  _statusValid
+              Image{
+                  width:    ScreenTools.largeFontPixelSize
+                  height:   ScreenTools.largeFontPixelSize
+                  source:   "/qmlimages/distance.svg"
+              }
+
+              QGCLabel {
+                  width:                  parent.width*0.5
+                  height:                 ScreenTools.largeFontPixelSize
+                  horizontalAlignment:    Text.AlignHCenter
+                  font.pixelSize:         ScreenTools.largeFontPixelSize
+                  font.weight:            Font.DemiBold
+                  color:                  "white"
+//                  fontSizeMode:         Text.HorizontalFit
+                  text:                   _distanceText//missionItem.distance
+              }
+        }
+    }
+
 
 //    Image {
 //        id:                     hamburger

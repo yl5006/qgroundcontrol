@@ -33,7 +33,7 @@ Item {
 
     Image {
         id:         waypoint
-        source:     isCurrentItem ? "/qmlimages/Waypoint0.svg" : "/qmlimages/Waypoint.svg"
+        source:     isCurrentItem ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
         mipmap:     true
         fillMode:   Image.PreserveAspectFit
         anchors.fill: parent

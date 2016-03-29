@@ -53,6 +53,7 @@ QGCView {
     readonly property real      _margin:            ScreenTools.defaultFontPixelHeight / 2
     readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
     readonly property real      _editFieldWidth:    ScreenTools.defaultFontPixelWidth * 16
+    readonly property real      _PointFieldWidth:    ScreenTools.defaultFontPixelWidth * 10
     readonly property real      _rightPanelWidth:   Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 30)
     readonly property real      _rightPanelOpacity: 0.8
     readonly property int       _toolButtonCount:   6
@@ -442,6 +443,7 @@ QGCView {
                     model:          controller.waypointLines
                 }
 
+
                 // Add the vehicles to the map
                 MapItemView {
                     model: QGroundControl.multiVehicleManager.vehicles
@@ -455,24 +457,43 @@ QGCView {
                         }
                 }
 
-                // Mission Item Editor
+//                MissionItemIndexIndicator {
+//                    id:             missionItemIndicator
+//                    anchors.right:  parent.right
+//                    anchors.top:    toolbarSpacer.bottom
+//                    anchors.margins:   _margin*2
+//                    width:          _rightPanelWidth
+//                    missionItem:    _currentMissionItem
+//                    qgcView:        _root
+//                    readOnly:       false
+//                    z:              QGroundControl.zOrderTopMost
+//         //         onClicked:      setCurrentItem(_currentMissionItem.sequenceNumber)
+//                    onRemove: {
+//                        itemDragger.clearItem()
+//                        controller.removeMissionItem(_currentMissionItem.sequenceNumber)
+//                    }
+//                    onInsert: {
+//                        var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
+//                        setCurrentItem(sequenceNumber)
+//                    }
+//                    onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
+//               }
+                /// Mission Item Editor
                 Item {
-                    id:             missionItem//Index//missionItemEditor
-                    height:         mainWindow.availableHeight/5  //change by yaoling
+                    id:             missionItemIndex//missionItemEditor
+                    height:         _PointFieldWidth+ScreenTools.defaultFontPixelWidth//mainWindow.availableHeight/5  //change by yaoling
+                    anchors.bottomMargin: _margin*2
                     anchors.bottom: parent.bottom
-//                  anchors.right:  parent.right
-                    anchors.left:   parent.left
+                    anchors.horizontalCenter:           parent.horizontalCenter
 //                  width:          _rightPanelWidth
-                    width:          mainWindow.availableWidth   //change by yaoling
+                    width:          mainWindow.availableWidth*0.9   //change by yaoling
                     opacity:        _rightPanelOpacity
-                    z:              QGroundControl.zOrderTopMost
+                    z:              QGroundControl.zOrderTopMost-1
 
                     ListView {
                         id:             editorListView
                         anchors.left:   parent.left
-//                      anchors.right:  parent.right
                         anchors.top:    parent.top
-//                      anchors.bottom: parent.bottom
                         height:         parent.height
                         width:          parent.width   //add yaoling
                         spacing:        _margin / 2
@@ -480,28 +501,28 @@ QGCView {
                         orientation:    ListView.Horizontal
                         model:          controller.visualItems
                         cacheBuffer:    width*2//height * 2
-                        delegate:       MissionItemEditor {//MissionItemEditor {
+                        delegate:       MissionItemIndex{//MissionItemIndex {//MissionItemEditor {
                             missionItem:    object
-                            width:          _rightPanelWidth//parent.width
+                            width:          _PointFieldWidth//_PointFieldWidth//_rightPanelWidth//parent.width
                             qgcView:        _root
                             readOnly:       false
 
                             onClicked:  setCurrentItem(object.sequenceNumber)
 
-                            onRemove: {
-                                itemDragger.clearItem()
-                                controller.removeMissionItem(object.sequenceNumber)
-                            }
+//                            onRemove: {
+//                                itemDragger.clearItem()
+//                                controller.removeMissionItem(object.sequenceNumber)
+//                            }
 
-                            onInsert: {
-                                var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
-                                setCurrentItem(sequenceNumber)
-                            }
+//                            onInsert: {
+//                                var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
+//                                setCurrentItem(sequenceNumber)
+//                            }
 
-                            onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
+//                            onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
                         }
                     } // ListView
-                } // Item - Mission Item editor
+                } /// Item - Mission Item editor
 
                 //-- Dismiss Drop Down (if any)
                 MouseArea {
@@ -675,7 +696,8 @@ QGCView {
                         }
                     }
                 }
-//   change by yaoling do not use this
+
+//change by yaoling do not use this
 //                MissionItemStatus {
 //                    id:                 waypointValuesDisplay
 //                    anchors.margins:    ScreenTools.defaultFontPixelWidth
