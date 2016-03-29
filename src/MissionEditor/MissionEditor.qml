@@ -467,29 +467,28 @@ QGCView {
 //                    qgcView:        _root
 //                    readOnly:       false
 //                    z:              QGroundControl.zOrderTopMost
-//         //         onClicked:      setCurrentItem(_currentMissionItem.sequenceNumber)
+//           //       onClicked:      setCurrentItem(_currentMissionItem.sequenceNumber)
 //                    onRemove: {
 //                        itemDragger.clearItem()
 //                        controller.removeMissionItem(_currentMissionItem.sequenceNumber)
 //                    }
 //                    onInsert: {
-//                        var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
+//                        var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, _currentMissionItem.sequenceNumber)
 //                        setCurrentItem(sequenceNumber)
 //                    }
 //                    onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
 //               }
-                /// Mission Item Editor
+                // Mission Item Editor
                 Item {
                     id:             missionItemIndex//missionItemEditor
                     height:         _PointFieldWidth+ScreenTools.defaultFontPixelWidth//mainWindow.availableHeight/5  //change by yaoling
                     anchors.bottomMargin: _margin*2
-                    anchors.bottom: parent.bottom
+                    anchors.bottom:  parent.bottom
                     anchors.horizontalCenter:           parent.horizontalCenter
 //                  width:          _rightPanelWidth
                     width:          mainWindow.availableWidth*0.9   //change by yaoling
                     opacity:        _rightPanelOpacity
-                    z:              QGroundControl.zOrderTopMost-1
-
+                    z:              QGroundControl.zOrderTopMost
                     ListView {
                         id:             editorListView
                         anchors.left:   parent.left
@@ -523,8 +522,51 @@ QGCView {
                         }
                     } // ListView
                 } /// Item - Mission Item editor
+                // Mission Item Editor
+                              Item {
+                                  id:             missionItemEditor
+                                  height:         mainWindow.availableHeight
+                                  anchors.bottom: parent.bottom
+                                  anchors.right:  parent.right
+                                  width:          _rightPanelWidth
+                                  opacity:        _rightPanelOpacity
+                                  z:              QGroundControl.zOrderTopMost
 
-                //-- Dismiss Drop Down (if any)
+                                  ListView {
+                                      id:             editorListView1
+                                      anchors.left:   parent.left
+                                      anchors.right:  parent.right
+                                      anchors.top:    parent.top
+                                      height:         parent.height
+                                      spacing:        _margin / 2
+                                      orientation:    ListView.Vertical
+                                      model:          controller.visualItems
+                                      cacheBuffer:    height * 2
+
+                                      delegate: MissionItemEditor {
+                                          missionItem:    object
+                                          width:          parent.width
+                                          qgcView:        _root
+                                          readOnly:       false
+
+                                          onClicked:  setCurrentItem(object.sequenceNumber)
+
+                                          onRemove: {
+                                              itemDragger.clearItem()
+                                              controller.removeMissionItem(object.sequenceNumber)
+                                          }
+
+                                          onInsert: {
+                                              var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
+                                              setCurrentItem(sequenceNumber)
+                                          }
+
+                                          onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
+                                      }
+                                  } // ListView
+                              } /// Item - Mission Item editor
+
+                ///-- Dismiss Drop Down (if any)
                 MouseArea {
                     anchors.fill:   parent
                     enabled:        _dropButtonsExclusiveGroup.current != null

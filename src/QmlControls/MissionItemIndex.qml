@@ -9,7 +9,6 @@ import QGroundControl.Controls      1.0
 import QGroundControl.FactControls  1.0
 import QGroundControl.Palette       1.0
 import QGroundControl               1.0
-
 /// Mission item edit control
 Rectangle {
     id: _root
@@ -23,9 +22,9 @@ Rectangle {
     property var    qgcView     ///< QGCView control used for showing dialogs
 
     signal clicked
-    signal remove
-    signal insert(int i)
-    signal moveHomeToMapCenter
+//  signal remove
+//  signal insert(int i)
+//  signal moveHomeToMapCenter
 
     property bool   _currentItem:       missionItem.isCurrentItem
     property color  _outerTextColor:    _currentItem ? "black" : qgcPal.text
@@ -46,7 +45,7 @@ Rectangle {
 
     MouseArea {
         anchors.fill:   waypoint
- //     visible:        !missionItem.isCurrentItem
+//        visible:        !missionItem.isCurrentItem
         onClicked:      _root.clicked()
     }
 

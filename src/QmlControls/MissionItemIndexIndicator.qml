@@ -8,7 +8,7 @@ import QGroundControl.Vehicle       1.0
 import QGroundControl.Controls      1.0
 import QGroundControl.FactControls  1.0
 import QGroundControl.Palette       1.0
-
+import QGroundControl               1.0
 
 /// Mission item edit control
 Rectangle {
@@ -22,7 +22,7 @@ Rectangle {
     property var    qgcView     ///< QGCView control used for showing dialogs
 
     signal remove
-    signal insert(int i)
+    signal insert
     signal moveHomeToMapCenter
 
     property bool   _currentItem:       missionItem.isCurrentItem
@@ -33,10 +33,11 @@ Rectangle {
     readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
 
 
-    MouseArea {
-        anchors.fill:   parent
-        onClicked:      _root.clicked()
-    }
+//    MouseArea {
+//        anchors.fill:   parent
+//        visible:        false
+//        onClicked:      _root.clicked()
+//    }
 
     QGCLabel {
         id:                     label
@@ -66,7 +67,7 @@ Rectangle {
 
                 MenuItem {
                     text:           "Insert"
-                    onTriggered:    insert(missionItem.sequenceNumber)
+                    onTriggered:    insert()
                 }
 
                 MenuItem {
