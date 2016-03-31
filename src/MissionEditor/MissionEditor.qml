@@ -54,7 +54,7 @@ QGCView {
     readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
     readonly property real      _editFieldWidth:    ScreenTools.defaultFontPixelWidth * 16
     readonly property real      _PointFieldWidth:    ScreenTools.defaultFontPixelWidth * 10
-    readonly property real      _rightPanelWidth:   Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 30)
+    readonly property real      _rightPanelWidth:   Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 35)
     readonly property real      _rightPanelOpacity: 0.8
     readonly property int       _toolButtonCount:   6
     readonly property string    _autoSyncKey:       "AutoSync"
@@ -456,29 +456,43 @@ QGCView {
                                 z:              QGroundControl.zOrderMapItems - 1
                         }
                 }
+                MissionItemIndexIndicator {
+                            anchors.right:   parent.right
+                            anchors.top:     parent.top
+                            anchors.topMargin:   _margin*2+topDialogMargin
+                            anchors.rightMargin:   _margin*2
+                            width:          _rightPanelWidth
+                            missionItem:    _currentMissionItem
+                            qgcView:        _root
+                            readOnly:       false
+                            z:              QGroundControl.zOrderTopMost-100
+                            onRemove: {
+                                itemDragger.clearItem()
+                                controller.removeMissionItem(_currentMissionItem.sequenceNumber)
+                                setCurrentItem(_currentMissionItem.sequenceNumber-1)
+                            }
 
+                            onInsert: {
+                                var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
+                                setCurrentItem(sequenceNumber)
+                            }
+
+                            onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
+
+                         }
 //                MissionItemIndexIndicator {
 //                    id:             missionItemIndicator
-//                    anchors.right:  parent.right
-//                    anchors.top:    toolbarSpacer.bottom
+//                    anchors.right:   parent.right
+//                    anchors.top:     parent.top
 //                    anchors.margins:   _margin*2
 //                    width:          _rightPanelWidth
 //                    missionItem:    _currentMissionItem
 //                    qgcView:        _root
 //                    readOnly:       false
-//                    z:              QGroundControl.zOrderTopMost
-//           //       onClicked:      setCurrentItem(_currentMissionItem.sequenceNumber)
-//                    onRemove: {
-//                        itemDragger.clearItem()
-//                        controller.removeMissionItem(_currentMissionItem.sequenceNumber)
-//                    }
-//                    onInsert: {
-//                        var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, _currentMissionItem.sequenceNumber)
-//                        setCurrentItem(sequenceNumber)
-//                    }
+//                    z:              QGroundControl.zOrderTopMost-100
 //                    onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
 //               }
-                // Mission Item Editor
+                /// Mission Item Editor
                 Item {
                     id:             missionItemIndex//missionItemEditor
                     height:         _PointFieldWidth+ScreenTools.defaultFontPixelWidth//mainWindow.availableHeight/5  //change by yaoling
@@ -488,7 +502,7 @@ QGCView {
 //                  width:          _rightPanelWidth
                     width:          mainWindow.availableWidth*0.9   //change by yaoling
                     opacity:        _rightPanelOpacity
-                    z:              QGroundControl.zOrderTopMost
+                    z:              QGroundControl.zOrderTopMost-100
                     ListView {
                         id:             editorListView
                         anchors.left:   parent.left
@@ -523,48 +537,9 @@ QGCView {
                     } // ListView
                 } /// Item - Mission Item editor
                 // Mission Item Editor
-                              Item {
-                                  id:             missionItemEditor
-                                  height:         mainWindow.availableHeight
-                                  anchors.bottom: parent.bottom
-                                  anchors.right:  parent.right
-                                  width:          _rightPanelWidth
-                                  opacity:        _rightPanelOpacity
-                                  z:              QGroundControl.zOrderTopMost
 
-                                  ListView {
-                                      id:             editorListView1
-                                      anchors.left:   parent.left
-                                      anchors.right:  parent.right
-                                      anchors.top:    parent.top
-                                      height:         parent.height
-                                      spacing:        _margin / 2
-                                      orientation:    ListView.Vertical
-                                      model:          controller.visualItems
-                                      cacheBuffer:    height * 2
 
-                                      delegate: MissionItemEditor {
-                                          missionItem:    object
-                                          width:          parent.width
-                                          qgcView:        _root
-                                          readOnly:       false
 
-                                          onClicked:  setCurrentItem(object.sequenceNumber)
-
-                                          onRemove: {
-                                              itemDragger.clearItem()
-                                              controller.removeMissionItem(object.sequenceNumber)
-                                          }
-
-                                          onInsert: {
-                                              var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
-                                              setCurrentItem(sequenceNumber)
-                                          }
-
-                                          onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
-                                      }
-                                  } // ListView
-                              } /// Item - Mission Item editor
 
                 ///-- Dismiss Drop Down (if any)
                 MouseArea {
@@ -740,17 +715,17 @@ QGCView {
                 }
 
 //change by yaoling do not use this
-//                MissionItemStatus {
-//                    id:                 waypointValuesDisplay
-//                    anchors.margins:    ScreenTools.defaultFontPixelWidth
-//                    anchors.left:       parent.left
-//                    anchors.bottom:     parent.bottom
-//                    z:                  QGroundControl.zOrderTopMost
-//                    currentMissionItem: _currentMissionItem
-//                    missionItems:       controller.visualItems
-//                    expandedWidth:      missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
-//                    visible:            !ScreenTools.isShortScreen
-//                }
+                MissionItemStatus {
+                    id:                 waypointValuesDisplay
+                    anchors.margins:    ScreenTools.defaultFontPixelWidth
+                    anchors.left:       parent.left
+                    anchors.bottom:     parent.bottom
+                    z:                  QGroundControl.zOrderTopMost
+                    currentMissionItem: _currentMissionItem
+                    missionItems:       controller.visualItems
+                    expandedWidth:      missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
+                    visible:            !ScreenTools.isShortScreen
+                }
             } // FlightMap
         } // Item - split view container
     } // QGCViewPanel

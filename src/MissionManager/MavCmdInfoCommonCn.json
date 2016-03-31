@@ -6,18 +6,18 @@
             "comment":              "MAV_CMD_NAV_LAST: Used for fake home position waypoint",
             "id":                   95,
             "rawName":              "HomeRaw",
-            "friendlyName":         "Home Position",
-            "description":          "Planned home position for mission.",
+            "friendlyName":         "家位置",
+            "description":          "为任务计划位置.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "Basic",
             "param5": {
-                "label":            "Latitude:",
+                "label":            "经度:",
                 "default":          37.803784,
                 "decimalPlaces":    7
             },
             "param6": {
-                "label":            "Longitude:",
+                "label":            "纬度:",
                 "default":          -122.462276,
                 "decimalPlaces":    7
             }
@@ -25,13 +25,13 @@
         {
             "id":                   16,
             "rawName":              "MAV_CMD_NAV_WAYPOINT",
-            "friendlyName":         "Waypoint",
-            "description":          "Travel to a position in 3D space.",
+            "friendlyName":         "航点",
+            "description":          "在三维空间中的位置.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "Basic",
             "param1": {
-                "label":            "Hold:",
+                "label":            "停留:",
                 "units":            "seconds",
                 "default":          0,
                 "decimalPlaces":    0
@@ -96,33 +96,33 @@
         {
             "id":           20,
             "rawName":      "MAV_CMD_NAV_RETURN_TO_LAUNCH",
-            "friendlyName": "Return Home",
-            "description":  "Send the vehicle back to the home position.",
+            "friendlyName": "回家",
+            "description":  "飞机回起飞点.",
             "friendlyEdit": true,
             "category":     "Basic"
         },
         {
             "id":                   21,
             "rawName":              "MAV_CMD_NAV_LAND",
-            "friendlyName":         "Land",
-            "description":          "Land vehicle at the specified location.",
+            "friendlyName":         "降落",
+            "description":          "在指定位置降落.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "Basic",
             "param1": {
-                "label":            "Abort Alt:",
+                "label":            "终止高度:",
                 "units":            "meters",
                 "default":          25.0,
                 "decimalPlaces":    3
             },
             "param4": {
-                "label":            "Heading:",
+                "label":            "机头:",
                 "units":            "radians",
                 "default":          0.0,
                 "decimalPlaces":    2
             },
             "param7": {
-                "label":            "Altitude:",
+                "label":            "高度:",
                 "units":            "meters",
                 "default":          0.0,
                 "decimalPlaces":    2
@@ -131,19 +131,19 @@
         {
             "id":                   22,
             "rawName":              "MAV_CMD_NAV_TAKEOFF",
-            "friendlyName":         "Takeoff",
-            "description":          "Take off from the ground and travel towards the specified position.",
+            "friendlyName":         "起飞",
+            "description":          "从地面起飞，向着指定的位置移动.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "Basic",
             "param1": {
-                "label":            "Pitch:",
+                "label":            "仰俯:",
                 "units":            "degrees",
                 "default":          15,
                 "decimalPlaces":    2
             },
             "param4": {
-                "label":            "Heading:",
+                "label":            "机头:",
                 "units":            "radians",
                 "default":          0.0,
                 "decimalPlaces":    2
@@ -161,14 +161,14 @@
             "friendlyEdit":         true,
             "category":             "Flight control",
             "param1": {
-                "label":            "Mode:",
-                "enumStrings":      "Climb,Neutral,Descend",
+                "label":            "模式:",
+                "enumStrings":      "爬升,中立,下降",
                 "enumValues":       "1,0,2",
                 "default":          1,
                 "decimalPlaces":    0
             },
             "param7": {
-                "label":            "Altitude:",
+                "label":            "高度:",
                 "units":            "meters",
                 "default":          55,
                 "decimalPlaces":    2
@@ -255,13 +255,13 @@
         {
             "id":                   82,
             "rawName":              "MAV_CMD_NAV_SPLINE_WAYPOINT",
-            "friendlyName":         "Spline waypoint",
-            "description":          "Travel to a position in 3D space using spline path.",
+            "friendlyName":         "SPLINE航点",
+            "description":          "使用SPLINE航点.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "Basic",
             "param1": {
-                "label":            "Hold:",
+                "label":            "停留:",
                 "units":            "seconds",
                 "default":          0,
                 "decimalPlaces":    0
@@ -271,13 +271,13 @@
         {
             "id":                   84,
             "rawName":              "MAV_CMD_NAV_VTOL_TAKEOFF",
-            "friendlyName":         "VTOL takeoff",
-            "description":          "Takeoff from ground using VTOL mode.",
+            "friendlyName":         "垂直起飞",
+            "description":          "用垂直起飞从地面起飞.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "VTOL",
             "param4": {
-                "label":            "Heading:",
+                "label":            "机头:",
                 "units":            "degrees",
                 "default":          0.0,
                 "decimalPlaces":    2
@@ -286,19 +286,19 @@
         {
             "id":                   85,
             "rawName":              "MAV_CMD_NAV_VTOL_LAND",
-            "friendlyName":         "VTOL land",
-            "description":          "Land using VTOL mode.",
+            "friendlyName":         "垂直降落",
+            "description":          "使用垂直模式降落.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "VTOL",
             "param4": {
-                "label":            "Heading:",
+                "label":            "机头:",
                 "units":            "degrees",
                 "default":          0.0,
                 "decimalPlaces":    2
             },
             "param7": {
-                "label":            "Altitude:",
+                "label":            "高度:",
                 "units":            "meters",
                 "default":          0.0,
                 "decimalPlaces":    2
@@ -307,10 +307,10 @@
         {
             "id":           92,
             "rawName":      "MAV_CMD_NAV_GUIDED_ENABLE",
-            "friendlyName": "Guided enable",
-            "description":  "Enable/Disabled guided mode.",
+            "friendlyName": "启用引导",
+            "description":  "启用/禁用 引导模式.",
             "param1": {
-                "label":            "Enable:",
+                "label":            "启用:",
                 "default":          1,
                 "decimalPlaces":    0
             }
@@ -318,12 +318,12 @@
         {
             "id":           112,
             "rawName":      "MAV_CMD_CONDITION_DELAY",
-            "friendlyName": "Delay",
-            "description":  "Delay the mission for the number of seconds.",
+            "friendlyName": "延时",
+            "description":  "任务延时一段时间.",
             "friendlyEdit": true,
             "category":     "Basic",
             "param1": {
-                "label":            "Hold:",
+                "label":            "停留:",
                 "units":            "seconds",
                 "default":          30,
                 "decimalPlaces":    0
@@ -332,17 +332,17 @@
         {
             "id":           113,
             "rawName":      "MAV_CMD_CONDITION_CHANGE_ALT",
-            "description":  "Delay the mission until the specified altitide is reached.",
-            "friendlyName": "Wait for altitude",
+            "description":  "延时任务直到到达该高度.",
+            "friendlyName": "等待到达高度",
             "category":     "Conditionals",
             "param1": {
-                "label":            "Rate:",
+                "label":            "速率:",
                 "units":            "m/s",
                 "default":          5,
                 "decimalPlaces":    2
             },
             "param7": {
-                "label":            "Altitude:",
+                "label":            "高度:",
                 "units":            "meters",
                 "default":          55,
                 "decimalPlaces":    2
@@ -351,11 +351,11 @@
         {
             "id":           114,
             "rawName":      "MAV_CMD_CONDITION_DISTANCE",
-            "description":  "Delay the mission until within the specified distance of the next waypoint.",
-            "friendlyName": "Wait for distance",
+            "description":  "等待任务直到和下一个航点到该距离.",
+            "friendlyName": "等待距离",
             "category":     "Conditionals",
             "param1": {
-                "label":            "Distance:",
+                "label":            "距离:",
                 "units":            "meters",
                 "default":          0,
                 "decimalPlaces":    2
@@ -396,17 +396,17 @@
         {
             "id":           177,
             "rawName":      "MAV_CMD_DO_JUMP",
-            "friendlyName": "Jump to item",
-            "description":  "Mission will continue at the specified item.",
+            "friendlyName": "跳转到指定的项目",
+            "description":  "任务会在指定项目继续.",
             "friendlyEdit": true,
             "category":     "Basic",
             "param1": {
-                "label":            "Item #:",
+                "label":            "项 #:",
                 "default":          1,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Repeat:",
+                "label":            "重复:",
                 "default":          0,
                 "decimalPlaces":    0
             }
@@ -414,22 +414,22 @@
         {
             "id":           178,
             "rawName":      "MAV_CMD_DO_CHANGE_SPEED",
-            "friendlyName": "Change speed",
-            "description":  "Change speed and/or throttle set points.",
+            "friendlyName": "改变速度",
+            "description":  "改变速度 /油门 设置航点.",
             "category":     "Flight control",
             "param1": {
-                "label":            "Type:",
-                "enumStrings":      "Airspeed,Ground Speed",
+                "label":            "类型:",
+                "enumStrings":      "空速,地速",
                 "enumValues":       "0,1",
                 "default":          1
             },
             "param2": {
-                "label":            "Speed:",
+                "label":            "速度:",
                 "units":            "m/s",
                 "default":          -1
             },
             "param3": {
-                "label":            "Throttle:",
+                "label":            "油门:",
                 "units":            "%",
                 "default":          -1
             }
@@ -493,11 +493,11 @@
         {
             "id":           183,
             "rawName":      "MAV_CMD_DO_SET_SERVO",
-            "friendlyName": "Set servo",
-            "description":  "Set servo to specified PWM value.",
+            "friendlyName": "设置伺服",
+            "description":  "设置伺服到该pwm值.",
             "friendlyEdit": true,
             "param1": {
-                "label":            "Servo:",
+                "label":            "伺服:",
                 "default":          1,
                 "decimalPlaces":    0
             },
@@ -539,8 +539,8 @@
         {
             "id":                   189,
             "rawName":              "MAV_CMD_DO_LAND_START",
-            "friendlyName":         "Land start",
-            "description":          "Marker to indicate start of landing sequence.",
+            "friendlyName":         "开始降落",
+            "description":          "标记指示降落开始序列.",
             "specifiesCoordinate":  true,
             "standaloneCoordinate": true,
             "friendlyEdit":         true,

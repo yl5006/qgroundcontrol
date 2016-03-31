@@ -156,8 +156,10 @@
     <qresource prefix="/json">
         <file alias="MavCmdInfoCommon.json">src/MissionManager/MavCmdInfoCommon.json</file>
         <file alias="APM/MavCmdInfoCommon.json">src/FirmwarePlugin/APM/MavCmdInfoCommon.json</file>
+	<file alias="APM/MavCmdInfoCommonCn.json">src/FirmwarePlugin/APM/MavCmdInfoCommonCn.json</file>
         <file alias="APM/MavCmdInfoFixedWing.json">src/FirmwarePlugin/APM/MavCmdInfoFixedWing.json</file>
-        <file alias="APM/MavCmdInfoMultiRotor.json">src/FirmwarePlugin/APM/MavCmdInfoMultiRotor.json</file>
+        <file alias="APM/MavCmdInfoMultiRotor.json">src/FirmwarePlugin/APM/MavCmdInfoMultiRotorCn.json</file>
+ 	<file alias="APM/MavCmdInfoMultiRotorCn.json">src/FirmwarePlugin/APM/MavCmdInfoMultiRotor.json</file>
         <file alias="PX4/MavCmdInfoCommon.json">src/FirmwarePlugin/PX4/MavCmdInfoCommon.json</file>
         <file alias="PX4/MavCmdInfoFixedWing.json">src/FirmwarePlugin/PX4/MavCmdInfoFixedWing.json</file>
         <file alias="PX4/MavCmdInfoMultiRotor.json">src/FirmwarePlugin/PX4/MavCmdInfoMultiRotor.json</file>
@@ -166,5 +168,6 @@
         <file alias="Vehicle/GPSFact.json">src/Vehicle/GPSFact.json</file>
         <file alias="Vehicle/WindFact.json">src/Vehicle/WindFact.json</file>
         <file alias="Vehicle/VibrationFact.json">src/Vehicle/VibrationFact.json</file>
+        <file alias="MavCmdInfoCommonCn.json">src/MissionManager/MavCmdInfoCommonCn.json</file>
     </qresource>
 </RCC>

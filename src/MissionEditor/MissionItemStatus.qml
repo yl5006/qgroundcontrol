@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
 QGroundControl Open Source Ground Control Station
 
@@ -138,11 +138,11 @@ Rectangle {
                         anchors.horizontalCenter:   parent.horizontalCenter
                         font.pixelSize:             ScreenTools.smallFontPixelSize
                         text:                       (object.relativeAltitude ? "" : "=") + object.coordinate.altitude.toFixed(0)
-                    }
-                    */
+                    }*/
+
                 }
 
             }
         }
-    }
+   }
 }

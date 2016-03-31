@@ -1,4 +1,4 @@
-/*===================================================================
+﻿/*===================================================================
 QGroundControl Open Source Ground Control Station
 
 (c) 2009, 2010 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
@@ -31,7 +31,7 @@ This file is part of the QGROUNDCONTROL project
 
 MissionCommands::MissionCommands(QGCApplication* app)
     : QGCTool(app)
-    , _commonMissionCommands(QStringLiteral(":/json/MavCmdInfoCommon.json"))
+    , _commonMissionCommands(QStringLiteral(":/json/MavCmdInfoCommonCn.json"))
 {
 }
 

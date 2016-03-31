@@ -1,4 +1,4 @@
-import QtQuick                  2.2
+﻿import QtQuick                  2.2
 import QtQuick.Controls         1.2
 
 import QGroundControl.ScreenTools   1.0
@@ -12,7 +12,8 @@ Rectangle {
     id:         _root
     height:     editorColumn.height + (_margin * 2)
     width:      availableWidth
-    color:      qgcPal.windowShadeDark
+//    color:      qgcPal.windowShadeDark
+    color:   Qt.rgba(0.102,0.122,0.133,0.9)
     radius:     _radius
 
     // The following properties must be available up the hierachy chain

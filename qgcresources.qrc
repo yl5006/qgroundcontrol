@@ -116,6 +116,7 @@
         <file alias="Megaphone.svg">src/ui/toolbar/Images/Megaphone.svg</file>
         <file alias="PaperPlane.svg">src/ui/toolbar/Images/PaperPlane.svg</file>
         <file alias="Plan.svg">src/ui/toolbar/Images/Plan.svg</file>
+        <file alias="logo.svg">src/ui/toolbar/Images/logo.svg</file>
         <file alias="Quad.svg">src/ui/toolbar/Images/Quad.svg</file>
         <file alias="RC.svg">src/ui/toolbar/Images/RC.svg</file>
         <file alias="Signal0.svg">src/ui/toolbar/Images/Signal0.svg</file>
@@ -137,6 +138,8 @@
         <file alias="Waypoint0.svg">src/FlightMap/Images/Waypoint0.svg</file>
         <file alias="Waypoint.svg">src/FlightMap/Images/Waypoint.svg</file>
 	<file alias="distance.svg">src/FlightMap/Images/distance.svg</file>
+	<file alias="deletepoint.svg">src/FlightMap/Images/deletepoint.svg</file>
+	<file alias="insertpoint.svg">src/FlightMap/Images/insertpoint.svg</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="AntennaRC">resources/Antenna_RC.svg</file>

@@ -48,7 +48,8 @@ Rectangle {
 
     QGCLabel {
         id:                     label
-        anchors.verticalCenter: commandPicker.verticalCenter
+ //       anchors.verticalCenter: commandPicker.verticalCenter
+        anchors.top:            parent.top
         anchors.leftMargin:     _margin
         anchors.left:           parent.left
         text:                   missionItem.abbreviation

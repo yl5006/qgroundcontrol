@@ -546,7 +546,13 @@ Rectangle {
         }
 
     }
-
+    Image {
+        id:             logo
+        source:         "/qmlimages/logo.svg"
+        height:         mainWindow.tbCellHeight*1.5//1.15625
+        anchors.top:    parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
     Item {
         id:                     vehicleIndicators
         height:                 mainWindow.tbCellHeight

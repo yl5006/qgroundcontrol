@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
  
@@ -592,7 +592,7 @@ QList<MAV_CMD> APMFirmwarePlugin::supportedMissionCommands(void)
 
 void APMFirmwarePlugin::missionCommandOverrides(QString& commonJsonFilename, QString& fixedWingJsonFilename, QString& multiRotorJsonFilename) const
 {
-    commonJsonFilename = QStringLiteral(":/json/APM/MavCmdInfoCommon.json");
+    commonJsonFilename = QStringLiteral(":/json/APM/MavCmdInfoCommonCn.json");
     fixedWingJsonFilename = QStringLiteral(":/json/APM/MavCmdInfoFixedWing.json");
     multiRotorJsonFilename = QStringLiteral(":/json/APM/MavCmdInfoMultiRotor.json");
 }

@@ -177,7 +177,8 @@ int MissionController::insertSimpleMissionItem(QGeoCoordinate coordinate, int i)
 {
     int sequenceNumber = _nextSequenceNumber();
     SimpleMissionItem * newItem = new SimpleMissionItem(_activeVehicle, this);
-    newItem->setSequenceNumber(sequenceNumber);
+//  newItem->setSequenceNumber(sequenceNumber);
+    newItem->setSequenceNumber(i);
     newItem->setCoordinate(coordinate);
     newItem->setCommand(MavlinkQmlSingleton::MAV_CMD_NAV_WAYPOINT);
     _initVisualItem(newItem);
@@ -199,7 +200,7 @@ int MissionController::insertSimpleMissionItem(QGeoCoordinate coordinate, int i)
 
     _recalcAll();
 
-    return sequenceNumber;
+    return i;//  return sequenceNumber;
 }
 
 int MissionController::insertComplexMissionItem(QGeoCoordinate coordinate, int i)

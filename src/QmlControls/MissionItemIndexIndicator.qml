@@ -14,7 +14,7 @@ import QGroundControl               1.0
 Rectangle {
     id:      _root
     height: editorLoader.y + editorLoader.height + (_margin * 2)
-    color:  _currentItem ? qgcPal.buttonHighlight : qgcPal.windowShade
+    color:   Qt.rgba(0.102,0.122,0.133,0.9)//qgcPal.windowShade
     radius: _radius
 
     property var    missionItem ///< MissionItem associated with this editor
@@ -22,92 +22,126 @@ Rectangle {
     property var    qgcView     ///< QGCView control used for showing dialogs
 
     signal remove
-    signal insert
+    signal insert(int i)
     signal moveHomeToMapCenter
 
     property bool   _currentItem:       missionItem.isCurrentItem
-    property color  _outerTextColor:    _currentItem ? "black" : qgcPal.text
+    property color  _outerTextColor:    "black"
 
     readonly property real  _editFieldWidth:    Math.min(width - _margin * 2, ScreenTools.defaultFontPixelWidth * 16)
     readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
     readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
 
 
-//    MouseArea {
-//        anchors.fill:   parent
-//        visible:        false
-//        onClicked:      _root.clicked()
-//    }
+    property real   _distance:          _statusValid ? missionItem.distance : 0
+    property real   _altDifference:     _statusValid ? missionItem.altDifference : 0
+    property real   _gradient:          _statusValid ? Math.atan(missionItem.altDifference / missionItem.distance) : 0
+    property real   _gradientPercent:   isNaN(_gradient) ? 0 : _gradient * 100
+    property real   _azimuth:           _statusValid ? missionItem.azimuth : -1
+    property bool   _statusValid:       missionItem.command==16&&missionItem.sequenceNumber != 0&&missionItem != undefined
+    property string _distanceText:      _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
+    property string _altText:           _statusValid ? QGroundControl.metersToAppSettingsDistanceUnits(_altDifference).toFixed(1)  + QGroundControl.appSettingsDistanceUnitsString : ""
+    property string _gradientText:      _statusValid ? _gradientPercent.toFixed(0) + "%" : ""
+    property string _azimuthText:       _statusValid ? " "+Math.round(_azimuth)+ "°" : ""
+
+
+    MouseArea {
+        anchors.fill:   parent
+    }
+    Rectangle {
+        width:           parent.width
+        anchors.top:     parent.top
+        anchors.bottom:  distanceLabel.top
+        anchors.bottomMargin: _margin*1
+        color:     Qt.rgba(0.2,0.267,0.306,1)//qgcPal.windowShade
+    }
+
 
     QGCLabel {
         id:                     label
         anchors.verticalCenter: commandPicker.verticalCenter
-        anchors.leftMargin:     _margin
+        anchors.leftMargin:     _margin*4
+        font.pixelSize:         ScreenTools.defaultFontPixelHeight*2
+        font.bold:              true
         anchors.left:           parent.left
         text:                   missionItem.abbreviation
-        color:                  _outerTextColor
+        color:                  Qt.rgba(1,0.675,0.290,1)
     }
 
     Image {
-        id:                     hamburger
+        id:                     insertpoint
         anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
         anchors.right:          parent.right
         anchors.verticalCenter: commandPicker.verticalCenter
-        width:                  commandPicker.height
-        height:                 commandPicker.height
-        source:                 "qrc:/qmlimages/Hamburger.svg"
-        visible:                missionItem.isCurrentItem && missionItem.sequenceNumber != 0
-
+        width:                  ScreenTools.defaultFontPixelHeight*2
+        height:                 ScreenTools.defaultFontPixelHeight*2
+        source:                 "qrc:/qmlimages/insertpoint.svg"
+        visible:                missionItem.sequenceNumber != 0
         MouseArea {
-            anchors.fill:   parent
-            onClicked:      hamburgerMenu.popup()
-
-            Menu {
-                id: hamburgerMenu
-
-                MenuItem {
-                    text:           "Insert"
-                    onTriggered:    insert()
-                }
-
-                MenuItem {
-                    text:           "Delete"
-                    onTriggered:    remove()
-                }
-
-                MenuSeparator {
-                    visible: missionItem.isSimpleItem
-                }
-
-                MenuItem {
-                    text:       "Show all values"
-                    checkable:  true
-                    checked:    missionItem.isSimpleItem ? missionItem.rawEdit : false
-                    visible:    missionItem.isSimpleItem
-
-                    onTriggered:    {
-                        if (missionItem.rawEdit) {
-                            if (missionItem.friendlyEditAllowed) {
-                                missionItem.rawEdit = false
-                            } else {
-                                qgcView.showMessage("Mission Edit", "You have made changes to the mission item which cannot be shown in Simple Mode", StandardButton.Ok)
-                            }
-                        } else {
-                            missionItem.rawEdit = true
-                        }
-                        checked = missionItem.rawEdit
-                    }
-                }
-            }
-        }
+                   anchors.fill: parent
+                   onClicked: insert(missionItem.sequenceNumber)
+                  }
     }
+    Image {
+        id:                     deletepoint
+        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth*2
+        anchors.right:          insertpoint.left
+        anchors.verticalCenter: commandPicker.verticalCenter
+        width:                  ScreenTools.defaultFontPixelHeight*2
+        height:                 ScreenTools.defaultFontPixelHeight*2
+        source:                 "qrc:/qmlimages/deletepoint.svg"
+        visible:                missionItem.sequenceNumber != 0
+        MouseArea {
+                   anchors.fill: parent
+                   onClicked: remove()
+                  }
+    }
+
+
+
+
+
+
+
+
+//                MenuItem {
+//                    text:           "Insert"
+//                    onTriggered:    insert(missionItem.sequenceNumber)
+//                }
+
+//                MenuItem {
+//                    text:           "Delete"
+//                    onTriggered:    remove()
+//                }
+
+//                MenuItem {
+//                    text:       "Show all values"
+//                    checkable:  true
+//                    checked:    missionItem.isSimpleItem ? missionItem.rawEdit : false
+//                    visible:    missionItem.isSimpleItem
+
+//                    onTriggered:    {
+//                        if (missionItem.rawEdit) {
+//                            if (missionItem.friendlyEditAllowed) {
+//                                missionItem.rawEdit = false
+//                            } else {
+//                                qgcView.showMessage("Mission Edit", "You have made changes to the mission item which cannot be shown in Simple Mode", StandardButton.Ok)
+//                            }
+//                        } else {
+//                            missionItem.rawEdit = true
+//                        }
+//                        checked = missionItem.rawEdit
+//                    }
+//                }
 
     QGCButton {
         id:                     commandPicker
         anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 2
-        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
+        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth * 2
+        anchors.topMargin:      ScreenTools.defaultFontPixelWidth * 2
+        anchors.top:            parent.top
         anchors.left:           label.right
-        anchors.right:          hamburger.left
+        anchors.right:          deletepoint.left
         visible:                missionItem.sequenceNumber != 0 && missionItem.isCurrentItem && !missionItem.rawEdit && missionItem.isSimpleItem
         text:                   missionItem.commandName
 
@@ -129,13 +163,91 @@ Rectangle {
         text:               missionItem.sequenceNumber == 0 ? "Home Position" : (missionItem.isSimpleItem ? missionItem.commandName : "Survey")
         color:              _outerTextColor
     }
+    QGCLabel {
+        id:                 distanceLabel
+        anchors.leftMargin: _margin*6
+        anchors.topMargin:  _margin*4
+        anchors.left:       parent.left
+        anchors.top:        commandPicker.bottom
+        color:              Qt.rgba(0.555,0.648,0.691,1)
+        text:               qsTr("距离")//"Distance" //+ _distanceText
+    }
 
+    QGCLabel {
+        id:                 altLabel
+        anchors.verticalCenter: distanceLabel.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        color:              Qt.rgba(0.555,0.648,0.691,1)
+        text:               qsTr("高度差")//"Alt diff"// + _altText
+    }
+
+//    QGCLabel {
+//        id:                 gradientLabel
+//        anchors.verticalCenter: distanceLabel.verticalCenter
+//        anchors.left:       altLabel.right
+//        anchors.leftMargin: _margin*4
+//        text:               "Gradient" //+ _gradientText
+//    }
+
+    QGCLabel {
+        id:                 azimuthLabel
+        anchors.verticalCenter: distanceLabel.verticalCenter
+        anchors.right:          parent.right
+        anchors.rightMargin: _margin*5
+        color:              Qt.rgba(0.555,0.648,0.691,1)
+        text:               qsTr("方位角")//"Azimuth" //+ _azimuthText
+    }
+
+
+
+    QGCLabel {
+        id:                 distance
+        anchors.horizontalCenter: distanceLabel.horizontalCenter
+        anchors.topMargin:  _margin*2
+        anchors.top:        distanceLabel.bottom
+        font.pixelSize:     ScreenTools.defaultFontPixelHeight*1.5
+        font.bold:          true
+        color:              Qt.rgba(0.102,0.887,0.609,1)
+        text:               _distanceText
+    }
+
+    QGCLabel {
+        id:                 alt
+        anchors.horizontalCenter: altLabel.horizontalCenter
+        anchors.topMargin:  _margin*2
+        anchors.top:        altLabel.bottom
+        font.pixelSize:     ScreenTools.defaultFontPixelHeight*1.5
+        font.bold:          true
+        color:              Qt.rgba(0.102,0.887,0.609,1)
+        text:               _altText
+    }
+
+
+    QGCLabel {
+        id:                 azimuth
+        anchors.horizontalCenter: azimuthLabel.horizontalCenter
+        anchors.topMargin:  _margin*2
+        anchors.top:        azimuthLabel.bottom
+        font.pixelSize:     ScreenTools.defaultFontPixelHeight*1.5
+        font.bold:          true
+        color:              Qt.rgba(0.102,0.887,0.609,1)
+        text:               _azimuthText
+        }
+    Rectangle {
+        id:                 space
+        anchors.topMargin:  _margin*3
+        anchors.top:        distance.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        width:              parent.width*0.8
+        height:             2
+        color:              Qt.rgba(0,0,0,1)
+    }
     Loader {
         id:                 editorLoader
         anchors.leftMargin: _margin
-        anchors.topMargin:  _margin
+        anchors.topMargin:  _margin*2
         anchors.left:       parent.left
-        anchors.top:        commandPicker.bottom
+        anchors.top:        space.bottom
         height:             item ? item.height : 0
         source:             missionItem.isSimpleItem ? "qrc:/qml/SimpleItemEditor.qml" : "qrc:/qml/SurveyItemEditor.qml"
 

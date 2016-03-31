@@ -1,4 +1,4 @@
-import QtQuick                  2.2
+﻿import QtQuick                  2.2
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.2
 import QtQuick.Dialogs          1.2
@@ -14,7 +14,8 @@ Rectangle {
     id:                 valuesRect
     width:              availableWidth
     height:             valuesItem.height
-    color:              qgcPal.windowShadeDark
+  //  color:              qgcPal.windowShadeDark
+    color:              Qt.rgba(0.102,0.887,0.609,0)
     visible:            missionItem.isCurrentItem
     radius:             _radius
 
@@ -41,7 +42,7 @@ Rectangle {
                 width:      parent.width
                 wrapMode:   Text.WordWrap
                 text:       missionItem.sequenceNumber == 0 ?
-                                "Planned home position." :
+                                 qsTr("计划家位置") ://"Planned home position."
                                 (missionItem.rawEdit ?
                                      "Provides advanced access to all commands/parameters. Be very careful!" :
                                      missionItem.commandDescription)

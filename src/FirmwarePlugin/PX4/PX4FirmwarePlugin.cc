@@ -262,7 +262,7 @@ QList<MAV_CMD> PX4FirmwarePlugin::supportedMissionCommands(void)
 void PX4FirmwarePlugin::missionCommandOverrides(QString& commonJsonFilename, QString& fixedWingJsonFilename, QString& multiRotorJsonFilename) const
 {
     // No overrides
-    commonJsonFilename = QStringLiteral(":/json/PX4/MavCmdInfoCommon.json");
+    commonJsonFilename = QStringLiteral(":/json/PX4/MavCmdInfoCommonCn.json");
     fixedWingJsonFilename = QStringLiteral(":/json/PX4/MavCmdInfoFixedWing.json");
     multiRotorJsonFilename = QStringLiteral(":/json/PX4/MavCmdInfoMultiRotor.json");
 }

@@ -1,4 +1,4 @@
-/*===================================================================
+﻿/*===================================================================
 QGroundControl Open Source Ground Control Station
 
 (c) 2009, 2010 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
@@ -62,7 +62,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
     , _rawEdit(false)
     , _homePositionSpecialCase(false)
     , _showHomePosition(false)
-    , _altitudeRelativeToHomeFact   (0, "Altitude is relative to home", FactMetaData::valueTypeUint32)
+    , _altitudeRelativeToHomeFact   (0, QT_TR_NOOP("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -398,7 +398,7 @@ QmlObjectListModel* SimpleMissionItem::textFieldFacts(void)
         }
 
         if (specifiesCoordinate() && !altitudeAdded) {
-            _missionItem._param7Fact._setName("Altitude:");
+            _missionItem._param7Fact._setName(tr("高度:"));  //Altitude:
             _missionItem._param7Fact.setMetaData(_altitudeMetaData);
             model->append(&_missionItem._param7Fact);
         }

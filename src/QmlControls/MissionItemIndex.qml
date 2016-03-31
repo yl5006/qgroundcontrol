@@ -68,7 +68,7 @@ Rectangle {
 
 
         QGCLabel {
-            id:                  number
+            id:                     number
             anchors.top:            parent.top
             width:                  parent.width
             horizontalAlignment:    Text.AlignHCenter
