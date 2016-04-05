@@ -111,7 +111,7 @@ QGCFlickable {
                     font.weight:            Font.DemiBold
                     color:                  textColor
                     fontSizeMode:           Text.HorizontalFit
-                    text:                   fact.name//fact.valueString
+                    text:                   fact.valueString
                 }
                 QGCLabel {
         //          width:                  parent.width

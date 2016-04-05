@@ -320,6 +320,7 @@ Vehicle::Vehicle(QObject* parent)
     _addFact(&_climbRateFact,           _climbRateFactName);
     _addFact(&_altitudeRelativeFact,    _altitudeRelativeFactName);
     _addFact(&_altitudeAMSLFact,        _altitudeAMSLFactName);
+    _addFact(&_throttleFact,            _throttleFactName); //add yaoling
 #ifdef QT_DEBUG
     _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
     _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
