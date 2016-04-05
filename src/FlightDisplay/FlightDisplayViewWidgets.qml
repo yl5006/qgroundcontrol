@@ -101,7 +101,7 @@ Item {
         id:                     instrumentGadget
         anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
 //	anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
-        anchors.left:           parent.left
+        anchors.right:          parent.right
         anchors.top:            parent.top
 //      anchors.verticalCenter: parent.verticalCenter
         visible:                !QGroundControl.virtualTabletJoystick
@@ -151,16 +151,15 @@ Item {
         id:                         toolColumn
         visible:                    _mainIsMap
         anchors.margins:            ScreenTools.defaultFontPixelHeight
-//      anchors.left:               parent.left
-        anchors.right:               parent.right
+        anchors.left:               parent.left
         anchors.top:                parent.top
         spacing:                    ScreenTools.defaultFontPixelHeight
 
         //-- Map Center Control
         DropButton {
             id:                     centerMapDropButton
- //         dropDirection:          dropRight
-            dropDirection:          dropLeft
+            dropDirection:          dropRight
+ //           dropDirection:          dropLeft
             buttonImage:            "/qmlimages/MapCenter.svg"
             viewportMargins:        ScreenTools.defaultFontPixelWidth / 2
             exclusiveGroup:         _dropButtonsExclusiveGroup
@@ -201,8 +200,8 @@ Item {
         //-- Map Type Control
         DropButton {
             id:                     mapTypeButton
-//          dropDirection:          dropRight
-            dropDirection:          dropLeft
+            dropDirection:          dropRight
+//            dropDirection:          dropLeft
             buttonImage:            "/qmlimages/MapType.svg"
             viewportMargins:        ScreenTools.defaultFontPixelWidth / 2
             exclusiveGroup:         _dropButtonsExclusiveGroup

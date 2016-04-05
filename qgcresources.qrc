@@ -110,6 +110,7 @@
         <file alias="Connect.svg">src/ui/toolbar/Images/Connect.svg</file>
         <file alias="Disarmed.svg">src/ui/toolbar/Images/Disarmed.svg</file>
         <file alias="Disconnect.svg">src/ui/toolbar/Images/Disconnect.svg</file>
+	<file alias="reddisconnect.svg">src/ui/toolbar/Images/reddisconnect.svg</file>
         <file alias="Gears.svg">src/ui/toolbar/Images/Gears.svg</file>
         <file alias="Gps.svg">src/ui/toolbar/Images/Gps.svg</file>
         <file alias="Hamburger.svg">src/ui/toolbar/Images/Hamburger.svg</file>
@@ -119,6 +120,8 @@
         <file alias="logo.svg">src/ui/toolbar/Images/logo.svg</file>
         <file alias="Quad.svg">src/ui/toolbar/Images/Quad.svg</file>
         <file alias="RC.svg">src/ui/toolbar/Images/RC.svg</file>
+	<file alias="LeftToolbarbutton.svg">src/ui/toolbar/Images/LeftToolbarbutton.svg</file>
+	<file alias="RightToolbarbutton.svg">src/ui/toolbar/Images/RightToolbarbutton.svg</file>
         <file alias="Signal0.svg">src/ui/toolbar/Images/Signal0.svg</file>
         <file alias="Signal20.svg">src/ui/toolbar/Images/Signal20.svg</file>
         <file alias="Signal40.svg">src/ui/toolbar/Images/Signal40.svg</file>

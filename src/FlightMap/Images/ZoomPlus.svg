@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="-269 361 72 72" style="enable-background:new -269 361 72 72;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-	.st1{fill:none;stroke:#FFFFFF;stroke-width:3;stroke-miterlimit:10;}
-	.st2{fill:#FFFFFF;}
-</style>
-<circle class="st0" cx="-236.2" cy="393.9" r="11.2"/>
-<line class="st1" x1="-218.6" y1="411.3" x2="-228.1" y2="401.8"/>
-<path class="st2" d="M-237.3,400.2V395h-5.2v-2.2h5.2v-5.2h2.2v5.2h5.2v2.2h-5.2v5.2H-237.3z"/>
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 96 96" enable-background="new 0 0 96 96" xml:space="preserve">
+<g>
+	<circle opacity="0.6" cx="48" cy="48" r="40.5"/>
+	<path opacity="0.6" d="M48,0C21.5,0,0,21.5,0,48c0,26.5,21.5,48,48,48s48-21.5,48-48C96,21.5,74.5,0,48,0z M48,91.5
+		C24,91.5,4.5,72,4.5,48C4.5,24,24,4.5,48,4.5S91.5,24,91.5,48C91.5,72,72,91.5,48,91.5z"/>
+	<g>
+		<g opacity="0.35">
+			<path d="M50.5,41.3H45v-5.5c0-0.3-0.2-0.5-0.5-0.5h-3c-0.3,0-0.5,0.2-0.5,0.5v5.5h-5.5c-0.3,0-0.5,0.2-0.5,0.5v3
+				c0,0.3,0.2,0.5,0.5,0.5H41v5.5c0,0.3,0.2,0.5,0.5,0.5h3c0.3,0,0.5-0.2,0.5-0.5v-5.5h5.5c0.3,0,0.5-0.2,0.5-0.5v-3
+				C51,41.5,50.8,41.3,50.5,41.3z"/>
+			<path d="M61.4,56.7L60,58.1l-2.5-2.5C60.3,52.3,62,48,62,43.3c0-10.5-8.5-19-19-19s-19,8.5-19,19s8.5,19,19,19
+				c4.7,0,9-1.7,12.3-4.5l2.5,2.5l-1.4,1.4l10.6,10.6l4.9-4.9L61.4,56.7z M43,58.3c-8.3,0-15-6.7-15-15s6.7-15,15-15s15,6.7,15,15
+				S51.3,58.3,43,58.3z"/>
+		</g>
+		<g>
+			<g>
+				<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="43" y1="34.25" x2="43" y2="50.25">
+					<stop  offset="0" style="stop-color:#2BFFA6"/>
+					<stop  offset="1" style="stop-color:#34FFFF"/>
+				</linearGradient>
+				<path fill="url(#SVGID_1_)" d="M50.5,40.3H45v-5.5c0-0.3-0.2-0.5-0.5-0.5h-3c-0.3,0-0.5,0.2-0.5,0.5v5.5h-5.5
+					c-0.3,0-0.5,0.2-0.5,0.5v3c0,0.3,0.2,0.5,0.5,0.5H41v5.5c0,0.3,0.2,0.5,0.5,0.5h3c0.3,0,0.5-0.2,0.5-0.5v-5.5h5.5
+					c0.3,0,0.5-0.2,0.5-0.5v-3C51,40.5,50.8,40.3,50.5,40.3z"/>
+				<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="48" y1="23.25" x2="48" y2="71.25">
+					<stop  offset="0" style="stop-color:#2BFFA6"/>
+					<stop  offset="1" style="stop-color:#34FFFF"/>
+				</linearGradient>
+				<path fill="url(#SVGID_2_)" d="M61.4,55.7L60,57.1l-2.5-2.5C60.3,51.3,62,47,62,42.3c0-10.5-8.5-19-19-19s-19,8.5-19,19
+					s8.5,19,19,19c4.7,0,9-1.7,12.3-4.5l2.5,2.5l-1.4,1.4l10.6,10.6l4.9-4.9L61.4,55.7z M43,57.3c-8.3,0-15-6.7-15-15s6.7-15,15-15
+					s15,6.7,15,15S51.3,57.3,43,57.3z"/>
+			</g>
+		</g>
+	</g>
+</g>
 </svg>

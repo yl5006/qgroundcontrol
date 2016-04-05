@@ -715,17 +715,17 @@ QGCView {
                 }
 
 //change by yaoling do not use this
-                MissionItemStatus {
-                    id:                 waypointValuesDisplay
-                    anchors.margins:    ScreenTools.defaultFontPixelWidth
-                    anchors.left:       parent.left
-                    anchors.bottom:     parent.bottom
-                    z:                  QGroundControl.zOrderTopMost
-                    currentMissionItem: _currentMissionItem
-                    missionItems:       controller.visualItems
-                    expandedWidth:      missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
-                    visible:            !ScreenTools.isShortScreen
-                }
+//                MissionItemStatus {
+//                    id:                 waypointValuesDisplay
+//                    anchors.margins:    ScreenTools.defaultFontPixelWidth
+//                    anchors.left:       parent.left
+//                    anchors.bottom:     parent.bottom
+//                    z:                  QGroundControl.zOrderTopMost
+//                    currentMissionItem: _currentMissionItem
+//                    missionItems:       controller.visualItems
+//                    expandedWidth:      missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
+//                    visible:            !ScreenTools.isShortScreen
+//                }
             } // FlightMap
         } // Item - split view container
     } // QGCViewPanel

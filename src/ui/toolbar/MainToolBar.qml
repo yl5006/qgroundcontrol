@@ -50,6 +50,7 @@ Rectangle {
     property bool isMessageImportant:   activeVehicle ? !activeVehicle.messageTypeNormal && !activeVehicle.messageTypeNone : false
     property bool isBackgroundDark:     true
     property bool opaqueBackground:     false
+    property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
 
     /*
         Dev System (Mac OS)
@@ -210,7 +211,7 @@ Rectangle {
                 anchors.centerIn:   parent
                 QGCLabel {
                     id:         gpsLabel
-                    text:       (activeVehicle && activeVehicle.gps.count.value >= 0) ? qsTr("GPS状态:")/*"GPS Status"*/ : qsTr("无GPS信息")/*"GPS Data Unavailable"*/
+                    text:       (activeVehicle && activeVehicle.gps.count.value >= 0) ? "GPS Status" : "GPS Data Unavailable"
                     font.weight:Font.DemiBold
                     color:      colorWhite
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -223,7 +224,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
                     QGCLabel {
-                        text:   qsTr("卫星颗数:")//"GPS Count:"
+                        text:   "GPS Count:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -231,7 +232,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("GPS锁定:")//"GPS Lock:"
+                        text:   "GPS Lock:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -239,7 +240,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("水平精度")//"HDOP:"
+                        text:   "HDOP:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -247,7 +248,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("垂直精度")//"VDOP:"
+                        text:   "VDOP:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -255,7 +256,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("地面航线")//"Course Over Ground:"
+                        text:   "Course Over Ground:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -292,7 +293,7 @@ Rectangle {
 
                 QGCLabel {
                     id:         battLabel
-                    text:       qsTr("电池状态")//"Battery Status"
+                    text:       "Battery Status"
                     color:      colorWhite
                     font.weight:Font.DemiBold
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -304,7 +305,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
                     QGCLabel {
-                        text:   qsTr("电压:")//"Voltage:"
+                        text:   "Voltage:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -312,7 +313,7 @@ Rectangle {
                         color:  getBatteryColor()
                     }
                     QGCLabel {
-                        text:   qsTr("累计消耗:")//"Accumulated Consumption:"
+                        text:   "Accumulated Consumption:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -347,7 +348,7 @@ Rectangle {
                 anchors.centerIn:   parent
                 QGCLabel {
                     id:         rssiLabel
-                    text:       activeVehicle ? (activeVehicle.rcRSSI > 0 ? qsTr("遥控信号状态:")/*"RC RSSI Status"*/ : qsTr("无遥控信号")/*"RC RSSI Data Unavailable"*/) : "N/A"
+                    text:       activeVehicle ? (activeVehicle.rcRSSI > 0 ? "RC RSSI Status" : "RC RSSI Data Unavailable") : "N/A"
                     color:      colorWhite
                     font.weight:Font.DemiBold
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -360,7 +361,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
                     QGCLabel {
-                        text:   qsTr("信号质量:")//"RSSI:"
+                        text:   "RSSI:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -394,7 +395,7 @@ Rectangle {
                 anchors.centerIn:   parent
                 QGCLabel {
                     id:         telemLabel
-                    text:       qsTr("数传信号状态:")//"Telemetry RSSI Status"
+                    text:       "Telemetry RSSI Status"
                     color:      colorWhite
                     font.weight:Font.DemiBold
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -406,7 +407,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
                     QGCLabel {
-                        text:   qsTr("本地数传信号:")//"Local RSSI:"
+                        text:   "Local RSSI:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -414,7 +415,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("远端数传信号:")//"Remote RSSI:"
+                        text:   "Remote RSSI:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -422,7 +423,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("接收错误:")//"RX Errors:"
+                        text:   "RX Errors:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -430,7 +431,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("错误解决:")//"Errors Fixed:"
+                        text:   "Errors Fixed:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -438,7 +439,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("传输缓存:")//"TX Buffer:"
+                        text:   "TX Buffer:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -446,7 +447,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("本地噪声:")//"Local Noise:"
+                        text:   "Local Noise:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -454,7 +455,7 @@ Rectangle {
                         color:  colorWhite
                     }
                     QGCLabel {
-                        text:   qsTr("远端噪声:")//"Remote Noise:"
+                        text:   "Remote Noise:"
                         color:  colorWhite
                     }
                     QGCLabel {
@@ -471,17 +472,36 @@ Rectangle {
         }
     }
 
+    Image {
+        id:                         leftbutton
+        anchors.verticalCenter:     parent.verticalCenter
+        anchors.left:               parent.left
+        height:                     mainWindow.tbHeight
+        source:                     "/qmlimages/LeftToolbarbutton.svg"
+         }
+
+    Image {
+        id:                         rightbutton
+        anchors.verticalCenter:     parent.verticalCenter
+        anchors.right:               parent.right
+        height:                     mainWindow.tbHeight
+        source:                     "/qmlimages/RightToolbarbutton.svg"
+         }
+
+
     //---------------------------------------------
     // Toolbar Row
+
+    ExclusiveGroup { id: mainActionGroup }
     Row {
-        id:             viewRow
+        id:             viewRowLeft
         height:         mainWindow.tbCellHeight
         spacing:        mainWindow.tbSpacing
         anchors.left:   parent.left
         anchors.leftMargin:     mainWindow.tbSpacing
         anchors.verticalCenter: parent.verticalCenter
 
-        ExclusiveGroup { id: mainActionGroup }
+ //       ExclusiveGroup { id: mainActionGroup }
 
         QGCToolBarButton {
             id:                 preferencesButton
@@ -496,8 +516,8 @@ Rectangle {
 
         Rectangle {
             height: mainWindow.tbCellHeight
-            width:  1
-            color: Qt.rgba(1,1,1,0.45)
+            width:  2
+            color: Qt.rgba(1,1,1,0.0)
         }
 
         QGCToolBarButton {
@@ -509,11 +529,24 @@ Rectangle {
             onClicked:          toolBar.showSetupView()
         }
 
-        Rectangle {
-            height: mainWindow.tbCellHeight
-            width:  1
-            color: Qt.rgba(1,1,1,0.45)
-        }
+//        Rectangle {
+//            height: mainWindow.tbCellHeight
+//            width:  1
+//            color: Qt.rgba(1,1,1,0.45)
+//        }
+    }
+
+    //---------------------------------------------
+    // Toolbar Row
+    Row {
+        id:             viewRowRight
+        height:         mainWindow.tbCellHeight
+        spacing:        mainWindow.tbSpacing
+        anchors.right:   parent.right
+        anchors.rightMargin:     mainWindow.tbSpacing
+        anchors.verticalCenter: parent.verticalCenter
+
+ //       ExclusiveGroup { id: mainActionGroup1 }
 
         QGCToolBarButton {
             id:                 planButton
@@ -533,65 +566,102 @@ Rectangle {
         QGCToolBarButton {
             id:                 flyButton
             width:              mainWindow.tbButtonWidth
-            height:             mainWindow.tbCellHeight*1.2
+            height:             mainWindow.tbCellHeight
             exclusiveGroup:     mainActionGroup
             source:             "/qmlimages/PaperPlane.svg"
             onClicked:          toolBar.showFlyView()
         }
 
-        Rectangle {
-            height: mainWindow.tbCellHeight
-            width:  1
-            color: Qt.rgba(1,1,1,0.45)
-        }
+    }
+
+    Image {
+        id:                         logo
+        anchors.horizontalCenter:   parent.horizontalCenter
+        anchors.top:                parent.top
+        height:                     mainWindow.tbHeight*1.15625
+        source:                     "/qmlimages/logo.svg"
+         }
+    QGCLabel {
+        id:                     connectionLost
+        text:                   qsTr("连接丢失")//"COMMUNICATION LOST"
+        font.pixelSize:         tbFontLarge
+        font.weight:            Font.DemiBold
+        color:                  colorRed
+        anchors.horizontalCenter:   parent.horizontalCenter
+        anchors.top:                parent.top
+        anchors.topMargin:      mainWindow.tbHeight*0.75
+        visible:                vehicleConnectionLost
 
     }
-    Image {
-        id:             logo
-        source:         "/qmlimages/logo.svg"
-        height:         mainWindow.tbCellHeight*1.5//1.15625
-        anchors.top:    parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
+
+    QGCToolBarButton {
+        id:                 disconnectButton
+        width:              mainWindow.tbButtonWidth
+        height:             mainWindow.tbCellHeight
+        anchors.right:       connectionLost.left
+        anchors.verticalCenter: connectionLost.verticalCenter
+        exclusiveGroup:     mainActionGroup
+        visible:            vehicleConnectionLost
+        source:             "/qmlimages/reddisconnect.svg"
+        onClicked:          activeVehicle.disconnectInactiveVehicle()
+        color:              "#e43a3d"
     }
+
+//    QGCButton {
+//        id:                     disconnectButton
+//        anchors.rightMargin:     mainWindow.tbSpacing * 2
+//        anchors.right:          parent.right
+//        anchors.verticalCenter: parent.verticalCenter
+//        text:                   "Disconnect"
+//        visible:                vehicleConnectionLost
+//        primary:                true
+//        onClicked:              activeVehicle.disconnectInactiveVehicle()
+//    }
     Item {
         id:                     vehicleIndicators
         height:                 mainWindow.tbCellHeight
         anchors.leftMargin:     mainWindow.tbSpacing * 2
-        anchors.left:           viewRow.right
+        anchors.left:           viewRowLeft.right
         anchors.right:          parent.right
         anchors.verticalCenter: parent.verticalCenter
 
         property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
 
         Loader {
-            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicators.qml" : ""
+            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsLeft.qml" : ""
             anchors.left:           parent.left
+            anchors.leftMargin:     mainWindow.tbSpacing * 3
             anchors.verticalCenter: parent.verticalCenter
         }
-
-        QGCLabel {
-            id:                     connectionLost
-            text:                   qsTr("丢失连接:")//"CONNECTION LOST"
-            font.pixelSize:         tbFontLarge
-            font.weight:            Font.DemiBold
-            color:                  colorRed
-            anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
-            anchors.right:          disconnectButton.left
-            anchors.verticalCenter: parent.verticalCenter
-            visible:                parent.vehicleConnectionLost
-
-        }
-
-        QGCButton {
-            id:                     disconnectButton
-            anchors.rightMargin:     mainWindow.tbSpacing * 2
+        Loader {
+            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsRight.qml" : ""
             anchors.right:          parent.right
+            anchors.rightMargin:    mainWindow.tbButtonWidth * 3
             anchors.verticalCenter: parent.verticalCenter
-            text:                   qsTr("断开连接:")//"Disconnect"
-            visible:                parent.vehicleConnectionLost
-            primary:                true
-            onClicked:              activeVehicle.disconnectInactiveVehicle()
         }
+//        QGCLabel {
+//            id:                     connectionLost
+//            text:                   "COMMUNICATION LOST"
+//            font.pixelSize:         tbFontLarge
+//            font.weight:            Font.DemiBold
+//            color:                  colorRed
+//            anchors.horizontalCenter:   logo.horizontalCenter
+//            anchors.top:                logo.top
+//            anchors.topMargin:      mainWindow.tbHeight*0.6
+//            visible:                parent.vehicleConnectionLost
+
+//        }
+
+//        QGCButton {
+//            id:                     disconnectButton
+//            anchors.rightMargin:     mainWindow.tbSpacing * 2
+//            anchors.right:          parent.right
+//            anchors.verticalCenter: parent.verticalCenter
+//            text:                   "Disconnect"
+//            visible:                parent.vehicleConnectionLost
+//            primary:                true
+//            onClicked:              activeVehicle.disconnectInactiveVehicle()
+//        }
     }
 
     // Progress bar

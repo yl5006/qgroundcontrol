@@ -133,7 +133,7 @@ void MainWindow::deleteInstance(void)
 ///         constructor.
 MainWindow::MainWindow()
     : _lowPowerMode(false)
-    , _showStatusBar(false)
+    , _showStatusBar(true)
     , _mainQmlWidgetHolder(NULL)
     , _forceClose(false)
 {
@@ -253,6 +253,9 @@ MainWindow::MainWindow()
         _ui.actionStatusBar->setChecked(_showStatusBar);
         showStatusBarCallback(_showStatusBar);
 #ifdef __mobile__
+        menuBar()->hide();
+#endif
+#ifndef QT_DEBUG
         menuBar()->hide();
 #endif
         show();

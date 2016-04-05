@@ -1,4 +1,4 @@
-import QtQuick 2.4
+﻿import QtQuick 2.4
 import QtQuick.Controls 1.2
 import QtGraphicalEffects 1.0
 
@@ -9,7 +9,7 @@ Item {
     property alias          source:  icon.source
     property bool           checked: false
     property ExclusiveGroup exclusiveGroup:  null
-
+    property color          color:  "#ffffff"
     signal   clicked()
 
     onExclusiveGroupChanged: {
@@ -33,7 +33,7 @@ Item {
         id:             iconOverlay
         anchors.fill:   icon
         source:         icon
-        color:          (checked ? "#e4e428" : "#ffffff")
+        color:          (checked ? "#e4e428" : parent.color)
     }
 
     MouseArea {
