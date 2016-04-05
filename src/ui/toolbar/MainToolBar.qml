@@ -446,7 +446,7 @@ Rectangle {
             anchors.bottomMargin:   _topBottomMargins
             anchors.top:            parent.top
             anchors.bottom:         parent.bottom
-            source:                 qgcPal.globalTheme == QGCPalette.Light ? "/res/QGCLogoBlack" : "/res/QGCLogoWhite"
+            source:                 qgcPal.globalTheme == QGCPalette.Light ? "/qmlimages/Hamburger.svg": "/qmlimages/Hamburger.svg"//"/res/QGCLogoBlack" : "/res/QGCLogoWhite"
             fillMode:               Image.PreserveAspectFit
             smooth:                 true
             mipmap:                 true
@@ -518,6 +518,7 @@ Rectangle {
         anchors.top:                parent.top
         anchors.topMargin:      mainWindow.tbHeight*0.75
         visible:                vehicleConnectionLost
+        }
 
     QGCToolBarButton {
         id:                 disconnectButton

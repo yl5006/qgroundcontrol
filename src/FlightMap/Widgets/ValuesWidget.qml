@@ -111,7 +111,7 @@ QGCFlickable {
                     font.weight:            Font.DemiBold
                     color:                  textColor
                     fontSizeMode:           Text.HorizontalFit
-                    text:                   fact.valueString
+                    text:                   fact.name//fact.valueString
                 }
                 QGCLabel {
         //          width:                  parent.width
@@ -137,7 +137,7 @@ QGCFlickable {
             model: _activeVehicle ? controller.smallValues : 0
 
             Column {
-                id:     valueColumn
+                id:     valueColumn1
                 width:  (_root.width / 2) - (_margins / 2) - 0.1
                 clip:   true
 

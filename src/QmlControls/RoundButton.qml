@@ -1,4 +1,4 @@
-import QtQuick                  2.4
+﻿import QtQuick                  2.4
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.2
 
@@ -43,15 +43,14 @@ Item {
         border.width:   ScreenTools.defaultFontPixelHeight * 0.0625
         border.color:   lightBorders ? qgcPal.mapWidgetBorderLight : qgcPal.mapWidgetBorderDark
         color:          checked ? qgcPal.buttonHighlight : qgcPal.button
-
         QGCColoredImage {
             id:             button
             anchors.fill:   parent
             fillMode:       Image.PreserveAspectFit
             mipmap:         true
             smooth:         true
-            color:          checked ? qgcPal.buttonHighlightText : qgcPal.buttonText
-
+//            color:          checked ? qgcPal.buttonHighlightText : qgcPal.buttonText
+            color:              Qt.rgba(0,0,0,0.0)
             RotationAnimation on rotation {
                 id: imageRotation
                 loops: Animation.Infinite

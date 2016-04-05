@@ -123,7 +123,7 @@ Rectangle {
         opacity:            0.5
         width:              attitudeWidget.width * 0.15
         fillMode:           Image.PreserveAspectFit
-                visible:            _activeVehicle
+//      visible:            _activeVehicle
         visible:            false                //do not use yaoling
                 MouseArea {
                     anchors.fill:   parent
@@ -172,7 +172,7 @@ Rectangle {
          anchors.top:        _spacer1.bottom
          height:             1
          width:              parent.width * 0.9
-            color:              isSatellite ? Qt.rgba(0,0,0,0.25) : Qt.rgba(1,1,1,0.25)
+//       color:              isSatellite ? Qt.rgba(0,0,0,0.25) : Qt.rgba(1,1,1,0.25)
          color:              Qt.rgba(0,0,0,0.0)
          anchors.horizontalCenter: parent.horizontalCenter
      }
