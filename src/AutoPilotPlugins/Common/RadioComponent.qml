@@ -256,338 +256,338 @@ QGCView {
 
         // Main view Qml starts here
 
-        // Left side column
-        Column {
-            id:             leftColumn
-            anchors.top:    parent.top
-            anchors.left:   parent.left
-            anchors.right:  columnSpacer.left
-            spacing:        10
+        QGCFlickable {
+            anchors.fill:   parent
+            contentHeight:  Math.max(leftColumn.height, rightColumn.height)
+            clip:           true
 
-            // Attitude Controls
+            // Left side column
             Column {
-                width:      parent.width
-                spacing:    5
+                id:             leftColumn
+                anchors.left:   parent.left
+                anchors.right:  columnSpacer.left
+                spacing:        10
+
+                // Attitude Controls
+                Column {
+                    width:      parent.width
+                    spacing:    5
 
 //                QGCLabel { text: "Attitude Controls" }
                 QGCLabel { text: qsTr("姿态控制")
                            anchors.horizontalCenter: parent.horizontalCenter}
-                Item {
-                    width:  parent.width
-                    height: defaultTextHeight * 2
+                    Item {
+                        width:  parent.width
+                        height: defaultTextHeight * 2
 
-                    QGCLabel {
-                        id:     rollLabel
-                        width:  defaultTextWidth * 10
+                        QGCLabel {
+                            id:     rollLabel
+                            width:  defaultTextWidth * 10
                         text:   qsTr("横滚")//"Roll"
-                    }
+                        }
 
-                    Loader {
-                        id:                 rollLoader
-                        anchors.left:       rollLabel.right
-                        anchors.right:      parent.right
-                        height:             qgcView.defaultTextHeight
-                        width:              100
-                        sourceComponent:    channelMonitorDisplayComponent
+                        Loader {
+                            id:                 rollLoader
+                            anchors.left:       rollLabel.right
+                            anchors.right:      parent.right
+                            height:             qgcView.defaultTextHeight
+                            width:              100
+                            sourceComponent:    channelMonitorDisplayComponent
 
-                        property real defaultTextWidth: qgcView.defaultTextWidth
-                        property bool mapped:           controller.rollChannelMapped
-                        property bool reversed:         controller.rollChannelReversed
-                    }
+                            property real defaultTextWidth: qgcView.defaultTextWidth
+                            property bool mapped:           controller.rollChannelMapped
+                            property bool reversed:         controller.rollChannelReversed
+                        }
 
-                    Connections {
-                        target: controller
+                        Connections {
+                            target: controller
 
-                        onRollChannelRCValueChanged: rollLoader.item.rcValue = rcValue
-                    }
-                }
-
-                Item {
-                    width:  parent.width
-                    height: defaultTextHeight * 2
-
-                    QGCLabel {
-                        id:     pitchLabel
-                        width:  defaultTextWidth * 10
-                        text:   qsTr("仰俯")//"Pitch"
-                    }
-
-                    Loader {
-                        id:                 pitchLoader
-                        anchors.left:       pitchLabel.right
-                        anchors.right:      parent.right
-                        height:             qgcView.defaultTextHeight
-                        width:              100
-                        sourceComponent:    channelMonitorDisplayComponent
-
-                        property real defaultTextWidth: qgcView.defaultTextWidth
-                        property bool mapped:           controller.pitchChannelMapped
-                        property bool reversed:         controller.pitchChannelReversed
-                    }
-
-                    Connections {
-                        target: controller
-
-                        onPitchChannelRCValueChanged: pitchLoader.item.rcValue = rcValue
-                    }
-                }
-
-                Item {
-                    width:  parent.width
-                    height: defaultTextHeight * 2
-
-                    QGCLabel {
-                        id:     yawLabel
-                        width:  defaultTextWidth * 10
-                        text:   qsTr("航向")//"Yaw"
-                    }
-
-                    Loader {
-                        id:                 yawLoader
-                        anchors.left:       yawLabel.right
-                        anchors.right:      parent.right
-                        height:             qgcView.defaultTextHeight
-                        width:              100
-                        sourceComponent:    channelMonitorDisplayComponent
-
-                        property real defaultTextWidth: qgcView.defaultTextWidth
-                        property bool mapped:           controller.yawChannelMapped
-                        property bool reversed:         controller.yawChannelReversed
-                    }
-
-                    Connections {
-                        target: controller
-
-                        onYawChannelRCValueChanged: yawLoader.item.rcValue = rcValue
-                    }
-                }
-
-                Item {
-                    width:  parent.width
-                    height: defaultTextHeight * 2
-
-                    QGCLabel {
-                        id:     throttleLabel
-                        width:  defaultTextWidth * 10
-                        text:   qsTr("油门")//"Throttle"
-                    }
-
-                    Loader {
-                        id:                 throttleLoader
-                        anchors.left:       throttleLabel.right
-                        anchors.right:      parent.right
-                        height:             qgcView.defaultTextHeight
-                        width:              100
-                        sourceComponent:    channelMonitorDisplayComponent
-
-                        property real defaultTextWidth: qgcView.defaultTextWidth
-                        property bool mapped:           controller.throttleChannelMapped
-                        property bool reversed:         controller.throttleChannelReversed
-                    }
-
-                    Connections {
-                        target: controller
-
-                        onThrottleChannelRCValueChanged: throttleLoader.item.rcValue = rcValue
-                    }
-                }
-            } // Column - Attitude Control labels
-
-            // Command Buttons
-            Row {
-                spacing: 10
-
-                QGCButton {
-                    id:         skipButton
-                    showBorder: true
-                    text:       qsTr("跳过")//"Skip"
-
-                    onClicked: controller.skipButtonClicked()
-                }
-
-                QGCButton {
-                    id:         cancelButton
-                    showBorder: true
-                    text:       qsTr("取消")//"Cancel"
-
-                    onClicked: controller.cancelButtonClicked()
-                }
-
-                QGCButton {
-                    id:         nextButton
-                    primary:    true
-                    showBorder: true
-                    text:       qsTr("校准")//"Calibrate"
-
-                    onClicked: {
-                        if (text == qsTr("校准")) {//qsTr("校准")
-                            showDialog(zeroTrimsDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.OK | StandardButton.Cancel)
-                        } else {
-                            controller.nextButtonClicked()
+                            onRollChannelRCValueChanged: rollLoader.item.rcValue = rcValue
                         }
                     }
+
+                    Item {
+                        width:  parent.width
+                        height: defaultTextHeight * 2
+
+                        QGCLabel {
+                            id:     pitchLabel
+                            width:  defaultTextWidth * 10
+                        text:   qsTr("仰俯")//"Pitch"
+                        }
+
+                        Loader {
+                            id:                 pitchLoader
+                            anchors.left:       pitchLabel.right
+                            anchors.right:      parent.right
+                            height:             qgcView.defaultTextHeight
+                            width:              100
+                            sourceComponent:    channelMonitorDisplayComponent
+
+                            property real defaultTextWidth: qgcView.defaultTextWidth
+                            property bool mapped:           controller.pitchChannelMapped
+                            property bool reversed:         controller.pitchChannelReversed
+                        }
+
+                        Connections {
+                            target: controller
+
+                            onPitchChannelRCValueChanged: pitchLoader.item.rcValue = rcValue
+                        }
+                    }
+
+                    Item {
+                        width:  parent.width
+                        height: defaultTextHeight * 2
+
+                        QGCLabel {
+                            id:     yawLabel
+                            width:  defaultTextWidth * 10
+                        text:   qsTr("航向")//"Yaw"
+                        }
+
+                        Loader {
+                            id:                 yawLoader
+                            anchors.left:       yawLabel.right
+                            anchors.right:      parent.right
+                            height:             qgcView.defaultTextHeight
+                            width:              100
+                            sourceComponent:    channelMonitorDisplayComponent
+
+                            property real defaultTextWidth: qgcView.defaultTextWidth
+                            property bool mapped:           controller.yawChannelMapped
+                            property bool reversed:         controller.yawChannelReversed
+                        }
+
+                        Connections {
+                            target: controller
+
+                            onYawChannelRCValueChanged: yawLoader.item.rcValue = rcValue
+                        }
+                    }
+
+                    Item {
+                        width:  parent.width
+                        height: defaultTextHeight * 2
+
+                        QGCLabel {
+                            id:     throttleLabel
+                            width:  defaultTextWidth * 10
+                        text:   qsTr("油门")//"Throttle"
+                        }
+
+                        Loader {
+                            id:                 throttleLoader
+                            anchors.left:       throttleLabel.right
+                            anchors.right:      parent.right
+                            height:             qgcView.defaultTextHeight
+                            width:              100
+                            sourceComponent:    channelMonitorDisplayComponent
+
+                            property real defaultTextWidth: qgcView.defaultTextWidth
+                            property bool mapped:           controller.throttleChannelMapped
+                            property bool reversed:         controller.throttleChannelReversed
+                        }
+
+                        Connections {
+                            target: controller
+
+                            onThrottleChannelRCValueChanged: throttleLoader.item.rcValue = rcValue
+                        }
+                    }
+                } // Column - Attitude Control labels
+
+                // Command Buttons
+                Row {
+                    spacing: 10
+
+                    QGCButton {
+                        id:         skipButton
+                    text:       qsTr("跳过")//"Skip"
+
+                        onClicked: controller.skipButtonClicked()
+                    }
+
+                    QGCButton {
+                        id:         cancelButton
+                    text:       qsTr("取消")//"Cancel"
+
+                        onClicked: controller.cancelButtonClicked()
+                    }
+
+                    QGCButton {
+                        id:         nextButton
+                        primary:    true
+                    text:       qsTr("校准")//"Calibrate"
+
+                        onClicked: {
+                        if (text == qsTr("校准")) {//qsTr("校准")
+                            showDialog(zeroTrimsDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
+                            } else {
+                                controller.nextButtonClicked()
+                            }
+                        }
+                    }
+                } // Row - Buttons
+
+                // Status Text
+                QGCLabel {
+                    id:         statusText
+                    width:      parent.width
+                    wrapMode:   Text.WordWrap
                 }
-            } // Row - Buttons
 
-            // Status Text
-            QGCLabel {
-                id:         statusText
-                width:      parent.width
-                wrapMode:   Text.WordWrap
-            }
+                Item {
+                    width: 10
+                    height: defaultTextHeight * 4
+                }
 
-            Item {
-                width: 10
-                height: defaultTextHeight * 4
-            }
-
-            Rectangle {
-                width:          parent.width
-                height:         1
-                border.color:   qgcPal.text
-                border.width:   1
-            }
+                Rectangle {
+                    width:          parent.width
+                    height:         1
+                    border.color:   qgcPal.text
+                    border.width:   1
+                }
 
 //            QGCLabel { text: "Additional Radio setup:" }
             QGCLabel { text: qsTr("更多遥控设置") }
 
-            Row {
-                spacing: 10
+                Row {
+                    spacing: 10
 
-                QGCLabel {
-                    anchors.baseline:   bindButton.baseline
+                    QGCLabel {
+                        anchors.baseline:   bindButton.baseline
                     text:               qsTr("开启遥控对频")//"Place Spektrum satellite receiver in bind mode:"
+                    }
+
+                    QGCButton {
+                        id:         bindButton
+                    text:       qsTr("遥控对频")//"Spektrum Bind"
+
+                        onClicked: showDialog(spektrumBindDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
+                    }
                 }
 
                 QGCButton {
-                    id:         bindButton
-                    showBorder: true
-                    text:       qsTr("遥控对频")//"Spektrum Bind"
-
-                    onClicked: showDialog(spektrumBindDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
-                }
-            }
-
-            QGCButton {
-                showBorder: true
                 text:       qsTr("拷贝修正")//"Copy Trims"
-                visible:    QGroundControl.multiVehicleManager.activeVehicle.px4Firmware
-                onClicked:  showDialog(copyTrimsDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
-            }
-
-            Repeater {
-                model: QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ? [ "RC_MAP_FLAPS", "RC_MAP_AUX1", "RC_MAP_AUX2", "RC_MAP_AUX3" ] : 0
-
-                Row {
-                    spacing: ScreenTools.defaultFontPixelWidth
-
-                    property Fact fact: controller.getParameterFact(-1, modelData)
-
-                    QGCLabel {
-                        anchors.baseline:   optCombo.baseline
-                        text:               fact.shortDescription + ":"
-                    }
-
-                    FactComboBox {
-                        id:         optCombo
-                        width:      ScreenTools.defaultFontPixelWidth * 15
-                        fact:       parent.fact
-                        indexModel: false
-                    }
-                }
-            } // Repeater
-        } // Column - Left Column
-
-        Item {
-            id:             columnSpacer
-            anchors.right:  rightColumn.left
-            width:          20
-        }
-
-        // Right side column
-        Column {
-            id:             rightColumn
-            anchors.top:    parent.top
-            anchors.right:  parent.right
-            width:          defaultTextWidth * 35
-            spacing:        10
-
-            Row {
-                spacing: 10
-                ExclusiveGroup { id: modeGroup }
-
-                QGCRadioButton {
-                    exclusiveGroup: modeGroup
-                    text:           qsTr("模式 1")//"Mode 1"
-                    checked:        controller.transmitterMode == 1
-
-                    onClicked: controller.transmitterMode = 1
-                }
-
-                QGCRadioButton {
-                    exclusiveGroup: modeGroup
-                    text:           qsTr("模式 2")//"Mode 2"
-                    checked:        controller.transmitterMode == 2
-
-                    onClicked: controller.transmitterMode = 2
-                }
-            }
-
-            Image {
-                width:      parent.width
-                height:     defaultTextHeight * 15
-                fillMode:   Image.PreserveAspectFit
-                smooth:     true
-                source:     controller.imageHelp
-            }
-
-            // Channel monitor
-            Column {
-                width:      parent.width
-                spacing:    5
-
-//                QGCLabel { text: "Channel Monitor" }
-                QGCLabel { text: qsTr("通道监控") }
-                Connections {
-                    target: controller
-
-                    onChannelRCValueChanged: {
-                        if (channelMonitorRepeater.itemAt(channel)) {
-                            channelMonitorRepeater.itemAt(channel).loader.item.rcValue = rcValue
-                        }
-                    }
+                    visible:    QGroundControl.multiVehicleManager.activeVehicle.px4Firmware
+                    onClicked:  showDialog(copyTrimsDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                 }
 
                 Repeater {
-                    id:     channelMonitorRepeater
-                    model:  controller.channelCount
-                    width:  parent.width
+                    model: QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ? [ "RC_MAP_FLAPS", "RC_MAP_AUX1", "RC_MAP_AUX2", "RC_MAP_AUX3" ] : 0
 
                     Row {
-                        spacing:    5
+                        spacing: ScreenTools.defaultFontPixelWidth
 
-                        // Need this to get to loader from Connections above
-                        property Item loader: theLoader
+                        property Fact fact: controller.getParameterFact(-1, modelData)
 
                         QGCLabel {
-                            id:     channelLabel
-                            text:   modelData + 1
+                            anchors.baseline:   optCombo.baseline
+                            text:               fact.shortDescription + ":"
                         }
 
-                        Loader {
-                            id:                     theLoader
-                            anchors.verticalCenter: channelLabel.verticalCenter
-                            height:                 qgcView.defaultTextHeight
-                            width:                  200
-                            sourceComponent:        channelMonitorDisplayComponent
-
-                            property real defaultTextWidth:     qgcView.defaultTextWidth
-                            property bool mapped:               true
-                            readonly property bool reversed:    false
+                        FactComboBox {
+                            id:         optCombo
+                            width:      ScreenTools.defaultFontPixelWidth * 15
+                            fact:       parent.fact
+                            indexModel: false
                         }
                     }
+                } // Repeater
+            } // Column - Left Column
+
+            Item {
+                id:             columnSpacer
+                anchors.right:  rightColumn.left
+                width:          20
+            }
+
+            // Right side column
+            Column {
+                id:             rightColumn
+                anchors.top:    parent.top
+                anchors.right:  parent.right
+                width:          defaultTextWidth * 35
+                spacing:        10
+
+                Row {
+                    spacing: 10
+                    ExclusiveGroup { id: modeGroup }
+
+                    QGCRadioButton {
+                        exclusiveGroup: modeGroup
+                    text:           qsTr("模式 1")//"Mode 1"
+                        checked:        controller.transmitterMode == 1
+
+                        onClicked: controller.transmitterMode = 1
+                    }
+
+                    QGCRadioButton {
+                        exclusiveGroup: modeGroup
+                    text:           qsTr("模式 2")//"Mode 2"
+                        checked:        controller.transmitterMode == 2
+
+                        onClicked: controller.transmitterMode = 2
+                    }
                 }
-            } // Column - Channel Monitor
-        } // Column - Right Column
+
+                Image {
+                    width:      parent.width
+                    height:     defaultTextHeight * 15
+                    fillMode:   Image.PreserveAspectFit
+                    smooth:     true
+                    source:     controller.imageHelp
+                }
+
+                // Channel monitor
+                Column {
+                    width:      parent.width
+                    spacing:    5
+
+//                QGCLabel { text: "Channel Monitor" }
+                QGCLabel { text: qsTr("通道监控") }
+                    Connections {
+                        target: controller
+
+                        onChannelRCValueChanged: {
+                            if (channelMonitorRepeater.itemAt(channel)) {
+                                channelMonitorRepeater.itemAt(channel).loader.item.rcValue = rcValue
+                            }
+                        }
+                    }
+
+                    Repeater {
+                        id:     channelMonitorRepeater
+                        model:  controller.channelCount
+                        width:  parent.width
+
+                        Row {
+                            spacing:    5
+
+                            // Need this to get to loader from Connections above
+                            property Item loader: theLoader
+
+                            QGCLabel {
+                                id:     channelLabel
+                                text:   modelData + 1
+                            }
+
+                            Loader {
+                                id:                     theLoader
+                                anchors.verticalCenter: channelLabel.verticalCenter
+                                height:                 qgcView.defaultTextHeight
+                                width:                  200
+                                sourceComponent:        channelMonitorDisplayComponent
+
+                                property real defaultTextWidth:     qgcView.defaultTextWidth
+                                property bool mapped:               true
+                                readonly property bool reversed:    false
+                            }
+                        }
+                    }
+                } // Column - Channel Monitor
+            } // Column - Right Column
+        } // QGCFlickable
     } // QGCViewPanel
 }

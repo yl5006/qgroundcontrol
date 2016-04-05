@@ -1,6 +1,8 @@
 ﻿<RCC>
     <qresource prefix="/qmlimages">
         <file alias="AirframeComponentIcon.png">src/AutoPilotPlugins/Common/Images/AirframeComponentIcon.png</file>
+
+        <!-- These are here for back compat with previous airframe meta data -->
         <file alias="AirframeFlyingWing.png">src/AutoPilotPlugins/Common/Images/FlyingWing.svg</file>
         <file alias="AirframeHexaRotorPlus.png">src/AutoPilotPlugins/Common/Images/HexaRotorPlus.svg</file>
         <file alias="AirframeHexaRotorX.png">src/AutoPilotPlugins/Common/Images/HexaRotorX.svg</file>
@@ -11,6 +13,8 @@
         <file alias="AirframeQuadRotorX.png">src/AutoPilotPlugins/Common/Images/QuadRotorX.svg</file>
         <file alias="AirframeSimulation.png">src/AutoPilotPlugins/Common/Images/AirframeSimulation.svg</file>
         <file alias="AirframeStandardPlane.png">src/AutoPilotPlugins/Common/Images/Plane.svg</file>
+
+        <!-- Aiframe images supported by airfame meta data ml image tag -->
         <file alias="Airframe/AirframeSimulation">src/AutoPilotPlugins/Common/Images/AirframeSimulation.svg</file>
         <file alias="Airframe/AirframeUnknown">src/AutoPilotPlugins/Common/Images/AirframeUnknown.svg</file>
         <file alias="Airframe/Boat">src/AutoPilotPlugins/Common/Images/Boat.svg</file>
@@ -53,7 +57,7 @@
         <file alias="PowerComponentBattery_06cell.svg">src/AutoPilotPlugins/PX4/Images/PowerComponentBattery_06cell.svg</file>
         <file alias="PowerComponentIcon.png">src/AutoPilotPlugins/PX4/Images/PowerComponentIcon.png</file>
         <file alias="RadioComponentIcon.png">src/AutoPilotPlugins/PX4/Images/RadioComponentIcon.png</file>
-        <file alias="ReturnToHome.svg">src/AutoPilotPlugins/PX4/Images/ReturnToHomeAltitude.svg</file>
+        <file alias="ReturnToHomeAltitude.svg">src/AutoPilotPlugins/PX4/Images/ReturnToHomeAltitude.svg</file>
         <file alias="SafetyComponentIcon.png">src/AutoPilotPlugins/PX4/Images/SafetyComponentIcon.png</file>
         <file alias="SensorsComponentIcon.png">src/AutoPilotPlugins/PX4/Images/SensorsComponentIcon.png</file>
         <file alias="TuningComponentIcon.png">src/AutoPilotPlugins/PX4/Images/TuningComponentIcon.png</file>
@@ -159,13 +163,15 @@
         <file alias="Pause">resources/Pause.svg</file>
         <file alias="Play">resources/Play.svg</file>
         <file alias="PowerButton">resources/PowerButton.svg</file>
+        <file alias="QGCLogoWhite">resources/QGCLogoWhite.svg</file>
+        <file alias="QGCLogoBlack">resources/QGCLogoBlack.svg</file>
         <file alias="QGroundControlConnect">resources/QGroundControlConnect.svg</file>
         <file alias="SplashScreen">resources/SplashScreen.png</file>
         <file alias="Stop">resources/Stop.svg</file>
         <file alias="XDelete.svg">resources/XDelete.svg</file>
         <file alias="XDeleteBlack.svg">resources/XDeleteBlack.svg</file>
         <file alias="startpage.png">resources/startpage.png</file>
-    </qresource>
+</qresource>
     <qresource prefix="/res/firmware">
         <file alias="px4.png">resources/firmware/px4.png</file>
         <file alias="apm.png">resources/firmware/apm.png</file>

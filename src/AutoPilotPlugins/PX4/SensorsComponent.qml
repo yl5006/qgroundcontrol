@@ -57,9 +57,6 @@ QGCView {
     // Used to pass help text to the preCalibrationDialog dialog
     property string preCalibrationDialogHelp
 
-    readonly property int sideBarH1PointSize:  ScreenTools.mediumFontPixelSize
-    readonly property int mainTextH1PointSize: ScreenTools.mediumFontPixelSize // Seems to be unused
-
     readonly property int rotationColumnWidth: 250
     readonly property var rotations: [
         "ROTATION_NONE",
@@ -214,7 +211,6 @@ QGCView {
                     id: compass0ComponentLabel
 
                     QGCLabel {
-                        font.pixelSize: sideBarH1PointSize
                         text: "External Compass Orientation"
                     }
 
@@ -355,7 +351,6 @@ QGCView {
 
                 QGCButton {
                     id:         cancelButton
-                    showBorder: true
                     text:       "Cancel"
                     enabled:    false
                     onClicked:  controller.cancelCalibration()
@@ -471,7 +466,6 @@ QGCView {
                         spacing: ScreenTools.defaultFontPixelWidth
 
                         QGCLabel {
-                            font.pixelSize: sideBarH1PointSize
                             text: "Autopilot Orientation"
                         }
 
@@ -497,7 +491,6 @@ QGCView {
                             id: compass0ComponentLabel2
 
                             QGCLabel {
-                                font.pixelSize: sideBarH1PointSize
                                 text: "External Compass Orientation"
                             }
                         }
@@ -525,7 +518,6 @@ QGCView {
                             id: compass1ComponentLabel2
 
                             QGCLabel {
-                                font.pixelSize: sideBarH1PointSize
                                 text: "External Compass 1 Orientation"
                             }
                         }
@@ -553,7 +545,6 @@ QGCView {
                             id: compass2ComponentLabel2
 
                             QGCLabel {
-                                font.pixelSize: sidebarH1PointSize
                                 text: "Compass 2 Orientation"
                             }
                         }
