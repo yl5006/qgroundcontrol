@@ -1,4 +1,4 @@
-#include <QStandardPaths>
+﻿#include <QStandardPaths>
 #include <QtEndian>
 
 #include "MainWindow.h"
@@ -67,10 +67,10 @@ void QGCMAVLinkLogPlayer::_selectLogFileForPlayback(void)
     
     QString logFilename = QGCFileDialog::getOpenFileName(
         this,
-        tr("Load MAVLink Log File"),
+        tr("Load Flight Log File"),
         QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
-        tr("MAVLink Log Files (*.mavlink);;All Files (*)"));
-
+//        tr("MAVLink Log Files (*.mavlink);;All Files (*)"));
+        tr("Log Files (*.log);;All Files (*)"));
     if (logFilename.isEmpty()) {
         return;
     }

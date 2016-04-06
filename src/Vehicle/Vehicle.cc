@@ -304,6 +304,7 @@ Vehicle::Vehicle(QObject* parent)
     , _climbRateFact        (0, _climbRateFactName,         FactMetaData::valueTypeDouble)
     , _altitudeRelativeFact (0, _altitudeRelativeFactName,  FactMetaData::valueTypeDouble)
     , _altitudeAMSLFact     (0, _altitudeAMSLFactName,      FactMetaData::valueTypeDouble)
+    , _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeDouble)         //add here
     , _gpsFactGroup(this)
     , _batteryFactGroup(this)
     , _windFactGroup(this)

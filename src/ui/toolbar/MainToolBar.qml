@@ -52,6 +52,8 @@ Rectangle {
     property bool opaqueBackground:     false
     property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
 
+    property bool planormisstion: true
+    property bool statuechange: true
     /*
         Dev System (Mac OS)
 
@@ -456,10 +458,24 @@ Rectangle {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: mainWindow.showLeftMenu()
+                onClicked: {
+           //         statuechange=false
+                    mainWindow.showLeftMenu()
+                }
             }
         }
-
+//        QGCToolBarButton {
+//            id:                 preferencesButton
+//            width:              mainWindow.tbButtonWidth
+//            anchors.top:        parent.top
+//            anchors.bottom:     parent.bottom
+//            exclusiveGroup:     mainActionGroup
+//            source:             "/qmlimages/Hamburger.svg"
+//            onClicked:          {
+//                statuechange=false
+//                mainWindow.showLeftMenu()
+//            }
+//        }
         QGCToolBarButton {
             id:                 setupButton
             width:              mainWindow.tbButtonWidth
@@ -467,38 +483,46 @@ Rectangle {
             anchors.bottom:     parent.bottom
             exclusiveGroup:     mainActionGroup
             source:             "/qmlimages/Gears.svg"
-            onClicked:          toolBar.showSetupView()
+            onClicked:          {
+                statuechange=false
+                toolBar.showSetupView()
+            }
         }
 
     }
     // Toolbar Row
-    Row {
+    Item {
         id:             viewRowRight
         height:         mainWindow.tbCellHeight
-        spacing:        mainWindow.tbSpacing
+        width:          mainWindow.tbButtonWidth
+ //     spacing:        mainWindow.tbSpacing
         anchors.right:   parent.right
         anchors.rightMargin:     mainWindow.tbSpacing
-        anchors.verticalCenter: parent.verticalCenter
- //       ExclusiveGroup { id: mainActionGroup1 }
+        anchors.verticalCenter: parent.verticalCenter       
+//        ExclusiveGroup { id: mainActionGroup }
         QGCToolBarButton {
             id:                 planButton
             width:              mainWindow.tbButtonWidth
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             exclusiveGroup:     mainActionGroup
-            source:             "/qmlimages/Plan.svg"
-            onClicked:          toolBar.showPlanView()
+            source:             planormisstion?"/qmlimages/Plan.svg":"/qmlimages/PaperPlane.svg"
+            onClicked:          {
+                statuechange?planormisstion=!planormisstion:planormisstion=planormisstion
+                planormisstion?toolBar.showPlanView():toolBar.showFlyView()
+                statuechange=true
+            }
         }
 
-        QGCToolBarButton {
-            id:                 flyButton
-            width:              mainWindow.tbButtonWidth
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            exclusiveGroup:     mainActionGroup
-            source:             "/qmlimages/PaperPlane.svg"
-            onClicked:          toolBar.showFlyView()
-        }
+//        QGCToolBarButton {
+//            id:                 flyButton
+//            width:              mainWindow.tbButtonWidth
+//            anchors.top:        parent.top
+//            anchors.bottom:     parent.bottom
+//            exclusiveGroup:     mainActionGroup
+//            source:             "/qmlimages/PaperPlane.svg"
+//            onClicked:          toolBar.showFlyView()
+//        }
     }
 
     Image {

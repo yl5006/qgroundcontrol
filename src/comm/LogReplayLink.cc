@@ -1,4 +1,4 @@
-/*=====================================================================
+﻿/*=====================================================================
 
  QGroundControl Open Source Ground Control Station
 
@@ -214,7 +214,7 @@ bool LogReplayLink::_loadLogFile(void)
     logFileInfo.setFile(logFilename);
     _logFileSize = logFileInfo.size();
     
-    _logTimestamped = logFilename.endsWith(".mavlink");
+    _logTimestamped = logFilename.endsWith(".log");  //mavlink change
     
     if (_logTimestamped) {
         // Get the first timestamp from the log

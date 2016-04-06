@@ -1,4 +1,4 @@
-#include "UASQuickView.h"
+﻿#include "UASQuickView.h"
 #include "UASQuickViewItemSelect.h"
 #include "UASQuickViewTextItem.h"
 #include "MultiVehicleManager.h"
@@ -35,6 +35,7 @@ UASQuickView::UASQuickView(QWidget *parent) : QWidget(parent),
         valueEnabled("altitudeAMSLFT");
         valueEnabled("altitudeRelative");
         valueEnabled("groundSpeed");
+        valueEnabled("thrust");                      //addby yaoling
         valueEnabled("distToWaypoint");
     }
 
