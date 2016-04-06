@@ -184,7 +184,7 @@ void MissionControllerTest::_testOfflineToOnlineWorker(MAV_AUTOPILOT firmwareTyp
     _missionController = new MissionController();
     Q_CHECK_PTR(_missionController);
     _missionController->start(true /* editMode */);
-    _missionController->insertSimpleMissionItem(QGeoCoordinate(37.803784, -122.462276), _missionController->missionItems()->count());
+    _missionController->insertSimpleMissionItem(QGeoCoordinate(37.803784, -122.462276), _missionController->visualItems()->count());
 
     // Go online to empty vehicle
     MissionControllerManagerTest::_initForFirmwareType(firmwareType);
