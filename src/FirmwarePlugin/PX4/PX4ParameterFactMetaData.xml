@@ -3932,6 +3932,12 @@ replay messages for logging</short_desc>
     </parameter>
   </group>
   <group name="Return To Land">
+    <parameter default="0" name="RTL_ENABLE_JUMP" type="INT32">
+    <short_desc>RTL go to nearest rtlpoint and go home</short_desc>
+    <long_desc>0: disabled, 1: enabled</long_desc>
+    <min>0</min>
+    <max>1</max>
+    </parameter>
     <parameter default="60" name="RTL_RETURN_ALT" type="FLOAT">
       <short_desc>RTL altitude</short_desc>
       <long_desc>Altitude to fly back in RTL in meters</long_desc>

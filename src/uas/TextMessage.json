@@ -1,0 +1,21 @@
+﻿{
+    "version": 1,
+
+    "TextMessage": [
+        {
+            "id":                   1,
+            "EnText":               "HomeRaw",
+            "CnText":               "家位置",
+        },
+        {
+            "id":                   2,
+            "EnText":               "HomeRaw",
+            "CnText":               "家位置",
+        },
+        {
+            "id":                   3,
+            "EnText":               "HomeRaw",
+            "CnText":               "家位置",
+        }
+       ]
+}

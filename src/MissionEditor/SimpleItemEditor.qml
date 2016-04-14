@@ -41,7 +41,7 @@ Rectangle {
             QGCLabel {
                 width:          parent.width
                 wrapMode:       Text.WordWrap
-                font.pixelSize: ScreenTools.smallFontPixelHeight
+ //               font.pixelSize: ScreenTools.smallFontPixelHeight
                 text:           missionItem.sequenceNumber == 0 ?
                                  qsTr("计划家位置") ://"Planned home position."
                                     (missionItem.rawEdit ?

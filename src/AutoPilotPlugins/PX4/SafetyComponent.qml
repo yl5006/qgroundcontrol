@@ -229,6 +229,20 @@ QGCView {
                     color:          palette.text
                 }
 
+
+                QGCCheckBox {
+                    id:                 jumptoRTL
+                    anchors.margins:    _margins
+                    anchors.top:        parent.top
+                    anchors.left:       icon.right
+                    text:               qsTr("执行返航路线跳转到最近返航点")//"Loiter at Home altitude for"
+                    checked:            fact.value == 1
+                    property Fact fact: controller.getParameterFact(-1, "RTL_ENABLE_JUMP")
+
+                    onClicked: fact.value = checked ? 1 : 0
+                }
+
+
                 QGCLabel {
                     id:                 climbLabel
                     anchors.margins:    _margins
@@ -240,7 +254,7 @@ QGCView {
                 FactTextField {
                     id:                 climbField
                     anchors.topMargin:  _margins
-                    anchors.top:        parent.top
+                    anchors.top:        jumptoRTL.bottom//parent.top
                     anchors.left:       landDelayField.left
                     fact:               controller.getParameterFact(-1, "RTL_RETURN_ALT")
                     showUnits:          true

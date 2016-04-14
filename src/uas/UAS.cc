@@ -695,7 +695,8 @@ void UAS::receiveMessage(mavlink_message_t message)
             {
                 text.remove("#");
                 emit textMessageReceived(uasId, message.compid, severity, text);
-                _say(text.toLower(), severity);
+//              do not say
+//                _say(text.toLower(), severity);
             }
             else
             {
