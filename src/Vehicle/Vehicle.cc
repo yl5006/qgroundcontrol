@@ -219,11 +219,11 @@ Vehicle::Vehicle(LinkInterface*             link,
     _lowBatteryAnnounceTimer.invalidate();
 
     // Build FactGroup object model
-#ifdef QT_DEBUG
+
     _addFact(&_rollFact,                _rollFactName);
     _addFact(&_pitchFact,               _pitchFactName);
     _addFact(&_headingFact,             _headingFactName);
-#endif
+
     _addFact(&_groundSpeedFact,         _groundSpeedFactName);
     _addFact(&_airSpeedFact,            _airSpeedFactName);
     _addFact(&_climbRateFact,           _climbRateFactName);
@@ -231,7 +231,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     _addFact(&_altitudeAMSLFact,        _altitudeAMSLFactName);
     _addFact(&_throttleFact,            _throttleFactName); //add yaoling
 
-#ifdef QT_DEBUG
+
     _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
     _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
     _addFactGroup(&_windFactGroup,      _windFactGroupName);
@@ -241,7 +241,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     _batteryFactGroup.setVehicle(this);
     _windFactGroup.setVehicle(this);
     _vibrationFactGroup.setVehicle(this);
-#endif
+
 }
 
 // Disconnected Vehicle
@@ -311,18 +311,18 @@ Vehicle::Vehicle(QObject* parent)
     , _vibrationFactGroup(this)
 {
     // Build FactGroup object model
-#ifdef QT_DEBUG
+
     _addFact(&_rollFact,                _rollFactName);
     _addFact(&_pitchFact,               _pitchFactName);
     _addFact(&_headingFact,             _headingFactName);
-#endif
+
     _addFact(&_groundSpeedFact,         _groundSpeedFactName);
     _addFact(&_airSpeedFact,            _airSpeedFactName);
     _addFact(&_climbRateFact,           _climbRateFactName);
     _addFact(&_altitudeRelativeFact,    _altitudeRelativeFactName);
     _addFact(&_altitudeAMSLFact,        _altitudeAMSLFactName);
     _addFact(&_throttleFact,            _throttleFactName); //add yaoling
-#ifdef QT_DEBUG
+
     _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
     _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
     _addFactGroup(&_windFactGroup,      _windFactGroupName);
@@ -332,7 +332,7 @@ Vehicle::Vehicle(QObject* parent)
     _batteryFactGroup.setVehicle(NULL);
     _windFactGroup.setVehicle(NULL);
     _vibrationFactGroup.setVehicle(NULL);
-#endif
+
 }
 
 Vehicle::~Vehicle()
