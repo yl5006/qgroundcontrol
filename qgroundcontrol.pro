@@ -18,7 +18,7 @@
 # -------------------------------------------------
 
 exists($${OUT_PWD}/qgroundcontrol.pro) {
-    error("You must use shadow build.")
+    error("You must use shadow build (e.g. mkdir build; cd build; qmake ../qgroundcontrol.pro).")
 }
 
 message(Qt version $$[QT_VERSION])
@@ -64,7 +64,16 @@ LinuxBuild {
 
 CONFIG += qt \
     thread \
-    c++11
+    c++11 \
+
+contains(DEFINES, ENABLE_VERBOSE_OUTPUT) {
+    message("Enable verbose compiler output (manual override from command line)")
+} else:exists(user_config.pri):infile(user_config.pri, DEFINES, ENABLE_VERBOSE_OUTPUT) {
+    message("Enable verbose compiler output (manual override from user_config.pri)")
+} else {
+CONFIG += \
+    silent
+}
 
 QT += \
     concurrent \
@@ -93,8 +102,10 @@ QT += \
 }
 
 #  testlib is needed even in release flavor for QSignalSpy support
-DebugBuild {
 QT += testlib
+ReleaseBuild {
+    # We don't need the testlib console in release mode
+    QT.testlib.CONFIG -= console
 }
 #
 # OS Specific settings
@@ -283,9 +294,11 @@ HEADERS += \
     src/QGCQuickWidget.h \
     src/QGCTemporaryFile.h \
     src/QGCToolbox.h \
+    src/QmlControls/AppMessages.h \
     src/QmlControls/CoordinateVector.h \
     src/QmlControls/MavlinkQmlSingleton.h \
     src/QmlControls/ParameterEditorController.h \
+    src/QmlControls/RCChannelMonitorController.h \
     src/QmlControls/ScreenToolsController.h \
     src/QmlControls/QGCQGeoCoordinate.h \
     src/QmlControls/QGroundControlQmlGlobal.h \
@@ -310,6 +323,8 @@ HEADERS += \
 WindowsBuild {
     PRECOMPILED_HEADER += src/stable_headers.h
     HEADERS += src/stable_headers.h
+    CONFIG -= silent
+    OTHER_FILES += .appveyor.yml
 }
 
 contains(DEFINES, QGC_ENABLE_BLUETOOTH) {
@@ -424,8 +439,10 @@ SOURCES += \
     src/QGCTemporaryFile.cc \
     src/QGCToolbox.cc \
     src/QGCGeo.cc \
+    src/QmlControls/AppMessages.cc \
     src/QmlControls/CoordinateVector.cc \
     src/QmlControls/ParameterEditorController.cc \
+    src/QmlControls/RCChannelMonitorController.cc \
     src/QmlControls/ScreenToolsController.cc \
     src/QmlControls/QGCQGeoCoordinate.cc \
     src/QmlControls/QGroundControlQmlGlobal.cc \
@@ -502,7 +519,7 @@ SOURCES += \
     src/ViewWidgets/CustomCommandWidgetController.cc \
     src/ViewWidgets/LogDownload.cc \
     src/ViewWidgets/LogDownloadController.cc \
-    src/ViewWidgets/ViewWidgetController.cc \
+    src/ViewWidgets/ViewWidgetController.cc
 }
 
 #

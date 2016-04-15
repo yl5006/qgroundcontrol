@@ -118,7 +118,7 @@ Rectangle {
         anchors.bottom:     attitude.bottom
         anchors.top:        attitude.top
         anchors.right:      attitudeWidget.right
-        source:             "/res/gear.svg"
+        source:             qgcPal.globalTheme == QGCPalette.Light ? "/res/gear-black.svg" : "/res/gear-white.svg"
         mipmap:             true
         opacity:            0.5
         width:              attitudeWidget.width * 0.15

@@ -167,7 +167,7 @@ void MultiVehicleManager::_deleteVehiclePhase1(Vehicle* vehicle)
     if(_vehicles.count() == 0) {
         //-- Once no vehicles are connected, we no longer need to keep screen from going off
         qCDebug(MultiVehicleManagerLog) << "QAndroidJniObject::restoreScreenOn";
-        MobileScreenMgr::setKeepScreenOn(true);
+        MobileScreenMgr::setKeepScreenOn(false);
     }
 #endif
 
@@ -325,4 +325,19 @@ void MultiVehicleManager::_sendGCSHeartbeat(void)
                                    MAV_STATE_ACTIVE);       // MAV_STATE
         vehicle->sendMessage(message);
     }
+}
+
+bool MultiVehicleManager::linkInUse(LinkInterface* link, Vehicle* skipVehicle)
+{
+    for (int i=0; i< _vehicles.count(); i++) {
+        Vehicle* vehicle = qobject_cast<Vehicle*>(_vehicles[i]);
+
+        if (vehicle != skipVehicle) {
+            if (vehicle->containsLink(link)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }

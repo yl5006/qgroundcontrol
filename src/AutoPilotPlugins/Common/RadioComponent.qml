@@ -76,7 +76,7 @@ QGCView {
         }
 
         onChannelCountChanged:              updateChannelCount()
-        onFunctionMappingChangedAPMReboot:    showMessage("Reboot required", "Your stick mappings have changed, you must reboot the vehicle for correct operation.", StandardButton.Ok)
+        onFunctionMappingChangedAPMReboot:    showMessage(qsTr("Reboot required"), qsTr("Your stick mappings have changed, you must reboot the vehicle for correct operation."), StandardButton.Ok)
     }
 
     onCompleted: {
@@ -95,7 +95,7 @@ QGCView {
             id: copyTrimsDialogComponent
 
             QGCViewMessage {
-//              message: "Center your sticks and move throttle all the way down, then press Ok to copy trims. After pressing Ok, reset the trims on your radio back to zero."
+//              message: qsTr("Center your sticks and move throttle all the way down, then press Ok to copy trims. After pressing Ok, reset the trims on your radio back to zero.")
                 message: qsTr("使摇杆回到中位，油门到最低，然后按OK。复位你的遥控回零。")
 
                 function accept() {
@@ -109,8 +109,8 @@ QGCView {
             id: zeroTrimsDialogComponent
 
             QGCViewMessage {
-                message: "Before calibrating you should zero all your trims and subtrims. Click Ok to start Calibration.\n\n" +
-                         (QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ? "" : "Please ensure all motor power is disconnected AND all props are removed from the vehicle.")
+                message: qsTr("Before calibrating you should zero all your trims and subtrims. Click Ok to start Calibration.\n\n%1").arg(
+                         (QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ? "" : qsTr("Please ensure all motor power is disconnected AND all props are removed from the vehicle.")))
 
                 function accept() {
                     hideDialog()
@@ -123,7 +123,7 @@ QGCView {
             id: channelCountDialogComponent
 
             QGCViewMessage {
-                message: controller.channelCount == 0 ? qsTr("请打开传输，至少")/*"Please turn on transmitter."*/ : controller.minChannelCount + qsTr("通道飞行")//" channels or more are needed to fly."
+                message: controller.channelCount == 0 ? qsTr("请打开传输，至少") /*qsTr("Please turn on transmitter.")*/ : qsTr("%1 channels or more are needed to fly.").arg(controller.minChannelCount)
             }
         }
 
@@ -148,7 +148,7 @@ QGCView {
                     QGCLabel {
                         width:      parent.width
                         wrapMode:   Text.WordWrap
-//                        text:       "Click Ok to place your Spektrum receiver in the bind mode. Select the specific receiver type below:"
+                        text:       qsTr("Click Ok to place your Spektrum receiver in the bind mode. Select the specific receiver type below:")
                         text:       qsTr("点击OK使接收机在绑定模式，选择具体接收器类型")
                     }
 
@@ -171,7 +171,7 @@ QGCView {
                     QGCRadioButton {
                         exclusiveGroup: radioGroup
                         checked:        true
-                        text:           qsTr("DSMX 至少8通道")//"DSMX (8 channels or more)"
+                        text:           "DSMX (8 channels or more)"
 
                         property int bindMode: RadioComponentController.DSMX8
                     }
@@ -272,18 +272,16 @@ QGCView {
                 Column {
                     width:      parent.width
                     spacing:    5
-
-//                QGCLabel { text: "Attitude Controls" }
-                QGCLabel { text: qsTr("姿态控制")
+       //             QGCLabel { text: "Attitude Controls" }
+                    QGCLabel { text: qsTr("姿态控制")
                            anchors.horizontalCenter: parent.horizontalCenter}
                     Item {
                         width:  parent.width
                         height: defaultTextHeight * 2
-
                         QGCLabel {
                             id:     rollLabel
                             width:  defaultTextWidth * 10
-                        text:   qsTr("横滚")//"Roll"
+                            text:   qsTr("横滚")//"Roll"
                         }
 
                         Loader {
@@ -313,7 +311,7 @@ QGCView {
                         QGCLabel {
                             id:     pitchLabel
                             width:  defaultTextWidth * 10
-                        text:   qsTr("仰俯")//"Pitch"
+                           text:   qsTr("仰俯")//"Pitch"
                         }
 
                         Loader {
@@ -343,7 +341,7 @@ QGCView {
                         QGCLabel {
                             id:     yawLabel
                             width:  defaultTextWidth * 10
-                        text:   qsTr("航向")//"Yaw"
+                            text:   qsTr("航向")//"Yaw"
                         }
 
                         Loader {
@@ -373,7 +371,7 @@ QGCView {
                         QGCLabel {
                             id:     throttleLabel
                             width:  defaultTextWidth * 10
-                        text:   qsTr("油门")//"Throttle"
+                            text:   qsTr("油门")//"Throttle"
                         }
 
                         Loader {
@@ -403,14 +401,14 @@ QGCView {
 
                     QGCButton {
                         id:         skipButton
-                    text:       qsTr("跳过")//"Skip"
+                        text:       qsTr("跳过")//"Skip"
 
                         onClicked: controller.skipButtonClicked()
                     }
 
                     QGCButton {
                         id:         cancelButton
-                    text:       qsTr("取消")//"Cancel"
+                       text:       qsTr("取消")//"Cancel"
 
                         onClicked: controller.cancelButtonClicked()
                     }
@@ -418,10 +416,10 @@ QGCView {
                     QGCButton {
                         id:         nextButton
                         primary:    true
-                    text:       qsTr("校准")//"Calibrate"
+                        text:       "Calibrate"
 
                         onClicked: {
-                        if (text == qsTr("校准")) {//qsTr("校准")
+                        if (text == qsTr("校准")) {//qsTr("Calibrate")
                             showDialog(zeroTrimsDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                             } else {
                                 controller.nextButtonClicked()
@@ -449,7 +447,7 @@ QGCView {
                     border.width:   1
                 }
 
-//            QGCLabel { text: "Additional Radio setup:" }
+                QGCLabel { text: "Additional Radio setup:" }
             QGCLabel { text: qsTr("更多遥控设置") }
 
                 Row {
@@ -457,19 +455,19 @@ QGCView {
 
                     QGCLabel {
                         anchors.baseline:   bindButton.baseline
-                    text:               qsTr("开启遥控对频")//"Place Spektrum satellite receiver in bind mode:"
+                        text:               "Place Spektrum satellite receiver in bind mode:"
                     }
 
                     QGCButton {
                         id:         bindButton
-                    text:       qsTr("遥控对频")//"Spektrum Bind"
+                        text:       qsTr("Spektrum Bind")
 
                         onClicked: showDialog(spektrumBindDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                     }
                 }
 
                 QGCButton {
-                text:       qsTr("拷贝修正")//"Copy Trims"
+                    text:       qsTr("Copy Trims")
                     visible:    QGroundControl.multiVehicleManager.activeVehicle.px4Firmware
                     onClicked:  showDialog(copyTrimsDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                 }
@@ -479,7 +477,6 @@ QGCView {
 
                     Row {
                         spacing: ScreenTools.defaultFontPixelWidth
-
                         property Fact fact: controller.getParameterFact(-1, modelData)
 
                         QGCLabel {
@@ -514,10 +511,9 @@ QGCView {
                 Row {
                     spacing: 10
                     ExclusiveGroup { id: modeGroup }
-
                     QGCRadioButton {
                         exclusiveGroup: modeGroup
-                    text:           qsTr("模式 1")//"Mode 1"
+                        text:           qsTr("模式 1")//"Mode 1"
                         checked:        controller.transmitterMode == 1
 
                         onClicked: controller.transmitterMode = 1
@@ -525,7 +521,7 @@ QGCView {
 
                     QGCRadioButton {
                         exclusiveGroup: modeGroup
-                    text:           qsTr("模式 2")//"Mode 2"
+                        text:           qsTr("模式 2")//"Mode 2"
                         checked:        controller.transmitterMode == 2
 
                         onClicked: controller.transmitterMode = 2
@@ -540,53 +536,9 @@ QGCView {
                     source:     controller.imageHelp
                 }
 
-                // Channel monitor
-                Column {
+                RCChannelMonitor {
                     width:      parent.width
-                    spacing:    5
-
-//                QGCLabel { text: "Channel Monitor" }
-                QGCLabel { text: qsTr("通道监控") }
-                    Connections {
-                        target: controller
-
-                        onChannelRCValueChanged: {
-                            if (channelMonitorRepeater.itemAt(channel)) {
-                                channelMonitorRepeater.itemAt(channel).loader.item.rcValue = rcValue
-                            }
-                        }
-                    }
-
-                    Repeater {
-                        id:     channelMonitorRepeater
-                        model:  controller.channelCount
-                        width:  parent.width
-
-                        Row {
-                            spacing:    5
-
-                            // Need this to get to loader from Connections above
-                            property Item loader: theLoader
-
-                            QGCLabel {
-                                id:     channelLabel
-                                text:   modelData + 1
-                            }
-
-                            Loader {
-                                id:                     theLoader
-                                anchors.verticalCenter: channelLabel.verticalCenter
-                                height:                 qgcView.defaultTextHeight
-                                width:                  200
-                                sourceComponent:        channelMonitorDisplayComponent
-
-                                property real defaultTextWidth:     qgcView.defaultTextWidth
-                                property bool mapped:               true
-                                readonly property bool reversed:    false
-                            }
-                        }
-                    }
-                } // Column - Channel Monitor
+                }
             } // Column - Right Column
         } // QGCFlickable
     } // QGCViewPanel

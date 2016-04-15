@@ -32,8 +32,10 @@
 #include "FirmwarePlugin.h"
 #include "UAS.h"
 
+#include <QEasingCurve>
 #include <QFile>
 #include <QDebug>
+#include <QVariantAnimation>
 
 /* types for local parameter cache */
 typedef QPair<int, QVariant> ParamTypeVal;
@@ -534,11 +536,16 @@ void ParameterLoader::_waitingParamTimeout(void)
             foreach(const QString &paramName, _waitingWriteParamNameMap[componentId].keys()) {
                 paramsRequested = true;
                 _waitingWriteParamNameMap[componentId][paramName]++;   // Bump retry count
-                _writeParameterRaw(componentId, paramName, _vehicle->autopilotPlugin()->getFact(FactSystem::ParameterProvider, componentId, paramName)->rawValue());
-                qCDebug(ParameterLoaderLog) << "Write resend for (componentId:" << componentId << "paramName:" << paramName << "retryCount:" << _waitingWriteParamNameMap[componentId][paramName] << ")";
-
-                if (++batchCount > maxBatchSize) {
-                    goto Out;
+                if (_waitingWriteParamNameMap[componentId][paramName] <= _maxReadWriteRetry) {
+                    _writeParameterRaw(componentId, paramName, _vehicle->autopilotPlugin()->getFact(FactSystem::ParameterProvider, componentId, paramName)->rawValue());
+                    qCDebug(ParameterLoaderLog) << "Write resend for (componentId:" << componentId << "paramName:" << paramName << "retryCount:" << _waitingWriteParamNameMap[componentId][paramName] << ")";
+                    if (++batchCount > maxBatchSize) {
+                        goto Out;
+                    }
+                } else {
+                    // Exceeded max retry count, notify user
+                    _waitingWriteParamNameMap[componentId].remove(paramName);
+                    qgcApp()->showMessage(tr("Parameter write failed: comp:%1 param:%2").arg(componentId).arg(paramName));
                 }
             }
         }
@@ -549,11 +556,16 @@ void ParameterLoader::_waitingParamTimeout(void)
             foreach(const QString &paramName, _waitingReadParamNameMap[componentId].keys()) {
                 paramsRequested = true;
                 _waitingReadParamNameMap[componentId][paramName]++;   // Bump retry count
-                _readParameterRaw(componentId, paramName, -1);
-                qCDebug(ParameterLoaderLog) << "Read re-request for (componentId:" << componentId << "paramName:" << paramName << "retryCount:" << _waitingReadParamNameMap[componentId][paramName] << ")";
-
-                if (++batchCount > maxBatchSize) {
-                    goto Out;
+                if (_waitingReadParamNameMap[componentId][paramName] <= _maxReadWriteRetry) {
+                    _readParameterRaw(componentId, paramName, -1);
+                    qCDebug(ParameterLoaderLog) << "Read re-request for (componentId:" << componentId << "paramName:" << paramName << "retryCount:" << _waitingReadParamNameMap[componentId][paramName] << ")";
+                    if (++batchCount > maxBatchSize) {
+                        goto Out;
+                    }
+                } else {
+                    // Exceeded max retry count, notify user
+                    _waitingReadParamNameMap[componentId].remove(paramName);
+                    qgcApp()->showMessage(tr("Parameter read failed: comp:%1 param:%2").arg(componentId).arg(paramName));
                 }
             }
         }
@@ -711,6 +723,26 @@ void ParameterLoader::_tryCacheHashLoad(int uasId, int componentId, QVariant has
         mavlink_message_t msg;
         mavlink_msg_param_set_encode(_mavlink->getSystemId(), _mavlink->getComponentId(), &msg, &p);
         _vehicle->sendMessageOnLink(_vehicle->priorityLink(), msg);
+
+        // Give the user some feedback things loaded properly
+        QVariantAnimation *ani = new QVariantAnimation(this);
+        ani->setEasingCurve(QEasingCurve::OutCubic);
+        ani->setStartValue(0.0);
+        ani->setEndValue(1.0);
+        ani->setDuration(750);
+
+        connect(ani, &QVariantAnimation::valueChanged, [this](const QVariant &value) {
+            emit parameterListProgress(value.toFloat());
+        });
+
+        // Hide 500ms after animation finishes
+        connect(ani, &QVariantAnimation::finished, [this](){
+            QTimer::singleShot(500, [this]() {
+                emit parameterListProgress(0);
+            });
+        });
+
+        ani->start(QAbstractAnimation::DeleteWhenStopped);
     }
 }
 

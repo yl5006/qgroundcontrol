@@ -33,7 +33,7 @@ FactPanel {
 
         VehicleSummaryRow {
             labelText: qsTr("仰俯:")//"Pitch:"
-            valueText: mapPitchFact ? (mapPitchFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapPitchFact.valueString) : ""
+            valueText: mapPitchFact ? (mapPitchFact.value === 0 ? "Setup required" : mapPitchFact.valueString) : ""
         }
 
         VehicleSummaryRow {

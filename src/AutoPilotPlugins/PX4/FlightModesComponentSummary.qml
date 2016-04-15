@@ -33,15 +33,15 @@ FactPanel {
             anchors.margins:    8
 
             VehicleSummaryRow {
-                labelText: "Mode switch:"
-                valueText: _rcMapFltmode.value === 0 ? "Setup required" : _rcMapFltmode.enumStringValue
+                labelText: qsTr("Mode switch:")
+                valueText: _rcMapFltmode.value === 0 ? qsTr("Setup required") : _rcMapFltmode.enumStringValue
             }
 
             Repeater {
                 model: 6
 
                 VehicleSummaryRow {
-                    labelText: "Flight Mode " + (index + 1) + ":"
+                    labelText: qsTr("Flight Mode %1 :").arg(index + 1)
                     valueText: controller.getParameterFact(-1, "COM_FLTMODE" + (index + 1)).enumStringValue
                 }
             }

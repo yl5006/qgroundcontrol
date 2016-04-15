@@ -114,7 +114,8 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                mainWindow.hideLeftMenu()
+                if (!__animateShowDialog.running)
+                    mainWindow.hideLeftMenu()
             }
         }
     }
@@ -157,7 +158,7 @@ Item {
                 spacing:                 ScreenTools.defaultFontPixelHeight
 
                 QGCLabel {
-                text:       qsTr("个人设置")//"Preferences"
+                    text:           "Preferences"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -190,7 +191,7 @@ Item {
                 QGCButton {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
-                    text:           "Offline Maps"
+                    text:           qsTr("Offline Maps")
                     exclusiveGroup: panelActionGroup
                     onClicked: {
                         if(__rightPanel.source != "OfflineMap.qml") {
@@ -203,7 +204,7 @@ Item {
                 QGCButton {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
-                    text:           "MavLink"
+                    text:           qsTr("MavLink")
                 visible:    ScreenTools.isDebug
                     exclusiveGroup: panelActionGroup
                     onClicked: {
@@ -217,7 +218,20 @@ Item {
                 QGCButton {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
-                    text:           "Mock Link"
+                    text:           qsTr("Console")
+                    exclusiveGroup: panelActionGroup
+                    onClicked: {
+                        if(__rightPanel.source != "QGroundControl/Controls/AppMessages.qml") {
+                            __rightPanel.source = "QGroundControl/Controls/AppMessages.qml"
+                        }
+                        checked = true
+                    }
+                }
+
+                QGCButton {
+                    anchors.left:   parent.left
+                    anchors.right:  parent.right
+                    text:           qsTr("Mock Link")
                     visible:        ScreenTools.isDebug
                     exclusiveGroup: panelActionGroup
                     onClicked: {
@@ -231,7 +245,7 @@ Item {
                 QGCButton {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
-                    text:           "Debug"
+                    text:           qsTr("Debug")
                     visible:        ScreenTools.isDebug
                     exclusiveGroup: panelActionGroup
                     onClicked: {
@@ -252,7 +266,8 @@ Item {
         anchors.right:  parent.right
         height:         toolBar.height
         onClicked: {
-            mainWindow.hideLeftMenu()
+            if (!__animateShowDialog.running)
+                mainWindow.hideLeftMenu()
         }
     }
 
@@ -299,8 +314,10 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    __rightPanel.source = ""
-                    mainWindow.hideLeftMenu()
+                    if (!__animateShowDialog.running) {
+                        __rightPanel.source = ""
+                        mainWindow.hideLeftMenu()
+                    }
                 }
             }
 

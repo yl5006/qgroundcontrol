@@ -239,7 +239,7 @@ QGCView {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     wrapMode:       Text.WordWrap
-                    text:           "Move the selected mission item to the be after following mission item:"
+                    text:           qsTr("Move the selected mission item to the be after following mission item:")
                 }
 
                 QGCComboBox {
@@ -288,6 +288,7 @@ QGCView {
                         if (addMissionItemsButton.checked) {
                             var sequenceNumber = controller.insertSimpleMissionItem(coordinate, controller.visualItems.count)
                             setCurrentItem(sequenceNumber)
+                            editorListView.positionViewAtIndex(editorListView.count - 1, ListView.Contain)
                         } else {
                             editorMap.mapClicked(coordinate)
                         }
@@ -503,6 +504,14 @@ QGCView {
                     width:          mainWindow.availableWidth*0.9   //change by yaoling
                     opacity:        _rightPanelOpacity
                     z:              QGroundControl.zOrderTopMost-100
+
+                    MouseArea {
+                         // This MouseArea prevents the Map below it from getting Mouse events. Without this
+                         // things like mousewheel will scroll the Flickable and then scroll the map as well.
+                         anchors.fill:       editorListView
+                         onWheel:            wheel.accepted = true
+                     }
+
                     ListView {
                         id:             editorListView
                         anchors.left:   parent.left
@@ -533,10 +542,19 @@ QGCView {
 //                            }
 
 //                            onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
+
+                            Connections {
+                                target: object
+
+                                onIsCurrentItemChanged: {
+                                    if (object.isCurrentItem) {
+                                        editorListView.positionViewAtIndex(index, ListView.Contain)
+                                    }
+                                }
+                            }
                         }
                     } // ListView
-                } /// Item - Mission Item editor
-                // Mission Item Editor
+                } // Item - Mission Item editor
 
 
 
@@ -671,7 +689,7 @@ QGCView {
                                         QGCButton {
                                             checkable:      true
                                             checked:        editorMap.mapType == text
-                                            text:           qsTr(modelData)
+                                            text:           modelData
                                             exclusiveGroup: _mapTypeButtonsExclusiveGroup
 
                                             onClicked: {
@@ -752,7 +770,7 @@ QGCView {
 
         QGCViewMessage {
             id:         syncLoadFromVehicleCheck
-            message:   "You have unsaved/unsent mission changes. Loading a mission from a file will lose these changes. Are you sure you want to load a mission from a file?"
+            message:   qsTr("You have unsaved/unsent mission changes. Loading a mission from a file will lose these changes. Are you sure you want to load a mission from a file?")
 
             function accept() {
                 hideDialog()
@@ -812,7 +830,7 @@ QGCView {
                     onClicked: {
                         syncButton.hideDropDown()
                         if (syncNeeded) {
-                            _root.showDialog(syncLoadFromVehicleOverwrite, "Mission overwrite", _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                            _root.showDialog(syncLoadFromVehicleOverwrite, qsTr("Mission overwrite"), _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                         } else {
                             loadFromVehicle()
                         }
@@ -840,7 +858,7 @@ QGCView {
                     onClicked: {
                         syncButton.hideDropDown()
                         if (syncNeeded) {
-                            _root.showDialog(syncLoadFromFileOverwrite, qsTr("任务覆盖")/*"Mission overwrite"*/, _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                            _root.showDialog(syncLoadFromFileOverwrite, "Mission overwrite", _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                         } else {
                             loadFromFile()
                         }

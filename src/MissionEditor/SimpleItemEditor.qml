@@ -45,7 +45,7 @@ Rectangle {
                 text:           missionItem.sequenceNumber == 0 ?
                                  qsTr("计划家位置") ://"Planned home position."
                                     (missionItem.rawEdit ?
-                                        "Provides advanced access to all commands/parameters. Be very careful!" :
+                                        qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
                                         missionItem.commandDescription)
             }
 
@@ -115,7 +115,7 @@ Rectangle {
             }
 
             QGCButton {
-                text:       "Move Home to map center"
+                text:       qsTr("Move Home to map center")
                 visible:    missionItem.homePosition
                 onClicked:  editorRoot.moveHomeToMapCenter()
                 anchors.horizontalCenter: parent.horizontalCenter

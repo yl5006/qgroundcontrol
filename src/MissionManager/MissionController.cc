@@ -256,6 +256,7 @@ void MissionController::removeAllMissionItems(void)
         _visualItems = new QmlObjectListModel(this);
         _addPlannedHomePosition(_visualItems, false /* addToCenter */);
         _initAllVisualItems();
+        _visualItems->setDirty(true);
     }
 }
 

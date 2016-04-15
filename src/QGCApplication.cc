@@ -36,6 +36,7 @@
 #include <QPainter>
 #include <QStyleFactory>
 #include <QAction>
+#include <QStringListModel>
 
 #ifdef QGC_ENABLE_BLUETOOTH
 #include <QBluetoothLocalDevice>
@@ -72,6 +73,7 @@
 #include "ESP8266ComponentController.h"
 #include "ScreenToolsController.h"
 #include "QGCMobileFileDialogController.h"
+#include "RCChannelMonitorController.h"
 #include "AutoPilotPlugin.h"
 #include "VehicleComponent.h"
 #include "FirmwarePluginManager.h"
@@ -100,6 +102,7 @@
 #include "LogDownloadController.h"
 #include "PX4AirframeLoader.h"
 #include "ValuesWidgetController.h"
+#include "AppMessages.h"
 
 #ifndef __ios__
     #include "SerialLink.h"
@@ -459,6 +462,7 @@ void QGCApplication::_initCommon(void)
     qmlRegisterType<FlightDisplayViewController>        ("QGroundControl.Controllers", 1, 0, "FlightDisplayViewController");
     qmlRegisterType<ValuesWidgetController>             ("QGroundControl.Controllers", 1, 0, "ValuesWidgetController");
     qmlRegisterType<QGCMobileFileDialogController>      ("QGroundControl.Controllers", 1, 0, "QGCMobileFileDialogController");
+    qmlRegisterType<RCChannelMonitorController>         ("QGroundControl.Controllers", 1, 0, "RCChannelMonitorController");
 
 #ifndef __mobile__
     qmlRegisterType<ViewWidgetController>           ("QGroundControl.Controllers", 1, 0, "ViewWidgetController");
@@ -488,6 +492,7 @@ bool QGCApplication::_initForNormalAppBoot(void)
     _qmlAppEngine = new QQmlApplicationEngine(this);
     _qmlAppEngine->addImportPath("qrc:/qml");
     _qmlAppEngine->rootContext()->setContextProperty("joystickManager", toolbox()->joystickManager());
+    _qmlAppEngine->rootContext()->setContextProperty("debugMessageModel", AppMessages::getModel());
     _qmlAppEngine->load(QUrl(QStringLiteral("qrc:/qml/MainWindowNative.qml")));
 #else
     // Start the user interface

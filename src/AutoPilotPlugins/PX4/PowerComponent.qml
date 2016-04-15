@@ -93,13 +93,13 @@ QGCView {
         id:         controller
         factPanel:  panel
 
-        onOldFirmware:          showMessage("ESC Calibration", "QGroundControl cannot perform ESC Calibration with this version of firmware. You will need to upgrade to a newer firmware.", StandardButton.Ok)
-        onNewerFirmware:        showMessage("ESC Calibration", "QGroundControl cannot perform ESC Calibration with this version of firmware. You will need to upgrade QGroundControl.", StandardButton.Ok)
-        onBatteryConnected:     showMessage("ESC Calibration", "Performing calibration. This will take a few seconds..", 0)
-        onCalibrationFailed:    showMessage("ESC Calibration failed", errorMessage, StandardButton.Ok)
-        onCalibrationSuccess:   showMessage("ESC Calibration", "Calibration complete. You can disconnect your battery now if you like.", StandardButton.Ok)
-        onConnectBattery:       showMessage("ESC Calibration", highlightPrefix + "WARNING: Props must be removed from vehicle prior to performing ESC calibration." + highlightSuffix + " Connect the battery now and calibration will begin.", 0)
-        onDisconnectBattery:    showMessage("ESC Calibration failed", "You must disconnect the battery prior to performing ESC Calibration. Disconnect your battery and try again.", StandardButton.Ok)
+        onOldFirmware:          showMessage(qsTr("ESC Calibration"), qsTr("QGroundControl cannot perform ESC Calibration with this version of firmware. You will need to upgrade to a newer firmware."), StandardButton.Ok)
+        onNewerFirmware:        showMessage(qsTr("ESC Calibration"), qsTr("QGroundControl cannot perform ESC Calibration with this version of firmware. You will need to upgrade QGroundControl."), StandardButton.Ok)
+        onBatteryConnected:     showMessage(qsTr("ESC Calibration"), qsTr("Performing calibration. This will take a few seconds.."), 0)
+        onCalibrationFailed:    showMessage(qsTr("ESC Calibration failed"), errorMessage, StandardButton.Ok)
+        onCalibrationSuccess:   showMessage(qsTr("ESC Calibration"), qsTr("Calibration complete. You can disconnect your battery now if you like."), StandardButton.Ok)
+        onConnectBattery:       showMessage(qsTr("ESC Calibration"), highlightPrefix + qsTr("WARNING: Props must be removed from vehicle prior to performing ESC calibration.") + highlightSuffix + qsTr(" Connect the battery now and calibration will begin."), 0)
+        onDisconnectBattery:    showMessage(qsTr("ESC Calibration failed"), qsTr("You must disconnect the battery prior to performing ESC Calibration. Disconnect your battery and try again."), StandardButton.Ok)
     }
 
     QGCPalette { id: palette; colorGroupEnabled: panel.enabled }
@@ -163,7 +163,7 @@ QGCView {
 
                             QGCLabel {
                                 id:                 battHighLabel
-                                text:               qsTr("单个电芯满电压")//"Full Voltage (per cell)"
+                                text:               "Full Voltage (per cell)"
                                 anchors.baseline:   battHighField.baseline
                                 }
 
@@ -270,7 +270,7 @@ QGCView {
 
                 QGCCheckBox {
                     id:     showUAVCAN
-                    text:   qsTr("显示UAVCAN设置")//"Show UAVCAN Settings"
+                    text:   "Show UAVCAN Settings"
                 }
 
                 QGCLabel {
@@ -298,7 +298,7 @@ QGCView {
                             fact:               controller.getParameterFact(-1, "UAVCAN_ENABLE")
                             checkedValue:       3
                             uncheckedValue:     0
-                            text:               qsTr("使UAVCAN总线为默认输出(需要重启)")//"Enable UAVCAN as the default MAIN output bus (requires autopilot restart)"
+                            text:               "Enable UAVCAN as the default MAIN output bus (requires autopilot restart)"
                         }
                     }
                 }
@@ -325,25 +325,25 @@ QGCView {
 
                         QGCLabel {
                             color:  palette.warningText
-                            text:   "WARNING: Propellers must be removed from vehicle prior to performing UAVCAN ESC configuration."
+                            text:   qsTr("WARNING: Propellers must be removed from vehicle prior to performing UAVCAN ESC configuration.")
                         }
 
                         QGCLabel {
-                            text: "ESC parameters will only be accessible in the editor after assignment."
+                            text: qsTr("ESC parameters will only be accessible in the editor after assignment.")
                         }
 
                         QGCLabel {
-                            text: "Start the process, then turn each motor into its turn direction, in the order of their motor indices."
+                            text: qsTr("Start the process, then turn each motor into its turn direction, in the order of their motor indices.")
                         }
 
                         QGCButton {
-                            text:       "Start Assignment"
+                            text:       qsTr("Start Assignment")
                             width:      ScreenTools.defaultFontPixelWidth * 20
                             onClicked:  controller.busConfigureActuators()
                         }
 
                         QGCButton {
-                            text:       "Stop Assignment"
+                            text:       qsTr("Stop Assignment")
                             width:      ScreenTools.defaultFontPixelWidth * 20
                             onClicked:  controller.stopBusConfigureActuators()
                         }
@@ -380,7 +380,7 @@ QGCView {
                             spacing: ScreenTools.defaultFontPixelWidth
 
                             QGCLabel {
-                                text:               "Voltage Drop on Full Load (per cell)"
+                                text:               qsTr("Voltage Drop on Full Load (per cell)")
                                 anchors.baseline:   battDropField.baseline
                             }
 
@@ -395,20 +395,20 @@ QGCView {
                         QGCLabel {
                             width:      parent.width
                             wrapMode:   Text.WordWrap
-                            text:       "Batteries show less voltage at high throttle. Enter the difference in Volts between idle throttle and full " +
-                                            "throttle, divided by the number of battery cells. Leave at the default if unsure. " +
-                                            highlightPrefix + "If this value is set too high, the battery might be deep discharged and damaged." + highlightSuffix
+                            text:       qsTr("Batteries show less voltage at high throttle. Enter the difference in Volts between idle throttle and full ") +
+                                        qsTr("throttle, divided by the number of battery cells. Leave at the default if unsure. ") +
+                                            highlightPrefix + qsTr("If this value is set too high, the battery might be deep discharged and damaged.") + highlightSuffix
                         }
 
                         Row {
                             spacing: ScreenTools.defaultFontPixelWidth
 
                             QGCLabel {
-                                text: "Compensated Minimum Voltage:"
+                                text: qsTr("Compensated Minimum Voltage:")
                             }
 
                             QGCLabel {
-                                text: ((battNumCells.value * battLowVolt.value) - (battNumCells.value * battVoltLoadDrop.value)).toFixed(1) + ' V'
+                                text: ((battNumCells.value * battLowVolt.value) - (battNumCells.value * battVoltLoadDrop.value)).toFixed(1) + qsTr(" V")
                             }
                         }
                     }

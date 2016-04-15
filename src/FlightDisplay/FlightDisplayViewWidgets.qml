@@ -71,7 +71,7 @@ Item {
 
         QGCLabel {
             anchors.horizontalCenter:   parent.horizontalCenter
-            visible:                    _activeVehicle && !_activeVehicle.coordinateValid
+            visible:                    _activeVehicle && !_activeVehicle.coordinateValid && _mainIsMap
             z:                          QGroundControl.zOrderTopMost
             color:                      mapPal.text
             font.pixelSize:             ScreenTools.largeFontPixelSize
@@ -185,7 +185,7 @@ Item {
 
                     QGCButton {
                         id:         centerMapButton
-                        text:       qsTr("回到中心")//"Center map on Vehicle"
+                        text:       "Center map on Vehicle"
                         enabled:    _activeVehicle&& !followVehicleCheckBox.checked
 
                         property var activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
@@ -233,7 +233,7 @@ Item {
                     }
 
                     QGCButton {
-                        text:       "Clear flight trails"
+                        text:       qsTr("Clear flight trails")
                         enabled:    QGroundControl.multiVehicleManager.activeVehicle
 
                         onClicked: {
@@ -329,7 +329,12 @@ Item {
             id:             guidedModeHideTimer
             interval:       7000
             running:        true
-            onTriggered:    _guidedModeBar.state = "Hidden"
+
+            onTriggered: {
+                if (ScreenTools.isShortScreen) {
+                    _guidedModeBar.state = "Hidden"
+                }
+            }
         }
 
         readonly property int confirmHome:          1
@@ -383,7 +388,7 @@ Item {
                 _activeVehicle.setCurrentMissionSequence(_flightMap._retaskSequence)
                 break;
             default:
-                console.warn("Internal error: unknown confirmActionCode", confirmActionCode)
+                console.warn(qsTr("Internal error: unknown confirmActionCode"), confirmActionCode)
             }
         }
 
@@ -400,35 +405,35 @@ Item {
             confirmActionCode = actionCode
             switch (confirmActionCode) {
             case confirmArm:
-                guidedModeConfirm.confirmText = "arm"
+                guidedModeConfirm.confirmText = qsTr("arm")
                 break;
             case confirmDisarm:
-                guidedModeConfirm.confirmText = "disarm"
+                guidedModeConfirm.confirmText = qsTr("disarm")
                 break;
             case confirmEmergencyStop:
-                guidedModeConfirm.confirmText = "STOP ALL MOTORS!"
+                guidedModeConfirm.confirmText = qsTr("STOP ALL MOTORS!")
                 break;
             case confirmTakeoff:
                 altitudeSlider.visible = true
                 altitudeSlider.setInitialValueMeters(10)
-                guidedModeConfirm.confirmText = "takeoff"
+                guidedModeConfirm.confirmText = qsTr("takeoff")
                 break;
             case confirmLand:
-                guidedModeConfirm.confirmText = "land"
+                guidedModeConfirm.confirmText = qsTr("land")
                 break;
             case confirmHome:
-                guidedModeConfirm.confirmText = "return to launch"
+                guidedModeConfirm.confirmText = qsTr("return to launch")
                 break;
             case confirmChangeAlt:
                 altitudeSlider.visible = true
                 altitudeSlider.setInitialValueAppSettingsDistanceUnits(_activeVehicle.altitudeAMSL.value)
-                guidedModeConfirm.confirmText = "change altitude"
+                guidedModeConfirm.confirmText = qsTr("change altitude")
                 break;
             case confirmGoTo:
-                guidedModeConfirm.confirmText = "move vehicle"
+                guidedModeConfirm.confirmText = qsTr("move vehicle")
                 break;
             case confirmRetask:
-                _guidedModeBar.confirmText = "active waypoint change"
+                _guidedModeBar.confirmText = qsTr("active waypoint change")
                 break;
             }
             guidedModeBar.visible = false
@@ -446,24 +451,24 @@ Item {
                 spacing: _margins
 
                 QGCButton {
-                    text:       (_activeVehicle && _activeVehicle.armed) ? (_activeVehicle.flying ? "Emergency Stop" : "Disarm") : "Arm"
+                    text:       (_activeVehicle && _activeVehicle.armed) ? (_activeVehicle.flying ? qsTr("Emergency Stop") : qsTr("Disarm")) :  qsTr("Arm")
                     onClicked:  _guidedModeBar.confirmAction(_activeVehicle.armed ? (_activeVehicle.flying ? _guidedModeBar.confirmEmergencyStop : _guidedModeBar.confirmDisarm) : _guidedModeBar.confirmArm)
                 }
 
                 QGCButton {
-                    text:       "RTL"
+                    text:       qsTr("RTL")
                     visible:    _activeVehicle && _activeVehicle.guidedModeSupported && _activeVehicle.flying
                     onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmHome)
                 }
 
                 QGCButton {
-                    text:       (_activeVehicle && _activeVehicle.flying) ? "Land" : "Takeoff"
+                    text:       (_activeVehicle && _activeVehicle.flying) ?  qsTr("Land"):  qsTr("Takeoff")
                     visible:    _activeVehicle && _activeVehicle.guidedModeSupported && _activeVehicle.armed
                     onClicked:  _guidedModeBar.confirmAction(_activeVehicle.flying ? _guidedModeBar.confirmLand : _guidedModeBar.confirmTakeoff)
                 }
 
                 QGCButton {
-                    text:       "Pause"
+                    text:       qsTr("Pause")
                     visible:    _activeVehicle && _activeVehicle.pauseVehicleSupported && _activeVehicle.flying
                     onClicked:  {
                         guidedModeHideTimer.restart()
@@ -472,7 +477,7 @@ Item {
                 }
 
                 QGCButton {
-                    text:       "Change Altitude"
+                    text:       qsTr("Change Altitude")
                     visible:    _activeVehicle && _activeVehicle.guidedModeSupported && _activeVehicle.armed
                     onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmChangeAlt)
                 }
@@ -553,7 +558,7 @@ Item {
 
             QGCLabel {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Alt (rel)"
+                text: qsTr("Alt (rel)")
             }
 
             QGCLabel {

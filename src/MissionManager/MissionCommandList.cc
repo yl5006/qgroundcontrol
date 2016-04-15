@@ -187,7 +187,7 @@ void MissionCommandList::_loadMavCmdInfoJson(const QString& jsonFilename)
 
                 paramInfo->_label =         paramObject.value(_labelJsonKey).toString();
                 paramInfo->_defaultValue =  paramObject.value(_defaultJsonKey).toDouble(0.0);
-                paramInfo->_decimalPlaces = paramObject.value(_decimalPlacesJsonKey).toInt(FactMetaData::defaultDecimalPlaces);
+                paramInfo->_decimalPlaces = paramObject.value(_decimalPlacesJsonKey).toInt(FactMetaData::unknownDecimalPlaces);
                 paramInfo->_enumStrings =   paramObject.value(_enumStringsJsonKey).toString().split(",", QString::SkipEmptyParts);
                 paramInfo->_param =         i;
                 paramInfo->_units =         paramObject.value(_unitsJsonKey).toString();
@@ -243,7 +243,6 @@ bool MissionCommandList::contains(MAV_CMD command) const
 MavCmdInfo* MissionCommandList::getMavCmdInfo(MAV_CMD command) const
 {
     if (!contains(command)) {
-        qWarning() << "Unknown command" << command;
         return NULL;
     }
 

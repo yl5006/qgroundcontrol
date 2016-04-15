@@ -79,7 +79,7 @@ Rectangle {
                 QGCLabel {
                     id:                 distanceUnitsLabel
                     anchors.baseline:   distanceUnitsCombo.baseline
-                    text:               "Distance units:"
+                    text:               qsTr("Distance units:")
                 }
 
                 FactComboBox {
@@ -91,7 +91,7 @@ Rectangle {
 
                 QGCLabel {
                     anchors.baseline:   distanceUnitsCombo.baseline
-                    text:               "(requires reboot to take affect)"
+                    text:               qsTr("(requires reboot to take affect)")
                 }
 
             }
@@ -102,7 +102,7 @@ Rectangle {
                 QGCLabel {
                     anchors.baseline:   speedUnitsCombo.baseline
                     width:              distanceUnitsLabel.width
-                    text:               "Speed units:"
+                    text:               qsTr("Speed units:")
                 }
 
                 FactComboBox {
@@ -114,7 +114,7 @@ Rectangle {
 
                 QGCLabel {
                     anchors.baseline:   speedUnitsCombo.baseline
-                    text:               "(requires reboot to take affect)"
+                    text:              qsTr("(requires reboot to take affect)")
                 }
             }
 
@@ -183,7 +183,7 @@ Rectangle {
                 QGCCheckBox {
                     id:                 announcePercentCheckbox
                     anchors.baseline:   announcePercent.baseline
-                    text:               "Announce battery percent lower than:"
+                    text:               qsTr("Announce battery percent lower than:")
                     checked:            _percentRemainingAnnounce.value != 0
 
                     onClicked: {
@@ -213,7 +213,7 @@ Rectangle {
                 QGCLabel {
                     anchors.baseline:   mapProviders.baseline
                     width:              ScreenTools.defaultFontPixelWidth * 16
-                    text: "Map Providers"
+                    text:               qsTr("Map Providers:")
                 }
                 QGCComboBox {
                     id:     mapProviders
@@ -222,7 +222,7 @@ Rectangle {
                     Component.onCompleted: {
                         var index = mapProviders.find(QGroundControl.flightMapSettings.mapProvider)
                         if (index < 0) {
-                            console.warn("Active map provider not in combobox", QGroundControl.flightMapSettings.mapProvider)
+                            console.warn(qsTr("Active map provider not in combobox"), QGroundControl.flightMapSettings.mapProvider)
                         } else {
                             mapProviders.currentIndex = index
                         }
@@ -230,7 +230,7 @@ Rectangle {
                     onActivated: {
                         if (index != -1) {
                             currentIndex = index
-                            console.log("New map provider: " + model[index])
+                            console.log(qsTr("New map provider: ") + model[index])
                             QGroundControl.flightMapSettings.mapProvider = model[index]
                         }
                     }
@@ -272,28 +272,28 @@ Rectangle {
                 spacing: ScreenTools.defaultFontPixelWidth * 2
 
                 QGCCheckBox {
-                    text:       "Pixhawk"
+                    text:       qsTr("Pixhawk")
                     visible:    !ScreenTools.isiOS
                     checked:    QGroundControl.linkManager.autoconnectPixhawk
                     onClicked:  QGroundControl.linkManager.autoconnectPixhawk = checked
                 }
 
                 QGCCheckBox {
-                    text:       "SiK Radio"
+                    text:       qsTr("SiK Radio")
                     visible:    !ScreenTools.isiOS
                     checked:    QGroundControl.linkManager.autoconnect3DRRadio
                     onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked
                 }
 
                 QGCCheckBox {
-                    text:       "PX4 Flow"
+                    text:       qsTr("PX4 Flow")
                     visible:    !ScreenTools.isiOS
                     checked:    QGroundControl.linkManager.autoconnectPX4Flow
                     onClicked:  QGroundControl.linkManager.autoconnectPX4Flow = checked
                 }
 
                 QGCCheckBox {
-                    text:       "UDP"
+                    text:       qsTr("UDP")
                     checked:    QGroundControl.linkManager.autoconnectUDP
                     onClicked:  QGroundControl.linkManager.autoconnectUDP = checked
                 }
@@ -312,28 +312,28 @@ Rectangle {
                 onClicked:  QGroundControl.virtualTabletJoystick = checked
             }
 
-//            Item {
-//                height: ScreenTools.defaultFontPixelHeight / 2
-//                width:  parent.width
-//            }
+            Item {
+                height: ScreenTools.defaultFontPixelHeight / 2
+                width:  parent.width
+            }
 
             //-----------------------------------------------------------------
             //-- Offline mission editing settings
-//            Row {
-//                spacing: ScreenTools.defaultFontPixelWidth
+            Row {
+                spacing: ScreenTools.defaultFontPixelWidth
 
-//                QGCLabel {
-//                    text:               "Offline mission editing vehicle type:"
-//                    anchors.baseline:   offlineTypeCombo.baseline
-//                }
+                QGCLabel {
+                    text:               qsTr("Offline mission editing vehicle type:")
+                    anchors.baseline:   offlineTypeCombo.baseline
+                }
 
-//                FactComboBox {
-//                    id:         offlineTypeCombo
-//                    width:      ScreenTools.defaultFontPixelWidth * 25
-//                    fact:       QGroundControl.offlineEditingFirmwareType
-//                    indexModel: false
-//                }
-//            }
+                FactComboBox {
+                    id:         offlineTypeCombo
+                    width:      ScreenTools.defaultFontPixelWidth * 25
+                    fact:       QGroundControl.offlineEditingFirmwareType
+                    indexModel: false
+                }
+            }
 
             Item {
                 height: ScreenTools.defaultFontPixelHeight / 2
@@ -343,7 +343,7 @@ Rectangle {
             //-----------------------------------------------------------------
             //-- Experimental Survey settings
             QGCCheckBox {
-                text:       "Experimental Survey [WIP - no bugs reports please]"
+                text:       qsTr("Experimental Survey [WIP - no bugs reports please]")
                 checked:    QGroundControl.experimentalSurvey
                 onClicked:  QGroundControl.experimentalSurvey = checked
             }

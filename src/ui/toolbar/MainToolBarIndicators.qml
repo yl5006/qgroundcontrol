@@ -374,7 +374,7 @@ Row {
             anchors.horizontalCenter: parent.horizontalCenter
 
             QGCLabel {
-                text:           activeVehicle ? activeVehicle.flightMode : "N/A"
+                text:           activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
                 font.pixelSize: tbFontLarge
                 color:          qgcPal.buttonText
                 anchors.verticalCenter: parent.verticalCenter

@@ -35,10 +35,11 @@ This file is part of the QGROUNDCONTROL project
 #include <QHostAddress>
 #include <QUdpSocket>
 #include <QtPlugin>
-
+#include <QStringListModel>
 #include <QSplashScreen>
 
 #include "QGCApplication.h"
+#include "AppMessages.h"
 
 #define  SINGLE_INSTANCE_PORT   14499
 
@@ -73,17 +74,6 @@ This file is part of the QGROUNDCONTROL project
 #endif
 
 #ifdef Q_OS_WIN
-
-/// @brief Message handler which is installed using qInstallMsgHandler so you do not need
-/// the MSFT debug tools installed to see qDebug(), qWarning(), qCritical and qAbort
-void msgHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
-{
-    const char symbols[] = { 'I', 'E', '!', 'X' };
-    QString output = QString("[%1] at %2:%3 - \"%4\"").arg(symbols[type]).arg(context.file).arg(context.line).arg(msg);
-    std::cerr << output.toStdString() << std::endl;
-    if( type == QtFatalMsg ) abort();
-}
-
 /// @brief CRT Report Hook installed using _CrtSetReportHook. We install this hook when
 /// we don't want asserts to pop a dialog on windows.
 int WindowsCrtReportHook(int reportType, char* message, int* returnValue)
@@ -126,6 +116,14 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_UNIX
+    //Force writing to the console on UNIX/BSD devices
+    if (!qEnvironmentVariableIsSet("QT_LOGGING_TO_CONSOLE"))
+        qputenv("QT_LOGGING_TO_CONSOLE", "1");
+#endif
+
+    // install the message handler
+    AppMessages::installHandler();
 
 #ifndef __mobile__
     //-- Test for another instance already running. If that's the case, we simply exit.
@@ -146,9 +144,6 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef Q_OS_WIN
-    // install the message handler
-    qInstallMessageHandler(msgHandler);
-
     // Set our own OpenGL buglist
     qputenv("QT_OPENGL_BUGLIST", ":/opengl/resources/opengl/buglist.json");
 
@@ -163,7 +158,6 @@ int main(int argc, char *argv[])
             break;
         }
     }
-
 #endif
 
     // The following calls to qRegisterMetaType are done to silence debug output which warns

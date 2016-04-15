@@ -438,6 +438,9 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_EXTENDED_SYS_STATE:
         _handleExtendedSysState(message);
         break;
+    case MAVLINK_MSG_ID_COMMAND_ACK:
+        _handleCommandAck(message);
+        break;
 
     // Following are ArduPilot dialect messages
 
@@ -449,6 +452,40 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     emit mavlinkMessageReceived(message);
 
     _uas->receiveMessage(message);
+}
+
+void Vehicle::_handleCommandAck(mavlink_message_t& message)
+{
+    mavlink_command_ack_t ack;
+    mavlink_msg_command_ack_decode(&message, &ack);
+
+    emit commandLongAck(message.compid, ack.command, ack.result);
+
+    QString commandName;
+    MavCmdInfo* cmdInfo = qgcApp()->toolbox()->missionCommands()->getMavCmdInfo((MAV_CMD)ack.command, this);
+    if (cmdInfo) {
+        commandName = cmdInfo->friendlyName();
+    } else {
+        commandName = tr("cmdid %1").arg(ack.command);
+    }
+
+    switch (ack.result) {
+    case MAV_RESULT_TEMPORARILY_REJECTED:
+        qgcApp()->showMessage(tr("%1 command temporarily rejected").arg(commandName));
+        break;
+    case MAV_RESULT_DENIED:
+        qgcApp()->showMessage(tr("%1 command denied").arg(commandName));
+        break;
+    case MAV_RESULT_UNSUPPORTED:
+        qgcApp()->showMessage(tr("%1 command not supported").arg(commandName));
+        break;
+    case MAV_RESULT_FAILED:
+        qgcApp()->showMessage(tr("%1 command failed").arg(commandName));
+        break;
+    default:
+        // Do nothing
+        break;
+    }
 }
 
 void Vehicle::_handleExtendedSysState(mavlink_message_t& message)
@@ -1280,9 +1317,14 @@ void Vehicle::disconnectInactiveVehicle(void)
 {
     // Vehicle is no longer communicating with us, disconnect all links
 
+
     LinkManager* linkMgr = qgcApp()->toolbox()->linkManager();
     for (int i=0; i<_links.count(); i++) {
-        linkMgr->disconnectLink(_links[i]);
+        // FIXME: This linkInUse check is a hack fix for multiple vehicles on the same link.
+        // The real fix requires significant restructuring which will come later.
+        if (!qgcApp()->toolbox()->multiVehicleManager()->linkInUse(_links[i], this)) {
+            linkMgr->disconnectLink(_links[i]);
+        }
     }
 }
 

@@ -407,6 +407,10 @@ public:
     /// @return true: message sent, false: Link no longer connected
     bool sendMessageOnLink(LinkInterface* link, mavlink_message_t message);
 
+    /// Sends a message to the priority link
+    /// @return true: message sent, false: Link no longer connected
+    bool sendMessageOnPriorityLink(mavlink_message_t message) { return sendMessageOnLink(priorityLink(), message); }
+
     /// Sends the specified messages multiple times to the vehicle in order to attempt to
     /// guarantee that it makes it to the vehicle.
     void sendMessageMultiple(mavlink_message_t message);
@@ -491,6 +495,8 @@ public:
     uint            messagesLost        () { return _messagesLost; }
     bool            flying              () const { return _flying; }
     bool            guidedMode          () const;
+    uint8_t         baseMode            () const { return _base_mode; }
+    uint32_t        customMode          () const { return _custom_mode; }
 
     Fact* roll              (void) { return &_rollFact; }
     Fact* heading           (void) { return &_headingFact; }
@@ -540,6 +546,7 @@ signals:
     void flyingChanged(bool flying);
     void guidedModeChanged(bool guidedMode);
     void prearmErrorChanged(const QString& prearmError);
+    void commandLongAck(uint8_t compID, uint16_t command, uint8_t result);
 
     void messagesReceivedChanged    ();
     void messagesSentChanged        ();
@@ -620,6 +627,7 @@ private:
     void _handleWind(mavlink_message_t& message);
     void _handleVibration(mavlink_message_t& message);
     void _handleExtendedSysState(mavlink_message_t& message);
+    void _handleCommandAck(mavlink_message_t& message);
     void _missionManagerError(int errorCode, const QString& errorMsg);
     void _mapTrajectoryStart(void);
     void _mapTrajectoryStop(void);

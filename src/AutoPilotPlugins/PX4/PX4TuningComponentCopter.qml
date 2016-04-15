@@ -32,8 +32,8 @@ FactSliderPanel {
 
     sliderModel: ListModel {
         ListElement {
-            title:          "Throttle Hover"
-            description:    "Adjust throttle so hover is at mid-throttle. Slide to the left if hover is lower than throttle center. Slide to the right if hover is higher than throttle center."
+            title:          qsTr("Throttle Hover")
+            description:    qsTr("Adjust throttle so hover is at mid-throttle. Slide to the left if hover is lower than throttle center. Slide to the right if hover is higher than throttle center.")
             param:          "MPC_THR_HOVER"
             min:            0.2
             max:            0.8
@@ -84,6 +84,5 @@ FactSliderPanel {
             max:            0.15
             step:           0.01
         }
-
     }
 }
