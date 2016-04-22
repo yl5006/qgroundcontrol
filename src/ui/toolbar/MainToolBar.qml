@@ -425,19 +425,15 @@ Rectangle {
         source:                     "/qmlimages/RightToolbarbutton.svg"
          }
 
-
     //---------------------------------------------
     // Logo (Preferences Button)
-
-    ExclusiveGroup { id: mainActionGroup }
     Rectangle {
-        id:             viewRowLeft
+        id:                     preferencesButton
         width:                  mainWindow.tbButtonWidth * 1.25
         height:                 parent.height
         anchors.top:            parent.top
         anchors.left:           parent.left
-        color:                  "#4A2C6D"
-        ExclusiveGroup { id: mainActionGroup }
+        color:                  Qt.rgba(0,0,0,0)
         Image {
             height:                 mainWindow.tbCellHeight
             anchors.centerIn:       parent
@@ -450,21 +446,15 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: mainWindow.showLeftMenu()
-                }
         }
     }
-//        QGCToolBarButton {
-//            id:                 preferencesButton
-//            width:              mainWindow.tbButtonWidth
-//            anchors.top:        parent.top
-//            anchors.bottom:     parent.bottom
-//            exclusiveGroup:     mainActionGroup
-//            source:             "/qmlimages/Hamburger.svg"
-//            onClicked:          {
-//                statuechange=false
-//                mainWindow.showLeftMenu()
-//            }
-//        }
+    ExclusiveGroup { id: mainActionGroup }
+    Row {
+        id:                     viewRowLeft
+        width:                  mainWindow.tbButtonWidth * 1.25
+        height:                 parent.height
+        anchors.top:            parent.top
+        anchors.left:           preferencesButton.right
         QGCToolBarButton {
             id:                 setupButton
             width:              mainWindow.tbButtonWidth
@@ -477,7 +467,6 @@ Rectangle {
                 toolBar.showSetupView()
             }
         }
-
     }
     // Toolbar Row
     Item {
@@ -573,9 +562,11 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
         }
         Loader {
-            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsRight.qml" : ""            anchors.right:          parent.right
+            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsRight.qml" : ""
+            anchors.right:          parent.right
             anchors.rightMargin:    mainWindow.tbButtonWidth * 3
             anchors.verticalCenter: parent.verticalCenter
+        }
         }
 //        QGCLabel {
 //            id:                     connectionLost
@@ -595,12 +586,12 @@ Rectangle {
 //            anchors.rightMargin:     mainWindow.tbSpacing * 2
 //            anchors.right:          parent.right
 //            anchors.verticalCenter: parent.verticalCenter
-            text:                   "Disconnect"
+//            text:                   "Disconnect"
 //            visible:                parent.vehicleConnectionLost
 //            primary:                true
 //            onClicked:              activeVehicle.disconnectInactiveVehicle()
 //        }
-    }
+
 
     // Progress bar
     Rectangle {
