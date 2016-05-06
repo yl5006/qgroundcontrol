@@ -148,7 +148,7 @@ QGCView {
                     QGCLabel {
                         width:      parent.width
                         wrapMode:   Text.WordWrap
-                        text:       qsTr("Click Ok to place your Spektrum receiver in the bind mode. Select the specific receiver type below:")
+//                        text:       qsTr("Click Ok to place your Spektrum receiver in the bind mode. Select the specific receiver type below:")
                         text:       qsTr("点击OK使接收机在绑定模式，选择具体接收器类型")
                     }
 
