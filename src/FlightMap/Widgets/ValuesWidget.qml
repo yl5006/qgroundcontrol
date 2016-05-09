@@ -23,6 +23,7 @@ This file is part of the QGROUNDCONTROL project
 
 import QtQuick          2.4
 import QtQuick.Dialogs  1.2
+import QtQuick.Layouts  1.2
 
 import QGroundControl.Controls      1.0
 import QGroundControl.ScreenTools   1.0
@@ -91,7 +92,6 @@ QGCFlickable {
 
 //           Column {
              Row {
-                id:     valueColumn
                 width:  parent.width*0.8//_largeColumn.width
                 spacing:    _margins*2
                 anchors.horizontalCenter:  parent.horizontalCenter
@@ -107,8 +107,6 @@ QGCFlickable {
                 QGCLabel {
                     width:                  parent.width*0.3
                     horizontalAlignment:    Text.AlignHCenter
-                    font.pixelSize:         ScreenTools.largeFontPixelSize
-                    font.weight:            Font.DemiBold
                     color:                  textColor
                     fontSizeMode:           Text.HorizontalFit
                     text:                   fact.valueString
@@ -116,8 +114,8 @@ QGCFlickable {
                 QGCLabel {
         //          width:                  parent.width
  //                 horizontalAlignment:    Text.AlignHCenter
-                    font.pixelSize:         ScreenTools.largeFontPixelSize// ScreenTools.largeFontPixelSize * (largeValue ? 1.3 : 1.0)
-                    font.weight:            Font.DemiBold//largeValue ? Font.ExtraBold : Font.Normal
+                    font.pointSize:         ScreenTools.mediumFontPointSize * (largeValue ? 1.3 : 1.0)
+                    font.family:            largeValue ? ScreenTools.demiboldFontFamily : ScreenTools.normalFontFamily
                     fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
                     text:                   fact.units ? fact.units  : ""
@@ -137,7 +135,7 @@ QGCFlickable {
             model: _activeVehicle ? controller.smallValues : 0
 
             Column {
-                id:     valueColumn1
+                id:     valueColumn
                 width:  (_root.width / 2) - (_margins / 2) - 0.1
                 clip:   true
 
@@ -146,7 +144,7 @@ QGCFlickable {
                 QGCLabel {
                     width:                  parent.width
                     horizontalAlignment:    Text.AlignHCenter
-                    font.pixelSize:         ScreenTools.smallFontPixelSize
+                    font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize * 0.75 : ScreenTools.smallFontPointSize
                     fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
                     text:                   fact.shortDescription
@@ -161,7 +159,7 @@ QGCFlickable {
                 QGCLabel {
                     width:                  parent.width
                     horizontalAlignment:    Text.AlignHCenter
-                    font.pixelSize:         ScreenTools.smallFontPixelSize
+                    font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize * 0.75 : ScreenTools.smallFontPointSize
                     fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
                     text:                   fact.units
@@ -223,7 +221,7 @@ QGCFlickable {
             Repeater {
                 model: factGroup ? factGroup.factNames : 0
 
-                Row {
+                RowLayout {
                     spacing: _margins
 
                     property string propertyName: factGroupName + "." + modelData
@@ -268,18 +266,20 @@ QGCFlickable {
                     }
 
                     QGCCheckBox {
-                        id:         _addCheckBox
-                        text:       factGroup.getFact(modelData).shortDescription
-                        checked:    _largeCheckBox.checked || listContains(controller.smallValues, propertyName)
-                        onClicked:  updateValues()
+                        id:                     _addCheckBox
+                        text:                   factGroup.getFact(modelData).shortDescription
+                        checked:                listContains(controller.smallValues, propertyName) || _largeCheckBox.checked
+                        onClicked:              updateValues()
+                        Layout.fillWidth:       true
+                        Layout.minimumWidth:    ScreenTools.defaultFontPixelWidth * 20
                     }
 
                     QGCCheckBox {
-                        id:         _largeCheckBox
-                        text:       qsTr("大")//"large"
-                        checked:    listContains(controller.largeValues, propertyName)
-                        enabled:    _addCheckBox.checked
-                        onClicked:  updateValues()
+                        id:                     _largeCheckBox
+                        text:       qsTr("大")//"Large"
+                        checked:                listContains(controller.largeValues, propertyName)
+                        enabled:                _addCheckBox.checked
+                        onClicked:              updateValues()
                     }
                 }
             }
@@ -288,12 +288,10 @@ QGCFlickable {
 
             Repeater {
                 model: factGroup ? factGroup.factGroupNames : 0
-
                 Loader {
                     sourceComponent: factGroupList
-
                     property var    factGroup:      _root ? _root.parent.factGroup.getFactGroup(modelData) : undefined
-                    property string factGroupName:  _root ? _root.parent.factGroupName + "." + modelData : undefined
+                    property string factGroupName:  _root ? _root.parent.factGroupName + "." + modelData : ""
                 }
             }
         }

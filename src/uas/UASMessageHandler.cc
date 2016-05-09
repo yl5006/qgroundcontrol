@@ -55,6 +55,8 @@ bool UASMessage::severityIsError()
 UASMessageHandler::UASMessageHandler(QGCApplication* app)
     : QGCTool(app)
     , _activeUAS(NULL)
+    , _activeComponent(-1)
+    , _multiComp(false)
     , _errorCount(0)
     , _errorCountTotal(0)
     , _warningCount(0)
@@ -127,6 +129,14 @@ void UASMessageHandler::handleTextMessage(int, int compId, int severity, QString
 
     _mutex.lock();
 
+    if (_activeComponent < 0) {
+        _activeComponent = compId;
+    }
+
+    if (compId != _activeComponent) {
+        _multiComp = true;
+    }
+
     // So first determine the styling based on the severity.
     QString style;
     switch (severity)
@@ -135,17 +145,17 @@ void UASMessageHandler::handleTextMessage(int, int compId, int severity, QString
     case MAV_SEVERITY_ALERT:
     case MAV_SEVERITY_CRITICAL:
     case MAV_SEVERITY_ERROR:
-        style = QString("color: #f95e5e; font-weight:bold");
+        style = QString("<#E>");
         _errorCount++;
         _errorCountTotal++;
         break;
     case MAV_SEVERITY_NOTICE:
     case MAV_SEVERITY_WARNING:
-        style = QString("color: #f9b55e; font-weight:bold");
+        style = QString("<#I>");
         _warningCount++;
         break;
     default:
-        style = QString("color: #ffffff; font-weight:bold");
+        style = QString("<#N>");
         _normalCount++;
         break;
     }
@@ -186,14 +196,22 @@ void UASMessageHandler::handleTextMessage(int, int compId, int severity, QString
     // Finally preppend the properly-styled text with a timestamp.
     QString dateString = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
     UASMessage* message = new UASMessage(compId, severity, text);
-    message->_setFormatedText(QString("<p style=\"color:#e0e0f0\">[%2 - COMP:%3]<font style=\"%1\">%4 %5</font></p>").arg(style).arg(dateString).arg(compId).arg(severityText).arg(text));
-    _messages.append(message);
-    int count = _messages.count();
+    QString compString("");
+    if (_multiComp) {
+        compString = QString(" COMP:%1").arg(compId);
+    }
+    message->_setFormatedText(QString("<font style=\"%1\">[%2%3]%4 %5</font><br/>").arg(style).arg(dateString).arg(compString).arg(severityText).arg(text));
+
     if (message->severityIsError()) {
         _latestError = severityText + " " + text;
     }
+
     _mutex.unlock();
+
     emit textMessageReceived(message);
+
+    _messages.append(message);
+    int count = _messages.count();
     emit textMessageCountChanged(count);
 
     if (_showErrorsInToolbar && message->severityIsError()) {

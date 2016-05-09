@@ -36,6 +36,7 @@ import QGroundControl.ScreenTools           1.0
 import QGroundControl.MultiVehicleManager   1.0
 
 Rectangle {
+    id: setupView
     color:  qgcPal.window
     z:      QGroundControl.zOrderTopMost
 
@@ -110,6 +111,13 @@ Rectangle {
                 panelLoader.sourceComponent = messagePanelComponent
             } else {
                 panelLoader.source = vehicleComponent.setupSource
+                for(var i = 0; i < componentRepeater.count; i++) {
+                    var obj = componentRepeater.itemAt(i);
+                    if (obj.text === vehicleComponent.name) {
+                        obj.checked = true;
+                        break;
+                    }
+                }
             }
         }
     }
@@ -143,7 +151,7 @@ Rectangle {
                 verticalAlignment:      Text.AlignVCenter
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
-                font.pixelSize:         ScreenTools.mediumFontPixelSize
+                font.pointSize:         ScreenTools.mediumFontPointSize
                 text:                   "QGroundControl does not currently support setup of your vehicle type. " +
                                         "If your vehicle is already configured you can still Fly."
 
@@ -164,7 +172,7 @@ Rectangle {
                 verticalAlignment:      Text.AlignVCenter
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
-                font.pixelSize:         ScreenTools.largeFontPixelSize
+                font.pointSize:         ScreenTools.largeFontPointSize
                 text:                   qsTr("连接你的飞控系统，地面会自动连接")//"Connect vehicle to your device and QGroundControl will automatically detect to it." +
                                         (ScreenTools.isMobile ? "" : " Click Firmware on the left to upgrade your vehicle.")
 
@@ -184,7 +192,7 @@ Rectangle {
                 verticalAlignment:      Text.AlignVCenter
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
-                font.pixelSize:         ScreenTools.mediumFontPixelSize
+                font.pointSize:         ScreenTools.mediumFontPointSize
                 text:                   "You are currently connected to a vehicle, but that vehicle did not return back the full parameter list. " +
                                         "Because of this the full set of vehicle setup options are not available."
 
@@ -203,7 +211,7 @@ Rectangle {
                 verticalAlignment:      Text.AlignVCenter
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
-                font.pixelSize:         ScreenTools.mediumFontPixelSize
+                font.pointSize:         ScreenTools.mediumFontPointSize
                 text:                   _messagePanelText
             }
         }
@@ -217,6 +225,7 @@ Rectangle {
         anchors.bottom:     parent.bottom
         contentHeight:      buttonColumn.height
         flickableDirection: Flickable.VerticalFlick
+        clip:               true
 
         Column {
             id:         buttonColumn
@@ -229,16 +238,22 @@ Rectangle {
 
             Connections {
                 target: componentRepeater
-
                 onModelChanged: buttonColumn.reflowWidths()
             }
 
+            // I don't know why this does not work
+            Connections {
+                target: QGroundControl
+                onBaseFontPointSizeChanged: buttonColumn.reflowWidths()
+            }
+
             function reflowWidths() {
-                for (var i=0; i<children.length; i++) {
-                    _maxButtonWidth = Math.max(_maxButtonWidth, children[i].width)
+                buttonColumn._maxButtonWidth = 0
+                for (var i = 0; i < children.length; i++) {
+                    buttonColumn._maxButtonWidth = Math.max(buttonColumn._maxButtonWidth, children[i].width)
                 }
-                for (var i=0; i<children.length; i++) {
-                    children[i].width = _maxButtonWidth
+                for (var j = 0; j < children.length; j++) {
+                    children[j].width = buttonColumn._maxButtonWidth
                 }
             }
 
@@ -295,7 +310,6 @@ Rectangle {
                     exclusiveGroup: setupButtonGroup
                     text:           modelData.name
                     visible:        modelData.setupSource.toString() != ""
-
 
                     onClicked: showVehicleComponentPanel(modelData)
                 }

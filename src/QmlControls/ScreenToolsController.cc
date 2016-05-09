@@ -22,23 +22,10 @@
  ======================================================================*/
 
 /// @file
-///     @author Gus Grubba <mavlink@grubba.com>
+/// @author Gus Grubba <mavlink@grubba.com>
 
 #include "ScreenToolsController.h"
-
-#ifdef Q_OS_WIN
-const double ScreenToolsController::_defaultFontPixelSizeRatio  = 1.0;
-#elif __android__
-const double ScreenToolsController::_defaultFontPixelSizeRatio  = 1.0;
-#elif __ios__
-const double ScreenToolsController::_defaultFontPixelSizeRatio  = 0.8;
-#else
-const double ScreenToolsController::_defaultFontPixelSizeRatio  = 0.8;
-#endif
-
-const double ScreenToolsController::_smallFontPixelSizeRatio    = 0.75;
-const double ScreenToolsController::_mediumFontPixelSizeRatio   = 1.22;
-const double ScreenToolsController::_largeFontPixelSizeRatio    = 1.66;
+#include <QScreen>
 
 ScreenToolsController::ScreenToolsController()
 {

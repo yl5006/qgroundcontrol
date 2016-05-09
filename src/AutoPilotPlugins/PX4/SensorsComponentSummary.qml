@@ -27,7 +27,6 @@ FactPanel {
 
     Column {
         anchors.fill:       parent
-        anchors.margins:    8
 
         VehicleSummaryRow {
             labelText: qsTr("磁罗盘")//"Compass:"

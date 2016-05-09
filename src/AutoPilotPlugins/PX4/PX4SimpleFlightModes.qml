@@ -71,7 +71,7 @@ Item {
                     QGCLabel {
                         id:             flightModeLabel
                         text:           qsTr("Flight Mode Settings")
-                        font.weight:    Font.DemiBold
+                        font.family:    ScreenTools.demiboldFontFamily
                     }
 
                     Rectangle {
@@ -114,7 +114,7 @@ Item {
 
                                     QGCLabel {
                                         anchors.baseline:   modeCombo.baseline
-                                        text:               qsTr("Flight Mode %1:)").arg(index)
+                                        text:               qsTr("Flight Mode %1").arg(index)
                                         color:              controller.activeFlightMode == index ? "yellow" : qgcPal.text
                                     }
 
@@ -136,7 +136,7 @@ Item {
 
                     QGCLabel {
                         text:           qsTr("Switch Settings")
-                        font.weight:    Font.DemiBold
+                        font.family:    ScreenTools.demiboldFontFamily
                     }
 
                     Rectangle {

@@ -30,6 +30,7 @@
 #include "QGCApplication.h"
 #include "UASMessageHandler.h"
 #include "FirmwarePlugin.h"
+#include "APMFirmwarePlugin.h"
 #include "UAS.h"
 
 #include <QEasingCurve>
@@ -415,8 +416,10 @@ void ParameterLoader::refreshParameter(int componentId, const QString& name)
     Q_ASSERT(_waitingReadParamNameMap.contains(componentId));
 
     if (_waitingReadParamNameMap.contains(componentId)) {
-        _waitingReadParamNameMap[componentId].remove(name); // Remove old wait entry if there
-        _waitingReadParamNameMap[componentId][name] = 0;    // Add new wait entry and update retry count
+        QString mappedParamName = _remapParamNameToVersion(name);
+
+        _waitingReadParamNameMap[componentId].remove(mappedParamName);  // Remove old wait entry if there
+        _waitingReadParamNameMap[componentId][mappedParamName] = 0;     // Add new wait entry and update retry count
         emit restartWaitingParamTimer();
     }
 
@@ -443,7 +446,7 @@ bool ParameterLoader::parameterExists(int componentId, const QString&  name)
 
     componentId = _actualComponentId(componentId);
     if (_mapParameterName2Variant.contains(componentId)) {
-        ret = _mapParameterName2Variant[componentId].contains(name);
+        ret = _mapParameterName2Variant[componentId].contains(_remapParamNameToVersion(name));
     }
 
     return ret;
@@ -453,12 +456,13 @@ Fact* ParameterLoader::getFact(int componentId, const QString& name)
 {
     componentId = _actualComponentId(componentId);
 
-    if (!_mapParameterName2Variant.contains(componentId) || !_mapParameterName2Variant[componentId].contains(name)) {
-        qgcApp()->reportMissingParameter(componentId, name);
+    QString mappedParamName = _remapParamNameToVersion(name);
+    if (!_mapParameterName2Variant.contains(componentId) || !_mapParameterName2Variant[componentId].contains(mappedParamName)) {
+        qgcApp()->reportMissingParameter(componentId, mappedParamName);
         return &_defaultFact;
     }
 
-    return _mapParameterName2Variant[componentId][name].value<Fact*>();
+    return _mapParameterName2Variant[componentId][mappedParamName].value<Fact*>();
 }
 
 QStringList ParameterLoader::parameterNames(int componentId)
@@ -904,11 +908,20 @@ void ParameterLoader::_addMetaDataToDefaultComponent(void)
          return;
      }
 
-    // Load best parameter meta data set
+     QString metaDataFile;
      int majorVersion, minorVersion;
-     QString metaDataFile = parameterMetaDataFile(_vehicle->firmwareType(), _parameterSetMajorVersion, majorVersion, minorVersion);
+     if (_vehicle->firmwareType() == MAV_AUTOPILOT_ARDUPILOTMEGA) {
+         // Parameter versioning is still not really figured out correctly. We need to handle ArduPilot specially based on vehicle version.
+         // The current three version are hardcoded in.
+         metaDataFile = ((APMFirmwarePlugin*)_vehicle->firmwarePlugin())->getParameterMetaDataFile(_vehicle);
+         qCDebug(ParameterLoaderLog) << "Adding meta data to Vehicle file:major:minor" << metaDataFile;
+     } else {
+         // Load best parameter meta data set
+         metaDataFile = parameterMetaDataFile(_vehicle->firmwareType(), _parameterSetMajorVersion, majorVersion, minorVersion);
+         qCDebug(ParameterLoaderLog) << "Adding meta data to Vehicle file:major:minor" << metaDataFile << majorVersion << minorVersion;
+     }
+
      _parameterMetaData = _vehicle->firmwarePlugin()->loadParameterMetaData(metaDataFile);
-     qCDebug(ParameterLoaderLog) << "Adding meta data to Vehicle file:major:minor" << metaDataFile << majorVersion << minorVersion;
 
     // Loop over all parameters in default component adding meta data
     QVariantMap& factMap = _mapParameterName2Variant[_defaultComponentId];
@@ -939,35 +952,6 @@ void ParameterLoader::_checkInitialLoadComplete(bool failIfNoDefaultComponent)
 
     // We aren't waiting for any more initial parameter updates, initial parameter loading is complete
     _initialLoadComplete = true;
-
-    // Check for any errors during vehicle boot
-
-    UASMessageHandler* msgHandler = qgcApp()->toolbox()->uasMessageHandler();
-    if (msgHandler->getErrorCountTotal()) {
-        QString errors;
-        bool firstError = true;
-        bool errorsFound = false;
-
-        msgHandler->lockAccess();
-        foreach (UASMessage* msg, msgHandler->messages()) {
-            if (msg->severityIsError()) {
-                if (!firstError) {
-                    errors += "<br>";
-                }
-                errors += " - ";
-                errors += msg->getText();
-                firstError = false;
-                errorsFound = true;
-            }
-        }
-        msgHandler->showErrorsInToolbar();
-        msgHandler->unlockAccess();
-
-        if (errorsFound) {
-            QString errorMsg = QString("<b>Critical safety issue detected:</b><br>%1").arg(errors);
-            qgcApp()->showMessage(errorMsg);
-        }
-    }
 
     // Check for index based load failures
     QString indexList;
@@ -1152,4 +1136,53 @@ void ParameterLoader::cacheMetaDataFile(const QString& metaDataFile, MAV_AUTOPIL
         QFile newFile(metaDataFile);
         newFile.copy(cacheFile.fileName());
     }
+}
+
+/// Remap a parameter from one firmware version to another
+QString ParameterLoader::_remapParamNameToVersion(const QString& paramName)
+{
+    QString mappedParamName;
+
+    if (!paramName.startsWith(QStringLiteral("r."))) {
+        // No version mapping wanted
+        return paramName;
+    }
+
+    int majorVersion = _vehicle->firmwareMajorVersion();
+    int minorVersion = _vehicle->firmwareMinorVersion();
+
+    qCDebug(ParameterLoaderLog) << "_remapParamNameToVersion" << paramName << majorVersion << minorVersion;
+
+    mappedParamName = paramName.right(paramName.count() - 2);
+
+    if (majorVersion == Vehicle::versionNotSetValue) {
+        // Vehicle version unknown
+        return mappedParamName;
+    }
+
+    const FirmwarePlugin::remapParamNameMajorVersionMap_t& majorVersionRemap = _vehicle->firmwarePlugin()->paramNameRemapMajorVersionMap();
+
+    if (!majorVersionRemap.contains(majorVersion)) {
+        // No mapping for this major version
+        qCDebug(ParameterLoaderLog) << "_remapParamNameToVersion: no major version mapping";
+        return mappedParamName;
+    }
+
+    const FirmwarePlugin::remapParamNameMinorVersionRemapMap_t& remapMinorVersion = majorVersionRemap[majorVersion];
+
+    // We must map from the highest known minor version to one above the vehicle's minor version
+
+    for (int currentMinorVersion=_vehicle->firmwarePlugin()->remapParamNameHigestMinorVersionNumber(majorVersion); currentMinorVersion>minorVersion; currentMinorVersion--) {
+        if (remapMinorVersion.contains(currentMinorVersion)) {
+            const FirmwarePlugin::remapParamNameMap_t& remap = remapMinorVersion[currentMinorVersion];
+
+            if (remap.contains(mappedParamName)) {
+                QString toParamName = remap[mappedParamName];
+                qCDebug(ParameterLoaderLog) << "_remapParamNameToVersion: remapped currentMinor:from:to"<< currentMinorVersion << mappedParamName << toParamName;
+                mappedParamName = toParamName;
+            }
+        }
+    }
+
+    return mappedParamName;
 }

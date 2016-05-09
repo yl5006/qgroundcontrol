@@ -19,18 +19,20 @@ TextField {
 
     property var __qgcPal: QGCPalette { colorGroupEnabled: enabled }
 
-    textColor: __qgcPal.textFieldText
-    height: ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 3 * 0.75 : implicitHeight
+    textColor:          __qgcPal.textFieldText
+    height:             Math.max(25, Math.round(ScreenTools.defaultFontPixelHeight * 1.2))
 
     Label {
-        id: unitsLabelWidthGenerator
-        text: unitsLabel
-        width: contentWidth + ((parent.__contentHeight/3)*2)
-        visible: false
-        antialiasing: true
+        id:             unitsLabelWidthGenerator
+        text:           unitsLabel
+        width:          contentWidth + ((parent.__contentHeight/3)*2)
+        visible:        false
+        antialiasing:   true
+        font.family:    ScreenTools.normalFontFamily
     }
 
     style: TextFieldStyle {
+        font.pointSize: ScreenTools.defaultFontPointSize
         background: Item {
             id: backgroundItem
 
@@ -49,21 +51,22 @@ TextField {
             Text {
                 id: unitsLabel
 
-                anchors.top: parent.top
+                anchors.top:    parent.top
                 anchors.bottom: parent.bottom
 
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment:  Text.AlignVCenter
+                horizontalAlignment:Text.AlignHCenter
 
-                x: parent.width - width
-                width: unitsLabelWidthGenerator.width
+                x:              parent.width - width
+                width:          unitsLabelWidthGenerator.width
 
-                text: control.unitsLabel
-                font.pixelSize: ScreenTools.defaultFontPixelSize
+                text:           control.unitsLabel
+                font.pointSize: ScreenTools.defaultFontPointSize
+                font.family:    ScreenTools.normalFontFamily
                 antialiasing:   true
 
-                color: control.textColor
-                visible: control.showUnits
+                color:          control.textColor
+                visible:        control.showUnits
             }
         }
 

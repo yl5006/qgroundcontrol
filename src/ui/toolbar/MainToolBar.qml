@@ -41,7 +41,7 @@ import QGroundControl.Controllers           1.0
 
 Rectangle {
     id:         toolBar
-    color:      qgcPal.window
+    color:      qgcPal.globalTheme === QGCPalette.Light ? Qt.rgba(1,1,1,0.8) : Qt.rgba(0,0,0,0.75)
 
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
@@ -51,95 +51,8 @@ Rectangle {
     property bool isBackgroundDark:     true
     property bool opaqueBackground:     false
     property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
-
     property bool planormisstion: true
     property bool statuechange: true
-    /*
-        Dev System (Mac OS)
-
-        qml: Main Window Width:   1008
-        qml: Toolbar height:      51.2
-        qml: Default font:        12.8
-        qml: Font (.75):          9.600000000000001
-        qml: Font (.85):          10.88
-        qml: Font 1.5):           19.200000000000003
-        qml: Default Font Width:  8.328125
-        qml: Default Font Height: 12.8
-        qml: --
-        qml: Real Font Height:    16
-        qml: fontHRatio:          1
-        qml: --
-        qml: cellHeight:          38
-        qml: tbFontSmall:         10
-        qml: tbFontNormal:        12
-        qml: tbFontLarge:         18
-        qml: tbSpacing:           9.54
-
-        Nexus 9
-
-        qml: Main Window Width:   2048
-        qml: Toolbar height:      90.9312
-        qml: Default font:        38
-        qml: Font (.75):          28.5
-        qml: Font (.85):          32.3
-        qml: Font 1.5):           57
-        qml: Default Font Width:  20.0625
-        qml: Default Font Height: 38
-        qml: --
-        qml: Real Font Height:    38
-        qml: fontHRatio:          2.375
-        qml: --
-        qml: cellHeight:          68
-        qml: tbFontSmall:         23.75
-        qml: tbFontNormal:        28.5
-        qml: tbFontLarge:         42.75
-        qml: tbSpacing:           16.87552
-
-        Nexus 7
-
-        qml: Main Window Width:   1920
-        qml: Toolbar height:      85.248
-        qml: Default font:        38
-        qml: Font (.75):          28.5
-        qml: Font (.85):          32.3
-        qml: Font 1.5):           57
-        qml: Default Font Width:  20.140625
-        qml: Default Font Height: 38
-        qml: --
-        qml: Real Font Height:    38
-        qml: fontHRatio:          2.375
-        qml: --
-        qml: cellHeight:          63
-        qml: tbFontSmall:         23.75
-        qml: tbFontNormal:        28.5
-        qml: tbFontLarge:         42.75
-        qml: tbSpacing:           15.820800000000002
-
-        Nexus 4
-
-        qml: Main Window Width:   1196
-        qml: Toolbar height:      79.65360000000001
-        qml: Default font:        38
-        qml: Font (.75):          28.5
-        qml: Font (.85):          32.3
-        qml: Font 1.5):           57
-        qml: Default Font Width:  20.140625
-        qml: Default Font Height: 38
-        qml: --
-        qml: Real Font Height:    38
-        qml: fontHRatio:          2.375
-        qml: --
-        qml: cellHeight:          59
-        qml: tbFontSmall:         23.75
-        qml: tbFontNormal:        28.5
-        qml: tbFontLarge:         42.75
-        qml: tbSpacing:           9.85504
-
-    */
-
-    readonly property real  tbFontSmall:    10 * ScreenTools.fontHRatio
-    readonly property real  tbFontNormal:   12 * ScreenTools.fontHRatio
-    readonly property real  tbFontLarge:    18 * ScreenTools.fontHRatio
 
     readonly property var   colorGreen:     "#05f068"
     readonly property var   colorOrange:    "#f0ab06"
@@ -215,9 +128,9 @@ Rectangle {
                 anchors.centerIn:   parent
 
                 QGCLabel {
-                    id:         gpsLabel
-                    text:       (activeVehicle && activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("GPS Data Unavailable")
-                    font.weight:Font.DemiBold
+                    id:             gpsLabel
+                    text:           (activeVehicle && activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("GPS Data Unavailable")
+                    font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -269,9 +182,9 @@ Rectangle {
                 anchors.centerIn:   parent
 
                 QGCLabel {
-                    id:         battLabel
-                    text:       qsTr("Battery Status")
-                    font.weight:Font.DemiBold
+                    id:             battLabel
+                    text:           qsTr("Battery Status")
+                    font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -316,15 +229,15 @@ Rectangle {
                 anchors.centerIn:   parent
 
                 QGCLabel {
-                    id:         rssiLabel
-                    text:       activeVehicle ? (activeVehicle.rcRSSI > 0 ? qsTr("RC RSSI Status") : qsTr("RC RSSI Data Unavailable")) : qsTr("N/A", "No data avaliable")
-                    font.weight:Font.DemiBold
+                    id:             rssiLabel
+                    text:           activeVehicle ? (activeVehicle.rcRSSI != 255 ? qsTr("RC RSSI Status") : qsTr("RC RSSI Data Unavailable")) : qsTr("N/A", "No data avaliable")
+                    font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 GridLayout {
                     id:                 rcrssiGrid
-                    visible:            activeVehicle && activeVehicle.rcRSSI > 0
+                    visible:            activeVehicle && activeVehicle.rcRSSI != 255
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     columnSpacing:      ScreenTools.defaultFontPixelWidth
                     columns:            2
@@ -364,7 +277,7 @@ Rectangle {
                 QGCLabel {
                     id:             telemLabel
                     text:           qsTr("Telemetry RSSI Status")
-                    font.weight:    Font.DemiBold
+                    font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -443,6 +356,15 @@ Rectangle {
             mipmap:                 true
             antialiasing:           true
         }
+        /* Experimenting with a white/black divider
+        Rectangle {
+            color:      qgcPal.globalTheme === QGCPalette.Light ? Qt.rgba(0,0,0,0.15) : Qt.rgba(1,1,1,0.15)
+            height: parent.height
+            width:  1
+            anchors.right:  parent.right
+            anchors.top:    parent.top
+        }
+        */
         MouseArea {
             anchors.fill: parent
             onClicked: mainWindow.showLeftMenu()
@@ -513,8 +435,8 @@ Rectangle {
     QGCLabel {
         id:                     connectionLost
         text:                   qsTr("连接丢失")//"COMMUNICATION LOST"
-        font.pixelSize:         tbFontLarge
-        font.weight:            Font.DemiBold
+   	font.pointSize:         ScreenTools.largeFontPointSize
+        font.family:            ScreenTools.demiboldFontFamily
         color:                  colorRed
         anchors.horizontalCenter:   parent.horizontalCenter
         anchors.top:                parent.top
@@ -563,6 +485,8 @@ Rectangle {
         }
         Loader {
             source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsRight.qml" : ""
+            font.pixelSize:         tbFontLarge
+            font.weight:            Font.DemiBold
             anchors.right:          parent.right
             anchors.rightMargin:    mainWindow.tbButtonWidth * 3
             anchors.verticalCenter: parent.verticalCenter

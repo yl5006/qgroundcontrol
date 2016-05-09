@@ -8,9 +8,9 @@ import QGroundControl.Controllers 1.0
 import QGroundControl.Palette 1.0
 
 FactPanel {
-    id:             panel
-    anchors.fill:   parent
-    color:          qgcPal.windowShadeDark
+    id:                 panel
+    anchors.fill:       parent
+    color:              qgcPal.windowShadeDark
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
     AirframeComponentController { id: controller; factPanel: panel }
@@ -21,19 +21,15 @@ FactPanel {
     property bool autoStartSet: sysAutoStartFact ? (sysAutoStartFact.value !== 0) : false
 
     Column {
-        anchors.fill:    parent
-        anchors.margins: 8
-
+        anchors.fill:       parent
         VehicleSummaryRow {
             labelText: qsTr("系统ID")//"System ID:"
             valueText: sysIdFact ? sysIdFact.valueString : ""
         }
-
         VehicleSummaryRow {
             labelText: qsTr("飞机类型")//"Airframe type:"
             valueText: autoStartSet ? controller.currentAirframeType : "Setup required"
         }
-
         VehicleSummaryRow {
             labelText: qsTr("机体名称:")//"Vehicle:"
             valueText: autoStartSet ? controller.currentVehicleName : "Setup required"

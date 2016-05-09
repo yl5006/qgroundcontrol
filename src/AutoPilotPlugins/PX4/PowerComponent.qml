@@ -46,6 +46,7 @@ QGCView {
     property Fact battHighVolt:     controller.getParameterFact(-1, "BAT_V_CHARGED")
     property Fact battLowVolt:      controller.getParameterFact(-1, "BAT_V_EMPTY")
     property Fact battVoltLoadDrop: controller.getParameterFact(-1, "BAT_V_LOAD_DROP")
+    property Fact uavcanEnable:     controller.getParameterFact(-1, "UAVCAN_ENABLE", false)
 
     readonly property string highlightPrefix:   "<font color=\"" + qgcPal.warningText + "\">"
     readonly property string highlightSuffix:   "</font>"
@@ -122,7 +123,7 @@ QGCView {
 
                 QGCLabel {
                     text: qsTr("电池")//"Battery"
-                    font.weight: Font.DemiBold
+                    font.family: ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -201,6 +202,7 @@ QGCView {
                         x:                      voltageCol.firstColumnWidth + textEditWidth + (ScreenTools.defaultFontPixelWidth * 3)
                         width:                  height * 0.75
                         height:                 voltageCol.height
+                        sourceSize.height:      height
                         fillMode:               Image.PreserveAspectFit
                         smooth:                 true
                         color:                  palette.text
@@ -236,7 +238,7 @@ QGCView {
 
                 QGCLabel {
                     text:           qsTr("电调PWM最小最大值校准")//"ESC PWM Minimum and Maximum Calibration"
-                    font.weight:    Font.DemiBold
+                    font.family:    ScreenTools.demiboldFontFamily
                 }
 
                 Rectangle {
@@ -269,13 +271,14 @@ QGCView {
                 }
 
                 QGCCheckBox {
-                    id:     showUAVCAN
+                    id:         showUAVCAN
                     text:   "Show UAVCAN Settings"
+                    visible:    uavcanEnable !== -1
                 }
 
                 QGCLabel {
                     text:           qsTr("UAVCAN总线设置")//"UAVCAN Bus Configuration"
-                    font.weight:    Font.DemiBold
+                    font.family:    ScreenTools.demiboldFontFamily
                     visible:        showUAVCAN.checked
                 }
 
@@ -295,7 +298,7 @@ QGCView {
                         FactCheckBox {
                             id:                 uavcanEnabledCheckBox
                             width:              ScreenTools.defaultFontPixelWidth * 20
-                            fact:               controller.getParameterFact(-1, "UAVCAN_ENABLE")
+                            fact:               uavcanEnable
                             checkedValue:       3
                             uncheckedValue:     0
                             text:               "Enable UAVCAN as the default MAIN output bus (requires autopilot restart)"
@@ -305,7 +308,7 @@ QGCView {
 
                 QGCLabel {
                     text:           qsTr("UAVCAN电机序号和方向分配")//"UAVCAN Motor Index and Direction Assignment"
-                    font.weight:    Font.DemiBold
+                    font.family:    ScreenTools.demiboldFontFamily
                     visible:        showUAVCAN.checked
                 }
 
@@ -357,7 +360,7 @@ QGCView {
 
                 QGCLabel {
                     text:           qsTr("高级电源设置")//"Advanced Power Settings"
-                    font.weight:    Font.DemiBold
+                    font.family:    ScreenTools.demiboldFontFamily
                     visible:        showAdvanced.checked
                 }
 

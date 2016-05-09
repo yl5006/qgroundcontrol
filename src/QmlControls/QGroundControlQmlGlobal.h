@@ -35,6 +35,7 @@
 #include "MissionCommands.h"
 #include "SettingsFact.h"
 #include "FactMetaData.h"
+#include "SimulatedPosition.h"
 
 #ifdef QT_DEBUG
 #include "MockLink.h"
@@ -72,6 +73,7 @@ public:
     Q_PROPERTY(MissionCommands*     missionCommands     READ missionCommands        CONSTANT)
     Q_PROPERTY(MultiVehicleManager* multiVehicleManager READ multiVehicleManager    CONSTANT)
     Q_PROPERTY(QGCMapEngineManager* mapEngineManager    READ mapEngineManager       CONSTANT)
+    Q_PROPERTY(QGCPositionManager*  qgcPositionManger   READ qgcPositionManger      CONSTANT)
 
     Q_PROPERTY(qreal                zOrderTopMost       READ zOrderTopMost          CONSTANT) ///< z order for top most items, toolbar, main window sub view
     Q_PROPERTY(qreal                zOrderWidgets       READ zOrderWidgets          CONSTANT) ///< z order value to widgets, for example: zoom controls, hud widgetss
@@ -84,6 +86,7 @@ public:
     Q_PROPERTY(bool     isSaveLogPrompt         READ isSaveLogPrompt            WRITE setIsSaveLogPrompt            NOTIFY isSaveLogPromptChanged)
     Q_PROPERTY(bool     isSaveLogPromptNotArmed READ isSaveLogPromptNotArmed    WRITE setIsSaveLogPromptNotArmed    NOTIFY isSaveLogPromptNotArmedChanged)
     Q_PROPERTY(bool     virtualTabletJoystick   READ virtualTabletJoystick      WRITE setVirtualTabletJoystick      NOTIFY virtualTabletJoystickChanged)
+    Q_PROPERTY(qreal    baseFontPointSize       READ baseFontPointSize          WRITE setBaseFontPointSize          NOTIFY baseFontPointSizeChanged)
 
     // MavLink Protocol
     Q_PROPERTY(bool     isMultiplexingEnabled   READ isMultiplexingEnabled      WRITE setIsMultiplexingEnabled      NOTIFY isMultiplexingEnabledChanged)
@@ -137,7 +140,8 @@ public:
     LinkManager*            linkManager         ()      { return _linkManager; }
     MissionCommands*        missionCommands     ()      { return _missionCommands; }
     MultiVehicleManager*    multiVehicleManager ()      { return _multiVehicleManager; }
-    QGCMapEngineManager*     mapEngineManager  ()      { return _mapEngineManager; }
+    QGCMapEngineManager*    mapEngineManager    ()      { return _mapEngineManager; }
+    QGCPositionManager*     qgcPositionManger   ()      { return _qgcPositionManager; }
 
     qreal                   zOrderTopMost       ()      { return 1000; }
     qreal                   zOrderWidgets       ()      { return 100; }
@@ -148,6 +152,7 @@ public:
     bool    isSaveLogPrompt         () { return _app->promptFlightDataSave(); }
     bool    isSaveLogPromptNotArmed () { return _app->promptFlightDataSaveNotArmed(); }
     bool    virtualTabletJoystick   () { return _virtualTabletJoystick; }
+    qreal   baseFontPointSize       () { return _baseFontPointSize; }
 
     bool    isMultiplexingEnabled   () { return _toolbox->mavlinkProtocol()->multiplexingEnabled(); }
     bool    isVersionCheckEnabled   () { return _toolbox->mavlinkProtocol()->versionCheckEnabled(); }
@@ -167,6 +172,7 @@ public:
     void    setIsSaveLogPrompt          (bool prompt);
     void    setIsSaveLogPromptNotArmed  (bool prompt);
     void    setVirtualTabletJoystick    (bool enabled);
+    void    setBaseFontPointSize        (qreal size);
 
     void    setIsMultiplexingEnabled    (bool enable);
     void    setIsVersionCheckEnabled    (bool enable);
@@ -188,6 +194,7 @@ signals:
     void isSaveLogPromptChanged         (bool prompt);
     void isSaveLogPromptNotArmedChanged (bool prompt);
     void virtualTabletJoystickChanged   (bool enabled);
+    void baseFontPointSizeChanged       (qreal size);
     void isMultiplexingEnabledChanged   (bool enabled);
     void isVersionCheckEnabledChanged   (bool enabled);
     void mavlinkSystemIDChanged         (int id);
@@ -202,11 +209,12 @@ private:
     MissionCommands*        _missionCommands;
     MultiVehicleManager*    _multiVehicleManager;
     QGCMapEngineManager*    _mapEngineManager;
+    QGCPositionManager*     _qgcPositionManager;
 
-    bool _virtualTabletJoystick;
-
-    QGeoCoordinate  _flightMapPosition;
-    double          _flightMapZoom;
+    bool                    _virtualTabletJoystick;
+    qreal                   _baseFontPointSize;
+    QGeoCoordinate          _flightMapPosition;
+    double                  _flightMapZoom;
 
     // These are static so they are available to C++ code as well as Qml
     static SettingsFact*    _offlineEditingFirmwareTypeFact;
@@ -217,6 +225,7 @@ private:
     static FactMetaData*    _speedUnitsMetaData;
 
     static const char*  _virtualTabletJoystickKey;
+    static const char*  _baseFontPointSizeKey;
 };
 
 #endif

@@ -43,6 +43,8 @@ QGC_LOGGING_CATEGORY(VehicleLog, "VehicleLog")
 #define DEFAULT_LAT  30.5386437f
 #define DEFAULT_LON  114.3662806f
 
+extern const char* guided_mode_not_supported_by_vehicle;
+
 const char* Vehicle::_settingsGroup =               "Vehicle%1";        // %1 replaced with mavlink system id
 const char* Vehicle::_joystickModeSettingsKey =     "JoystickMode";
 const char* Vehicle::_joystickEnabledSettingsKey =  "JoystickEnabled";
@@ -99,8 +101,8 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _navigationTargetBearing(0.0f)
     , _refreshTimer(new QTimer(this))
     , _updateCount(0)
-    , _rcRSSI(0)
-    , _rcRSSIstore(100.0)
+    , _rcRSSI(255)
+    , _rcRSSIstore(255)
     , _autoDisconnect(false)
     , _flying(false)
     , _connectionLost(false)
@@ -123,6 +125,9 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _messageSeq(0)
     , _compID(0)
     , _heardFrom(false)
+    , _firmwareMajorVersion(versionNotSetValue)
+    , _firmwareMinorVersion(versionNotSetValue)
+    , _firmwarePatchVersion(versionNotSetValue)
     , _rollFact             (0, _rollFactName,              FactMetaData::valueTypeDouble)
     , _pitchFact            (0, _pitchFactName,             FactMetaData::valueTypeDouble)
     , _headingFact          (0, _headingFactName,           FactMetaData::valueTypeDouble)
@@ -273,8 +278,8 @@ Vehicle::Vehicle(QObject* parent)
     , _navigationTargetBearing(0.0f)
     , _refreshTimer(new QTimer(this))
     , _updateCount(0)
-    , _rcRSSI(0)
-    , _rcRSSIstore(100.0)
+    , _rcRSSI(255)
+    , _rcRSSIstore(255)
     , _autoDisconnect(false)
     , _connectionLost(false)
     , _connectionLostEnabled(true)
@@ -296,6 +301,9 @@ Vehicle::Vehicle(QObject* parent)
     , _messageSeq(0)
     , _compID(0)
     , _heardFrom(false)
+    , _firmwareMajorVersion(versionNotSetValue)
+    , _firmwareMinorVersion(versionNotSetValue)
+    , _firmwarePatchVersion(versionNotSetValue)
     , _rollFact             (0, _rollFactName,              FactMetaData::valueTypeDouble)
     , _pitchFact            (0, _pitchFactName,             FactMetaData::valueTypeDouble)
     , _headingFact          (0, _headingFactName,           FactMetaData::valueTypeDouble)
@@ -932,6 +940,11 @@ QString Vehicle::formatedMessages()
     return messages;
 }
 
+void Vehicle::clearMessages()
+{
+    qgcApp()->toolbox()->uasMessageHandler()->clearMessages();
+}
+
 void Vehicle::_handletextMessageReceived(UASMessage* message)
 {
     if(message)
@@ -1346,6 +1359,10 @@ void Vehicle::_imageReady(UASInterface*)
 
 void Vehicle::_remoteControlRSSIChanged(uint8_t rssi)
 {
+    if (_rcRSSIstore < 0 || _rcRSSIstore > 100) {
+        _rcRSSIstore = rssi;
+    }
+
     // Low pass to git rid of jitter
     _rcRSSIstore = (_rcRSSIstore * 0.9f) + ((float)rssi * 0.1);
     uint8_t filteredRSSI = (uint8_t)ceil(_rcRSSIstore);
@@ -1430,6 +1447,40 @@ void Vehicle::_setCoordinateValid(bool coordinateValid)
     }
 }
 
+QString Vehicle::vehicleTypeName() const {
+    static QMap<int, QString> typeNames = {
+        { MAV_TYPE_GENERIC,         tr("Generic micro air vehicle" )},
+        { MAV_TYPE_FIXED_WING,      tr("Fixed wing aircraft")},
+        { MAV_TYPE_QUADROTOR,       tr("Quadrotor")},
+        { MAV_TYPE_COAXIAL,         tr("Coaxial helicopter")},
+        { MAV_TYPE_HELICOPTER,      tr("Normal helicopter with tail rotor.")},
+        { MAV_TYPE_ANTENNA_TRACKER, tr("Ground installation")},
+        { MAV_TYPE_GCS,             tr("Operator control unit / ground control station")},
+        { MAV_TYPE_AIRSHIP,         tr("Airship, controlled")},
+        { MAV_TYPE_FREE_BALLOON,    tr("Free balloon, uncontrolled")},
+        { MAV_TYPE_ROCKET,          tr("Rocket")},
+        { MAV_TYPE_GROUND_ROVER,    tr("Ground rover")},
+        { MAV_TYPE_SURFACE_BOAT,    tr("Surface vessel, boat, ship")},
+        { MAV_TYPE_SUBMARINE,       tr("Submarine")},
+        { MAV_TYPE_HEXAROTOR,       tr("Hexarotor")},
+        { MAV_TYPE_OCTOROTOR,       tr("Octorotor")},
+        { MAV_TYPE_TRICOPTER,       tr("Octorotor")},
+        { MAV_TYPE_FLAPPING_WING,   tr("Flapping wing")},
+        { MAV_TYPE_KITE,            tr("Flapping wing")},
+        { MAV_TYPE_ONBOARD_CONTROLLER, tr("Onboard companion controller")},
+        { MAV_TYPE_VTOL_DUOROTOR,   tr("Two-rotor VTOL using control surfaces in vertical operation in addition. Tailsitter")},
+        { MAV_TYPE_VTOL_QUADROTOR,  tr("Quad-rotor VTOL using a V-shaped quad config in vertical operation. Tailsitter")},
+        { MAV_TYPE_VTOL_TILTROTOR,  tr("Tiltrotor VTOL")},
+        { MAV_TYPE_VTOL_RESERVED2,  tr("VTOL reserved 2")},
+        { MAV_TYPE_VTOL_RESERVED3,  tr("VTOL reserved 3")},
+        { MAV_TYPE_VTOL_RESERVED4,  tr("VTOL reserved 4")},
+        { MAV_TYPE_VTOL_RESERVED5,  tr("VTOL reserved 5")},
+        { MAV_TYPE_GIMBAL,          tr("Onboard gimbal")},
+        { MAV_TYPE_ADSB,            tr("Onboard ADSB peripheral")},
+    };
+    return typeNames[_vehicleType];
+}
+
 /// Returns the string to speak to identify the vehicle
 QString Vehicle::_vehicleIdSpeech(void)
 {
@@ -1477,7 +1528,7 @@ bool Vehicle::pauseVehicleSupported(void) const
 void Vehicle::guidedModeRTL(void)
 {
     if (!guidedModeSupported()) {
-        qgcApp()->showMessage(QStringLiteral("Guided mode not supported by vehicle."));
+        qgcApp()->showMessage(guided_mode_not_supported_by_vehicle);
         return;
     }
     _firmwarePlugin->guidedModeRTL(this);
@@ -1486,7 +1537,7 @@ void Vehicle::guidedModeRTL(void)
 void Vehicle::guidedModeLand(void)
 {
     if (!guidedModeSupported()) {
-        qgcApp()->showMessage(QStringLiteral("Guided mode not supported by vehicle."));
+        qgcApp()->showMessage(guided_mode_not_supported_by_vehicle);
         return;
     }
     _firmwarePlugin->guidedModeLand(this);
@@ -1495,7 +1546,7 @@ void Vehicle::guidedModeLand(void)
 void Vehicle::guidedModeTakeoff(double altitudeRel)
 {
     if (!guidedModeSupported()) {
-        qgcApp()->showMessage(QStringLiteral("Guided mode not supported by vehicle."));
+        qgcApp()->showMessage(guided_mode_not_supported_by_vehicle);
         return;
     }
     setGuidedMode(true);
@@ -1505,7 +1556,7 @@ void Vehicle::guidedModeTakeoff(double altitudeRel)
 void Vehicle::guidedModeGotoLocation(const QGeoCoordinate& gotoCoord)
 {
     if (!guidedModeSupported()) {
-        qgcApp()->showMessage(QStringLiteral("Guided mode not supported by vehicle."));
+        qgcApp()->showMessage(guided_mode_not_supported_by_vehicle);
         return;
     }
     _firmwarePlugin->guidedModeGotoLocation(this, gotoCoord);
@@ -1514,7 +1565,7 @@ void Vehicle::guidedModeGotoLocation(const QGeoCoordinate& gotoCoord)
 void Vehicle::guidedModeChangeAltitude(double altitudeRel)
 {
     if (!guidedModeSupported()) {
-        qgcApp()->showMessage(QStringLiteral("Guided mode not supported by vehicle."));
+        qgcApp()->showMessage(guided_mode_not_supported_by_vehicle);
         return;
     }
     _firmwarePlugin->guidedModeChangeAltitude(this, altitudeRel);
@@ -1603,6 +1654,18 @@ void Vehicle::setPrearmError(const QString& prearmError)
 void Vehicle::_prearmErrorTimeout(void)
 {
     setPrearmError(QString());
+}
+
+void Vehicle::setFirmwareVersion(int majorVersion, int minorVersion, int patchVersion)
+{
+    _firmwareMajorVersion = majorVersion;
+    _firmwareMinorVersion = minorVersion;
+    _firmwarePatchVersion = patchVersion;
+}
+
+void Vehicle::rebootVehicle()
+{
+    doCommandLong(id(), MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 const char* VehicleGPSFactGroup::_hdopFactName =                "hdop";

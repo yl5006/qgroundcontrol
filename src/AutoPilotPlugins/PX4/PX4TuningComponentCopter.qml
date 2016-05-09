@@ -32,12 +32,21 @@ FactSliderPanel {
 
     sliderModel: ListModel {
         ListElement {
-            title:          qsTr("Throttle Hover")
+            title:          qsTr("Hover Throttle")
             description:    qsTr("Adjust throttle so hover is at mid-throttle. Slide to the left if hover is lower than throttle center. Slide to the right if hover is higher than throttle center.")
             param:          "MPC_THR_HOVER"
-            min:            0.2
-            max:            0.8
-            step:           0.01
+            min:            20
+            max:            80
+            step:           1
+        }
+
+        ListElement {
+            title:          qsTr("Manual minimum throttle")
+            description:    qsTr("Slide to the left to start the motors with less idle power. Slide to the right if descending in manual flight becomes unstable.")
+            param:          "MPC_MANTHR_MIN"
+            min:            0
+            max:            15
+            step:           1
         }
 
         ListElement {
@@ -74,15 +83,6 @@ FactSliderPanel {
             min:            0
             max:            1.0
             step:           0.1
-        }
-
-        ListElement {
-            title:          qsTr("手动最小油门")//"Manual minimum throttle"
-            description:    qsTr("滑到左边开始用更少的闲置功耗电机。滑动到右侧，如果在手动飞行不稳定")//"Slide to the left to start the motors with less idle power. Slide to the right if descending in manual flight becomes unstable."
-            param:          "MPC_MANTHR_MIN"
-            min:            0
-            max:            0.15
-            step:           0.01
         }
     }
 }

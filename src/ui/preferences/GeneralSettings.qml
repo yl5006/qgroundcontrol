@@ -40,7 +40,9 @@ Rectangle {
     anchors.fill:       parent
     anchors.margins:    ScreenTools.defaultFontPixelWidth
 
-    property Fact _percentRemainingAnnounce: QGroundControl.multiVehicleManager.disconnectedVehicle.battery.percentRemainingAnnounce
+    property Fact _percentRemainingAnnounce:    QGroundControl.multiVehicleManager.disconnectedVehicle.battery.percentRemainingAnnounce
+    property real _firstLabelWidth:             ScreenTools.defaultFontPixelWidth * 16
+    property real _editFieldWidth:              ScreenTools.defaultFontPixelWidth * 22
 
     QGCPalette { id: qgcPal }
 
@@ -57,7 +59,7 @@ Rectangle {
 
             QGCLabel {
                 text:   qsTr("常规设置")//"General Settings"
-                font.pixelSize: ScreenTools.mediumFontPixelSize
+                font.pointSize: ScreenTools.mediumFontPointSize
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Rectangle {
@@ -71,22 +73,86 @@ Rectangle {
             }
 
             //-----------------------------------------------------------------
+            //-- Base UI Font Point Size
+            Row {
+                spacing:    ScreenTools.defaultFontPixelWidth
+                QGCLabel {
+                    width:              _firstLabelWidth
+                    text:               qsTr("Base UI font size:")
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                Row {
+                    anchors.verticalCenter: parent.verticalCenter
+                    Rectangle {
+                        width:              baseFontEdit.height
+                        height:             width
+                        color:              qgcPal.button
+                        QGCLabel {
+                            text:           "-"
+                            anchors.centerIn: parent
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                if(ScreenTools.defaultFontPointSize > 6)
+                                    QGroundControl.baseFontPointSize = QGroundControl.baseFontPointSize - 1
+                            }
+                        }
+                    }
+                    QGCTextField {
+                        id:                 baseFontEdit
+                        width:              _editFieldWidth - (height * 2)
+                        text:               QGroundControl.baseFontPointSize
+                        showUnits:          true
+                        unitsLabel:         "pt"
+                        maximumLength:      6
+                        validator:          DoubleValidator {bottom: 6.0; top: 48.0; decimals: 2;}
+                        onEditingFinished: {
+                            var point = parseFloat(text)
+                            if(point >= 6.0 && point <= 48.0)
+                                QGroundControl.baseFontPointSize = point;
+                        }
+                    }
+                    Rectangle {
+                        width:              baseFontEdit.height
+                        height:             width
+                        color:              qgcPal.button
+                        QGCLabel {
+                            text:           "+"
+                            anchors.centerIn: parent
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                if(ScreenTools.defaultFontPointSize < 49)
+                                    QGroundControl.baseFontPointSize = QGroundControl.baseFontPointSize + 1
+                            }
+                        }
+                    }
+                }
+                QGCLabel {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text:               qsTr("(requires reboot to take affect)")
+                }
+            }
+
+            //-----------------------------------------------------------------
             //-- Units
 
             Row {
                 spacing:    ScreenTools.defaultFontPixelWidth
 
                 QGCLabel {
-                    id:                 distanceUnitsLabel
+                    width:              _firstLabelWidth
                     anchors.baseline:   distanceUnitsCombo.baseline
                     text:               qsTr("Distance units:")
                 }
 
                 FactComboBox {
-                    id:         distanceUnitsCombo
-                    width:      ScreenTools.defaultFontPixelWidth * 10
-                    fact:       QGroundControl.distanceUnits
-                    indexModel: false
+                    id:                 distanceUnitsCombo
+                    width:              _editFieldWidth
+                    fact:               QGroundControl.distanceUnits
+                    indexModel:         false
                 }
 
                 QGCLabel {
@@ -97,19 +163,19 @@ Rectangle {
             }
 
             Row {
-                spacing:    ScreenTools.defaultFontPixelWidth
+                spacing:                ScreenTools.defaultFontPixelWidth
 
                 QGCLabel {
                     anchors.baseline:   speedUnitsCombo.baseline
-                    width:              distanceUnitsLabel.width
+                    width:              _firstLabelWidth
                     text:               qsTr("Speed units:")
                 }
 
                 FactComboBox {
-                    id:         speedUnitsCombo
-                    width:      ScreenTools.defaultFontPixelWidth * 20
-                    fact:       QGroundControl.speedUnits
-                    indexModel: false
+                    id:                 speedUnitsCombo
+                    width:              _editFieldWidth
+                    fact:               QGroundControl.speedUnits
+                    indexModel:         false
                 }
 
                 QGCLabel {
@@ -118,6 +184,17 @@ Rectangle {
                 }
             }
 
+            //-----------------------------------------------------------------
+            //-- Scale on Flight View
+            QGCCheckBox {
+                text:       qsTr("Show scale on Fly View")
+                onClicked: {
+                    QGroundControl.flightMapSettings.showScaleOnFlyView = checked
+                }
+                Component.onCompleted: {
+                    checked = QGroundControl.flightMapSettings.showScaleOnFlyView
+                }
+            }
             //-----------------------------------------------------------------
             //-- Audio preferences
             QGCCheckBox {
@@ -212,13 +289,13 @@ Rectangle {
                 spacing:    ScreenTools.defaultFontPixelWidth
                 QGCLabel {
                     anchors.baseline:   mapProviders.baseline
-                    width:              ScreenTools.defaultFontPixelWidth * 16
+                    width:              _firstLabelWidth
                     text:               qsTr("Map Providers:")
                 }
                 QGCComboBox {
-                    id:     mapProviders
-                    width:  ScreenTools.defaultFontPixelWidth * 16
-                    model:  QGroundControl.flightMapSettings.mapProviders
+                    id:                 mapProviders
+                    width:              _editFieldWidth
+                    model:              QGroundControl.flightMapSettings.mapProviders
                     Component.onCompleted: {
                         var index = mapProviders.find(QGroundControl.flightMapSettings.mapProvider)
                         if (index < 0) {
@@ -242,14 +319,14 @@ Rectangle {
                 spacing:    ScreenTools.defaultFontPixelWidth
                 QGCLabel {
                     anchors.baseline:   paletteCombo.baseline
-                    width:              ScreenTools.defaultFontPixelWidth * 16
+                    width:              _firstLabelWidth
                     text:   qsTr("主题")//"Style"
                 }
                 QGCComboBox {
-                    id: paletteCombo
-                    width: ScreenTools.defaultFontPixelWidth * 16
+                    id:                 paletteCombo
+                    width:              _editFieldWidth
                     model: [ qsTr("黑色"), qsTr("亮色") ]//model: [ "Indoor", "Outdoor" ]
-                    currentIndex: QGroundControl.isDarkStyle ? 0 : 1
+                    currentIndex:       QGroundControl.isDarkStyle ? 0 : 1
                     onActivated: {
                         if (index != -1) {
                             currentIndex = index
@@ -296,6 +373,12 @@ Rectangle {
                     text:       qsTr("UDP")
                     checked:    QGroundControl.linkManager.autoconnectUDP
                     onClicked:  QGroundControl.linkManager.autoconnectUDP = checked
+                }
+
+                QGCCheckBox {
+                    text:       qsTr("RTK GPS")
+                    checked:    QGroundControl.linkManager.autoconnectRTKGPS
+                    onClicked:  QGroundControl.linkManager.autoconnectRTKGPS = checked
                 }
             }
 

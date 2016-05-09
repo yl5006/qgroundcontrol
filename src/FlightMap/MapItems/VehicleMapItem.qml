@@ -45,16 +45,16 @@ MapQuickItem {
     visible:        vehicle && vehicle.coordinateValid
 
     sourceItem: Image {
-        id:         vehicleIcon
-        source:     isSatellite ? "/qmlimages/airplaneOpaque.svg" : "/qmlimages/airplaneOutline.svg"
-        mipmap:     true
+        id:                 vehicleIcon
+        source:             isSatellite ? "/qmlimages/airplaneOpaque.svg" : "/qmlimages/airplaneOutline.svg"
+        mipmap:             true
         width:      size / 2
-        fillMode:   Image.PreserveAspectFit
-
+        sourceSize.width:   size
+        fillMode:           Image.PreserveAspectFit
         transform: Rotation {
-            origin.x:   vehicleIcon.width  / 2
-            origin.y:   vehicleIcon.height / 2
-            angle:      vehicle ? vehicle.heading.value : 0
+            origin.x:       vehicleIcon.width  / 2
+            origin.y:       vehicleIcon.height / 2
+            angle:          vehicle ? vehicle.heading.value : 0
         }
     }
 }

@@ -253,14 +253,20 @@ QGCView {
 
     QGCViewPanel {
         id:             panel
-        anchors.fill:   parent
+        height:         ScreenTools.availableHeight
+        anchors.bottom: parent.bottom
+        anchors.left:   parent.left
+        anchors.right:  parent.right
 
         Item {
             anchors.fill: parent
 
             FlightMap {
                 id:             editorMap
-                anchors.fill:   parent
+                height:         _root.height
+                anchors.bottom: parent.bottom
+                anchors.left:   parent.left
+                anchors.right:  parent.right
                 mapName:        "MissionEditor"
 
                 signal mapClicked(var coordinate)
@@ -278,19 +284,24 @@ QGCView {
                 }
 
                 MouseArea {
+                    //-- It's a whole lot faster to just fill parent and deal with top offset below
+                    //   than computing the coordinate offset.
                     anchors.fill: parent
-
                     onClicked: {
-                        var coordinate = editorMap.toCoordinate(Qt.point(mouse.x, mouse.y))
-                        coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
-                        coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
-                        coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
-                        if (addMissionItemsButton.checked) {
-                            var sequenceNumber = controller.insertSimpleMissionItem(coordinate, controller.visualItems.count)
-                            setCurrentItem(sequenceNumber)
-                            editorListView.positionViewAtIndex(editorListView.count - 1, ListView.Contain)
-                        } else {
-                            editorMap.mapClicked(coordinate)
+                        //-- Don't pay attention to items beneath the toolbar.
+                        var topLimit = parent.height - ScreenTools.availableHeight
+                        if(mouse.y >= topLimit) {
+                            var coordinate = editorMap.toCoordinate(Qt.point(mouse.x, mouse.y))
+                            coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
+                            coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
+                            coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
+                            if (addMissionItemsButton.checked) {
+                                var sequenceNumber = controller.insertSimpleMissionItem(coordinate, controller.visualItems.count)
+                                setCurrentItem(sequenceNumber)
+                                editorListView.positionViewAtIndex(editorListView.count - 1, ListView.Contain)
+                            } else {
+                                editorMap.mapClicked(coordinate)
+                            }
                         }
                     }
                 }
@@ -401,6 +412,9 @@ QGCView {
                         missionItem:    object
                         sequenceNumber: object.sequenceNumber
 
+                        //-- If you don't want to allow selecting items beneath the
+                        //   toolbar, the code below has to check and see if mouse.y
+                        //   is greater than (map.height - ScreenTools.availableHeight)
                         onClicked: setCurrentItem(object.sequenceNumber)
 
                         function updateItemIndicator() {
@@ -469,7 +483,7 @@ QGCView {
                             z:              QGroundControl.zOrderTopMost-100
                             onRemove: {
                                 itemDragger.clearItem()
-                                controller.removeMissionItem(_currentMissionItem.sequenceNumber)
+                                controller.removeMissionItem(index)
                                 setCurrentItem(_currentMissionItem.sequenceNumber-1)
                             }
 
@@ -497,7 +511,7 @@ QGCView {
                 Item {
                     id:             missionItemIndex//missionItemEditor
                     height:         _PointFieldWidth+ScreenTools.defaultFontPixelWidth//mainWindow.availableHeight/5  //change by yaoling
-                    anchors.bottomMargin: _margin*2
+                    anchors.top:    parent.top
                     anchors.bottom:  parent.bottom
                     anchors.horizontalCenter:           parent.horizontalCenter
 //                  width:          _rightPanelWidth
@@ -523,6 +537,7 @@ QGCView {
                         orientation:    ListView.Horizontal
                         model:          controller.visualItems
                         cacheBuffer:    width*2//height * 2
+                        clip:           true
                         delegate:       MissionItemIndex{//MissionItemIndex {//MissionItemEditor {
                             missionItem:    object
                             width:          _PointFieldWidth//_PointFieldWidth//_rightPanelWidth//parent.width
@@ -533,7 +548,7 @@ QGCView {
 
 //                            onRemove: {
 //                                itemDragger.clearItem()
-//                                controller.removeMissionItem(object.sequenceNumber)
+//                                controller.removeMissionItem(index)
 //                            }
 
 //                            onInsert: {
@@ -573,6 +588,7 @@ QGCView {
                 //-- Vertical Tool Buttons
                 Column {
                     id:                 toolColumn
+                    anchors.topMargin:  parent.height - ScreenTools.availableHeight + ScreenTools.defaultFontPixelHeight
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     anchors.left:       parent.left
                     anchors.top:        parent.top
@@ -726,7 +742,6 @@ QGCView {
                         buttonImage:    "/qmlimages/ZoomMinus.svg"
                         z:              QGroundControl.zOrderWidgets
                         lightBorders:   _lightWidgetBorders
-
                         onClicked: {
                             if(editorMap)
                                 editorMap.zoomLevel -= 0.5

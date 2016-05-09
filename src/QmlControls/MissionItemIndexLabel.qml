@@ -21,16 +21,11 @@ Item {
 //  border.color:   "white"
 //  color:          isCurrentItem ? "green" : qgcPal.mapButtonHighlight
 
-    property real _width: small ? ScreenTools.smallFontPixelSize * 1.2 : ScreenTools.mediumFontPixelSize * 1.2
+    property real _width: small ? ScreenTools.defaultFontPixelHeight * ScreenTools.smallFontPointRatio * 1.75 : ScreenTools.defaultFontPixelHeight * 1.75
 
     QGCPalette { id: qgcPal }
 
-    MouseArea {
-        anchors.fill: point//parent
-
-        onClicked: parent.clicked()
-    }
-
+        anchors.fill: parent
     Image {
         id:         waypoint
         source:     isCurrentItem ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
@@ -53,7 +48,13 @@ Item {
             horizontalAlignment:    Text.AlignHCenter
             verticalAlignment:      Text.AlignVCenter
             color:                  "white"
-            font.pixelSize:         small ? ScreenTools.smallFontPixelSize : ScreenTools.mediumFontPixelSize
+        font.pointSize:         small ? ScreenTools.smallFontPointSize : ScreenTools.defaultFontPointSize
         }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: parent.clicked()
+    }
+
     }
 }

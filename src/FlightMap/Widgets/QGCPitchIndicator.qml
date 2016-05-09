@@ -40,7 +40,7 @@ Rectangle {
     property real _reticleSlot:     _reticleSpacing + _reticleHeight
     property real _longDash:        size * 0.40
     property real _shortDash:       size * 0.25
-    property real _fontSize:        ScreenTools.defaultFontPixelSize * (size / _defaultSize)
+    property real _fontSize:        ScreenTools.defaultFontPointSize * (size / _defaultSize)
 
     property real _defaultSize:     ScreenTools.isAndroid ? 300 : 100
 
@@ -71,8 +71,8 @@ Rectangle {
                         anchors.horizontalCenterOffset: -(_longDash * 0.8)
                         anchors.verticalCenter: parent.verticalCenter
                         smooth: true
-                        font.weight: Font.DemiBold
-                        font.pixelSize: _fontSize < 1 ? 1 : _fontSize;
+                        font.family: ScreenTools.demiboldFontFamily
+                        font.pointSize: _fontSize < 1 ? 1 : _fontSize;
                         text: _pitch
                         color: "white"
                         visible: (_pitch != 0) && ((_pitch % 10) === 0)
@@ -82,8 +82,8 @@ Rectangle {
                         anchors.horizontalCenterOffset: (_longDash * 0.8)
                         anchors.verticalCenter: parent.verticalCenter
                         smooth: true
-                        font.weight: Font.DemiBold
-                        font.pixelSize: _fontSize < 1 ? 1 : _fontSize;
+                        font.family: ScreenTools.demiboldFontFamily
+                        font.pointSize: _fontSize < 1 ? 1 : _fontSize;
                         text: _pitch
                         color: "white"
                         visible: (_pitch != 0) && ((_pitch % 10) === 0)

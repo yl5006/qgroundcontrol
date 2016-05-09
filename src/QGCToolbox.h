@@ -31,6 +31,7 @@ class FactSystem;
 class FirmwarePluginManager;
 class FlightMapSettings;
 class GAudioOutput;
+class GPSManager;
 class HomePositionManager;
 class JoystickManager;
 class FollowMe;
@@ -42,6 +43,7 @@ class QGCMapEngineManager;
 class QGCApplication;
 class QGCImageProvider;
 class UASMessageHandler;
+class QGCPositionManager;
 
 /// This is used to manage all of our top level services/tools
 class QGCToolbox {
@@ -64,6 +66,10 @@ public:
     QGCImageProvider*           imageProvider()                 { return _imageProvider; }
     UASMessageHandler*          uasMessageHandler(void)         { return _uasMessageHandler; }
     FollowMe*                   followMe(void)                  { return _followMe; }
+    QGCPositionManager*         qgcPositionManager(void)        { return _qgcPositionManager; }
+#ifndef __mobile__
+    GPSManager*                 gpsManager(void)                { return _gpsManager; }
+#endif
 
 private:
     GAudioOutput*               _audioOutput;
@@ -71,6 +77,9 @@ private:
     FactSystem*                 _factSystem;
     FirmwarePluginManager*      _firmwarePluginManager;
     FlightMapSettings*          _flightMapSettings;
+#ifndef __mobile__
+    GPSManager*                 _gpsManager;
+#endif
     HomePositionManager*        _homePositionManager;
     QGCImageProvider*           _imageProvider;
     JoystickManager*            _joystickManager;
@@ -81,6 +90,7 @@ private:
     QGCMapEngineManager*         _mapEngineManager;
     UASMessageHandler*          _uasMessageHandler;
     FollowMe*                   _followMe;
+    QGCPositionManager*         _qgcPositionManager;
 };
 
 /// This is the base class for all tools

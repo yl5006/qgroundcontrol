@@ -41,8 +41,9 @@ Item {
     property alias animateHideDialog: __animateHideDialog
 
     readonly property int  __animationDuration: 100
-    readonly property real __closeButtonSize:   ScreenTools.defaultFontPixelHeight * 2
-    readonly property real _margins:            ScreenTools.defaultFontPixelHeight / 2
+    readonly property real __closeButtonSize:   ScreenTools.defaultFontPixelHeight * 1.5
+    readonly property real _margins:            ScreenTools.defaultFontPixelHeight * 0.5
+    readonly property real _buttonHeight:       ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 3 : ScreenTools.defaultFontPixelHeight * 2
 
     QGCPalette { id: qgcPal }
 
@@ -133,7 +134,7 @@ Item {
     // This is the menu dialog panel which is anchored to the left edge
     Rectangle {
         id:             __leftMenu
-        width:          ScreenTools.defaultFontPixelWidth * 14
+        width:          ScreenTools.defaultFontPixelWidth * 16
         anchors.left:   parent.left
         anchors.top:    __topSeparator.bottom
         anchors.bottom: parent.bottom
@@ -155,7 +156,7 @@ Item {
                 anchors.right:          parent.right
                 anchors.topMargin:      _margins
                 anchors.top:            parent.top
-                spacing:                 ScreenTools.defaultFontPixelHeight
+                spacing:                ScreenTools.defaultFontPixelHeight * 0.5
 
                 QGCLabel {
                     text:           "Preferences"
@@ -163,6 +164,7 @@ Item {
                 }
 
                 QGCButton {
+                    height:         _buttonHeight
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                 text:       qsTr("一般")//"General"
@@ -176,6 +178,7 @@ Item {
                 }
 
                 QGCButton {
+                    height:         _buttonHeight
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                 text:       qsTr("连接")//"Comm Links"
@@ -189,6 +192,7 @@ Item {
                 }
 
                 QGCButton {
+                    height:         _buttonHeight
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     text:           qsTr("Offline Maps")
@@ -202,6 +206,7 @@ Item {
                 }
 
                 QGCButton {
+                    height:         _buttonHeight
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     text:           qsTr("MavLink")
@@ -216,6 +221,7 @@ Item {
                 }
 
                 QGCButton {
+                    height:         _buttonHeight
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     text:           qsTr("Console")
@@ -229,6 +235,7 @@ Item {
                 }
 
                 QGCButton {
+                    height:         _buttonHeight
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     text:           qsTr("Mock Link")
@@ -243,6 +250,7 @@ Item {
                 }
 
                 QGCButton {
+                    height:         _buttonHeight
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     text:           qsTr("Debug")
@@ -283,6 +291,7 @@ Item {
 
     //-- Main Setting Display Area
     Rectangle {
+        id:             settingDisplayArea
         anchors.left:   __verticalSeparator.right
         width:          mainWindow.width - __leftMenu.width - __verticalSeparator.width
         height:         parent.height - toolBar.height - __topSeparator.height
@@ -301,7 +310,7 @@ Item {
             height:          __closeButtonSize
             anchors.right:   parent.right
             anchors.top:     parent.top
-            anchors.margins: ScreenTools.defaultFontPixelSize * 0.5
+            anchors.margins: ScreenTools.defaultFontPixelHeight * 0.5
             QGCColoredImage {
                 source:       "/res/XDelete.svg"
                 mipmap:       true
@@ -309,6 +318,7 @@ Item {
                 color:        qgcPal.text
                 width:        parent.width  * 0.75
                 height:       parent.height * 0.75
+                sourceSize.height: height
                 anchors.centerIn: parent
             }
             MouseArea {

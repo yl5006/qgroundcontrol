@@ -278,7 +278,7 @@ FactPanel {
         // This covers the parent with an transparent section
         Rectangle {
             id:             __transparentSection
-            anchors.top:    parent.top
+            height:         ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
             anchors.bottom: parent.bottom
             anchors.left:   parent.left
             anchors.right:  __dialogPanel.left
@@ -291,7 +291,7 @@ FactPanel {
             id:                 __dialogPanel
             width:              __dialogCharWidth == showDialogFullWidth ? parent.width : defaultTextWidth * __dialogCharWidth
             anchors.topMargin:  topDialogMargin
-            anchors.top:        parent.top
+            height:             ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
             anchors.bottom:     parent.bottom
             anchors.right:      parent.right
             color:              __qgcPal.windowShadeDark
@@ -326,7 +326,9 @@ FactPanel {
                     anchors.right:  parent.right
                     primary:        true
 
-                    onClicked: __dialogComponentLoader.item.accept()
+                    onClicked: {
+                       __dialogComponentLoader.item.accept()
+                    }
                 }
             }
 

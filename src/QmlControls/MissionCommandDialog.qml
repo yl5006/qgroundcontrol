@@ -77,7 +77,7 @@ QGCViewDialog {
 
         delegate: Rectangle {
             width:  parent.width
-            height: commandColumn.height + ScreenTools.defaultFontPixelSize
+            height: commandColumn.height + ScreenTools.defaultFontPixelHeight
             color:  qgcPal.button
 
             property var    mavCmdInfo: object
@@ -93,7 +93,7 @@ QGCViewDialog {
                 QGCLabel {
                     text:           mavCmdInfo.friendlyName
                     color:          textColor
-                    font.weight:    Font.DemiBold
+                    font.family:    ScreenTools.demiboldFontFamily
                 }
 
                 QGCLabel {
