@@ -392,7 +392,7 @@ Item {
             anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
             anchors.top:        parent.top
             anchors.right:      parent.right
-            width:              ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
+            width:              ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
             height:             width
             sourceSize.height:  width
             source:             "/res/XDelete.svg"
@@ -400,7 +400,8 @@ Item {
             mipmap:             true
             smooth:             true
             MouseArea {
-                anchors.fill:   parent
+                anchors.fill:       parent
+                anchors.margins:    ScreenTools.isMobile ? -ScreenTools.defaultFontPixelHeight : 0
                 onClicked: {
                     messageArea.close()
                 }
@@ -411,7 +412,7 @@ Item {
             anchors.bottom:     parent.bottom
             anchors.right:      parent.right
             anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
-            height:             ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
+            height:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
             width:              height
             sourceSize.height:   height
             source:             "/res/TrashDelete.svg"
@@ -500,14 +501,15 @@ Item {
             anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
             anchors.top:        parent.top
             anchors.right:      parent.right
-            width:              ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
+            width:              ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
             height:             width
             sourceSize.height:  width
             source:             "/res/XDelete.svg"
             fillMode:           Image.PreserveAspectFit
             color:              "black"
             MouseArea {
-                anchors.fill:   parent
+                anchors.fill:       parent
+                anchors.margins:    ScreenTools.isMobile ? -ScreenTools.defaultFontPixelHeight : 0
                 onClicked: {
                     criticalMmessageArea.close()
                 }
@@ -519,14 +521,13 @@ Item {
             anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
             anchors.bottom:     parent.bottom
             anchors.right:      parent.right
-            width:              ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
+            width:              ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
             height:             width
             sourceSize.height:  width
             source:             "/res/ArrowDown.svg"
             fillMode:           Image.PreserveAspectFit
             visible:            criticalMessageText.lineCount > 5
             color:              "black"
-
             MouseArea {
                 anchors.fill:   parent
                 onClicked: {
