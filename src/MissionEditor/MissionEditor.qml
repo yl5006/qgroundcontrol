@@ -53,7 +53,7 @@ QGCView {
     readonly property real      _margin:            ScreenTools.defaultFontPixelHeight * 0.5
     readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
     readonly property real      _editFieldWidth:    ScreenTools.defaultFontPixelWidth * 16
-    readonly property real      _PointFieldWidth:    ScreenTools.defaultFontPixelWidth * 10
+    readonly property real      _PointFieldWidth:    ScreenTools.defaultFontPixelWidth * 12
     readonly property real      _rightPanelWidth:   Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 35)
     readonly property real      _rightPanelOpacity: 0.8
     readonly property int       _toolButtonCount:   6
@@ -485,7 +485,7 @@ QGCView {
                             onRemove: {
                                 itemDragger.clearItem()
                                 controller.removeMissionItem(index)
-                                setCurrentItem(_currentMissionItem.sequenceNumber-1)
+                                setCurrentItem(index-1)
                             }
 
                             onInsert: {
@@ -512,7 +512,6 @@ QGCView {
                 Item {
                     id:             missionItemIndex//missionItemEditor
                     height:         _PointFieldWidth+ScreenTools.defaultFontPixelWidth//mainWindow.availableHeight/5  //change by yaoling
-                    anchors.top:    parent.top
                     anchors.bottom:  parent.bottom
                     anchors.horizontalCenter:           parent.horizontalCenter
 //                  width:          _rightPanelWidth

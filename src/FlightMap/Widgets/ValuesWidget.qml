@@ -92,30 +92,28 @@ QGCFlickable {
 
 //           Column {
              Row {
-                width:  parent.width*0.8//_largeColumn.width
+                width:  _largeColumn.width*0.8//_largeColumn.width
                 spacing:    _margins*2
-                anchors.horizontalCenter:  parent.horizontalCenter
+                anchors.horizontalCenter:  _largeColumn.horizontalCenter
                 property Fact fact: _activeVehicle.getFact(modelData.replace("Vehicle.", ""))
                 property bool largeValue: _root.listContains(controller.altitudeProperties, fact.name)
 
                 Image{
-                    width:    ScreenTools.largeFontPixelSize
-                    height:   ScreenTools.largeFontPixelSize
+                    width:    ScreenTools.mediumFontPointSize * (largeValue ? 1.3 : 1.0)
+                    height:   ScreenTools.mediumFontPointSize * (largeValue ? 1.3 : 1.0)
                     source:   getIcon(fact.name)
                 }
 
                 QGCLabel {
                     width:                  parent.width*0.3
                     horizontalAlignment:    Text.AlignHCenter
-                    color:                  textColor
                     fontSizeMode:           Text.HorizontalFit
-                    text:                   fact.valueString
+                    color:                  textColor
+                    text:                   fact.valueString                    
                 }
                 QGCLabel {
         //          width:                  parent.width
  //                 horizontalAlignment:    Text.AlignHCenter
-                    font.pointSize:         ScreenTools.mediumFontPointSize * (largeValue ? 1.3 : 1.0)
-                    font.family:            largeValue ? ScreenTools.demiboldFontFamily : ScreenTools.normalFontFamily
                     fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
                     text:                   fact.units ? fact.units  : ""

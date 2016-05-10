@@ -75,9 +75,9 @@ Rectangle {
         planButton.checked = true
     }
 
-    function checkFlyButton() {
-        flyButton.checked = true
-    }
+//    function checkFlyButton() {
+//        flyButton.checked = true
+//    }
 
     function getBatteryColor() {
         if(activeVehicle) {
@@ -106,7 +106,7 @@ Rectangle {
 
     Component.onCompleted: {
         //-- TODO: Get this from the actual state
-        flyButton.checked = true
+        planButton.checked = true
     }
 
     //---------------------------------------------
@@ -485,8 +485,6 @@ Rectangle {
         }
         Loader {
             source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsRight.qml" : ""
-            font.pixelSize:         tbFontLarge
-            font.weight:            Font.DemiBold
             anchors.right:          parent.right
             anchors.rightMargin:    mainWindow.tbButtonWidth * 3
             anchors.verticalCenter: parent.verticalCenter

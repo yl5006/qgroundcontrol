@@ -54,6 +54,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.leftMargin:     _margin
         anchors.top:            parent.top
+
 //      anchors.left:           parent.left
         text:                   missionItem.sequenceNumber == 0 ? "Home" : missionItem.commandName
         color:                  _outerTextColor
@@ -86,16 +87,17 @@ Rectangle {
            spacing:    _margin*2
            anchors.horizontalCenter:  parent.horizontalCenter
            Image{
-               width:    ScreenTools.largeFontPixelSize
-               height:   ScreenTools.largeFontPixelSize
+               width:    ScreenTools.defaultFontPixelHeight
+               height:   ScreenTools.defaultFontPixelHeight
                source:   "/qmlimages/altitudeRelativewhite.svg"
            }
 
            QGCLabel {
                width:                  parent.width*0.5
                horizontalAlignment:    Text.AlignHCenter
-               font.pixelSize:         ScreenTools.largeFontPixelSize
-               font.weight:            Font.DemiBold
+               font.pixelSize:         ScreenTools.defaultFontPixelHeight
+               font.family:            ScreenTools.demiboldFontFamily
+               font.bold:              true
                color:                  "white"
 //             fontSizeMode:           Text.HorizontalFit
                text:                   missionItem.coordinate.altitude+" m"
@@ -110,17 +112,18 @@ Rectangle {
               anchors.horizontalCenter:  parent.horizontalCenter
               visible:                  _statusValid
               Image{
-                  width:    ScreenTools.largeFontPixelSize
-                  height:   ScreenTools.largeFontPixelSize
+                  width:    ScreenTools.defaultFontPixelHeight
+                  height:   ScreenTools.defaultFontPixelHeight
                   source:   "/qmlimages/distance.svg"
               }
 
               QGCLabel {
                   width:                  parent.width*0.5
-                  height:                 ScreenTools.largeFontPixelSize
+//                  height:                 ScreenTools.mediumFontPointSize
                   horizontalAlignment:    Text.AlignHCenter
-                  font.pixelSize:         ScreenTools.largeFontPixelSize
-                  font.weight:            Font.DemiBold
+                  font.pixelSize:         ScreenTools.defaultFontPixelHeight
+                  font.family:            ScreenTools.demiboldFontFamily
+                  font.bold:              true
                   color:                  "white"
 //                  fontSizeMode:         Text.HorizontalFit
                   text:                   _distanceText//missionItem.distance

@@ -38,7 +38,7 @@ import QGroundControl.Palette       1.0
 
 Rectangle {
     id:     instrumentPanel
-    height: instrumentColumn.y + instrumentColumn.height + _topBottomMargin
+    height: attitudeWidget.y + attitudeWidget.height + _topBottomMargin
     width:  size
  //   color:  _backgroundColor
     color:          Qt.rgba(0,0,0,0)
@@ -115,8 +115,8 @@ Rectangle {
 
     Image {
         id:                 gearThingy
-        anchors.bottom:     attitude.bottom
-        anchors.top:        attitude.top
+        anchors.bottom:     attitudeWidget.bottom
+        anchors.top:        attitudeWidget.top
         anchors.right:      attitudeWidget.right
         source:             qgcPal.globalTheme == QGCPalette.Light ? "/res/gear-black.svg" : "/res/gear-white.svg"
         mipmap:             true

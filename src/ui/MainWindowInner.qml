@@ -72,7 +72,8 @@ Item {
         flightView.visible          = true
         setupViewLoader.visible     = false
         planViewLoader.visible      = false
-        toolBar.checkFlyButton()
+ //       toolBar.checkFlyButton()
+        toolBar.checkPlanButton()
     }
 
     function showPlanView() {
