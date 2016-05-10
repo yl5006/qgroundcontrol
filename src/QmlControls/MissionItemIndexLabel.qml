@@ -48,7 +48,7 @@ Item {
             horizontalAlignment:    Text.AlignHCenter
             verticalAlignment:      Text.AlignVCenter
             color:                  "white"
-        font.pointSize:         small ? ScreenTools.smallFontPointSize : ScreenTools.defaultFontPointSize
+            font.pointSize:         small ? ScreenTools.smallFontPointSize : ScreenTools.defaultFontPointSize
         }
 
     MouseArea {
