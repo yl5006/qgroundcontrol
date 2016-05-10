@@ -1449,7 +1449,9 @@ void Vehicle::_setCoordinateValid(bool coordinateValid)
 
 QString Vehicle::vehicleTypeName() const {
     static QMap<int, QString> typeNames;
-    typeNames.insert(MAV_TYPE_GENERIC,tr("Generic micro air vehicle" ));
+    typeNames.insert(MAV_TYPE_GENERIC,         tr("Generic micro air vehicle" ));
+    typeNames.insert(MAV_TYPE_FIXED_WING,         tr("Fixed wing aircraft" ));
+    typeNames.insert(MAV_TYPE_QUADROTOR,         tr("Quadrotor" ));
 //    = {
 //        { MAV_TYPE_GENERIC,         tr("Generic micro air vehicle" )},
 //        { MAV_TYPE_FIXED_WING,      tr("Fixed wing aircraft")},
