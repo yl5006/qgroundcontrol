@@ -25,7 +25,10 @@ Item {
 
     QGCPalette { id: qgcPal }
 
+    MouseArea {
         anchors.fill: parent
+        onClicked: parent.clicked()
+    }
     Image {
         id:         waypoint
         source:     isCurrentItem ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
@@ -50,11 +53,5 @@ Item {
             color:                  "white"
             font.pointSize:         small ? ScreenTools.smallFontPointSize : ScreenTools.defaultFontPointSize
         }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: parent.clicked()
-    }
-
     }
 }

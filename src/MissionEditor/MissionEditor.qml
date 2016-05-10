@@ -442,7 +442,7 @@ QGCView {
                             Repeater {
                                 model: object.childItems
 
-                                delegate: MissionItemIndexLabel {
+                                delegate:   {
                                     label:          object.sequenceNumber
                                     isCurrentItem:  object.isCurrentItem
                                     z:              2
@@ -484,8 +484,8 @@ QGCView {
                             z:              QGroundControl.zOrderTopMost-100
                             onRemove: {
                                 itemDragger.clearItem()
-                                controller.removeMissionItem(index)
-                                setCurrentItem(index-1)
+                                controller.removeMissionItem(_currentMissionItem.sequenceNumber)
+                                setCurrentItem(_currentMissionItem.sequenceNumber-1)
                             }
 
                             onInsert: {

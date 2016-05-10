@@ -95,7 +95,7 @@ Rectangle {
            QGCLabel {
                width:                  parent.width*0.5
                horizontalAlignment:    Text.AlignHCenter
-               font.pixelSize:         ScreenTools.defaultFontPixelHeight
+ //              font.pixelSize:         ScreenTools.defaultFontPixelHeight
                font.family:            ScreenTools.demiboldFontFamily
                font.bold:              true
                color:                  "white"
@@ -121,7 +121,7 @@ Rectangle {
                   width:                  parent.width*0.5
 //                  height:                 ScreenTools.mediumFontPointSize
                   horizontalAlignment:    Text.AlignHCenter
-                  font.pixelSize:         ScreenTools.defaultFontPixelHeight
+ //                 font.pixelSize:         ScreenTools.defaultFontPixelHeight
                   font.family:            ScreenTools.demiboldFontFamily
                   font.bold:              true
                   color:                  "white"
