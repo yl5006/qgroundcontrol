@@ -97,43 +97,6 @@ Rectangle {
                   }
     }
 
-
-
-
-
-
-
-
-//                MenuItem {
-//                    text:           "Insert"
-//                    onTriggered:    insert(missionItem.sequenceNumber)
-//                }
-
-//                MenuItem {
-//                    text:           "Delete"
-//                    onTriggered:    remove()
-//                }
-
-//                MenuItem {
-//                    text:       "Show all values"
-//                    checkable:  true
-//                    checked:    missionItem.isSimpleItem ? missionItem.rawEdit : false
-//                    visible:    missionItem.isSimpleItem
-
-//                    onTriggered:    {
-//                        if (missionItem.rawEdit) {
-//                            if (missionItem.friendlyEditAllowed) {
-//                                missionItem.rawEdit = false
-//                            } else {
-//                                qgcView.showMessage("Mission Edit", "You have made changes to the mission item which cannot be shown in Simple Mode", StandardButton.Ok)
-//                            }
-//                        } else {
-//                            missionItem.rawEdit = true
-//                        }
-//                        checked = missionItem.rawEdit
-//                    }
-//                }
-
     QGCButton {
         id:                     commandPicker
         anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 2
@@ -181,14 +144,6 @@ Rectangle {
         text:               qsTr("高度差")//"Alt diff"// + _altText
     }
 
-//    QGCLabel {
-//        id:                 gradientLabel
-//        anchors.verticalCenter: distanceLabel.verticalCenter
-//        anchors.left:       altLabel.right
-//        anchors.leftMargin: _margin*4
-//        text:               "Gradient" //+ _gradientText
-//    }
-
     QGCLabel {
         id:                 azimuthLabel
         anchors.verticalCenter: distanceLabel.verticalCenter
@@ -197,8 +152,6 @@ Rectangle {
         color:              Qt.rgba(0.555,0.648,0.691,1)
         text:               qsTr("方位角")//"Azimuth" //+ _azimuthText
     }
-
-
 
     QGCLabel {
         id:                 distance

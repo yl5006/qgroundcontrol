@@ -32,7 +32,7 @@ Rectangle {
     readonly property real  _editFieldWidth:    ScreenTools.defaultFontPixelWidth * 16
     readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
     readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
-    readonly property real  _PointFieldWidth:   ScreenTools.defaultFontPixelWidth * 10
+    readonly property real  _PointFieldWidth:   ScreenTools.defaultFontPixelWidth * 9
     property real   _distance:          _statusValid ? missionItem.distance : 0
     property bool   _statusValid:       missionItem.command==16&&missionItem.sequenceNumber != 0
     property string _distanceText:      _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(0) + " " + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(1) + "k" + QGroundControl.appSettingsDistanceUnitsString
@@ -54,7 +54,6 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.leftMargin:     _margin
         anchors.top:            parent.top
-
 //      anchors.left:           parent.left
         text:                   missionItem.sequenceNumber == 0 ? "Home" : missionItem.commandName
         color:                  _outerTextColor
@@ -86,6 +85,7 @@ Rectangle {
            width:  parent.width*0.9//_largeColumn.width
            spacing:    _margin*2
            anchors.horizontalCenter:  parent.horizontalCenter
+           visible:                  missionItem.sequenceNumber != 0
            Image{
                width:    ScreenTools.defaultFontPixelHeight
                height:   ScreenTools.defaultFontPixelHeight
@@ -119,9 +119,8 @@ Rectangle {
 
               QGCLabel {
                   width:                  parent.width*0.5
-//                  height:                 ScreenTools.mediumFontPointSize
                   horizontalAlignment:    Text.AlignHCenter
- //                 font.pixelSize:         ScreenTools.defaultFontPixelHeight
+                  font.pixelSize:         ScreenTools.defaultFontPixelHeight
                   font.family:            ScreenTools.demiboldFontFamily
                   font.bold:              true
                   color:                  "white"

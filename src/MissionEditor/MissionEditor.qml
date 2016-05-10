@@ -53,7 +53,7 @@ QGCView {
     readonly property real      _margin:            ScreenTools.defaultFontPixelHeight * 0.5
     readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
     readonly property real      _editFieldWidth:    ScreenTools.defaultFontPixelWidth * 16
-    readonly property real      _PointFieldWidth:    ScreenTools.defaultFontPixelWidth * 12
+    readonly property real      _PointFieldWidth:    ScreenTools.defaultFontPixelWidth * 11
     readonly property real      _rightPanelWidth:   Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 35)
     readonly property real      _rightPanelOpacity: 0.8
     readonly property int       _toolButtonCount:   6
@@ -442,7 +442,7 @@ QGCView {
                             Repeater {
                                 model: object.childItems
 
-                                delegate:   {
+                                delegate:   MissionItemIndexLabel{
                                     label:          object.sequenceNumber
                                     isCurrentItem:  object.isCurrentItem
                                     z:              2
@@ -475,7 +475,7 @@ QGCView {
                 MissionItemIndexIndicator {
                             anchors.right:   parent.right
                             anchors.top:     parent.top
-                            anchors.topMargin:   _margin*2+topDialogMargin
+                            anchors.topMargin:   _margin+mainWindow.tbHeight
                             anchors.rightMargin:   _margin*2
                             width:          _rightPanelWidth
                             missionItem:    _currentMissionItem

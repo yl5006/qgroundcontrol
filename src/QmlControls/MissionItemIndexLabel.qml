@@ -14,8 +14,8 @@ Item {
 
     signal clicked
 
-    width:          _width*2
-    height:         _width*2
+    width:          _width*1.5
+    height:         _width*1.5
 //  radius:         _width / 2
 //  border.width:   small ? 1 : 2
 //  border.color:   "white"
@@ -38,8 +38,8 @@ Item {
     }
     Rectangle {
         id:             point
-        width:          _width
-        height:         _width
+        width:          _width/2
+        height:         _width/2
         radius:         _width / 2
         color:              Qt.rgba(0,0,0,0.0)
         anchors.topMargin: _width/3
