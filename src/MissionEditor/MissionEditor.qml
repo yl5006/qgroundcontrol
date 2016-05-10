@@ -472,30 +472,6 @@ QGCView {
                                 z:              QGroundControl.zOrderMapItems - 1
                         }
                 }
-                MissionItemIndexIndicator {
-                            anchors.right:   parent.right
-                            anchors.top:     parent.top
-                            anchors.topMargin:   _margin+mainWindow.tbHeight
-                            anchors.rightMargin:   _margin*2
-                            width:          _rightPanelWidth
-                            missionItem:    _currentMissionItem
-                            qgcView:        _root
-                            readOnly:       false
-                            z:              QGroundControl.zOrderTopMost-100
-                            onRemove: {
-                                itemDragger.clearItem()
-                                controller.removeMissionItem(_currentMissionItem.sequenceNumber)
-                                setCurrentItem(_currentMissionItem.sequenceNumber-1)
-                            }
-
-                            onInsert: {
-                                var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
-                                setCurrentItem(sequenceNumber)
-                            }
-
-                            onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
-
-                         }
 //                MissionItemIndexIndicator {
 //                    id:             missionItemIndicator
 //                    anchors.right:   parent.right
@@ -742,7 +718,31 @@ QGCView {
                         }
                     }
                 }
+                MissionItemIndexIndicator {
+                            id:              indexIndicator
+                            anchors.right:   parent.right
+                            anchors.top:     parent.top
+                            anchors.topMargin:   _margin+mainWindow.tbHeight
+                            anchors.rightMargin:   _margin*2
+                            width:          _rightPanelWidth
+                            missionItem:    _currentMissionItem
+                            qgcView:        _root
+                            readOnly:       false
+                            z:              QGroundControl.zOrderTopMost
+                            onRemove: {
+                                itemDragger.clearItem()
+                                controller.removeMissionItem(_currentMissionItem.sequenceNumber)
+                                setCurrentItem(_currentMissionItem.sequenceNumber-1)
+                            }
 
+                            onInsert: {
+                                var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
+                                setCurrentItem(sequenceNumber)
+                            }
+
+                            onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
+
+                         }
 //change by yaoling do not use this
 //                MissionItemStatus {
 //                    id:                 waypointValuesDisplay

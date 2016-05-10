@@ -52,7 +52,7 @@ Rectangle {
         width:           parent.width
         anchors.top:     parent.top
         anchors.bottom:  distanceLabel.top
-        anchors.bottomMargin: _margin*1
+        anchors.bottomMargin: _margin
         color:     Qt.rgba(0.2,0.267,0.306,1)//qgcPal.windowShade
     }
 
