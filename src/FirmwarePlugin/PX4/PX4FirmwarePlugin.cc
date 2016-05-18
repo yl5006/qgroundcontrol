@@ -132,8 +132,6 @@ QStringList PX4FirmwarePlugin::flightModes(void)
 {
     QStringList flightModes;
 
-    // FIXME: fixed-wing/multi-rotor differences?
-
     for (size_t i=0; i<sizeof(rgModes2Name)/sizeof(rgModes2Name[0]); i++) {
         const struct Modes2Name* pModes2Name = &rgModes2Name[i];
 
@@ -152,8 +150,6 @@ QString PX4FirmwarePlugin::flightMode(uint8_t base_mode, uint32_t custom_mode) c
     if (base_mode & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED) {
         union px4_custom_mode px4_mode;
         px4_mode.data = custom_mode;
-
-        // FIXME: fixed-wing/multi-rotor differences?
 
         bool found = false;
         for (size_t i=0; i<sizeof(rgModes2Name)/sizeof(rgModes2Name[0]); i++) {
@@ -277,18 +273,14 @@ QObject* PX4FirmwarePlugin::loadParameterMetaData(const QString& metaDataFile)
 
 void PX4FirmwarePlugin::pauseVehicle(Vehicle* vehicle)
 {
-    // kick it into hold mode
-    vehicle->setFlightMode(pauseFlightMode);
-
     // then tell it to loiter at the current position
-    // above the takeoff (home) position
     mavlink_message_t msg;
     mavlink_command_long_t cmd;
 
     cmd.command = (uint16_t)MAV_CMD_DO_REPOSITION;
     cmd.confirmation = 0;
     cmd.param1 = -1.0f;
-    cmd.param2 = 0.0;
+    cmd.param2 = MAV_DO_REPOSITION_FLAGS_CHANGE_MODE;
     cmd.param3 = 0.0f;
     cmd.param4 = NAN;
     cmd.param5 = NAN;
@@ -321,19 +313,16 @@ void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double altitudeRel)
         return;
     }
 
-    // tell the system first to take off in its internal,
-    // airframe specific takeoff action
-    vehicle->setFlightMode(takeoffFlightMode);
+    MAVLinkProtocol* mavlink = qgcApp()->toolbox()->mavlinkProtocol();
 
-    // then tell it to loiter at the user-selected location
-    // above the takeoff (home) position
+    // Set destination altitude
     mavlink_message_t msg;
     mavlink_command_long_t cmd;
 
-    cmd.command = (uint16_t)MAV_CMD_DO_REPOSITION;
+    cmd.command = (uint16_t)MAV_CMD_NAV_TAKEOFF;
     cmd.confirmation = 0;
     cmd.param1 = -1.0f;
-    cmd.param2 = 0.0;
+    cmd.param2 = 0.0f;
     cmd.param3 = 0.0f;
     cmd.param4 = NAN;
     cmd.param5 = NAN;
@@ -342,9 +331,7 @@ void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double altitudeRel)
     cmd.target_system = vehicle->id();
     cmd.target_component = 0;
 
-    MAVLinkProtocol* mavlink = qgcApp()->toolbox()->mavlinkProtocol();
     mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
-
     vehicle->sendMessage(msg);
 }
 
@@ -416,5 +403,6 @@ void PX4FirmwarePlugin::setGuidedMode(Vehicle* vehicle, bool guidedMode)
 bool PX4FirmwarePlugin::isGuidedMode(const Vehicle* vehicle) const
 {
     // Not supported by generic vehicle
-    return (vehicle->flightMode() == pauseFlightMode);
+    return (vehicle->flightMode() == pauseFlightMode || vehicle->flightMode() == takeoffFlightMode
+            || vehicle->flightMode() == landingFlightMode);
 }
