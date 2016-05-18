@@ -125,7 +125,7 @@ iOSBuild {
     QMAKE_BUNDLE_DATA  += BUNDLE
     LIBS               += -framework AVFoundation
     #-- Info.plist (need an "official" one for the App Store)
-    ForAppStore {
+    ForAppStore {++
         message(App Store Build)
         QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOSForAppStore-Info.plist
         OTHER_FILES      += $${BASEDIR}/ios/iOSForAppStore-Info.plist
@@ -514,7 +514,7 @@ SOURCES += \
     src/ui/linechart/ScrollZoomer.cc \
     src/ui/MainWindow.cc \
     src/ui/MultiVehicleDockWidget.cc \
-    src/ui/QGCDataPlot2D.cc \
+    src/ui/QGCDataPlotmacD.cc \
     src/ui/QGCHilConfiguration.cc \
     src/ui/QGCHilFlightGearConfiguration.cc \
     src/ui/QGCHilJSBSimConfiguration.cc \

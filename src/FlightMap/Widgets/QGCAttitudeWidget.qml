@@ -105,7 +105,7 @@ Item {
             anchors.centerIn:   parent
             source:             "/qmlimages/crossHair.svg"
             mipmap:             true
-            width:              size * 0.75
+            width:              size * 0.5
             sourceSize.width:   width
             fillMode:           Image.PreserveAspectFit
         }

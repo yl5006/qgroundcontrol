@@ -48,7 +48,7 @@ LinuxBuild {
     }
 } else:WindowsBuild {
     #- gstreamer installed by default under c:/gstreamer
-    GST_ROOT = c:/gstreamer/1.0/x86
+    GST_ROOT = d:/gstreamer/1.0/x86
     exists($$GST_ROOT) {
         CONFIG      += VideoEnabled
         LIBS        += -L$$GST_ROOT/lib/gstreamer-1.0/static -lgstreamer-1.0 -lgstvideo-1.0 -lgstbase-1.0
