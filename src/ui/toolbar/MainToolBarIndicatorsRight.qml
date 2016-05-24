@@ -98,7 +98,7 @@ Row {
         QGCLabel {
             text:           activeVehicle ? activeVehicle.gps.hdop.valueString : ""
             visible:        activeVehicle && !isNaN(activeVehicle.gps.hdop.value)
-            font.pixelSize: tbFontSmall
+            font.pixelSize: ScreenTools.mediumFontPointSize
             color:          colorWhite
             anchors.top:    parent.top
             anchors.leftMargin: gpsIcon.width
@@ -201,7 +201,7 @@ Row {
             }
             QGCLabel {
                 text:           getBatteryPercentageText()
-                font.pixelSize: tbFontLarge
+                font.pixelSize: ScreenTools.mediumFontPointSize
                 color:          getBatteryColor()
                 anchors.verticalCenter: parent.verticalCenter
             }

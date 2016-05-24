@@ -514,7 +514,7 @@ SOURCES += \
     src/ui/linechart/ScrollZoomer.cc \
     src/ui/MainWindow.cc \
     src/ui/MultiVehicleDockWidget.cc \
-    src/ui/QGCDataPlotmacD.cc \
+    src/ui/QGCDataPlot2D.cc \
     src/ui/QGCHilConfiguration.cc \
     src/ui/QGCHilFlightGearConfiguration.cc \
     src/ui/QGCHilJSBSimConfiguration.cc \

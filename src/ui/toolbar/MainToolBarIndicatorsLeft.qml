@@ -197,7 +197,7 @@ Row {
             }
             QGCLabel {
                 text:           activeVehicle ? activeVehicle.flightMode : "N/A"
-                font.pixelSize: tbFontLarge
+                font.pixelSize: ScreenTools.mediumFontPointSize
                 color:          colorWhite
                 anchors.verticalCenter: parent.verticalCenter
             }
