@@ -569,18 +569,17 @@ QGCView {
                     anchors.left:       parent.left
                     anchors.top:        parent.top
                     spacing:            ScreenTools.defaultFontPixelHeight
+                    z:                  QGroundControl.zOrderWidgets
 
                     RoundButton {
                         id:             addMissionItemsButton
                         buttonImage:    "/qmlimages/MapAddMission.svg"
-                        z:              QGroundControl.zOrderWidgets
                         lightBorders:   _lightWidgetBorders
                     }
 
                     RoundButton {
                         id:             addShapeButton
                         buttonImage:    "/qmlimages/MapDrawShape.svg"
-                        z:              QGroundControl.zOrderWidgets
                         visible:        QGroundControl.experimentalSurvey
                         lightBorders:   _lightWidgetBorders
 
@@ -602,7 +601,6 @@ QGCView {
                         buttonImage:        syncNeeded ? "/qmlimages/MapSyncChanged.svg" : "/qmlimages/MapSync.svg"
                         viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
                         exclusiveGroup:     _dropButtonsExclusiveGroup
-                        z:                  QGroundControl.zOrderWidgets
                         dropDownComponent:  syncDropDownComponent
                         enabled:            !controller.syncInProgress
                         rotateImage:        controller.syncInProgress
@@ -615,7 +613,6 @@ QGCView {
                         buttonImage:        "/qmlimages/MapCenter.svg"
                         viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
                         exclusiveGroup:     _dropButtonsExclusiveGroup
-                        z:                  QGroundControl.zOrderWidgets
                         lightBorders:       _lightWidgetBorders
 
                         dropDownComponent: Component {
@@ -661,7 +658,6 @@ QGCView {
                         buttonImage:        "/qmlimages/MapType.svg"
                         viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
                         exclusiveGroup:     _dropButtonsExclusiveGroup
-                        z:                  QGroundControl.zOrderWidgets
                         lightBorders:       _lightWidgetBorders
 
                         dropDownComponent: Component {
@@ -694,7 +690,6 @@ QGCView {
                         id:             mapZoomPlus
                         visible:        !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
                         buttonImage:    "/qmlimages/ZoomPlus.svg"
-                        z:              QGroundControl.zOrderWidgets
                         lightBorders:   _lightWidgetBorders
 
                         onClicked: {
@@ -709,7 +704,6 @@ QGCView {
                         id:             mapZoomMinus
                         visible:        !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
                         buttonImage:    "/qmlimages/ZoomMinus.svg"
-                        z:              QGroundControl.zOrderWidgets
                         lightBorders:   _lightWidgetBorders
                         onClicked: {
                             if(editorMap)

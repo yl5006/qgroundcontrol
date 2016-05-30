@@ -103,6 +103,8 @@ public:
 
     /// If this file is newer than anything in the cache, cache it as the latest version
     static void cacheMetaDataFile(const QString& metaDataFile, MAV_AUTOPILOT firmwareType);
+
+    int defaultComponenentId(void) { return _defaultComponentId; }
     
 signals:
     /// Signalled when the full set of facts are ready
@@ -142,8 +144,6 @@ private:
     void _saveToEEPROM(void);
     void _checkInitialLoadComplete(bool failIfNoDefaultComponent);
 
-    LinkInterface* _dedicatedLink; ///< Parameter protocol stays on this link
-    
     /// First mapping is by component id
     /// Second mapping is parameter name, to Fact* in QVariant
     QMap<int, QVariantMap>            _mapParameterName2Variant;

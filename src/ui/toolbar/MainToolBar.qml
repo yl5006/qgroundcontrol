@@ -61,6 +61,7 @@ Rectangle {
     readonly property var   colorBlue:      "#636efe"
     readonly property var   colorWhite:     "#ffffff"
 
+    signal showPreferences()
     signal showSetupView()
     signal showPlanView()
     signal showFlyView()
@@ -366,8 +367,8 @@ Rectangle {
         }
         */
         MouseArea {
-            anchors.fill: parent
-            onClicked: mainWindow.showLeftMenu()
+            anchors.fill:   parent
+            onClicked:      toolBar.showPreferences()
         }
     }
     ExclusiveGroup { id: mainActionGroup }

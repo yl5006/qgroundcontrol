@@ -100,7 +100,6 @@ QGCView {
                             spacing:                    _margins * 0.5
                             anchors.verticalCenter:     parent.verticalCenter
                             Row {
-                                visible:                !controller.fixedWing
                                 QGCLabel {
                                     anchors.baseline:   lowBattCombo.baseline
                                     width:              _middleRowWidth
@@ -364,7 +363,7 @@ QGCView {
                             sourceSize.width:           width
                             mipmap:                     true
                             fillMode:                   Image.PreserveAspectFit
-                            source:                     controller.fixedWing ? "/qmlimages/ReturnToHomeAltitude.svg" : "/qmlimages/ReturnToHomeAltitudeCopter.svg"
+                            source:                     controller.vehicle.fixedWing ? "/qmlimages/ReturnToHomeAltitude.svg" : "/qmlimages/ReturnToHomeAltitudeCopter.svg"
                             anchors.verticalCenter:     parent.verticalCenter
                         }
                         Item { width: _margins * 0.5; height: 1; }
@@ -479,7 +478,7 @@ QGCView {
                             sourceSize.width:           width
                             mipmap:                     true
                             fillMode:                   Image.PreserveAspectFit
-                            source:                     controller.fixedWing ? "/qmlimages/LandMode.svg" : "/qmlimages/LandModeCopter.svg"
+                            source:                     controller.vehicle.fixedWing ? "/qmlimages/LandMode.svg" : "/qmlimages/LandModeCopter.svg"
                             anchors.verticalCenter:     parent.verticalCenter
                         }
                         Item {
@@ -490,7 +489,7 @@ QGCView {
                             spacing:                    _margins * 0.5
                             anchors.verticalCenter:     parent.verticalCenter
                             Row {
-                                visible:                _landSpeedMC !== -1
+                                visible:                !controller.vehicle.fixedWing && (_landSpeedMC !== -1)
                                 QGCLabel {
                                     anchors.baseline:   landVelField.baseline
                                     width:              _middleRowWidth

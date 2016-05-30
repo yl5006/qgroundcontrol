@@ -128,6 +128,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _firmwareMajorVersion(versionNotSetValue)
     , _firmwareMinorVersion(versionNotSetValue)
     , _firmwarePatchVersion(versionNotSetValue)
+    , _firmwareVersionType(FIRMWARE_VERSION_TYPE_OFFICIAL)
     , _rollFact             (0, _rollFactName,              FactMetaData::valueTypeDouble)
     , _pitchFact            (0, _pitchFactName,             FactMetaData::valueTypeDouble)
     , _headingFact          (0, _headingFactName,           FactMetaData::valueTypeDouble)
@@ -211,6 +212,9 @@ Vehicle::Vehicle(LinkInterface*             link,
     _parameterLoader = new ParameterLoader(this);
     connect(_parameterLoader, &ParameterLoader::parametersReady, _autopilotPlugin, &AutoPilotPlugin::_parametersReadyPreChecks);
     connect(_parameterLoader, &ParameterLoader::parameterListProgress, _autopilotPlugin, &AutoPilotPlugin::parameterListProgress);
+
+    // Ask the vehicle for firmware version info
+    doCommandLong(defaultComponentId(), MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES, 1 /* request firmware version */);
 
     _firmwarePlugin->initializeVehicle(this);
 
@@ -449,6 +453,9 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_COMMAND_ACK:
         _handleCommandAck(message);
         break;
+    case MAVLINK_MSG_ID_AUTOPILOT_VERSION:
+        _handleAutopilotVersion(message);
+        break;
 
     // Following are ArduPilot dialect messages
 
@@ -460,6 +467,23 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     emit mavlinkMessageReceived(message);
 
     _uas->receiveMessage(message);
+}
+
+void Vehicle::_handleAutopilotVersion(mavlink_message_t& message)
+{
+    mavlink_autopilot_version_t autopilotVersion;
+    mavlink_msg_autopilot_version_decode(&message, &autopilotVersion);
+
+    if (autopilotVersion.flight_sw_version != 0) {
+        int majorVersion, minorVersion, patchVersion;
+        FIRMWARE_VERSION_TYPE versionType;
+
+        majorVersion = (autopilotVersion.flight_sw_version >> (8*3)) & 0xFF;
+        minorVersion = (autopilotVersion.flight_sw_version >> (8*2)) & 0xFF;
+        patchVersion = (autopilotVersion.flight_sw_version >> (8*1)) & 0xFF;
+        versionType = (FIRMWARE_VERSION_TYPE)((autopilotVersion.flight_sw_version >> (8*0)) & 0xFF);
+        setFirmwareVersion(majorVersion, minorVersion, patchVersion, versionType);
+    }
 }
 
 void Vehicle::_handleCommandAck(mavlink_message_t& message)
@@ -1187,7 +1211,7 @@ bool Vehicle::flightModeSetAvailable(void)
 
 QStringList Vehicle::flightModes(void)
 {
-    return _firmwarePlugin->flightModes();
+    return _firmwarePlugin->flightModes(this);
 }
 
 QString Vehicle::flightMode(void) const
@@ -1439,6 +1463,22 @@ bool Vehicle::multiRotor(void) const
     }
 }
 
+bool Vehicle::vtol(void) const
+{
+    switch (vehicleType()) {
+    case MAV_TYPE_VTOL_DUOROTOR:
+    case MAV_TYPE_VTOL_QUADROTOR:
+    case MAV_TYPE_VTOL_TILTROTOR:
+    case MAV_TYPE_VTOL_RESERVED2:
+    case MAV_TYPE_VTOL_RESERVED3:
+    case MAV_TYPE_VTOL_RESERVED4:
+    case MAV_TYPE_VTOL_RESERVED5:
+        return true;
+    default:
+        return false;
+    }
+}
+
 void Vehicle::_setCoordinateValid(bool coordinateValid)
 {
     if (coordinateValid != _coordinateValid) {
@@ -1656,16 +1696,43 @@ void Vehicle::_prearmErrorTimeout(void)
     setPrearmError(QString());
 }
 
-void Vehicle::setFirmwareVersion(int majorVersion, int minorVersion, int patchVersion)
+void Vehicle::setFirmwareVersion(int majorVersion, int minorVersion, int patchVersion, FIRMWARE_VERSION_TYPE versionType)
 {
     _firmwareMajorVersion = majorVersion;
     _firmwareMinorVersion = minorVersion;
     _firmwarePatchVersion = patchVersion;
+    _firmwareVersionType = versionType;
+    emit firmwareMajorVersionChanged(_firmwareMajorVersion);
+    emit firmwareMinorVersionChanged(_firmwareMinorVersion);
+    emit firmwarePatchVersionChanged(_firmwarePatchVersion);
+    emit firmwareVersionTypeChanged(_firmwareVersionType);
+}
+
+QString Vehicle::firmwareVersionTypeString(void) const
+{
+    switch (_firmwareVersionType) {
+    case FIRMWARE_VERSION_TYPE_DEV:
+        return QStringLiteral("dev");
+    case FIRMWARE_VERSION_TYPE_ALPHA:
+        return QStringLiteral("alpha");
+    case FIRMWARE_VERSION_TYPE_BETA:
+        return QStringLiteral("beta");
+    case FIRMWARE_VERSION_TYPE_RC:
+        return QStringLiteral("rc");
+    case FIRMWARE_VERSION_TYPE_OFFICIAL:
+    default:
+        return QStringLiteral("");
+    }
 }
 
 void Vehicle::rebootVehicle()
 {
     doCommandLong(id(), MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+}
+
+int Vehicle::defaultComponentId(void)
+{
+    return _parameterLoader->defaultComponenentId();
 }
 
 const char* VehicleGPSFactGroup::_hdopFactName =                "hdop";

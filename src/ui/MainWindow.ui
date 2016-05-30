@@ -65,14 +65,7 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>帮助</string>
-    </property>
-    <addaction name="actionOnline_Documentation"/>
-    <addaction name="actionProject_Roadmap"/>
-    <addaction name="actionDeveloper_Credits"/>
-   </widget>
+     <string>Help</string>
    <widget class="QMenu" name="menuWidgets">
     <property name="title">
      <string>工具</string>
@@ -80,7 +73,6 @@
    </widget>
    <addaction name="menuMGround"/>
    <addaction name="menuWidgets"/>
-   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -94,21 +86,6 @@
   <action name="actionAdd_Link">
    <property name="text">
     <string>Manage Communication Links</string>
-   </property>
-  </action>
-  <action name="actionOnline_Documentation">
-   <property name="text">
-    <string>Online Documentation</string>
-   </property>
-  </action>
-  <action name="actionProject_Roadmap">
-   <property name="text">
-    <string>Project Roadmap</string>
-   </property>
-  </action>
-  <action name="actionDeveloper_Credits">
-   <property name="text">
-    <string>Developer Credits</string>
    </property>
   </action>
   <action name="actionMuteAudioOutput">
