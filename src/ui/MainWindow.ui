@@ -65,7 +65,6 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
-     <string>Help</string>
    <widget class="QMenu" name="menuWidgets">
     <property name="title">
      <string>工具</string>
