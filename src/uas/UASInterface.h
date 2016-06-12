@@ -255,7 +255,7 @@ signals:
      */
     void batteryChanged(UASInterface* uas, double voltage, double current, double percent, int seconds);
     void statusChanged(UASInterface* uas, QString status);
-    void throttleChanged(UASInterface*, double thrust);  //yaoling
+    void thrustChanged(UASInterface*, double thrust);
     void attitudeChanged(UASInterface*, double roll, double pitch, double yaw, quint64 usec);
     void attitudeChanged(UASInterface*, int component, double roll, double pitch, double yaw, quint64 usec);
     void attitudeRotationRatesChanged(int uas, double rollrate, double pitchrate, double yawrate, quint64 usec);

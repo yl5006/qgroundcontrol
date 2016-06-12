@@ -93,7 +93,7 @@ public:
     Q_PROPERTY(double   altitudeAMSLFT          READ getAltitudeAMSLFT                                  NOTIFY altitudeAMSLFTChanged)
     Q_PROPERTY(double   altitudeRelative        READ getAltitudeRelative    WRITE setAltitudeRelative   NOTIFY altitudeRelativeChanged)
 //yaoling
-    Q_PROPERTY(double   thrust                  READ getThrust              WRITE setThrust             NOTIFY thrustChanged)
+//    Q_PROPERTY(double   thrust                  READ getThrust              WRITE setThrust             NOTIFY thrustChanged)
     Q_PROPERTY(double   satRawHDOP              READ getSatRawHDOP                                      NOTIFY satRawHDOPChanged)
     Q_PROPERTY(double   satRawVDOP              READ getSatRawVDOP                                      NOTIFY satRawVDOPChanged)
     Q_PROPERTY(double   satRawCOG               READ getSatRawCOG                                       NOTIFY satRawCOGChanged)
@@ -214,12 +214,12 @@ public:
         return altitudeRelative;
     }
 
-    void setThrust(double val)
-    {
-        thrust = val;
-        emit thrustChanged(val, "thrust");
-        emit valueChanged(this->uasId,"thrust","%",QVariant(val),getUnixTime());
-    }
+//    void setThrust(double val)
+//    {
+//        thrust = val;
+//        emit thrustChanged(val, "thrust");
+//        emit valueChanged(this->uasId,"thrust","%",QVariant(val),getUnixTime());
+//    }
 
     double getThrust() const
     {
@@ -591,7 +591,7 @@ signals:
     void altitudeAMSLChanged(double val,QString name);
     void altitudeAMSLFTChanged(double val,QString name);
     void altitudeRelativeChanged(double val,QString name);
-    void thrustChanged(double val,QString name);   //yaoling
+//    void thrustChanged(double val,QString name);   //yaoling
 
     void satRawHDOPChanged  (double value);
     void satRawVDOPChanged  (double value);

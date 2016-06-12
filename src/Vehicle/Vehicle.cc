@@ -198,7 +198,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     connect(_mav, SIGNAL(attitudeChanged                    (UASInterface*,int,double,double,double,quint64)),          this, SLOT(_updateAttitude(UASInterface*,int,double, double, double, quint64)));
     connect(_mav, SIGNAL(statusChanged                      (UASInterface*,QString,QString)),                           this, SLOT(_updateState(UASInterface*, QString,QString)));
 
-    connect(_mav, &UASInterface::throttleChanged, this, &Vehicle::_updatethrust);  //add yaoling
+//    connect(_mav, &UASInterface::throttleChanged, this, &Vehicle::_updatethrust);  //add yaoling
     connect(_mav, &UASInterface::speedChanged, this, &Vehicle::_updateSpeed);
     connect(_mav, &UASInterface::altitudeChanged, this, &Vehicle::_updateAltitude);
     connect(_mav, &UASInterface::navigationControllerErrorsChanged,this, &Vehicle::_updateNavigationControllerErrors);

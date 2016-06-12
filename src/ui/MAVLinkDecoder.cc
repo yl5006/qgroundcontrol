@@ -90,8 +90,7 @@ void MAVLinkDecoder::receiveMessage(LinkInterface* link,mavlink_message_t messag
 
         // See if first value is a time value and if it is, use that as the arrival time for this data.
         uint8_t fieldid = 0;
- //       uint8_t* m = ((uint8_t*)(receivedMessages+msgid))+8;
-          uint8_t* m = ((uint8_t*)(receivedMessages+msgid))+9;
+        uint8_t* m = ((uint8_t*)(receivedMessages+msgid))+MAVLINK_NUM_NON_PAYLOAD_BYTES;
         if (QString(messageInfo[msgid].fields[fieldid].name) == QString("time_boot_ms") && messageInfo[msgid].fields[fieldid].type == MAVLINK_TYPE_UINT32_T)
         {
             time = *((quint32*)(m+messageInfo[msgid].fields[fieldid].wire_offset));
@@ -219,8 +218,7 @@ void MAVLinkDecoder::emitFieldValue(mavlink_message_t* msg, int fieldid, quint64
     if (messageFilter.contains(msgid)) return;
     QString fieldName(messageInfo[msgid].fields[fieldid].name);
     QString fieldType;
-//    uint8_t* m = ((uint8_t*)(receivedMessages+msgid))+8;
-    uint8_t* m = ((uint8_t*)(receivedMessages+msgid))+9;
+    uint8_t* m = ((uint8_t*)(receivedMessages+msgid))+MAVLINK_NUM_NON_PAYLOAD_BYTES;
     QString name("%1.%2");
     QString unit("");
 

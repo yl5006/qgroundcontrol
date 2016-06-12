@@ -431,8 +431,8 @@ void UAS::receiveMessage(mavlink_message_t message)
             mavlink_msg_vfr_hud_decode(&message, &hud);
             quint64 time = getUnixTime();
             // Display updated values
-            setThrust(hud.throttle);
-            emit throttleChanged(this,thrust);
+            emit thrustChanged(this, hud.throttle/100.0);
+
             if (!attitudeKnown)
             {
                 setYaw(QGC::limitAngleToPMPId((((double)hud.heading)/180.0)*M_PI));
@@ -440,7 +440,6 @@ void UAS::receiveMessage(mavlink_message_t message)
             }
 
             setAltitudeAMSL(hud.alt);
-            setAltitudeRelative(hud.alt);
             setGroundSpeed(hud.groundspeed);
             if (!qIsNaN(hud.airspeed))
                 setAirSpeed(hud.airspeed);

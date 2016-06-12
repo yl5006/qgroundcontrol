@@ -543,8 +543,7 @@ void QGCMAVLinkInspector::updateField(int sysid, int msgid, int fieldid, QTreeWi
         return;
     }
 
-//    uint8_t* m = ((uint8_t*)uasMessage)+8;
-    uint8_t* m = ((uint8_t*)uasMessage)+9;
+    uint8_t* m = ((uint8_t*)uasMessage)+MAVLINK_NUM_NON_PAYLOAD_BYTES;
 
     switch (messageInfo[msgid].fields[fieldid].type)
     {
