@@ -1,25 +1,12 @@
-/*=====================================================================
+/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
 
-QGroundControl Open Source Ground Control Station
-
-(c) 2009, 2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
-
-This file is part of the QGROUNDCONTROL project
-
-    QGROUNDCONTROL is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    QGROUNDCONTROL is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with QGROUNDCONTROL. If not, see <http://www.gnu.org/licenses/>.
-
-======================================================================*/
 
 /**
  * @file
@@ -315,6 +302,9 @@ QGCCacheWorker::_getTileSets(QGCMapTask* mtask)
         while(query.next()) {
             QString name = query.value("name").toString();
             QString desc = query.value("description").toString();
+            //-- Original database had description as NOT NULL
+            if(desc.isEmpty())
+                desc = " ";
             QGCCachedTileSet* set = new QGCCachedTileSet(name, desc);
             set->setId(query.value("setID").toULongLong());
             set->setMapTypeStr(query.value("typeStr").toString());
@@ -422,11 +412,15 @@ QGCCacheWorker::_createTileSet(QGCMapTask *mtask)
         quint32 actual_count = 0;
         QGCCreateTileSetTask* task = static_cast<QGCCreateTileSetTask*>(mtask);
         QSqlQuery query(*_db);
+        QString desc = task->tileSet()->description();
+        //-- Original database had description as NOT NULL
+        if(desc.isEmpty())
+            desc = " ";
         query.prepare("INSERT INTO TileSets("
             "name, description, typeStr, topleftLat, topleftLon, bottomRightLat, bottomRightLon, minZoom, maxZoom, type, numTiles, tilesSize, thumbNail, thumbW, thumbH, date"
             ") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         query.addBindValue(task->tileSet()->name());
-        query.addBindValue(task->tileSet()->description());
+        query.addBindValue(desc);
         query.addBindValue(task->tileSet()->mapTypeStr());
         query.addBindValue(task->tileSet()->topleftLat());
         query.addBindValue(task->tileSet()->topleftLon());
@@ -678,7 +672,7 @@ QGCCacheWorker::_createDB()
             "CREATE TABLE IF NOT EXISTS TileSets ("
             "setID INTEGER PRIMARY KEY NOT NULL, "
             "name TEXT NOT NULL UNIQUE, "
-            "description TEXT NOT NULL, "
+            "description TEXT, "
             "typeStr TEXT, "
             "topleftLat REAL DEFAULT 0.0, "
             "topleftLon REAL DEFAULT 0.0, "

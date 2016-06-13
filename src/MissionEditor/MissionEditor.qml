@@ -1,25 +1,12 @@
-﻿/*=====================================================================
+﻿/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
 
-QGroundControl Open Source Ground Control Station
-
-(c) 2009, 2015 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
-
-This file is part of the QGROUNDCONTROL project
-
-    QGROUNDCONTROL is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    QGROUNDCONTROL is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with QGROUNDCONTROL. If not, see <http://www.gnu.org/licenses/>.
-
-======================================================================*/
 
 import QtQuick          2.4
 import QtQuick.Controls 1.3
@@ -52,7 +39,6 @@ QGCView {
     readonly property real      _horizontalMargin:  ScreenTools.defaultFontPixelWidth  / 2
     readonly property real      _margin:            ScreenTools.defaultFontPixelHeight * 0.5
     readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
-    readonly property real      _editFieldWidth:    ScreenTools.defaultFontPixelWidth * 16
     readonly property real      _PointFieldWidth:    ScreenTools.defaultFontPixelWidth * 11
     readonly property real      _rightPanelWidth:   Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 35)
     readonly property real      _rightPanelOpacity: 0.8
@@ -299,7 +285,6 @@ QGCView {
                             if (addMissionItemsButton.checked) {
                                 var sequenceNumber = controller.insertSimpleMissionItem(coordinate, controller.visualItems.count)
                                 setCurrentItem(sequenceNumber)
-                                editorListView.positionViewAtIndex(editorListView.count - 1, ListView.Contain)
                             } else {
                                 editorMap.mapClicked(coordinate)
                             }
@@ -514,6 +499,7 @@ QGCView {
                         model:          controller.visualItems
                         cacheBuffer:    width*2//height * 2
                         clip:           true
+                        highlightMoveDuration: 250
                         delegate:       MissionItemIndex{//MissionItemIndex {//MissionItemEditor {
                             missionItem:    object
                             width:          _PointFieldWidth//_PointFieldWidth//_rightPanelWidth//parent.width
@@ -527,11 +513,6 @@ QGCView {
 //                                controller.removeMissionItem(index)
 //                            }
 
-//                            onInsert: {
-//                                var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
-//                                setCurrentItem(sequenceNumber)
-//                            }
-
 //                            onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
 
                             Connections {
@@ -539,7 +520,7 @@ QGCView {
 
                                 onIsCurrentItemChanged: {
                                     if (object.isCurrentItem) {
-                                        editorListView.positionViewAtIndex(index, ListView.Contain)
+                                        editorListView.currentIndex = index
                                     }
                                 }
                             }
@@ -668,13 +649,14 @@ QGCView {
                                     spacing: ScreenTools.defaultFontPixelWidth
                                     Repeater {
                                         model: QGroundControl.flightMapSettings.mapTypes
+
                                         QGCButton {
                                             checkable:      true
-                                            checked:        editorMap.mapType === text
+                                            checked:        QGroundControl.flightMapSettings.mapType === text
                                             text:           modelData
                                             exclusiveGroup: _mapTypeButtonsExclusiveGroup
                                             onClicked: {
-                                                editorMap.mapType = text
+                                                QGroundControl.flightMapSettings.mapType = text
                                                 checked = true
                                                 mapTypeButton.hideDropDown()
                                             }
@@ -711,6 +693,15 @@ QGCView {
                             checked = false
                         }
                     }
+                }
+
+                MapScale {
+                    anchors.margins:    ScreenTools.defaultFontPixelHeight * (0.66)
+                    anchors.bottom:     waypointValuesDisplay.visible ? waypointValuesDisplay.top : parent.bottom
+                    anchors.left:       parent.left
+                    z:                  QGroundControl.zOrderWidgets
+                    mapControl:         editorMap
+                    visible:            !ScreenTools.isTinyScreen
                 }
                 MissionItemIndexIndicator {
                             id:              indexIndicator

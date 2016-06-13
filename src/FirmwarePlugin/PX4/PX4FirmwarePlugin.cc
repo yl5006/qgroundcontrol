@@ -1,25 +1,12 @@
-﻿/*=====================================================================
+﻿/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
 
- QGroundControl Open Source Ground Control Station
-
- (c) 2009 - 2015 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
-
- This file is part of the QGROUNDCONTROL project
-
- QGROUNDCONTROL is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- QGROUNDCONTROL is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with QGROUNDCONTROL. If not, see <http://www.gnu.org/licenses/>.
-
- ======================================================================*/
 
 /// @file
 ///     @author Don Gagne <don@thegagnes.com>
@@ -261,6 +248,9 @@ QList<MAV_CMD> PX4FirmwarePlugin::supportedMissionCommands(void)
          << MAV_CMD_DO_SET_CAM_TRIGG_DIST
          << MAV_CMD_DO_SET_SERVO
          << MAV_CMD_DO_CHANGE_SPEED
+         << MAV_CMD_DO_SET_ROI
+         << MAV_CMD_DO_MOUNT_CONFIGURE
+         << MAV_CMD_DO_MOUNT_CONTROL
          << MAV_CMD_NAV_PATHPLANNING;
 
     return list;
@@ -297,12 +287,12 @@ void PX4FirmwarePlugin::pauseVehicle(Vehicle* vehicle)
     cmd.param6 = NAN;
     cmd.param7 = NAN;
     cmd.target_system = vehicle->id();
-    cmd.target_component = 0;
+    cmd.target_component = vehicle->defaultComponentId();
 
     MAVLinkProtocol* mavlink = qgcApp()->toolbox()->mavlinkProtocol();
     mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
 
-    vehicle->sendMessage(msg);
+    vehicle->sendMessageOnPriorityLink(msg);
 }
 
 void PX4FirmwarePlugin::guidedModeRTL(Vehicle* vehicle)
@@ -339,10 +329,10 @@ void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double altitudeRel)
     cmd.param6 = NAN;
     cmd.param7 = vehicle->altitudeAMSL()->rawValue().toDouble() + altitudeRel;
     cmd.target_system = vehicle->id();
-    cmd.target_component = 0;
+    cmd.target_component = vehicle->defaultComponentId();
 
     mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
-    vehicle->sendMessage(msg);
+    vehicle->sendMessageOnPriorityLink(msg);
 }
 
 void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoordinate& gotoCoord)
@@ -365,12 +355,12 @@ void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoord
     cmd.param6 = gotoCoord.longitude() * 1e7;
     cmd.param7 = vehicle->altitudeAMSL()->rawValue().toDouble();
     cmd.target_system = vehicle->id();
-    cmd.target_component = 0;
+    cmd.target_component = vehicle->defaultComponentId();
 
     MAVLinkProtocol* mavlink = qgcApp()->toolbox()->mavlinkProtocol();
     mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
 
-    vehicle->sendMessage(msg);
+    vehicle->sendMessageOnPriorityLink(msg);
 }
 
 void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitudeRel)
@@ -393,12 +383,12 @@ void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitu
     cmd.param6 = NAN;
     cmd.param7 = vehicle->altitudeAMSL()->rawValue().toDouble() + altitudeRel;
     cmd.target_system = vehicle->id();
-    cmd.target_component = 0;
+    cmd.target_component = vehicle->defaultComponentId();
 
     MAVLinkProtocol* mavlink = qgcApp()->toolbox()->mavlinkProtocol();
     mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
 
-    vehicle->sendMessage(msg);
+    vehicle->sendMessageOnPriorityLink(msg);
 }
 
 void PX4FirmwarePlugin::setGuidedMode(Vehicle* vehicle, bool guidedMode)

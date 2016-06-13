@@ -1,25 +1,12 @@
-﻿/*=====================================================================
+﻿/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
 
- QGroundControl Open Source Ground Control Station
-
- (c) 2009 - 2015 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
-
- This file is part of the QGROUNDCONTROL project
-
- QGROUNDCONTROL is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- QGROUNDCONTROL is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with QGROUNDCONTROL. If not, see <http://www.gnu.org/licenses/>.
-
- ======================================================================*/
 
 #include "FlightMapSettings.h"
 
@@ -30,7 +17,6 @@ const char* FlightMapSettings::_defaultMapProvider      = "Bing";               
 const char* FlightMapSettings::_settingsGroup           = "FlightMapSettings";
 const char* FlightMapSettings::_mapProviderKey          = "MapProvider";
 const char* FlightMapSettings::_mapTypeKey              = "MapType";
-const char* FlightMapSettings::_showScaleOnFlyViewKey   = "ShowScaleOnFlyView";
 
 FlightMapSettings::FlightMapSettings(QGCApplication* app)
     : QGCTool(app)
@@ -104,24 +90,24 @@ void FlightMapSettings::_setMapTypesForCurrentProvider(void)
     emit mapTypesChanged(_mapTypes);
 }
 
-QString FlightMapSettings::mapTypeForMapName(const QString& mapName)
+QString FlightMapSettings::mapType(void)
 {
     QSettings settings;
 
     settings.beginGroup(_settingsGroup);
-    settings.beginGroup(mapName);
     settings.beginGroup(_mapProvider);
     return settings.value(_mapTypeKey, "Satellite Map").toString();
 }
 
-void FlightMapSettings::setMapTypeForMapName(const QString& mapName, const QString& mapType)
+void FlightMapSettings::setMapType(const QString& mapType)
 {
     QSettings settings;
 
     settings.beginGroup(_settingsGroup);
-    settings.beginGroup(mapName);
     settings.beginGroup(_mapProvider);
     settings.setValue(_mapTypeKey, mapType);
+
+    emit mapTypeChanged(mapType);
 }
 
 void FlightMapSettings::saveMapSetting (const QString &mapName, const QString& key, const QString& value)
@@ -158,20 +144,4 @@ bool FlightMapSettings::loadBoolMapSetting (const QString &mapName, const QStrin
     settings.beginGroup(_settingsGroup);
     settings.beginGroup(mapName);
     return settings.value(key, defaultValue).toBool();
-}
-
-bool FlightMapSettings::showScaleOnFlyView()
-{
-    QSettings settings;
-    settings.beginGroup(_settingsGroup);
-    bool show = settings.value(_showScaleOnFlyViewKey, true).toBool();
-    return show;
-}
-
-void FlightMapSettings::setShowScaleOnFlyView(bool show)
-{
-    QSettings settings;
-    settings.beginGroup(_settingsGroup);
-    settings.setValue(_showScaleOnFlyViewKey, show);
-    emit showScaleOnFlyViewChanged();
 }

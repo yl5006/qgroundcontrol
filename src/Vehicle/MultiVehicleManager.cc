@@ -1,25 +1,12 @@
-/*=====================================================================
+/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
 
- QGroundControl Open Source Ground Control Station
-
- (c) 2009 - 2014 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
-
- This file is part of the QGROUNDCONTROL project
-
- QGROUNDCONTROL is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- QGROUNDCONTROL is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with QGROUNDCONTROL. If not, see <http://www.gnu.org/licenses/>.
-
- ======================================================================*/
 
 /// @file
 ///     @author Don Gagne <don@thegagnes.com>
@@ -319,12 +306,12 @@ void MultiVehicleManager::_sendGCSHeartbeat(void)
         mavlink_msg_heartbeat_pack(_mavlinkProtocol->getSystemId(),
                                    _mavlinkProtocol->getComponentId(),
                                    &message,
-                                   MAV_TYPE_GCS,                // MAV_TYPE
+                                   MAV_TYPE_GCS,            // MAV_TYPE
                                    MAV_AUTOPILOT_INVALID,   // MAV_AUTOPILOT
                                    MAV_MODE_MANUAL_ARMED,   // MAV_MODE
                                    0,                       // custom mode
                                    MAV_STATE_ACTIVE);       // MAV_STATE
-        vehicle->sendMessage(message);
+        vehicle->sendMessageOnPriorityLink(message);
     }
 }
 

@@ -1,5 +1,12 @@
-/*===================================================================
-======================================================================*/
+/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
+
 
 /**
  * @file
@@ -53,7 +60,7 @@ MAVLinkProtocol::MAVLinkProtocol(QGCApplication* app)
     , m_actionGuardEnabled(false)
     , m_actionRetransmissionTimeout(100)
     , versionMismatchIgnore(false)
-    , systemId(QGC::defaultSystemId)
+    , systemId(255)
 #ifndef __mobile__
     , _logSuspendError(false)
     , _logSuspendReplay(false)
@@ -415,7 +422,7 @@ void MAVLinkProtocol::setSystemId(int id)
 /** @return Component id of this application */
 int MAVLinkProtocol::getComponentId()
 {
-    return QGC::defaultComponentId;
+    return 0;
 }
 
 /**

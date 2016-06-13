@@ -1,25 +1,12 @@
-﻿/*=====================================================================
+﻿/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
 
- QGroundControl Open Source Ground Control Station
-
- (c) 2009 - 2015 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
-
- This file is part of the QGROUNDCONTROL project
-
- QGROUNDCONTROL is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- QGROUNDCONTROL is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with QGROUNDCONTROL. If not, see <http://www.gnu.org/licenses/>.
-
- ======================================================================*/
 
 import QtQuick          2.5
 import QtQuick.Controls 1.2
@@ -447,23 +434,15 @@ QGCView {
                     border.width:   1
                 }
 
-                QGCLabel { text: "Additional Radio setup:" }
+ //               QGCLabel { text: "Additional Radio setup:" }
             QGCLabel { text: qsTr("更多遥控设置") }
 
-                Row {
-                    spacing: 10
 
-                    QGCLabel {
-                        anchors.baseline:   bindButton.baseline
-                        text:               "Place Spektrum satellite receiver in bind mode:"
-                    }
+                QGCButton {
+                    id:         bindButton
+                    text:       qsTr("Spektrum Bind")
 
-                    QGCButton {
-                        id:         bindButton
-                        text:       qsTr("Spektrum Bind")
-
-                        onClicked: showDialog(spektrumBindDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
-                    }
+                    onClicked: showDialog(spektrumBindDialogComponent, dialogTitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                 }
 
                 QGCButton {
@@ -505,12 +484,14 @@ QGCView {
                 id:             rightColumn
                 anchors.top:    parent.top
                 anchors.right:  parent.right
-                width:          defaultTextWidth * 35
-                spacing:        10
+                width:          Math.min(defaultTextWidth * 35, qgcView.width * 0.4)
+                spacing:        ScreenTools.defaultFontPixelHeight / 2
 
                 Row {
-                    spacing: 10
+                    spacing: ScreenTools.defaultFontPixelWidth
+
                     ExclusiveGroup { id: modeGroup }
+
                     QGCRadioButton {
                         exclusiveGroup: modeGroup
                         text:           qsTr("模式 1")//"Mode 1"
@@ -530,14 +511,13 @@ QGCView {
 
                 Image {
                     width:      parent.width
-                    height:     defaultTextHeight * 15
                     fillMode:   Image.PreserveAspectFit
                     smooth:     true
                     source:     controller.imageHelp
                 }
 
                 RCChannelMonitor {
-                    width:      parent.width
+                    width: parent.width
                 }
             } // Column - Right Column
         } // QGCFlickable

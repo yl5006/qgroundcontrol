@@ -13,7 +13,7 @@ import QGroundControl.Palette       1.0
 Rectangle {
     id:                 valuesRect
     width:              availableWidth
-    height:             valuesItem.height
+    height:             visible ? valuesItem.height : 0
   //  color:              qgcPal.windowShadeDark
     color:              Qt.rgba(0.102,0.887,0.609,0)
     visible:            missionItem.isCurrentItem

@@ -1,25 +1,12 @@
-/*=====================================================================
+/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
 
-QGroundControl Open Source Ground Control Station
-
-(c) 2009, 2015 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
-
-This file is part of the QGROUNDCONTROL project
-
-    QGROUNDCONTROL is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    QGROUNDCONTROL is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with QGROUNDCONTROL. If not, see <http://www.gnu.org/licenses/>.
-
-======================================================================*/
 
 import QtQuick                      2.4
 import QtQuick.Controls             1.3
@@ -39,7 +26,6 @@ FlightMap {
     id:             flightMap
     anchors.fill:   parent
     mapName:        _mapName
-    showScale:      QGroundControl.flightMapSettings.showScaleOnFlyView
 
     property alias  missionController: _missionController
     property var    flightWidgets
@@ -122,6 +108,16 @@ FlightMap {
             isCurrentItem:  true
             label:          qsTr("G", "Goto here waypoint") // second string is translator's hint.
         }
+    }    
+
+    MapScale {
+        anchors.bottomMargin:   ScreenTools.defaultFontPixelHeight * (0.66)
+        anchors.rightMargin:    ScreenTools.defaultFontPixelHeight * (0.33)
+        anchors.bottom:         parent.bottom
+        anchors.right:          parent.right
+        z:                      QGroundControl.zOrderWidgets
+        mapControl:             flightMap
+        visible:                !ScreenTools.isTinyScreen
     }
 
     // Handle guided mode clicks

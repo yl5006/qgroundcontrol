@@ -1,25 +1,12 @@
-/*=====================================================================
+/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
 
- QGroundControl Open Source Ground Control Station
-
- (c) 2009 - 2014 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
-
- This file is part of the QGROUNDCONTROL project
-
- QGROUNDCONTROL is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- QGROUNDCONTROL is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with QGROUNDCONTROL. If not, see <http://www.gnu.org/licenses/>.
-
- ======================================================================*/
 
 #include "LogDownloadController.h"
 #include "MultiVehicleManager.h"
@@ -461,7 +448,7 @@ LogDownloadController::_requestLogData(uint8_t id, uint32_t offset, uint32_t cou
             qgcApp()->toolbox()->mavlinkProtocol()->getSystemId(),
             qgcApp()->toolbox()->mavlinkProtocol()->getComponentId(),
             &msg,
-            qgcApp()->toolbox()->multiVehicleManager()->activeVehicle()->id(), MAV_COMP_ID_ALL,
+            qgcApp()->toolbox()->multiVehicleManager()->activeVehicle()->id(), qgcApp()->toolbox()->multiVehicleManager()->activeVehicle()->defaultComponentId(),
             id, offset, count);
         _vehicle->sendMessageOnLink(_vehicle->priorityLink(), msg);
     }
@@ -489,7 +476,7 @@ LogDownloadController::_requestLogList(uint32_t start, uint32_t end)
             qgcApp()->toolbox()->mavlinkProtocol()->getComponentId(),
             &msg,
             _vehicle->id(),
-            MAV_COMP_ID_ALL,
+            _vehicle->defaultComponentId(),
             start,
             end);
         _vehicle->sendMessageOnLink(_vehicle->priorityLink(), msg);
@@ -634,7 +621,7 @@ LogDownloadController::eraseAll(void)
             qgcApp()->toolbox()->mavlinkProtocol()->getSystemId(),
             qgcApp()->toolbox()->mavlinkProtocol()->getComponentId(),
             &msg,
-            qgcApp()->toolbox()->multiVehicleManager()->activeVehicle()->id(), MAV_COMP_ID_ALL);
+            qgcApp()->toolbox()->multiVehicleManager()->activeVehicle()->id(), qgcApp()->toolbox()->multiVehicleManager()->activeVehicle()->defaultComponentId());
         _vehicle->sendMessageOnLink(_vehicle->priorityLink(), msg);
         refresh();
     }

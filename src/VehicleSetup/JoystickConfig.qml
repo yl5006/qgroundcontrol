@@ -1,25 +1,12 @@
-/*=====================================================================
+/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
 
- QGroundControl Open Source Ground Control Station
-
- (c) 2009 - 2015 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
-
- This file is part of the QGROUNDCONTROL project
-
- QGROUNDCONTROL is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- QGROUNDCONTROL is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with QGROUNDCONTROL. If not, see <http://www.gnu.org/licenses/>.
-
- ======================================================================*/
 
 import QtQuick          2.2
 import QtQuick.Controls 1.2
@@ -356,8 +343,8 @@ QGCView {
 
 
                         QGCCheckBox {
-                            enabled:    _activeJoystick.calibrated
-                            text:       _activeJoystick.calibrated ? qsTr("Enable joystick input") : qsTr("Enable/Disable not allowed (Calibrate First)")
+                            enabled:    checked || _activeJoystick.calibrated
+                            text:       _activeJoystick.calibrated ? qsTr("Enable joystick input") : qsTr("Enable not allowed (Calibrate First)")
                             checked:    _activeVehicle.joystickEnabled
 
                             onClicked:  _activeVehicle.joystickEnabled = checked
@@ -473,7 +460,7 @@ QGCView {
                             visible: _activeVehicle.manualControlReservedButtonCount != 0
                             text: qsTr("Buttons 0-%1 reserved for firmware use").arg(reservedButtonCount)
 
-                            property int reservedButtonCount: _activeVehicle.manualControlReservedButtonCount == -1 ? _activeJoystick.buttonCount : _activeVehicle.manualControlReservedButtonCount
+                            property int reservedButtonCount: _activeVehicle.manualControlReservedButtonCount == -1 ? _activeJoystick.totalButtonCount : _activeVehicle.manualControlReservedButtonCount
                         }
 
                         Repeater {
@@ -612,10 +599,10 @@ QGCView {
 
                     Repeater {
                         id:     buttonMonitorRepeater
-                        model:  _activeJoystick.buttonCount
+                        model:  _activeJoystick.totalButtonCount
 
                         Rectangle {
-                            width:          ScreenTools.defaultFontPixelHeight * 1.5
+                            width:          ScreenTools.defaultFontPixelHeight * 1.2
                             height:         width
                             border.width:   1
                             border.color:   qgcPal.text
