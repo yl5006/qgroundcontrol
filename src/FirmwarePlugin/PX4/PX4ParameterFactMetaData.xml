@@ -3323,6 +3323,15 @@ but also ignore less noise</short_desc>
         <value code="0">Altitude following</value>
       </values>
     </parameter>
+    <parameter default="0" name="MPC_SAFE_DIS" type="FLOAT">
+      <short_desc>distance to obstacle</short_desc>
+      <min>1</min>
+      <max>30</max>
+      <unit>m</unit>
+      <decimal>2</decimal>
+      <increment>0.1</increment>
+      <scope>modules/mc_pos_control</scope>
+    </parameter>
     <parameter default="0.1" name="MPP_THR_MIN" type="FLOAT">
       <short_desc>Minimum thrust</short_desc>
       <long_desc>Minimum vertical thrust. It's recommended to set it &gt; 0 to avoid free fall with zero thrust.</long_desc>
