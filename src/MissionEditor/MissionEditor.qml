@@ -47,8 +47,9 @@ QGCView {
     readonly property int       _addMissionItemsButtonAutoOffTimeout:   10000
     readonly property var       _defaultVehicleCoordinate:   QtPositioning.coordinate(30.5386437,114.3662806)
 
-    property var    _visualItems:          controller.visualItems
+    property var    _visualItems:           controller.visualItems
     property var    _currentMissionItem
+    property int    _currentMissionIndex:   0
     property bool   _firstVehiclePosition:  true
     property var    activeVehiclePosition:  _activeVehicle ? _activeVehicle.coordinate : QtPositioning.coordinate()
     property bool   _lightWidgetBorders:    editorMap.isSatelliteMap
@@ -82,6 +83,7 @@ QGCView {
         } else {
             controller.loadMissionFromFilePicker()
             fitViewportToMissionItems()
+            _currentMissionItem = _visualItems.get(0)
         }
     }
 
@@ -168,6 +170,7 @@ QGCView {
             if (visualItem.sequenceNumber == sequenceNumber) {
                 _currentMissionItem = visualItem
                 _currentMissionItem.isCurrentItem = true
+                _currentMissionIndex = i
             } else {
                 visualItem.isCurrentItem = false
             }
@@ -186,6 +189,7 @@ QGCView {
             onFilenameReturned: {
                 controller.loadMissionFromFile(filename)
                 fitViewportToMissionItems()
+                _currentMissionItem = _visualItems.get(0)
             }
         }
     }
@@ -428,7 +432,7 @@ QGCView {
                                 model: object.childItems
 
                                 delegate:   MissionItemIndexLabel{
-                                    label:          object.sequenceNumber
+                                    label:          object.abbreviation
                                     isCurrentItem:  object.isCurrentItem
                                     z:              2
 
@@ -499,6 +503,7 @@ QGCView {
                         model:          controller.visualItems
                         cacheBuffer:    width*2//height * 2
                         clip:           true
+                        currentIndex:   _currentMissionIndex
                         highlightMoveDuration: 250
                         delegate:       MissionItemIndex{//MissionItemIndex {//MissionItemEditor {
                             missionItem:    object
@@ -513,17 +518,12 @@ QGCView {
 //                                controller.removeMissionItem(index)
 //                            }
 
-//                            onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
-
-                            Connections {
-                                target: object
-
-                                onIsCurrentItemChanged: {
-                                    if (object.isCurrentItem) {
-                                        editorListView.currentIndex = index
-                                    }
-                                }
+                            onInsert: {
+                                var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, insertAfterIndex)
+                                setCurrentItem(sequenceNumber)
                             }
+
+                            onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
                         }
                     } // ListView
                 } // Item - Mission Item editor

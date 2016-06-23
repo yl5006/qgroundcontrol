@@ -43,23 +43,6 @@ Rectangle {
             anchors.margins:    ScreenTools.defaultFontPixelWidth
             spacing:            ScreenTools.defaultFontPixelHeight / 2
 
-            QGCLabel {
-                text:   qsTr("常规设置")//"General Settings"
-                font.pointSize: ScreenTools.mediumFontPointSize
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            Rectangle {
-                height: 1
-                width:  parent.width
-                color:  qgcPal.text
-            }
-
-            Item {
-                height: ScreenTools.defaultFontPixelHeight / 2
-                width:  parent.width
-            }
-
             //-----------------------------------------------------------------
             //-- Base UI Font Point Size
             Row {
