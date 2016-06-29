@@ -55,9 +55,9 @@ const QVariantList& PX4AutoPilotPlugin::vehicleComponents(void)
 
             _airframeComponent = new AirframeComponent(_vehicle, this);
             _airframeComponent->setupTriggerSignals();
-#ifdef QT_DEBUG
+//#ifdef QT_DEBUG  if not alow to select airframe
             _components.append(QVariant::fromValue((VehicleComponent*)_airframeComponent));
-#endif
+//#endif
             _radioComponent = new PX4RadioComponent(_vehicle, this);
             _radioComponent->setupTriggerSignals();
             _components.append(QVariant::fromValue((VehicleComponent*)_radioComponent));

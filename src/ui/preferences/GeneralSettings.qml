@@ -373,21 +373,22 @@ Rectangle {
 
             //-----------------------------------------------------------------
             //-- Offline mission editing settings
-            Row {
-                spacing: ScreenTools.defaultFontPixelWidth
+            // only use px4 fly stack
+//            Row {
+//                spacing: ScreenTools.defaultFontPixelWidth
 
-                QGCLabel {
-                    text:               qsTr("Offline mission editing:")
-                    anchors.baseline:   offlineTypeCombo.baseline
-                }
+//                QGCLabel {
+//                    text:               qsTr("Offline mission editing:")
+//                    anchors.baseline:   offlineTypeCombo.baseline
+//                }
 
-                FactComboBox {
-                    id:         offlineTypeCombo
-                    width:      ScreenTools.defaultFontPixelWidth * 18
-                    fact:       QGroundControl.offlineEditingFirmwareType
-                    indexModel: false
-                }
-            }
+//                FactComboBox {
+//                    id:         offlineTypeCombo
+//                    width:      ScreenTools.defaultFontPixelWidth * 18
+//                    fact:       QGroundControl.offlineEditingFirmwareType
+//                    indexModel: false
+//                }
+//            }
 
             Item {
                 height: ScreenTools.defaultFontPixelHeight / 2
