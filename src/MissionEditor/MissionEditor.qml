@@ -28,8 +28,6 @@ import QGroundControl.Controllers   1.0
 QGCView {
     id:         _root
 
-    property bool syncNeeded: controller.visualItems.dirty // Unsaved changes, visible to parent container
-
     viewPanel:          panel
 
     // zOrder comes from the Loader in MainWindow.qml
@@ -47,6 +45,7 @@ QGCView {
     readonly property int       _addMissionItemsButtonAutoOffTimeout:   10000
     readonly property var       _defaultVehicleCoordinate:   QtPositioning.coordinate(30.5386437,114.3662806)
 
+    property bool   _syncNeeded:            controller.visualItems.dirty // Unsaved changes, visible to parent container
     property var    _visualItems:           controller.visualItems
     property var    _currentMissionItem
     property int    _currentMissionIndex:   0
@@ -579,7 +578,7 @@ QGCView {
                     DropButton {
                         id:                 syncButton
                         dropDirection:      dropRight
-                        buttonImage:        syncNeeded ? "/qmlimages/MapSyncChanged.svg" : "/qmlimages/MapSync.svg"
+                        buttonImage:        _syncNeeded ? "/qmlimages/MapSyncChanged.svg" : "/qmlimages/MapSync.svg"
                         viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
                         exclusiveGroup:     _dropButtonsExclusiveGroup
                         dropDownComponent:  syncDropDownComponent
@@ -788,7 +787,7 @@ QGCView {
             QGCLabel {
                 width:      sendSaveGrid.width
                 wrapMode:   Text.WordWrap
-                text:       syncNeeded && !controller.autoSync ?
+                text:       _syncNeeded && !controller.autoSync ?
                                 qsTr("你修改了任务，你需要发送给飞机或存为文件:")://"You have unsaved changed to you mission. You should send to your vehicle, or save to a file:" :
                                 qsTr("同步:")//"Sync:"
             }
@@ -814,7 +813,7 @@ QGCView {
                     enabled:            _activeVehicle && !controller.syncInProgress
                     onClicked: {
                         syncButton.hideDropDown()
-                        if (syncNeeded) {
+                        if (_syncNeeded) {
                             _root.showDialog(syncLoadFromVehicleOverwrite, qsTr("Mission overwrite"), _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                         } else {
                             loadFromVehicle()
@@ -836,8 +835,8 @@ QGCView {
                     enabled:            !controller.syncInProgress
                     onClicked: {
                         syncButton.hideDropDown()
-                        if (syncNeeded) {
-                            _root.showDialog(syncLoadFromFileOverwrite, "Mission overwrite", _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                        if (_syncNeeded) {
+                            _root.showDialog(syncLoadFromFileOverwrite, qsTr("Mission overwrite"), _root.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                         } else {
                             loadFromFile()
                         }
