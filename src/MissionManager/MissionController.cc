@@ -515,7 +515,8 @@ void MissionController::saveMissionToFile(const QString& filename)
             // QGroundControlQmlGlobal is not available from C++ side.
 
             QSettings settings;
-            firmwareType = (MAV_AUTOPILOT)settings.value("OfflineEditingFirmwareType", MAV_AUTOPILOT_ARDUPILOTMEGA).toInt();
+   //         firmwareType = (MAV_AUTOPILOT)settings.value("OfflineEditingFirmwareType", MAV_AUTOPILOT_ARDUPILOTMEGA).toInt();
+            firmwareType = (MAV_AUTOPILOT)settings.value("OfflineEditingFirmwareType", MAV_AUTOPILOT_PX4).toInt();
         }
         missionFileObject[_jsonMavAutopilotKey] = firmwareType;
 

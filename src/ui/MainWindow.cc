@@ -65,7 +65,7 @@
 #endif
 
 /// The key under which the Main Window settings are saved
-const char* MAIN_SETTINGS_GROUP = "QGC_MAINWINDOW";
+const char* MAIN_SETTINGS_GROUP = "GS_MAINWINDOW";  //use GS for QGC
 
 #ifndef __mobile__
 enum DockWidgetTypes {

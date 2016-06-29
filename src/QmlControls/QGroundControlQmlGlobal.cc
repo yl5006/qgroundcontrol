@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -228,7 +228,7 @@ Fact* QGroundControlQmlGlobal::offlineEditingFirmwareType(void)
         QStringList     enumStrings;
         QVariantList    enumValues;
 
-        _offlineEditingFirmwareTypeFact = new SettingsFact(QString(), "OfflineEditingFirmwareType", FactMetaData::valueTypeUint32, (uint32_t)MAV_AUTOPILOT_ARDUPILOTMEGA);
+        _offlineEditingFirmwareTypeFact = new SettingsFact(QString(), "OfflineEditingFirmwareType", FactMetaData::valueTypeUint32, (uint32_t)MAV_AUTOPILOT_PX4);//(uint32_t)MAV_AUTOPILOT_ARDUPILOTMEGA);
         _offlineEditingFirmwareTypeMetaData = new FactMetaData(FactMetaData::valueTypeUint32);
 
         enumStrings << "ArduPilot Firmware" << "PX4 Firmware" << "Mavlink Generic Firmware";

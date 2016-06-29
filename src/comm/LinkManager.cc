@@ -41,9 +41,9 @@ QGC_LOGGING_CATEGORY(LinkManagerVerboseLog, "LinkManagerVerboseLog")
 
 const char* LinkManager::_settingsGroup =           "LinkManager";
 const char* LinkManager::_autoconnectUDPKey =       "AutoconnectUDP";
-const char* LinkManager::_autoconnectPixhawkKey =   "AutoconnectPixhawk";
-const char* LinkManager::_autoconnect3DRRadioKey =  "Autoconnect3DRRadio";
-const char* LinkManager::_autoconnectPX4FlowKey =   "AutoconnectPX4Flow";
+const char* LinkManager::_autoconnectPixhawkKey =   "AutoconnectEwt";        //use Ewtkey for AutoconnectPixhawk
+const char* LinkManager::_autoconnect3DRRadioKey =  "AutoconnectEwtRadio";   //use EwtRadiokey for Autoconnect3DRRadio
+const char* LinkManager::_autoconnectPX4FlowKey =   "AutoconnectEwtFlow";    //use EwtFlowkey for AutoconnectPX4Flow
 const char* LinkManager::_autoconnectRTKGPSKey =    "AutoconnectRTKGPS";
 const char* LinkManager::_defaultUPDLinkName =      "Default UDP Link";
 

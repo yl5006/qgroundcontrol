@@ -313,28 +313,28 @@ Rectangle {
             }
 
 //            -----------------------------------------------------------------
-//            -- Autoconnect settings
+//            -- Autoconnect settings  Maybe here do not use (yaoling)
             QGCLabel { text: "Autoconnect to the following devices:" }
 
             Row {
                 spacing: ScreenTools.defaultFontPixelWidth * 2
 
                 QGCCheckBox {
-                    text:       qsTr("Pixhawk")
+                    text:       qsTr("Ewt2.0")//qsTr("Pixhawk")
                     visible:    !ScreenTools.isiOS
                     checked:    QGroundControl.linkManager.autoconnectPixhawk
                     onClicked:  QGroundControl.linkManager.autoconnectPixhawk = checked
                 }
 
                 QGCCheckBox {
-                    text:       qsTr("SiK Radio")
+                    text:       qsTr("EWT Radio")//qsTr("SiK Radio")
                     visible:    !ScreenTools.isiOS
                     checked:    QGroundControl.linkManager.autoconnect3DRRadio
                     onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked
                 }
 
                 QGCCheckBox {
-                    text:       qsTr("PX4 Flow")
+                    text:       qsTr("EWT Flow")//qsTr("PX4 Flow")
                     visible:    !ScreenTools.isiOS
                     checked:    QGroundControl.linkManager.autoconnectPX4Flow
                     onClicked:  QGroundControl.linkManager.autoconnectPX4Flow = checked
@@ -373,7 +373,7 @@ Rectangle {
 
             //-----------------------------------------------------------------
             //-- Offline mission editing settings
-            // only use px4 fly stack
+            // only use px4 fly stack(yaoling)
 //            Row {
 //                spacing: ScreenTools.defaultFontPixelWidth
 

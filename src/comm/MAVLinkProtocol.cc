@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -124,20 +124,20 @@ void MAVLinkProtocol::loadSettings()
 {
     // Load defaults from settings
     QSettings settings;
-    settings.beginGroup("QGC_MAVLINK_PROTOCOL");
+    settings.beginGroup("GS_EWR_PROTOCOL");  //use GS for QGC by yaoling
     enableVersionCheck(settings.value("VERSION_CHECK_ENABLED", m_enable_version_check).toBool());
     enableMultiplexing(settings.value("MULTIPLEXING_ENABLED", m_multiplexingEnabled).toBool());
 
     // Only set system id if it was valid
-    int temp = settings.value("GCS_SYSTEM_ID", systemId).toInt();
+    int temp = settings.value("CS_SYSTEM_ID", systemId).toInt();
     if (temp > 0 && temp < 256)
     {
         systemId = temp;
     }
 
     // Set auth key
-    m_authKey = settings.value("GCS_AUTH_KEY", m_authKey).toString();
-    enableAuth(settings.value("GCS_AUTH_ENABLED", m_authEnabled).toBool());
+    m_authKey = settings.value("CS_AUTH_KEY", m_authKey).toString();
+    enableAuth(settings.value("CS_AUTH_ENABLED", m_authEnabled).toBool());
 
     // Parameter interface settings
     bool ok;
@@ -153,12 +153,12 @@ void MAVLinkProtocol::storeSettings()
 {
     // Store settings
     QSettings settings;
-    settings.beginGroup("QGC_MAVLINK_PROTOCOL");
+    settings.beginGroup("GS_EWT_PROTOCOL");  //("QGC_MAVLINK_PROTOCOL")  //use GS for QGC by yaoling
     settings.setValue("VERSION_CHECK_ENABLED", m_enable_version_check);
     settings.setValue("MULTIPLEXING_ENABLED", m_multiplexingEnabled);
-    settings.setValue("GCS_SYSTEM_ID", systemId);
-    settings.setValue("GCS_AUTH_KEY", m_authKey);
-    settings.setValue("GCS_AUTH_ENABLED", m_authEnabled);
+    settings.setValue("GS_SYSTEM_ID", systemId);
+    settings.setValue("GS_AUTH_KEY", m_authKey);
+    settings.setValue("GS_AUTH_ENABLED", m_authEnabled);
     // Parameter interface settings
     settings.setValue("PARAMETER_RETRANSMISSION_TIMEOUT", m_paramRetransmissionTimeout);
     settings.setValue("PARAMETER_REWRITE_TIMEOUT", m_paramRewriteTimeout);
