@@ -201,8 +201,8 @@ Rectangle {
         anchors.topMargin:  _margin*2
         anchors.left:       parent.left
         anchors.top:        space.bottom
-        height:             item ? item.height : 0
-        source:             missionItem.isSimpleItem ? "qrc:/qml/SimpleItemEditor.qml" : "qrc:/qml/SurveyItemEditor.qml"
+        height:             _currentItem && item ? item.height : 0
+        source:             _currentItem ? (missionItem.isSimpleItem ? "qrc:/qml/SimpleItemEditor.qml" : "qrc:/qml/SurveyItemEditor.qml"):""
 
         property real   availableWidth: _root.width - (_margin * 2) ///< How wide the editor should be
         property var    editorRoot:     _root
