@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Everything -->
     <usb-device />
-    <!-- 0x26AC / 0x11: PX4 FMU Pixhawk -->
+    <!-- 0x0483 / 0x5740: PX4 FMU Pixhawk -->
     <!--
     <usb-device vendor-id="9900" product-id="17" />
     -->

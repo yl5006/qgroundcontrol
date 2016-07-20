@@ -348,8 +348,8 @@ Rectangle {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             exclusiveGroup:     mainActionGroup
-            source:             "/res/QGCLogoWhite"
-            logo:               true
+            source:             "/qmlimages/Hamburger.svg"
+  //          logo:               true
             onClicked:          toolBar.showPreferences()
         }
         QGCToolBarButton {

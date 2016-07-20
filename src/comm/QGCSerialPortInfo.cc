@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -52,7 +52,6 @@ QGCSerialPortInfo::BoardType_t QGCSerialPortInfo::boardType(void) const
 
     for (size_t i=0; i<sizeof(s_rgVIDPIDMappings)/sizeof(s_rgVIDPIDMappings[0]); i++) {
         const struct VIDPIDMapInfo_s* pIDMap = &s_rgVIDPIDMappings[i];
-
         if (vendorIdentifier() == pIDMap->vendorId && productIdentifier() == pIDMap->productId) {
             boardType = pIDMap->boardType;
             qCDebug(QGCSerialPortInfoLog) << pIDMap->boardString;

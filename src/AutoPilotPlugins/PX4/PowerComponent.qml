@@ -228,9 +228,8 @@ QGCView {
                 spacing:        ScreenTools.defaultFontPixelHeight * 0.5
 
                 QGCLabel {
-                    text: qsTr("电池")//"Battery"
+                    text: qsTr("Battery")
                     font.family: ScreenTools.demiboldFontFamily
-                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Rectangle {
@@ -247,7 +246,7 @@ QGCView {
                         columnSpacing:      ScreenTools.defaultFontPixelWidth
 
                         QGCLabel {
-                            text:               qsTr("电池芯数")//qsTr("Number of Cells (in Series)")
+                            text:               qsTr("Number of Cells (in Series)")
                         }
 
                         FactTextField {
@@ -274,7 +273,7 @@ QGCView {
 
                         QGCLabel {
                             id:                 battHighLabel
-                                text:               "Full Voltage (per cell)"
+                            text:               qsTr("Full Voltage (per cell)")
                         }
 
                         FactTextField {
@@ -285,7 +284,7 @@ QGCView {
                         }
 
                         QGCLabel {
-                            text:   qsTr("最大电量")//qsTr("Battery Max:")
+                            text:   qsTr("Battery Max:")
                         }
 
                         QGCLabel {
@@ -294,7 +293,7 @@ QGCView {
 
                         QGCLabel {
                             id:                 battLowLabel
-                            text:               qsTr("单个电芯空电压")//"Empty Voltage (per cell)"
+                            text:               qsTr("Empty Voltage (per cell)")
                         }
 
                         FactTextField {
@@ -305,12 +304,11 @@ QGCView {
                         }
 
                         QGCLabel {
-                            text:   qsTr("最小电量")//qsTr("Battery Min:")
+                            text:   qsTr("Battery Min:")
                         }
 
                         QGCLabel {
                             text:   (battNumCells.value * battLowVolt.value).toFixed(1) + ' V'
-                                text:   qsTr("Battery Max:")
                         }
 
                         QGCLabel {
@@ -334,7 +332,7 @@ QGCView {
                             id:                 voltMultHelp
                             Layout.columnSpan:  batteryGrid.columns
                             Layout.fillWidth:   true
-                                text:   qsTr("Battery Min:")
+                            font.pointSize:     ScreenTools.smallFontPointSize
                             wrapMode:           Text.WordWrap
                             text:               "If the battery voltage reported by the vehicle is largely different than the voltage read externally using a voltmeter you can adjust the voltage multiplier value to correct this. " +
                                                 "Click the Calculate button for help with calculating a new value."
@@ -371,7 +369,7 @@ QGCView {
                 } // Rectangle - Battery settings
 
                 QGCLabel {
-                    text:           qsTr("电调PWM最小最大值校准")//"ESC PWM Minimum and Maximum Calibration"
+                    text:           qsTr("ESC PWM Minimum and Maximum Calibration")
                     font.family:    ScreenTools.demiboldFontFamily
                 }
 
@@ -392,15 +390,15 @@ QGCView {
                             width:      parent.width
                             color:      palette.warningText
                             wrapMode:   Text.WordWrap
-                            text:   qsTr("警告:执行ESC校准之前,螺旋桨必须除去")//"WARNING: Propellers must be removed from vehicle prior to performing ESC calibration."
+                            text:       qsTr("WARNING: Propellers must be removed from vehicle prior to performing ESC calibration.")
                         }
 
                         QGCLabel {
-                            text:   qsTr("你必须在usb连接下进行此操作")//"You must use USB connection for this operation."
+                            text: qsTr("You must use USB connection for this operation.")
                         }
 
                         QGCButton {
-                            text:       qsTr("校准")//"Calibrate"
+                            text:       qsTr("Calibrate")
                             width:      ScreenTools.defaultFontPixelWidth * 20
                             onClicked:  controller.calibrateEsc()
                         }
@@ -409,12 +407,12 @@ QGCView {
 
                 QGCCheckBox {
                     id:         showUAVCAN
-                    text:   "Show UAVCAN Settings"
+                    text:       qsTr("Show UAVCAN Settings")
                     visible:    uavcanEnable !== -1
                 }
 
                 QGCLabel {
-                    text:           qsTr("UAVCAN总线设置")//"UAVCAN Bus Configuration"
+                    text:           qsTr("UAVCAN Bus Configuration")
                     font.family:    ScreenTools.demiboldFontFamily
                     visible:        showUAVCAN.checked
                 }
@@ -438,13 +436,13 @@ QGCView {
                             fact:               uavcanEnable
                             checkedValue:       3
                             uncheckedValue:     0
-                            text:               "Enable UAVCAN as the default MAIN output bus (requires autopilot restart)"
+                            text:               qsTr("Enable UAVCAN as the default MAIN output bus (requires autopilot restart)")
                         }
                     }
                 }
 
                 QGCLabel {
-                    text:           qsTr("UAVCAN电机序号和方向分配")//"UAVCAN Motor Index and Direction Assignment"
+                    text:           qsTr("UAVCAN Motor Index and Direction Assignment")
                     font.family:    ScreenTools.demiboldFontFamily
                     visible:        showUAVCAN.checked
                 }
@@ -499,11 +497,11 @@ QGCView {
 
                 QGCCheckBox {
                     id:     showAdvanced
-                    text:   qsTr("显示高级设置")//"Show Advanced Settings"
+                    text:   qsTr("Show Advanced Settings")
                 }
 
                 QGCLabel {
-                    text:           qsTr("高级电源设置")//"Advanced Power Settings"
+                    text:           qsTr("Advanced Power Settings")
                     font.family:    ScreenTools.demiboldFontFamily
                     visible:        showAdvanced.checked
                 }
