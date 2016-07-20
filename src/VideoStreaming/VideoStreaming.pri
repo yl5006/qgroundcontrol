@@ -57,7 +57,7 @@ LinuxBuild {
             $$GST_ROOT/include/gstreamer-1.0 \
             $$GST_ROOT/include/glib-2.0 \
             $$GST_ROOT/lib/gstreamer-1.0/include \
-            $$GST_ROOT/lib/glib-2.0/include
+            $$GST_ROOT/lib/glib-2.0/include        
         COPY_FILE_LIST = \
             $$GST_ROOT\\bin\\libffi-6.dll \
             $$GST_ROOT\\bin\\libglib-2.0-0.dll \
@@ -195,3 +195,4 @@ VideoEnabled {
         message("Skipping support for video streaming (Unsupported platform)")
     }
 }
+

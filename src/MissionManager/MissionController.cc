@@ -17,6 +17,7 @@
 #include "SimpleMissionItem.h"
 #include "ComplexMissionItem.h"
 #include "JsonHelper.h"
+#include "ParameterLoader.h"
 
 #ifndef __mobile__
 #include "QGCFileDialog.h"
@@ -174,11 +175,13 @@ int MissionController::insertSimpleMissionItem(QGeoCoordinate coordinate, int i)
     newItem->setDefaultsForCommand();
     if ((MAV_CMD)newItem->command() == MAV_CMD_NAV_WAYPOINT) {
         double lastValue;
+        MAV_FRAME lastFrame;
 
         if (_findLastAcceptanceRadius(&lastValue)) {
             newItem->missionItem().setParam2(lastValue);
         }
-        if (_findLastAltitude(&lastValue)) {
+        if (_findLastAltitude(&lastValue, &lastFrame)) {
+            newItem->missionItem().setFrame(lastFrame);
             newItem->missionItem().setParam7(lastValue);
         }
     }
@@ -596,7 +599,7 @@ void MissionController::_calcPrevWaypointValues(double homeAlt, VisualMissionIte
     } else {
         *altDifference = 0.0;
         *azimuth = 0.0;
-        *distance = -1.0;   // Signals no values
+        *distance = 0.0;
     }
 }
 
@@ -708,7 +711,7 @@ void MissionController::_recalcAltitudeRangeBearing()
     // No values for first item
     lastCoordinateItem->setAltDifference(0.0);
     lastCoordinateItem->setAzimuth(0.0);
-    lastCoordinateItem->setDistance(-1.0);
+    lastCoordinateItem->setDistance(0.0);
 
     double minAltSeen = 0.0;
     double maxAltSeen = 0.0;
@@ -721,7 +724,7 @@ void MissionController::_recalcAltitudeRangeBearing()
 
         // Assume the worst
         item->setAzimuth(0.0);
-        item->setDistance(-1.0);
+        item->setDistance(0.0);
 
         // If we still haven't found the first coordinate item and we hit a a takeoff command link back to home
         if (firstCoordinateItem &&
@@ -964,8 +967,9 @@ void MissionController::_activeVehicleChanged(Vehicle* activeVehicle)
         connect(_activeVehicle, &Vehicle::homePositionAvailableChanged,     this, &MissionController::_activeVehicleHomePositionAvailableChanged);
         connect(_activeVehicle, &Vehicle::homePositionChanged,              this, &MissionController::_activeVehicleHomePositionChanged);
 
-        if (!syncInProgress()) {
-            // We have to manually ask for the items from the Vehicle
+        if (_activeVehicle->getParameterLoader()->parametersAreReady() && !syncInProgress()) {
+            // We are switching between two previously existing vehicles. We have to manually ask for the items from the Vehicle.
+            // We don't request mission items for new vehicles since that will happen autamatically.
             getMissionItems();
         }
 
@@ -1046,23 +1050,24 @@ void MissionController::_inProgressChanged(bool inProgress)
     }
 }
 
-bool MissionController::_findLastAltitude(double* lastAltitude)
+bool MissionController::_findLastAltitude(double* lastAltitude, MAV_FRAME* frame)
 {
-    bool found = false;
+    bool found = false;    
     double foundAltitude;
+    MAV_FRAME foundFrame;
 
     // Don't use home position
     for (int i=1; i<_visualItems->count(); i++) {
         VisualMissionItem* visualItem = qobject_cast<VisualMissionItem*>(_visualItems->get(i));
 
         if (visualItem->specifiesCoordinate() && !visualItem->isStandaloneCoordinate()) {
-            foundAltitude = visualItem->exitCoordinate().altitude();
-            found = true;
 
             if (visualItem->isSimpleItem()) {
                 SimpleMissionItem* simpleItem = qobject_cast<SimpleMissionItem*>(visualItem);
-                if ((MAV_CMD)simpleItem->command() == MAV_CMD_NAV_TAKEOFF) {
-                    found = false;
+                if ((MAV_CMD)simpleItem->command() != MAV_CMD_NAV_TAKEOFF) {
+                    foundAltitude = simpleItem->exitCoordinate().altitude();
+                    foundFrame = simpleItem->missionItem().frame();
+                    found = true;
                 }
             }
         }
@@ -1070,6 +1075,7 @@ bool MissionController::_findLastAltitude(double* lastAltitude)
 
     if (found) {
         *lastAltitude = foundAltitude;
+        *frame = foundFrame;
     }
 
     return found;

@@ -1,4 +1,4 @@
-#ifdef QT_DEBUG# -------------------------------------------------
+# -------------------------------------------------
 # QGroundControl - Micro Air Vehicle Groundstation
 # Please see our website at <http://qgroundcontrol.org>
 # Maintainer:
@@ -19,7 +19,7 @@ message(Qt version $$[QT_VERSION])
 
 include(QGCCommon.pri)
 
-TARGET   = groundstation
+TARGET   = GroundStation
 TEMPLATE = app
 
 DebugBuild {
@@ -143,7 +143,7 @@ RC_ICONS = resources/icons/qgroundcontrol.ico
 QMAKE_TARGET_COMPANY = "groundstation.org"
 QMAKE_TARGET_DESCRIPTION = "ground station provided by yaoling"
 QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2016 . All rights reserved."
-QMAKE_TARGET_PRODUCT = "groundstation"
+QMAKE_TARGET_PRODUCT = "GroundStation"
 
 #
 # Build-specific settings
@@ -641,6 +641,7 @@ HEADERS+= \
     src/AutoPilotPlugins/APM/APMSensorsComponent.h \
     src/AutoPilotPlugins/APM/APMSensorsComponentController.h \
     src/AutoPilotPlugins/APM/APMTuningComponent.h \
+    src/AutoPilotPlugins/Common/MotorComponent.h \
     src/AutoPilotPlugins/Common/RadioComponentController.h \
     src/AutoPilotPlugins/Common/ESP8266ComponentController.h \
     src/AutoPilotPlugins/Common/ESP8266Component.h \
@@ -699,6 +700,7 @@ SOURCES += \
     src/AutoPilotPlugins/APM/APMSensorsComponent.cc \
     src/AutoPilotPlugins/APM/APMSensorsComponentController.cc \
     src/AutoPilotPlugins/APM/APMTuningComponent.cc \
+    src/AutoPilotPlugins/Common/MotorComponent.cc \
     src/AutoPilotPlugins/Common/RadioComponentController.cc \
     src/AutoPilotPlugins/Common/ESP8266ComponentController.cc \
     src/AutoPilotPlugins/Common/ESP8266Component.cc \

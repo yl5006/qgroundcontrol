@@ -55,6 +55,10 @@ Rectangle {
 
     MainToolBarController { id: _controller }
 
+    function checkPreferencesButton() {
+        preferencesButton.checked = true
+    }
+
     function checkSetupButton() {
         setupButton.checked = true
     }
@@ -327,44 +331,27 @@ Rectangle {
          }
 
     //---------------------------------------------
-    // Logo (Preferences Button)
-    Rectangle {
-        id:                     preferencesButton
-        width:                  mainWindow.tbButtonWidth * 1.25
-        height:                 parent.height
-        anchors.top:            parent.top
-        anchors.left:           parent.left
-        color:                  Qt.rgba(0,0,0,0)
-        Image {
-            height:                 mainWindow.tbCellHeight
-            anchors.centerIn:       parent
-            source:                 "/qmlimages/Hamburger.svg"
-            fillMode:               Image.PreserveAspectFit
-            smooth:                 true
-            mipmap:                 true
-            antialiasing:           true
-        }
-        /* Experimenting with a white/black divider
-        Rectangle {
-            color:      qgcPal.globalTheme === QGCPalette.Light ? Qt.rgba(0,0,0,0.15) : Qt.rgba(1,1,1,0.15)
-            height: parent.height
-            width:  1
-            anchors.right:  parent.right
-            anchors.top:    parent.top
-        }
-        */
-        MouseArea {
-            anchors.fill:   parent
-            onClicked:      toolBar.showPreferences()
-        }
-    }
     ExclusiveGroup { id: mainActionGroup }
     Row {
         id:                     viewRowLeft
         width:                  mainWindow.tbButtonWidth * 1.25
         height:                 parent.height
+        spacing:                mainWindow.tbSpacing
+        anchors.left:           parent.left
+        anchors.bottomMargin:   1
         anchors.top:            parent.top
-        anchors.left:           preferencesButton.right
+        anchors.bottom:         parent.bottom
+
+        QGCToolBarButton {
+            id:                 preferencesButton
+            width:              mainWindow.tbButtonWidth
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            exclusiveGroup:     mainActionGroup
+            source:             "/res/QGCLogoWhite"
+            logo:               true
+            onClicked:          toolBar.showPreferences()
+        }
         QGCToolBarButton {
             id:                 setupButton
             width:              mainWindow.tbButtonWidth

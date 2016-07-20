@@ -121,6 +121,8 @@
 #endif
 #endif
 
+#include "QGCMapEngine.h"
+
 QGCApplication* QGCApplication::_app = NULL;
 
 const char* QGCApplication::parameterFileExtension =    "params";
@@ -200,6 +202,9 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
 #ifndef __android__
     setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 #endif
+
+    // Setup for network proxy support
+    QNetworkProxyFactory::setUseSystemConfiguration(true);
 
 #ifdef Q_OS_LINUX
 #ifndef __mobile__
@@ -281,13 +286,7 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
     setOrganizationName(QGC_ORG_NAME);
     setOrganizationDomain(QGC_ORG_DOMAIN);
 
-    QString versionString(GIT_TAG);
-    // stable versions are on tags (v1.2.3)
-    // development versions are full git describe versions (v1.2.3-18-g879e8b3)
-    if (versionString.length() > 8) {
-        versionString.append(" (Development)");
-    }
-//    this->setApplicationVersion(versionString);
+   // this->setApplicationVersion(QString(GIT_VERSION));
       this->setApplicationVersion(tr("EWT 2.0"));
     // Set settings format
     QSettings::setDefaultFormat(QSettings::IniFormat);
@@ -461,6 +460,11 @@ bool QGCApplication::_initForNormalAppBoot(void)
         settings.setValue(_settingsVersionKey, QGC_SETTINGS_VERSION);
         showMessage("The format for QGroundControl saved settings has been modified. "
                     "Your saved settings have been reset to defaults.");
+    }
+
+    if (getQGCMapEngine()->wasCacheReset()) {
+        showMessage("The Offline Map Cache database has been upgraded. "
+                    "Your old map cache sets have been reset.");
     }
 
     settings.sync();

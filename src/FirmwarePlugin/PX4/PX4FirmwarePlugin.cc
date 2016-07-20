@@ -84,6 +84,12 @@ static const struct Modes2Name rgModes2Name[] = {
     { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,       PX4FirmwarePlugin::takeoffFlightMode,       false,  true,   true },
 };
 
+PX4FirmwarePlugin::PX4FirmwarePlugin(void)
+    : _versionNotified(false)
+{
+
+}
+
 QList<VehicleComponent*> PX4FirmwarePlugin::componentsForVehicle(AutoPilotPlugin* vehicle)
 {
     Q_UNUSED(vehicle);
@@ -214,7 +220,7 @@ QList<MAV_CMD> PX4FirmwarePlugin::supportedMissionCommands(void)
     QList<MAV_CMD> list;
 
     list << MAV_CMD_NAV_WAYPOINT
-         << MAV_CMD_NAV_LOITER_UNLIM << MAV_CMD_NAV_LOITER_TIME
+         << MAV_CMD_NAV_LOITER_UNLIM << MAV_CMD_NAV_LOITER_TIME << MAV_CMD_NAV_LOITER_TO_ALT
          << MAV_CMD_NAV_RETURN_TO_LAUNCH << MAV_CMD_NAV_LAND << MAV_CMD_NAV_TAKEOFF
          << MAV_CMD_DO_JUMP
          << MAV_CMD_DO_VTOL_TRANSITION << MAV_CMD_NAV_VTOL_TAKEOFF << MAV_CMD_NAV_VTOL_LAND
@@ -222,10 +228,9 @@ QList<MAV_CMD> PX4FirmwarePlugin::supportedMissionCommands(void)
          << MAV_CMD_DO_SET_CAM_TRIGG_DIST
          << MAV_CMD_DO_SET_SERVO
          << MAV_CMD_DO_CHANGE_SPEED
-         << MAV_CMD_DO_SET_ROI
+         << MAV_CMD_DO_LAND_START
          << MAV_CMD_DO_MOUNT_CONFIGURE
-         << MAV_CMD_DO_MOUNT_CONTROL
-         << MAV_CMD_NAV_PATHPLANNING;
+         << MAV_CMD_DO_MOUNT_CONTROL;
 
     return list;
 }
@@ -325,8 +330,8 @@ void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoord
     cmd.param2 = MAV_DO_REPOSITION_FLAGS_CHANGE_MODE;
     cmd.param3 = 0.0f;
     cmd.param4 = NAN;
-    cmd.param5 = gotoCoord.latitude() * 1e7;
-    cmd.param6 = gotoCoord.longitude() * 1e7;
+    cmd.param5 = gotoCoord.latitude();
+    cmd.param6 = gotoCoord.longitude();
     cmd.param7 = vehicle->altitudeAMSL()->rawValue().toDouble();
     cmd.target_system = vehicle->id();
     cmd.target_component = vehicle->defaultComponentId();
@@ -379,4 +384,52 @@ bool PX4FirmwarePlugin::isGuidedMode(const Vehicle* vehicle) const
     // Not supported by generic vehicle
     return (vehicle->flightMode() == holdFlightMode || vehicle->flightMode() == takeoffFlightMode
             || vehicle->flightMode() == landingFlightMode);
+}
+
+bool PX4FirmwarePlugin::adjustIncomingMavlinkMessage(Vehicle* vehicle, mavlink_message_t* message)
+{
+    //-- Don't process messages to/from UDP Bridge. It doesn't suffer from these issues
+    if (message->compid == MAV_COMP_ID_UDP_BRIDGE) {
+        return true;
+    }
+
+    switch (message->msgid) {
+    case MAVLINK_MSG_ID_AUTOPILOT_VERSION:
+        _handleAutopilotVersion(vehicle, message);
+        break;
+    }
+
+    return true;
+}
+
+void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_message_t* message)
+{
+    Q_UNUSED(vehicle);
+
+    if (!_versionNotified) {
+        bool notifyUser = false;
+        int supportedMajorVersion = 1;
+        int supportedMinorVersion = 4;
+        int supportedPatchVersion = 1;
+
+        mavlink_autopilot_version_t version;
+        mavlink_msg_autopilot_version_decode(message, &version);
+
+        if (version.flight_sw_version != 0) {
+            int majorVersion, minorVersion, patchVersion;
+
+            majorVersion = (version.flight_sw_version >> (8*3)) & 0xFF;
+            minorVersion = (version.flight_sw_version >> (8*2)) & 0xFF;
+            patchVersion = (version.flight_sw_version >> (8*1)) & 0xFF;
+
+            notifyUser = majorVersion < supportedMajorVersion || minorVersion < supportedMinorVersion || patchVersion < supportedPatchVersion;
+        } else {
+            notifyUser = true;
+        }
+
+        if (notifyUser) {
+            _versionNotified = true;
+            qgcApp()->showMessage(QString("QGroundControl supports PX4 Pro firmware Version %1.%2.%3 and above. You are using a version prior to that which will lead to unpredictable results. Please upgrade your firmware.").arg(supportedMajorVersion).arg(supportedMinorVersion).arg(supportedPatchVersion));
+        }
+    }
 }
