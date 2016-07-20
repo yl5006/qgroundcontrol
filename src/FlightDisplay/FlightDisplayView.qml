@@ -24,7 +24,7 @@ import QGroundControl.Palette       1.0
 import QGroundControl.Vehicle       1.0
 import QGroundControl.Controllers   1.0
 import QGroundControl.FactSystem    1.0
-
+import OpenCV 1.0
 /// Flight Display View
 QGCView {
     id:             root
@@ -34,8 +34,8 @@ QGCView {
 
     property var _activeVehicle:        QGroundControl.multiVehicleManager.activeVehicle
     readonly property real _defaultAltitudeRelative:    0
-    property bool _mainIsMap:           _controller.hasVideo ? QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true) : true
-    property bool _isPipVisible:        _controller.hasVideo ? QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true) : false
+    property bool _mainIsMap:          QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true)// _controller.hasVideo ? QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true) : true
+    property bool _isPipVisible:       QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true)// _controller.hasVideo ? QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true) : false
 
     property real _roll:                _activeVehicle ? _activeVehicle.roll.value    : _defaultRoll
     property real _pitch:               _activeVehicle ? _activeVehicle.pitch.value   : _defaultPitch
@@ -162,14 +162,52 @@ QGCView {
         }
 
         //-- Video View
-        FlightDisplayViewVideo {
-            id:             _flightVideo
-            z:              _mainIsMap ? _panel.z + 2 : _panel.z + 1
-            width:          !_mainIsMap ? _panel.width  : pipSize
-            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
+//        FlightDisplayViewVideo {
+//            id:             _flightVideo
+//            z:              _mainIsMap ? _panel.z + 2 : _panel.z + 1
+//            width:          !_mainIsMap ? _panel.width  : pipSize
+//            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
+//            anchors.left:   _panel.left
+//            anchors.bottom: _panel.bottom
+//            visible:        _controller.hasVideo && (!_mainIsMap || _isPipVisible)
+//            states: [
+//                State {
+//                    name:   "pipMode"
+//                    PropertyChanges {
+//                        target: _flightVideo
+//                        anchors.margins:    ScreenTools.defaultFontPixelHeight
+//                    }
+//                },
+//                State {
+//                    name:   "fullMode"
+//                    PropertyChanges {
+//                        target: _flightVideo
+//                        anchors.margins:    0
+//                    }
+//                }
+//            ]
+//        }
+         //-- Video View
+        OpenCVcamera {
+            id:opencvCamera
+            m_cameraId: 0
+            m_run: true
+
+            //width: 320
+            //height: 240
+        }
+
+        OpenCVshowFrame {
+            //anchors.centerIn: parent
             anchors.left:   _panel.left
             anchors.bottom: _panel.bottom
-            visible:        _controller.hasVideo && (!_mainIsMap || _isPipVisible)
+            id:_flightVideo
+            m_capture: opencvCamera
+            m_frameRate: 24
+            m_run: true
+            z:               _mainIsMap ? _panel.z + 2 : _panel.z + 1
+            width:          !_mainIsMap ? _panel.width  : pipSize
+            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
             states: [
                 State {
                     name:   "pipMode"

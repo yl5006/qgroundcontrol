@@ -94,6 +94,11 @@
 #include "PositionManager.h"
 #include "FollowMe.h"
 
+#ifdef   QGC_OPENCV_STREAMING
+#include "opencvcamera.h"
+#include "opencvshowframe.h"
+#endif
+
 #ifndef __ios__
     #include "SerialLink.h"
 #endif
@@ -415,6 +420,11 @@ void QGCApplication::_initCommon(void)
     qmlRegisterSingletonType<QGroundControlQmlGlobal>   ("QGroundControl",                          1, 0, "QGroundControl",         qgroundcontrolQmlGlobalSingletonFactory);
     qmlRegisterSingletonType<ScreenToolsController>     ("QGroundControl.ScreenToolsController",    1, 0, "ScreenToolsController",  screenToolsControllerSingletonFactory);
     qmlRegisterSingletonType<MavlinkQmlSingleton>       ("QGroundControl.Mavlink",                  1, 0, "Mavlink",                mavlinkQmlSingletonFactory);
+
+#ifdef   QGC_OPENCV_STREAMING
+    qmlRegisterType<OpenCVcamera>("OpenCV", 1, 0, "OpenCVcamera");
+    qmlRegisterType<OpenCVshowFrame>("OpenCV", 1, 0, "OpenCVshowFrame");
+#endif
 }
 
 bool QGCApplication::_initForNormalAppBoot(void)

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -82,6 +82,13 @@ void VideoReceiver::start()
             qCritical() << "VideoReceiver::start() failed. Error with gst_element_factory_make('udpsrc')";
             break;
         }
+        guint major, minor, micro, nano;
+        gst_version (&major, &minor, &micro, &nano);
+        qDebug()<< "This program is linked against GStreamer"<<major<<","<<minor<<","<<micro<<","<<nano<<endl;
+//        if ((dataSource = gst_element_factory_make("v4l2src", "v4l2-source")) == NULL) {
+//            qCritical() << "VideoReceiver::start() failed. Error with gst_element_factory_make('v4l2src')";
+//            break;
+//        }
 
         if ((caps = gst_caps_from_string("application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264")) == NULL) {
             qCritical() << "VideoReceiver::start() failed. Error with gst_caps_from_string()";

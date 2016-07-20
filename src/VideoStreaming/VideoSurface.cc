@@ -46,7 +46,7 @@ GstElement* VideoSurface::videoSink() const
 {
     if (_data->videoSink == NULL) {
         if ((_data->videoSink = gst_element_factory_make("qtquick2videosink", NULL)) == NULL) {
-            qCritical("Failed to create qtquick2videosink. Make sure it is installed correctly");
+            qCritical("Failed to create qtquick2videosink. Make sure it is installed correctly");//qtquick2videosink
             return NULL;
         }
         g_signal_connect(_data->videoSink, "update", G_CALLBACK(onUpdateThunk), (void* )this);

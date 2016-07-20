@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -28,7 +28,7 @@ FlightDisplayViewController::FlightDisplayViewController(QObject *parent)
      *
      * gst-launch-1.0 uvch264src initial-bitrate=1000000 average-bitrate=1000000 iframe-period=1000 name=src auto-start=true src.vidsrc ! \
      * video/x-h264,width=1280,height=720,framerate=24/1 ! h264parse ! rtph264pay ! udpsink host=192.168.1.9 port=5600
-     *
+     * gst-launch-1.0.exe -v rtspsrc location=rtsp://192.168.199.188/tc10.264 caps="application/x-rtp,media=(string)video,clock-rate=(int)90000, encoding-name=(string)H264" ! udpsink host=127.0.0.1 port=5600
      * Where the main parameters are:
      *
      *  uvch264src:         Your h264 video source (the example above uses a Logitech C920 on an Raspberry PI 2+ or Odroid C1
@@ -55,6 +55,9 @@ FlightDisplayViewController::FlightDisplayViewController(QObject *parent)
     _videoReceiver->setVideoSink(_videoSurface->videoSink());
     connect(&_frameTimer, &QTimer::timeout, this, &FlightDisplayViewController::_updateTimer);
     _frameTimer.start(1000);
+ //   VideoCapture cap(0);
+ //  bool op= cap.isOpened();
+ //  qDebug()<<"op:"<<op<<endl
 #endif
 }
 
