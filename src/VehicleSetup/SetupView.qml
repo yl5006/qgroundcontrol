@@ -260,7 +260,7 @@ Rectangle {
                 imageResource:  "/qmlimages/FirmwareUpgradeIcon.png"
                 setupIndicator: false
                 exclusiveGroup: setupButtonGroup
-                    visible:        !ScreenTools.isMobile&&ScreenTools.isDebug
+//                visible:        !ScreenTools.isMobile&&ScreenTools.isDebug
                 text:           "Firmware"
 
                 onClicked: showFirmwarePanel()
@@ -269,7 +269,7 @@ Rectangle {
             SubMenuButton {
                 id:             px4FlowButton
                 exclusiveGroup: setupButtonGroup
-                    visible:        ScreenTools.isDebug&&QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.genericFirmware : false
+                visible:        ScreenTools.isDebug&&QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.genericFirmware : false
                 setupIndicator: false
                 text:           "PX4Flow"
                 onClicked:      showPX4FlowPanel()

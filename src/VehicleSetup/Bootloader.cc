@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -583,7 +583,6 @@ bool Bootloader::getPX4BoardInfo(QextSerialPort* port, uint32_t& bootloaderVersi
     bootloaderVersion = _bootloaderVersion;
     boardID = _boardID;
     flashSize = _boardFlashSize;
-    
     return true;
     
 Error:

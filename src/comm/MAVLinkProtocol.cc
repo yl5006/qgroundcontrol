@@ -42,7 +42,7 @@ QGC_LOGGING_CATEGORY(MAVLinkProtocolLog, "MAVLinkProtocolLog")
 
 #ifndef __mobile__
 const char* MAVLinkProtocol::_tempLogFileTemplate = "FlightDataXXXXXX"; ///< Template for temporary log file
-const char* MAVLinkProtocol::_logFileExtension = "mavlink";             ///< Extension for log files
+const char* MAVLinkProtocol::_logFileExtension = "log";//"mavlink";             ///< Extension for log files
 #endif
 
 /**
