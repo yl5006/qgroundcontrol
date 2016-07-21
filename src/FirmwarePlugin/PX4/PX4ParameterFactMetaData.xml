@@ -3529,7 +3529,7 @@ EPV used if greater than this value</short_desc>
         <value code="0">Altitude following</value>
       </values>
     </parameter>
-    <parameter default="0" name="MPC_SAFE_DIS" type="FLOAT">
+    <parameter default="5" name="MPC_SAFE_DIS" type="FLOAT">
       <short_desc>distance to obstacle</short_desc>
       <min>1</min>
       <max>30</max>
@@ -6694,7 +6694,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <parameter default="1" name="THROW_ENABLE" type="INT32">
         <short_desc>throw enable</short_desc>
         <long_desc>throw enable</long_desc>
-        <min>0.0</min>
+        <min>0</min>
         <decimal>2</decimal>
       </parameter>
     </group>
