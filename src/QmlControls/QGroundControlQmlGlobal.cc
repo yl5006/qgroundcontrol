@@ -214,7 +214,7 @@ Fact* QGroundControlQmlGlobal::offlineEditingFirmwareType(void)
     if (!_offlineEditingFirmwareTypeFact) {
         QStringList     enumStrings;
         QVariantList    enumValues;
-
+        //use default MAV_AUTOPILOT_PX4
         _offlineEditingFirmwareTypeFact = new SettingsFact(QString(), "OfflineEditingFirmwareType", FactMetaData::valueTypeUint32, (uint32_t)MAV_AUTOPILOT_PX4);//(uint32_t)MAV_AUTOPILOT_ARDUPILOTMEGA);
         _offlineEditingFirmwareTypeMetaData = new FactMetaData(FactMetaData::valueTypeUint32);
 

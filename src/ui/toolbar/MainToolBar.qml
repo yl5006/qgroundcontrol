@@ -447,7 +447,7 @@ Rectangle {
         height:                 mainWindow.tbCellHeight
         anchors.leftMargin:     mainWindow.tbSpacing * 2
         anchors.left:           viewRowLeft.right
-        anchors.right:          parent.right
+        anchors.right:          viewRowRight.right
         anchors.verticalCenter: parent.verticalCenter
 
         property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
@@ -455,13 +455,13 @@ Rectangle {
         Loader {
             source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsLeft.qml" : ""
             anchors.left:           parent.left
-            anchors.leftMargin:     mainWindow.tbSpacing * 3
+            anchors.leftMargin:     mainWindow.tbButtonWidth * 2
             anchors.verticalCenter: parent.verticalCenter
         }
         Loader {
             source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsRight.qml" : ""
             anchors.right:          parent.right
-            anchors.rightMargin:    mainWindow.tbButtonWidth * 3
+            anchors.rightMargin:    mainWindow.tbButtonWidth * 2
             anchors.verticalCenter: parent.verticalCenter
         }
         }

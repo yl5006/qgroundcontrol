@@ -190,7 +190,7 @@ QGCView {
          //-- Video View
         OpenCVcamera {
             id:opencvCamera
-            m_cameraId: 0
+            m_cameraId: 1
             m_run: true
 
             //width: 320

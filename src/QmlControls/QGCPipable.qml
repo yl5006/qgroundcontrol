@@ -42,8 +42,8 @@ Item {
         anchors.left:   parent.left
         anchors.bottom: parent.bottom
         visible:        !isHidden
-        height:         ScreenTools.defaultFontPixelSize * 3//2.5
-        width:          ScreenTools.defaultFontPixelSize * 4//2.5
+        height:         ScreenTools.defaultFontPixelHeight * 3//2.5
+        width:          ScreenTools.defaultFontPixelHeight * 4 //2.5
         sourceSize.height:  height
         MouseArea {
             anchors.fill: parent
