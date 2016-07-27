@@ -78,7 +78,7 @@ Item {
             Column {
                 id:                     buttonColumn
                 anchors.leftMargin:     _margins
-                anchors.rightMargin:    _margins
+        //        anchors.rightMargin:    _margins
                 anchors.left:           parent.left
                 anchors.right:          parent.right
                 anchors.topMargin:      _margins
@@ -89,13 +89,13 @@ Item {
                     text:           "Preferences"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
-
-                QGCButton {
+                SubMenuButtonModify {
                     id:             _generalButton
+                    imageResource:  "/qmlimages/tool-01.svg"
                     height:         _buttonHeight
                     anchors.left:   parent.left
                     anchors.right:  parent.right
-                text:       qsTr("一般")//"General"
+                    text:           qsTr("一般")//"General"
                     exclusiveGroup: panelActionGroup
                     onClicked: {
                         if(__rightPanel.source != "GeneralSettings.qml") {
@@ -109,7 +109,7 @@ Item {
                     height:         _buttonHeight
                     anchors.left:   parent.left
                     anchors.right:  parent.right
-                text:       qsTr("连接")//"Comm Links"
+                    text:       qsTr("连接")//"Comm Links"
                     exclusiveGroup: panelActionGroup
                     onClicked: {
                         if(__rightPanel.source != "LinkSettings.qml") {

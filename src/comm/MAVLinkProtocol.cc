@@ -335,7 +335,6 @@ void MAVLinkProtocol::receiveBytes(LinkInterface* link, QByteArray b)
                 mavlink_msg_heartbeat_decode(&message, &heartbeat);
                 emit vehicleHeartbeatInfo(link, message.sysid, heartbeat.mavlink_version, heartbeat.autopilot, heartbeat.type);
             }
-
             // Increase receive counter
             totalReceiveCounter[mavlinkChannel]++;
             currReceiveCounter[mavlinkChannel]++;

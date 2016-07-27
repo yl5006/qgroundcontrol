@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -48,6 +48,7 @@ QColor QGCPalette::_warningText[QGCPalette::_cThemes][QGCPalette::_cColorGroups]
 QColor QGCPalette::_button[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#ffffff"),  QColor("#ffffff") },
     { QColor(0x58, 0x58, 0x58), QColor(98, 98, 100) },
+//    { QColor(46, 187, 217), QColor(46, 187, 217) },
 };
 
 QColor QGCPalette::_buttonText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
@@ -57,7 +58,8 @@ QColor QGCPalette::_buttonText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] 
 
 QColor QGCPalette::_buttonHighlight[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#e4e4e4"), QColor("#33b5e5") },
-    { QColor(0x58, 0x58, 0x58), QColor(237, 235, 51) },
+//    { QColor(0x58, 0x58, 0x58), QColor(237, 235, 51) },
+    { QColor(46, 187, 217), QColor(46, 187, 217) },
 };
 
 QColor QGCPalette::_buttonHighlightText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {

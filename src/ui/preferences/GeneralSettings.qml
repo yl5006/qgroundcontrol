@@ -69,7 +69,7 @@ QGCView {
                             width:  height
                             height: baseFontEdit.height
                             text:   "-"
-
+                            _showHighlight : true
                             onClicked: {
                                 if(ScreenTools.defaultFontPointSize > 6) {
                                     QGroundControl.baseFontPointSize = QGroundControl.baseFontPointSize - 1

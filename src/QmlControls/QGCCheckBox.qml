@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 
@@ -9,6 +9,23 @@ CheckBox {
     property var __qgcPal: QGCPalette { colorGroupEnabled: enabled }
 
     style: CheckBoxStyle {
+        indicator: Item {
+                     implicitWidth:  16
+                     implicitHeight: 16
+                     Rectangle {
+                     anchors.fill: parent
+                     radius: 2
+                     border.color: "#2ebbd9"//control.__qgcPal.buttonHighlightText
+                     border.width: 1
+                     Rectangle {
+                         visible: control.checked
+                         color: "#2ebbd9"
+                         radius: 1
+                         anchors.margins: 4
+                         anchors.fill: parent
+                     }
+                     }
+        }
         label: Item {
             implicitWidth: text.implicitWidth + 2
             implicitHeight: text.implicitHeight

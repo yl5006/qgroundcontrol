@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Controls.Private 1.0
@@ -8,7 +8,7 @@ import QGroundControl.ScreenTools 1.0
 
 ComboBox {
     property var    _qgcPal:        QGCPalette { colorGroupEnabled: enabled }
-    property bool   _showHighlight: pressed | hovered
+    property bool   _showHighlight: true//pressed | hovered     //change by yaoling
     property bool   _showBorder:    _qgcPal.globalTheme === QGCPalette.Light
 
     style: ComboBoxStyle {
@@ -26,6 +26,7 @@ ComboBox {
                 color:          _showHighlight ? control._qgcPal.buttonHighlight : control._qgcPal.button
                 border.width:   _showBorder ? 1: 0
                 border.color:  control._qgcPal.buttonText
+                radius:         2                    //add by yaoling
             }
 
             Image {

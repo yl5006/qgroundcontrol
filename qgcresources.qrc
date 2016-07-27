@@ -89,6 +89,7 @@
         <file alias="VehicleRight.png">src/AutoPilotPlugins/PX4/Images/VehicleRight.png</file>
         <file alias="VehicleRightRotate.png">src/AutoPilotPlugins/PX4/Images/VehicleRightRotate.png</file>
         <file alias="VehicleSummaryIcon.png">src/VehicleSetup/VehicleSummaryIcon.png</file>
+	<file alias="tool-01.svg">src/VehicleSetup/tool-01.svg</file>
         <file alias="VehicleTailDown.png">src/AutoPilotPlugins/PX4/Images/VehicleTailDown.png</file>
         <file alias="VehicleTailDownRotate.png">src/AutoPilotPlugins/PX4/Images/VehicleTailDownRotate.png</file>
         <file alias="VehicleUpsideDown.png">src/AutoPilotPlugins/PX4/Images/VehicleUpsideDown.png</file>
@@ -161,6 +162,8 @@
         <file alias="groundSpeed.svg">src/FlightMap/Images/groundSpeed.svg</file>
         <file alias="airSpeed.svg">src/FlightMap/Images/airSpeed.svg</file>
         <file alias="climbRate.svg">src/FlightMap/Images/climbRate.svg</file>
+        <file alias="Waypoint0.svg">src/FlightMap/Images/Waypoint0.svg</file>
+        <file alias="Waypoint.svg">src/FlightMap/Images/Waypoint.svg</file>
 	<file alias="distance.svg">src/FlightMap/Images/distance.svg</file>
 	<file alias="deletepoint.svg">src/FlightMap/Images/deletepoint.svg</file>
 	<file alias="insertpoint.svg">src/FlightMap/Images/insertpoint.svg</file>
