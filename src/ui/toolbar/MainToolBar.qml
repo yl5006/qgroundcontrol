@@ -490,13 +490,13 @@ Rectangle {
 //        }
 
 
-    // Progress bar
-    Rectangle {
-        id:             progressBar
-        anchors.bottom: parent.bottom
-        height:         toolBar.height * 0.05
-        width:          parent.width * _controller.progressBarValue
-        color:          colorGreen
-    }
+//    // Progress bar
+//    Rectangle {
+//        id:             progressBar
+//        anchors.bottom: parent.bottom
+//        height:         toolBar.height * 0.05
+//        width:          parent.width * _controller.progressBarValue
+//        color:          colorGreen
+//    }
 
 }

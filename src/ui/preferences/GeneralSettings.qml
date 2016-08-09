@@ -24,7 +24,7 @@ import QGroundControl.Palette               1.0
 QGCView {
     id:                 qgcView
     viewPanel:          panel
-    color:              qgcPal.window
+    color:              "#35414d"// qgcPal.buttonHighlight//"#35414d"//qgcPal.windowShadeDark//qgcPal.window
     anchors.fill:       parent
     anchors.margins:    ScreenTools.defaultFontPixelWidth
 
@@ -36,13 +36,11 @@ QGCView {
     QGCViewPanel {
         id:             panel
         anchors.fill:   parent
-
         QGCFlickable {
             clip:               true
             anchors.fill:       parent
             contentHeight:      settingsColumn.height
             contentWidth:       settingsColumn.width
-
             Column {
                 id:                 settingsColumn
                 anchors.margins:    ScreenTools.defaultFontPixelWidth
@@ -375,7 +373,13 @@ QGCView {
                     height: ScreenTools.defaultFontPixelHeight / 2
                     width:  parent.width
                 }
-
+                QGCVariantButton {
+                    width:  200
+                    height: baseFontEdit.height*1.5
+                    text:   "this is test"
+                    bordercolor: Qt.rgba(0.0627, 0.9216, 0.749, 1)
+                    _showDotBorder: true
+                }
                 //-----------------------------------------------------------------
                 //-- Offline mission editing settings
             // only use px4 fly stack(yaoling)

@@ -38,22 +38,23 @@ Item {
     }
 
     // This covers the screen with a transparent section
-    Rectangle {
-        id:             __transparentSection
-        height:         parent.height - toolBar.height
-        anchors.bottom: parent.bottom
-        anchors.left:   parent.left
-        opacity:        0.0
-        color:          qgcPal.window
-        visible:        __rightPanel.source == ""
-    }
+//    Rectangle {
+//        id:             __transparentSection
+//        height:         parent.height - toolBar.height
+//        anchors.bottom: parent.bottom
+//        anchors.left:   parent.left
+//        opacity:        0.0
+//        color:          qgcPal.window
+//        visible:        __rightPanel.source == ""
+
+//    }
 
     //-- Top Separator
     Rectangle {
         id:             __topSeparator
         width:          parent.width
         height:         1
-        y:              toolBar.height
+        y:              0//toolBar.height
         anchors.left:   parent.left
         color:          QGroundControl.isDarkStyle ? "#909090" : "#7f7f7f"
     }
@@ -78,24 +79,26 @@ Item {
             Column {
                 id:                     buttonColumn
                 anchors.leftMargin:     _margins
-        //        anchors.rightMargin:    _margins
+                anchors.rightMargin:    -_margins
                 anchors.left:           parent.left
                 anchors.right:          parent.right
                 anchors.topMargin:      _margins
                 anchors.top:            parent.top
-                spacing:                ScreenTools.defaultFontPixelHeight * 0.5
+      //        spacing:                ScreenTools.defaultFontPixelHeight * 0.5
 
                 QGCLabel {
                     text:           "Preferences"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
+
                 SubMenuButtonModify {
                     id:             _generalButton
-                    imageResource:  "/qmlimages/tool-01.svg"
-                    height:         _buttonHeight
+                    imageResource:   "/qmlimages/tool-01.svg"
+                    height:         _buttonHeight*1.4
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     text:           qsTr("一般")//"General"
+                    highlightcolor: "#35414d"
                     exclusiveGroup: panelActionGroup
                     onClicked: {
                         if(__rightPanel.source != "GeneralSettings.qml") {
@@ -104,12 +107,13 @@ Item {
                         checked = true
                     }
                 }
-
-                QGCButton {
-                    height:         _buttonHeight
+                SubMenuButtonModify {
+                    height:         _buttonHeight*1.4
+                    imageResource:   "/res/connect.svg"
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     text:       qsTr("连接")//"Comm Links"
+                    highlightcolor: "#35414d"
                     exclusiveGroup: panelActionGroup
                     onClicked: {
                         if(__rightPanel.source != "LinkSettings.qml") {
@@ -120,7 +124,7 @@ Item {
                 }
 
                 QGCButton {
-                    height:         _buttonHeight
+                    height:         _buttonHeight*1.4
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     text:           qsTr("Offline Maps")
@@ -138,7 +142,7 @@ Item {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     text:           qsTr("MavLink")
-                visible:    ScreenTools.isDebug
+                    visible:    ScreenTools.isDebug
                     exclusiveGroup: panelActionGroup
                     onClicked: {
                         if(__rightPanel.source != "MavlinkSettings.qml") {
@@ -195,25 +199,25 @@ Item {
         }
     }
 
-    //-- Vertical Separator
-    Rectangle {
-        id:             __verticalSeparator
-        width:          1
-        height:         parent.height - toolBar.height
-        anchors.left:   __leftMenu.right
-        anchors.bottom: parent.bottom
-        color:          QGroundControl.isDarkStyle ? "#909090" : "#7f7f7f"
-    }
+//    //-- Vertical Separator
+//    Rectangle {
+//        id:             __verticalSeparator
+//        width:          1
+//        height:         parent.height - toolBar.height
+//        anchors.left:   __leftMenu.right
+//        anchors.bottom: parent.bottom
+//        color:          QGroundControl.isDarkStyle ? "#909090" : "#7f7f7f"
+//    }
 
     //-- Main Setting Display Area
     Rectangle {
         id:             settingDisplayArea
-        anchors.left:   __verticalSeparator.right
-        width:          mainWindow.width - __leftMenu.width - __verticalSeparator.width
+        anchors.left:   __leftMenu.right//__verticalSeparator.right
+        width:          mainWindow.width - __leftMenu.width //- __verticalSeparator.width
         height:         parent.height - toolBar.height - __topSeparator.height
         anchors.bottom: parent.bottom
         visible:        __rightPanel.source != ""
-        color:          qgcPal.window
+        color:          "#35414d"//qgcPal.window
         //-- Panel Contents
         Loader {
             id:             __rightPanel

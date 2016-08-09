@@ -33,17 +33,17 @@ Rectangle {
     function computeSummaryBoxSize() {
         var sw  = 0
         var rw  = 0
-        var idx = Math.floor(_summaryRoot.width / (_minSummaryW + ScreenTools.defaultFontPixelWidth))
+        var idx = Math.floor((_summaryRoot.width-ScreenTools.defaultFontPixelWidth * 8) / (_minSummaryW + ScreenTools.defaultFontPixelWidth))
         if(idx < 1) {
-            _summaryBoxWidth = _summaryRoot.width
+            _summaryBoxWidth = (_summaryRoot.width-ScreenTools.defaultFontPixelWidth * 8)
             _summaryBoxSpace = 0
         } else {
             _summaryBoxSpace = 0
             if(idx > 1) {
-                _summaryBoxSpace = ScreenTools.defaultFontPixelWidth * 2
+                _summaryBoxSpace = ScreenTools.defaultFontPixelWidth * 4
                 sw = _summaryBoxSpace * (idx - 1)
             }
-            rw = _summaryRoot.width - sw
+            rw = _summaryRoot.width-ScreenTools.defaultFontPixelWidth * 8 - sw
             _summaryBoxWidth = rw / idx
         }
     }
@@ -91,9 +91,9 @@ Rectangle {
 
             Flow {
                 id:         _flowCtl
-                width:      _summaryRoot.width
+                width:      _summaryRoot.width-ScreenTools.defaultFontPixelWidth*8
                 spacing:    _summaryBoxSpace
-
+                anchors.margins:    _summaryBoxSpace
                 Repeater {
                     model: QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.autopilot.vehicleComponents : undefined
 
@@ -103,31 +103,37 @@ Rectangle {
                         height:     ScreenTools.defaultFontPixelHeight * 13
                         color:      qgcPal.windowShade
                         visible:    modelData.summaryQmlSource.toString() !== ""
-                        border.width: 1
-                        border.color: qgcPal.text
-                        Component.onCompleted: {
-                            border.color = Qt.rgba(border.color.r, border.color.g, border.color.b, 0.1)
-                        }
+//                        border.width: 1
+//                        border.color: qgcPal.text
+//                        Component.onCompleted: {
+//                            border.color = Qt.rgba(border.color.r, border.color.g, border.color.b, 0.1)
+//                        }
 
                         readonly property real titleHeight: ScreenTools.defaultFontPixelHeight * 2
 
                         // Title bar
-                        QGCButton {
+                        QGCVariantButton {
                             id:     titleBar
                             width:  parent.width
                             height: titleHeight
                             text:   capitalizeWords(modelData.name)
-
-                            // Setup indicator
-                            Rectangle {
-                                anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
-                                anchors.right:          parent.right
+                            bordercolor:  modelData.setupComplete ? Qt.rgba(0.0627, 0.9216, 0.749, 1)   :Qt.rgba(0.8941, 0.2275, 0.2392, 1)
+                            startcolor:   modelData.setupComplete ? Qt.rgba(0.0627, 0.9216, 0.749, 0)   :Qt.rgba(0.8941, 0.2275, 0.2392, 0)
+                            middlecolor:  modelData.setupComplete ? Qt.rgba(0.0627, 0.9216, 0.749, 0.35):Qt.rgba(0.8941, 0.2275, 0.2392, 0.35)
+                            stopcolor:    modelData.setupComplete ? Qt.rgba(0.0627, 0.9216, 0.749, 0)   :Qt.rgba(0.8941, 0.2275, 0.2392, 0)
+                            _showDotBorder: true
+                            _showVerticalDotBorder: modelData.setupComplete ? false :true
+                            _dottedAnimation:        modelData.setupComplete ? false :true
+                            QGCColoredImage {
+                                source:                 "/res/buttoncircle.svg"
+                                anchors.leftMargin:    ScreenTools.defaultFontPixelWidth*2
+                                anchors.left:          parent.left
                                 anchors.verticalCenter: parent.verticalCenter
                                 width:                  ScreenTools.defaultFontPixelWidth * 1.75
                                 height:                 width
-                                radius:                 width / 2
-                                color:                  modelData.setupComplete ? "#00d932" : "red"
-                        //        visible:                modelData.requiresSetup
+                                fillMode:               Image.PreserveAspectFit
+                                color:                  modelData.setupComplete ? Qt.rgba(0.0627, 0.9216, 0.749, 1)   :Qt.rgba(0.8941, 0.2275, 0.2392, 1)
+                      //        visible:                modelData.requiresSetup
                             }
                             onClicked : {
                                 setupView.showVehicleComponentPanel(modelData)
@@ -136,7 +142,13 @@ Rectangle {
                         // Summary Qml
                         Rectangle {
                             anchors.top:    titleBar.bottom
-                            width:          parent.width
+                            width:          parent.width-titleHeight
+                            color:          qgcPal.windowShade
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            height:         ScreenTools.defaultFontPixelHeight * 13-titleHeight
+                            border.width: 1
+                            border.color:  modelData.setupComplete ? Qt.rgba(0.0627, 0.9216, 0.749, 0.35)   :Qt.rgba(0.8941, 0.2275, 0.2392, 0.35)
+
                             Loader {
                                 anchors.fill:       parent
                                 anchors.margins:    ScreenTools.defaultFontPixelWidth

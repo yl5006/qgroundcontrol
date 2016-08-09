@@ -141,7 +141,7 @@ LinuxBuild {
 
 RC_ICONS = resources/icons/qgroundcontrol.ico
 QMAKE_TARGET_COMPANY = "groundstation.org"
-QMAKE_TARGET_DESCRIPTION = "ground station provided by yaoling"
+QMAKE_TARGET_DESCRIPTION = "ground station provided by yl"
 QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2016 . All rights reserved."
 QMAKE_TARGET_PRODUCT = "GroundStation"
 

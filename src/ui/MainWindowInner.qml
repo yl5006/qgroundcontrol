@@ -19,7 +19,8 @@ import QGroundControl.Controls              1.0
 import QGroundControl.FlightDisplay         1.0
 import QGroundControl.ScreenTools           1.0
 import QGroundControl.MultiVehicleManager   1.0
-import QGroundControl.QGCPositionManager   1.0
+import QGroundControl.QGCPositionManager    1.0
+import QGroundControl.Controllers           1.0
 
 /// Inner common QML for mainWindow
 Item {
@@ -32,6 +33,8 @@ Item {
     readonly property string _preferencesSource:    "MainWindowLeftPanel.qml"
 
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
+
+    MainToolBarController { id: _controller }
 
     property real   tbHeight:           ScreenTools.isMobile ? (ScreenTools.isTinyScreen ? (mainWindow.width * 0.0666) : (mainWindow.width * 0.05)) : ScreenTools.defaultFontPixelHeight * 3
     property int    tbCellHeight:       tbHeight * 0.75
@@ -282,6 +285,7 @@ Item {
         id:                 toolBar
         height:             tbHeight
         anchors.left:       parent.left
+        anchors.leftMargin: preferencesPanel.visible ? ScreenTools.defaultFontPixelWidth * 16 : 0//      for display
         anchors.right:      parent.right
         anchors.top:        parent.top
         mainWindow:         mainWindow
@@ -531,6 +535,14 @@ Item {
                 }
             }
         }
+    }
+    // Progress bar
+    Rectangle {
+        id:             progressBar
+        anchors.bottom: parent.bottom
+        height:         toolBar.height * 0.05
+        width:          parent.width * _controller.progressBarValue
+        color:          "#05f068"
     }
 }
 

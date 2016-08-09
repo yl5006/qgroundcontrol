@@ -195,6 +195,8 @@
         <file alias="TrashDelete.svg">resources/TrashDelete.svg</file>
         <file alias="XDelete.svg">resources/XDelete.svg</file>
         <file alias="XDeleteBlack.svg">resources/XDeleteBlack.svg</file>
+	<file alias="connect.svg">resources/connect.svg</file>
+	<file alias="buttoncircle.svg">resources/buttoncircle.svg</file>
         <file alias="startpage.png">resources/startpage.png</file>
     </qresource>
     <qresource prefix="/res/firmware">

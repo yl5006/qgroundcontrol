@@ -22,12 +22,14 @@ QGCPalette::Theme QGCPalette::_theme = QGCPalette::Dark;
 
 QColor QGCPalette::_window[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#ffffff"), QColor("#ffffff") },
-    { QColor(0x22, 0x22, 0x22), QColor(0x22, 0x22, 0x22) }
+  //  { QColor(0x22, 0x22, 0x22), QColor(0x22, 0x22, 0x22) }
+    { QColor("#1e2328"), QColor("#1e2328") }
 };
 
 QColor QGCPalette::_windowShade[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#d9d9d9"), QColor("#d9d9d9") },
-    { QColor(51, 51, 51), QColor(51, 51, 51) }
+ //   { QColor(51, 51, 51), QColor(51, 51, 51) }
+    { QColor("#1e2328"), QColor("#1e2328") }
 };
 
 QColor QGCPalette::_windowShadeDark[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {

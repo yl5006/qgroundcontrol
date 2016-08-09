@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -347,24 +347,27 @@ QGCView {
     QGCViewPanel {
         id:             panel
         anchors.fill:   parent
-
-        QGCLabel {
-            id:             titleLabel
-            text:           title
-            font.pointSize: ScreenTools.mediumFontPointSize
-        }
-
-        ProgressBar {
+//        ProgressBar {
+//            id:                 progressBar
+//            anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+//            anchors.top:        titleLabel.bottom
+//            width:              parent.width
+//        }
+        QGCProgressBar
+        {
             id:                 progressBar
-            anchors.topMargin:  ScreenTools.defaultFontPixelHeight
-            anchors.top:        titleLabel.bottom
-            width:              parent.width
+            anchors.topMargin:  ScreenTools.defaultFontPixelHeight*12
+            anchors.top:        parent.top
+            anchors.verticalCenter: parent.verticalCenter//+ScreenTools.defaultFontPixelHeight*12
+            anchors.horizontalCenter:   parent.horizontalCenter
+            width:              ScreenTools.defaultFontPixelHeight*16
+            height:             ScreenTools.defaultFontPixelHeight*16
+            test:               qsTr("Firmware")
         }
-
         TextArea {
             id:                 statusTextArea
-            anchors.topMargin:  ScreenTools.defaultFontPixelHeight
-            anchors.top:        progressBar.bottom
+            anchors.top:        parent.top
+            anchors.topMargin:  ScreenTools.defaultFontPixelHeight*24
             anchors.bottom:     parent.bottom
             width:              parent.width
             readOnly:           true
