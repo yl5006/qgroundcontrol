@@ -198,7 +198,7 @@ void PX4FirmwareUpgradeThreadWorker::_3drRadioForceBootloader(const QGCSerialPor
 bool PX4FirmwareUpgradeThreadWorker::_findBootloader(const QGCSerialPortInfo& portInfo, bool radioMode, bool errorOnNotFound)
 {
     qCDebug(FirmwareUpgradeLog) << "_findBootloader" << portInfo.systemLocation();
-    
+
     uint32_t bootloaderVersion = 0;
     uint32_t boardID;
     uint32_t flashSize = 0;

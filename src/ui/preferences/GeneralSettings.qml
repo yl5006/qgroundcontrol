@@ -373,12 +373,52 @@ QGCView {
                     height: ScreenTools.defaultFontPixelHeight / 2
                     width:  parent.width
                 }
+//                QGCVariantButton {
+//                    width:  200
+//                    height: baseFontEdit.height*1.5
+//                    text:   "this is test"
+//                    bordercolor: Qt.rgba(0.0627, 0.9216, 0.749, 1)
+//                    _showDotBorder: true
+//                }
+                Rectangle {
+                       id: up
+                       width: 100
+                       height: 100
+                       color: "green"
+                       QGCLabel {
+                           id:                 map
+                           anchors.horizontalCenter: id.horizontalCenter
+                           anchors.verticalCenter: id.verticalCenter
+                           text:               qsTr("test")
+                       }
+                       // 并行动画，水平移动和颜色变化同时进行
+                       NumberAnimation on x{
+                               id: myAnimation
+                               to: 260
+                               duration: 1000
+                               running: false
+                           }
+                       NumberAnimation on x{
+                               id: myAn1
+                               to: 50
+                               duration: 1000
+                               running: false
+                           }
+                           MouseArea {
+                                   anchors.fill: up
+                                   onClicked: myAnimation.running = true
+                               }
+                       }
                 QGCVariantButton {
+                //    anchors.top:        up.bottom
                     width:  200
                     height: baseFontEdit.height*1.5
-                    text:   "this is test"
+                    text:   myAnimation.running ? "Animation is running" : "Animation is not running"
                     bordercolor: Qt.rgba(0.0627, 0.9216, 0.749, 1)
                     _showDotBorder: true
+                      onClicked: {
+                          myAn1.running=true
+                      }
                 }
                 //-----------------------------------------------------------------
                 //-- Offline mission editing settings

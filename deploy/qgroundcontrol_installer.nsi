@@ -1,4 +1,4 @@
-!include "MUI2.nsh"
+﻿!include "MUI2.nsh"
 !include LogicLib.nsh
 !include Win\COM.nsh
 !include Win\Propkey.nsh
@@ -36,13 +36,13 @@
     ${EndIf}
 !macroend
 
-Name "QGroundcontrol"
+Name "GroundStation"
 Var StartMenuFolder
 
-InstallDir $PROGRAMFILES\qgroundcontrol
+InstallDir $PROGRAMFILES\GroundStation
 
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "installheader.bmp";
+!define MUI_HEADERIMAGE_BITMAP "installlogo.bmp";
 
 !insertmacro MUI_PAGE_LICENSE "license.txt"
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
@@ -55,23 +55,23 @@ InstallDir $PROGRAMFILES\qgroundcontrol
 !insertmacro MUI_LANGUAGE "English"
 
 Section
-  ReadRegStr $R0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\QGroundControl" "UninstallString"
+  ReadRegStr $R0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation" "UninstallString"
   StrCmp $R0 "" doinstall
 
   ExecWait "$R0 /S _?=$INSTDIR"
   IntCmp $0 0 doinstall
 
   MessageBox MB_OK|MB_ICONEXCLAMATION \
-        "Could not remove a previously installed QGroundControl version.$\n$\nPlease remove it before continuing."
+        "Could not remove a previously installed GroundStation version.$\n$\nPlease remove it before continuing."
   Abort
 
 doinstall:
   SetOutPath $INSTDIR
-  File /r /x qgroundcontrol.pdb /x qgroundcontrol.lib /x qgroundcontrol.exp build_windows_install\release\*.* 
-  File deploy\px4driver.msi
-  WriteUninstaller $INSTDIR\QGroundControl_uninstall.exe
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\QGroundControl" "DisplayName" "QGroundControl"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\QGroundControl" "UninstallString" "$\"$INSTDIR\QGroundControl_uninstall.exe$\""
+  File /r /x GroundStation.pdb /x GroundStation.lib /x GroundStation.exp E:\UAV\build-qgroundcontrol-Desktop_Qt_5_5_1_MSVC2013_32bit-Release\release\*.*
+#  File deploy\px4driver.msi
+  WriteUninstaller $INSTDIR\GroundStation_uninstall.exe
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation" "DisplayName" "GroundStation"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation" "UninstallString" "$\"$INSTDIR\GroundStation_uninstall.exe$\""
 
   ; Only attempt to install the PX4 driver if the version isn't present
   !define ROOTKEY "SYSTEM\CurrentControlSet\Control\Class\{4D36E978-E325-11CE-BFC1-08002BE10318}"
@@ -109,17 +109,17 @@ Section "Uninstall"
   RMDir /r /REBOOTOK $INSTDIR
   RMDir /r /REBOOTOK "$SMPROGRAMS\$StartMenuFolder\"
   SetShellVarContext current
-  RMDir /r /REBOOTOK "$APPDATA\QGROUNDCONTROL.ORG\"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\QGroundControl"
+  RMDir /r /REBOOTOK "$APPDATA\GROUNDSTATION.ORG\"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation"
 SectionEnd
 
 Section "create Start Menu Shortcuts"
   SetShellVarContext all
   CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\QGroundControl.lnk" "$INSTDIR\qgroundcontrol.exe" "" "$INSTDIR\qgroundcontrol.exe" 0
-  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\QGroundControl (GPU Compatibility Mode).lnk" "$INSTDIR\qgroundcontrol.exe" "-angle" "$INSTDIR\qgroundcontrol.exe" 0
-  !insertmacro DemoteShortCut "$SMPROGRAMS\$StartMenuFolder\QGroundControl (GPU Compatibility Mode).lnk"
-  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\QGroundControl (GPU Safe Mode).lnk" "$INSTDIR\qgroundcontrol.exe" "-swrast" "$INSTDIR\qgroundcontrol.exe" 0
-  !insertmacro DemoteShortCut "$SMPROGRAMS\$StartMenuFolder\QGroundControl (GPU Safe Mode).lnk"
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation.lnk" "$INSTDIR\GroundStation.exe" "" "$INSTDIR\GroundStation.exe" 0
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation (GPU Compatibility Mode).lnk" "$INSTDIR\GroundStation.exe" "-angle" "$INSTDIR\GroundStation.exe" 0
+  !insertmacro DemoteShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation (GPU Compatibility Mode).lnk"
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation (GPU Safe Mode).lnk" "$INSTDIR\GroundStation.exe" "-swrast" "$INSTDIR\GroundStation.exe" 0
+  !insertmacro DemoteShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation (GPU Safe Mode).lnk"
 SectionEnd
 

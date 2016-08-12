@@ -34,6 +34,7 @@
         <file alias="UdpSettings.qml">src/ui/preferences/UdpSettings.qml</file>
         <file alias="JoystickConfig.qml">src/VehicleSetup/JoystickConfig.qml</file>
         <file alias="MainToolBar.qml">src/ui/toolbar/MainToolBar.qml</file>
+	<file alias="MainTool.qml">src/ui/toolbar/MainTool.qml</file>
         <file alias="MainWindowHybrid.qml">src/ui/MainWindowHybrid.qml</file>
         <file alias="MainWindowInner.qml">src/ui/MainWindowInner.qml</file>
         <file alias="MainWindowNative.qml">src/ui/MainWindowNative.qml</file>
@@ -51,6 +52,8 @@
         <file alias="QGroundControl/Controls/IndicatorButton.qml">src/QmlControls/IndicatorButton.qml</file>
         <file alias="QGroundControl/Controls/JoystickThumbPad.qml">src/QmlControls/JoystickThumbPad.qml</file>
         <file alias="QGroundControl/Controls/MainToolBar.qml">src/ui/toolbar/MainToolBar.qml</file>
+	<file alias="QGroundControl/Controls/RightToolBar.qml">src/ui/toolbar/RightToolBar.qml</file>
+	<file alias="QGroundControl/Controls/MainTool.qml">src/ui/toolbar/MainTool.qml</file>
         <file alias="QGroundControl/Controls/MainToolBarIndicators.qml">src/ui/toolbar/MainToolBarIndicators.qml</file>
 	<file alias="QGroundControl/Controls/MainToolBarIndicatorsLeft.qml">src/ui/toolbar/MainToolBarIndicatorsLeft.qml</file>
 	<file alias="QGroundControl/Controls/MainToolBarIndicatorsRight.qml">src/ui/toolbar/MainToolBarIndicatorsRight.qml</file>
@@ -89,6 +92,7 @@
         <file alias="QGroundControl/Controls/SignalStrength.qml">src/ui/toolbar/SignalStrength.qml</file>
         <file alias="QGroundControl/Controls/SliderSwitch.qml">src/QmlControls/SliderSwitch.qml</file>
         <file alias="QGroundControl/Controls/SubMenuButton.qml">src/QmlControls/SubMenuButton.qml</file>
+	<file alias="QGroundControl/Controls/ImageButton.qml">src/QmlControls/ImageButton.qml</file>
 	<file alias="QGroundControl/Controls/PathDraw.qml">src/QmlControls/PathDraw.qml</file>
 	<file alias="QGroundControl/Controls/QGCVariantButton.qml">src/QmlControls/QGCVariantButton.qml</file>
 	<file alias="QGroundControl/Controls/QGCProgressBar.qml">src/QmlControls/QGCProgressBar.qml</file>

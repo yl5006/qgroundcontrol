@@ -42,7 +42,7 @@ void OpenCVcamera::setRun(bool r)
     m_run = r;
     if (m_run) {
         if (!m_Capture.isOpened()) {
-            m_Capture.open(m_cameraId);
+            m_Capture.open(m_cameraId);//rtmp://live.hkstv.hk.lxdns.com/live/hks
             m_openedCameraId = m_cameraId;
         } else if (m_cameraId != m_openedCameraId){
             m_Capture.release();

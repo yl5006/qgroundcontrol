@@ -33,12 +33,12 @@ QGCView {
     readonly property string title:             "FIRMWARE"
     readonly property string highlightPrefix:   "<font color=\"" + qgcPal.warningText + "\">"
     readonly property string highlightSuffix:   "</font>"
-    readonly property string welcomeText:       "QGroundControl can upgrade the firmware on Pixhawk devices, SiK Radios and PX4 Flow Smart Cameras."
+    readonly property string welcomeText:       "GroundStation can upgrade the firmware on EWT2.0 devices"
     readonly property string plugInText:        "<big>" + highlightPrefix + "Plug in your device" + highlightSuffix + " via USB to " + highlightPrefix + "start" + highlightSuffix + " firmware upgrade.</big>"
     readonly property string flashFailText:     "If upgrade failed, make sure to connect " + highlightPrefix + "directly" + highlightSuffix + " to a powered USB port on your computer, not through a USB hub. " +
                                                 "Also make sure you are only powered via USB " + highlightPrefix + "not battery" + highlightSuffix + "."
-    readonly property string qgcUnplugText1:    "All QGroundControl connections to vehicles must be " + highlightPrefix + " disconnected " + highlightSuffix + "prior to firmware upgrade."
-    readonly property string qgcUnplugText2:    highlightPrefix + "<big>Please unplug your Pixhawk and/or Radio from USB.</big>" + highlightSuffix
+    readonly property string qgcUnplugText1:    "All GroundStation connections to vehicles must be " + highlightPrefix + " disconnected " + highlightSuffix + "prior to firmware upgrade."
+    readonly property string qgcUnplugText2:    highlightPrefix + "<big>Please unplug your devices  from USB.</big>" + highlightSuffix
 
     property string firmwareWarningMessage
     property bool   controllerCompleted:      false
@@ -140,7 +140,7 @@ QGCView {
                 } else {
                     versionString = controller.px4StableVersion
                 }
-                px4FlightStack.text = qsTr("PX4 Flight Stack ") + versionString
+                px4FlightStack.text = qsTr("EWT2.0 Flight Stack ") + versionString
             }
 
             Component.onCompleted: updatePX4VersionDisplay()
@@ -228,7 +228,7 @@ QGCView {
                     id:             px4FlightStack
                     checked:        true
                     exclusiveGroup: firmwareGroup
-                    text:           qsTr("PX4 Flight Stack ")
+                    text:           qsTr("EWT2.0 Flight Stack ")
                     visible:        !px4Flow
 
                     onClicked: parent.firmwareVersionChanged(firmwareTypeList)
@@ -363,6 +363,7 @@ QGCView {
             width:              ScreenTools.defaultFontPixelHeight*16
             height:             ScreenTools.defaultFontPixelHeight*16
             test:               qsTr("Firmware")
+            value:              0.3
         }
         TextArea {
             id:                 statusTextArea

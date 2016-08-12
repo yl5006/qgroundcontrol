@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -123,12 +123,12 @@ void FirmwareUpgradeController::_foundBoard(bool firstAttempt, const QSerialPort
 
     switch (boardType) {
     case QGCSerialPortInfo::BoardTypePX4FMUV1:
-        _foundBoardTypeName = "PX4 FMU V1";
+        _foundBoardTypeName = "EWT1.0";
         _startFlashWhenBootloaderFound = false;
         break;
     case QGCSerialPortInfo::BoardTypePX4FMUV2:
     case QGCSerialPortInfo::BoardTypePX4FMUV4:
-        _foundBoardTypeName = "Pixhawk";
+        _foundBoardTypeName = "EWT2.0";
         _startFlashWhenBootloaderFound = false;
         break;
     case QGCSerialPortInfo::BoardTypeAeroCore:

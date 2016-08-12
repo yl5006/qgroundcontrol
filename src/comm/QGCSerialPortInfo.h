@@ -40,10 +40,10 @@ public:
 
     // Vendor and products ids for the boards we care about
 
-    static const int px4VendorId =                          1155;//9900;   ///< Vendor ID for Pixhawk board (V2 and V1) and PX4 Flow
+    static const int px4VendorId =                          9900;   //1155;///< Vendor ID for Pixhawk board (V2 and V1) and PX4 Flow
 
     static const int pixhawkFMUV4ProductId =                18;     //< Product ID for Pixhawk V2 board
-    static const int pixhawkFMUV2ProductId =                22336;  //17;     ///< Product ID for Pixhawk V2 board
+    static const int pixhawkFMUV2ProductId =                17;     //22336;  ///< Product ID for Pixhawk V2 board
     static const int pixhawkFMUV2OldBootloaderProductId =   22;     ///< Product ID for Bootloader on older Pixhawk V2 boards
     static const int pixhawkFMUV1ProductId =                16;     ///< Product ID for PX4 FMU V1 board
 

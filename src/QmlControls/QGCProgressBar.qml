@@ -23,19 +23,19 @@ Item {
                 id:     rotor
                 x:      progressRepeater.width  / 2 + _armXCenter
                 y:      progressRepeater.height / 2 + _armYCenter
-                width:  ScreenTools.defaultFontPixelHeight *  4
-                height: ScreenTools.defaultFontPixelHeight * 0.8
+                width:  ScreenTools.defaultFontPixelHeight *  0.8
+                height: ScreenTools.defaultFontPixelHeight *    4
                 property real _armOffsetRadians:        ((2 * Math.PI) / _progressCount)
-                property real _armOffsetIndexRadians:   (_armOffsetRadians  * index)
+                property real _armOffsetIndexRadians:   (_armOffsetRadians  * index-Math.PI/2)
                 property real _armLength:               ScreenTools.defaultFontPixelHeight * 7
                 property real _armXCenter:              Math.cos(_armOffsetIndexRadians) * _armLength // adjacent = cos * hypotenuse
                 property real _armYCenter:              Math.sin(_armOffsetIndexRadians) * _armLength // opposite = sin * hypotenuse
                 color :Qt.rgba(0,0,0,0)
                 Rectangle {
                     id:              cicle
-                    anchors.right :   parent.right
-                    width:          ScreenTools.defaultFontPixelHeight *  2.5
-                    height:         ScreenTools.defaultFontPixelHeight * 0.8
+                    anchors.top :   parent.top
+                    width:          ScreenTools.defaultFontPixelHeight * 0.8// 2.5
+                    height:         ScreenTools.defaultFontPixelHeight * 2.5//0.8
                     radius:         ScreenTools.defaultFontPixelHeight /  2
                     color:           index * 4 /100 < value ? _posColor:_unposColor
                 }
@@ -50,9 +50,9 @@ Item {
                 }
                 Rectangle {
                     id:             dot
-                    anchors.rightMargin:  ScreenTools.defaultFontPixelHeight/2
-                    anchors.right :   cicle.left
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.topMargin:  ScreenTools.defaultFontPixelHeight/2
+                    anchors.top :   cicle.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
                     width:          ScreenTools.defaultFontPixelHeight/2
                     height:         ScreenTools.defaultFontPixelHeight/2
                     radius:         ScreenTools.defaultFontPixelHeight/4
@@ -72,8 +72,9 @@ Item {
 
     QGCLabel {
         id:     label
-        anchors.horizontalCenter: progressRepeater.label
-        anchors.verticalCenter: progressRepeater.verticalCenter
+        anchors.horizontalCenter: progressRepeater.horizontalCenter
+        anchors.top : progressRepeater.top
+        anchors.topMargin:  ScreenTools.defaultFontPixelHeight * 1
         font.pointSize: ScreenTools.defaultFontPointSize*1.5
         text:   test
     }

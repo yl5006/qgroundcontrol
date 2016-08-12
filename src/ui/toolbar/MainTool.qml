@@ -25,10 +25,10 @@ import QGroundControl.Palette               1.0
 import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.ScreenTools           1.0
 import QGroundControl.Controllers           1.0
-
+import QtGraphicalEffects                   1.0
 Rectangle {
     id:         toolBar
-    color:      qgcPal.globalTheme === QGCPalette.Light ? Qt.rgba(1,1,1,0.8) : Qt.rgba(0,0,0,0.75)
+    color:      Qt.rgba(0,0,0,0)
 
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
@@ -37,6 +37,9 @@ Rectangle {
     property bool isMessageImportant:   activeVehicle ? !activeVehicle.messageTypeNormal && !activeVehicle.messageTypeNone : false
     property bool isBackgroundDark:     true
     property bool opaqueBackground:     false
+    property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
+    property bool planormisstion: true
+    property bool statuechange: true
 
     readonly property var   colorGreen:     "#05f068"
     readonly property var   colorOrange:    "#f0ab06"
@@ -45,28 +48,7 @@ Rectangle {
     readonly property var   colorBlue:      "#636efe"
     readonly property var   colorWhite:     "#ffffff"
 
-    signal showSettingsView()
-    signal showSetupView()
-    signal showPlanView()
-    signal showFlyView()
-
     MainToolBarController { id: _controller }
-
-    function checkSettingsButton() {
-        preferencesButton.checked = true
-    }
-
-    function checkSetupButton() {
-        setupButton.checked = true
-    }
-
-    function checkPlanButton() {
-        planButton.checked = true
-    }
-
-    function checkFlyButton() {
-        flyButton.checked = true
-    }
 
     function getBatteryColor() {
         if(activeVehicle) {
@@ -92,12 +74,6 @@ Rectangle {
             return colorOrange;
         return colorRed;
     }
-
-    Component.onCompleted: {
-        //-- TODO: Get this from the actual state
-        flyButton.checked = true
-    }
-
     //---------------------------------------------
     // GPS Info
     Component {
@@ -302,118 +278,37 @@ Rectangle {
         }
     }
 
-    Rectangle {
-        anchors.left:   parent.left
-        anchors.right:  parent.right
-        anchors.bottom: parent.bottom
-        height:         1
-        color:          "black"
-        visible:        qgcPal.globalTheme == QGCPalette.Light
-    }
-
-    //---------------------------------------------
-    // Toolbar Row
-    Row {
-        id:                     viewRow
-        height:                 mainWindow.tbCellHeight
-        spacing:                mainWindow.tbSpacing
-        anchors.left:           parent.left
-        anchors.bottomMargin:   1
-        anchors.top:            parent.top
-        anchors.bottom:         parent.bottom
-
-        ExclusiveGroup { id: mainActionGroup }
-
-        QGCToolBarButton {
-            id:                 preferencesButton
-            width:              mainWindow.tbButtonWidth
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            exclusiveGroup:     mainActionGroup
-            source:             "/res/QGCLogoWhite"
-            logo:               true
-            onClicked:          toolBar.showSettingsView()
-        }
-
-        QGCToolBarButton {
-            id:                 setupButton
-            width:              mainWindow.tbButtonWidth
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            exclusiveGroup:     mainActionGroup
-            source:             "/qmlimages/Gears.svg"
-            onClicked:          toolBar.showSetupView()
-        }
-
-        QGCToolBarButton {
-            id:                 planButton
-            width:              mainWindow.tbButtonWidth
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            exclusiveGroup:     mainActionGroup
-            source:             "/qmlimages/Plan.svg"
-            onClicked:          toolBar.showPlanView()
-        }
-
-        QGCToolBarButton {
-            id:                 flyButton
-            width:              mainWindow.tbButtonWidth
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            exclusiveGroup:     mainActionGroup
-            source:             "/qmlimages/PaperPlane.svg"
-            onClicked:          toolBar.showFlyView()
-        }
-    }
-
     Item {
         id:                     vehicleIndicators
-        height:                 mainWindow.tbCellHeight
+        height:                 mainWindow.tbCellHeight*1.2
         anchors.leftMargin:     mainWindow.tbSpacing * 2
-        anchors.left:           viewRow.right
+        anchors.left:           parent.left
         anchors.right:          parent.right
         anchors.verticalCenter: parent.verticalCenter
 
         property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
 
         Loader {
-            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicators.qml" : ""
+            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsLeft.qml" : ""
             anchors.left:           parent.left
+            anchors.leftMargin:     mainWindow.tbButtonWidth * 2
             anchors.verticalCenter: parent.verticalCenter
         }
-
-        QGCLabel {
-            id:                     connectionLost
-            text:                   qsTr("COMMUNICATION LOST")
-            font.pointSize:         ScreenTools.largeFontPointSize
-            font.family:            ScreenTools.demiboldFontFamily
-            color:                  colorRed
-            anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
-            anchors.right:          disconnectButton.left
-            anchors.verticalCenter: parent.verticalCenter
-            visible:                parent.vehicleConnectionLost
-
-        }
-
-        QGCButton {
-            id:                     disconnectButton
-            anchors.rightMargin:     mainWindow.tbSpacing * 2
+        Loader {
+            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsRight.qml" : ""
             anchors.right:          parent.right
+            anchors.rightMargin:    mainWindow.tbButtonWidth * 2
             anchors.verticalCenter: parent.verticalCenter
-            text:                   qsTr("Disconnect")
-            visible:                parent.vehicleConnectionLost
-            primary:                true
-            onClicked:              activeVehicle.disconnectInactiveVehicle()
         }
-    }
+        }
 
     // Progress bar
     Rectangle {
         id:             progressBar
-        anchors.bottom: parent.bottom
+        anchors.top:    parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
         height:         toolBar.height * 0.05
         width:          parent.width * _controller.progressBarValue
         color:          colorGreen
     }
-
 }

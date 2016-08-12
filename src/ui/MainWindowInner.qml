@@ -48,6 +48,7 @@ Item {
     property var    activeVehicle:      QGroundControl.multiVehicleManager.activeVehicle
     property string formatedMessage:    activeVehicle ? activeVehicle.formatedMessage : ""
 
+    property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
     onHeightChanged: {
         //-- We only deal with the available height if within the Fly or Plan view
         if(!setupViewLoader.visible) {
@@ -278,27 +279,62 @@ Item {
             }
         }
     }
+    //logo
+    Rectangle {
+        id:                 logo
+        y:                  parent.top
+        width:              parent.width
+        height:             tbHeight
+        color:              qgcPal.windowShade
+        z:                  QGroundControl.zOrderTopMost
 
+        Image {
+            source:"/qmlimages/logo.svg"
+            height:     tbHeight//*1.15625
+            anchors.centerIn: parent
+            fillMode: Image.PreserveAspectFit
+        }
+        NumberAnimation on y{
+                id: myAn1
+                to:  -tbHeight
+                duration: 1000
+                running: QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && !QGroundControl.multiVehicleManager.activeVehicle.missingParameters
+            }
+        NumberAnimation on y{
+                id: myAn2
+                to: 0
+                duration: 1000
+                running: activeVehicle && !vehicleConnectionLost ? false : true
+            }
+    }
     //-- Main UI
 
-    MainToolBar {
+    MainTool {
         id:                 toolBar
-        height:             tbHeight
+        height:             !(activeVehicle && !vehicleConnectionLost ? false : true)? tbHeight* 1.2 : 0
         anchors.left:       parent.left
-        anchors.leftMargin: preferencesPanel.visible ? ScreenTools.defaultFontPixelWidth * 16 : 0//      for display
         anchors.right:      parent.right
-        anchors.top:        parent.top
-        mainWindow:         mainWindow
-        opaqueBackground:   preferencesPanel.visible
-        isBackgroundDark:   flightView.isBackgroundDark
+        anchors.top:        logo.bottom
         z:                  QGroundControl.zOrderTopMost
-        onShowSetupView:    mainWindow.showSetupView()
-        onShowPlanView:     mainWindow.showPlanView()
-        onShowFlyView:      mainWindow.showFlyView()
-        onShowPreferences:  mainWindow.showPreferences()
+//      onShowSetupView:    mainWindow.showSetupView()
+//      onShowPlanView:     mainWindow.showPlanView()
+//      onShowFlyView:      mainWindow.showFlyView()
+//      onShowSettingsView: mainWindow.showSettingsView()
+        visible:            !(activeVehicle && !vehicleConnectionLost ? false : true)
         Component.onCompleted: {
             ScreenTools.availableHeight = parent.height - toolBar.height
         }
+    }
+    RightToolBar {
+            id:                     rightBar
+            width:                  mainWindow.tbCellHeight*2
+            mainWindow:             mainWindow
+            anchors.verticalCenter: parent.verticalCenter           
+            onShowPlanView:         mainWindow.showPlanView()
+            onShowFlyView:          mainWindow.showFlyView()
+            onShowSettingsView:     mainWindow.showSettingsView()
+            anchors.right:          parent.right
+            z:                      QGroundControl.zOrderTopMost
     }
 
     FlightDisplayView {
@@ -535,14 +571,6 @@ Item {
                 }
             }
         }
-    }
-    // Progress bar
-    Rectangle {
-        id:             progressBar
-        anchors.bottom: parent.bottom
-        height:         toolBar.height * 0.05
-        width:          parent.width * _controller.progressBarValue
-        color:          "#05f068"
     }
 }
 
