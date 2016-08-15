@@ -44,7 +44,6 @@ InstallDir $PROGRAMFILES\GroundStation
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "installlogo.bmp";
 
-!insertmacro MUI_PAGE_LICENSE "license.txt"
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES

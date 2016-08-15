@@ -33,17 +33,19 @@ QGCView {
     // zOrder comes from the Loader in MainWindow.qml
     z: QGroundControl.zOrderTopMost
 
-    readonly property int       _decimalPlaces:     8
-    readonly property real      _horizontalMargin:  ScreenTools.defaultFontPixelWidth  / 2
-    readonly property real      _margin:            ScreenTools.defaultFontPixelHeight * 0.5
-    readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
+    readonly property int       _decimalPlaces:         8
+    readonly property real      _horizontalMargin:      ScreenTools.defaultFontPixelWidth  / 2
+    readonly property real      _margin:                ScreenTools.defaultFontPixelHeight * 0.5
+    readonly property var       _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     readonly property real      _PointFieldWidth:    ScreenTools.defaultFontPixelWidth * 11
     readonly property real      _rightPanelWidth:   Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 35)
-    readonly property real      _rightPanelOpacity: 0.8
-    readonly property int       _toolButtonCount:   6
-    readonly property string    _autoSyncKey:       "AutoSync"
+    readonly property real      _rightPanelOpacity:     0.8
+    readonly property int       _toolButtonCount:       6
+    readonly property string    _autoSyncKey:           "AutoSync"
+    readonly property real      _toolButtonTopMargin:   parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
     readonly property int       _addMissionItemsButtonAutoOffTimeout:   10000
     readonly property var       _defaultVehicleCoordinate:   QtPositioning.coordinate(30.5386437,114.3662806)
+
 
     property bool   _syncNeeded:            controller.visualItems.dirty // Unsaved changes, visible to parent container
     property var    _visualItems:           controller.visualItems
@@ -273,6 +275,8 @@ QGCView {
                     }
                 }
 
+                QGCMapPalette { id: mapPal; lightColors: editorMap.isSatelliteMap }
+
                 MouseArea {
                     //-- It's a whole lot faster to just fill parent and deal with top offset below
                     //   than computing the coordinate offset.
@@ -362,6 +366,7 @@ QGCView {
 
                     delegate: MapPolyline {
                         line.color: "white"
+                        line.width: 2
                         path:       object.gridPoints
                     }
                 }
@@ -541,13 +546,23 @@ QGCView {
                     }
                 }
 
+                QGCLabel {
+                    id:         planLabel
+                    text:       qsTr("Plan")
+                    color:      mapPal.text
+                    visible:    !ScreenTools.isShortScreen
+                    anchors.topMargin:          _toolButtonTopMargin
+                    anchors.horizontalCenter:   toolColumn.horizontalCenter
+                    anchors.top:                parent.top
+                }
+
                 //-- Vertical Tool Buttons
                 Column {
                     id:                 toolColumn
-                    anchors.topMargin:  parent.height - ScreenTools.availableHeight + ScreenTools.defaultFontPixelHeight
-                    anchors.margins:    ScreenTools.defaultFontPixelHeight
+                    anchors.topMargin:  ScreenTools.isShortScreen ? _toolButtonTopMargin : ScreenTools.defaultFontPixelHeight / 2
+                    anchors.leftMargin: ScreenTools.defaultFontPixelHeight
                     anchors.left:       parent.left
-                    anchors.top:        parent.top
+                    anchors.top:        ScreenTools.isShortScreen ? parent.top : planLabel.bottom
                     spacing:            ScreenTools.defaultFontPixelHeight
                     z:                  QGroundControl.zOrderWidgets
 
@@ -720,22 +735,26 @@ QGCView {
 
                             onInsert: {
                                 var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
-                                setCurrentItem(sequenceNumber)
-                            }
+                    cruiseDistance:    controller.cruiseDistance
+                    hoverDistance:    controller.hoverDistance
 
                             onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
 
                          }
 //change by yaoling do not use this
-//                MissionItemStatus {
-//                    id:                 waypointValuesDisplay
+//  MissionItemStatus {
+//                   id:                 waypointValuesDisplay
 //                    anchors.margins:    ScreenTools.defaultFontPixelWidth
 //                    anchors.left:       parent.left
-//                    anchors.bottom:     parent.bottom
+//
 //                    z:                  QGroundControl.zOrderTopMost
 //                    currentMissionItem: _currentMissionItem
 //                    missionItems:       controller.visualItems
 //                    expandedWidth:      missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
+//                    missionDistance:    controller.missionDistance
+//                    missionMaxTelemetry: controller.missionMaxTelemetry
+//                    cruiseDistance:    controller.cruiseDistance
+//                    hoverDistance:    controller.hoverDistance
 //                    visible:            !ScreenTools.isShortScreen
 //                }
             } // FlightMap
@@ -787,8 +806,8 @@ QGCView {
                 width:      sendSaveGrid.width
                 wrapMode:   Text.WordWrap
                 text:       _syncNeeded && !controller.autoSync ?
-                                qsTr("你修改了任务，你需要发送给飞机或存为文件:")://"You have unsaved changed to you mission. You should send to your vehicle, or save to a file:" :
-                                qsTr("同步:")//"Sync:"
+                                qsTr("You have unsaved changes to your mission. You should send to your vehicle, or save to a file:") :
+                                qsTr("Sync:")
             }
             GridLayout {
                 id:                 sendSaveGrid

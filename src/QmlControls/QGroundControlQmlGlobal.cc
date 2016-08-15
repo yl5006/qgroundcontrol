@@ -21,8 +21,14 @@ static const char* kQmlGlobalKeyName = "QGCQml";
 
 SettingsFact* QGroundControlQmlGlobal::_offlineEditingFirmwareTypeFact =        NULL;
 FactMetaData* QGroundControlQmlGlobal::_offlineEditingFirmwareTypeMetaData =    NULL;
+SettingsFact* QGroundControlQmlGlobal::_offlineEditingVehicleTypeFact =         NULL;
+FactMetaData* QGroundControlQmlGlobal::_offlineEditingVehicleTypeMetaData =     NULL;
+SettingsFact* QGroundControlQmlGlobal::_offlineEditingCruiseSpeedFact =         NULL;
+SettingsFact* QGroundControlQmlGlobal::_offlineEditingHoverSpeedFact =          NULL;
 SettingsFact* QGroundControlQmlGlobal::_distanceUnitsFact =                     NULL;
 FactMetaData* QGroundControlQmlGlobal::_distanceUnitsMetaData =                 NULL;
+SettingsFact* QGroundControlQmlGlobal::_areaUnitsFact =                         NULL;
+FactMetaData* QGroundControlQmlGlobal::_areaUnitsMetaData =                     NULL;
 SettingsFact* QGroundControlQmlGlobal::_speedUnitsFact =                        NULL;
 FactMetaData* QGroundControlQmlGlobal::_speedUnitsMetaData =                    NULL;
 
@@ -131,6 +137,15 @@ void QGroundControlQmlGlobal::startAPMArduPlaneMockLink(bool sendStatusText)
 #endif
 }
 
+void QGroundControlQmlGlobal::startAPMArduSubMockLink(bool sendStatusText)
+{
+#ifdef QT_DEBUG
+    MockLink::startAPMArduSubMockLink(sendStatusText);
+#else
+    Q_UNUSED(sendStatusText);
+#endif
+}
+
 void QGroundControlQmlGlobal::stopAllMockLinks(void)
 {
 #ifdef QT_DEBUG
@@ -228,6 +243,41 @@ Fact* QGroundControlQmlGlobal::offlineEditingFirmwareType(void)
     return _offlineEditingFirmwareTypeFact;
 }
 
+Fact* QGroundControlQmlGlobal::offlineEditingVehicleType(void)
+{
+    if (!_offlineEditingVehicleTypeFact) {
+        QStringList     enumStrings;
+        QVariantList    enumValues;
+
+        _offlineEditingVehicleTypeFact = new SettingsFact(QString(), "OfflineEditingVehicleType", FactMetaData::valueTypeUint32, (uint32_t)MAV_TYPE_FIXED_WING);
+        _offlineEditingVehicleTypeMetaData = new FactMetaData(FactMetaData::valueTypeUint32);
+
+        enumStrings << "Fixedwing" << "Multicopter" << "VTOL";
+        enumValues << QVariant::fromValue((uint32_t)MAV_TYPE_FIXED_WING) << QVariant::fromValue((uint32_t)MAV_TYPE_QUADROTOR) << QVariant::fromValue((uint32_t)MAV_TYPE_VTOL_DUOROTOR);
+
+        _offlineEditingVehicleTypeMetaData->setEnumInfo(enumStrings, enumValues);
+        _offlineEditingVehicleTypeFact->setMetaData(_offlineEditingVehicleTypeMetaData);
+    }
+
+    return _offlineEditingVehicleTypeFact;
+}
+
+Fact* QGroundControlQmlGlobal::offlineEditingCruiseSpeed(void)
+{
+    if (!_offlineEditingCruiseSpeedFact) {
+        _offlineEditingCruiseSpeedFact = new SettingsFact(QString(), "OfflineEditingCruiseSpeed", FactMetaData::valueTypeDouble, 16.0);
+    }
+    return _offlineEditingCruiseSpeedFact;
+}
+
+Fact* QGroundControlQmlGlobal::offlineEditingHoverSpeed(void)
+{
+    if (!_offlineEditingHoverSpeedFact) {
+        _offlineEditingHoverSpeedFact = new SettingsFact(QString(), "OfflineEditingHoverSpeed", FactMetaData::valueTypeDouble, 4.0);
+    }
+    return _offlineEditingHoverSpeedFact;
+}
+
 Fact* QGroundControlQmlGlobal::distanceUnits(void)
 {
     if (!_distanceUnitsFact) {
@@ -245,6 +295,26 @@ Fact* QGroundControlQmlGlobal::distanceUnits(void)
     }
 
     return _distanceUnitsFact;
+
+}
+
+Fact* QGroundControlQmlGlobal::areaUnits(void)
+{
+    if (!_areaUnitsFact) {
+        QStringList     enumStrings;
+        QVariantList    enumValues;
+
+        _areaUnitsFact = new SettingsFact(QString(), "AreaUnits", FactMetaData::valueTypeUint32, AreaUnitsSquareMeters);
+        _areaUnitsMetaData = new FactMetaData(FactMetaData::valueTypeUint32);
+
+        enumStrings << "SquareFeet" << "SquareMeters" << "SquareKilometers" << "Hectares" << "Acres" << "SquareMiles";
+        enumValues << QVariant::fromValue((uint32_t)AreaUnitsSquareFeet) << QVariant::fromValue((uint32_t)AreaUnitsSquareMeters) << QVariant::fromValue((uint32_t)AreaUnitsSquareKilometers) << QVariant::fromValue((uint32_t)AreaUnitsHectares) << QVariant::fromValue((uint32_t)AreaUnitsAcres) << QVariant::fromValue((uint32_t)AreaUnitsSquareMiles);
+
+        _areaUnitsMetaData->setEnumInfo(enumStrings, enumValues);
+        _areaUnitsFact->setMetaData(_areaUnitsMetaData);
+    }
+
+    return _areaUnitsFact;
 
 }
 

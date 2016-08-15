@@ -275,6 +275,11 @@ public:
     Q_PROPERTY(bool                 multiRotor              READ multiRotor                                             CONSTANT)
     Q_PROPERTY(bool                 vtol                    READ vtol                                                   CONSTANT)
     Q_PROPERTY(bool                 rover                   READ rover                                                  CONSTANT)
+    Q_PROPERTY(bool                 supportsManualControl   READ supportsManualControl                                  CONSTANT)
+    Q_PROPERTY(bool        supportsThrottleModeCenterZero   READ supportsThrottleModeCenterZero                         CONSTANT)
+    Q_PROPERTY(bool                 supportsJSButton        READ supportsJSButton                                       CONSTANT)
+    Q_PROPERTY(bool                 supportsRadio           READ supportsRadio                                          CONSTANT)
+    Q_PROPERTY(bool                 sub                     READ sub                                                    CONSTANT)
     Q_PROPERTY(bool                 autoDisconnect          MEMBER _autoDisconnect                                      NOTIFY autoDisconnectChanged)
     Q_PROPERTY(QString              prearmError             READ prearmError            WRITE setPrearmError            NOTIFY prearmErrorChanged)
     Q_PROPERTY(int                  motorCount              READ motorCount                                             CONSTANT)
@@ -376,11 +381,14 @@ public:
     /// Clear Messages
     Q_INVOKABLE void clearMessages();
 
+#if 0
+    // Temporarily removed, waiting for new command implementation
     /// Test motor
     ///     @param motor Motor number, 1-based
     ///     @param percent 0-no power, 100-full power
     ///     @param timeoutSecs Number of seconds for motor to run
     Q_INVOKABLE void motorTest(int motor, int percent, int timeoutSecs);
+#endif
 
     bool guidedModeSupported(void) const;
     bool pauseVehicleSupported(void) const;
@@ -466,6 +474,12 @@ public:
     bool multiRotor(void) const;
     bool vtol(void) const;
     bool rover(void) const;
+    bool sub(void) const;
+
+    bool supportsManualControl(void) const;
+    bool supportsThrottleModeCenterZero(void) const;
+    bool supportsRadio(void) const;
+    bool supportsJSButton(void) const;
 
     void setFlying(bool flying);
     void setGuidedMode(bool guidedMode);

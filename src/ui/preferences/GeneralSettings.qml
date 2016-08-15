@@ -137,6 +137,29 @@ QGCView {
                 }
 
                 Row {
+                    spacing:    ScreenTools.defaultFontPixelWidth
+
+                    QGCLabel {
+                        width:              baseFontLabel.width
+                        anchors.baseline:   areaUnitsCombo.baseline
+                        text:               qsTr("Area units:")
+                    }
+
+                    FactComboBox {
+                        id:                 areaUnitsCombo
+                        width:              _editFieldWidth
+                        fact:               QGroundControl.areaUnits
+                        indexModel:         false
+                    }
+
+                    QGCLabel {
+                        anchors.baseline:   areaUnitsCombo.baseline
+                        text:               qsTr("(requires app restart)")
+                    }
+
+                }
+
+                Row {
                     spacing:                ScreenTools.defaultFontPixelWidth
 
                     QGCLabel {
@@ -255,7 +278,15 @@ QGCView {
                 //-----------------------------------------------------------------
                 //-- Map Providers
                 Row {
-                    spacing: ScreenTools.defaultFontPixelWidth
+
+                    /*
+                      TODO: Map settings should come from QGroundControl.mapEngineManager. What is currently in
+                      QGroundControl.flightMapSettings should be moved there so all map related funtions are in
+                      one place.
+                     */
+
+                    spacing:    ScreenTools.defaultFontPixelWidth
+                    visible:    QGroundControl.flightMapSettings.googleMapEnabled
 
                     QGCLabel {
                         id:                 mapProvidersLabel
@@ -373,71 +404,84 @@ QGCView {
                     height: ScreenTools.defaultFontPixelHeight / 2
                     width:  parent.width
                 }
-//                QGCVariantButton {
-//                    width:  200
-//                    height: baseFontEdit.height*1.5
-//                    text:   "this is test"
-//                    bordercolor: Qt.rgba(0.0627, 0.9216, 0.749, 1)
-//                    _showDotBorder: true
-//                }
-                Rectangle {
-                       id: up
-                       width: 100
-                       height: 100
-                       color: "green"
-                       QGCLabel {
-                           id:                 map
-                           anchors.horizontalCenter: id.horizontalCenter
-                           anchors.verticalCenter: id.verticalCenter
-                           text:               qsTr("test")
-                       }
-                       // 并行动画，水平移动和颜色变化同时进行
-                       NumberAnimation on x{
-                               id: myAnimation
-                               to: 260
-                               duration: 1000
-                               running: false
-                           }
-                       NumberAnimation on x{
-                               id: myAn1
-                               to: 50
-                               duration: 1000
-                               running: false
-                           }
-                           MouseArea {
-                                   anchors.fill: up
-                                   onClicked: myAnimation.running = true
-                               }
-                       }
-                QGCVariantButton {
-                //    anchors.top:        up.bottom
-                    width:  200
-                    height: baseFontEdit.height*1.5
-                    text:   myAnimation.running ? "Animation is running" : "Animation is not running"
-                    bordercolor: Qt.rgba(0.0627, 0.9216, 0.749, 1)
-                    _showDotBorder: true
-                      onClicked: {
-                          myAn1.running=true
-                      }
-                }
+
                 //-----------------------------------------------------------------
                 //-- Offline mission editing settings
-            // only use px4 fly stack(yaoling)
-//            Row {
-//                spacing: ScreenTools.defaultFontPixelWidth
 
-//                QGCLabel {
-//                    text:               qsTr("Offline mission editing:")
-//                    anchors.baseline:   offlineTypeCombo.baseline
-//                }
+                QGCLabel { text: "Offline mission editing" }
 
-//                FactComboBox {
-//                    id:         offlineTypeCombo
-//                    width:      ScreenTools.defaultFontPixelWidth * 18
-//                    fact:       QGroundControl.offlineEditingFirmwareType
-//                    indexModel: false
-//                }
-//            }
+                Row {
+                    spacing: ScreenTools.defaultFontPixelWidth
+
+                    QGCLabel {
+                        text:               qsTr("Firmware:")
+                        width:              hoverSpeedLabel.width
+                        anchors.baseline:   offlineTypeCombo.baseline
+                    }
+
+                    FactComboBox {
+                        id:         offlineTypeCombo
+                        width:      ScreenTools.defaultFontPixelWidth * 18
+                        fact:       QGroundControl.offlineEditingFirmwareType
+                        indexModel: false
+                    }
+                }
+
+                Row {
+                    spacing: ScreenTools.defaultFontPixelWidth
+
+                    QGCLabel {
+                        text:               qsTr("Vehicle:")
+                        width:              hoverSpeedLabel.width
+                        anchors.baseline:   offlineVehicleCombo.baseline
+                    }
+
+                    FactComboBox {
+                        id:         offlineVehicleCombo
+                        width:      offlineTypeCombo.width
+                        fact:       QGroundControl.offlineEditingVehicleType
+                        indexModel: false
+                    }
+                }
+
+                Row {
+                    spacing: ScreenTools.defaultFontPixelWidth
+                    visible:  offlineVehicleCombo.currentText != "Multicopter"
+
+                    QGCLabel {
+                        text:               qsTr("Cruise speed:")
+                        width:              hoverSpeedLabel.width
+                        anchors.baseline:   cruiseSpeedField.baseline
+                    }
+
+
+                    FactTextField {
+                        id:                 cruiseSpeedField
+                        width:              offlineTypeCombo.width
+                        fact:               QGroundControl.offlineEditingCruiseSpeed
+                        enabled:            true
+                    }
+                }
+
+                Row {
+                    spacing: ScreenTools.defaultFontPixelWidth
+                    visible:  offlineVehicleCombo.currentText != "Fixedwing"
+
+                    QGCLabel {
+                        id:                 hoverSpeedLabel
+                        text:               qsTr("Hover speed:")
+                        width:              baseFontLabel.width
+                        anchors.baseline:   hoverSpeedField.baseline
+                    }
+
+
+                    FactTextField {
+                        id:                 hoverSpeedField
+                        width:              offlineTypeCombo.width
+                        fact:               QGroundControl.offlineEditingHoverSpeed
+                        enabled:            true
+                    }
+                }
 
                 Item {
                     height: ScreenTools.defaultFontPixelHeight / 2

@@ -68,6 +68,7 @@ QGCView {
     FlightDisplayViewController { id: _controller }
 
     function setStates() {
+        QGroundControl.saveBoolGlobalSetting(_mainIsMapKey, _mainIsMap)
         if(_mainIsMap) {
             //-- Adjust Margins
             _flightMapContainer.state   = "fullMode"
@@ -93,7 +94,7 @@ QGCView {
     }
 
     function px4JoystickCheck() {
-        if (_activeVehicle && !_activeVehicle.px4Firmware && (QGroundControl.virtualTabletJoystick || _activeVehicle.joystickEnabled)) {
+        if ( _activeVehicle && !_activeVehicle.supportsManualControl && (QGroundControl.virtualTabletJoystick || _activeVehicle.joystickEnabled)) {
             px4JoystickSupport.open()
         }
     }

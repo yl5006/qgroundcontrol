@@ -3,6 +3,7 @@
         <file alias="PX4MockLink.params">src/comm/PX4MockLink.params</file>
         <file alias="APMArduCopterMockLink.params">src/comm/APMArduCopterMockLink.params</file>
         <file alias="APMArduPlaneMockLink.params">src/comm/APMArduPlaneMockLink.params</file>
+        <file alias="APMArduSubMockLink.params">src/comm/APMArduSubMockLink.params</file>
         <file alias="FactSystemTest.qml">src/FactSystem/FactSystemTest.qml</file>
     </qresource>
     <qresource prefix="/qml">
@@ -38,7 +39,7 @@
         <file alias="MainWindowHybrid.qml">src/ui/MainWindowHybrid.qml</file>
         <file alias="MainWindowInner.qml">src/ui/MainWindowInner.qml</file>
         <file alias="MainWindowNative.qml">src/ui/MainWindowNative.qml</file>
-        <file alias="MainWindowLeftPanel.qml">src/ui/MainWindowLeftPanel.qml</file>
+        <file alias="AppSettings.qml">src/ui/AppSettings.qml</file>
         <file alias="MissionEditor.qml">src/MissionEditor/MissionEditor.qml</file>
         <file alias="MotorComponent.qml">src/AutoPilotPlugins/Common/MotorComponent.qml</file>
         <file alias="PowerComponent.qml">src/AutoPilotPlugins/PX4/PowerComponent.qml</file>
