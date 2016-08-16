@@ -28,7 +28,7 @@ import QGroundControl.Controllers           1.0
 import QtGraphicalEffects                   1.0
 Rectangle {
     id:         toolBar
-    color:      Qt.rgba(0,0,0,0)
+    color:      qgcPal.window//Qt.rgba(0,0,0,0.75)
 
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
 

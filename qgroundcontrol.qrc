@@ -97,6 +97,7 @@
 	<file alias="QGroundControl/Controls/PathDraw.qml">src/QmlControls/PathDraw.qml</file>
 	<file alias="QGroundControl/Controls/QGCVariantButton.qml">src/QmlControls/QGCVariantButton.qml</file>
 	<file alias="QGroundControl/Controls/QGCProgressBar.qml">src/QmlControls/QGCProgressBar.qml</file>
+	<file alias="QGroundControl/Controls/QGCCircleProgress.qml">src/QmlControls/QGCCircleProgress.qml</file>
 	<file alias="QGroundControl/Controls/SubMenuButtonModify.qml">src/QmlControls/SubMenuButtonModify.qml</file>
         <file alias="QGroundControl/Controls/VehicleRotationCal.qml">src/QmlControls/VehicleRotationCal.qml</file>
         <file alias="QGroundControl/Controls/VehicleSummaryRow.qml">src/QmlControls/VehicleSummaryRow.qml</file>
@@ -168,6 +169,7 @@
         <file alias="APMSensorsComponentSummary.qml">src/AutoPilotPlugins/APM/APMSensorsComponentSummary.qml</file>
         <file alias="SetupParameterEditor.qml">src/VehicleSetup/SetupParameterEditor.qml</file>
         <file alias="SetupView.qml">src/VehicleSetup/SetupView.qml</file>
+	<file alias="SetupViewandAppsetting.qml">src/VehicleSetup/SetupViewandAppsetting.qml</file>
         <file alias="test.qml">src/test.qml</file>
         <file alias="VehicleSummary.qml">src/VehicleSetup/VehicleSummary.qml</file>
         <file alias="QGroundControl/Controls/OfflineMapButton.qml">src/QmlControls/OfflineMapButton.qml</file>

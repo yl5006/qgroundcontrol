@@ -735,28 +735,28 @@ QGCView {
 
                             onInsert: {
                                 var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, i)
-                    cruiseDistance:    controller.cruiseDistance
-                    hoverDistance:    controller.hoverDistance
+                                var sequenceNumber = controller.insertSimpleMissionItem(editorMap.center, insertAfterIndex)
+                                setCurrentItem(sequenceNumber)
 
                             onMoveHomeToMapCenter: controller.visualItems.get(0).coordinate = editorMap.center
 
                          }
 //change by yaoling do not use this
-//  MissionItemStatus {
-//                   id:                 waypointValuesDisplay
-//                    anchors.margins:    ScreenTools.defaultFontPixelWidth
-//                    anchors.left:       parent.left
-//
-//                    z:                  QGroundControl.zOrderTopMost
-//                    currentMissionItem: _currentMissionItem
-//                    missionItems:       controller.visualItems
-//                    expandedWidth:      missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
-//                    missionDistance:    controller.missionDistance
-//                    missionMaxTelemetry: controller.missionMaxTelemetry
-//                    cruiseDistance:    controller.cruiseDistance
-//                    hoverDistance:    controller.hoverDistance
-//                    visible:            !ScreenTools.isShortScreen
-//                }
+//                  MissionItemStatus {
+//                            id:                 waypointValuesDisplay
+//                            anchors.margins:    ScreenTools.defaultFontPixelWidth
+//                            anchors.left:       parent.left
+//                            anchors.bottom:     parent.bottom
+//                            z:                  QGroundControl.zOrderTopMost
+//                            currentMissionItem: _currentMissionItem
+//                            missionItems:       controller.visualItems
+//                            expandedWidth:      missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
+//                            missionDistance:    controller.missionDistance
+//                            missionMaxTelemetry: controller.missionMaxTelemetry
+//                            cruiseDistance:    controller.cruiseDistance
+//                            hoverDistance:    controller.hoverDistance
+//                            visible:            !ScreenTools.isShortScreen
+//                        }
             } // FlightMap
         } // Item - split view container
     } // QGCViewPanel
@@ -890,5 +890,6 @@ QGCView {
             }
 */
         }
+    }
     }
 } // QGCVIew

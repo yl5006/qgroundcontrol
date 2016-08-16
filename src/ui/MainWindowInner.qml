@@ -29,7 +29,7 @@ Item {
     signal reallyClose
 
     readonly property string _planViewSource:       "MissionEditor.qml"
-    readonly property string _setupViewSource:      "SetupView.qml"
+    readonly property string _setupViewSource:      "SetupViewandAppsetting.qml"//"SetupView.qml"
     readonly property string _settingsViewSource:   "AppSettings.qml"
 
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
@@ -65,7 +65,8 @@ Item {
         flightView.visible          = true
         setupViewLoader.visible     = false
         planViewLoader.visible      = false
-        toolBar.checkFlyButton()
+  //      toolBar.visible      = true
+  //      rightBar.checkFlyButton()
     }
 
     function showPlanView() {
@@ -80,7 +81,8 @@ Item {
         flightView.visible          = false
         setupViewLoader.visible     = false
         planViewLoader.visible      = true
-        toolBar.checkPlanButton()
+  //      toolBar.visible      = true
+  //      rightBar.checkPlanButton()
     }
 
     function showSetupView() {
@@ -96,7 +98,8 @@ Item {
         flightView.visible          = false
         setupViewLoader.visible     = true
         planViewLoader.visible      = false
-        toolBar.checkSetupButton()
+   //     toolBar.visible      = false
+   //     rightBar.checkSetupButton()
     }
 
     function showSettingsView() {
@@ -112,7 +115,7 @@ Item {
         setupViewLoader.visible     = false
         planViewLoader.visible      = false
         settingsViewLoader.visible  = true
-        toolBar.checkSettingsButton()
+   //     rightBar.checkSettingsButton()
     }
 
     // The following are use for unit testing only
@@ -268,7 +271,7 @@ Item {
     //logo
     Rectangle {
         id:                 logo
-        y:                  parent.top
+        y:                  0
         width:              parent.width
         height:             tbHeight
         color:              qgcPal.windowShade
@@ -293,19 +296,31 @@ Item {
             }
     }
     //-- Main UI
-
+//    MainToolBar {
+//           id:                 toolBar
+//           height:             tbHeight
+//           anchors.left:       parent.left
+//           anchors.right:      parent.right
+//           anchors.top:        parent.top
+//           mainWindow:         mainWindow
+//           isBackgroundDark:   flightView.isBackgroundDark
+//           z:                  QGroundControl.zOrderTopMost
+//           onShowSetupView:    mainWindow.showSetupView()
+//           onShowPlanView:     mainWindow.showPlanView()
+//           onShowFlyView:      mainWindow.showFlyView()
+//           onShowSettingsView: mainWindow.showSettingsView()
+//           Component.onCompleted: {
+//               ScreenTools.availableHeight = parent.height - toolBar.height
+//           }
+//       }
     MainTool {
         id:                 toolBar
         height:             !(activeVehicle && !vehicleConnectionLost ? false : true)? tbHeight* 1.2 : 0
         anchors.left:       parent.left
+        mainWindow:         mainWindow
         anchors.right:      parent.right
         anchors.top:        logo.bottom
         z:                  QGroundControl.zOrderTopMost
-//       onShowSetupView:    mainWindow.showSetupView()
-//       onShowPlanView:     mainWindow.showPlanView()
-//       onShowFlyView:      mainWindow.showFlyView()
-//       onShowSettingsView: mainWindow.showSettingsView()
-
         visible:            !(activeVehicle && !vehicleConnectionLost ? false : true)
         Component.onCompleted: {
             ScreenTools.availableHeight = parent.height - toolBar.height
@@ -313,13 +328,14 @@ Item {
     }
     RightToolBar {
             id:                     rightBar
-            width:                  mainWindow.tbCellHeight*2
+            width:                  mainWindow.tbHeight*2
+            height:                 mainWindow.tbHeight*4
             mainWindow:             mainWindow
-            anchors.verticalCenter: parent.verticalCenter           
+            anchors.left:           parent.left
+            anchors.verticalCenter: parent.verticalCenter
             onShowPlanView:         mainWindow.showPlanView()
             onShowFlyView:          mainWindow.showFlyView()
-            onShowSettingsView:     mainWindow.showSettingsView()
-            anchors.right:          parent.right
+            onShowSetupView:        mainWindow.showSetupView()
             z:                      QGroundControl.zOrderTopMost
     }
 

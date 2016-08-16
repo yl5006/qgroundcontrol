@@ -409,23 +409,23 @@ QGCView {
                 //-- Offline mission editing settings
 
                 QGCLabel { text: "Offline mission editing" }
+//              only use px4 fly stack(yaoling)
+//                Row {
+//                    spacing: ScreenTools.defaultFontPixelWidth
 
-                Row {
-                    spacing: ScreenTools.defaultFontPixelWidth
+//                    QGCLabel {
+//                        text:               qsTr("Firmware:")
+//                        width:              hoverSpeedLabel.width
+//                        anchors.baseline:   offlineTypeCombo.baseline
+//                    }
 
-                    QGCLabel {
-                        text:               qsTr("Firmware:")
-                        width:              hoverSpeedLabel.width
-                        anchors.baseline:   offlineTypeCombo.baseline
-                    }
-
-                    FactComboBox {
-                        id:         offlineTypeCombo
-                        width:      ScreenTools.defaultFontPixelWidth * 18
-                        fact:       QGroundControl.offlineEditingFirmwareType
-                        indexModel: false
-                    }
-                }
+//                    FactComboBox {
+//                        id:         offlineTypeCombo
+//                        width:      ScreenTools.defaultFontPixelWidth * 18
+//                        fact:       QGroundControl.offlineEditingFirmwareType
+//                        indexModel: false
+//                    }
+//                }
 
                 Row {
                     spacing: ScreenTools.defaultFontPixelWidth
@@ -481,6 +481,9 @@ QGCView {
                         fact:               QGroundControl.offlineEditingHoverSpeed
                         enabled:            true
                     }
+                }
+                QGCCircleProgress{
+                       value:    0.2
                 }
 
                 Item {

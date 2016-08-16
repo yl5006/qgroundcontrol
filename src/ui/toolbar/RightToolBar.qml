@@ -28,8 +28,7 @@ import QGroundControl.Controllers           1.0
 
 Rectangle {
     id:         rightbar
-    color:      Qt.rgba(1,1,1,0.25)
-    width:      mainWindow.tbCellHeight*2
+    color:      Qt.rgba(0,0,0,0.5)
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
     property var  activeVehicle:        QGroundControl.multiVehicleManager.activeVehicle
@@ -43,7 +42,7 @@ Rectangle {
     readonly property var   colorBlue:      "#636efe"
     readonly property var   colorWhite:     "#ffffff"
 
-    signal showPreferences()
+    signal showSetupView()
     signal showPlanView()
     signal showFlyView()
 
@@ -74,20 +73,18 @@ Rectangle {
     // Right
     Column {
         id:                     viewRow
-        width:                  mainWindow.tbCellHeight*2
-        spacing:                mainWindow.tbSpacing
-        anchors.right:          parent.right
-        anchors.bottomMargin:   1
+        spacing:                mainWindow.tbSpacing*2
         anchors.top:            parent.top
+        anchors.left:           parent.left
+        anchors.right:          parent.right
         anchors.bottom:         parent.bottom
-
         ExclusiveGroup { id: mainActionGroup }
 
         QGCToolBarButton {
             id:                 flyButton
-            width:              mainWindow.tbButtonWidth
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
+            height:             mainWindow.tbButtonWidth
+            anchors.left:        parent.left
+            anchors.right:     parent.right
             exclusiveGroup:     mainActionGroup
             source:             "/qmlimages/PaperPlane.svg"
             onClicked:          rightbar.showFlyView()
@@ -95,9 +92,9 @@ Rectangle {
 
         QGCToolBarButton {
             id:                 planButton
-            width:              mainWindow.tbButtonWidth
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
+            height:              mainWindow.tbButtonWidth
+            anchors.left:        parent.left
+            anchors.right:     parent.right
             exclusiveGroup:     mainActionGroup
             source:             "/qmlimages/Plan.svg"
             onClicked:          rightbar.showPlanView()
@@ -105,12 +102,12 @@ Rectangle {
 
         QGCToolBarButton {
             id:                 setupButton
-            width:              mainWindow.tbButtonWidth
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
+            height:              mainWindow.tbButtonWidth
+            anchors.left:        parent.left
+            anchors.right:     parent.right
             exclusiveGroup:     mainActionGroup
             source:             "/qmlimages/Gears.svg"
-            onClicked:          rightbar.showPreferences()
+            onClicked:          rightbar.showSetupView()
         }
 
     }
