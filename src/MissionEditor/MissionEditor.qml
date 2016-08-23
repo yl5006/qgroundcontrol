@@ -711,8 +711,8 @@ QGCView {
                 MapScale {
                     anchors.margins:    ScreenTools.defaultFontPixelHeight * (0.66)
 //                  anchors.bottom:     waypointValuesDisplay.visible ? waypointValuesDisplay.top : parent.bottom
-                    anchors.bottom:     parent.bottom
-                    anchors.left:       parent.left
+                    anchors.bottom:     missionItemIndex.top
+                    anchors.right:      parent.right
                     z:                  QGroundControl.zOrderWidgets
                     mapControl:         editorMap
                     visible:            !ScreenTools.isTinyScreen

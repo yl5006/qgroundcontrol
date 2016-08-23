@@ -44,7 +44,7 @@ Item {
             return ScreenTools.isTinyScreen ? mainWindow.width * 0.2 : mainWindow.width * 0.15
         }
         var w = mainWindow.width * 0.15
-        return Math.min(w, 200)
+        return Math.min(w, 250)
     }
 
     ExclusiveGroup {
@@ -90,27 +90,46 @@ Item {
             _dropButtonsExclusiveGroup.current = null
         }
     }
-    //-- Instrument Panel
-    QGCInstrumentWidget {
-        id:                     instrumentGadget
-        anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
-        anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
-//        anchors.right:          parent.right
-        anchors.top:            parent.top
-        anchors.verticalCenter: parent.verticalCenter
-        visible:                !_useAlternateInstruments
-        size:                   getGadgetWidth()
-        active:                 _activeVehicle!= null
-        heading:                _heading
-        rollAngle:              _roll
-        pitchAngle:             _pitch
-        groundSpeedFact:        _groundSpeedFact
-        airSpeedFact:           _airSpeedFact
-        lightBorders:           _lightWidgetBorders
-        z:                      QGroundControl.zOrderWidgets
-        qgcView:                parent.parent.qgcView
-        maxHeight:              parent.height - (anchors.margins * 2)
-    }
+        //-- Instrument Panel
+        QGCInstrumentWidgetBottom {
+            id:                     instrumentGadget
+            anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
+            anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
+            anchors.bottom:         parent.bottom
+            visible:                !_useAlternateInstruments
+            size:                   getGadgetWidth()
+            active:                 _activeVehicle!= null
+            heading:                _heading
+            rollAngle:              _roll
+            pitchAngle:             _pitch
+            groundSpeedFact:        _groundSpeedFact
+            airSpeedFact:           _airSpeedFact
+            lightBorders:           _lightWidgetBorders
+            z:                      QGroundControl.zOrderWidgets
+            qgcView:                parent.parent.qgcView
+//          maxHeight:              parent.height - (anchors.margins * 2)
+        }
+//    //-- Instrument Panel
+//    QGCInstrumentWidget {
+//        id:                     instrumentGadget
+//        anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
+//        anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
+////        anchors.right:          parent.right
+//        anchors.top:            parent.top
+//        anchors.verticalCenter: parent.verticalCenter
+//        visible:                !_useAlternateInstruments
+//        size:                   getGadgetWidth()
+//        active:                 _activeVehicle!= null
+//        heading:                _heading
+//        rollAngle:              _roll
+//        pitchAngle:             _pitch
+//        groundSpeedFact:        _groundSpeedFact
+//        airSpeedFact:           _airSpeedFact
+//        lightBorders:           _lightWidgetBorders
+//        z:                      QGroundControl.zOrderWidgets
+//        qgcView:                parent.parent.qgcView
+//        maxHeight:              parent.height - (anchors.margins * 2)
+//    }
 
     QGCInstrumentWidgetAlternate {
         id:                     instrumentGadgetAlternate

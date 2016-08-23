@@ -13,6 +13,7 @@ QGCAttitudeWidget               1.0 QGCAttitudeWidget.qml
 QGCAttitudeCompassWidget        1.0 QGCAttitudeCompassWidget.qml
 QGCCompassWidget                1.0 QGCCompassWidget.qml
 QGCInstrumentWidget             1.0 QGCInstrumentWidget.qml
+QGCInstrumentWidgetBottom       1.0 QGCInstrumentWidgetBottom.qml
 QGCInstrumentWidgetAlternate    1.0 QGCInstrumentWidgetAlternate.qml
 QGCPitchIndicator               1.0 QGCPitchIndicator.qml
 QGCSlider                       1.0 QGCSlider.qml

@@ -18,7 +18,6 @@ import QtQuick 2.4
 import QtGraphicalEffects 1.0
 
 import QGroundControl.Controls 1.0
-
 Item {
     id: root
 
@@ -102,12 +101,11 @@ Item {
             id:                 head
             anchors.top:        parent.top
             anchors.left:       parent.left
-            anchors.topMargin:   size*0.25
-            anchors.leftMargin:  size*0.5
+            anchors.topMargin:   size*0.28
+            anchors.leftMargin:  size*0.55
             horizontalAlignment: Text.AlignRight;
             text:               active ? heading.toFixed(0)+"°" :qsTr("OFF")
-            font.pointSize:     ScreenTools.defaultFontPixelHeight
-            font.family:        ScreenTools.demiboldFontFamily
+            font.pointSize:     size*0.08
         }
     }
 
