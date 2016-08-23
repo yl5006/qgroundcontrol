@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -31,7 +31,7 @@ QString APMFlightModesComponent::description(void) const
 
 QString APMFlightModesComponent::iconResource(void) const
 {
-    return QStringLiteral("/qmlimages/FlightModesComponentIcon.png");
+    return QStringLiteral("/qmlimages/FlightModesComponentIcon.svg");
 }
 
 bool APMFlightModesComponent::requiresSetup(void) const

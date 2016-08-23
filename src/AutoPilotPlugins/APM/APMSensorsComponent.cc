@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -35,7 +35,7 @@ QString APMSensorsComponent::description(void) const
 
 QString APMSensorsComponent::iconResource(void) const
 {
-    return "/qmlimages/SensorsComponentIcon.png";
+    return "/qmlimages/SensorsComponentIcon.svg";
 }
 
 bool APMSensorsComponent::requiresSetup(void) const

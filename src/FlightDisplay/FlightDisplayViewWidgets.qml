@@ -94,10 +94,10 @@ Item {
     QGCInstrumentWidget {
         id:                     instrumentGadget
         anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
-//	anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
-        anchors.right:          parent.right
+        anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
+//        anchors.right:          parent.right
         anchors.top:            parent.top
-//      anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenter: parent.verticalCenter
         visible:                !_useAlternateInstruments
         size:                   getGadgetWidth()
         active:                 _activeVehicle!= null

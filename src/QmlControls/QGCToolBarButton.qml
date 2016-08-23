@@ -42,7 +42,16 @@ Item {
         visible:        logo
         color:          "#4A2C6D"
     }
-
+    Rectangle {
+        anchors.rightMargin:    _topBottomMargins
+        anchors.leftMargin:     _topBottomMargins
+//        anchors.bottom: parent.bottom
+//        height:         _topBottomMargins * 0.25
+//       color:          qgcPal.buttonHighlight
+        anchors.fill:   parent
+        visible:        checked
+        color:          (checked ? "#e4e428" : parent.color)
+    }
     QGCColoredImage {
         id:                     icon
         anchors.left:           parent.left
@@ -56,15 +65,14 @@ Item {
         color:                  logo ? "white" : (checked ? qgcPal.buttonHighlight : qgcPal.buttonText)
     }
 
-    Rectangle {
-        anchors.left:   parent.left
-        anchors.right:  parent.right
-        anchors.bottom: parent.bottom
-        height:         _topBottomMargins * 0.25
-//       color:          qgcPal.buttonHighlight
-        visible:        checked
-        color:          (checked ? "#e4e428" : parent.color)
-    }
+//    Rectangle {
+//        anchors.left:   parent.left
+//        anchors.right:  parent.right
+//        anchors.bottom: parent.bottom
+//        height:         _topBottomMargins * 0.25
+//        visible:        checked
+//        color:          (checked ? "#e4e428" : parent.color)
+//    }
 
     MouseArea {
         anchors.fill: parent

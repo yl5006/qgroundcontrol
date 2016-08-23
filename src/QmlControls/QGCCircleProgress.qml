@@ -7,47 +7,37 @@ Rectangle
       property color  ciclectcolor:       "blue"
       property real   value:         0
       color:  "transparent"
-      width:  60
+      width:  80
       height: width
-
       Rectangle
       {
          id: outerRing
          z: 0
          anchors.fill: parent
-         radius: Math.max(width, height) / 2
-         color: ciclectcolor//"transparent"
-      }
+         radius: width / 2
+         color: "transparent"
+       }
       Rectangle
       {
          id: innerRing
          z: 1
          anchors.fill: parent
-         anchors.margins: 8
          radius: outerRing.radius
          color: "transparent"
+         border.color: ciclectcolor
+         border.width: 8
          ConicalGradient
          {
             source: innerRing
             anchors.fill: parent
             gradient: Gradient
             {
-               GradientStop { position: 0.00; color: valuecolor }
+               GradientStop { position: 0.00;  color: valuecolor }
                GradientStop { position: value; color: valuecolor }
-               GradientStop { position: value + 0.01; color: "transparent" }
-               GradientStop { position: 1.00; color: "transparent" }
+               GradientStop { position: value+0.001; color: "transparent" }
+               GradientStop { position: 1.00;  color: "transparent" }
             }
          }
-      }
-
-
-
-      Text
-      {
-         id: progressLabel
-         anchors.centerIn: parent
-         color: "black"
-         text: (value * 100).toFixed() + "%"
       }
 }
 

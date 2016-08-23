@@ -6,7 +6,7 @@ import QGroundControl.FactControls 1.0
 import QGroundControl.Controls 1.0
 import QGroundControl.Controllers 1.0
 import QGroundControl.Palette 1.0
-
+import QGroundControl.ScreenTools           1.0
 FactPanel {
     id:                 panel
     anchors.fill:       parent
@@ -22,6 +22,7 @@ FactPanel {
 
     Column {
         anchors.fill:       parent
+        spacing:            ScreenTools.defaultFontPointSize*0.5
         VehicleSummaryRow {
             labelText: qsTr("系统ID")//"System ID:"
             valueText: sysIdFact ? sysIdFact.valueString : ""

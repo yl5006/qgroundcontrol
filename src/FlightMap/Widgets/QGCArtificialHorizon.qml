@@ -35,12 +35,11 @@ Item {
             anchors.fill: parent
             smooth: true
             antialiasing: true
-            gradient: Gradient {
-//                GradientStop { position: 0.25; color: Qt.hsla(0.6, 1.0, 0.25) }
-//                GradientStop { position: 0.5;  color: Qt.hsla(0.6, 0.5, 0.55) }
-                  GradientStop { position: 0.25; color: Qt.hsla(0.572, 1.0, 0.25) }
-                  GradientStop { position: 0.5;  color: Qt.hsla(0.572, 0.5, 0.35) }
-            }
+            color:   Qt.rgba(0.189, 0.584, 0.686)
+//            gradient: Gradient {
+//                      GradientStop { position: 0.25; color: Qt.hsla(0.6, 1.0, 0.25) }
+//                      GradientStop { position: 0.5;  color: Qt.hsla(0.6, 0.5, 0.55) }
+//                  }
         }
         Rectangle {
             id: ground
@@ -52,12 +51,11 @@ Item {
             }
             smooth: true
             antialiasing: true
-            gradient: Gradient {
-//                GradientStop { position: 0.0;  color: Qt.hsla(0.25,  0.5, 0.   ) }
-//                GradientStop { position: 0.25; color: Qt.hsla(0.25, 0.75, 0.25) }
-                  GradientStop { position: 0.1;  color:  Qt.rgba(0,0,0,0.75) }
-                  GradientStop { position: 0.25; color:  Qt.rgba(0,0,0,0.75) }
-            }
+            color:  Qt.rgba(0.110, 0.298, 0.298)
+//            gradient: Gradient {
+//                           GradientStop { position: 0.0;  color: Qt.hsla(0.25,  0.5, 0.45) }
+//                           GradientStop { position: 0.25; color: Qt.hsla(0.25, 0.75, 0.25) }
+//                       }
         }
         transform: [
             Translate {

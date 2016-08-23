@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -35,6 +35,7 @@ public:
     
     Q_PROPERTY(QVariantList airframeTypes MEMBER _airframeTypes CONSTANT)
     
+    Q_PROPERTY(QString currentAirframeImgSouce MEMBER _currentAirframeImgSouce CONSTANT)
     Q_PROPERTY(QString currentAirframeType MEMBER _currentAirframeType CONSTANT)
     Q_PROPERTY(QString currentVehicleName MEMBER _currentVehicleName CONSTANT)
     Q_PROPERTY(int currentVehicleIndex MEMBER _currentVehicleIndex CONSTANT)
@@ -58,6 +59,7 @@ private:
     static bool _typesRegistered;
     
     QVariantList    _airframeTypes;
+    QString         _currentAirframeImgSouce;
     QString         _currentAirframeType;
     QString         _currentVehicleName;
     int             _currentVehicleIndex;

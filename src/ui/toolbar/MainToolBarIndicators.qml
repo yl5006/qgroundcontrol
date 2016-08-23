@@ -20,7 +20,7 @@ import QGroundControl.ScreenTools   1.0
 import QGroundControl.Palette       1.0
 
 Row {
-    spacing:  tbSpacing * 2
+    spacing:  tbSpacing * 4
 
     QGCPalette { id: qgcPal }
 

@@ -31,7 +31,7 @@ QString PX4RadioComponent::description(void) const
 
 QString PX4RadioComponent::iconResource(void) const
 {
-    return "/qmlimages/RadioComponentIcon.png";
+    return "/qmlimages/RC.svg";//RadioComponentIcon.png";
 }
 
 bool PX4RadioComponent::requiresSetup(void) const

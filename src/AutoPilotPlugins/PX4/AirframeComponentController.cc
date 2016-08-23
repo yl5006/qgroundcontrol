@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -63,6 +63,7 @@ AirframeComponentController::AirframeComponentController(void) :
                 _currentAirframeType = pType->name;
                 _currentVehicleName = pInfo->name;
                 _currentVehicleIndex = index;
+                _currentAirframeImgSouce = pType->imageResource;
             }
             airframeType->addAirframe(pInfo->name, pInfo->autostartId);
         }

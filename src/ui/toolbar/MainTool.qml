@@ -26,20 +26,19 @@ import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.ScreenTools           1.0
 import QGroundControl.Controllers           1.0
 import QtGraphicalEffects                   1.0
+import QGroundControl.FactSystem            1.0
+import QGroundControl.FactControls          1.0
+
 Rectangle {
     id:         toolBar
-    color:      qgcPal.window//Qt.rgba(0,0,0,0.75)
-
+    color:      Qt.rgba(0,0,0,0.75)
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
     property var  activeVehicle:        QGroundControl.multiVehicleManager.activeVehicle
     property var  mainWindow:           null
     property bool isMessageImportant:   activeVehicle ? !activeVehicle.messageTypeNormal && !activeVehicle.messageTypeNone : false
-    property bool isBackgroundDark:     true
-    property bool opaqueBackground:     false
+
     property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
-    property bool planormisstion: true
-    property bool statuechange: true
 
     readonly property var   colorGreen:     "#05f068"
     readonly property var   colorOrange:    "#f0ab06"
@@ -53,9 +52,9 @@ Rectangle {
     function getBatteryColor() {
         if(activeVehicle) {
             if(activeVehicle.battery.percentRemaining.value > 75) {
-                return qgcPal.text
+                return colorGreen
             }
-            if(activeVehicle.battery.percentRemaining.value > 50) {
+            if(activeVehicle.battery.percentRemaining.value > 30) {
                 return colorOrange
             }
             if(activeVehicle.battery.percentRemaining.value > 0.1) {
@@ -277,38 +276,37 @@ Rectangle {
             }
         }
     }
-
     Item {
         id:                     vehicleIndicators
-        height:                 mainWindow.tbCellHeight*1.2
-        anchors.leftMargin:     mainWindow.tbSpacing * 2
+        height:                 parent.height
         anchors.left:           parent.left
         anchors.right:          parent.right
-        anchors.verticalCenter: parent.verticalCenter
-
         property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
 
-        Loader {
-            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsLeft.qml" : ""
-            anchors.left:           parent.left
-            anchors.leftMargin:     mainWindow.tbButtonWidth * 2
-            anchors.verticalCenter: parent.verticalCenter
+        Loader {            
+            source:                   (QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable&&activeVehicle && !parent.vehicleConnectionLost) ? "MainToolBarIndicatorsRight.qml" : ""
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter:   parent.verticalCenter
         }
-        Loader {
-            source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicatorsRight.qml" : ""
-            anchors.right:          parent.right
-            anchors.rightMargin:    mainWindow.tbButtonWidth * 2
-            anchors.verticalCenter: parent.verticalCenter
-        }
-        }
+    }
 
     // Progress bar
     Rectangle {
         id:             progressBar
         anchors.top:    parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        height:         toolBar.height * 0.05
+        height:         toolBar.height * 0.02
+        radius:         1
         width:          parent.width * _controller.progressBarValue
         color:          colorGreen
+    }
+    RectangularGlow {
+        id: effect
+        anchors.fill: progressBar
+        glowRadius: ScreenTools.defaultFontPixelHeight/4
+        spread: 0.1
+        color: progressBar.color
+        cornerRadius:   glowRadius
+        visible:        progressBar.width > 0
     }
 }

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -30,7 +30,7 @@ QString APMTuningComponent::description(void) const
 
 QString APMTuningComponent::iconResource(void) const
 {
-    return QStringLiteral("/qmlimages/TuningComponentIcon.png");
+    return QStringLiteral("/qmlimages/TuningComponentIcon.svg");
 }
 
 bool APMTuningComponent::requiresSetup(void) const

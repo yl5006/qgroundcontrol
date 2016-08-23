@@ -31,7 +31,7 @@ QString PX4TuningComponent::description(void) const
 
 QString PX4TuningComponent::iconResource(void) const
 {
-    return "/qmlimages/TuningComponentIcon.png";
+    return "/qmlimages/TuningComponentIcon.svg";
 }
 
 bool PX4TuningComponent::requiresSetup(void) const

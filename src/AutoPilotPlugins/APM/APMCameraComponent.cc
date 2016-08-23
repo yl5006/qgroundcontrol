@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -34,7 +34,7 @@ QString APMCameraComponent::description(void) const
 
 QString APMCameraComponent::iconResource(void) const
 {
-    return QStringLiteral("/qmlimages/CameraComponentIcon.png");
+    return QStringLiteral("/qmlimages/CameraComponentIcon.svg");
 }
 
 bool APMCameraComponent::requiresSetup(void) const

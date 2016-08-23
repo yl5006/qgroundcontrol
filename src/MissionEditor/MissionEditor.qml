@@ -486,7 +486,7 @@ QGCView {
 //                  width:          _rightPanelWidth
                     width:          mainWindow.availableWidth*0.9   //change by yaoling
                     opacity:        _rightPanelOpacity
-                    z:              QGroundControl.zOrderTopMost-100
+                    z:              QGroundControl.zOrderTopMost
 
                     MouseArea {
                          // This MouseArea prevents the Map below it from getting Mouse events. Without this
@@ -710,7 +710,8 @@ QGCView {
 
                 MapScale {
                     anchors.margins:    ScreenTools.defaultFontPixelHeight * (0.66)
-                    anchors.bottom:     waypointValuesDisplay.visible ? waypointValuesDisplay.top : parent.bottom
+//                  anchors.bottom:     waypointValuesDisplay.visible ? waypointValuesDisplay.top : parent.bottom
+                    anchors.bottom:     parent.bottom
                     anchors.left:       parent.left
                     z:                  QGroundControl.zOrderWidgets
                     mapControl:         editorMap
@@ -726,7 +727,7 @@ QGCView {
                             missionItem:    _currentMissionItem
                             qgcView:        _root
                             readOnly:       false
-                            z:              QGroundControl.zOrderTopMost
+                            z:              QGroundControl.zOrderTopMost+100
                             onRemove: {
                                 itemDragger.clearItem()
                                 controller.removeMissionItem(_currentMissionItem.sequenceNumber)

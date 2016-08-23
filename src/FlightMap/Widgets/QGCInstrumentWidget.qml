@@ -29,7 +29,7 @@ Rectangle {
     width:  size
  //   color:  _backgroundColor
     color:          Qt.rgba(0,0,0,0)
-    property alias  heading:        compass.heading
+    property alias  heading:        attitudeWidget.heading//compass.heading
     property alias  rollAngle:      attitudeWidget.rollAngle
     property alias  pitchAngle:     attitudeWidget.pitchAngle
     property real   size:           _defaultSize
@@ -89,12 +89,12 @@ Rectangle {
         maxHeight:          _availableValueHeight
         visible:            _showCompass
     }
-    QGCAttitudeWidget {
+    QGCAttitudeCompassWidget {
         id:             attitudeWidget
         anchors.top:    _valuesWidget.bottom
         anchors.topMargin:  _spacing//
         y:              _topBottomMargin
-        size:           parent.width * 0.95
+        size:           parent.width *0.95
         active:         instrumentPanel.active
         visible:        !QGroundControl.virtualTabletJoystick
         anchors.horizontalCenter: parent.horizontalCenter

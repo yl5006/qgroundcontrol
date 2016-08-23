@@ -13,7 +13,10 @@ import QtQuick.Controls 1.2
 import QtQuick.Dialogs  1.2
 import QtPositioning    5.2
 
+import QtQuick.Controls.Styles  1.2
 import QGroundControl                       1.0
+
+
 import QGroundControl.Palette               1.0
 import QGroundControl.Controls              1.0
 import QGroundControl.FlightDisplay         1.0
@@ -21,6 +24,8 @@ import QGroundControl.ScreenTools           1.0
 import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.QGCPositionManager    1.0
 import QGroundControl.Controllers           1.0
+
+import QGroundControl.FlightMap     1.0
 
 /// Inner common QML for mainWindow
 Item {
@@ -35,7 +40,6 @@ Item {
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
     MainToolBarController { id: _controller }
-
     property real   tbHeight:           ScreenTools.isMobile ? (ScreenTools.isTinyScreen ? (mainWindow.width * 0.0666) : (mainWindow.width * 0.05)) : ScreenTools.defaultFontPixelHeight * 3
     property int    tbCellHeight:       tbHeight * 0.75
     property real   tbSpacing:          ScreenTools.isMobile ? width * 0.00824 : 9.54
@@ -63,10 +67,11 @@ Item {
         ScreenTools.availableHeight = parent.height - toolBar.height
         settingsViewLoader.visible  = false
         flightView.visible          = true
+        initMap.visible             = false
         setupViewLoader.visible     = false
         planViewLoader.visible      = false
   //      toolBar.visible      = true
-  //      rightBar.checkFlyButton()
+        rightBar.checkFlyButton()
     }
 
     function showPlanView() {
@@ -78,11 +83,13 @@ Item {
         }
         ScreenTools.availableHeight = parent.height - toolBar.height
         settingsViewLoader.visible  = false
+        initMap.visible           = false
         flightView.visible          = false
+
         setupViewLoader.visible     = false
         planViewLoader.visible      = true
   //      toolBar.visible      = true
-  //      rightBar.checkPlanButton()
+        rightBar.checkPlanButton()
     }
 
     function showSetupView() {
@@ -96,10 +103,11 @@ Item {
         }
         settingsViewLoader.visible  = false
         flightView.visible          = false
+        initMap.visible           = true
         setupViewLoader.visible     = true
         planViewLoader.visible      = false
    //     toolBar.visible      = false
-   //     rightBar.checkSetupButton()
+        rightBar.checkSetupButton()
     }
 
     function showSettingsView() {
@@ -217,15 +225,18 @@ Item {
 
     property var messageQueue: []
 
-    function showMessage(message) {
-        if(criticalMmessageArea.visible) {
-            messageQueue.push(message)
-        } else {
-            criticalMessageText.text = message
-            criticalMmessageArea.visible = true
-        }
-    }
+//    function showMessage(message) {
+//        if(criticalMmessageArea.visible) {
+//            messageQueue.push(message)
+//        } else {
+//            criticalMessageText.text = message
+//            criticalMmessageArea.visible = true
+//        }
+//    }
 
+    function showMessage(message) {
+        messageText.append(formatMessage(message))
+    }
     function formatMessage(message) {
         message = message.replace(new RegExp("<#E>", "g"), "color: #f95e5e; font: " + (ScreenTools.defaultFontPointSize.toFixed(0) - 1) + "pt monospace;");
         message = message.replace(new RegExp("<#I>", "g"), "color: #f9b55e; font: " + (ScreenTools.defaultFontPointSize.toFixed(0) - 1) + "pt monospace;");
@@ -315,7 +326,7 @@ Item {
 //       }
     MainTool {
         id:                 toolBar
-        height:             !(activeVehicle && !vehicleConnectionLost ? false : true)? tbHeight* 1.2 : 0
+        height:             tbHeight* 1.8
         anchors.left:       parent.left
         mainWindow:         mainWindow
         anchors.right:      parent.right
@@ -329,7 +340,7 @@ Item {
     RightToolBar {
             id:                     rightBar
             width:                  mainWindow.tbHeight*2
-            height:                 mainWindow.tbHeight*4
+            height:                 mainWindow.tbHeight*5
             mainWindow:             mainWindow
             anchors.left:           parent.left
             anchors.verticalCenter: parent.verticalCenter
@@ -338,7 +349,13 @@ Item {
             onShowSetupView:        mainWindow.showSetupView()
             z:                      QGroundControl.zOrderTopMost
     }
-
+    FlightMap {
+        id:             initMap
+        anchors.fill:   parent
+        mapName:        "initmap"
+        // Initial map position duplicates Fly view position
+        Component.onCompleted: initMap.center = QGroundControl.flightMapPosition
+    }
     FlightDisplayView {
         id:                 flightView
         anchors.fill:       parent
@@ -353,12 +370,13 @@ Item {
 
     Loader {
         id:                 setupViewLoader
-        anchors.left:       parent.left
+        anchors.left:       rightBar.right
         anchors.right:      parent.right
         anchors.top:        toolBar.bottom
         anchors.bottom:     parent.bottom
         visible:            false
     }
+
 
     Loader {
         id:                 settingsViewLoader
@@ -483,8 +501,9 @@ Item {
             }
         }
     }
-
+/*
     //-------------------------------------------------------------------------
+    //   I think do not need this
     //-- Critical Message Area
     Rectangle {
         id:                         criticalMmessageArea
@@ -590,5 +609,6 @@ Item {
             }
         }
     }
+    */
 }
 

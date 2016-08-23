@@ -124,7 +124,7 @@ Row {
     //-- Vehicle Selector
     QGCButton {
         id:                     vehicleSelectorButton
-        width:                  ScreenTools.defaultFontPixelSize * 8
+        width:                  ScreenTools.defaultFontPixelHeight * 8
         text:                   "Vehicle " + (activeVehicle ? activeVehicle.id : "None")
         visible:                QGroundControl.multiVehicleManager.vehicles.count > 1
         anchors.verticalCenter: parent.verticalCenter
@@ -197,7 +197,7 @@ Row {
             }
             QGCLabel {
                 text:           activeVehicle ? activeVehicle.flightMode : "N/A"
-                font.pixelSize: ScreenTools.mediumFontPointSize
+                font.pointSize: ScreenTools.mediumFontPointSize
                 color:          colorWhite
                 anchors.verticalCenter: parent.verticalCenter
             }

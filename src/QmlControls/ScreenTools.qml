@@ -1,4 +1,4 @@
-pragma Singleton
+﻿pragma Singleton
 
 import QtQuick 2.4
 import QtQuick.Controls 1.2
@@ -59,7 +59,7 @@ Item {
     property bool isTinyScreen:     (Screen.width / Screen.pixelDensity) < 120 // 120mm
     property bool isShortScreen:    ScreenToolsController.isMobile && ((Screen.height / Screen.width) < 0.6) // Nexus 7 for example
 
-    readonly property string normalFontFamily:      "opensans"
+    readonly property string normalFontFamily:      "opensans"// "Droid Sans"//
     readonly property string demiboldFontFamily:    "opensans-demibold"
 
     /* This mostly works but for some reason, reflowWidths() in SetupView doesn't change size.

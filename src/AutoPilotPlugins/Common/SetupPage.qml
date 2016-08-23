@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -23,7 +23,7 @@ import QGroundControl.Controllers   1.0
 QGCView {
     id:         setupView
     viewPanel:  setupPanel
-
+//    color:      qgcPal.windowShade
     property alias  pageComponent:      pageLoader.sourceComponent
     property real   availableWidth:     width - pageLoader.x
     property real   availableHeight:    height - pageLoader.y

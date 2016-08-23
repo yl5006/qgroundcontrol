@@ -35,7 +35,7 @@ Rectangle {
     readonly property real  _PointFieldWidth:   ScreenTools.defaultFontPixelWidth * 9
     property real   _distance:          _statusValid ? missionItem.distance : 0
     property bool   _statusValid:       missionItem.command==16&&missionItem.sequenceNumber != 0
-    property string _distanceText:      _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(0) + " " + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(1) + "k" + QGroundControl.appSettingsDistanceUnitsString
+    property string _distanceText:      _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(0) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(1) + "k" + QGroundControl.appSettingsDistanceUnitsString
 
     QGCPalette {
         id: qgcPal
@@ -72,21 +72,22 @@ Rectangle {
             anchors.top:            parent.top
             width:                  parent.width
             horizontalAlignment:    Text.AlignHCenter
-            font.pixelSize:         ScreenTools.defaultFontPixelHeight*2
+            font.pointSize:         ScreenTools.defaultFontPixelHeight*1.2
             font.bold:              true
             fontSizeMode:           Text.HorizontalFit
             color:                  "white"
             text:                   missionItem.sequenceNumber
         }
         Row {
-           anchors.bottom:          waypoint.bottom
-           anchors.bottomMargin:    _margin
-           id:     altitudedisplay
+           id:                        altitudedisplay
+           anchors.bottom:            parent.bottom
+           anchors.bottomMargin:       _margin*0.2
            width:  parent.width*0.9//_largeColumn.width
            spacing:    _margin*2
            anchors.horizontalCenter:  parent.horizontalCenter
            visible:                  missionItem.sequenceNumber != 0
            Image{
+               anchors.verticalCenter: parent.verticalCenter
                width:    ScreenTools.defaultFontPixelHeight
                height:   ScreenTools.defaultFontPixelHeight
                source:   "/qmlimages/altitudeRelativewhite.svg"
@@ -95,23 +96,24 @@ Rectangle {
            QGCLabel {
                width:                  parent.width*0.5
                horizontalAlignment:    Text.AlignHCenter
- //              font.pixelSize:         ScreenTools.defaultFontPixelHeight
+               font.pointSize:         ScreenTools.defaultFontPixelHeight*0.8
                font.family:            ScreenTools.demiboldFontFamily
                font.bold:              true
                color:                  "white"
 //             fontSizeMode:           Text.HorizontalFit
-               text:                   missionItem.coordinate.altitude+" m"
+               text:                   missionItem.coordinate.altitude+"m"
            }
         }
            Row {
-              anchors.bottom:           altitudedisplay.top
-              anchors.bottomMargin:     _margin
               id:                       distancedisplay
+              anchors.bottom:           altitudedisplay.top
+              anchors.bottomMargin:     _margin*0.2
               width:                    parent.width*0.9//_largeColumn.width
               spacing:                  _margin*2
               anchors.horizontalCenter:  parent.horizontalCenter
               visible:                  _statusValid
               Image{
+                  anchors.verticalCenter: parent.verticalCenter
                   width:    ScreenTools.defaultFontPixelHeight
                   height:   ScreenTools.defaultFontPixelHeight
                   source:   "/qmlimages/distance.svg"
@@ -120,11 +122,11 @@ Rectangle {
               QGCLabel {
                   width:                  parent.width*0.5
                   horizontalAlignment:    Text.AlignHCenter
-                  font.pixelSize:         ScreenTools.defaultFontPixelHeight
+                  font.pointSize:         ScreenTools.defaultFontPixelHeight*0.8
                   font.family:            ScreenTools.demiboldFontFamily
                   font.bold:              true
                   color:                  "white"
-//                  fontSizeMode:         Text.HorizontalFit
+//                fontSizeMode:         Text.HorizontalFit
                   text:                   _distanceText//missionItem.distance
               }
         }

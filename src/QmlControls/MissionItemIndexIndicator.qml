@@ -61,7 +61,7 @@ Rectangle {
         id:                     label
         anchors.verticalCenter: commandPicker.verticalCenter
         anchors.leftMargin:     _margin*4
-        font.pixelSize:         ScreenTools.defaultFontPixelHeight*2
+        font.pointSize:         ScreenTools.defaultFontPixelHeight*2
         font.bold:              true
         anchors.left:           parent.left
         text:                   missionItem.abbreviation
@@ -158,7 +158,7 @@ Rectangle {
         anchors.horizontalCenter: distanceLabel.horizontalCenter
         anchors.topMargin:  _margin*2
         anchors.top:        distanceLabel.bottom
-        font.pixelSize:     ScreenTools.defaultFontPixelHeight*1.5
+        font.pointSize:     ScreenTools.defaultFontPixelHeight
         font.bold:          true
         color:              Qt.rgba(0.102,0.887,0.609,1)
         text:               _distanceText
@@ -169,7 +169,7 @@ Rectangle {
         anchors.horizontalCenter: altLabel.horizontalCenter
         anchors.topMargin:  _margin*2
         anchors.top:        altLabel.bottom
-        font.pixelSize:     ScreenTools.defaultFontPixelHeight*1.5
+        font.pointSize:     ScreenTools.defaultFontPixelHeight
         font.bold:          true
         color:              Qt.rgba(0.102,0.887,0.609,1)
         text:               _altText
@@ -181,7 +181,7 @@ Rectangle {
         anchors.horizontalCenter: azimuthLabel.horizontalCenter
         anchors.topMargin:  _margin*2
         anchors.top:        azimuthLabel.bottom
-        font.pixelSize:     ScreenTools.defaultFontPixelHeight*1.5
+        font.pointSize:     ScreenTools.defaultFontPixelHeight
         font.bold:          true
         color:              Qt.rgba(0.102,0.887,0.609,1)
         text:               _azimuthText

@@ -24,7 +24,6 @@ import QGroundControl.ScreenTools   1.0
 QGCView {
     id:         qgcView
     viewPanel:  panel
-
     // Those user visible strings are hard to translate because we can't send the
     // HTML strings to translation as this can create a security risk. we need to find
     // a better way to hightlight them, or use less hightlights.

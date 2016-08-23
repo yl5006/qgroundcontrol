@@ -34,7 +34,7 @@ Rectangle {
     property var  activeVehicle:        QGroundControl.multiVehicleManager.activeVehicle
     property var  mainWindow:           null
 
-
+    property bool isMessageImportant:   activeVehicle ? !activeVehicle.messageTypeNormal && !activeVehicle.messageTypeNone : false
     readonly property var   colorGreen:     "#05f068"
     readonly property var   colorOrange:    "#f0ab06"
     readonly property var   colorRed:       "#fc4638"
@@ -46,6 +46,24 @@ Rectangle {
     signal showPlanView()
     signal showFlyView()
 
+    //-------------------------------------------------------------------------
+    function getMessageColor() {
+        if (activeVehicle) {
+            if (activeVehicle.messageTypeNone)
+                return colorGrey
+            if (activeVehicle.messageTypeNormal)
+                return colorBlue;
+            if (activeVehicle.messageTypeWarning)
+                return colorOrange;
+            if (activeVehicle.messageTypeError)
+                return colorRed;
+            // Cannot be so make make it obnoxious to show error
+            console.log("Invalid vehicle message type")
+            return "purple";
+        }
+        //-- It can only get here when closing (vehicle gone while window active)
+        return "white";
+    }
     MainToolBarController { id: _controller }
 
     function checkSettingsButton() {
@@ -73,7 +91,7 @@ Rectangle {
     // Right
     Column {
         id:                     viewRow
-        spacing:                mainWindow.tbSpacing*2
+        spacing:                mainWindow.tbSpacing
         anchors.top:            parent.top
         anchors.left:           parent.left
         anchors.right:          parent.right
@@ -83,8 +101,8 @@ Rectangle {
         QGCToolBarButton {
             id:                 flyButton
             height:             mainWindow.tbButtonWidth
-            anchors.left:        parent.left
-            anchors.right:     parent.right
+            anchors.left:       parent.left
+            anchors.right:      parent.right
             exclusiveGroup:     mainActionGroup
             source:             "/qmlimages/PaperPlane.svg"
             onClicked:          rightbar.showFlyView()
@@ -104,10 +122,56 @@ Rectangle {
             id:                 setupButton
             height:              mainWindow.tbButtonWidth
             anchors.left:        parent.left
-            anchors.right:     parent.right
-            exclusiveGroup:     mainActionGroup
+            anchors.right:       parent.right
+            exclusiveGroup:      mainActionGroup
             source:             "/qmlimages/Gears.svg"
             onClicked:          rightbar.showSetupView()
+        }
+        //-------------------------------------------------------------------------
+        //-- Message Indicator
+        Item {
+            id:         messages
+            width:      mainWindow.tbButtonWidth
+            height:     mainWindow.tbButtonWidth
+            anchors.left:        parent.left
+            anchors.right:       parent.right
+       //     visible:    activeVehicle && activeVehicle.messageCount
+            Item {
+                id:                 criticalMessage
+                anchors.fill:       parent
+                visible:            activeVehicle && activeVehicle.messageCount > 0 && isMessageImportant
+                Image {
+                    source:             "/qmlimages/Yield.svg"
+                    height:             mainWindow.tbCellHeight
+                    sourceSize.height:  height
+                    fillMode:           Image.PreserveAspectFit
+                    cache:              false
+                    visible:            isMessageImportant
+                    anchors.verticalCenter:   parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+            }
+            Item {
+                anchors.fill:       parent
+                visible:            !criticalMessage.visible
+                QGCColoredImage {
+                    id:         messageIcon
+                    source:     "/qmlimages/Megaphone.svg"
+                    height:     mainWindow.tbCellHeight
+                    width:      height
+                    sourceSize.height: height
+                    fillMode:   Image.PreserveAspectFit
+                    color:      getMessageColor()
+                    anchors.verticalCenter:   parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    mainWindow.showMessageArea()
+                }
+            }
         }
 
     }

@@ -5,7 +5,7 @@ import QGroundControl.FactSystem 1.0
 import QGroundControl.FactControls 1.0
 import QGroundControl.Controls 1.0
 import QGroundControl.Palette 1.0
-
+import QGroundControl.ScreenTools 1.0
 FactPanel {
     id:             panel
     anchors.fill:   parent
@@ -24,26 +24,83 @@ FactPanel {
 
     Column {
         anchors.fill:       parent
-
-        VehicleSummaryRow {
-            labelText: qsTr("横滚:")//"Roll:"
-            valueText: mapRollFact ? (mapRollFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapRollFact.valueString) : ""
+        spacing:            ScreenTools.defaultFontPointSize*0.5
+        Row{
+            spacing:            ScreenTools.defaultFontPointSize*3
+            Column {
+                spacing:            ScreenTools.defaultFontPointSize*0.5
+                QGCLabel {
+                    id:     label
+                    text:   qsTr("横滚:")//"Roll:"
+                    color:  qgcPal.buttonHighlight
+                }
+                QGCLabel {
+                    anchors.horizontalCenter: label.horizontalCenter
+                    text:   mapRollFact ? (mapRollFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapRollFact.valueString) : ""
+                }
+            }
+            Column {
+                spacing:            ScreenTools.defaultFontPointSize*0.5
+                QGCLabel {
+                    id:     label1
+                    text:   qsTr("仰俯:")//"Pitch:"
+                    color:  qgcPal.buttonHighlight
+                }
+                QGCLabel {
+                    anchors.horizontalCenter: label1.horizontalCenter
+                    text:  mapPitchFact ? (mapPitchFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapPitchFact.valueString) : ""
+                }
+            }
+            Column {
+                spacing:            ScreenTools.defaultFontPointSize*0.5
+                QGCLabel {
+                    id:     label2
+                    text:   qsTr("航角:")//"Yaw:"
+                    color:  qgcPal.buttonHighlight
+                }
+                QGCLabel {
+                    anchors.horizontalCenter: label2.horizontalCenter
+                    text:   mapYawFact ? (mapYawFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapYawFact.valueString) : ""
+                }
+            }
+            Column {
+                spacing:            ScreenTools.defaultFontPointSize*0.5
+                QGCLabel {
+                    id:     label3
+                    text:   qsTr("油门:")//"Throttle:"
+                    color:  qgcPal.buttonHighlight
+                }
+                QGCLabel {
+                    anchors.horizontalCenter: label3.horizontalCenter
+                    text:   mapThrottleFact ? (mapThrottleFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapThrottleFact.valueString) : ""
+                }
+            }
         }
 
-        VehicleSummaryRow {
-            labelText: qsTr("仰俯:")//"Pitch:"
-            valueText: mapPitchFact ? (mapPitchFact.value === 0 ? "Setup required" : mapPitchFact.valueString) : ""
+        Rectangle {
+            height:                 2
+            width:                  parent.width
+            color:                  qgcPal.buttonHighlight
         }
+//        VehicleSummaryRow {
+//            labelText: qsTr("横滚:")//"Roll:"
+//            valueText: mapRollFact ? (mapRollFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapRollFact.valueString) : ""
+//        }
 
-        VehicleSummaryRow {
-            labelText: qsTr("航角:")//"Yaw:"
-            valueText: mapYawFact ? (mapYawFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapYawFact.valueString) : ""
-        }
+//        VehicleSummaryRow {
+//            labelText: qsTr("仰俯:")//"Pitch:"
+//            valueText: mapPitchFact ? (mapPitchFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapPitchFact.valueString) : ""
+//        }
 
-        VehicleSummaryRow {
-            labelText: qsTr("油门:")//"Throttle:"
-            valueText: mapThrottleFact ? (mapThrottleFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapThrottleFact.valueString) : ""
-        }
+//        VehicleSummaryRow {
+//            labelText: qsTr("航角:")//"Yaw:"
+//            valueText: mapYawFact ? (mapYawFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapYawFact.valueString) : ""
+//        }
+
+//        VehicleSummaryRow {
+//            labelText: qsTr("油门:")//"Throttle:"
+//            valueText: mapThrottleFact ? (mapThrottleFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapThrottleFact.valueString) : ""
+//        }
 
         VehicleSummaryRow {
             labelText: qsTr("附翼:")//"Flaps:"

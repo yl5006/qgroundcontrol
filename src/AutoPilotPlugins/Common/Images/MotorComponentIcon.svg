@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 72 72" enable-background="new 0 0 72 72" xml:space="preserve">
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
 <g>
-	<rect x="3.6" y="31.831" fill="#FFFFFF" width="64.8" height="33.188"/>
-	<rect x="13.549" y="65.019" fill="#FFFFFF" width="44.902" height="5.256"/>
-	<rect x="13.549" y="27.641" fill="#FFFFFF" width="44.902" height="5.256"/>
-	<rect x="31.515" y="20.234" fill="#FFFFFF" width="8.97" height="7.73"/>
-	<path fill="#FFFFFF" d="M39.439,3.34l9.255,17.678H36H23.305L32.561,3.34C33.688,1.186,38.312,1.186,39.439,3.34z"/>
+	<polygon fill="#FFFFFF" points="0,63.6 7.4,73.5 7.4,34 0,43.8 	"/>
+	<rect x="33.3" y="48.6" fill="#FFFFFF" width="44.4" height="10.2"/>
+	<path fill="#FFFFFF" d="M33.3,21.6v9.9h44.4v-9.9h-2.5l4.9-4.9V4.3c0-1.4-1.1-2.5-2.5-2.5H33.3c-1.4,0-2.5,1.1-2.5,2.5v12.3
+		l4.9,4.9H33.3z"/>
+	<rect x="33.3" y="34.9" fill="#FFFFFF" width="44.4" height="10.2"/>
+	<path fill="#FFFFFF" d="M28.4,21.6H16c-2.7,0-4.9,2.2-4.9,4.9v54.3c0,2.7,2.2,4.9,4.9,4.9h12.3V21.6z"/>
+	<path fill="#FFFFFF" d="M95.1,21.6H82.7v64.2h12.3c2.7,0,4.9-2.2,4.9-4.9V26.5C100,23.8,97.8,21.6,95.1,21.6z"/>
+	<rect x="33.3" y="62.3" fill="#FFFFFF" width="44.4" height="10.2"/>
+	<rect x="33.3" y="75.9" fill="#FFFFFF" width="44.4" height="9.9"/>
+	<path fill="#FFFFFF" d="M70.4,88.3H40.7c-1.9,4.8-6.9,9.9-12.3,9.9h54.3C77.3,98.1,72.9,93.9,70.4,88.3z"/>
 </g>
 </svg>

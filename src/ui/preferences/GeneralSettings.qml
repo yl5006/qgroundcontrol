@@ -21,10 +21,9 @@ import QGroundControl.ScreenTools           1.0
 import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.Palette               1.0
 
-QGCView {
+Rectangle {
     id:                 qgcView
-    viewPanel:          panel
-    color:              "#35414d"// qgcPal.buttonHighlight//"#35414d"//qgcPal.windowShadeDark//qgcPal.window
+    color:              qgcPal.window//"#35414d"qgcPal.windowShadeDark//
     anchors.fill:       parent
     anchors.margins:    ScreenTools.defaultFontPixelWidth
 
@@ -33,19 +32,23 @@ QGCView {
 
     QGCPalette { id: qgcPal }
 
-    QGCViewPanel {
-        id:             panel
-        anchors.fill:   parent
+//    QGCViewPanel {
+//        id:                 panel
+//       // height:             settingsColumn.height
+//        anchors.fill:       parent
+
         QGCFlickable {
             clip:               true
             anchors.fill:       parent
             contentHeight:      settingsColumn.height
             contentWidth:       settingsColumn.width
+
             Column {
                 id:                 settingsColumn
                 anchors.margins:    ScreenTools.defaultFontPixelWidth
                 spacing:            ScreenTools.defaultFontPixelHeight / 2
-
+                width:              parent.width*0.5
+                anchors.horizontalCenter: parent.horizontalCenter
                 //-----------------------------------------------------------------
                 //-- Base UI Font Point Size
                 Row {
@@ -438,7 +441,7 @@ QGCView {
 
                     FactComboBox {
                         id:         offlineVehicleCombo
-                        width:      offlineTypeCombo.width
+                        width:      ScreenTools.defaultFontPixelWidth * 18//offlineTypeCombo.width
                         fact:       QGroundControl.offlineEditingVehicleType
                         indexModel: false
                     }
@@ -457,7 +460,7 @@ QGCView {
 
                     FactTextField {
                         id:                 cruiseSpeedField
-                        width:              offlineTypeCombo.width
+                        width:              ScreenTools.defaultFontPixelWidth * 18//offlineTypeCombo.width
                         fact:               QGroundControl.offlineEditingCruiseSpeed
                         enabled:            true
                     }
@@ -477,13 +480,14 @@ QGCView {
 
                     FactTextField {
                         id:                 hoverSpeedField
-                        width:              offlineTypeCombo.width
+                        width:              ScreenTools.defaultFontPixelWidth * 18//offlineTypeCombo.width
                         fact:               QGroundControl.offlineEditingHoverSpeed
                         enabled:            true
                     }
                 }
                 QGCCircleProgress{
-                       value:    0.2
+                       width:    60
+                       value:    0.4
                 }
 
                 Item {
@@ -492,5 +496,5 @@ QGCView {
                 }
             }
         }
-    } // QGCViewPanel
+ //   } // QGCViewPanel
 } // QGCView

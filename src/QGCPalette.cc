@@ -61,7 +61,7 @@ QColor QGCPalette::_buttonText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] 
 QColor QGCPalette::_buttonHighlight[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#e4e4e4"), QColor("#33b5e5") },
 //    { QColor(0x58, 0x58, 0x58), QColor(237, 235, 51) },
-    { QColor(46, 187, 217), QColor(46, 187, 217) },
+    { QColor(47, 160, 175), QColor(47, 160, 175) },
 };
 
 QColor QGCPalette::_buttonHighlightText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {

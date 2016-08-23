@@ -19,7 +19,7 @@ import QGroundControl.FactSystem 1.0
 import QGroundControl.FactControls 1.0
 import QGroundControl.Controls 1.0
 import QGroundControl.Palette 1.0
-
+import QGroundControl.ScreenTools           1.0
 FactPanel {
     id:             panel
     anchors.fill:   parent
@@ -34,20 +34,59 @@ FactPanel {
 
     Column {
         anchors.fill:       parent
-
-        VehicleSummaryRow {
-            labelText: qsTr("满电压")//"Battery Full:"
-            valueText: batVChargedFact ? batVChargedFact.valueString + " " + batVChargedFact.units : ""
+        Row{
+            spacing:            ScreenTools.defaultFontPointSize*5
+            Column {
+                spacing:            ScreenTools.defaultFontPointSize*0.5
+                QGCLabel {
+                    id:     label
+                    text:   qsTr("满电压")//"Battery Full:"
+                    color:  qgcPal.buttonHighlight
+                }
+                QGCLabel {
+                    anchors.horizontalCenter: label.horizontalCenter
+                    text:   batVChargedFact ? batVChargedFact.valueString + " " + batVChargedFact.units : ""
+                }
+            }
+            Column {
+                spacing:            ScreenTools.defaultFontPointSize*0.5
+                QGCLabel {
+                    id:     label1
+                    text:   qsTr("空电压")//"Battery Empty:"
+                    color:  qgcPal.buttonHighlight
+                }
+                QGCLabel {
+                    anchors.horizontalCenter: label1.horizontalCenter
+                    text:  batVEmptyFact ? batVEmptyFact.valueString + " " + batVEmptyFact.units : ""
+                }
+            }
+            Column {
+                spacing:            ScreenTools.defaultFontPointSize*0.5
+                QGCLabel {
+                    id:     label2
+                    text:   qsTr("电芯数")//"Number of Cells:"
+                    color:  qgcPal.buttonHighlight
+                }
+                QGCLabel {
+                    anchors.horizontalCenter: label2.horizontalCenter
+                    text:   batCellsFact ? batCellsFact.valueString : ""
+                }
+            }
         }
 
-        VehicleSummaryRow {
-            labelText: qsTr("空电压")//"Battery Empty:"
-            valueText: batVEmptyFact ? batVEmptyFact.valueString + " " + batVEmptyFact.units : ""
-        }
+//        VehicleSummaryRow {
+//            labelText: qsTr("满电压")//"Battery Full:"
+//            valueText: batVChargedFact ? batVChargedFact.valueString + " " + batVChargedFact.units : ""
+//        }
 
-        VehicleSummaryRow {
-            labelText: qsTr("电芯数")//"Number of Cells:"
-            valueText: batCellsFact ? batCellsFact.valueString : ""
-        }
+//        VehicleSummaryRow {
+//            labelText: qsTr("空电压")//"Battery Empty:"
+//            valueText: batVEmptyFact ? batVEmptyFact.valueString + " " + batVEmptyFact.units : ""
+//        }
+
+//        VehicleSummaryRow {
+//            labelText: qsTr("电芯数")//"Number of Cells:"
+//            valueText: batCellsFact ? batCellsFact.valueString : ""
+//        }
     }
 }

@@ -7,12 +7,7 @@ import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 
 Button {
-    property bool   select:  true                                    ///< true: setup complete indicator shows as completed
-    property color  selectcolor:       "#000000"                             ///< true: show setup complete indicator
-    property color  unselectcolor:  "#000000"
     property string imageResource:  "/qmlimages/subMenuButtonImage.png"     ///< Button image
-
-    text: "Button"  ///< Pass in your own button text
 
     checkable:      true
     implicitHeight: ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 3.5 : ScreenTools.defaultFontPixelHeight * 2.5
@@ -24,12 +19,12 @@ Button {
             id:                 qgcPal
         }
 
-        property bool showHighlight: control.pressed | control.checked
+        property bool showHighlight: control.pressed
 
         background: Rectangle {
             id:     innerRect
     //        color:  showHighlight ? qgcPal.buttonHighlight : qgcPal.windowShade
-
+            color:  "transparent"
     //        implicitWidth: titleBar.x + titleBar.contentWidth + ScreenTools.defaultFontPixelWidth
 
             QGCColoredImage {
@@ -37,17 +32,8 @@ Button {
                 anchors.fill:           parent
                 fillMode:               Image.PreserveAspectFit
                 smooth:                 true
-                color:                  select ?
+                color:                  "white"//showHighlight ? qgcPal.buttonText : qgcPal.buttonHighlightText
                 source:                 control.imageResource
-            }
-
-            QGCLabel {
-                id:                     title
-                anchors.horizontalCenter: image.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                verticalAlignment:      TextEdit.AlignVCenter
-                color:                  showHighlight ? qgcPal.buttonHighlightText : qgcPal.buttonText
-                text:                   control.text
             }
         }
 

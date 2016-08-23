@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -34,7 +34,7 @@ QString APMSafetyComponent::description(void) const
 
 QString APMSafetyComponent::iconResource(void) const
 {
-    return QStringLiteral("/qmlimages/SafetyComponentIcon.png");
+    return QStringLiteral("/qmlimages/SafetyComponentIcon.svg");
 }
 
 bool APMSafetyComponent::requiresSetup(void) const

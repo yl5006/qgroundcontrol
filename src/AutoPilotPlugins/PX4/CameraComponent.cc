@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -34,7 +34,7 @@ QString CameraComponent::description(void) const
 
 QString CameraComponent::iconResource(void) const
 {
-    return "/qmlimages/CameraComponentIcon.png";
+    return "/qmlimages/CameraComponentIcon.svg";
 }
 
 bool CameraComponent::requiresSetup(void) const

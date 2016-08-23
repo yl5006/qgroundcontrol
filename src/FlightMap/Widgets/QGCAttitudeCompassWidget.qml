@@ -25,6 +25,7 @@ Item {
     property bool active:       false  ///< true: actively connected to data provider, false: show inactive control
     property real rollAngle :   _defaultRollAngle
     property real pitchAngle:   _defaultPitchAngle
+    property real heading:      0
     property bool showPitch:    true
     property real size
 
@@ -71,7 +72,7 @@ Item {
             transform: Rotation {
                 origin.x:       root.width  / 2
                 origin.y:       root.height / 2
-                angle:          -_rollAngle
+                angle:          -heading//-_rollAngle
             }
         }
         //----------------------------------------------------
@@ -92,9 +93,21 @@ Item {
             anchors.centerIn:   parent
             source:             "/qmlimages/crossHair.svg"
             mipmap:             true
-            width:              size * 0.75
+            width:              size * 0.4
             sourceSize.width:   width
             fillMode:           Image.PreserveAspectFit
+        }
+        //-- Cross Hair
+        QGCLabel {
+            id:                 head
+            anchors.top:        parent.top
+            anchors.left:       parent.left
+            anchors.topMargin:   size*0.25
+            anchors.leftMargin:  size*0.5
+            horizontalAlignment: Text.AlignRight;
+            text:               active ? heading.toFixed(0)+"°" :qsTr("OFF")
+            font.pointSize:     ScreenTools.defaultFontPixelHeight
+            font.family:        ScreenTools.demiboldFontFamily
         }
     }
 
