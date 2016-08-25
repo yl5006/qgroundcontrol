@@ -30,7 +30,7 @@ Item {
 
     //-- The point and pixel font size values are computed at runtime
 
-    property real defaultFontPointSize:     10
+    property real defaultFontPointSize:     12
 
     /// You can use this property to position ui elements in a screen resolution independant manner. Using fixed positioning values should not
     /// be done. All positioning should be done using anchors or a ratio of the defaultFontPixelHeight and defaultFontPixelWidth values. This way

@@ -289,7 +289,9 @@ Item {
         z:                  QGroundControl.zOrderTopMost
         Image {
             source:"/qmlimages/logo.svg"
-            height:     tbHeight//*1.15625
+            height:     tbHeight*0.8
+            width:      tbHeight*6*0.8
+            mipmap:             true
             anchors.centerIn: parent
             fillMode: Image.PreserveAspectFit
         }
@@ -297,7 +299,7 @@ Item {
                 id: myAn1
                 to:  -tbHeight
                 duration: 1000
-                running: QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && !QGroundControl.multiVehicleManager.activeVehicle.missingParameters
+                running: vehicleConnectionLost||(QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && !QGroundControl.multiVehicleManager.activeVehicle.missingParameters)
             }
         NumberAnimation on y{
                 id: myAn2
@@ -338,16 +340,41 @@ Item {
         }
     }
     RightToolBar {
-            id:                     rightBar
-            width:                  mainWindow.tbHeight*2
-            height:                 mainWindow.tbHeight*5
-            mainWindow:             mainWindow
-            anchors.left:           parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            onShowPlanView:         mainWindow.showPlanView()
-            onShowFlyView:          mainWindow.showFlyView()
-            onShowSetupView:        mainWindow.showSetupView()
-            z:                      QGroundControl.zOrderTopMost
+        id:                     rightBar
+        width:                  mainWindow.tbHeight*2
+        height:                 mainWindow.tbHeight*5
+        mainWindow:             mainWindow
+        anchors.left:           parent.left
+        anchors.leftMargin:     _barMargin
+        anchors.verticalCenter: parent.verticalCenter
+        onShowPlanView:         mainWindow.showPlanView()
+        onShowFlyView:          mainWindow.showFlyView()
+        onShowSetupView:        mainWindow.showSetupView()
+        z:                      QGroundControl.zOrderTopMost
+        state:                  "Init"
+        property real   _barMargin:     0
+        states: [
+            State {
+                name: "Shown"
+                PropertyChanges { target: showAnimation; running: true  }
+            },
+            State {
+                name: "Hidden"
+                PropertyChanges { target: hideAnimation; running: true  }
+            }
+        ]
+        NumberAnimation on _barMargin{
+            id:             showAnimation
+            duration:       150
+            easing.type:    Easing.InOutQuad
+            to:             0
+        }
+        NumberAnimation on _barMargin{
+            id:             hideAnimation
+            duration:       150
+            easing.type:    Easing.InOutQuad
+            to:             -mainWindow.tbHeight*1.6
+        }
     }
     FlightMap {
         id:             initMap
@@ -370,11 +397,13 @@ Item {
 
     Loader {
         id:                 setupViewLoader
-        anchors.left:       rightBar.right
+        anchors.left:       parent.left
+        anchors.leftMargin: mainWindow.tbHeight*2
         anchors.right:      parent.right
-        anchors.top:        toolBar.bottom
+        anchors.top:        toolBar.visible?toolBar.bottom:logo.bottom
         anchors.bottom:     parent.bottom
         visible:            false
+
     }
 
 

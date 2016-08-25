@@ -121,7 +121,7 @@ Rectangle {
 
     function showGeneralPanel()
     {
-        panelLoader.source = "GeneralSettings.qml";
+        panelLoader.source = "SystemSettings.qml";
         divider.visible=true
     }
     function showLinksPanel()
@@ -335,7 +335,7 @@ Rectangle {
             height:         width
             imageResource:  "/qmlimages/tool-01.svg"
             exclusiveGroup: setupButtonGroup
-            text:           "General"
+            text:           qsTr("系统")//"General"
             onClicked:      showGeneralPanel()
         }
         SubMenuButtonModify {
@@ -344,7 +344,7 @@ Rectangle {
             width:          _defaultTextHeight*8
             height:         width
             exclusiveGroup: setupButtonGroup
-            text:           "Comm Links"
+            text:           qsTr("连接")//"Comm Links"
             onClicked:      showLinksPanel()
         }
         SubMenuButtonModify {
@@ -353,7 +353,7 @@ Rectangle {
             width:          _defaultTextHeight*8
             height:         width
             exclusiveGroup: setupButtonGroup
-            text:           "Offline Maps"
+            text:           qsTr("离线地图")//"Offline Maps"
             onClicked:      showOfflineMapsPanel()
         }
         SubMenuButtonModify {
@@ -362,7 +362,7 @@ Rectangle {
              height:         width
              imageResource:  "/qmlimages/FirmwareUpgradeIcon.svg"
              exclusiveGroup: setupButtonGroup
-             text:           "Firmware"
+             text:           qsTr("固件下载")//"Firmware"
              onClicked: showFirmwarePanel()
        }
        SubMenuButtonModify {
@@ -410,6 +410,7 @@ Rectangle {
     Rectangle {
         id:                     divider
         anchors.fill:           parent
+        anchors.margins:        _defaultTextHeight
         visible:                false
         color:                  qgcPal.windowShade
         z:                       1

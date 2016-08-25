@@ -28,7 +28,7 @@ import QGroundControl.Controllers           1.0
 
 Rectangle {
     id:         rightbar
-    color:      Qt.rgba(0,0,0,0.5)
+    color:      "transparent"//Qt.rgba(0,0,0,0.5)
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
     property var  activeVehicle:        QGroundControl.multiVehicleManager.activeVehicle
@@ -87,17 +87,37 @@ Rectangle {
         flyButton.checked = true
     }
 
+    Image{
+        anchors.fill:   parent
+        fillMode:       Image.PreserveAspectFit
+        source:          "/qmlimages/sidebar.svg"
+    }
+    Image {
+        id:         hide
+        source:     (rightbar.state=="Shown")?"/qmlimages/hidebar.svg":"/qmlimages/showbar.svg"
+        width:      mainWindow.tbHeight*0.4
+        height:     width
+        anchors.verticalCenter: rightbar.verticalCenter
+        anchors.right:          rightbar.right
+        fillMode: Image.PreserveAspectFit
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                rightbar.state = (rightbar.state=="Hidden")?"Shown":"Hidden"
+            }
+        }
+    }
     //---------------------------------------------
     // Right
     Column {
         id:                     viewRow
         spacing:                mainWindow.tbSpacing
-        anchors.top:            parent.top
-        anchors.left:           parent.left
+//        anchors.top:            parent.top
+        anchors.left:           parent.left   
         anchors.right:          parent.right
-        anchors.bottom:         parent.bottom
+//        anchors.bottom:         parent.bottom
         ExclusiveGroup { id: mainActionGroup }
-
+        anchors.verticalCenter: parent.verticalCenter
         QGCToolBarButton {
             id:                 flyButton
             height:             mainWindow.tbButtonWidth
@@ -124,7 +144,7 @@ Rectangle {
             anchors.left:        parent.left
             anchors.right:       parent.right
             exclusiveGroup:      mainActionGroup
-            source:             "/qmlimages/Gears.svg"
+            source:             "/qmlimages/Hamburger.svg"
             onClicked:          rightbar.showSetupView()
         }
         //-------------------------------------------------------------------------
@@ -135,6 +155,7 @@ Rectangle {
             height:     mainWindow.tbButtonWidth
             anchors.left:        parent.left
             anchors.right:       parent.right
+            anchors.rightMargin:    ScreenTools.defaultFontPixelHeight/2*3
        //     visible:    activeVehicle && activeVehicle.messageCount
             Item {
                 id:                 criticalMessage

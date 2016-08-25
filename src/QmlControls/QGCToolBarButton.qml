@@ -45,16 +45,17 @@ Item {
     Rectangle {
         anchors.rightMargin:    _topBottomMargins
         anchors.leftMargin:     _topBottomMargins
-//        anchors.bottom: parent.bottom
-//        height:         _topBottomMargins * 0.25
-//       color:          qgcPal.buttonHighlight
+//      anchors.bottom: parent.bottom
+//      height:         _topBottomMargins * 0.25
+//      color:          qgcPal.buttonHighlight
         anchors.fill:   parent
-        visible:        checked
+        visible:        checked&&logo
         color:          (checked ? "#e4e428" : parent.color)
     }
     QGCColoredImage {
         id:                     icon
         anchors.left:           parent.left
+        anchors.rightMargin:    _topBottomMargins*3
         anchors.right:          parent.right
         anchors.topMargin:      _topBottomMargins
         anchors.top:            parent.top
@@ -75,7 +76,7 @@ Item {
 //    }
 
     MouseArea {
-        anchors.fill: parent
+        anchors.fill: icon
         onClicked: {
             checked = true
             _root.clicked()

@@ -116,6 +116,12 @@
         <file alias="ZoomMinus.svg">src/FlightMap/Images/ZoomMinus.svg</file>
         <file alias="ArrowHead.svg">src/FlightMap/Images/ArrowHead.svg</file>
         <file alias="Help.svg">src/FlightMap/Images/Help.svg</file>
+	<file alias="Returnhome.svg">src/FlightMap/Images/Returnhome.svg</file>
+	<file alias="lock.svg">src/FlightMap/Images/lock.svg</file>
+	<file alias="unlock.svg">src/FlightMap/Images/unlock.svg</file>
+	<file alias="takeoff.svg">src/FlightMap/Images/takeoff.svg</file>
+	<file alias="landing.svg">src/FlightMap/Images/landing.svg</file>
+	<file alias="PauseUav.svg">src/FlightMap/Images/PauseUav.svg</file>
         <file alias="HelpBlack.svg">src/FlightMap/Images/HelpBlack.svg</file>
         <file alias="MapAddMission.svg">src/FlightMap/Images/MapAddMission.svg</file>
         <file alias="MapAddMissionBlack.svg">src/FlightMap/Images/MapAddMissionBlack.svg</file>
@@ -140,6 +146,9 @@
         <file alias="Hamburger.svg">src/ui/toolbar/Images/Hamburger.svg</file>
         <file alias="Megaphone.svg">src/ui/toolbar/Images/Megaphone.svg</file>
         <file alias="PaperPlane.svg">src/ui/toolbar/Images/PaperPlane.svg</file>
+	<file alias="sidebar.svg">src/ui/toolbar/Images/sidebar.svg</file>
+	<file alias="showbar.svg">src/ui/toolbar/Images/showbar.svg</file>
+	<file alias="hidebar.svg">src/ui/toolbar/Images/hidebar.svg</file>
         <file alias="Plan.svg">src/ui/toolbar/Images/Plan.svg</file>
         <file alias="logo.svg">src/ui/toolbar/Images/logo.svg</file>
         <file alias="Quad.svg">src/ui/toolbar/Images/Quad.svg</file>
@@ -154,6 +163,7 @@
         <file alias="Signal100.svg">src/ui/toolbar/Images/Signal100.svg</file>
         <file alias="TelemRSSI.svg">src/ui/toolbar/Images/TelemRSSI.svg</file>
         <file alias="Yield.svg">src/ui/toolbar/Images/Yield.svg</file>
+	<file alias="title.svg">src/ui/toolbar/Images/title.svg</file>
         <file alias="CogWheel.svg">src/MissionManager/CogWheel.svg</file>
 	<file alias="StationMode.svg">src/AutoPilotPlugins/Common/Images/StationMode.svg</file>
 	<file alias="APMode.svg">src/AutoPilotPlugins/Common/Images/APMode.svg</file>
@@ -280,6 +290,9 @@
     </qresource>
     <qresource prefix="/AutoPilotPlugins/PX4">
         <file alias="AirframeFactMetaData.xml">src/AutoPilotPlugins/PX4/AirframeFactMetaData.xml</file>
+    </qresource>
+   <qresource prefix="/OpencvStreaming">
+        <file alias="haarcascade_frontalface_alt.xml">src/OpencvStreaming/haarcascade_frontalface_alt.xml</file>
     </qresource>
     <qresource prefix="/AutoPilotPlugins/APM">
         <file alias="APMAirframeFactMetaData.xml">src/AutoPilotPlugins/APM/APMAirframeFactMetaData.xml</file>

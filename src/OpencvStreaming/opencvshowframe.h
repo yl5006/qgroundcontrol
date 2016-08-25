@@ -71,7 +71,7 @@ private:
     Mat  doActions(Mat &img);
 //    OpencvFaceRecognizer *fr;
 //    OpenCVfaceDetectAction *f;
-    Tracker *f;
+    OpenCVfaceDetectAction *f;
     QImage::Format format(int depth, int nChannels);
 
 

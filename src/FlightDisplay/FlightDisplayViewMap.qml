@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -111,9 +111,9 @@ FlightMap {
     }    
 
     MapScale {
-        anchors.bottomMargin:   ScreenTools.defaultFontPixelHeight * (0.66)
+        anchors.topMargin:      ScreenTools.defaultFontPixelHeight * 5
         anchors.rightMargin:    ScreenTools.defaultFontPixelHeight * (0.33)
-        anchors.bottom:         parent.bottom
+        anchors.top:            parent.top
         anchors.right:          parent.right
         z:                      QGroundControl.zOrderWidgets
         mapControl:             flightMap

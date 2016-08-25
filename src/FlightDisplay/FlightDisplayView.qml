@@ -119,7 +119,7 @@ QGCView {
     onActiveVehicleJoystickEnabledChanged: px4JoystickCheck()
 
     Component.onCompleted: {
-        widgetsLoader.source = "FlightDisplayViewWidgets.qml"
+        widgetsLoader.source = "FlightDisplayViewWidgetsBottom.qml"
         setStates()
         px4JoystickCheck()
     }
@@ -192,7 +192,7 @@ QGCView {
         OpenCVcamera {
             id:opencvCamera
             m_cameraId: 1
-            m_run: true
+            m_run: false
 
             //width: 320
             //height: 240
@@ -204,7 +204,7 @@ QGCView {
             anchors.bottom: _panel.bottom
             id:_flightVideo
             m_capture: opencvCamera
-            m_frameRate: 24
+            m_frameRate: 16
             m_run: true
             z:               _mainIsMap ? _panel.z + 2 : _panel.z + 1
             width:          !_mainIsMap ? _panel.width  : pipSize

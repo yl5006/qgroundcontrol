@@ -21,33 +21,64 @@ import QGroundControl.ScreenTools           1.0
 import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.Palette               1.0
 
-QGCView {
-    id:                 qgcView
-    viewPanel:          panel
-    color:              qgcPal.window
-    anchors.fill:       parent
-    anchors.margins:    ScreenTools.defaultFontPixelWidth
-
-    property Fact _percentRemainingAnnounce:    QGroundControl.batteryPercentRemainingAnnounce
-    property real _editFieldWidth:              ScreenTools.defaultFontPixelWidth * 15
-
+SetupPage {
+    id:             generalPage
+    pageComponent:  pageComponent
     QGCPalette { id: qgcPal }
 
-    QGCViewPanel {
-        id:             panel
-        anchors.fill:   parent
+    Component {
+        id: pageComponent
+        Item {
+            width:  Math.max(availableWidth, settingsColumn.width)
+            height: settingsColumn.height
 
-        QGCFlickable {
-            clip:               true
-            anchors.fill:       parent
-            contentHeight:      settingsColumn.height
-            contentWidth:       settingsColumn.width
+            property Fact _percentRemainingAnnounce:    QGroundControl.batteryPercentRemainingAnnounce
+            property real _editFieldWidth:              ScreenTools.defaultFontPixelWidth * 15
 
+            QGCCircleProgress{
+                id:                 setcircle
+                anchors.left:       parent.left
+                anchors.top:        parent.top
+                anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+                anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+                width:              ScreenTools.defaultFontPixelHeight*5
+                value:              0
+            }
+            QGCColoredImage {
+                id:         setimg
+                height:     ScreenTools.defaultFontPixelHeight*2.5
+                width:      height
+                sourceSize.width: width
+                source:     "/qmlimages/tool-01.svg"
+                fillMode:   Image.PreserveAspectFit
+                color:      qgcPal.text
+                anchors.horizontalCenter:setcircle.horizontalCenter
+                anchors.verticalCenter: setcircle.verticalCenter
+            }
+            QGCLabel {
+                    id:             idset
+                    anchors.left:   setimg.left
+                    anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+                    text:           qsTr("系统设置")//"Systemseting"
+                    font.pointSize: ScreenTools.mediumFontPointSize
+                    font.bold:              true
+                    color:          qgcPal.text
+                    anchors.verticalCenter: setimg.verticalCenter
+                }
+            Image {
+                source:    "/qmlimages/title.svg"
+                width:      idset.width+ScreenTools.defaultFontPixelHeight*4
+                height:     ScreenTools.defaultFontPixelHeight*3
+                anchors.verticalCenter: setcircle.verticalCenter
+                anchors.left:          setcircle.right
+                fillMode: Image.PreserveAspectFit
+            }
             Column {
                 id:                 settingsColumn
-                anchors.margins:    ScreenTools.defaultFontPixelWidth
+                anchors.top:        setimg.bottom
+                anchors.margins:    ScreenTools.defaultFontPixelWidth*2
                 spacing:            ScreenTools.defaultFontPixelHeight / 2
-
+                anchors.horizontalCenter: parent.horizontalCenter
                 //-----------------------------------------------------------------
                 //-- Base UI Font Point Size
                 Row {
@@ -69,7 +100,7 @@ QGCView {
                             width:  height
                             height: baseFontEdit.height
                             text:   "-"
-
+                            _showHighlight : true
                             onClicked: {
                                 if(ScreenTools.defaultFontPointSize > 6) {
                                     QGroundControl.baseFontPointSize = QGroundControl.baseFontPointSize - 1
@@ -191,7 +222,7 @@ QGCView {
                 //-----------------------------------------------------------------
                 //-- Audio preferences
                 QGCCheckBox {
-                    text:       qsTr("Mute all audio output")
+                    text:       qsTr("消除音频输出")//"Mute all audio output"
                     checked:    QGroundControl.isAudioMuted
                     onClicked: {
                         QGroundControl.isAudioMuted = checked
@@ -201,7 +232,7 @@ QGCView {
                 //-- Prompt Save Log
                 QGCCheckBox {
                     id:         promptSaveLog
-                    text:       qsTr("Prompt to save Flight Data Log after each flight")
+                    text:       qsTr("在每次飞行中存储飞行日志")//"Prompt to save Flight Data Log after each flight"
                     checked:    QGroundControl.isSaveLogPrompt
                     visible:    !ScreenTools.isMobile
                     onClicked: {
@@ -211,7 +242,7 @@ QGCView {
                 //-----------------------------------------------------------------
                 //-- Prompt Save even if not armed
                 QGCCheckBox {
-                    text:       qsTr("Prompt to save Flight Data Log even if vehicle was not armed")
+                    text:       qsTr("即使未解锁也存储飞行日志")//"Prompt to save Flight Data Log even if vehicle was not armed"
                     checked:    QGroundControl.isSaveLogPromptNotArmed
                     visible:    !ScreenTools.isMobile
                     enabled:    promptSaveLog.checked
@@ -223,7 +254,7 @@ QGCView {
                 //-- Clear settings
                 QGCCheckBox {
                     id:         clearCheck
-                    text:       qsTr("Clear all settings on next start")
+                    text:       qsTr("每次启动清除配置文件")//"Clear all settings on next start"
                     checked:    false
                     onClicked: {
                         checked ? clearDialog.visible = true : QGroundControl.clearDeleteAllSettingsNextBoot()
@@ -233,8 +264,8 @@ QGCView {
                         visible:    false
                         icon:       StandardIcon.Warning
                         standardButtons: StandardButton.Yes | StandardButton.No
-                        title:      qsTr("Clear Settings")
-                        text:       qsTr("All saved settings will be reset the next time you start QGroundControl. Is this really what you want?")
+                        title:      qsTr("清除设置")//"Clear Settings"
+                        text:       qsTr("所有保持设置会在下次重启都清除,你确认要这样做？")//"All saved settings will be reset the next time you start QGroundControl. Is this really what you want?"
                         onYes: {
                             QGroundControl.deleteAllSettingsNextBoot()
                             clearDialog.visible = false
@@ -325,13 +356,13 @@ QGCView {
                     QGCLabel {
                         width:              mapProvidersLabel.width
                         anchors.baseline:   paletteCombo.baseline
-                        text:               qsTr("Style:")
+                        text:   qsTr("主题")//"Style"
                     }
 
                     QGCComboBox {
                         id:             paletteCombo
                         width:          _editFieldWidth
-                        model:          [ qsTr("Indoor"), qsTr("Outdoor") ]
+                        model: [ qsTr("黑色"), qsTr("亮色") ]//model: [ "Indoor", "Outdoor" ]
                         currentIndex:   QGroundControl.isDarkStyle ? 0 : 1
 
                         onActivated: {
@@ -349,28 +380,28 @@ QGCView {
                 }
 
                 //-----------------------------------------------------------------
-                //-- Autoconnect settings
+                //            -- Autoconnect settings  Maybe here do not use (yaoling)
                 QGCLabel { text: "Autoconnect to the following devices:" }
 
                 Row {
                     spacing: ScreenTools.defaultFontPixelWidth * 2
 
                     QGCCheckBox {
-                        text:       qsTr("Pixhawk")
+                        text:       qsTr("Ewt2.0")//qsTr("Pixhawk")
                         visible:    !ScreenTools.isiOS
                         checked:    QGroundControl.linkManager.autoconnectPixhawk
                         onClicked:  QGroundControl.linkManager.autoconnectPixhawk = checked
                     }
 
                     QGCCheckBox {
-                        text:       qsTr("SiK Radio")
+                        text:       qsTr("EWT Radio")//qsTr("SiK Radio")
                         visible:    !ScreenTools.isiOS
                         checked:    QGroundControl.linkManager.autoconnect3DRRadio
                         onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked
                     }
 
                     QGCCheckBox {
-                        text:       qsTr("PX4 Flow")
+                        text:       qsTr("EWT Flow")//qsTr("PX4 Flow")
                         visible:    !ScreenTools.isiOS
                         checked:    QGroundControl.linkManager.autoconnectPX4Flow
                         onClicked:  QGroundControl.linkManager.autoconnectPX4Flow = checked
@@ -397,7 +428,7 @@ QGCView {
                 //-----------------------------------------------------------------
                 //-- Virtual joystick settings
                 QGCCheckBox {
-                    text:       qsTr("Virtual Joystick")
+                    text:       qsTr("虚拟遥控")//"Virtual Joystick"
                     checked:    QGroundControl.virtualTabletJoystick
                     onClicked:  QGroundControl.virtualTabletJoystick = checked
                 }
@@ -411,23 +442,23 @@ QGCView {
                 //-- Offline mission editing settings
 
                 QGCLabel { text: "Offline mission editing" }
+                //              only use px4 fly stack(yaoling)
+                //                Row {
+                //                    spacing: ScreenTools.defaultFontPixelWidth
 
-                Row {
-                    spacing: ScreenTools.defaultFontPixelWidth
+                //                    QGCLabel {
+                //                        text:               qsTr("Firmware:")
+                //                        width:              hoverSpeedLabel.width
+                //                        anchors.baseline:   offlineTypeCombo.baseline
+                //                    }
 
-                    QGCLabel {
-                        text:               qsTr("Firmware:")
-                        width:              hoverSpeedLabel.width
-                        anchors.baseline:   offlineTypeCombo.baseline
-                    }
-
-                    FactComboBox {
-                        id:         offlineTypeCombo
-                        width:      ScreenTools.defaultFontPixelWidth * 18
-                        fact:       QGroundControl.offlineEditingFirmwareType
-                        indexModel: false
-                    }
-                }
+                //                    FactComboBox {
+                //                        id:         offlineTypeCombo
+                //                        width:      ScreenTools.defaultFontPixelWidth * 18
+                //                        fact:       QGroundControl.offlineEditingFirmwareType
+                //                        indexModel: false
+                //                    }
+                //                }
 
                 Row {
                     spacing: ScreenTools.defaultFontPixelWidth
@@ -440,7 +471,7 @@ QGCView {
 
                     FactComboBox {
                         id:         offlineVehicleCombo
-                        width:      offlineTypeCombo.width
+                        width:      ScreenTools.defaultFontPixelWidth * 18//offlineTypeCombo.width
                         fact:       QGroundControl.offlineEditingVehicleType
                         indexModel: false
                     }
@@ -459,7 +490,7 @@ QGCView {
 
                     FactTextField {
                         id:                 cruiseSpeedField
-                        width:              offlineTypeCombo.width
+                        width:              ScreenTools.defaultFontPixelWidth * 18//offlineTypeCombo.width
                         fact:               QGroundControl.offlineEditingCruiseSpeed
                         enabled:            true
                     }
@@ -479,10 +510,14 @@ QGCView {
 
                     FactTextField {
                         id:                 hoverSpeedField
-                        width:              offlineTypeCombo.width
+                        width:              ScreenTools.defaultFontPixelWidth * 18//offlineTypeCombo.width
                         fact:               QGroundControl.offlineEditingHoverSpeed
                         enabled:            true
                     }
+                }
+                QGCCircleProgress{
+                    width:    60
+                    value:    1
                 }
 
                 Item {

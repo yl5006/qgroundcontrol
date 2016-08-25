@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 Rectangle
 {
       property color  valuecolor:         "white"                          ///< true: show setup complete indicator
-      property color  ciclectcolor:       "blue"
+      property color  ciclectcolor:       "grey"
       property real   value:         0
       color:  "transparent"
       width:  80
@@ -25,7 +25,7 @@ Rectangle
          radius: outerRing.radius
          color: "transparent"
          border.color: ciclectcolor
-         border.width: 8
+         border.width: parent.width/9
          ConicalGradient
          {
             source: innerRing
@@ -35,7 +35,8 @@ Rectangle
                GradientStop { position: 0.00;  color: valuecolor }
                GradientStop { position: value; color: valuecolor }
                GradientStop { position: value+0.001; color: "transparent" }
-               GradientStop { position: 1.00;  color: "transparent" }
+               GradientStop { position: 1;  color: "transparent" }
+          //     GradientStop { position: 1;  color: ciclectcolor }
             }
          }
       }

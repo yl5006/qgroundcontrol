@@ -42,30 +42,30 @@ QGCView {
             contentHeight:  pageLoader.y + pageLoader.item.height
             clip:           true
 
-            Column {
-                id:             headingColumn
-                width:          setupPanel.width
-                spacing:        _margins
+//            Column {
+//                id:             headingColumn
+//                width:          setupPanel.width
+//                spacing:        _margins
 
-                QGCLabel {
-                    font.pointSize: ScreenTools.largeFontPointSize
-                    text:           vehicleComponent.name + " " + qsTr("Setup")
-                    visible:        !ScreenTools.isShortScreen
-                }
+//                QGCLabel {
+//                    font.pointSize: ScreenTools.largeFontPointSize
+//                    text:           vehicleComponent.name + " " + qsTr("Setup")
+//                    visible:        !ScreenTools.isShortScreen
+//                }
 
-                QGCLabel {
-                    anchors.left:   parent.left
-                    anchors.right:  parent.right
-                    wrapMode:       Text.WordWrap
-                    text:           vehicleComponent.description
-                    visible:        !ScreenTools.isShortScreen
-                }
-            }
+//                QGCLabel {
+//                    anchors.left:   parent.left
+//                    anchors.right:  parent.right
+//                    wrapMode:       Text.WordWrap
+//                    text:           vehicleComponent.description
+//                    visible:        !ScreenTools.isShortScreen
+//                }
+//            }
 
             Loader {
                 id:                 pageLoader
                 anchors.topMargin:  _margins
-                anchors.top:        headingColumn.bottom
+                anchors.top:        parent.top//headingColumn.bottom
 
             }
         }

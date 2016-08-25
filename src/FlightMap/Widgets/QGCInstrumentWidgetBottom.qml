@@ -53,57 +53,77 @@ Rectangle {
 
     QGCPalette { id: qgcPal }
 
-//    MouseArea {
-//        anchors.fill:       valuesspacer
-//        onClicked: _valuesWidget.showPicker()
-//    }
-//    Rectangle {
-//        id:                 valuesspacer
-////      anchors.topMargin:  _spacing//
-//        anchors.top:        parent.top
-//        anchors.bottom:     attitudeWidget.top
-//        anchors.bottomMargin:  _spacing
-//        width:              parent.width * 0.9
-//        radius:             _spacing*2
-//        color:              Qt.rgba(0,0,0,0.65)
-//        anchors.horizontalCenter: parent.horizontalCenter
-//    }
-//    ValuesWidget {
-//        id:                 _valuesWidget
-//        anchors.topMargin:  _spacing//
-//        anchors.top:        parent.top//_spacer1.bottom
-//        width:              parent.width
-//        qgcView:            instrumentPanel.qgcView
-//        textColor:          "white"//isSatellite ? "black" : "white"
-//        maxHeight:          _availableValueHeight
-//        visible:            _showCompass
-//    }
-    Rectangle {
-            id:                 souce
-            anchors.right:      parent.right
-            anchors.rightMargin: _topBottomMargin*4
-            anchors.bottom:     parent.bottom
-            width:              parent.height
-            height:             width
-            radius:             width/2
-            color:              Qt.rgba(255,255,255,1)
-            visible: false
-        }
     Rectangle {
             id:                 mask
-            anchors.right:      souce.right
+            anchors.right:      attitudeWidget.right
             anchors.bottom:     parent.bottom
             anchors.rightMargin: parent.height/2
             width:              parent.height*2
             height:             parent.height
-            color:              Qt.rgba(0,0,0,0.65)
-            visible: false
-        }
-    OpacityMask {
-        anchors.fill: mask
-        source: souce
-        maskSource: mask
+            color:              Qt.rgba(0, 0, 0, 0)
+            LinearGradient {
+                   anchors.fill: parent
+                   start:   Qt.point(0,0)
+                   end:     Qt.point(parent.width,0)
+                   gradient: Gradient {
+                       GradientStop { position: 0.0;    color:  Qt.rgba(0,0,0,0) }
+                       GradientStop { position: 1.0;    color:  Qt.rgba(0,0,0,0.75)}
+                   }
+             }
     }
+    QGCLabel {
+        id:                     lable
+        anchors.top:            mask.top
+        anchors.topMargin:      _spacing*3
+        anchors.left:           mask.left
+        anchors.leftMargin:     _spacing*12
+        horizontalAlignment:    Text.AlignHCenter
+        font.pointSize:         ScreenTools.defaultFontPixelHeight
+        font.family:            ScreenTools.demiboldFontFamily
+        font.bold:              true
+        color:                  "White"
+        text:                   qsTr("飞行数据")
+    }
+    QGCLabel {
+        id:                     picker
+        anchors.top:            mask.top
+        anchors.topMargin:      _spacing*3
+        anchors.left:           lable.right
+        anchors.leftMargin:     _spacing*12
+        horizontalAlignment:    Text.AlignHCenter
+        font.pointSize:         ScreenTools.defaultFontPixelHeight
+        font.family:            ScreenTools.demiboldFontFamily
+        font.bold:              true
+        color:                  "White"
+        text:                   "..."
+    }
+    MouseArea {
+            anchors.fill:       picker
+            onClicked: _valuesWidget.showPicker()
+        }
+    Rectangle {
+            id:                 space
+            anchors.topMargin:  _spacing*3
+            anchors.top:        lable.bottom
+            anchors.left:       mask.left
+            anchors.leftMargin: _spacing*9
+            height:             2
+            width:              parent.height
+            color:              "White"
+    }
+    ValuesWidgetBottom {
+        id:                 _valuesWidget
+        anchors.top:        space.bottom//_spacer1.bottom
+        anchors.topMargin:  _spacing*3
+        anchors.left:       mask.left
+        anchors.leftMargin: _spacing*12
+        width:              parent.height
+        qgcView:            instrumentPanel.qgcView
+        textColor:          "white"//isSatellite ? "black" : "white"
+        maxHeight:          parent.height
+        visible:            _showCompass
+    }
+
     QGCAttitudeCompassWidget {
         id:             attitudeWidget
         anchors.bottom:  parent.bottom
@@ -111,7 +131,7 @@ Rectangle {
         y:              _topBottomMargin
         size:            parent.height
         active:         instrumentPanel.active
-        visible:        false//!QGroundControl.virtualTabletJoystick
+        visible:        !QGroundControl.virtualTabletJoystick
         anchors.verticalCenter:  parent.verticalCenter
      }
 

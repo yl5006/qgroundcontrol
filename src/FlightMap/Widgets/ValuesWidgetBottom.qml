@@ -40,7 +40,7 @@ QGCFlickable {
     }
 
     function showPicker() {
-        qgcView.showDialog(propertyPicker, qsTr("Value Widget Setup"), qgcView.showDialogDefaultWidth, StandardButton.Ok)
+        qgcView.showDialog(propertyPicker,qsTr("显示值设置")/*"Value Widget Setup"*/, qgcView.showDialogDefaultWidth, StandardButton.Ok)
     }
 
     function listContains(list, value) {
@@ -51,41 +51,66 @@ QGCFlickable {
         }
         return false
     }
-
-    MouseArea {
-        anchors.fill:   parent
-        onClicked:      showPicker()
+    function getIcon(name) {
+        if(name== "altitudeRelative")
+           return "/qmlimages/altitudeRelative.svg"
+        if(name== "altitudeAMSL")
+           return "/qmlimages/altitudeAMSL.svg"
+        if(name== "climbRate")
+           return "/qmlimages/climbRate.svg"
+        if(name== "airSpeed")
+           return "/qmlimages/airSpeed.svg"
+        if(name== "groundSpeed")
+           return "/qmlimages/groundSpeed.svg"
+        if(name== "thrust")
+           return "/qmlimages/Throttle.svg"
     }
-
     Column {
         id:         _largeColumn
         width:      parent.width
-        spacing:    _margins
+        spacing:    _margins*1.2
 
         Repeater {
             model: _activeVehicle ? controller.largeValues : 0
 
-            Column {
-                width:  _largeColumn.width
-
+//           Column {
+             Row {
+                width:  _largeColumn.width*0.8//_largeColumn.width
+                spacing:    _margins*2
+                anchors.horizontalCenter:  _largeColumn.horizontalCenter
                 property Fact fact: _activeVehicle.getFact(modelData.replace("Vehicle.", ""))
                 property bool largeValue: _root.listContains(controller.altitudeProperties, fact.name)
 
+                Image{
+                    width:    ScreenTools.mediumFontPointSize * 1.5
+                    height:   ScreenTools.mediumFontPointSize * 1.5
+                    source:   getIcon(fact.name)
+                }
+
                 QGCLabel {
-                    width:                  parent.width
+                    width:                  parent.width*0.25
                     horizontalAlignment:    Text.AlignHCenter
-                    color:                  textColor
+                    font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
                     fontSizeMode:           Text.HorizontalFit
-                    text:                   fact.shortDescription + (fact.units ? " (" + fact.units + ")" : "")
+                    color:                  Qt.rgba(0.102,0.887,0.609,1)//textColor
+                    text:                   fact.shortDescription
+                }
+
+                QGCLabel {
+                    width:                  parent.width*0.25
+                    font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
+                    horizontalAlignment:    Text.AlignHCenter
+                    fontSizeMode:           Text.HorizontalFit
+                    color:                  textColor
+                    text:                   fact.valueString                    
                 }
                 QGCLabel {
-                    width:                  parent.width
-                    horizontalAlignment:    Text.AlignHCenter
-                    font.pointSize:         ScreenTools.mediumFontPointSize * (largeValue ? 1.3 : 1.0)
-                    font.family:            largeValue ? ScreenTools.demiboldFontFamily : ScreenTools.normalFontFamily
+        //          width:                  parent.width
+ //                 horizontalAlignment:    Text.AlignHCenter
+                    font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
                     fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
-                    text:                   fact.valueString
+                    text:                   fact.units ? fact.units  : ""
                 }
             }
         } // Repeater - Large
@@ -98,11 +123,11 @@ QGCFlickable {
         anchors.top:        _largeColumn.bottom
         layoutDirection:    Qt.LeftToRight
         spacing:            _margins
-
         Repeater {
             model: _activeVehicle ? controller.smallValues : 0
 
             Column {
+                id:     valueColumn
                 width:  (_root.width / 2) - (_margins / 2) - 0.1
                 clip:   true
 
@@ -149,7 +174,7 @@ QGCFlickable {
 
                 QGCLabel {
                     id:     _label
-                    text:   qsTr("Select the values you want to display:")
+                text:   qsTr("选择需要显示的信息")//"Select the values you want to display:"
                 }
 
                 Loader {
@@ -181,7 +206,8 @@ QGCFlickable {
             QGCLabel {
                 width:      parent.width
                 wrapMode:   Text.WordWrap
-                text:       factGroup ? factGroupName : qsTr("Vehicle must be connected to assign values.")
+                visible:    !factGroup     //add  yaoling
+                text:       factGroup ? factGroupName : qsTr("机体需处于连接状态")//"Vehicle must be connected to assign values."
             }
 
             Repeater {
@@ -218,13 +244,13 @@ QGCFlickable {
 
                     function updateValues() {
                         if (_addCheckBox.checked) {
-                            if (_largeCheckBox.checked) {
+//                            if (_largeCheckBox.checked) {
                                 controller.largeValues = addToList(controller.largeValues, propertyName)
                                 controller.smallValues = removeFromList(controller.smallValues, propertyName)
-                            } else {
-                                controller.smallValues = addToList(controller.smallValues, propertyName)
-                                controller.largeValues = removeFromList(controller.largeValues, propertyName)
-                            }
+//                            } else {
+//                                controller.smallValues = addToList(controller.smallValues, propertyName)
+//                                controller.largeValues = removeFromList(controller.largeValues, propertyName)
+//                            }
                         } else {
                             controller.largeValues = removeFromList(controller.largeValues, propertyName)
                             controller.smallValues = removeFromList(controller.smallValues, propertyName)
@@ -234,19 +260,20 @@ QGCFlickable {
                     QGCCheckBox {
                         id:                     _addCheckBox
                         text:                   factGroup.getFact(modelData).shortDescription
-                        checked:                listContains(controller.smallValues, propertyName) || _largeCheckBox.checked
+                   //     checked:                listContains(controller.smallValues, propertyName) || _largeCheckBox.checked
+                        checked:                listContains(controller.largeValues, propertyName)// || _largeCheckBox.checked
                         onClicked:              updateValues()
                         Layout.fillWidth:       true
                         Layout.minimumWidth:    ScreenTools.defaultFontPixelWidth * 20
                     }
 
-                    QGCCheckBox {
-                        id:                     _largeCheckBox
-                        text:                   qsTr("Large")
-                        checked:                listContains(controller.largeValues, propertyName)
-                        enabled:                _addCheckBox.checked
-                        onClicked:              updateValues()
-                    }
+//                    QGCCheckBox {
+//                        id:                     _largeCheckBox
+//                        text:                   qsTr("大")//"Large"
+//                        checked:                listContains(controller.largeValues, propertyName)
+//                        enabled:                _addCheckBox.checked
+//                        onClicked:              updateValues()
+//                    }
                 }
             }
 
