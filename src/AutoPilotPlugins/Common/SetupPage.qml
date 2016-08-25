@@ -23,8 +23,10 @@ import QGroundControl.Controllers   1.0
 QGCView {
     id:         setupView
     viewPanel:  setupPanel
-//    color:      qgcPal.windowShade
+
     property alias  pageComponent:      pageLoader.sourceComponent
+    property string pageName:           vehicleComponent ? vehicleComponent.name : ""
+    property string pageDescription:    vehicleComponent ? vehicleComponent.description : ""
     property real   availableWidth:     width - pageLoader.x
     property real   availableHeight:    height - pageLoader.y
 
@@ -42,25 +44,25 @@ QGCView {
             contentHeight:  pageLoader.y + pageLoader.item.height
             clip:           true
 
-//            Column {
-//                id:             headingColumn
-//                width:          setupPanel.width
-//                spacing:        _margins
+            Column {
+                id:             headingColumn
+                width:          setupPanel.width
+                spacing:        _margins
 
-//                QGCLabel {
-//                    font.pointSize: ScreenTools.largeFontPointSize
-//                    text:           vehicleComponent.name + " " + qsTr("Setup")
-//                    visible:        !ScreenTools.isShortScreen
-//                }
+                QGCLabel {
+                    font.pointSize: ScreenTools.largeFontPointSize
+                    text:           pageName + " " + qsTr("Setup")
+                    visible:        !ScreenTools.isShortScreen
+                }
 
-//                QGCLabel {
-//                    anchors.left:   parent.left
-//                    anchors.right:  parent.right
-//                    wrapMode:       Text.WordWrap
-//                    text:           vehicleComponent.description
-//                    visible:        !ScreenTools.isShortScreen
-//                }
-//            }
+                QGCLabel {
+                    anchors.left:   parent.left
+                    anchors.right:  parent.right
+                    wrapMode:       Text.WordWrap
+                    text:           pageDescription
+                    visible:        !ScreenTools.isShortScreen
+                }
+            }
 
             Loader {
                 id:                 pageLoader

@@ -48,21 +48,18 @@ Rectangle {
 
     QGCAttitudeWidget {
         id:                 attitude
-//      anchors.leftMargin: _topBottomMargin
-//      anchors.left:       parent.left
-        anchors.rightMargin: _topBottomMargin
-        anchors.right:       compass.left
-        size:               _innerRadius * 3
-        active:             active
+        anchors.leftMargin: _topBottomMargin
+        anchors.left:       parent.left
+        size:               _innerRadius * 2
+        active:             root.active
         anchors.verticalCenter: parent.verticalCenter
     }
     QGCCompassWidget {
         id:                 compass
         anchors.leftMargin: _spacing
-//      anchors.left:       attitude.right
-        anchors.left:       parent.left
-        size:               _innerRadius * 3
-        active:             active
+        anchors.left:       attitude.right
+        size:               _innerRadius * 2
+        active:             root.active
         anchors.verticalCenter: parent.verticalCenter
     }
 }
