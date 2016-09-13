@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 Rectangle
 {
       property color  valuecolor:         "white"                          ///< true: show setup complete indicator
-      property color  ciclectcolor:       "grey"
+      property color  ciclectcolor:       "#33444c"
       property real   value:         0
       color:  "transparent"
       width:  80

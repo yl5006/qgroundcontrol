@@ -479,7 +479,7 @@ void MissionController::loadMissionFromFile(const QString& filename)
 void MissionController::loadMissionFromFilePicker(void)
 {
 #ifndef __mobile__
-    QString filename = QGCFileDialog::getOpenFileName(NULL, "Select Mission File to load", QString(), "Mission file (*.mission);;All Files (*.*)");
+    QString filename = QGCFileDialog::getOpenFileName(NULL, tr("选择任务文件")/*"Select Mission File to load"*/, QString(), "Mission file (*.mission);;All Files (*.*)");
 
     if (filename.isEmpty()) {
         return;
@@ -564,7 +564,7 @@ void MissionController::saveMissionToFile(const QString& filename)
 void MissionController::saveMissionToFilePicker(void)
 {
 #ifndef __mobile__
-    QString filename = QGCFileDialog::getSaveFileName(NULL, "Select file to save mission to", QString(), "Mission file (*.mission);;All Files (*.*)");
+    QString filename = QGCFileDialog::getSaveFileName(NULL, tr("保存任务文件")/*"Select file to save mission to"*/, QString(), "Mission file (*.mission);;All Files (*.*)");
 
     if (filename.isEmpty()) {
         return;

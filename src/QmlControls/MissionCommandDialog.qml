@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -28,7 +28,7 @@ QGCViewDialog {
     QGCLabel {
         id:                 categoryLabel
         anchors.baseline:   categoryCombo.baseline
-        text:               qsTr("Category:")
+        text:               qsTr("类别:")//qsTr("Category:")
     }
 
     QGCComboBox {

@@ -56,7 +56,7 @@ Rectangle {
         } else {
             panelLoader.sourceComponent = disconnectedVehicleSummaryComponent
         }
-        divider.visible=true
+        loader.visible=true
     }
 
     function showFirmwarePanel()
@@ -69,7 +69,7 @@ Rectangle {
                 panelLoader.source = "FirmwareUpgrade.qml";
             }
         }
-        divider.visible=true
+        loader.visible=true
     }
 
     function showJoystickPanel()
@@ -80,19 +80,19 @@ Rectangle {
         } else {
             panelLoader.source = "JoystickConfig.qml";
         }
-        divider.visible=true
+        loader.visible=true
     }
 
     function showParametersPanel()
     {
         panelLoader.source = "SetupParameterEditor.qml";
-        divider.visible=true
+        loader.visible=true
     }
 
     function showPX4FlowPanel()
     {
         panelLoader.source = "PX4FlowSensor.qml";
-        divider.visible=true
+        loader.visible=true
     }
 
     function showVehicleComponentPanel(vehicleComponent)
@@ -102,7 +102,7 @@ Rectangle {
             panelLoader.sourceComponent = messagePanelComponent
         } else {
             if (vehicleComponent.prerequisiteSetup != "") {
-                _messagePanelText = vehicleComponent.prerequisiteSetup + " setup must be completed prior to " + vehicleComponent.name + " setup."
+                _messagePanelText = vehicleComponent.prerequisiteSetup + qsTr("设置需在")/*" setup must be completed prior to "*/ + vehicleComponent.name +qsTr("之前") /*" setup."*/
                 panelLoader.sourceComponent = messagePanelComponent
             } else {
                 panelLoader.vehicleComponent = vehicleComponent
@@ -115,24 +115,24 @@ Rectangle {
                     }
                 }
             }
-            divider.visible=true
+            loader.visible=true
         }
     }
 
     function showGeneralPanel()
     {
         panelLoader.source = "SystemSettings.qml";
-        divider.visible=true
+        loader.visible=true
     }
     function showLinksPanel()
     {
         panelLoader.source = "LinkSettings.qml";
-        divider.visible=true
+        loader.visible=true
     }
     function showOfflineMapsPanel()
     {
         panelLoader.source = "OfflineMap.qml";
-        divider.visible=true
+        loader.visible=true
     }
 
 //   Component.onCompleted: showSummaryPanel()
@@ -156,20 +156,20 @@ Rectangle {
         id: noComponentsVehicleSummaryComponent
 
         Rectangle {
-            color: qgcPal.windowShade
+     //       color: qgcPal.windowShade
+               color:"transparent"
+//            QGCLabel {
+//                anchors.margins:        _defaultTextWidth * 2
+//                anchors.fill:           parent
+//                verticalAlignment:      Text.AlignVCenter
+//                horizontalAlignment:    Text.AlignHCenter
+//                wrapMode:               Text.WordWrap
+//                font.pointSize:         ScreenTools.mediumFontPointSize
+//                text:                   "QGroundControl does not currently support setup of your vehicle type. " +
+//                                        "If your vehicle is already configured you can still Fly."
 
-            QGCLabel {
-                anchors.margins:        _defaultTextWidth * 2
-                anchors.fill:           parent
-                verticalAlignment:      Text.AlignVCenter
-                horizontalAlignment:    Text.AlignHCenter
-                wrapMode:               Text.WordWrap
-                font.pointSize:         ScreenTools.mediumFontPointSize
-                text:                   "QGroundControl does not currently support setup of your vehicle type. " +
-                                        "If your vehicle is already configured you can still Fly."
-
-                onLinkActivated: Qt.openUrlExternally(link)
-            }
+//                onLinkActivated: Qt.openUrlExternally(link)
+//            }
         }
     }
 
@@ -231,7 +231,7 @@ Rectangle {
 
     QGCFlickable {
         id:                     flowscroll
-        anchors.topMargin:      _defaultTextHeight
+        anchors.topMargin:      _defaultTextHeight*2
         anchors.top:            parent.top
         anchors.bottom:         rowscroll.top
         anchors.bottomMargin:   _defaultTextHeight
@@ -261,13 +261,14 @@ Rectangle {
                              id:         qgcView
                          }
                          QGCLabel {
-                             id:                    name
+                             id:                     name
                              anchors.top:            parent.top
                              anchors.left:           parent.left
                              anchors.leftMargin:     _defaultTextHeight
                              font.pointSize:         ScreenTools.mediumFontPointSize
                              color:                 modelData.setupComplete?"white":"red"
                              text:                   modelData.name
+                             font.bold:             true
                          }
                          Rectangle {
                              id:                     divider
@@ -290,7 +291,10 @@ Rectangle {
                                 imgcolor:       modelData.setupComplete? "white"/*Qt.rgba(0.0627, 0.9216, 0.749, 1)*/ :Qt.rgba(0.8941, 0.2275, 0.2392, 1)//"green" : "red"
                                 exclusiveGroup: setupButtonGroup
                                 visible:        modelData.setupSource.toString() != ""
-                                onClicked:      showVehicleComponentPanel(modelData)
+                                onClicked:
+                                {   if(!loader.visible)
+                                        showVehicleComponentPanel(modelData)
+                                }
                                }
                          Rectangle {
                              anchors.top:               divider.bottom
@@ -317,7 +321,7 @@ Rectangle {
         id:                     rowscroll
         height:                 _defaultTextHeight*8
         anchors.bottom:         parent.bottom
-        anchors.bottomMargin:   _defaultTextHeight*3
+        anchors.bottomMargin:   _defaultTextHeight*4
         anchors.left:           parent.left
         anchors.right:          parent.right
         anchors.leftMargin:     _defaultTextHeight*5
@@ -336,16 +340,23 @@ Rectangle {
             imageResource:  "/qmlimages/tool-01.svg"
             exclusiveGroup: setupButtonGroup
             text:           qsTr("系统")//"General"
-            onClicked:      showGeneralPanel()
+            onClicked:
+                {   if(!loader.visible)
+                        showGeneralPanel()
+                }
         }
         SubMenuButtonModify {
             id:             linksButton
-             imageResource:  "/res/connect.svg"
+            imageResource:  "/res/connect.svg"
             width:          _defaultTextHeight*8
             height:         width
             exclusiveGroup: setupButtonGroup
             text:           qsTr("连接")//"Comm Links"
-            onClicked:      showLinksPanel()
+            onClicked:
+            {
+                 if(!loader.visible)
+                    showLinksPanel()
+            }
         }
         SubMenuButtonModify {
             id:             offlinemapButton
@@ -354,7 +365,11 @@ Rectangle {
             height:         width
             exclusiveGroup: setupButtonGroup
             text:           qsTr("离线地图")//"Offline Maps"
-            onClicked:      showOfflineMapsPanel()
+            onClicked:
+            {
+                 if(!loader.visible)
+                     showOfflineMapsPanel()
+            }
         }
         SubMenuButtonModify {
              id:             firmwareButton
@@ -363,7 +378,11 @@ Rectangle {
              imageResource:  "/qmlimages/FirmwareUpgradeIcon.svg"
              exclusiveGroup: setupButtonGroup
              text:           qsTr("固件下载")//"Firmware"
-             onClicked: showFirmwarePanel()
+             onClicked:
+             {
+                  if(!loader.visible)
+                      showFirmwarePanel()
+             }
        }
        SubMenuButtonModify {
              id:             px4FlowButton
@@ -372,7 +391,11 @@ Rectangle {
              exclusiveGroup: setupButtonGroup
              visible:        ScreenTools.isDebug&&QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.genericFirmware : false
              text:           "PX4Flow"
-             onClicked:      showPX4FlowPanel()
+             onClicked:
+             {
+                  if(!loader.visible)
+                      showPX4FlowPanel()
+             }
         }
 
         SubMenuButtonModify {
@@ -383,7 +406,11 @@ Rectangle {
              exclusiveGroup: setupButtonGroup
              visible:        _fullParameterVehicleAvailable && joystickManager.joysticks.length != 0
              text:           "Joystick"
-             onClicked: showJoystickPanel()
+             onClicked:
+             {
+                  if(!loader.visible)
+                      showJoystickPanel()
+                  }
             }
         Repeater {
               model:  _fullParameterVehicleAvailable ? QGroundControl.multiVehicleManager.activeVehicle.autopilot.vehicleComponents : undefined
@@ -394,7 +421,11 @@ Rectangle {
                      exclusiveGroup: setupButtonGroup
                      text:           modelData.name
                      visible:        modelData.summaryQmlSource.toString() == ""&&modelData.setupSource.toString() != ""
-                     onClicked:      showVehicleComponentPanel(modelData)
+                     onClicked:
+                     {
+                          if(!loader.visible)
+                              showVehicleComponentPanel(modelData)
+                          }
                     }
         }
         SubMenuButtonModify {
@@ -403,17 +434,21 @@ Rectangle {
               exclusiveGroup: setupButtonGroup
               visible:        QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable
               text:           "Parameters"
-              onClicked: showParametersPanel()
+              onClicked:
+              {
+                   if(!loader.visible)
+                       showParametersPanel()
+                   }
             }
         }
     }
     Rectangle {
-        id:                     divider
+        id:                     loader
         anchors.fill:           parent
         anchors.margins:        _defaultTextHeight
         visible:                false
         color:                  qgcPal.windowShade
-        z:                       1
+        z:                       QGroundControl.zOrderTopMost
         Loader {
             id:                     panelLoader
             anchors.fill:           parent
@@ -422,17 +457,18 @@ Rectangle {
 
     }
     ImageButton {
-        anchors.margins:        _defaultTextWidth
+        anchors.margins:        _defaultTextWidth*2
         anchors.top: parent.top
         anchors.right: parent.right
         imageResource:             "/res/XDelete.svg"
-        width:              ScreenTools.defaultFontPixelHeight * 3
+        width:              ScreenTools.defaultFontPixelHeight * 2
         height:             width
-        visible:            divider.visible
-        z:                       2
+        visible:            loader.visible
+        z:                      QGroundControl.zOrderTopMost+ 1
         onClicked:
         {
-            divider.visible =   false
+            panelLoader.sourceComponent = noComponentsVehicleSummaryComponent
+            loader.visible =   false
         }
     }
 }

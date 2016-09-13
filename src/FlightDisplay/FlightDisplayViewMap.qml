@@ -110,15 +110,15 @@ FlightMap {
         }
     }    
 
-    MapScale {
-        anchors.topMargin:      ScreenTools.defaultFontPixelHeight * 5
-        anchors.rightMargin:    ScreenTools.defaultFontPixelHeight * (0.33)
-        anchors.top:            parent.top
-        anchors.right:          parent.right
-        z:                      QGroundControl.zOrderWidgets
-        mapControl:             flightMap
-        visible:                !ScreenTools.isTinyScreen
-    }
+//    MapScale {
+//        anchors.topMargin:      ScreenTools.defaultFontPixelHeight * 5
+//        anchors.rightMargin:    ScreenTools.defaultFontPixelHeight * (0.33)
+//        anchors.top:            parent.top
+//        anchors.right:          parent.right
+//        z:                      QGroundControl.zOrderWidgets
+//        mapControl:             flightMap
+//        visible:                !ScreenTools.isTinyScreen
+//    }
 
     // Handle guided mode clicks
     MouseArea {

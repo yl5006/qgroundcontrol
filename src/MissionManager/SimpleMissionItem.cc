@@ -18,7 +18,7 @@
 #include "MissionCommandTree.h"
 #include "MissionCommandUIInfo.h"
 
-const double SimpleMissionItem::defaultAltitude =             50.0;
+const double SimpleMissionItem::defaultAltitude =             25.0;//50.0;
 
 FactMetaData* SimpleMissionItem::_altitudeMetaData =          NULL;
 FactMetaData* SimpleMissionItem::_commandMetaData =           NULL;
@@ -81,7 +81,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, const MissionItem& missio
     , _homePositionSpecialCase(false)
     , _showHomePosition(false)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, "Altitude is relative to home", FactMetaData::valueTypeUint32)
+    , _altitudeRelativeToHomeFact   (0, QT_TR_NOOP("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -109,7 +109,7 @@ SimpleMissionItem::SimpleMissionItem(const SimpleMissionItem& other, QObject* pa
     , _homePositionSpecialCase(false)
     , _showHomePosition(false)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, "Altitude is relative to home", FactMetaData::valueTypeUint32)
+    , _altitudeRelativeToHomeFact   (0, QT_TR_NOOP("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -362,6 +362,17 @@ QmlObjectListModel* SimpleMissionItem::textFieldFacts(void)
             command = _missionItem.command();
         }
 
+        _missionItem._param5Fact._setName(tr("纬度:"));
+        _missionItem._param5Fact.setMetaData(_defaultParamMetaData);
+        model->append(&_missionItem._param5Fact);
+        _missionItem._param6Fact._setName(tr("经度:"));
+        _missionItem._param6Fact.setMetaData(_defaultParamMetaData);
+        model->append(&_missionItem._param6Fact);
+        _missionItem._param7Fact._setName(tr("高度:"));
+        _missionItem._param7Fact.setMetaData(_defaultParamMetaData);
+        model->append(&_missionItem._param7Fact);
+
+
         Fact*           rgParamFacts[7] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact };
         FactMetaData*   rgParamMetaData[7] =    { &_param1MetaData, &_param2MetaData, &_param3MetaData, &_param4MetaData, &_param5MetaData, &_param6MetaData, &_param7MetaData };
 
@@ -386,11 +397,11 @@ QmlObjectListModel* SimpleMissionItem::textFieldFacts(void)
             }
         }
 
-        if (specifiesCoordinate() && !altitudeAdded) {
-            _missionItem._param7Fact._setName(tr("高度:"));  //Altitude:
-            _missionItem._param7Fact.setMetaData(_altitudeMetaData);
-            model->append(&_missionItem._param7Fact);
-        }
+//        if (specifiesCoordinate() && !altitudeAdded) {
+//            _missionItem._param7Fact._setName(tr("高度h:"));  //Altitude:
+//            _missionItem._param7Fact.setMetaData(_altitudeMetaData);
+//            model->append(&_missionItem._param7Fact);
+//        }
     }
     
     return model;

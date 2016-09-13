@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -34,7 +34,7 @@ const char* GAudioOutput::_mutedKey = "AudioMuted";
 
 GAudioOutput::GAudioOutput(QGCApplication* app)
     : QGCTool(app)
-    , muted(false)
+    , muted(true)
 #ifndef __android__
     , thread(new QThread())
     , worker(new QGCAudioWorker())

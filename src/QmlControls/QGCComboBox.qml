@@ -9,13 +9,13 @@ import QGroundControl.ScreenTools 1.0
 ComboBox {
     property var    _qgcPal:        QGCPalette { colorGroupEnabled: enabled }
     property bool   _showHighlight: true//pressed | hovered     //change by yaoling
-    property bool   _showBorder:    _qgcPal.globalTheme === QGCPalette.Light
+    property bool   _showBorder:    false//_qgcPal.globalTheme === QGCPalette.Light
 
     style: ComboBoxStyle {
         font.pointSize: ScreenTools.defaultFontPointSize
         textColor: _showHighlight ?
                     control._qgcPal.buttonHighlightText :
-                    control._qgcPal.buttonText
+                    control._qgcPal.buttonHighlightText//control._qgcPal.buttonText
 
         background: Item {
             implicitWidth:      Math.round(ScreenTools.defaultFontPixelWidth * 4.5)
@@ -23,7 +23,7 @@ ComboBox {
 
             Rectangle {
                 anchors.fill:   parent
-                color:          _showHighlight ? control._qgcPal.buttonHighlight : control._qgcPal.button
+                color:          _showHighlight ? control._qgcPal.buttonHighlight : "transparent"//control._qgcPal.button
                 border.width:   _showBorder ? 1: 0
                 border.color:  control._qgcPal.buttonText
                 radius:         2                    //add by yaoling

@@ -1,4 +1,4 @@
-{
+﻿{
     "comment":  "PX4 Pro, Any Vehicle",
 
     "version": 1,
@@ -8,6 +8,11 @@
             "id":           16,
             "comment":      "MAV_CMD_NAV_WAYPOINT",
             "paramRemove":  "2,3,4"
+        },
+        {
+            "id":           95,
+            "comment":      "MAV_CMD_NAV_LAST",
+            "paramRemove":  "5,6"
         }
     ]
 }

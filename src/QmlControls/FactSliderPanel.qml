@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -20,7 +20,8 @@ Column {
     /// ListModel must contains elements which look like this:
     ///     ListElement {
     ///         title:          "Roll sensitivity"
-    ///         description:    "Slide to the left to make roll control faster and more accurate. Slide to the right if roll oscillates or is too twitchy."
+    ///         descriptionleft:    "Slide to the left to make roll control faster and more accurate. Slide to the right if roll oscillates or is too twitchy."
+    ///         descriptionright:
     ///         param:          "MC_ROLL_TC"
     ///         min:            0
     ///         max:            100
@@ -52,13 +53,13 @@ Column {
         _loadComplete = true
     }
 
-    QGCLabel {
-        id:             panelLabel
-        text:           panelTitle
-        font.family:    ScreenTools.demiboldFontFamily
-    }
+//    QGCLabel {
+//        id:             panelLabel
+//        text:           panelTitle
+//        font.family:    ScreenTools.demiboldFontFamily
+//    }
 
-    Column {
+    Flow {
         id:                 sliderOuterColumn
         anchors.left:       parent.left
         anchors.right:      parent.right
@@ -70,33 +71,52 @@ Column {
 
             Rectangle {
                 id:                 sliderRect
-                anchors.left:       parent.left
-                anchors.right:      parent.right
+                width:              Math.max(parent.width/2-_margins,ScreenTools.defaultFontPixelHeight*30)
                 height:             sliderColumn.y + sliderColumn.height + _margins
-                color:              palette.windowShade
+                color:              "transparent"
 
                 property alias sliderValue: slider.value
-
+                Image {
+                    anchors.fill:               parent
+                    mipmap:                     true
+                    source:                     "/qmlimages/safebackground.svg"
+                }
+                Image {
+                    anchors.top:                    parent.top
+                    anchors.left:                   parent.left
+                    width:                          parent.width/2
+                    height:                         ScreenTools.defaultFontPixelHeight*2.4
+                    anchors.topMargin:              ScreenTools.defaultFontPixelHeight/2
+                    mipmap:                         true
+                    source:                         "/qmlimages/safetitlebg.svg"
+                }
                 Column {
                     id:                 sliderColumn
                     anchors.margins:    _margins
                     anchors.left:       parent.left
                     anchors.right:      parent.right
                     anchors.top:        sliderRect.top
-
+                    spacing:            _margins
                     QGCLabel {
                         text:           title
                         font.family:    ScreenTools.demiboldFontFamily
+                        font.pointSize:                 ScreenTools.mediumFontPointSize
+                        font.bold:       true
                     }
 
                     QGCLabel {
-                        text:           description
+                        text:           descriptionleft
                         anchors.left:   parent.left
                         anchors.right:  parent.right
                         wrapMode:       Text.WordWrap
                     }
-
-                    Slider {
+                    QGCLabel {
+                        text:           descriptionright
+                        anchors.left:   parent.left
+                        anchors.right:  parent.right
+                        wrapMode:       Text.WordWrap
+                    }
+                    GSSlider {
                         id:                 slider
                         anchors.left:       parent.left
                         anchors.right:      parent.right

@@ -42,6 +42,7 @@
         <file alias="MainWindowNative.qml">src/ui/MainWindowNative.qml</file>
         <file alias="AppSettings.qml">src/ui/AppSettings.qml</file>
         <file alias="MissionEditor.qml">src/MissionEditor/MissionEditor.qml</file>
+	<file alias="MissionEditorBottom.qml">src/MissionEditor/MissionEditorBottom.qml</file>
         <file alias="MotorComponent.qml">src/AutoPilotPlugins/Common/MotorComponent.qml</file>
         <file alias="PowerComponent.qml">src/AutoPilotPlugins/PX4/PowerComponent.qml</file>
         <file alias="PowerComponentSummary.qml">src/AutoPilotPlugins/PX4/PowerComponentSummary.qml</file>
@@ -82,6 +83,7 @@
         <file alias="QGroundControl/Controls/QGCPipable.qml">src/QmlControls/QGCPipable.qml</file>
         <file alias="QGroundControl/Controls/QGCRadioButton.qml">src/QmlControls/QGCRadioButton.qml</file>
         <file alias="QGroundControl/Controls/QGCSlider.qml">src/QmlControls/QGCSlider.qml</file>
+        <file alias="QGroundControl/Controls/GSSlider.qml">src/QmlControls/GSSlider.qml</file>
         <file alias="QGroundControl/Controls/QGCTextField.qml">src/QmlControls/QGCTextField.qml</file>
         <file alias="QGroundControl/Controls/QGCToolBarButton.qml">src/QmlControls/QGCToolBarButton.qml</file>
         <file alias="QGroundControl/Controls/QGCView.qml">src/QmlControls/QGCView.qml</file>

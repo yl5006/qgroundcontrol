@@ -45,12 +45,11 @@ AirframeComponentController::AirframeComponentController(void) :
     bool autostartFound = false;
     _autostartId = getParameterFact(FactSystem::defaultComponentId, "SYS_AUTOSTART")->rawValue().toInt();
 
-    
     for (int tindex = 0; tindex < AirframeComponentAirframes::get().count(); tindex++) {
 
         const AirframeComponentAirframes::AirframeType_t* pType = AirframeComponentAirframes::get().values().at(tindex);
 
-        AirframeType* airframeType = new AirframeType(pType->name, pType->imageResource, this);
+        AirframeType* airframeType = new AirframeType(pType->name, pType->imageResource,pType->type, this);
         Q_CHECK_PTR(airframeType);
 
         for (int index = 0; index < pType->rgAirframeInfo.count(); index++) {
@@ -129,10 +128,11 @@ void AirframeComponentController::_rebootAfterStackUnwind(void)
     qgcApp()->restoreOverrideCursor();
 }
 
-AirframeType::AirframeType(const QString& name, const QString& imageResource, QObject* parent) :
+AirframeType::AirframeType(const QString& name, const QString& imageResource,int type, QObject* parent) :
     QObject(parent),
     _name(name),
-    _imageResource(imageResource)
+    _imageResource(imageResource),
+    _type(type)
 {
     
 }

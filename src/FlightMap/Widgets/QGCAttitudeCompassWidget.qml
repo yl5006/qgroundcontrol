@@ -101,11 +101,12 @@ Item {
             id:                 head
             anchors.top:        parent.top
             anchors.left:       parent.left
-            anchors.topMargin:   size*0.28
+            anchors.topMargin:   size*0.30
             anchors.leftMargin:  size*0.55
             horizontalAlignment: Text.AlignRight;
             text:               active ? heading.toFixed(0)+"°" :qsTr("OFF")
-            font.pointSize:     size*0.08
+            font.pointSize:     size*0.07
+            font.bold:          true
         }
     }
 

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -34,16 +34,17 @@ public:
     typedef struct {
         QString name;
         QString imageResource;
+        int     type;
         QList<AirframeInfo_t*> rgAirframeInfo;
     } AirframeType_t;
 
     static QMap<QString, AirframeComponentAirframes::AirframeType_t*>& get();
     static void clear();
-    static void insert(QString& group, QString& image, QString& name, int id);
+    static void insert(QString& group, QString& image,int type, QString& name, int id);
     
 protected:
     static QMap<QString, AirframeType_t*> rgAirframeTypes;
-    
+
 private:
 };
 

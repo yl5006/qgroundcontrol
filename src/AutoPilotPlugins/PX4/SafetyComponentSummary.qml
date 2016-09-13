@@ -26,34 +26,34 @@ FactPanel {
         anchors.fill:       parent
 
         VehicleSummaryRow {
-            labelText: qsTr("RTL min alt:")
+            labelText: qsTr("返航高度:")//qsTr("RTL min alt:")
             valueText: returnAltFact ? returnAltFact.valueString + " " + returnAltFact.units : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("RTL home alt:")
+            labelText: qsTr("返航点高度:")//qsTr("RTL home alt:")
             valueText: descendAltFact ? descendAltFact.valueString + " " + descendAltFact.units : ""
         }
 
+//        VehicleSummaryRow {
+//            labelText: qsTr("RC loss RTL:")
+//            valueText: commRCLossFact ? commRCLossFact.valueString + " " + commRCLossFact.units : ""
+//        }
         VehicleSummaryRow {
-            labelText: qsTr("RC loss RTL:")
-            valueText: commRCLossFact ? commRCLossFact.valueString + " " + commRCLossFact.units : ""
+            labelText: qsTr("低电池:")//qsTr("Low battery action:")
+            valueText: lowBattAction ? lowBattAction.enumStringValue : ""
         }
-
         VehicleSummaryRow {
-            labelText: qsTr("RC loss action:")
+            labelText: qsTr("遥控丢失:")//qsTr("RC loss action:")
             valueText: rcLossAction ? rcLossAction.enumStringValue : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("Link loss action:")
+            labelText: qsTr("数据链丢失:")//qsTr("Link loss action:")
             valueText: dataLossAction ? dataLossAction.enumStringValue : ""
         }
 
-        VehicleSummaryRow {
-            labelText: qsTr("RC loss RTL (seconds):")
-            valueText: lowBattAction ? lowBattAction.enumStringValue : ""
-        }
+
 
     }
 }

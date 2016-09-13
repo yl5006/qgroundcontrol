@@ -93,7 +93,7 @@ Rectangle {
 
                 QGCLabel {
                     id:             gpsLabel
-                    text:           (activeVehicle && activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("GPS Data Unavailable")
+                    text:           (activeVehicle && activeVehicle.gps.count.value >= 0) ?  qsTr("GPS 状态") /*qsTr("GPS Status")*/ : qsTr("GPS 信息不可用") /*qsTr("GPS Data Unavailable")*/
                     font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -106,15 +106,15 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
 
-                    QGCLabel { text: qsTr("GPS Count:") }
+                    QGCLabel { text: qsTr("卫星颗数:")/*qsTr("GPS Count:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.count.valueString : qsTr("N/A", "No data to display") }
-                    QGCLabel { text: qsTr("GPS Lock:") }
+                    QGCLabel { text: qsTr("锁定模式:")/*qsTr("GPS Lock:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.lock.enumStringValue : qsTr("N/A", "No data to display") }
-                    QGCLabel { text: qsTr("HDOP:") }
+                    QGCLabel { text: qsTr("水平精度:")/*qsTr("HDOP:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.hdop.valueString : qsTr("--.--", "No data to display") }
-                    QGCLabel { text: qsTr("VDOP:") }
+                    QGCLabel { text: qsTr("垂直精度:")/*qsTr("VDOP:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.vdop.valueString : qsTr("--.--", "No data to display") }
-                    QGCLabel { text: qsTr("Course Over Ground:") }
+                    QGCLabel { text: qsTr("地面速度:") /*qsTr("Course Over Ground:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.courseOverGround.valueString : qsTr("--.--", "No data to display") }
                 }
             }
@@ -147,7 +147,7 @@ Rectangle {
 
                 QGCLabel {
                     id:             battLabel
-                    text:           qsTr("Battery Status")
+                    text:           qsTr("电池状态")//qsTr("Battery Status")
                     font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -159,9 +159,9 @@ Rectangle {
                     columns:            2
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    QGCLabel { text: qsTr("Voltage:") }
+                    QGCLabel { text: qsTr("电压:") /*qsTr("Voltage:")*/ }
                     QGCLabel { text: (activeVehicle && activeVehicle.battery.voltage.value != -1) ? (activeVehicle.battery.voltage.valueString + " " + activeVehicle.battery.voltage.units) : "N/A" }
-                    QGCLabel { text: qsTr("Accumulated Consumption:") }
+                    QGCLabel { text: qsTr("消耗:")/*qsTr("Accumulated Consumption:")*/ }
                     QGCLabel { text: (activeVehicle && activeVehicle.battery.mahConsumed.value != -1) ? (activeVehicle.battery.mahConsumed.valueString + " " + activeVehicle.battery.mahConsumed.units) : "N/A" }
                 }
             }
@@ -194,7 +194,7 @@ Rectangle {
 
                 QGCLabel {
                     id:             rssiLabel
-                    text:           activeVehicle ? (activeVehicle.rcRSSI != 255 ? qsTr("RC RSSI Status") : qsTr("RC RSSI Data Unavailable")) : qsTr("N/A", "No data avaliable")
+                    text:           activeVehicle ? (activeVehicle.rcRSSI != 255 ? qsTr("遥控信号状态")/*qsTr("RC RSSI Status")*/ : qsTr("遥控信号强度不可用")/*qsTr("RC RSSI Data Unavailable")*/) : qsTr("N/A", qsTr("无数据")/*"No data avaliable"*/)
                     font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }

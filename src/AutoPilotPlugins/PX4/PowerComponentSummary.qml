@@ -40,10 +40,12 @@ FactPanel {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
                 QGCLabel {
                     id:     label
+                    font.bold:   true
                     text:   qsTr("满电压")//"Battery Full:"
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
+                    font.bold:   true
                     anchors.horizontalCenter: label.horizontalCenter
                     text:   batVChargedFact ? batVChargedFact.valueString + " " + batVChargedFact.units : ""
                 }
@@ -52,10 +54,12 @@ FactPanel {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
                 QGCLabel {
                     id:     label1
+                    font.bold:   true
                     text:   qsTr("空电压")//"Battery Empty:"
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
+                    font.bold:   true
                     anchors.horizontalCenter: label1.horizontalCenter
                     text:  batVEmptyFact ? batVEmptyFact.valueString + " " + batVEmptyFact.units : ""
                 }
@@ -63,11 +67,13 @@ FactPanel {
             Column {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
                 QGCLabel {
+                    font.bold:   true
                     id:     label2
                     text:   qsTr("电芯数")//"Number of Cells:"
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
+                    font.bold:   true
                     anchors.horizontalCenter: label2.horizontalCenter
                     text:   batCellsFact ? batCellsFact.valueString : ""
                 }

@@ -11,6 +11,7 @@ Item {
     signal          clicked()
     property alias  buttonImage:        roundButton.buttonImage
     property alias  rotateImage:        roundButton.rotateImage
+    property alias  imgcolor:           roundButton.imgcolor
     property real   radius:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.75 : ScreenTools.defaultFontPixelHeight * 1.25
     property int    dropDirection:      dropDown
     property alias  dropDownComponent:  dropDownLoader.sourceComponent

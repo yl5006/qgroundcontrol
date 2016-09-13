@@ -22,7 +22,7 @@ Item {
 
     property alias          source:         icon.source
     property bool           checked:        false
-    property bool           logo:           false
+    property bool           primary:           true
     property ExclusiveGroup exclusiveGroup:  null
     property color          color:  "#ffffff"
     readonly property real _topBottomMargins: ScreenTools.defaultFontPixelHeight / 2
@@ -37,21 +37,21 @@ Item {
 
     QGCPalette { id: qgcPal }
 
-    Rectangle {
-        anchors.fill:   parent
-        visible:        logo
-        color:          "#4A2C6D"
-    }
-    Rectangle {
-        anchors.rightMargin:    _topBottomMargins
-        anchors.leftMargin:     _topBottomMargins
-//      anchors.bottom: parent.bottom
-//      height:         _topBottomMargins * 0.25
-//      color:          qgcPal.buttonHighlight
-        anchors.fill:   parent
-        visible:        checked&&logo
-        color:          (checked ? "#e4e428" : parent.color)
-    }
+//    Rectangle {
+//        anchors.fill:   parent
+//        visible:        logo
+//        color:          "#4A2C6D"
+//    }
+//    Rectangle {
+//        anchors.rightMargin:    _topBottomMargins
+//        anchors.leftMargin:     _topBottomMargins
+////      anchors.bottom: parent.bottom
+////      height:         _topBottomMargins * 0.25
+////      color:          qgcPal.buttonHighlight
+//        anchors.fill:   parent
+//        visible:        checked&&logo
+//        color:          (checked ? "#e4e428" : parent.color)
+//    }
     QGCColoredImage {
         id:                     icon
         anchors.left:           parent.left
@@ -63,7 +63,7 @@ Item {
         anchors.bottom:         parent.bottom
         sourceSize.height:      parent.height
         fillMode:               Image.PreserveAspectFit
-        color:                  logo ? "white" : (checked ? qgcPal.buttonHighlight : qgcPal.buttonText)
+        color:                  (checked ?(primary ? qgcPal.primaryButton : qgcPal.buttonHighlight)  : qgcPal.buttonText)
     }
 
 //    Rectangle {

@@ -28,15 +28,22 @@ FactPanel {
     Component {
         id: simple
         Column {
+            spacing:    ScreenTools.defaultFontPixelHeight/2
             VehicleSummaryRow {
-                labelText: qsTr("Mode switch:")
-                valueText: _rcMapFltmode.value === 0 ? qsTr("Setup required") : _rcMapFltmode.enumStringValue
+                labelText: qsTr("模式开关:")//qsTr("Mode switch:")
+                valueText: _rcMapFltmode.value === 0 ? qsTr("未配置")/*qsTr("Setup required")*/ : _rcMapFltmode.enumStringValue
             }
-            Repeater {
-                model: 6
-                VehicleSummaryRow {
-                    labelText: qsTr("Flight Mode %1 :").arg(index + 1)
-                    valueText: controller.getParameterFact(-1, "COM_FLTMODE" + (index + 1)).enumStringValue
+            Flow {
+                id:         monitorColumn
+                width:      parent.width
+                spacing:    ScreenTools.defaultFontPixelHeight
+                Repeater {
+                    model: 6
+                    VehicleSummaryRow {
+                        width:      parent.width/2-ScreenTools.defaultFontPixelHeight/2
+                        labelText: qsTr("飞行模式%1 :").arg(index + 1)//qsTr("Flight Mode %1 :").arg(index + 1)
+                        valueText: controller.getParameterFact(-1, "COM_FLTMODE" + (index + 1)).enumStringValue
+                    }
                 }
             }
         }
@@ -49,19 +56,19 @@ FactPanel {
             property Fact loiterSwFact: controller.getParameterFact(-1, "RC_MAP_LOITER_SW")
             property Fact returnSwFact: controller.getParameterFact(-1, "RC_MAP_RETURN_SW")
             VehicleSummaryRow {
-            	labelText: qsTr("模式切换开关")//"Mode switch:"
+                labelText: qsTr("模式切换开关")//"Mode switch:"
                 valueText: _rcMapModeSw.value === 0 ? "Setup required" : _rcMapModeSw.valueString
             }
             VehicleSummaryRow {
-            	labelText: qsTr("位置控制开关")//"Position Ctl switch:"
+                labelText: qsTr("位置控制开关")//"Position Ctl switch:"
                 valueText: posCtlSwFact.value === 0 ? "Disabled" : posCtlSwFact.valueString
             }
             VehicleSummaryRow {
-            	labelText: qsTr("悬停开关")//"Loiter switch:"
+                labelText: qsTr("悬停开关")//"Loiter switch:"
                 valueText: loiterSwFact.value === 0 ? "Disabled" : loiterSwFact.valueString
             }
             VehicleSummaryRow {
-            	labelText: qsTr("返航开关")//"Return switch:"
+                labelText: qsTr("返航开关")//"Return switch:"
                 valueText: returnSwFact.value === 0 ? "Disabled" : returnSwFact.valueString
             }
         }

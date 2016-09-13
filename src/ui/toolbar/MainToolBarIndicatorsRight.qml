@@ -63,7 +63,6 @@ Row {
             anchors.left:   parent.left
             width:          mainWindow.tbHeight*1.5
             value:          (activeVehicle && activeVehicle.battery.percentRemaining.value > 0 )? activeVehicle.battery.percentRemaining.value/100:0
-            ciclectcolor:   colorGrey
             valuecolor:     getBatteryColor()
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -105,12 +104,11 @@ Row {
         height:     parent.height
         visible:    activeVehicle ? activeVehicle.supportsRadio : false
         QGCCircleProgress{
-            id:       rccircle
+            id:          rccircle
             anchors.left:  parent.left
-            width:    mainWindow.tbHeight*1.5
-            value:    activeVehicle ? ((activeVehicle.rcRSSI > 100) ? 0 : activeVehicle.rcRSSI/100) : 0
-            ciclectcolor: colorGrey
-            valuecolor: getBatteryColor()
+            width:       mainWindow.tbHeight*1.5
+            value:       activeVehicle ? ((activeVehicle.rcRSSI > 100) ? 0 : activeVehicle.rcRSSI/100) : 0
+            valuecolor:  getBatteryColor()
             anchors.verticalCenter: parent.verticalCenter
         }
         QGCColoredImage {
@@ -121,8 +119,8 @@ Row {
             source:     "/qmlimages/RC.svg"
             fillMode:   Image.PreserveAspectFit
             color:      qgcPal.text
-            anchors.horizontalCenter:rccircle.horizontalCenter
-            anchors.verticalCenter: rccircle.verticalCenter
+            anchors.horizontalCenter:   rccircle.horizontalCenter
+            anchors.verticalCenter:     rccircle.verticalCenter
         }
         MouseArea {
             anchors.fill:   parent
@@ -143,8 +141,7 @@ Row {
             id:       gpsycircle
             anchors.left:  parent.left
             width:    mainWindow.tbHeight*1.5
-            value:    (activeVehicle && activeVehicle.battery.percentRemaining.value > 0 )? activeVehicle.battery.percentRemaining.value/100:0
-            ciclectcolor:   colorGrey
+            value:    activeVehicle.gps.count>15?0.99:activeVehicle.gps.count/15
             valuecolor:     colorGrey
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -281,7 +278,6 @@ Row {
                     anchors.left:           parent.left
                     width:                  mainWindow.tbHeight*1.5
                     value:                  0
-                    ciclectcolor:           colorGrey
                     valuecolor:             colorGrey
                     anchors.verticalCenter: parent.verticalCenter
              }

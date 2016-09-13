@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -89,7 +89,8 @@ void SensorsComponentController::_startLogCalibration(void)
     
     connect(_uas, &UASInterface::textMessageReceived, this, &SensorsComponentController::_handleUASTextMessage);
     
-    _cancelButton->setEnabled(false);
+//    _cancelButton->setEnabled(false);
+    _cancelButton->setVisible(false);
 }
 
 void SensorsComponentController::_startVisualCalibration(void)
@@ -100,8 +101,8 @@ void SensorsComponentController::_startVisualCalibration(void)
     _airspeedButton->setEnabled(false);
     _levelButton->setEnabled(false);
     _setOrientationsButton->setEnabled(false);
-    _cancelButton->setEnabled(true);
-
+ //   _cancelButton->setEnabled(true);
+    _cancelButton->setVisible(true);
     _resetInternalState();
     
     _progressBar->setProperty("value", 0);
@@ -143,8 +144,8 @@ void SensorsComponentController::_stopCalibration(SensorsComponentController::St
     _airspeedButton->setEnabled(true);
     _levelButton->setEnabled(true);
     _setOrientationsButton->setEnabled(true);
-    _cancelButton->setEnabled(false);
-    
+ //   _cancelButton->setEnabled(false);
+    _cancelButton->setVisible(false);
     if (code == StopCalibrationSuccess) {
         _resetInternalState();
         
@@ -160,7 +161,7 @@ void SensorsComponentController::_stopCalibration(SensorsComponentController::St
     
     switch (code) {
         case StopCalibrationSuccess:
-            _orientationCalAreaHelpText->setProperty("text", "Calibration complete");
+            _orientationCalAreaHelpText->setProperty("text", tr("校准完成")/*"Calibration complete"*/);
             emit resetStatusTextArea();
             if (_magCalInProgress) {
                 emit setCompassRotations();
@@ -175,7 +176,7 @@ void SensorsComponentController::_stopCalibration(SensorsComponentController::St
         default:
             // Assume failed
             _hideAllCalAreas();
-            qgcApp()->showMessage("Calibration failed. Calibration log will be displayed.");
+            qgcApp()->showMessage(tr("校准失败")/*"Calibration failed. Calibration log will be displayed."*/);
             break;
     }
     
@@ -224,11 +225,11 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
     if (uasId != uas->getUASID()) {
         return;
     }
-    
+    int p;
     if (text.contains("progress <")) {
         QString percent = text.split("<").last().split(">").first();
         bool ok;
-        int p = percent.toInt(&ok);
+        p = percent.toInt(&ok);
         if (ok) {
             Q_ASSERT(_progressBar);
             _progressBar->setProperty("value", (float)(p / 100.0));
@@ -268,7 +269,8 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
         _startVisualCalibration();
         
         text = parts[1];
-        if (text == "accel" || text == "mag" || text == "gyro") {
+      //  qDebug() << text;
+        if (text == "accel" || text == "mag" || text == "gyro"|| text == "level") {
             // Reset all progress indication
             _orientationCalDownSideDone = false;
             _orientationCalUpsideDownSideDone = false;
@@ -291,7 +293,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
             _orientationCalTailDownSideVisible = false;
             _orientationCalNoseDownSideVisible = false;
             
-            _orientationCalAreaHelpText->setProperty("text", "Place your vehicle into one of the Incomplete orientations shown below and hold it still");
+            _orientationCalAreaHelpText->setProperty("text", tr("按照下面图放置你的机体，并保持静止")/*"Place your vehicle into one of the Incomplete orientations shown below and hold it still"*/);
             
             if (text == "accel") {
                 _accelCalInProgress = true;
@@ -324,7 +326,10 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
             } else if (text == "gyro") {
                 _gyroCalInProgress = true;
                 _orientationCalDownSideVisible = true;
-            } else {
+            }else if (text == "level") {
+                 _gyroCalInProgress = true;
+                _orientationCalDownSideVisible = true;
+            }else {
                 Q_ASSERT(false);
             }
             emit orientationCalSidesDoneChanged();
@@ -372,9 +377,9 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
         }
         
         if (_magCalInProgress) {
-            _orientationCalAreaHelpText->setProperty("text", "Rotate the vehicle continuously as shown in the diagram until marked as Completed");
+            _orientationCalAreaHelpText->setProperty("text", tr("旋转机体，直到完成")/*"Rotate the vehicle continuously as shown in the diagram until marked as Completed"*/);
         } else {
-            _orientationCalAreaHelpText->setProperty("text", "Hold still in the current orientation");
+            _orientationCalAreaHelpText->setProperty("text", tr("保持该方向，保持静止")/*"Hold still in the current orientation"*/);
         }
         
         emit orientationCalSidesInProgressChanged();
@@ -412,7 +417,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
             _orientationCalTailDownSideRotate = false;
         }
         
-        _orientationCalAreaHelpText->setProperty("text", "Place you vehicle into one of the orientations shown below and hold it still");
+        _orientationCalAreaHelpText->setProperty("text", tr("按照下面图放置你的机体，并保持静止"/*"Place you vehicle into one of the orientations shown below and hold it still"*/));
 
         emit orientationCalSidesInProgressChanged();
         emit orientationCalSidesDoneChanged();
@@ -421,7 +426,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
     }
 
     if (text.endsWith("side already completed")) {
-        _orientationCalAreaHelpText->setProperty("text", "Orientation already completed, place you vehicle into one of the incomplete orientations shown below and hold it still");
+        _orientationCalAreaHelpText->setProperty("text", tr("该方向已经完成，按照下图所示的未完成的方向之一放置机体，并保持静止")/*"Orientation already completed, place you vehicle into one of the incomplete orientations shown below and hold it still"*/);
         return;
     }
     
@@ -474,6 +479,7 @@ void SensorsComponentController::cancelCalibration(void)
     // for it to timeout.
     _waitingForCancel = true;
     emit waitingForCancelChanged();
-    _cancelButton->setEnabled(false);
+ //   _cancelButton->setEnabled(false);
+    _cancelButton->setVisible(false);
     _uas->stopCalibration();
 }

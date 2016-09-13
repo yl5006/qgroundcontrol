@@ -1,41 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="draw" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 369.161 369.857" enable-background="new 0 0 369.161 369.857" xml:space="preserve">
-<title>QuadRotorPlus</title>
-<rect x="181.192" y="51.713" fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" width="6.777" height="267.144"/>
-<rect x="50.999" y="181.896" fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" width="267.161" height="6.777"/>
-<path fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" d="M227.78,192.289l-36.195,36.195
-	c-3.869,3.869-10.141,3.869-14.009,0l-36.195-36.195c-3.869-3.869-3.869-10.141,0-14.009l36.195-36.195
-	c3.869-3.869,10.141-3.869,14.009,0l36.195,36.195C231.649,182.148,231.649,188.42,227.78,192.289z"/>
-<polygon fill="#FF442B" stroke="#000000" stroke-miterlimit="10" points="166.403,207.285 184.58,156.285 202.758,207.285 "/>
-<g opacity="0.8">
-	
-		<ellipse transform="matrix(0.7091 -0.7051 0.7051 0.7091 -38.092 278.2566)" fill="#4EC3E8" cx="318.162" cy="185.291" rx="50.993" ry="51.004"/>
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 220 220" enable-background="new 0 0 220 220" xml:space="preserve">
+<g>
+	<path fill="#698596" d="M110,104L110,104c-2,0-3.5-1.6-3.5-3.6l2.3-63.6h2.4l2.3,63.6C113.5,102.4,112,104,110,104z"/>
+	<circle opacity="0.5" fill="#E43A3D" cx="110" cy="34.8" r="26.4"/>
+	<circle fill="#FFFFFF" cx="110" cy="34.8" r="6"/>
+	<path fill="#698596" d="M104,110L104,110c0,2-1.6,3.5-3.6,3.5l-63.6-2.3v-2.4l63.6-2.3C102.4,106.5,104,108,104,110z"/>
+	<circle opacity="0.5" fill="#2EBBD9" cx="34.8" cy="110" r="26.4"/>
+	<circle fill="#FFFFFF" cx="34.8" cy="110" r="6"/>
+	<path fill="#698596" d="M110,116L110,116c2,0,3.5,1.6,3.5,3.6l-2.3,63.6h-2.4l-2.3-63.6C106.5,117.6,108,116,110,116z"/>
+	<circle opacity="0.5" fill="#E43A3D" cx="110" cy="185.2" r="26.4"/>
+	<circle fill="#FFFFFF" cx="110" cy="185.2" r="6"/>
+	<path fill="#698596" d="M116,110L116,110c0-2,1.6-3.5,3.6-3.5l63.6,2.3v2.4l-63.6,2.3C117.6,113.5,116,112,116,110z"/>
+	<circle opacity="0.5" fill="#2EBBD9" cx="185.2" cy="110" r="26.4"/>
+	<circle fill="#FFFFFF" cx="185.2" cy="110" r="6"/>
+	<polygon fill="#698596" points="103.9,133 93.2,126.8 87,116.1 87,103.9 93.2,93.2 103.9,87 116.1,87 126.8,93.2 133,103.9 
+		133,116.1 126.8,126.8 116.1,133 	"/>
+	<g>
+		<polygon fill="#FFFFFF" points="105.2,110.2 108.2,123.9 108.2,96.1 98.5,111.6 		"/>
+		<polygon fill="#FFFFFF" points="111.8,96.1 111.8,123.9 114.8,110.2 121.5,111.6 		"/>
+	</g>
 </g>
-<path fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" d="M326.101,177.368c-4.374-4.384-11.473-4.393-15.858-0.019
-	c-4.384,4.374-4.393,11.473-0.019,15.858c4.365,4.375,11.447,4.394,15.835,0.042c4.397-4.335,4.446-11.414,0.111-15.811
-	C326.147,177.414,326.124,177.391,326.101,177.368z"/>
-<g opacity="0.8">
-	
-		<ellipse transform="matrix(0.7091 -0.7051 0.7051 0.7091 -115.9983 89.944)" fill="#4EC3E8" cx="51" cy="185.546" rx="50.993" ry="51.004"/>
-</g>
-<path fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" d="M43.059,193.459c4.374,4.384,11.473,4.393,15.858,0.019
-	c4.384-4.374,4.393-11.473,0.019-15.858c-4.365-4.375-11.447-4.394-15.835-0.042c-4.397,4.335-4.446,11.414-0.111,15.811
-	C43.013,193.413,43.036,193.436,43.059,193.459z"/>
-<g opacity="0.8">
-	
-		<ellipse transform="matrix(0.7051 -0.7091 0.7091 0.7051 18.2994 145.9969)" fill="#159E1F" cx="184.694" cy="50.996" rx="50.993" ry="51.004"/>
-</g>
-<path fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" d="M192.614,43.06c4.384,4.374,4.393,11.473,0.019,15.858
-	c-4.374,4.384-11.473,4.393-15.858,0.019c-4.375-4.365-4.394-11.447-0.042-15.835c4.335-4.397,11.414-4.446,15.811-0.111
-	C192.568,43.014,192.591,43.037,192.614,43.06z"/>
-<g opacity="0.8">
-	
-		<ellipse transform="matrix(0.7051 -0.7091 0.7091 0.7051 -171.6616 224.8952)" fill="#159E1F" cx="184.58" cy="318.851" rx="50.993" ry="51.004"/>
-</g>
-<path fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" d="M176.663,326.797c-4.384-4.374-4.393-11.473-0.019-15.858
-	c4.374-4.384,11.473-4.393,15.858-0.019c4.375,4.365,4.394,11.447,0.042,15.835c-4.335,4.397-11.414,4.446-15.811,0.111
-	C176.709,326.843,176.686,326.82,176.663,326.797z"/>
 </svg>

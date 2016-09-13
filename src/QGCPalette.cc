@@ -49,7 +49,8 @@ QColor QGCPalette::_warningText[QGCPalette::_cThemes][QGCPalette::_cColorGroups]
 
 QColor QGCPalette::_button[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#ffffff"),  QColor("#ffffff") },
-    { QColor(0x58, 0x58, 0x58), QColor(98, 98, 100) },
+ //   { QColor(0x58, 0x58, 0x58), QColor(98, 98, 100) },
+    { QColor("#33444c"),  QColor("#33444c") },
 //    { QColor(46, 187, 217), QColor(46, 187, 217) },
 };
 
@@ -61,6 +62,7 @@ QColor QGCPalette::_buttonText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] 
 QColor QGCPalette::_buttonHighlight[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#e4e4e4"), QColor("#33b5e5") },
 //    { QColor(0x58, 0x58, 0x58), QColor(237, 235, 51) },
+  //   { QColor("#10ebbf"), QColor("#10ebbf") },
     { QColor(47, 160, 175), QColor(47, 160, 175) },
 };
 
@@ -71,7 +73,8 @@ QColor QGCPalette::_buttonHighlightText[QGCPalette::_cThemes][QGCPalette::_cColo
 
 QColor QGCPalette::_primaryButton[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor(0x58, 0x58, 0x58), QColor("#badec5") },
-    { QColor(0x58, 0x58, 0x58), QColor("#badec5") },
+ //   { QColor(0x58, 0x58, 0x58), QColor("#badec5") },
+     { QColor("#10ebbf"), QColor("#10ebbf") },
 };
 
 QColor QGCPalette::_primaryButtonText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {

@@ -35,10 +35,10 @@ FactPanel {
             labelText: qsTr("机体名称:")//"Vehicle:"
             valueText: autoStartSet ? controller.currentVehicleName : "Setup required"
         }
-
-        VehicleSummaryRow {
-            labelText: qsTr("Firmware Version:")
-            valueText: activeVehicle.firmwareMajorVersion == -1 ? qsTr("Unknown") : activeVehicle.firmwareMajorVersion + "." + activeVehicle.firmwareMinorVersion + "." + activeVehicle.firmwarePatchVersion + activeVehicle.firmwareVersionTypeString
-        }
+//   do not show
+//        VehicleSummaryRow {
+//            labelText: qsTr("Firmware Version:")
+//            valueText: activeVehicle.firmwareMajorVersion == -1 ? qsTr("Unknown") : activeVehicle.firmwareMajorVersion + "." + activeVehicle.firmwareMinorVersion + "." + activeVehicle.firmwarePatchVersion + activeVehicle.firmwareVersionTypeString
+//        }
     }
 }

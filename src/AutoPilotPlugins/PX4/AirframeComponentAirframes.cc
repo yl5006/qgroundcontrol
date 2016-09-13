@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -38,13 +38,13 @@ QMap<QString, AirframeComponentAirframes::AirframeType_t*>& AirframeComponentAir
     return rgAirframeTypes;
 }
 
-void AirframeComponentAirframes::insert(QString& group, QString& image, QString& name, int id)
+void AirframeComponentAirframes::insert(QString& group, QString& image,int type, QString& name, int id)
 {
     AirframeType_t *g;
     if (!rgAirframeTypes.contains(group)) {
         g = new AirframeType_t;
         g->name = group;
-
+        g->type = type;
         if (image.length() > 0) {
             g->imageResource = QString(":/qmlimages/Airframe/").append(image);
             if (!QFile::exists(g->imageResource)) {
@@ -57,7 +57,6 @@ void AirframeComponentAirframes::insert(QString& group, QString& image, QString&
         if (g->imageResource.isEmpty()) {
             g->imageResource = QString("qrc:/qmlimages/Airframe/AirframeUnknown");
         }
-
         rgAirframeTypes.insert(group, g);
     } else {
         g = rgAirframeTypes.value(group);

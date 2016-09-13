@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -44,21 +44,34 @@ Item {
         Column {
             id:         column1
             spacing:    _margins
-
+            anchors.horizontalCenter: parent.horizontalCenter
             Row {
                 id:         settingsRow
-                spacing:    _margins
-
+                spacing:    _margins*4
+         //       anchors.horizontalCenter: parent.horizontalCenter
                 Column {
                     id:     flightModeSettingsColumn
                     spacing: _margins
 
                     QGCLabel {
                         id:             flightModeLabel
-                        text:           qsTr("Flight Mode Settings")
+                        text:           qsTr("飞行模式设置")//qsTr("Flight Mode Settings")
                         font.family:    ScreenTools.demiboldFontFamily
+                        anchors.horizontalCenter: parent.horizontalCenter
                     }
-
+                    //-- Palette Styles
+                    Item {
+                        height: ScreenTools.defaultFontPixelHeight / 2
+                        width:  parent.width
+                        PathDraw {
+                            lineWidth: 1
+                            lineColor: qgcPal.button
+                            point1x:0
+                            point1y:parent.height/2
+                            point2x:parent.width
+                            point2y:parent.height/2
+                        }
+                    }
                     Rectangle {
                         id:                 flightModeSettings
                         width:              flightModeColumn.width + (_margins * 2)
@@ -76,9 +89,10 @@ Item {
                                 spacing: _margins
 
                                 QGCLabel {
+                                    width:              modelabel.width
                                     id:                 modeChannelLabel
                                     anchors.baseline:   modeChannelCombo.baseline
-                                    text:               qsTr("Mode channel:")
+                                    text:               qsTr("模式通道: ")//qsTr("Mode channel:")
                                 }
 
                                 FactComboBox {
@@ -99,7 +113,7 @@ Item {
 
                                     QGCLabel {
                                         anchors.baseline:   modeCombo.baseline
-                                        text:               qsTr("Flight Mode %1").arg(index)
+                                        text:               qsTr("飞行模式 %1").arg(index)//qsTr("Flight Mode %1").arg(index)
                                         color:              controller.activeFlightMode == index ? "yellow" : qgcPal.text
                                     }
 
@@ -120,10 +134,23 @@ Item {
                     spacing:    _margins
 
                     QGCLabel {
-                        text:           qsTr("Switch Settings")
+                        text:          qsTr("开关设置")// qsTr("Switch Settings")
                         font.family:    ScreenTools.demiboldFontFamily
+                         anchors.horizontalCenter: parent.horizontalCenter
                     }
-
+                    //-- Palette Styles
+                    Item {
+                        height: ScreenTools.defaultFontPixelHeight / 2
+                        width:  parent.width
+                        PathDraw {
+                            lineWidth: 1
+                            lineColor: qgcPal.button
+                            point1x:0
+                            point1y:parent.height/2
+                            point2x:parent.width
+                            point2y:parent.height/2
+                        }
+                    }
                     Rectangle {
                         id:     switchSettingsRect
                         width:  switchSettingsColumn.width + (_margins * 2)
@@ -144,7 +171,7 @@ Item {
 
                                 QGCLabel {
                                     anchors.baseline:   returnCombo.baseline
-                                    text:               "Return switch:"
+                                    text:               qsTr("返航开关")//"Return switch:"
                                     color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
                                 }
 
@@ -156,43 +183,43 @@ Item {
                                 }
                             }
 
-                            Row {
-                                spacing: ScreenTools.defaultFontPixelWidth
+//                            Row {
+//                                spacing: ScreenTools.defaultFontPixelWidth
 
-                                property Fact fact: controller.getParameterFact(-1, "RC_MAP_KILL_SW")
+//                                property Fact fact: controller.getParameterFact(-1, "RC_MAP_KILL_SW")
 
-                                QGCLabel {
-                                    anchors.baseline:   killCombo.baseline
-                                    text:               "Kill switch:"
-                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
-                                }
+//                                QGCLabel {
+//                                    anchors.baseline:   killCombo.baseline
+//                                    text:               "Kill switch:"
+//                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
+//                                }
 
-                                FactComboBox {
-                                    id:         killCombo
-                                    width:      _channelComboWidth
-                                    fact:       parent.fact
-                                    indexModel: false
-                                }
-                            }
+//                                FactComboBox {
+//                                    id:         killCombo
+//                                    width:      _channelComboWidth
+//                                    fact:       parent.fact
+//                                    indexModel: false
+//                                }
+//                            }
 
-                            Row {
-                                spacing: ScreenTools.defaultFontPixelWidth
+//                            Row {
+//                                spacing: ScreenTools.defaultFontPixelWidth
 
-                                property Fact fact: controller.getParameterFact(-1, "RC_MAP_OFFB_SW")
+//                                property Fact fact: controller.getParameterFact(-1, "RC_MAP_OFFB_SW")
 
-                                QGCLabel {
-                                    anchors.baseline:   offboardCombo.baseline
-                                    text:               "Offboard switch:"
-                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
-                                }
+//                                QGCLabel {
+//                                    anchors.baseline:   offboardCombo.baseline
+//                                    text:               "Offboard switch:"
+//                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
+//                                }
 
-                                FactComboBox {
-                                    id:         offboardCombo
-                                    width:      _channelComboWidth
-                                    fact:       parent.fact
-                                    indexModel: false
-                                }
-                            }
+//                                FactComboBox {
+//                                    id:         offboardCombo
+//                                    width:      _channelComboWidth
+//                                    fact:       parent.fact
+//                                    indexModel: false
+//                                }
+//                            }
 
                             Row {
                                 spacing: ScreenTools.defaultFontPixelWidth
@@ -202,7 +229,7 @@ Item {
 
                                 QGCLabel {
                                     anchors.baseline:   vtolCombo.baseline
-                                    text:               "VTOL mode switch:"
+                                    text:               qsTr("垂直起降模式开关")//"VTOL mode switch:"
                                     color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
                                 }
 
@@ -215,20 +242,20 @@ Item {
                             }
                         } // Column
                     } // Rectangle
-
-                    RCChannelMonitor {
-                        width: switchSettingsRect.width
-                    }
+//                   No Monitor
+//                    RCChannelMonitor {
+//                        width: switchSettingsRect.width
+//                    }
                 } // Column - Switch settings
             } // Row - Settings
-
-            QGCButton {
-                text: "Use Multi Channel Mode Selection"
-                onClicked: {
-                    controller.getParameterFact(-1, "RC_MAP_MODE_SW").value = 5
-                    controller.getParameterFact(-1, "RC_MAP_FLTMODE").value = 0
-                }
-            }
+//            不切换
+//            QGCButton {
+//                text: "Use Multi Channel Mode Selection"
+//                onClicked: {
+//                    controller.getParameterFact(-1, "RC_MAP_MODE_SW").value = 5
+//                    controller.getParameterFact(-1, "RC_MAP_FLTMODE").value = 0
+//                }
+//            }
         } // Column
     } // QGCFlickable
 } // QGCView

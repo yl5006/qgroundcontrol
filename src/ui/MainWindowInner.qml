@@ -33,7 +33,7 @@ Item {
 
     signal reallyClose
 
-    readonly property string _planViewSource:       "MissionEditor.qml"
+    readonly property string _planViewSource:       "MissionEditorBottom.qml"
     readonly property string _setupViewSource:      "SetupViewandAppsetting.qml"//"SetupView.qml"
     readonly property string _settingsViewSource:   "AppSettings.qml"
 

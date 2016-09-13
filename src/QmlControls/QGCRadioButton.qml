@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 
@@ -9,8 +9,23 @@ RadioButton {
     property var __qgcPal: QGCPalette { colorGroupEnabled: enabled }
 
     style: RadioButtonStyle {
+        indicator: Rectangle {
+                implicitWidth:  16
+                implicitHeight: 16
+                radius: 9
+                border.color: __qgcPal.primaryButton
+                border.width: 2
+                color: "transparent"
+                Rectangle {
+                    anchors.fill: parent
+                    anchors.margins: 4
+                    visible: control.checked
+                    color:  __qgcPal.primaryButton
+                    radius: width/2
+                }
+        }
         label: Item {
-            implicitWidth:          text.implicitWidth + ScreenTools.defaultFontPixelWidth * 0.25
+            implicitWidth:          text.implicitWidth + ScreenTools.defaultFontPixelWidth * 0.4
             implicitHeight:         text.implicitHeight
             baselineOffset:         text.y + text.baselineOffset
             Rectangle {
@@ -19,7 +34,7 @@ RadioButton {
                 anchors.leftMargin: -3
                 anchors.rightMargin:-3
                 visible:            control.activeFocus
-                height:             ScreenTools.defaultFontPixelWidth * 0.25
+                height:             ScreenTools.defaultFontPixelWidth * 0.4
                 radius:             height * 0.5
                 color:              "#224f9fef"
                 border.color:       "#47b"

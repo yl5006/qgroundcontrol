@@ -160,30 +160,29 @@ Item {
         maxHeight:                  virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.y - y : parent.height - anchors.margins - y
     }
 */
-    QGCLabel {
-        id:         flyLabel
-        text:       qsTr("Fly")
-        color:      mapPal.text
-        visible:    !ScreenTools.isShortScreen
-        anchors.topMargin:          _toolButtonTopMargin
-        anchors.horizontalCenter:   toolColumn.horizontalCenter
-        anchors.top:                parent.top
-    }
+//    QGCLabel {
+//        id:         flyLabel
+//        text:       qsTr("Fly")
+//        color:      mapPal.text
+//        visible:    !ScreenTools.isShortScreen
+//        anchors.topMargin:          _toolButtonTopMargin
+//        anchors.horizontalCenter:   toolColumn.horizontalCenter
+//        anchors.top:                parent.top
+//    }
 
     //-- Vertical Tool Buttons
-    Column {
+    Row {
         id:                 toolColumn
-        anchors.topMargin:  ScreenTools.isShortScreen ? _toolButtonTopMargin : ScreenTools.defaultFontPixelHeight / 2
-        anchors.leftMargin: ScreenTools.defaultFontPixelHeight
-        anchors.left:       parent.left
-        anchors.top:        ScreenTools.isShortScreen ? parent.top : flyLabel.bottom
-        spacing:            ScreenTools.defaultFontPixelHeight
+        anchors.topMargin:  ScreenTools.isShortScreen ? _toolButtonTopMargin+_toolButtonTopMargin : ScreenTools.defaultFontPixelHeight / 2+_toolButtonTopMargin
+        anchors.top:        parent.top
+        anchors.horizontalCenter:   parent.horizontalCenter
+    //    spacing:            ScreenTools.defaultFontPixelHeight
         visible:            _mainIsMap
 
         //-- Map Center Control
         DropButton {
             id:                 centerMapDropButton
-            dropDirection:      dropRight
+            dropDirection:      dropDown
             buttonImage:        "/qmlimages/MapCenter.svg"
             viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
             exclusiveGroup:     _dropButtonsExclusiveGroup
@@ -191,14 +190,14 @@ Item {
             lightBorders:       _lightWidgetBorders
 
             dropDownComponent: Component {
-                Row {
+                Column {
                     spacing: ScreenTools.defaultFontPixelWidth
 
                     QGCCheckBox {
                         id:         followVehicleCheckBox
                         text:               qsTr("跟随地图")//"Follow Vehicle"
                         checked:    _flightMap ? _flightMap._followVehicle : false
-                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter:  parent.horizontalCenter
                         //anchors.baseline:   centerMapButton.baseline - This doesn't work correctly on mobile for some strange reason, so we center instead
 
                         onClicked: {
@@ -206,27 +205,53 @@ Item {
                             _flightMap._followVehicle = !_flightMap._followVehicle
                         }
                     }
-
-                    QGCButton {
-                        id:         centerMapButton
-                        text:       "Center map on Vehicle"
+                    SubMenuButton {
+                        imageResource:      "/qmlimages/map_plane.svg"
                         enabled:    _activeVehicle&& !followVehicleCheckBox.checked
-
+                        text:               qsTr("地图中心")//qsTr("Center map on Vehicle")
                         property var activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
 
-                        onClicked: {
+                        onClicked:  {
                             _dropButtonsExclusiveGroup.current = null
                             _flightMap.center = activeVehicle.coordinate
                         }
                     }
+//                    ImageButton {
+//                        width:          ScreenTools.defaultFontPixelHeight*2
+//                        height:         width
+//                        anchors.horizontalCenter:  parent.horizontalCenter
+//                        imageResource:  "/qmlimages/map_plane.svg"
+//                        enabled:     _activeVehicle&& !followVehicleCheckBox.checked
+//                        property var activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+//                        onClicked: {
+//                            _dropButtonsExclusiveGroup.current = null
+//                            _flightMap.center = activeVehicle.coordinate
+//                        }
+//                    }
+//                    QGCButton {
+//                        id:         centerMapButton
+//                        text:       "Center map on Vehicle"
+//                        enabled:    _activeVehicle&& !followVehicleCheckBox.checked
+
+//                        property var activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+
+//                        onClicked: {
+//                            _dropButtonsExclusiveGroup.current = null
+//                            _flightMap.center = activeVehicle.coordinate
+//                        }
+//                    }
                 }
             }
         }
-
+        Rectangle {
+            height:     parent.height*0.8
+            width:      1
+            color:      "grey"
+        }
         //-- Map Type Control
         DropButton {
             id:                 mapTypeButton
-            dropDirection:      dropRight
+            dropDirection:      dropDown
             buttonImage:        "/qmlimages/MapType.svg"
             viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
             exclusiveGroup:     _dropButtonsExclusiveGroup
@@ -237,33 +262,53 @@ Item {
                 Column {
                     spacing: ScreenTools.defaultFontPixelWidth
 
+
                     Row {
                         spacing: ScreenTools.defaultFontPixelWidth
-
                         Repeater {
                             model: QGroundControl.flightMapSettings.mapTypes
-
-                            QGCButton {
-                                checkable:      true
-                                checked:        QGroundControl.flightMapSettings.mapType === text
-                                text:           modelData
-                                width:          clearButton.width
+                            RoundImageButton {
+                                width:          ScreenTools.defaultFontPixelHeight*3
+                                height:         width
                                 exclusiveGroup: _mapTypeButtonsExclusiveGroup
-
+                                checked:        QGroundControl.flightMapSettings.mapType === QGroundControl.flightMapSettings.mapTypes[index]
+                                imageResource:  index==0?"/qmlimages/map_street.svg":index==1?"/qmlimages/map_gps.svg" :"/qmlimages/map_terrain.svg"
+                                bordercolor:    qgcPal.buttonHighlight
+                                showcheckcolor: true
                                 onClicked: {
-                                    QGroundControl.flightMapSettings.mapType = text
+                                    QGroundControl.flightMapSettings.mapType = QGroundControl.flightMapSettings.mapTypes[index]
                                     checked = true
                                     _dropButtonsExclusiveGroup.current = null
                                 }
                             }
                         }
                     }
+//                    Row {
+//                        spacing: ScreenTools.defaultFontPixelWidth
 
-                    QGCButton {
-                        id:         clearButton
-                        text:       qsTr("Clear Flight Trails")
+//                        Repeater {
+//                            model: QGroundControl.flightMapSettings.mapTypes
+
+//                            QGCButton {
+//                                checkable:      true
+//                                checked:        QGroundControl.flightMapSettings.mapType === text
+//                                text:           modelData
+//                                width:          clearButton.width
+//                                exclusiveGroup: _mapTypeButtonsExclusiveGroup
+
+//                                onClicked: {
+//                                    QGroundControl.flightMapSettings.mapType = text
+//                                    checked = true
+//                                    _dropButtonsExclusiveGroup.current = null
+//                                }
+//                            }
+//                        }
+//                    }
+                    SubMenuButton {
+                        imageResource:      "/qmlimages/clearmission.svg"
                         enabled:    QGroundControl.multiVehicleManager.activeVehicle
-                        onClicked: {
+                        text:               qsTr("清除飞行路线")//qsTr("Clear Flight Trails")
+                        onClicked:  {
                             QGroundControl.multiVehicleManager.activeVehicle.clearTrajectoryPoints()
                             _dropButtonsExclusiveGroup.current = null
                         }
@@ -271,7 +316,11 @@ Item {
                 }
             }
         }
-
+        Rectangle {
+            height:     parent.height*0.8
+            width:      1
+            color:      "grey"
+        }
         //-- Zoom Map In
         RoundButton {
             id:                 mapZoomPlus
@@ -286,7 +335,11 @@ Item {
                 checked = false
             }
         }
-
+        Rectangle {
+            height:     parent.height*0.8
+            width:      1
+            color:      "grey"
+        }
         //-- Zoom Map Out
         RoundButton {
             id:                 mapZoomMinus
@@ -302,7 +355,15 @@ Item {
             }
         }
     }
+    MapScale {
+        anchors.margins:    ScreenTools.defaultFontPixelHeight
+        anchors.left:       toolColumn.right
+         anchors.verticalCenter:         toolColumn.verticalCenter
+        z:                  QGroundControl.zOrderWidgets
+        mapControl:         _flightMap
+        visible:            !ScreenTools.isTinyScreen
 
+    }
     //-- Guided mode buttons
     Rectangle {
         id:                         _guidedModeBar

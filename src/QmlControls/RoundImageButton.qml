@@ -12,7 +12,7 @@ Button {
     property string imageResource:  "/qmlimages/subMenuButtonImage.png"     ///< Button image
     property color  bordercolor:     "White"
     text: "Button"  ///< Pass in your own button text
-
+    property bool   showcheckcolor:      false
     checkable:      true
     implicitHeight: ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 3.5 : ScreenTools.defaultFontPixelHeight * 2.5
 
@@ -29,7 +29,7 @@ Button {
         background: Rectangle {
             id:     innerRect
             anchors.fill:   parent
-            color:  qgcPal.windowShade
+            color:          (showcheckcolor && control.checked)?qgcPal.buttonHighlight:qgcPal.windowShade
             radius:         width / 2
             border.width:   showborder? width / 20 :0
             border.color:   bordercolor

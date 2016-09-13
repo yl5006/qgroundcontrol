@@ -16,7 +16,7 @@ Rectangle {
     height:             deferedload.status == Loader.Ready ? (visible ? deferedload.item.height : 0) : 0
   //  color:              qgcPal.windowShadeDark
     color:              Qt.rgba(0.102,0.887,0.609,0)
-    visible:            missionItem.isCurrentItem
+    //visible:            _currentMissionItem.isCurrentItem
     radius:             _radius
 
     Loader {
@@ -42,16 +42,16 @@ Rectangle {
                     QGCLabel {
                         width:          parent.width
                         wrapMode:       Text.WordWrap
-                        font.pointSize: ScreenTools.smallFontPointSize
-                        text:           missionItem.sequenceNumber == 0 ?
+                        font.pointSize: ScreenTools.defaultFontPointSize
+                        text:           _currentMissionItem.sequenceNumber == 0 ?
                                     qsTr("Planned home position.") :
-                                            (missionItem.rawEdit ?
+                                            (_currentMissionItem.rawEdit ?
                                                 qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
-                                                missionItem.commandDescription)
+                                                _currentMissionItem.commandDescription)
                     }
 
                     Repeater {
-                        model: missionItem.comboboxFacts
+                        model: _currentMissionItem.comboboxFacts
 
                         Item {
                             width:  valuesColumn.width
@@ -76,7 +76,7 @@ Rectangle {
                     }
 
                     Repeater {
-                        model: missionItem.textFieldFacts
+                        model: _currentMissionItem.textFieldFacts
 
                         Item {
                             width:  valuesColumn.width
@@ -107,7 +107,7 @@ Rectangle {
                     }
 
                     Repeater {
-                        model: missionItem.checkboxFacts
+                        model: _currentMissionItem.checkboxFacts
 
                         FactCheckBox {
                             text:   object.name
@@ -117,7 +117,7 @@ Rectangle {
 
                     QGCButton {
                         text:       qsTr("Move Home to map center")
-                        visible:    missionItem.homePosition
+                        visible:    _currentMissionItem.homePosition
                         onClicked:  editorRoot.moveHomeToMapCenter()
                         anchors.horizontalCenter: parent.horizontalCenter
                     }

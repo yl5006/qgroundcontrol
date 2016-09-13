@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -51,5 +51,5 @@ FactPanel {
         }
     }
 
-    color: __qgcPal.windowShadeDark
+    color:"transparent" //__qgcPal.windowShadeDark
 }

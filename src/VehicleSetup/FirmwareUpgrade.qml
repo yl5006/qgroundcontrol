@@ -346,18 +346,64 @@ QGCView {
     QGCViewPanel {
         id:             panel
         anchors.fill:   parent
-//        ProgressBar {
-//            id:                 progressBar
-//            anchors.topMargin:  ScreenTools.defaultFontPixelHeight
-//            anchors.top:        titleLabel.bottom
-//            width:              parent.width
-//        }
+        //        ProgressBar {
+        //            id:                 progressBar
+        //            anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+        //            anchors.top:        titleLabel.bottom
+        //            width:              parent.width
+        //        }
+        Rectangle {
+            id:                         title
+            anchors.top:                parent.top
+            anchors.horizontalCenter:   parent.horizontalCenter
+            width:                  parent.width
+            height:                 ScreenTools.defaultFontPixelHeight*10
+            color:                  "transparent"
+            QGCCircleProgress{
+                id:                     setcircle
+                anchors.left:           parent.left
+                anchors.top:            parent.top
+                anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*5
+                anchors.topMargin:      ScreenTools.defaultFontPixelHeight
+                width:                  ScreenTools.defaultFontPixelHeight*5
+                value:                  0
+            }
+            QGCColoredImage {
+                id:                     setimg
+                height:                 ScreenTools.defaultFontPixelHeight*2.5
+                width:                  height
+                sourceSize.width: width
+                source:     "/qmlimages/FirmwareUpgradeIcon.svg"
+                fillMode:   Image.PreserveAspectFit
+                color:      qgcPal.text
+                anchors.horizontalCenter:setcircle.horizontalCenter
+                anchors.verticalCenter: setcircle.verticalCenter
+            }
+            QGCLabel {
+                id:             idset
+                anchors.left:   setimg.left
+                anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+                text:           qsTr("固件下载")//"Systemseting"
+                font.pointSize: ScreenTools.mediumFontPointSize
+                font.bold:              true
+                color:          qgcPal.text
+                anchors.verticalCenter: setimg.verticalCenter
+            }
+            Image {
+                source:    "/qmlimages/title.svg"
+                width:      idset.width+ScreenTools.defaultFontPixelHeight*4
+                height:     ScreenTools.defaultFontPixelHeight*3
+                anchors.verticalCenter: setcircle.verticalCenter
+                anchors.left:          setcircle.right
+                //                fillMode: Image.PreserveAspectFit
+            }
+        }
+
         QGCProgressBar
         {
             id:                 progressBar
-            anchors.topMargin:  ScreenTools.defaultFontPixelHeight*12
-            anchors.top:        parent.top
-            anchors.verticalCenter: parent.verticalCenter//+ScreenTools.defaultFontPixelHeight*12
+            anchors.top:        title.bottom
+            anchors.topMargin: ScreenTools.defaultFontPixelHeight*4
             anchors.horizontalCenter:   parent.horizontalCenter
             width:              ScreenTools.defaultFontPixelHeight*16
             height:             ScreenTools.defaultFontPixelHeight*16
@@ -366,10 +412,10 @@ QGCView {
         }
         TextArea {
             id:                 statusTextArea
-            anchors.top:        parent.top
-            anchors.topMargin:  ScreenTools.defaultFontPixelHeight*24
+            anchors.top:        progressBar.bottom
             anchors.bottom:     parent.bottom
-            width:              parent.width
+            anchors.horizontalCenter:   parent.horizontalCenter
+            width:              parent.width*0.8
             readOnly:           true
             frameVisible:       false
             font.pointSize:     ScreenTools.defaultFontPointSize
@@ -381,5 +427,6 @@ QGCView {
                 backgroundColor:    qgcPal.windowShade
             }
         }
+
     } // QGCViewPabel
 } // QGCView

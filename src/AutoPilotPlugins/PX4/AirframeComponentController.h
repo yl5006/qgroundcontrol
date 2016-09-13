@@ -89,11 +89,12 @@ class AirframeType : public QObject
     Q_OBJECT
     
 public:
-    AirframeType(const QString& name, const QString& imageResource, QObject* parent = NULL);
+    AirframeType(const QString& name, const QString& imageResource, int type , QObject* parent = NULL);
     ~AirframeType();
     
     Q_PROPERTY(QString name MEMBER _name CONSTANT)
     Q_PROPERTY(QString imageResource MEMBER _imageResource CONSTANT)
+    Q_PROPERTY(int     type          MEMBER _type CONSTANT)
     Q_PROPERTY(QVariantList airframes MEMBER _airframes CONSTANT)
     
     void addAirframe(const QString& name, int autostartId);
@@ -101,6 +102,7 @@ public:
 private:
     QString         _name;
     QString         _imageResource;
+    int             _type;
     QVariantList    _airframes;
 };
 

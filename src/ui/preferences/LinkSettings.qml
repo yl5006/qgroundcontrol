@@ -21,7 +21,7 @@ Rectangle {
     id:                 _linkRoot
     color:              qgcPal.window
     anchors.fill:       parent
-    anchors.margins:    ScreenTools.defaultFontPixelWidth
+ //   anchors.margins:    ScreenTools.defaultFontPixelWidth
 
     property var _currentSelection: null
     property int _firstColumn:      ScreenTools.defaultFontPixelWidth * 12
@@ -45,96 +45,243 @@ Rectangle {
         settingLoader.sourceComponent = null
     }
 
+    QGCCircleProgress{
+        id:                 setcircle
+        anchors.left:       parent.left
+        anchors.top:        parent.top
+        anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+        anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+        width:              ScreenTools.defaultFontPixelHeight*5
+        value:              0
+    }
+    QGCColoredImage {
+        id:         setimg
+        height:     ScreenTools.defaultFontPixelHeight*2.5
+        width:      height
+        sourceSize.width: width
+        source:     "/res/connect.svg"
+        fillMode:   Image.PreserveAspectFit
+        color:      qgcPal.text
+        anchors.horizontalCenter:setcircle.horizontalCenter
+        anchors.verticalCenter: setcircle.verticalCenter
+    }
+    QGCLabel {
+        id:             idset
+        anchors.left:   setimg.left
+        anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+        text:           qsTr("连接")//"Systemseting"
+        font.pointSize: ScreenTools.mediumFontPointSize
+        font.bold:      true
+        color:          qgcPal.text
+        anchors.verticalCenter: setimg.verticalCenter
+    }
+    Image {
+        source:    "/qmlimages/title.svg"
+        width:      idset.width+ScreenTools.defaultFontPixelHeight*4
+        height:     ScreenTools.defaultFontPixelHeight*3
+        anchors.verticalCenter: setcircle.verticalCenter
+        anchors.left:           setcircle.right
+        //        fillMode: Image.PreserveAspectFit
+    }
+
     QGCFlickable {
         clip:               true
-        anchors.top:        parent.top
+        anchors.top:        setimg.bottom
+        anchors.margins:    ScreenTools.defaultFontPixelWidth*5
         width:              parent.width
-        height:             parent.height - buttonRow.height
-        contentHeight:      settingsColumn.height
+        height:             parent.height -ScreenTools.defaultFontPixelWidth*20
+        contentHeight:      settingsColumn.height+ScreenTools.defaultFontPixelWidth*2
         contentWidth:       _linkRoot.width
         flickableDirection: Flickable.VerticalFlick
 
-        Column {
+        Flow {
             id:                 settingsColumn
-            width:              _linkRoot.width
-            anchors.margins:    ScreenTools.defaultFontPixelWidth
-            spacing:            ScreenTools.defaultFontPixelHeight / 2
+            width:              _linkRoot.width*0.9
+            anchors.left:       parent.left
+            anchors.leftMargin: ScreenTools.defaultFontPixelWidth*20
+            anchors.top:        parent.top
+            anchors.topMargin:  ScreenTools.defaultFontPixelWidth
+            spacing:            ScreenTools.defaultFontPixelHeight*4
             Repeater {
                 model: QGroundControl.linkManager.linkConfigurations
-                delegate:
-                QGCButton {
-                    text:   object.name
-                    width:  _linkRoot.width * 0.5
-                    exclusiveGroup: linkGroup
-                    anchors.horizontalCenter: settingsColumn.horizontalCenter
-                    onClicked: {
-                        checked = true
-                        _currentSelection = object
+                delegate: Rectangle{
+                    width:              ScreenTools.defaultFontPixelHeight * 24
+                    height:             ScreenTools.defaultFontPixelHeight * 10
+                    color:              "transparent"
+                    ImageButton {
+                        id:                  con
+                        imageResource:       "/qmlimages/connecttitlebg.svg"
+                        checkimage:          "/qmlimages/connecttitlebgcheck.svg"
+                        exclusiveGroup:      linkGroup
+                        anchors.top:         parent.top
+                        anchors.left:        parent.left
+                        checkable:           true
+                        width:               ScreenTools.defaultFontPixelHeight * 24
+                        height:              ScreenTools.defaultFontPixelHeight * 3
+                        text:                object.name
+                        onClicked: {
+                            //  checked=  true
+                            _currentSelection = object
+                        }
                     }
+                    Image{
+                        id:                     bgicon
+                        anchors.top:                con.bottom
+                        anchors.horizontalCenter:   con.horizontalCenter
+                        source:             "/qmlimages/connecticonbg.svg"
+                        fillMode:            Image.PreserveAspectFit
+                        width:               ScreenTools.defaultFontPixelHeight * 20
+                        height:              ScreenTools.defaultFontPixelHeight * 4
+                    }
+                    Row{
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: bgicon.verticalCenter
+                        spacing:            ScreenTools.defaultFontPixelHeight * 3
+                        QGCColoredImage {
+                            id:                     connect
+                            width:                  ScreenTools.defaultFontPixelHeight * 2
+                            height:                 ScreenTools.defaultFontPixelHeight * 2
+                            fillMode:               Image.PreserveAspectFit
+                            smooth:                 true
+                            color:                  "#8ea6b1"//"White"//qgcPal.button
+                            source:                 "/qmlimages/connect.svg"
+                            visible:                 object && !object.link
+                            MouseArea{
+                                anchors.fill: parent
+                                enabled:    object && !object.link
+                                onClicked: {
+                                   QGroundControl.linkManager.createConnectedLink(object)
+                                }
+                            }
+                        }
+                        QGCColoredImage {
+                            id:                     edit
+                            anchors.verticalCenter: parent.verticalCenter
+                            width:                  ScreenTools.defaultFontPixelHeight * 2
+                            height:                 ScreenTools.defaultFontPixelHeight * 2
+                            fillMode:               Image.PreserveAspectFit
+                            smooth:                 true
+                            color:                  "#8ea6b1"//"White"// qgcPal.button
+                            source:                 "/qmlimages/connectedit.svg"
+                            visible:                object && !object.link
+                            MouseArea{
+                                anchors.fill: parent
+                                enabled:    object && !object.link
+                                onClicked: {
+                                   _linkRoot.openCommSettings(object)
+                                }
+                            }
+
+                        }
+                        QGCColoredImage {
+                            id:                     del
+                            anchors.verticalCenter: parent.verticalCenter
+                            width:                  ScreenTools.defaultFontPixelHeight * 2
+                            height:                 ScreenTools.defaultFontPixelHeight * 2
+                            fillMode:               Image.PreserveAspectFit
+                            smooth:                 true
+                            color:                  "#8ea6b1"//"White"//qgcPal.button
+                            source:                 "/qmlimages/connectdel.svg"
+                            visible:                object && ! object.dynamic
+                            MouseArea{
+                                anchors.fill: parent
+                                enabled:                object && ! object.dynamic
+                                onClicked: {
+                                    if(object)
+                                        deleteDialog.visible = true
+                                }
+                                MessageDialog {
+                                    id:         deleteDialog
+                                    visible:    false
+                                    icon:       StandardIcon.Warning
+                                    standardButtons: StandardButton.Yes | StandardButton.No
+                                    title:      qsTr("Remove Link Configuration")
+                                    text:       object ? qsTr("Remove %1. Is this really what you want?").arg(object.name) : ""
+                                    onYes: {
+                                        if(object)
+                                            QGroundControl.linkManager.removeConfiguration(object)
+                                        deleteDialog.visible = false
+                                    }
+                                    onNo: {
+                                        deleteDialog.visible = false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }//Repeater
+            ImageButton {
+                id:                  add
+                imageResource:       "/qmlimages/connectadd.svg"
+                width:               ScreenTools.defaultFontPixelHeight * 24
+                height:              ScreenTools.defaultFontPixelHeight * 7
+                onClicked: {
+                    _linkRoot.openCommSettings(null) //  checked=  tru
                 }
             }
         }
     }
 
-    Row {
-        id:                 buttonRow
-        spacing:            ScreenTools.defaultFontPixelWidth
-        anchors.bottom:     parent.bottom
-        anchors.margins:    ScreenTools.defaultFontPixelWidth
-        anchors.horizontalCenter: parent.horizontalCenter
-        QGCButton {
-            width:      ScreenTools.defaultFontPixelWidth * 10
-            text:       qsTr("Delete")
-            enabled:    _currentSelection && !_currentSelection.dynamic
-            onClicked: {
-                if(_currentSelection)
-                    deleteDialog.visible = true
-            }
-            MessageDialog {
-                id:         deleteDialog
-                visible:    false
-                icon:       StandardIcon.Warning
-                standardButtons: StandardButton.Yes | StandardButton.No
-                title:      qsTr("Remove Link Configuration")
-                text:       _currentSelection ? qsTr("Remove %1. Is this really what you want?").arg(_currentSelection.name) : ""
-                onYes: {
-                    if(_currentSelection)
-                        QGroundControl.linkManager.removeConfiguration(_currentSelection)
-                    deleteDialog.visible = false
-                }
-                onNo: {
-                    deleteDialog.visible = false
-                }
-            }
-        }
-        QGCButton {
-            text:       qsTr("Edit")
-            enabled:    _currentSelection && !_currentSelection.link
-            onClicked: {
-                _linkRoot.openCommSettings(_currentSelection)
-            }
-        }
-        QGCButton {
-            text:       qsTr("Add")
-            onClicked: {
-                _linkRoot.openCommSettings(null)
-            }
-        }
-        QGCButton {
-            text:       qsTr("Connect")
-            enabled:    _currentSelection && !_currentSelection.link
-            onClicked: {
-                QGroundControl.linkManager.createConnectedLink(_currentSelection)
-            }
-        }
-        QGCButton {
-            text:       qsTr("Disconnect")
-            enabled:    _currentSelection && _currentSelection.link
-            onClicked: {
-                QGroundControl.linkManager.disconnectLink(_currentSelection.link, false)
-            }
-        }
-    }
+//    Row {
+//        id:                 buttonRow
+//        spacing:            ScreenTools.defaultFontPixelWidth
+//        anchors.bottom:     parent.bottom
+//        anchors.margins:    ScreenTools.defaultFontPixelWidth
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        QGCButton {
+//            width:      ScreenTools.defaultFontPixelWidth * 10
+//            text:       qsTr("Delete")
+//            enabled:    _currentSelection && !_currentSelection.dynamic
+//            onClicked: {
+//                if(_currentSelection)
+//                    deleteDialog1.visible = true
+//            }
+//            MessageDialog {
+//                id:         deleteDialog1
+//                visible:    false
+//                icon:       StandardIcon.Warning
+//                standardButtons: StandardButton.Yes | StandardButton.No
+//                title:      qsTr("Remove Link Configuration")
+//                text:       _currentSelection ? qsTr("Remove %1. Is this really what you want?").arg(_currentSelection.name) : ""
+//                onYes: {
+//                    if(_currentSelection)
+//                        QGroundControl.linkManager.removeConfiguration(_currentSelection)
+//                    deleteDialog.visible = false
+//                }
+//                onNo: {
+//                    deleteDialog.visible = false
+//                }
+//            }
+//        }
+//        QGCButton {
+//            text:       qsTr("Edit")
+//            enabled:    _currentSelection && !_currentSelection.link
+//            onClicked: {
+//                _linkRoot.openCommSettings(_currentSelection)
+//            }
+//        }
+//        QGCButton {
+//            text:       qsTr("Add")
+//            onClicked: {
+//                _linkRoot.openCommSettings(null)
+//            }
+//        }
+//        QGCButton {
+//            text:       qsTr("Connect")
+//            enabled:    _currentSelection && !_currentSelection.link
+//            onClicked: {
+//                QGroundControl.linkManager.createConnectedLink(_currentSelection)
+//            }
+//        }
+//        QGCButton {
+//            text:       qsTr("Disconnect")
+//            enabled:    _currentSelection && _currentSelection.link
+//            onClicked: {
+//                QGroundControl.linkManager.disconnectLink(_currentSelection.link, false)
+//            }
+//        }
+//    }
 
     Loader {
         id:             settingLoader

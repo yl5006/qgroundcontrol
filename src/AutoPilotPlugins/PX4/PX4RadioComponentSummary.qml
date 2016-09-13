@@ -31,10 +31,12 @@ FactPanel {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
                 QGCLabel {
                     id:     label
+                    font.bold:   true
                     text:   qsTr("横滚:")//"Roll:"
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
+                    font.bold:   true
                     anchors.horizontalCenter: label.horizontalCenter
                     text:   mapRollFact ? (mapRollFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapRollFact.valueString) : ""
                 }
@@ -43,10 +45,12 @@ FactPanel {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
                 QGCLabel {
                     id:     label1
+                    font.bold:   true
                     text:   qsTr("仰俯:")//"Pitch:"
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
+                    font.bold:   true
                     anchors.horizontalCenter: label1.horizontalCenter
                     text:  mapPitchFact ? (mapPitchFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapPitchFact.valueString) : ""
                 }
@@ -55,10 +59,12 @@ FactPanel {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
                 QGCLabel {
                     id:     label2
+                    font.bold:   true
                     text:   qsTr("航角:")//"Yaw:"
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
+                    font.bold:   true
                     anchors.horizontalCenter: label2.horizontalCenter
                     text:   mapYawFact ? (mapYawFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapYawFact.valueString) : ""
                 }
@@ -67,10 +73,12 @@ FactPanel {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
                 QGCLabel {
                     id:     label3
+                    font.bold:   true
                     text:   qsTr("油门:")//"Throttle:"
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
+                    font.bold:   true
                     anchors.horizontalCenter: label3.horizontalCenter
                     text:   mapThrottleFact ? (mapThrottleFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapThrottleFact.valueString) : ""
                 }

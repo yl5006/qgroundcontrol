@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Controls.Private 1.0
@@ -13,7 +13,7 @@ Button {
     property var    _qgcPal:            QGCPalette { colorGroupEnabled: enabled }
     property bool   _showHighlight:     (pressed | hovered | checked) && !__forceHoverOff
     property bool   _showBorder:        _qgcPal.globalTheme === QGCPalette.Light
-
+    property color  bordercolor:        _qgcPal.buttonText
     // This fixes the issue with button hover where if a Button is near the edge oa QQuickWidget you can
     // move the mouse fast enough such that the MouseArea does not trigger an onExited. This is turn
     // cause the hover property to not be cleared correctly.
@@ -64,11 +64,10 @@ Button {
 
                 Rectangle {
                     anchors.fill:   parent
-                    border.width:   _showBorder ? 1: 0
-                    border.color:   _qgcPal.buttonText
-                    color:          _showHighlight ?
-                                        control._qgcPal.buttonHighlight :
-                                        (primary ? control._qgcPal.primaryButton : control._qgcPal.button)
+                    border.width:   _showBorder ? 2: 0
+                    border.color:   bordercolor
+                    color:          _showHighlight ?(primary ? control._qgcPal.primaryButton : control._qgcPal.buttonHighlight) :
+                                         control._qgcPal.button
                 }
 
                 Image {
@@ -106,8 +105,8 @@ Button {
                         font.family:    ScreenTools.normalFontFamily
                         anchors.verticalCenter: parent.verticalCenter
                         color: _showHighlight ?
-                            control._qgcPal.buttonHighlightText :
-                            (primary ? control._qgcPal.primaryButtonText : control._qgcPal.buttonText)
+                            control._qgcPal.buttonHighlightText :control._qgcPal.buttonText
+                         //   (primary ? control._qgcPal.primaryButtonText : control._qgcPal.buttonText)
                     }
                 }
             }

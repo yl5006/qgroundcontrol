@@ -132,7 +132,7 @@ Rectangle {
             id:                 planButton
             height:              mainWindow.tbButtonWidth
             anchors.left:        parent.left
-            anchors.right:     parent.right
+            anchors.right:       parent.right
             exclusiveGroup:     mainActionGroup
             source:             "/qmlimages/Plan.svg"
             onClicked:          rightbar.showPlanView()

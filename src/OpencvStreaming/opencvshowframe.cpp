@@ -12,7 +12,7 @@
 
 //using namespace cv;
 OpenCVshowFrame::OpenCVshowFrame(QQuickItem *parent) : QQuickItem(parent),
-    m_frameRate(24),
+    m_frameRate(16),
     m_run(false),
     m_bEnabled(true),
     m_bPressed(false),
@@ -30,16 +30,16 @@ OpenCVshowFrame::OpenCVshowFrame(QQuickItem *parent) : QQuickItem(parent),
    // f.Rectbox
     m_actions.push_back(f);
 
-    /*OpenCVfaceDetectAction **/
+ /*OpenCVfaceDetectAction **/
  //   f = new OpenCVfaceDetectAction();
  //  m_actions.push_back(f);
-    //connect(f, &OpenCVfaceDetectAction::a, this, &OpenCVshowFrame::a);
+ //connect(f, &OpenCVfaceDetectAction::a, this, &OpenCVshowFrame::a);
 
-    //using namespace cv;
-    //Ptr<FaceRecognizer> r = createFisherFaceRecognizer();
+ // using namespace cv;
+ //Ptr<FaceRecognizer> r = createFisherFaceRecognizer();
 
-    /*OpencvFaceRecognizer **/
-    //fr = new OpencvFaceRecognizer(this);
+ /*OpencvFaceRecognizer **/
+  //fr = new OpencvFaceRecognizer(this);
 //    fr->loadRecognizer();
 
 //   connect(f, &OpenCVfaceDetectAction::train, fr, &OpencvFaceRecognizer::train);

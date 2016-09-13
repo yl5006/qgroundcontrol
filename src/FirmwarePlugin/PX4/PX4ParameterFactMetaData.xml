@@ -673,9 +673,9 @@ velocity</short_desc>
       <increment>1</increment>
       <scope>modules/commander</scope>
       <values>
-        <value code="1">Return to Land</value>
-        <value code="0">Warning</value>
-        <value code="2">Land at current position</value>
+        <value code="1">返航</value>
+        <value code="0">警告</value>
+        <value code="2">在当前位置降落</value>
       </values>
     </parameter>
     <parameter default="0.0" name="COM_OF_LOSS_T" type="FLOAT">
@@ -2177,10 +2177,14 @@ but also ignore less noise</short_desc>
       <max>4</max>
       <scope>modules/navigator</scope>
       <values>
-        <value code="1">Warning</value>
+      <value code="1">警告</value>
+      <value code="0">不处理</value>
+      <value code="3">返航</value>
+      <value code="2">悬停</value>
+     <!--   <value code="1">Warning</value>
         <value code="0">None</value>
         <value code="3">Return to Land</value>
-        <value code="2">Loiter</value>
+        <value code="2">Loiter</value>-->
       </values>
     </parameter>
     <parameter default="0" name="GF_ALTMODE" type="INT32">
@@ -2898,10 +2902,14 @@ EPV used if greater than this value</short_desc>
       <long_desc>The data link loss failsafe will only be entered after a timeout, set by COM_DL_LOSS_T in seconds. Once the timeout occurs the selected action will be executed. Setting this parameter to 4 will enable CASA Outback Challenge rules, which are only recommended to participants of that competition.</long_desc>
       <scope>modules/navigator</scope>
       <values>
-        <value code="1">Loiter</value>
-        <value code="0">Disabled</value>
-        <value code="3">Land at current position</value>
-        <value code="2">Return to Land</value>
+      <!-- <value code="1">Loiter</value>
+       <value code="0">Disabled</value>
+       <value code="3">Land at current position</value>
+       <value code="2">Return to Land</value>-->
+        <value code="1">悬停</value>
+        <value code="0">禁用</value>
+        <value code="3">在当前位置降落</value>
+        <value code="2">返航</value>
       </values>
     </parameter>
     <parameter default="2" name="NAV_RCL_ACT" type="INT32">
@@ -2909,10 +2917,14 @@ EPV used if greater than this value</short_desc>
       <long_desc>The RC loss failsafe will only be entered after a timeout, set by COM_RC_LOSS_T in seconds. If RC input checks have been disabled by setting the COM_RC_IN_MODE param it will not be triggered. Setting this parameter to 4 will enable CASA Outback Challenge rules, which are only recommended to participants of that competition.</long_desc>
       <scope>modules/navigator</scope>
       <values>
-        <value code="1">Loiter</value>
+        <value code="1">悬停</value>
+        <value code="0">禁用</value>
+        <value code="3">在当前位置降落</value>
+        <value code="2">返航</value>
+       <!-- <value code="1">Loiter</value>
         <value code="0">Disabled</value>
         <value code="3">Land at current position</value>
-        <value code="2">Return to Land</value>
+        <value code="2">Return to Land</value>-->
       </values>
     </parameter>
   </group>
@@ -3693,8 +3705,8 @@ EPV used if greater than this value</short_desc>
       <min>0</min>
       <max>1</max>
       <values>
-        <value code="0">Disable safe dis</value>
-        <value code="1">Enable safe dis</value>
+        <value code="0">禁用</value>
+        <value code="1">启用</value>
       </values>
       <scope>modules/mc_pos_control</scope>
     </parameter>
@@ -5428,25 +5440,25 @@ EPV used if greater than this value</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="11">Channel 11</value>
-        <value code="10">Channel 10</value>
-        <value code="13">Channel 13</value>
-        <value code="12">Channel 12</value>
-        <value code="15">Channel 15</value>
-        <value code="14">Channel 14</value>
-        <value code="17">Channel 17</value>
-        <value code="16">Channel 16</value>
-        <value code="18">Channel 18</value>
-        <value code="1">Channel 1</value>
-        <value code="0">Unassigned</value>
-        <value code="3">Channel 3</value>
-        <value code="2">Channel 2</value>
-        <value code="5">Channel 5</value>
-        <value code="4">Channel 4</value>
-        <value code="7">Channel 7</value>
-        <value code="6">Channel 6</value>
-        <value code="9">Channel 9</value>
-        <value code="8">Channel 8</value>
+        <value code="11">通道 11</value>
+        <value code="10">通道 10</value>
+        <value code="13">通道 13</value>
+        <value code="12">通道 12</value>
+        <value code="15">通道 15</value>
+        <value code="14">通道 14</value>
+        <value code="17">通道 17</value>
+        <value code="16">通道 16</value>
+        <value code="18">通道 18</value>
+        <value code="1">通道 1</value>
+        <value code="0">未分配</value>
+        <value code="3">通道 3</value>
+        <value code="2">通道 2</value>
+        <value code="5">通道 5</value>
+        <value code="4">通道 4</value>
+        <value code="7">通道 7</value>
+        <value code="6">通道 6</value>
+        <value code="9">通道 9</value>
+        <value code="8">通道 8</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_MODE_SW" type="INT32">
@@ -5483,25 +5495,25 @@ EPV used if greater than this value</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="11">Channel 11</value>
-        <value code="10">Channel 10</value>
-        <value code="13">Channel 13</value>
-        <value code="12">Channel 12</value>
-        <value code="15">Channel 15</value>
-        <value code="14">Channel 14</value>
-        <value code="17">Channel 17</value>
-        <value code="16">Channel 16</value>
-        <value code="18">Channel 18</value>
-        <value code="1">Channel 1</value>
-        <value code="0">Unassigned</value>
-        <value code="3">Channel 3</value>
-        <value code="2">Channel 2</value>
-        <value code="5">Channel 5</value>
-        <value code="4">Channel 4</value>
-        <value code="7">Channel 7</value>
-        <value code="6">Channel 6</value>
-        <value code="9">Channel 9</value>
-        <value code="8">Channel 8</value>
+        <value code="11">通道 11</value>
+        <value code="10">通道 10</value>
+        <value code="13">通道 13</value>
+        <value code="12">通道 12</value>
+        <value code="15">通道 15</value>
+        <value code="14">通道 14</value>
+        <value code="17">通道 17</value>
+        <value code="16">通道 16</value>
+        <value code="18">通道 18</value>
+        <value code="1">通道 1</value>
+        <value code="0">未分配</value>
+        <value code="3">通道 3</value>
+        <value code="2">通道 2</value>
+        <value code="5">通道 5</value>
+        <value code="4">通道 4</value>
+        <value code="7">通道 7</value>
+        <value code="6">通道 6</value>
+        <value code="9">通道 9</value>
+        <value code="8">通道 8</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_RATT_SW" type="INT32">
@@ -6783,6 +6795,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
         <long_desc>Reduce if the system is too twitchy, increase if the response is too slow and sluggish.</long_desc>
         <min>0.04</min>
         <max>1</max>
+        <unit>s</unit>
         <decimal>3</decimal>
       </parameter>
       <parameter default="1.2" name="THROW_POWER" type="FLOAT">
@@ -6790,6 +6803,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
         <long_desc>Reduce if the system is too twitchy, increase if the response is too slow and sluggish.</long_desc>
         <min>0.5</min>
         <max>2</max>
+        <unit>g</unit>
         <decimal>2</decimal>
       </parameter>
       <parameter default="1" name="THROW_DERECTION" type="INT32">
@@ -6797,13 +6811,20 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
         <long_desc>0 for xy derection 1 for z derection</long_desc>
         <min>0</min>
         <max>2</max>
-        <decimal>1</decimal>
+        <values>
+          <value code="0">水平方向</value>
+          <value code="1">垂直方向</value>
+        </values>
       </parameter>
       <parameter default="1" name="THROW_ENABLE" type="INT32">
         <short_desc>throw enable</short_desc>
         <long_desc>throw enable</long_desc>
         <min>0</min>
-        <decimal>2</decimal>
+        <max>1</max>
+        <values>
+          <value code="1">启用</value>
+          <value code="0">禁用</value>
+        </values>
       </parameter>
     </group>
   <group name="UAVCAN">
@@ -7372,20 +7393,20 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="11">Land</value>
-        <value code="10">Takeoff</value>
-        <value code="12">Follow Me</value>
-        <value code="1">Altitude</value>
-        <value code="0">Manual</value>
-        <value code="3">Mission</value>
-        <value code="2">Position</value>
-        <value code="-1">Unassigned</value>
-        <value code="4">Hold</value>
-        <value code="7">Offboard</value>
-        <value code="6">Acro</value>
-        <value code="9">Rattitude</value>
-        <value code="5">Return</value>
-        <value code="8">Stabilized</value>
+        <value code="11">降落</value>
+        <value code="10">起飞</value>
+        <value code="12">跟随</value>
+        <value code="1">定高</value>
+        <value code="0">手动</value>
+        <value code="3">任务</value>
+        <value code="2">定点</value>
+        <value code="-1">未分配</value>
+        <value code="4">悬停</value>
+<!--    <value code="7">Offboard</value>-->
+        <value code="6">运动</value>
+<!--    <value code="9">Rattitude</value>-->
+        <value code="5">返航</value>
+        <value code="8">自稳</value>
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE2" type="INT32">
@@ -7393,20 +7414,20 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="11">Land</value>
-        <value code="10">Takeoff</value>
-        <value code="12">Follow Me</value>
-        <value code="1">Altitude</value>
-        <value code="0">Manual</value>
-        <value code="3">Mission</value>
-        <value code="2">Position</value>
-        <value code="-1">Unassigned</value>
-        <value code="4">Hold</value>
-        <value code="7">Offboard</value>
-        <value code="6">Acro</value>
-        <value code="9">Rattitude</value>
-        <value code="5">Return</value>
-        <value code="8">Stabilized</value>
+      <value code="11">降落</value>
+      <value code="10">起飞</value>
+      <value code="12">跟随</value>
+      <value code="1">定高</value>
+      <value code="0">手动</value>
+      <value code="3">任务</value>
+      <value code="2">定点</value>
+      <value code="-1">未分配</value>
+      <value code="4">悬停</value>
+<!--    <value code="7">Offboard</value>-->
+      <value code="6">运动</value>
+<!--    <value code="9">Rattitude</value>-->
+      <value code="5">返航</value>
+      <value code="8">自稳</value>
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE3" type="INT32">
@@ -7414,20 +7435,20 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="11">Land</value>
-        <value code="10">Takeoff</value>
-        <value code="12">Follow Me</value>
-        <value code="1">Altitude</value>
-        <value code="0">Manual</value>
-        <value code="3">Mission</value>
-        <value code="2">Position</value>
-        <value code="-1">Unassigned</value>
-        <value code="4">Hold</value>
-        <value code="7">Offboard</value>
-        <value code="6">Acro</value>
-        <value code="9">Rattitude</value>
-        <value code="5">Return</value>
-        <value code="8">Stabilized</value>
+      <value code="11">降落</value>
+      <value code="10">起飞</value>
+      <value code="12">跟随</value>
+      <value code="1">定高</value>
+      <value code="0">手动</value>
+      <value code="3">任务</value>
+      <value code="2">定点</value>
+      <value code="-1">未分配</value>
+      <value code="4">悬停</value>
+<!--    <value code="7">Offboard</value>-->
+      <value code="6">运动</value>
+<!--    <value code="9">Rattitude</value>-->
+      <value code="5">返航</value>
+        <value code="8">自稳</value>
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE4" type="INT32">
@@ -7435,20 +7456,20 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="11">Land</value>
-        <value code="10">Takeoff</value>
-        <value code="12">Follow Me</value>
-        <value code="1">Altitude</value>
-        <value code="0">Manual</value>
-        <value code="3">Mission</value>
-        <value code="2">Position</value>
-        <value code="-1">Unassigned</value>
-        <value code="4">Hold</value>
-        <value code="7">Offboard</value>
-        <value code="6">Acro</value>
-        <value code="9">Rattitude</value>
-        <value code="5">Return</value>
-        <value code="8">Stabilized</value>
+      <value code="11">降落</value>
+      <value code="10">起飞</value>
+      <value code="12">跟随</value>
+      <value code="1">定高</value>
+      <value code="0">手动</value>
+      <value code="3">任务</value>
+      <value code="2">定点</value>
+      <value code="-1">未分配</value>
+      <value code="4">悬停</value>
+<!--    <value code="7">Offboard</value>-->
+      <value code="6">运动</value>
+<!--    <value code="9">Rattitude</value>-->
+      <value code="5">返航</value>
+      <value code="8">自稳</value>
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE5" type="INT32">
@@ -7456,20 +7477,20 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="11">Land</value>
-        <value code="10">Takeoff</value>
-        <value code="12">Follow Me</value>
-        <value code="1">Altitude</value>
-        <value code="0">Manual</value>
-        <value code="3">Mission</value>
-        <value code="2">Position</value>
-        <value code="-1">Unassigned</value>
-        <value code="4">Hold</value>
-        <value code="7">Offboard</value>
-        <value code="6">Acro</value>
-        <value code="9">Rattitude</value>
-        <value code="5">Return</value>
-        <value code="8">Stabilized</value>
+      <value code="11">降落</value>
+      <value code="10">起飞</value>
+      <value code="12">跟随</value>
+      <value code="1">定高</value>
+      <value code="0">手动</value>
+      <value code="3">任务</value>
+      <value code="2">定点</value>
+      <value code="-1">未分配</value>
+      <value code="4">悬停</value>
+<!--    <value code="7">Offboard</value>-->
+      <value code="6">运动</value>
+<!--    <value code="9">Rattitude</value>-->
+      <value code="5">返航</value>
+      <value code="8">自稳</value>
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE6" type="INT32">
@@ -7477,20 +7498,20 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="11">Land</value>
-        <value code="10">Takeoff</value>
-        <value code="12">Follow Me</value>
-        <value code="1">Altitude</value>
-        <value code="0">Manual</value>
-        <value code="3">Mission</value>
-        <value code="2">Position</value>
-        <value code="-1">Unassigned</value>
-        <value code="4">Hold</value>
-        <value code="7">Offboard</value>
-        <value code="6">Acro</value>
-        <value code="9">Rattitude</value>
-        <value code="5">Return</value>
-        <value code="8">Stabilized</value>
+      <value code="11">降落</value>
+      <value code="10">起飞</value>
+      <value code="12">跟随</value>
+      <value code="1">定高</value>
+      <value code="0">手动</value>
+      <value code="3">任务</value>
+      <value code="2">定点</value>
+      <value code="-1">未分配</value>
+      <value code="4">悬停</value>
+<!--    <value code="7">Offboard</value>-->
+      <value code="6">运动</value>
+<!--    <value code="9">Rattitude</value>-->
+      <value code="5">返航</value>
+      <value code="8">自稳</value>
       </values>
     </parameter>
     <parameter default="10.0" name="SEG_TH2V_P" type="FLOAT">

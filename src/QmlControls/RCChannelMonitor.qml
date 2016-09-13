@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -15,6 +15,7 @@ import QtQuick.Dialogs  1.2
 import QGroundControl               1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.Controls      1.0
+import QGroundControl.FactSystem    1.0
 import QGroundControl.FactControls  1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Controllers   1.0
@@ -43,33 +44,31 @@ FactPanel {
 
             property int            __lastRcValue:      1500
             readonly property int   __rcValueMaxJitter: 2
-            property color          __barColor:         qgcPal.windowShade
+            property color          __barColor:         qgcPal.button
 
             // Bar
             Rectangle {
-                id:                     bar
-                anchors.verticalCenter: parent.verticalCenter
-                width:                  parent.width
-                height:                 parent.height / 2
+                id:                     bar   
+                anchors.fill:           parent
                 color:                  __barColor
             }
 
-            // Center point
-            Rectangle {
-                anchors.horizontalCenter:   parent.horizontalCenter
-                width:                      ScreenTools.defaultTextWidth / 2
-                height:                     parent.height
-                color:                      qgcPal.window
-            }
+//            // Center point
+//            Rectangle {
+//                anchors.horizontalCenter:   parent.horizontalCenter
+//                width:                      ScreenTools.defaultTextWidth / 2
+//                height:                     parent.height
+//                color:                      qgcPal.window
+//            }
 
             // Indicator
             Rectangle {
+                anchors.left:           parent.left
                 anchors.verticalCenter: parent.verticalCenter
-                width:                  parent.height * 0.75
-                height:                 width
-                x:                      (((reversed ? _pwmMax - rcValue : rcValue - _pwmMin) / _pwmRange) * parent.width) - (width / 2)
-                radius:                 width / 2
-                color:                  qgcPal.text
+                width:                  ((reversed ? _pwmMax - rcValue : rcValue - _pwmMin) / _pwmRange) * parent.width
+                height:                 parent.height
+          //      x:                      ((reversed ? _pwmMax - rcValue : rcValue - _pwmMin) / _pwmRange) * parent.width
+                color:                  qgcPal.primaryButton//qgcPal.text
                 visible:                mapped
             }
 
@@ -77,27 +76,36 @@ FactPanel {
                 anchors.fill:           parent
                 horizontalAlignment:    Text.AlignHCenter
                 verticalAlignment:      Text.AlignVCenter
-                text:                   "Not Mapped"
+                text:                   qsTr("未配置")//"Not Mapped"
                 visible:                !mapped
             }
 
-            ColorAnimation {
-                id:         barAnimation
-                target:     bar
-                property:   "color"
-                from:       "yellow"
-                to:         __barColor
-                duration:   1500
-            }
+//            ColorAnimation {
+//                id:         barAnimation
+//                target:     bar
+//                property:   "color"
+//                from:       "yellow"
+//                to:         __barColor
+//                duration:   1500
+//            }
         }
     } // Component - channelMonitorDisplayComponent
+    Column{
+        anchors.fill: parent
+        spacing:    ScreenTools.defaultFontPixelHeight
 
-    Column {
+
+    QGCLabel {
+        anchors.horizontalCenter:   parent.horizontalCenter
+        text: qsTr(" 遥控通道监控")/*"Channel Monitor"*/
+    }
+
+    Flow {
         id:         monitorColumn
         width:      parent.width
-        spacing:    ScreenTools.defaultFontPixelHeight / 2
-
-        QGCLabel { text: "Channel Monitor" }
+        height:     ScreenTools.defaultFontPixelHeight*(controller.channelCount/2+8)
+        spacing:    ScreenTools.defaultFontPixelHeight
+        flow:       Flow.TopToBottom
 
         Connections {
             target: controller
@@ -113,13 +121,13 @@ FactPanel {
             id:         channelMonitorRepeater
             model:      controller.channelCount
 
-            Item {
-                width:  monitorColumn.width
+            Row {
+                width:  monitorColumn.width/2-ScreenTools.defaultFontPixelHeight
                 height: ScreenTools.defaultFontPixelHeight
-
+                spacing: ScreenTools.defaultFontPixelWidth / 2
                 // Need this to get to loader from Connections above
                 property Item loader: theLoader
-
+//           //     property Fact fact: controller.getParameterFact(0, channelrev[index])
                 QGCLabel {
                     id:     channelLabel
                     text:   modelData + 1
@@ -127,17 +135,27 @@ FactPanel {
 
                 Loader {
                     id:                     theLoader
-                    anchors.leftMargin:     ScreenTools.defaultFontPixelWidth / 2
-                    anchors.left:           channelLabel.right
-                    anchors.verticalCenter: channelLabel.verticalCenter
+//                    anchors.leftMargin:     ScreenTools.defaultFontPixelWidth / 2
+//                    anchors.left:           channelLabel.right
+//                    anchors.verticalCenter: channelLabel.verticalCenter
                     height:                 ScreenTools.defaultFontPixelHeight
-                    width:                  parent.width - anchors.leftMargin - ScreenTools.defaultFontPixelWidth
+                    width:                  parent.width  - ScreenTools.defaultFontPixelWidth*2-revCheckBox.width
                     sourceComponent:        channelMonitorDisplayComponent
 
                     property bool mapped:               true
                     readonly property bool reversed:    false
                 }
+                FactCheckBox {
+                    id:                 revCheckBox
+                 //   width:              ScreenTools.defaultFontPixelWidth * 20
+                    fact:               controller.getParameterFact(-1, "RC"+(index+1).toString()+"_REV")
+                    checkedValue:       -1
+                    uncheckedValue:     1
+                    text:               qsTr("反向")
+                }
+
             }
         }
+    }
     }
 }

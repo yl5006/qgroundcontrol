@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -41,58 +41,58 @@ FactPanel {
 
         // Accept role buttons
         if (buttons & StandardButton.Ok) {
-            __acceptButton.text = qsTr("Ok")
+            __acceptButton.text = qsTr("确认")//qsTr("Ok")
             __acceptButton.visible = true
         } else if (buttons & StandardButton.Open) {
-            __acceptButton.text = qsTr("Open")
+            __acceptButton.text = qsTr("打开")//qsTr("Open")
             __acceptButton.visible = true
         } else if (buttons & StandardButton.Save) {
-            __acceptButton.text = qsTr("Save")
+            __acceptButton.text = qsTr("保存")//qsTr("Save")
             __acceptButton.visible = true
         } else if (buttons & StandardButton.Apply) {
-            __acceptButton.text = qsTr("Apply")
+            __acceptButton.text = qsTr("应用")//qsTr("Apply")
             __acceptButton.visible = true
-        } else if (buttons & StandardButton.Open) {
-            __acceptButton.text = qsTr("Open")
-            __acceptButton.visible = true
+//        } else if (buttons & StandardButton.Open) {
+//            __acceptButton.text = qsTr("打开")//qsTr("Open")
+//            __acceptButton.visible = true
         } else if (buttons & StandardButton.SaveAll) {
-            __acceptButton.text = qsTr("Save All")
+            __acceptButton.text = qsTr("保存所有")//qsTr("Save All")
             __acceptButton.visible = true
         } else if (buttons & StandardButton.Yes) {
-            __acceptButton.text = qsTr("Yes")
+            __acceptButton.text = qsTr("是")//qsTr("Yes")
             __acceptButton.visible = true
         } else if (buttons & StandardButton.YesToAll) {
-            __acceptButton.text = qsTr("Yes to All")
+            __acceptButton.text = qsTr("全是")//qsTr("Yes to All")
             __acceptButton.visible = true
         } else if (buttons & StandardButton.Retry) {
-            __acceptButton.text = qsTr("Retry")
+            __acceptButton.text = qsTr("重试")//qsTr("Retry")
             __acceptButton.visible = true
         } else if (buttons & StandardButton.Reset) {
-            __acceptButton.text = qsTr("Reset")
+            __acceptButton.text = qsTr("重置")//qsTr("Reset")
             __acceptButton.visible = true
         } else if (buttons & StandardButton.RestoreToDefaults) {
-            __acceptButton.text = qsTr("Restore to Defaults")
+            __acceptButton.text = qsTr("恢复默认")//qsTr("Restore to Defaults")
             __acceptButton.visible = true
         } else if (buttons & StandardButton.Ignore) {
-            __acceptButton.text = qsTr("Ignore")
+            __acceptButton.text = qsTr("忽略")//qsTr("Ignore")
             __acceptButton.visible = true
         }
 
         // Reject role buttons
         if (buttons & StandardButton.Cancel) {
-            __rejectButton.text = qsTr("Cancel")
+            __rejectButton.text = qsTr("取消")//qsTr("Cancel")
             __rejectButton.visible = true
         } else if (buttons & StandardButton.Close) {
-            __rejectButton.text = qsTr("Close")
+            __rejectButton.text = qsTr("关闭")//qsTr("Close")
             __rejectButton.visible = true
         } else if (buttons & StandardButton.No) {
-            __rejectButton.text = qsTr("No")
+            __rejectButton.text = qsTr("否")//qsTr("No")
             __rejectButton.visible = true
         } else if (buttons & StandardButton.NoToAll) {
-            __rejectButton.text = qsTr("No to All")
+            __rejectButton.text = qsTr("忽略")//qsTr("No to All")
             __rejectButton.visible = true
         } else if (buttons & StandardButton.Abort) {
-            __rejectButton.text = qsTr("Abort")
+            __rejectButton.text = qsTr("终止")//qsTr("Abort")
             __rejectButton.visible = true
         }
     }
@@ -135,11 +135,11 @@ FactPanel {
 
         __dialogComponent = component
         viewPanel.enabled = false
-        __dialogOverlay.visible = true
+   //     __dialogOverlay.visible = true
 
         //__dialogComponentLoader.item.forceActiveFocus()
 
-        __animateShowDialog.start()
+  //      __animateShowDialog.start()
     }
 
     function showMessage(title, message, buttons) {
@@ -164,13 +164,14 @@ FactPanel {
 
         __dialogComponentLoader.item.forceActiveFocus()
 
-        __animateShowDialog.start()
+   //     __animateShowDialog.start()
     }
 
     function hideDialog() {
         //__dialogComponentLoader.item.focus = false
         viewPanel.enabled = true
-        __animateHideDialog.start()
+        __dialogComponent = null
+      //  __animateHideDialog.start()
     }
 
     QGCPalette { id: __qgcPal; colorGroupEnabled: true }
@@ -209,72 +210,72 @@ FactPanel {
         onHideDialog: __rootItem.hideDialog()
     }
 
-    Item {
-        id:             __dialogOverlay
-        visible:        false
-        anchors.fill:   parent
-        z:              5000
+//    Item {
+//        id:             __dialogOverlay
+//        visible:        false
+//        anchors.fill:   parent
+//        z:              5000
 
-        readonly property int __animationDuration: 200
+//        readonly property int __animationDuration: 200
 
-        ParallelAnimation {
-            id: __animateShowDialog
+//        ParallelAnimation {
+//            id: __animateShowDialog
 
 
-            NumberAnimation {
-                target:     __transparentSection
-                properties: "opacity"
-                from:       0.0
-                to:         0.8
-                duration:   __dialogOverlay.__animationDuration
-            }
+//            NumberAnimation {
+//                target:     __transparentSection
+//                properties: "opacity"
+//                from:       0.0
+//                to:         0.8
+//                duration:   __dialogOverlay.__animationDuration
+//            }
 
-            NumberAnimation {
-                target:     __transparentSection
-                properties: "width"
-                from:       __dialogOverlay.width
-                to:         __dialogOverlay.width - __dialogPanel.width
-                duration:   __dialogOverlay.__animationDuration
-            }
-        }
+//            NumberAnimation {
+//                target:     __transparentSection
+//                properties: "width"
+//                from:       __dialogOverlay.width
+//                to:         __dialogOverlay.width - __dialogPanel.width
+//                duration:   __dialogOverlay.__animationDuration
+//            }
+//        }
 
-        ParallelAnimation {
-            id: __animateHideDialog
+//        ParallelAnimation {
+//            id: __animateHideDialog
 
-            NumberAnimation {
-                target:     __transparentSection
-                properties: "opacity"
-                from:       0.8
-                to:         0.0
-                duration:   __dialogOverlay.__animationDuration
-            }
+//            NumberAnimation {
+//                target:     __transparentSection
+//                properties: "opacity"
+//                from:       0.8
+//                to:         0.0
+//                duration:   __dialogOverlay.__animationDuration
+//            }
 
-            NumberAnimation {
-                target:     __transparentSection
-                properties: "width"
-                from:       __dialogOverlay.width - __dialogPanel.width
-                to:         __dialogOverlay.width
-                duration:   __dialogOverlay.__animationDuration
-            }
+//            NumberAnimation {
+//                target:     __transparentSection
+//                properties: "width"
+//                from:       __dialogOverlay.width - __dialogPanel.width
+//                to:         __dialogOverlay.width
+//                duration:   __dialogOverlay.__animationDuration
+//            }
 
-            onRunningChanged: {
-                if (!running) {
-                    __dialogComponent = null
-                    __dialogOverlay.visible = false
-                }
-            }
-        }
+//            onRunningChanged: {
+//                if (!running) {
+//                    __dialogComponent = null
+//                    __dialogOverlay.visible = false
+//                }
+//            }
+//        }
 
-        // This covers the parent with an transparent section
-        Rectangle {
-            id:             __transparentSection
-            height:         ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
-            anchors.bottom: parent.bottom
-            anchors.left:   parent.left
-            anchors.right:  __dialogPanel.left
-            opacity:        0.0
-            color:          __qgcPal.window
-        }
+//        // This covers the parent with an transparent section
+//        Rectangle {
+//            id:             __transparentSection
+//            height:         ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
+//            anchors.bottom: parent.bottom
+//            anchors.left:   parent.left
+//            anchors.right:  __dialogPanel.left
+//            opacity:        0.0
+//            color:          __qgcPal.window
+//        }
 
         // This is the main dialog panel which is anchored to the right edge
         Rectangle {

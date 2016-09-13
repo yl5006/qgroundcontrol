@@ -13,7 +13,7 @@ Item {
     property real   radius:         ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.75 : ScreenTools.defaultFontPixelHeight * 1.25
     property bool   rotateImage:    false
     property bool   lightBorders:   true
-
+    property color  imgcolor:      "White"
     width:  radius * 2
     height: radius * 2
 
@@ -39,19 +39,21 @@ Item {
 
     Rectangle {
         anchors.fill:   parent
-        radius:         width / 2
-        border.width:   ScreenTools.defaultFontPixelHeight * 0.0625
-        border.color:   lightBorders ? qgcPal.mapWidgetBorderLight : qgcPal.mapWidgetBorderDark
-        color:          checked ? qgcPal.buttonHighlight : qgcPal.button
+ //       radius:         width / 2
+//        border.width:   ScreenTools.defaultFontPixelHeight * 0.0625
+//        border.color:   lightBorders ? qgcPal.mapWidgetBorderLight : qgcPal.mapWidgetBorderDark
+        color:          qgcPal.windowShade
         QGCColoredImage {
             id:                 button
-            anchors.fill:       parent
-            sourceSize.height:  parent.height
+       //     anchors.fill:       parent
+            anchors.centerIn:   parent
+            height:             parent.height*0.6
+            width:              height
+            sourceSize.height:  parent.height*0.6
             fillMode:           Image.PreserveAspectFit
             mipmap:             true
             smooth:             true
-//            color:          checked ? qgcPal.buttonHighlightText : qgcPal.buttonText
-            color:              Qt.rgba(0,0,0,0.0)
+            color:              checked ? qgcPal.buttonHighlight : imgcolor
             RotationAnimation on rotation {
                 id:             imageRotation
                 loops:          Animation.Infinite

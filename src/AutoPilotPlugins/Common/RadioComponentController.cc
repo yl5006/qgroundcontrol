@@ -129,17 +129,17 @@ const RadioComponentController::stateMachineEntry* RadioComponentController::_ge
     static const char* msgBeginAPM =        "Lower the Throttle stick all the way down as shown in diagram.\nReset all transmitter trims to center.\n\n"
                                             "Please ensure all motor power is disconnected AND all props are removed from the vehicle.\n\n"
                                             "Click Next to continue";
-    static const char* msgThrottleUp =      "Move the Throttle stick all the way up and hold it there...";
-    static const char* msgThrottleDown =    "Move the Throttle stick all the way down and leave it there...";
-    static const char* msgYawLeft =         "Move the Yaw stick all the way to the left and hold it there...";
-    static const char* msgYawRight =        "Move the Yaw stick all the way to the right and hold it there...";
-    static const char* msgRollLeft =        "Move the Roll stick all the way to the left and hold it there...";
-    static const char* msgRollRight =       "Move the Roll stick all the way to the right and hold it there...";
-    static const char* msgPitchDown =       "Move the Pitch stick all the way down and hold it there...";
-    static const char* msgPitchUp =         "Move the Pitch stick all the way up and hold it there...";
-    static const char* msgPitchCenter =     "Allow the Pitch stick to move back to center...";
-    static const char* msgSwitchMinMax =    "Move all the transmitter switches and/or dials back and forth to their extreme positions.";
-    static const char* msgComplete =        "All settings have been captured. Click Next to write the new parameters to your board.";
+    static const char* msgThrottleUp =      QT_TR_NOOP("移动油门摇杆到上");//tr("Move the Throttle stick all the way up and hold it there...");
+    static const char* msgThrottleDown =    QT_TR_NOOP("移动油门摇杆到下");//"Move the Throttle stick all the way down and leave it there...";
+    static const char* msgYawLeft =         QT_TR_NOOP("移动航向角摇杆到左");//"Move the Yaw stick all the way to the left and hold it there...";
+    static const char* msgYawRight =        QT_TR_NOOP("移动航向角摇杆到右");//"Move the Yaw stick all the way to the right and hold it there...";
+    static const char* msgRollLeft =        QT_TR_NOOP("移动翻滚摇杆到左");//"Move the Roll stick all the way to the left and hold it there...";
+    static const char* msgRollRight =       QT_TR_NOOP("移动翻滚摇杆到右");//"Move the Roll stick all the way to the right and hold it there...";
+    static const char* msgPitchDown =       QT_TR_NOOP("移动仰俯摇杆到下");//"Move the Pitch stick all the way down and hold it there...";
+    static const char* msgPitchUp =         QT_TR_NOOP("移动仰俯摇杆到上");//"Move the Pitch stick all the way up and hold it there...";
+    static const char* msgPitchCenter =     QT_TR_NOOP("移动仰俯摇杆回中");//"Allow the Pitch stick to move back to center...";
+    static const char* msgSwitchMinMax =    QT_TR_NOOP("摇杆开关到极限位置");//"Move all the transmitter switches and/or dials back and forth to their extreme positions.";
+    static const char* msgComplete =        QT_TR_NOOP("所有设置以映射，点击下一步");//"All settings have been captured. Click Next to write the new parameters to your board.";
     
     static const stateMachineEntry rgStateMachinePX4[] = {
         //Function

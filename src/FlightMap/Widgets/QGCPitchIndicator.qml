@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -25,8 +25,8 @@ Rectangle {
     property real _reticleHeight:   1
     property real _reticleSpacing:  size * 0.15
     property real _reticleSlot:     _reticleSpacing + _reticleHeight
-    property real _longDash:        size * 0.40
-    property real _shortDash:       size * 0.25
+    property real _longDash:        size * 0.2//0.40
+    property real _shortDash:       size * 0.1
     property real _fontSize:        ScreenTools.defaultFontPointSize * (size / _defaultSize)
 
     property real _defaultSize:     ScreenTools.isAndroid ? 300 : 100
@@ -55,7 +55,7 @@ Rectangle {
                     smooth: true
                     QGCLabel {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.horizontalCenterOffset: -(_longDash * 0.8)
+                        anchors.horizontalCenterOffset: -(_longDash /** 0.8*/)
                         anchors.verticalCenter: parent.verticalCenter
                         smooth: true
                         font.family: ScreenTools.demiboldFontFamily
@@ -64,17 +64,17 @@ Rectangle {
                         color: "white"
                         visible: (_pitch != 0) && ((_pitch % 10) === 0)
                     }
-                    QGCLabel {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.horizontalCenterOffset: (_longDash * 0.8)
-                        anchors.verticalCenter: parent.verticalCenter
-                        smooth: true
-                        font.family: ScreenTools.demiboldFontFamily
-                        font.pointSize: _fontSize < 1 ? 1 : _fontSize;
-                        text: _pitch
-                        color: "white"
-                        visible: (_pitch != 0) && ((_pitch % 10) === 0)
-                    }
+//                    QGCLabel {
+//                        anchors.horizontalCenter: parent.horizontalCenter
+//                        anchors.horizontalCenterOffset: (_longDash * 0.8)
+//                        anchors.verticalCenter: parent.verticalCenter
+//                        smooth: true
+//                        font.family: ScreenTools.demiboldFontFamily
+//                        font.pointSize: _fontSize < 1 ? 1 : _fontSize;
+//                        text: _pitch
+//                        color: "white"
+//                        visible: (_pitch != 0) && ((_pitch % 10) === 0)
+//                    }
                 }
             }
         }
