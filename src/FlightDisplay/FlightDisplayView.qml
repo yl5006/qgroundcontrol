@@ -14,6 +14,7 @@ import QtQuick.Controls.Styles  1.2
 import QtQuick.Dialogs          1.2
 import QtLocation               5.3
 import QtPositioning            5.2
+import QtMultimedia             5.5
 
 import QGroundControl               1.0
 import QGroundControl.FlightDisplay 1.0
@@ -33,9 +34,8 @@ QGCView {
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
 
     property var _activeVehicle:        QGroundControl.multiVehicleManager.activeVehicle
-    readonly property real _defaultAltitudeRelative:    0
-    property bool _mainIsMap:          QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true)// _controller.hasVideo ? QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true) : true
-    property bool _isPipVisible:       QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true)// _controller.hasVideo ? QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true) : false
+    property bool _mainIsMap:           QGroundControl.videoManager.hasVideo ? QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true) : true
+    property bool _isPipVisible:        QGroundControl.videoManager.hasVideo ? QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true) : false
 
     property real _roll:                _activeVehicle ? _activeVehicle.roll.value    : _defaultRoll
     property real _pitch:               _activeVehicle ? _activeVehicle.pitch.value   : _defaultPitch
@@ -45,8 +45,7 @@ QGCView {
     property Fact _emptyFact:               Fact { }
     property Fact _groundSpeedFact:         _activeVehicle ? _activeVehicle.groundSpeed      : _emptyFact
     property Fact _airSpeedFact:            _activeVehicle ? _activeVehicle.airSpeed         : _emptyFact
-    property Fact _altitudeRelative:    _activeVehicle ? _activeVehicle.altitudeRelative    : _emptyFact
-  
+
     property bool activeVehicleJoystickEnabled: _activeVehicle ? _activeVehicle.joystickEnabled : false
 
     property real _savedZoomLevel:      0
@@ -64,8 +63,6 @@ QGCView {
     readonly property string    _showMapBackgroundKey:  "/showMapBackground"
     readonly property string    _mainIsMapKey:          "MainFlyWindowIsMap"
     readonly property string    _PIPVisibleKey:         "IsPIPVisible"
-
-    FlightDisplayViewController { id: _controller }
 
     function setStates() {
         QGroundControl.saveBoolGlobalSetting(_mainIsMapKey, _mainIsMap)
@@ -162,33 +159,7 @@ QGCView {
             }
         }
 
-        //-- Video View
-//        FlightDisplayViewVideo {
-//            id:             _flightVideo
-//            z:              _mainIsMap ? _panel.z + 2 : _panel.z + 1
-//            width:          !_mainIsMap ? _panel.width  : pipSize
-//            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
-//            anchors.left:   _panel.left
-//            anchors.bottom: _panel.bottom
-//            visible:        _controller.hasVideo && (!_mainIsMap || _isPipVisible)
-//            states: [
-//                State {
-//                    name:   "pipMode"
-//                    PropertyChanges {
-//                        target: _flightVideo
-//                        anchors.margins:    ScreenTools.defaultFontPixelHeight
-//                    }
-//                },
-//                State {
-//                    name:   "fullMode"
-//                    PropertyChanges {
-//                        target: _flightVideo
-//                        anchors.margins:    0
-//                    }
-//                }
-//            ]
-//        }
-         //-- Video View
+     //-- Video View
         OpenCVcamera {
             id:opencvCamera
             m_cameraId: 1
@@ -227,6 +198,45 @@ QGCView {
             ]
         }
 
+        //-- Video View
+        Item {
+            id:             _flightVideo
+            z:              _mainIsMap ? _panel.z + 2 : _panel.z + 1
+            width:          !_mainIsMap ? _panel.width  : pipSize
+            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
+            anchors.left:   _panel.left
+            anchors.bottom: _panel.bottom
+            visible:        QGroundControl.videoManager.hasVideo && (!_mainIsMap || _isPipVisible)
+            states: [
+                State {
+                    name:   "pipMode"
+                    PropertyChanges {
+                        target: _flightVideo
+                        anchors.margins:    ScreenTools.defaultFontPixelHeight
+                    }
+                },
+                State {
+                    name:   "fullMode"
+                    PropertyChanges {
+                        target: _flightVideo
+                        anchors.margins:    0
+                    }
+                }
+            ]
+            //-- Video Streaming
+            FlightDisplayViewVideo {
+                anchors.fill:   parent
+                visible:        QGroundControl.videoManager.isGStreamer
+            }
+            //-- UVC Video (USB Camera or Video Device)
+            Loader {
+                id:             cameraLoader
+                anchors.fill:   parent
+                visible:        !QGroundControl.videoManager.isGStreamer
+                source:         QGroundControl.videoManager.uvcEnabled ? "qrc:/qml/FlightDisplayViewUVC.qml" : "qrc:/qml/FlightDisplayViewDummy.qml"
+            }
+        }
+
         QGCPipable {
             id:                 _flightVideoPipControl
             z:                  _flightVideo.z + 3
@@ -235,7 +245,7 @@ QGCView {
             anchors.left:       _panel.left
             anchors.bottom:     _panel.bottom
             anchors.margins:    ScreenTools.defaultFontPixelHeight
-            visible:            _controller.hasVideo
+            visible:            QGroundControl.videoManager.hasVideo
             isHidden:           !_isPipVisible
             isDark:             isBackgroundDark
             onActivated: {

@@ -165,7 +165,7 @@ void MissionManager::_ackTimeout(void)
     
     if (timedOutAck == AckNone) {
         qCWarning(MissionManagerLog) << "_ackTimeout timeout with AckNone";
-        _sendError(InternalError, "Internal error occured during Mission Item communication: _ackTimeOut:_retryAck == AckNone");
+        _sendError(InternalError, "Internal error occurred during Mission Item communication: _ackTimeOut:_retryAck == AckNone");
         return;
     }
     
@@ -574,8 +574,8 @@ void MissionManager::_handleMissionCurrent(const mavlink_message_t& message)
 
     mavlink_msg_mission_current_decode(&message, &missionCurrent);
 
-    qCDebug(MissionManagerLog) << "_handleMissionCurrent seq:" << missionCurrent.seq;
     if (missionCurrent.seq != _currentMissionItem) {
+        qCDebug(MissionManagerLog) << "_handleMissionCurrent seq:" << missionCurrent.seq;
         _currentMissionItem = missionCurrent.seq;
         emit currentItemChanged(_currentMissionItem);
     }

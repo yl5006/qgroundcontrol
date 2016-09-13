@@ -28,7 +28,7 @@ SetupPage {
         id: pageComponent
 
         Item {
-            width:  availableWidth
+            width:  Math.max(availableWidth, mainCol.width)
             height: mainCol.height+ScreenTools.defaultFontPixelHeight*8
 
             FactPanelController {
@@ -609,8 +609,8 @@ SetupPage {
                                 id:                 fenceRadiusCheckBox
                                 anchors.baseline:   fenceRadiusField.baseline
                                 text:               qsTr("最大半径")//qsTr("Max radius:")
-                                checked:            _fenceRadius.value >= 0
-                                onClicked:          _fenceRadius.value = checked ? 100 : -1
+                                    checked:            _fenceRadius.value > 0
+                                    onClicked:          _fenceRadius.value = checked ? 100 : 0
                                 width:              _middleRowWidth
                             }
                             FactTextField {
@@ -626,8 +626,8 @@ SetupPage {
                                 id:                 fenceAltMaxCheckBox
                                 anchors.baseline:   fenceAltMaxField.baseline
                                 text:               qsTr("最大高度")//qsTr("Max altitude:")
-                                checked:            _fenceAlt.value >= 0
-                                onClicked:          _fenceAlt.value = checked ? 100 : -1
+                                    checked:            _fenceAlt.value > 0
+                                    onClicked:          _fenceAlt.value = checked ? 100 : 0
                                 width:              _middleRowWidth
                             }
                             FactTextField {

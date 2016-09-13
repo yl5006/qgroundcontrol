@@ -33,6 +33,7 @@ class FirmwarePluginManager;
 class AutoPilotPlugin;
 class AutoPilotPluginManager;
 class MissionManager;
+class GeoFenceManager;
 class ParameterLoader;
 class JoystickManager;
 class UASMessage;
@@ -445,6 +446,7 @@ public:
     int manualControlReservedButtonCount(void);
 
     MissionManager* missionManager(void) { return _missionManager; }
+    GeoFenceManager* geoFenceManager(void) { return _geoFenceManager; }
 
     bool homePositionAvailable(void);
     QGeoCoordinate homePosition(void);
@@ -569,6 +571,14 @@ public:
     /// @return true: X confiuration, false: Plus configuration
     bool xConfigMotors(void);
 
+    /// Returns true if the specifed parameter exists from the default component
+    bool parameterExists(int componentId, const QString& name) const;
+
+    /// Returns the specified parameter Fact from the default component
+    /// WARNING: Returns a default Fact if parameter does not exists. If that possibility exists, check for existence first with
+    /// parameterExists.
+    Fact* getParameterFact(int componentId, const QString& name);
+
 public slots:
     void setLatitude(double latitude);
     void setLongitude(double longitude);
@@ -662,6 +672,7 @@ private slots:
     void _imageReady                        (UASInterface* uas);
     void _connectionLostTimeout(void);
     void _prearmErrorTimeout(void);
+    void _newMissionItemsAvailable(void);
 
 private:
     bool _containsLink(LinkInterface* link);
@@ -682,6 +693,7 @@ private:
     void _handleCommandAck(mavlink_message_t& message);
     void _handleAutopilotVersion(mavlink_message_t& message);
     void _missionManagerError(int errorCode, const QString& errorMsg);
+    void _geoFenceManagerError(int errorCode, const QString& errorMsg);
     void _mapTrajectoryStart(void);
     void _mapTrajectoryStop(void);
     void _connectionActive(void);
@@ -746,6 +758,9 @@ private:
 
     MissionManager*     _missionManager;
     bool                _missionManagerInitialRequestComplete;
+
+    GeoFenceManager*    _geoFenceManager;
+    bool                _geoFenceManagerInitialRequestComplete;
 
     ParameterLoader*    _parameterLoader;
 

@@ -119,6 +119,12 @@ LinuxBuild {
             libQt5Widgets.so.5 \
             libQt5XcbQpa.so.5
 
+        !contains (DEFINES, QGC_DISABLE_UVC) {
+            QT_LIB_LIST += \
+                libQt5Multimedia.so.5 \
+                libQt5MultimediaQuick_p.so.5
+        }
+
         !contains(DEFINES, __rasp_pi2__) {
             QT_LIB_LIST += \
                 libicudata.so.54 \

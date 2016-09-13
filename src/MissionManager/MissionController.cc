@@ -36,12 +36,9 @@ const char* MissionController::_jsonComplexItemsKey =           "complexItems";
 const char* MissionController::_jsonPlannedHomePositionKey =    "plannedHomePosition";
 
 MissionController::MissionController(QObject *parent)
-    : QObject(parent)
-    , _editMode(false)
+    : PlanElementController(parent)
     , _visualItems(NULL)
     , _complexItems(NULL)
-    , _activeVehicle(NULL)
-    , _autoSync(false)
     , _firstItemsFromVehicle(false)
     , _missionItemsRequested(false)
     , _queuedSend(false)
@@ -62,12 +59,7 @@ void MissionController::start(bool editMode)
 {
     qCDebug(MissionControllerLog) << "start editMode" << editMode;
 
-    _editMode = editMode;
-
-    MultiVehicleManager* multiVehicleMgr = qgcApp()->toolbox()->multiVehicleManager();
-
-    connect(multiVehicleMgr, &MultiVehicleManager::activeVehicleChanged, this, &MissionController::_activeVehicleChanged);
-    _activeVehicleChanged(multiVehicleMgr->activeVehicle());
+    PlanElementController::start(editMode);
 
     // We start with an empty mission
     _visualItems = new QmlObjectListModel(this);
@@ -111,7 +103,7 @@ void MissionController::_newMissionItemsAvailableFromVehicle(void)
     }
 }
 
-void MissionController::getMissionItems(void)
+void MissionController::loadFromVehicle(void)
 {
     Vehicle* activeVehicle = qgcApp()->toolbox()->multiVehicleManager()->activeVehicle();
 
@@ -121,7 +113,7 @@ void MissionController::getMissionItems(void)
     }
 }
 
-void MissionController::sendMissionItems(void)
+void MissionController::sendToVehicle(void)
 {
     if (_activeVehicle) {
         // Convert to MissionItems so we can send to vehicle
@@ -240,7 +232,7 @@ void MissionController::removeMissionItem(int index)
     _visualItems->setDirty(true);
 }
 
-void MissionController::removeAllMissionItems(void)
+void MissionController::removeAll(void)
 {
     if (_visualItems) {
         _deinitAllVisualItems();
@@ -416,7 +408,7 @@ bool MissionController::_loadTextMissionFile(QTextStream& stream, QmlObjectListM
     return true;
 }
 
-void MissionController::loadMissionFromFile(const QString& filename)
+void MissionController::loadFromFile(const QString& filename)
 {
     QString errorString;
 
@@ -476,7 +468,7 @@ void MissionController::loadMissionFromFile(const QString& filename)
     _initAllVisualItems();
 }
 
-void MissionController::loadMissionFromFilePicker(void)
+void MissionController::loadFromFilePicker(void)
 {
 #ifndef __mobile__
     QString filename = QGCFileDialog::getOpenFileName(NULL, tr("选择任务文件")/*"Select Mission File to load"*/, QString(), "Mission file (*.mission);;All Files (*.*)");
@@ -484,11 +476,11 @@ void MissionController::loadMissionFromFilePicker(void)
     if (filename.isEmpty()) {
         return;
     }
-    loadMissionFromFile(filename);
+    loadFromFile(filename);
 #endif
 }
 
-void MissionController::saveMissionToFile(const QString& filename)
+void MissionController::saveToFile(const QString& filename)
 {
     qDebug() << filename;
 
@@ -561,7 +553,7 @@ void MissionController::saveMissionToFile(const QString& filename)
     _visualItems->setDirty(false);
 }
 
-void MissionController::saveMissionToFilePicker(void)
+void MissionController::saveToFilePicker(void)
 {
 #ifndef __mobile__
     QString filename = QGCFileDialog::getSaveFileName(NULL, tr("保存任务文件")/*"Select file to save mission to"*/, QString(), "Mission file (*.mission);;All Files (*.*)");
@@ -569,7 +561,7 @@ void MissionController::saveMissionToFilePicker(void)
     if (filename.isEmpty()) {
         return;
     }
-    saveMissionToFile(filename);
+    saveToFile(filename);
 #endif
 }
 
@@ -632,8 +624,6 @@ void MissionController::_recalcWaypointLines(void)
 
     if (!homeItem) {
         qWarning() << "Home item is not SimpleMissionItem";
-    } else {
-        connect(homeItem, &VisualMissionItem::coordinateChanged, this, &MissionController::_recalcAltitudeRangeBearing);
     }
 
     bool    showHomePosition =  homeItem->showHomePosition();
@@ -953,6 +943,10 @@ void MissionController::_initAllVisualItems(void)
         homeItem->setShowHomePosition(true);
     }
 
+    emit plannedHomePositionChanged(plannedHomePosition());
+
+    connect(homeItem, &VisualMissionItem::coordinateChanged, this, &MissionController::_homeCoordinateChanged);
+
     QmlObjectListModel* newComplexItems = new QmlObjectListModel(this);
     for (int i=0; i<_visualItems->count(); i++) {
         VisualMissionItem* item = qobject_cast<VisualMissionItem*>(_visualItems->get(i));
@@ -980,9 +974,9 @@ void MissionController::_initAllVisualItems(void)
     emit visualItemsChanged();
     emit complexVisualItemsChanged();
 
-    _visualItems->setDirty(false);
+    connect(_visualItems, &QmlObjectListModel::dirtyChanged, this, &MissionController::dirtyChanged);
 
-    connect(_visualItems, &QmlObjectListModel::dirtyChanged, this, &MissionController::_dirtyChanged);
+    _visualItems->setDirty(false);
 }
 
 void MissionController::_deinitAllVisualItems(void)
@@ -991,7 +985,7 @@ void MissionController::_deinitAllVisualItems(void)
         _deinitVisualItem(qobject_cast<VisualMissionItem*>(_visualItems->get(i)));
     }
 
-    connect(_visualItems, &QmlObjectListModel::dirtyChanged, this, &MissionController::_dirtyChanged);
+    disconnect(_visualItems, &QmlObjectListModel::dirtyChanged, this, &MissionController::dirtyChanged);
 }
 
 void MissionController::_initVisualItem(VisualMissionItem* visualItem)
@@ -1030,48 +1024,45 @@ void MissionController::_itemCommandChanged(void)
     _recalcWaypointLines();
 }
 
-void MissionController::_activeVehicleChanged(Vehicle* activeVehicle)
+void MissionController::_activeVehicleBeingRemoved(Vehicle* vehicle)
 {
-    qCDebug(MissionControllerLog) << "_activeVehicleChanged activeVehicle" << activeVehicle;
+    qCDebug(MissionControllerLog) << "_activeVehicleSet _activeVehicleBeingRemoved";
 
-    if (_activeVehicle) {
-        MissionManager* missionManager = _activeVehicle->missionManager();
+    MissionManager* missionManager = vehicle->missionManager();
 
-        disconnect(missionManager, &MissionManager::newMissionItemsAvailable,   this, &MissionController::_newMissionItemsAvailableFromVehicle);
-        disconnect(missionManager, &MissionManager::inProgressChanged,          this, &MissionController::_inProgressChanged);
-        disconnect(missionManager, &MissionManager::currentItemChanged,         this, &MissionController::_currentMissionItemChanged);
-        disconnect(_activeVehicle, &Vehicle::homePositionAvailableChanged,      this, &MissionController::_activeVehicleHomePositionAvailableChanged);
-        disconnect(_activeVehicle, &Vehicle::homePositionChanged,               this, &MissionController::_activeVehicleHomePositionChanged);
-        _activeVehicle = NULL;
-    }
+    disconnect(missionManager, &MissionManager::newMissionItemsAvailable,   this, &MissionController::_newMissionItemsAvailableFromVehicle);
+    disconnect(missionManager, &MissionManager::inProgressChanged,          this, &MissionController::_inProgressChanged);
+    disconnect(missionManager, &MissionManager::currentItemChanged,         this, &MissionController::_currentMissionItemChanged);
+    disconnect(vehicle, &Vehicle::homePositionAvailableChanged,             this, &MissionController::_activeVehicleHomePositionAvailableChanged);
+    disconnect(vehicle, &Vehicle::homePositionChanged,                      this, &MissionController::_activeVehicleHomePositionChanged);
 
     // We always remove all items on vehicle change. This leaves a user model hole:
     //      If the user has unsaved changes in the Plan view they will lose them
-    removeAllMissionItems();
+    removeAll();
+}
 
-    _activeVehicle = activeVehicle;
+void MissionController::_activeVehicleSet(void)
+{
+    // We always remove all items on vehicle change. This leaves a user model hole:
+    //      If the user has unsaved changes in the Plan view they will lose them
+    removeAll();
 
-    if (_activeVehicle) {
-        MissionManager* missionManager = activeVehicle->missionManager();
+    MissionManager* missionManager = _activeVehicle->missionManager();
 
-        connect(missionManager, &MissionManager::newMissionItemsAvailable,  this, &MissionController::_newMissionItemsAvailableFromVehicle);
-        connect(missionManager, &MissionManager::inProgressChanged,         this, &MissionController::_inProgressChanged);
-        connect(missionManager, &MissionManager::currentItemChanged,        this, &MissionController::_currentMissionItemChanged);
-        connect(_activeVehicle, &Vehicle::homePositionAvailableChanged,     this, &MissionController::_activeVehicleHomePositionAvailableChanged);
-        connect(_activeVehicle, &Vehicle::homePositionChanged,              this, &MissionController::_activeVehicleHomePositionChanged);
+    connect(missionManager, &MissionManager::newMissionItemsAvailable,  this, &MissionController::_newMissionItemsAvailableFromVehicle);
+    connect(missionManager, &MissionManager::inProgressChanged,         this, &MissionController::_inProgressChanged);
+    connect(missionManager, &MissionManager::currentItemChanged,        this, &MissionController::_currentMissionItemChanged);
+    connect(_activeVehicle, &Vehicle::homePositionAvailableChanged,     this, &MissionController::_activeVehicleHomePositionAvailableChanged);
+    connect(_activeVehicle, &Vehicle::homePositionChanged,              this, &MissionController::_activeVehicleHomePositionChanged);
 
-        if (_activeVehicle->getParameterLoader()->parametersAreReady() && !syncInProgress()) {
-            // We are switching between two previously existing vehicles. We have to manually ask for the items from the Vehicle.
-            // We don't request mission items for new vehicles since that will happen autamatically.
-            getMissionItems();
-        }
-
-        _activeVehicleHomePositionChanged(_activeVehicle->homePosition());
-        _activeVehicleHomePositionAvailableChanged(_activeVehicle->homePositionAvailable());
+    if (_activeVehicle->getParameterLoader()->parametersAreReady() && !syncInProgress()) {
+        // We are switching between two previously existing vehicles. We have to manually ask for the items from the Vehicle.
+        // We don't request mission items for new vehicles since that will happen autamatically.
+        loadFromVehicle();
     }
 
-    // Whenever vehicle changes we need to update syncInProgress
-    emit syncInProgressChanged(syncInProgress());
+    _activeVehicleHomePositionChanged(_activeVehicle->homePosition());
+    _activeVehicleHomePositionAvailableChanged(_activeVehicle->homePositionAvailable());
 }
 
 void MissionController::_activeVehicleHomePositionAvailableChanged(bool homePositionAvailable)
@@ -1081,6 +1072,7 @@ void MissionController::_activeVehicleHomePositionAvailableChanged(bool homePosi
 
         if (homeItem) {
             homeItem->setShowHomePosition(homePositionAvailable);
+            emit plannedHomePositionChanged(plannedHomePosition());
             _recalcWaypointLines();
         } else {
             qWarning() << "Unabled to cast home item to SimpleMissionItem";
@@ -1091,24 +1083,18 @@ void MissionController::_activeVehicleHomePositionAvailableChanged(bool homePosi
 void MissionController::_activeVehicleHomePositionChanged(const QGeoCoordinate& homePosition)
 {
     if (!_editMode && _visualItems) {
-        qobject_cast<VisualMissionItem*>(_visualItems->get(0))->setCoordinate(homePosition);
-        _recalcWaypointLines();
+        VisualMissionItem* item = qobject_cast<VisualMissionItem*>(_visualItems->get(0));
+        if (item) {
+            if (item->coordinate() != homePosition) {
+                item->setCoordinate(homePosition);
+                qCDebug(MissionControllerLog) << "Home position update" << homePosition;
+                emit plannedHomePositionChanged(plannedHomePosition());
+                _recalcWaypointLines();
+            }
+        } else {
+            qWarning() << "Unabled to cast home item to VisualMissionItem";
+        }
     }
-}
-
-void MissionController::setAutoSync(bool autoSync)
-{
-    // FIXME: AutoSync temporarily turned off
-#if 0
-    _autoSync = autoSync;
-    emit autoSyncChanged(_autoSync);
-
-    if (_autoSync) {
-        _dirtyChanged(true);
-    }
-#else
-    Q_UNUSED(autoSync)
-#endif
 }
 
 void MissionController::setMissionDistance(double missionDistance)
@@ -1143,36 +1129,9 @@ void MissionController::setHoverDistance(double hoverDistance)
     }
 }
 
-void MissionController::_dirtyChanged(bool dirty)
-{
-    if (dirty && _autoSync) {
-        Vehicle* activeVehicle = qgcApp()->toolbox()->multiVehicleManager()->activeVehicle();
-
-        if (activeVehicle && !activeVehicle->armed()) {
-            if (_activeVehicle->missionManager()->inProgress()) {
-                _queuedSend = true;
-            } else {
-                _autoSyncSend();
-            }
-        }
-    }
-}
-
-void MissionController::_autoSyncSend(void)
-{
-    _queuedSend = false;
-    if (_visualItems) {
-        sendMissionItems();
-        _visualItems->setDirty(false);
-    }
-}
-
 void MissionController::_inProgressChanged(bool inProgress)
 {
     emit syncInProgressChanged(inProgress);
-    if (!inProgress && _queuedSend) {
-        _autoSyncSend();
-    }
 }
 
 bool MissionController::_findLastAltitude(double* lastAltitude, MAV_FRAME* frame)
@@ -1293,11 +1252,38 @@ void MissionController::_currentMissionItemChanged(int sequenceNumber)
     }
 }
 
-bool MissionController::syncInProgress(void)
+bool MissionController::syncInProgress(void) const
 {
-    if (_activeVehicle) {
-        return _activeVehicle->missionManager()->inProgress();
-    } else {
-        return false;
+    return _activeVehicle ? _activeVehicle->missionManager()->inProgress() : false;
+}
+
+bool MissionController::dirty(void) const
+{
+    return _visualItems ? _visualItems->dirty() : false;
+}
+
+
+void MissionController::setDirty(bool dirty)
+{
+    if (_visualItems) {
+        _visualItems->setDirty(dirty);
     }
+}
+
+QGeoCoordinate MissionController::plannedHomePosition(void)
+{
+    if (_visualItems && _visualItems->count() > 0) {
+        SimpleMissionItem* item = qobject_cast<SimpleMissionItem*>(_visualItems->get(0));
+        if (item && item->showHomePosition()) {
+            return item->coordinate();
+        }
+    }
+
+    return QGeoCoordinate();
+}
+
+void MissionController::_homeCoordinateChanged(void)
+{
+    emit plannedHomePositionChanged(plannedHomePosition());
+    _recalcAltitudeRangeBearing();
 }

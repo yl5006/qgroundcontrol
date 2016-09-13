@@ -198,30 +198,17 @@ Map {
         property bool   adjustingPolygon:   false
         property bool   polygonReady:       polygonDrawerPolygon.path.length > 3 ///< true: enough points have been captured to create a closed polygon
 
-        /// New polygon capture has started
-        signal polygonCaptureStarted
-
-        /// Polygon capture is complete
-        ///     @param coordinates Map coordinates for the polygon points
-        signal polygonCaptureFinished(var coordinates)
-
-        /// Polygon adjustment has begun
-        signal polygonAdjustStarted
-
-        /// Polygon Vertex coordinate has been adjusted
-        signal polygonAdjustVertex(int vertexIndex, var vertexCoordinate)
-
-        /// Polygon adjustment finished
-        signal polygonAdjustFinished
+        property var _callbackObject
 
         property var _vertexDragList: []
 
         /// Begin capturing a new polygon
         ///     polygonCaptureStarted will be signalled
-        function startCapturePolygon() {
+        function startCapturePolygon(callback) {
+            polygonDrawer._callbackObject = callback
             polygonDrawer.drawingPolygon = true
             polygonDrawer._clearPolygon()
-            polygonDrawer.polygonCaptureStarted()
+            polygonDrawer._callbackObject.polygonCaptureStarted()
         }
 
         /// Finish capturing the polygon
@@ -234,13 +221,13 @@ Map {
 
             var polygonPath = polygonDrawerPolygon.path
             polygonPath.pop() // get rid of drag coordinate
-            polygonDrawer._clearPolygon()
-            polygonDrawer.drawingPolygon = false
-            polygonDrawer.polygonCaptureFinished(polygonPath)
+            _cancelCapturePolygon()
+            polygonDrawer._callbackObject.polygonCaptureFinished(polygonPath)
             return true
         }
 
-        function startAdjustPolygon(vertexCoordinates) {
+        function startAdjustPolygon(callback, vertexCoordinates) {
+            polygonDraw._callbackObject = callback
             polygonDrawer.adjustingPolygon = true
             for (var i=0; i<vertexCoordinates.length; i++) {
                 var mapItem = Qt.createQmlObject(
@@ -268,7 +255,7 @@ Map {
                             "" +
                             "   function updateCoordinate() { " +
                             "       vertexDrag.coordinate = _map.toCoordinate(Qt.point(vertexDrag.x + _halfSideLength, vertexDrag.y + _halfSideLength), false); " +
-                            "       polygonDrawer.polygonAdjustVertex(vertexDrag.index, vertexDrag.coordinate); " +
+                            "       polygonDrawer._callbackObject.polygonAdjustVertex(vertexDrag.index, vertexDrag.coordinate); " +
                             "   } " +
                             "" +
                             "   function updatePosition() { " +
@@ -299,17 +286,32 @@ Map {
                 mapItem.index = i
                 mapItem.updatePosition()
                 polygonDrawer._vertexDragList.push(mapItem)
-                polygonDrawer.polygonAdjustStarted()
+                polygonDrawer._callbackObject.polygonAdjustStarted()
             }
         }
 
         function finishAdjustPolygon() {
+            _cancelAdjustPolygon()
+            polygonDrawer._callbackObject.polygonAdjustFinished()
+        }
+
+        /// Cancels an in progress draw or adjust
+        function cancelPolygonEdit() {
+            _cancelAdjustPolygon()
+            _cancelCapturePolygon()
+        }
+
+        function _cancelAdjustPolygon() {
             polygonDrawer.adjustingPolygon = false
             for (var i=0; i<polygonDrawer._vertexDragList.length; i++) {
                 polygonDrawer._vertexDragList[i].destroy()
             }
             polygonDrawer._vertexDragList = []
-            polygonDrawer.polygonAdjustFinished()
+        }
+
+        function _cancelCapturePolygon() {
+            polygonDrawer._clearPolygon()
+            polygonDrawer.drawingPolygon = false
         }
 
         function _clearPolygon() {
