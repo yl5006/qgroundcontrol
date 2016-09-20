@@ -60,7 +60,7 @@ public:
     ///     value:  remapParamNameMinorVersionRemapMap_t entry
     typedef QMap<int, remapParamNameMinorVersionRemapMap_t> remapParamNameMajorVersionMap_t;
 
-    /// Called when Vehicle is first created to send any necessary mavlink messages to the firmware.
+    /// Called when Vehicle is first created to perform any firmware specific setup.
     virtual void initializeVehicle(Vehicle* vehicle);
 
     /// @return true: Firmware supports all specified capabilites
@@ -216,6 +216,9 @@ public:
 
     /// Returns the parameter which holds the fence circle radius if supported.
     virtual QString geoFenceRadiusParam(Vehicle* vehicle) { Q_UNUSED(vehicle); return QString(); }
+
+    /// Return the resource file which contains the set of params loaded for offline editing.
+    virtual QString offlineEditingParamFile(Vehicle* vehicle) { Q_UNUSED(vehicle); return QString(); }
 };
 
 #endif

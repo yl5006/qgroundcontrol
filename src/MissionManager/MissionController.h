@@ -131,7 +131,7 @@ private:
     int _nextSequenceNumber(void);
 
     // Overrides from PlanElementController
-    void _activeVehicleBeingRemoved(Vehicle* vehicle) final;
+    void _activeVehicleBeingRemoved(void) final;
     void _activeVehicleSet(void) final;
 
 private:
@@ -148,8 +148,6 @@ private:
     double              _hoverDistance;
 
     static const char*  _settingsGroup;
-    static const char*  _jsonVersionKey;
-    static const char*  _jsonGroundStationKey;
     static const char*  _jsonMavAutopilotKey;
     static const char*  _jsonComplexItemsKey;
     static const char*  _jsonPlannedHomePositionKey;

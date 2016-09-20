@@ -8,8 +8,8 @@
  ****************************************************************************/
 
 
-#ifndef PARAMETERLOADER_H
-#define PARAMETERLOADER_H
+#ifndef ParameterManager_H
+#define ParameterManager_H
 
 #include <QObject>
 #include <QMap>
@@ -17,6 +17,7 @@
 #include <QLoggingCategory>
 #include <QMutex>
 #include <QDir>
+#include <QJsonObject>
 
 #include "FactSystem.h"
 #include "MAVLinkProtocol.h"
@@ -27,27 +28,32 @@
 /// @file
 ///     @author Don Gagne <don@thegagnes.com>
 
-Q_DECLARE_LOGGING_CATEGORY(ParameterLoaderVerboseLog)
+Q_DECLARE_LOGGING_CATEGORY(ParameterManagerVerboseLog)
 
 /// Connects to Parameter Manager to load/update Facts
-class ParameterLoader : public QObject
+class ParameterManager : public QObject
 {
     Q_OBJECT
     
 public:
     /// @param uas Uas which this set of facts is associated with
-    ParameterLoader(Vehicle* vehicle);
-    
-    ~ParameterLoader();
+    ParameterManager(Vehicle* vehicle);
+    ~ParameterManager();
+
+    /// true: Parameters are ready for use
+    Q_PROPERTY(bool parametersReady READ parametersReady NOTIFY parametersReadyChanged)
+    bool parametersReady(void) { return _parametersReady; }
+
+    /// true: Parameters are missing from firmware response, false: all parameters received from firmware
+    Q_PROPERTY(bool missingParameters READ missingParameters NOTIFY missingParametersChanged)
+    bool missingParameters(void) { return _missingParameters; }
 
     /// @return Directory of parameter caches
     static QDir parameterCacheDir();
 
     /// @return Location of parameter cache file
-    static QString parameterCacheFile(int uasId, int componentId);
+    static QString parameterCacheFile(int vehicleId, int componentId);
     
-    /// Returns true if the full set of facts are ready
-    bool parametersAreReady(void) { return _parametersReady; }
 
     /// Re-request the full set of parameters from the autopilot
     void refreshAllParameters(uint8_t componentID = MAV_COMP_ID_ALL);
@@ -58,18 +64,21 @@ public:
     /// Request a refresh on all parameters that begin with the specified prefix
     void refreshParametersPrefix(int componentId, const QString& namePrefix);
     
+    void resetAllParametersToDefaults(void);
+
     /// Returns true if the specifed parameter exists
-    bool parameterExists(int			componentId,    ///< fact component, -1=default component
-						 const QString& name);          ///< fact name
-	
+    ///     @param componentId Component id or FactSystem::defaultComponentId
+    ///     @param name Parameter name
+    bool parameterExists(int componentId, const QString& name);
+
 	/// Returns all parameter names
 	QStringList parameterNames(int componentId);
     
-    /// Returns the specified Fact.
-    /// WARNING: Will assert if parameter does not exists. If that possibily exists, check for existence first with
-    /// parameterExists.
-    Fact* getFact(int               componentId,    ///< fact component, -1=default component
-                  const QString&    name);          ///< fact name
+    /// Returns the specified Parameter. Returns a default empty fact is parameter does not exists. Also will pop
+    /// a missing parameter error to user if parameter does not exist.
+    ///     @param componentId Component id or FactSystem::defaultComponentId
+    ///     @param name Parameter name
+    Fact* getParameter(int componentId, const QString& name);
     
     const QMap<int, QMap<QString, QStringList> >& getGroupMap(void);
     
@@ -91,15 +100,30 @@ public:
     /// If this file is newer than anything in the cache, cache it as the latest version
     static void cacheMetaDataFile(const QString& metaDataFile, MAV_AUTOPILOT firmwareType);
 
-    int defaultComponenentId(void) { return _defaultComponentId; }
-    
+    int defaultComponentId(void) { return _defaultComponentId; }
+
+    /// Saves the specified param set to the json object.
+    ///     @param componentId Component id which contains params, MAV_COMP_ID_ALL to save all components
+    ///     @param paramsToSave List of params names to save, empty to save all for component
+    ///     @param saveObject Json object to save to
+    void saveToJson(int componentId, const QStringList& paramsToSave, QJsonObject& saveObject);
+
+    /// Load a parameter set from json
+    ///     @param json Json object to load from
+    ///     @param required true: no parameters in object will generate error
+    ///     @param errorString Error string if return is false
+    /// @return true: success, false: failure (errorString set)
+    bool loadFromJson(const QJsonObject& json, bool required, QString& errorString);
+
+    Vehicle* vehicle(void) { return _vehicle; }
+
 signals:
-    /// Signalled when the full set of facts are ready
-    void parametersReady(bool missingParameters);
+    void parametersReadyChanged(bool parametersReady);
+    void missingParametersChanged(bool missingParameters);
 
     /// Signalled to update progress of full parameter list request
     void parameterListProgress(float value);
-    
+
     /// Signalled to ourselves in order to get call on our own thread
     void restartWaitingParamTimer(void);
     
@@ -107,7 +131,7 @@ protected:
     Vehicle*            _vehicle;
     MAVLinkProtocol*    _mavlink;
     
-    void _parameterUpdate(int uasId, int componentId, QString parameterName, int parameterCount, int parameterId, int mavType, QVariant value);
+    void _parameterUpdate(int vehicleId, int componentId, QString parameterName, int parameterCount, int parameterId, int mavType, QVariant value);
     void _valueUpdated(const QVariant& value);
     void _restartWaitingParamTimer(void);
     void _waitingParamTimeout(void);
@@ -121,10 +145,11 @@ private:
     void _setupGroupMap(void);
     void _readParameterRaw(int componentId, const QString& paramName, int paramIndex);
     void _writeParameterRaw(int componentId, const QString& paramName, const QVariant& value);
-    void _writeLocalParamCache(int uasId, int componentId);
-    void _tryCacheHashLoad(int uasId, int componentId, QVariant hash_value);
+    void _writeLocalParamCache(int vehicleId, int componentId);
+    void _tryCacheHashLoad(int vehicleId, int componentId, QVariant hash_value);
     void _addMetaDataToDefaultComponent(void);
     QString _remapParamNameToVersion(const QString& paramName);
+    void _loadOfflineEditingParams(void);
 
     MAV_PARAM_TYPE _factTypeToMavType(FactMetaData::ValueType_t factType);
     FactMetaData::ValueType_t _mavTypeToFactType(MAV_PARAM_TYPE mavType);
@@ -141,7 +166,8 @@ private:
     /// Second mapping is group name, to Fact
     QMap<int, QMap<QString, QStringList> > _mapGroup2ParameterName;
     
-    bool        _parametersReady;               ///< true: full set of parameters correctly loaded
+    bool        _parametersReady;               ///< true: parameter load complete
+    bool        _missingParameters;             ///< true: parameter missing from initial load
     bool        _initialLoadComplete;           ///< true: Initial load of all parameters complete, whether successful or not
     bool        _waitingForDefaultComponent;    ///< true: last chance wait for default component params
     bool        _saveRequired;                  ///< true: _saveToEEPROM should be called
@@ -178,6 +204,10 @@ private:
     static Fact _defaultFact;   ///< Used to return default fact, when parameter not found
 
     static const char* _cachedMetaDataFilePrefix;
+    static const char* _jsonParametersKey;
+    static const char* _jsonCompIdKey;
+    static const char* _jsonParamNameKey;
+    static const char* _jsonParamValueKey;
 };
 
 #endif

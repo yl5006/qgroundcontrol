@@ -18,16 +18,6 @@ QGCFlickable {
 
     property var polygon: geoFenceController.polygon
 
-    Connections {
-        target: geoFenceController.polygon
-
-        onPathChanged: {
-            if (geoFenceController.polygon.path.length > 2) {
-                geoFenceController.breachReturnPoint = geoFenceController.polygon.center()
-            }
-        }
-    }
-
     Rectangle {
         id:     geoFenceEditorRect
         width:  parent.width
@@ -40,7 +30,7 @@ QGCFlickable {
             anchors.margins:    _margin
             anchors.left:       parent.left
             anchors.top:        parent.top
-            text:               qsTr("GeoFence (WIP careful!)")
+            text:               qsTr("GeoFence")
             color:              "black"
         }
 

@@ -19,6 +19,8 @@
 
 Q_DECLARE_LOGGING_CATEGORY(GeoFenceControllerLog)
 
+class GeoFenceManager;
+
 class GeoFenceController : public PlanElementController
 {
     Q_OBJECT
@@ -61,7 +63,6 @@ public:
     QStringList         paramLabels             (void) const;
     QString             editorQml               (void) const;
 
-public slots:
     void setBreachReturnPoint(const QGeoCoordinate& breachReturnPoint);
 
 signals:
@@ -79,19 +80,24 @@ signals:
 private slots:
     void _polygonDirtyChanged(bool dirty);
     void _setDirty(void);
-    void _setPolygon(const QList<QGeoCoordinate>& polygon);
+    void _setPolygonFromManager(const QList<QGeoCoordinate>& polygon);
+    void _setReturnPointFromManager(QGeoCoordinate breachReturnPoint);
+    void _loadComplete(const QGeoCoordinate& breachReturn, const QList<QGeoCoordinate>& polygon);
 
 private:
-    void _clearGeoFence(void);
     void _signalAll(void);
+    bool _loadJsonFile(QJsonDocument& jsonDoc, QString& errorString);
 
-    void _activeVehicleBeingRemoved(Vehicle* vehicle) final;
+    void _activeVehicleBeingRemoved(void) final;
     void _activeVehicleSet(void) final;
 
-    bool            _dirty;
-    QGCMapPolygon   _polygon;
-    QGeoCoordinate  _breachReturnPoint;
-    QVariantList    _params;
+    bool                _dirty;
+    QGCMapPolygon       _polygon;
+    QGeoCoordinate      _breachReturnPoint;
+    QVariantList        _params;
+
+    static const char* _jsonFileTypeValue;
+    static const char* _jsonBreachReturnKey;
 };
 
 #endif

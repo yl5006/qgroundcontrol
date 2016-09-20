@@ -159,6 +159,33 @@ QGCView {
                 _editingLayer = _layerMission
             }
         }
+
+        function saveToSelectedFile() {
+            if (ScreenTools.isMobile) {
+                qgcView.showDialog(mobileFileSaver, qsTr("Save Fence File"), qgcView.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel)
+            } else {
+                geoFenceController.saveToFilePicker()
+            }
+        }
+
+        function loadFromSelectedFile() {
+            if (ScreenTools.isMobile) {
+                qgcView.showDialog(mobileFilePicker, qsTr("Select Fence File"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+            } else {
+                geoFenceController.loadFromFilePicker()
+            }
+        }
+
+        function validateBreachReturn() {
+            if (geoFenceController.polygon.path.length > 0) {
+                if (!geoFenceController.polygon.containsCoordinate(geoFenceController.breachReturnPoint)) {
+                    geoFenceController.breachReturnPoint = geoFenceController.polygon.center()
+                }
+                if (!geoFenceController.polygon.containsCoordinate(geoFenceController.breachReturnPoint)) {
+                    geoFenceController.breachReturnPoint = geoFenceController.polygon.path[0]
+                }
+            }
+        }
     }
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
@@ -193,7 +220,7 @@ QGCView {
 
         QGCMobileFileDialog {
             openDialog:         true
-            fileExtension:      QGroundControl.missionFileExtension
+            fileExtension:      _syncDropDownController == geoFenceController ? QGroundControl.fenceFileExtension : QGroundControl.missionFileExtension
             onFilenameReturned: _syncDropDownController.loadFromfile(filename)
         }
     }
@@ -203,7 +230,7 @@ QGCView {
 
         QGCMobileFileDialog {
             openDialog:         false
-            fileExtension:      QGroundControl.missionFileExtension
+            fileExtension:      _syncDropDownController == geoFenceController ? QGroundControl.fenceFileExtension : QGroundControl.missionFileExtension
             onFilenameReturned: _syncDropDownController.saveToFile()
         }
     }
@@ -300,6 +327,7 @@ QGCView {
                             break
                         case _layerGeoFence:
                             geoFenceController.breachReturnPoint = coordinate
+                            geoFenceController.validateBreachReturn()
                             break
                         }
                     }
@@ -357,7 +385,7 @@ QGCView {
 
                 // Add the complex mission item polygon to the map
                 MapItemView {
-                    model: _editingLayer == _layerMission ? missionController.complexVisualItems : undefined
+                    model: missionController.complexVisualItems
 
                     delegate: MapPolygon {
                         color:      'green'
@@ -368,7 +396,7 @@ QGCView {
 
                 // Add the complex mission item grid to the map
                 MapItemView {
-                    model: _editingLayer == _layerMission ? missionController.complexVisualItems : undefined
+                    model: missionController.complexVisualItems
 
                     delegate: MapPolyline {
                         line.color: "white"
@@ -379,7 +407,7 @@ QGCView {
 
                 // Add the complex mission item exit coordinates
                 MapItemView {
-                    model: _editingLayer == _layerMission ? missionController.complexVisualItems : undefined
+                    model: missionController.complexVisualItems
                     delegate:   exitCoordinateComponent
                 }
 
@@ -397,7 +425,7 @@ QGCView {
 
                 // Add the simple mission items to the map
                 MapItemView {
-                    model:      _editingLayer == _layerMission ? missionController.visualItems : undefined
+                    model:      missionController.visualItems
                     delegate:   missionItemComponent
                 }
 
@@ -586,6 +614,7 @@ QGCView {
                     border.color:   "#80FF0000"
                     border.width:   3
                     path:           geoFenceController.polygonSupported ? geoFenceController.polygon.path : undefined
+                    z:              QGroundControl.zOrderMapItems
                 }
 
                 // GeoFence circle
@@ -594,14 +623,7 @@ QGCView {
                     border.width:   3
                     center:         missionController.plannedHomePosition
                     radius:         geoFenceController.circleSupported ? geoFenceController.circleRadius : 0
-                }
-
-                // GeoFence circle
-                MapCircle {
-                    border.color:   "#80FF0000"
-                    border.width:   3
-                    center:         missionController.plannedHomePosition
-                    radius:         geoFenceController.circleSupported ? geoFenceController.circleRadius : 0
+                    z:              QGroundControl.zOrderMapItems
                 }
 
                 // GeoFence breach return point
@@ -610,6 +632,7 @@ QGCView {
                     coordinate:     geoFenceController.breachReturnPoint
                     visible:        geoFenceController.breachReturnSupported
                     sourceItem:     MissionItemIndexLabel { label: "F" }
+                    z:              QGroundControl.zOrderMapItems
                 }
 
                 //-- Dismiss Drop Down (if any)

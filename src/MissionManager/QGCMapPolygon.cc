@@ -9,10 +9,13 @@
 
 #include "QGCMapPolygon.h"
 #include "QGCGeo.h"
+#include "JsonHelper.h"
 
 #include <QGeoRectangle>
 #include <QDebug>
-#include <QPolygon>
+#include <QJsonArray>
+
+const char* QGCMapPolygon::_jsonPolygonKey = "polygon";
 
 QGCMapPolygon::QGCMapPolygon(QObject* parent)
     : QObject(parent)
@@ -48,13 +51,6 @@ void QGCMapPolygon::clear(void)
     setDirty(true);
 }
 
-void QGCMapPolygon::addCoordinate(const QGeoCoordinate coordinate)
-{
-    _polygonPath << QVariant::fromValue(coordinate);
-    emit pathChanged();
-    setDirty(true);
-}
-
 void QGCMapPolygon::adjustCoordinate(int vertexIndex, const QGeoCoordinate coordinate)
 {
     _polygonPath[vertexIndex] = QVariant::fromValue(coordinate);
@@ -70,24 +66,61 @@ void QGCMapPolygon::setDirty(bool dirty)
     }
 }
 
-QGeoCoordinate QGCMapPolygon::center(void) const
+QGeoCoordinate QGCMapPolygon::_coordFromPointF(const QPointF& point) const
+{
+    QGeoCoordinate coord;
+
+    if (_polygonPath.count() > 0) {
+        QGeoCoordinate tangentOrigin = _polygonPath[0].value<QGeoCoordinate>();
+        convertNedToGeo(-point.y(), point.x(), 0, tangentOrigin, &coord);
+    }
+
+    return coord;
+}
+
+QPointF QGCMapPolygon::_pointFFromCoord(const QGeoCoordinate& coordinate) const
+{
+    if (_polygonPath.count() > 0) {
+        double y, x, down;
+        QGeoCoordinate tangentOrigin = _polygonPath[0].value<QGeoCoordinate>();
+
+        convertGeoToNed(coordinate, tangentOrigin, &y, &x, &down);
+        return QPointF(x, -y);
+    }
+
+    return QPointF();
+}
+
+QPolygonF QGCMapPolygon::_toPolygonF(void) const
 {
     QPolygonF polygon;
 
-    QGeoCoordinate tangentOrigin = _polygonPath[0].value<QGeoCoordinate>();
-
-    foreach(const QVariant& coordVar, _polygonPath) {
-        double y, x, down;
-
-        convertGeoToNed(coordVar.value<QGeoCoordinate>(), tangentOrigin, &y, &x, &down);
-        polygon << QPointF(x, -y);
+    if (_polygonPath.count() > 2) {
+        for (int i=0; i<_polygonPath.count(); i++) {
+            polygon.append(_pointFFromCoord(_polygonPath[i].value<QGeoCoordinate>()));
+        }
     }
 
-    QGeoCoordinate centerCoord;
-    QPointF centerPoint = polygon.boundingRect().center();
-    convertNedToGeo(-centerPoint.y(), centerPoint.x(), 0, tangentOrigin, &centerCoord);
+    return polygon;
+}
 
-    return centerCoord;
+bool QGCMapPolygon::containsCoordinate(const QGeoCoordinate& coordinate) const
+{
+    if (_polygonPath.count() > 2) {
+        return _toPolygonF().containsPoint(_pointFFromCoord(coordinate), Qt::OddEvenFill);
+    } else {
+        return false;
+    }
+}
+
+QGeoCoordinate QGCMapPolygon::center(void) const
+{
+    if (_polygonPath.count() > 2) {
+        QPointF centerPoint = _toPolygonF().boundingRect().center();
+        return _coordFromPointF(centerPoint);
+    } else {
+        return QGeoCoordinate();
+    }
 }
 
 void QGCMapPolygon::setPath(const QList<QGeoCoordinate>& path)
@@ -105,4 +138,69 @@ void QGCMapPolygon::setPath(const QVariantList& path)
     _polygonPath = path;
     setDirty(true);
     emit pathChanged();
+}
+
+void QGCMapPolygon::saveToJson(QJsonObject& json)
+{
+    QJsonArray rgPoints;
+
+    // Add all points to the array
+    for (int i=0; i<_polygonPath.count(); i++) {
+        QJsonValue jsonPoint;
+
+        JsonHelper::writeQGeoCoordinate(jsonPoint, (*this)[i], false /* writeAltitude */);
+        rgPoints.append(jsonPoint);
+    }
+
+    json.insert(_jsonPolygonKey, QJsonValue(rgPoints));
+
+    setDirty(false);
+}
+
+bool QGCMapPolygon::loadFromJson(const QJsonObject& json, bool required, QString& errorString)
+{
+    errorString.clear();
+    clear();
+
+    if (required) {
+        if (!JsonHelper::validateRequiredKeys(json, QStringList(_jsonPolygonKey), errorString)) {
+            return false;
+        }
+    } else if (!json.contains(_jsonPolygonKey)) {
+        return true;
+    }
+
+    QList<QJsonValue::Type> types;
+
+    types << QJsonValue::Array;
+    if (!JsonHelper::validateKeyTypes(json, QStringList(_jsonPolygonKey), types, errorString)) {
+        return false;
+    }
+
+    QList<QGeoCoordinate> rgPoints;
+    QJsonArray jsonPoints =  json[_jsonPolygonKey].toArray();
+    for (int i=0; i<jsonPoints.count(); i++) {
+        QGeoCoordinate coordinate;
+
+        if (!JsonHelper::toQGeoCoordinate(jsonPoints[i], coordinate, false /* altitudeRequired */, errorString)) {
+            return false;
+        }
+        rgPoints.append(coordinate);
+    }
+    setPath(rgPoints);
+
+    setDirty(false);
+
+    return true;
+}
+
+QList<QGeoCoordinate> QGCMapPolygon::coordinateList(void) const
+{
+    QList<QGeoCoordinate> coords;
+
+    for (int i=0; i<count(); i++) {
+        coords.append((*this)[i]);
+    }
+
+    return coords;
 }

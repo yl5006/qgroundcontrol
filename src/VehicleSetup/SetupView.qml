@@ -39,7 +39,7 @@ Rectangle {
     readonly property string    _armedVehicleText:  qsTr("不能在解锁情况下操作")//"This operation cannot be performed while vehicle is armed."
 
     property string _messagePanelText:              qsTr("任务消息")//"missing message panel text"
-    property bool   _fullParameterVehicleAvailable: QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && !QGroundControl.multiVehicleManager.activeVehicle.missingParameters
+    property bool   _fullParameterVehicleAvailable: QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && !QGroundControl.multiVehicleManager.activeVehicle.parameterManager.missingParameters
 
     function showSummaryPanel()
     {
