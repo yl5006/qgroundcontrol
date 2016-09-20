@@ -219,7 +219,7 @@ SetupPage {
 
                 QGCViewDialog {
                     id: setOrientationsDialog
-
+                    height:    ScreenTools.defaultFontPixelHeight*10
                     QGCFlickable {
                         anchors.fill:   parent
                         contentHeight:  columnLayout.height

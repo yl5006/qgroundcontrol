@@ -225,11 +225,12 @@ Rectangle {
             id: commandDialog
 
             MissionCommandDialog {
-                missionItem: _root.currentMissionItem
+                missionItem:_currentMissionItem//_root.currentMissionItem
             }
         }
 
-        onClicked:              qgcView.showDialog(commandDialog, "Select Mission Command", qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+        onClicked:              qgcView.showDialog(commandDialog,qsTr("选择任务") /*"Select Mission Command"*/, qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+
     }
     Rectangle {
         width:           commandPicker.width*0.8

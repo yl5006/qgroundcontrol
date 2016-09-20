@@ -20,7 +20,7 @@ import QGroundControl.Palette 1.0
 import QGroundControl.ScreenTools 1.0
 import QGroundControl.FactSystem 1.0
 import QGroundControl.FactControls 1.0
-import QtGraphicalEffects 1.0
+
 FactPanel {
     id: _rootItem
 
@@ -40,59 +40,120 @@ FactPanel {
 
         // Accept role buttons
         if (buttons & StandardButton.Ok) {
-            _acceptButton.text = qsTr("确认")//qsTr("Ok")
+<<<<<<< HEAD
+            __acceptButton.text = qsTr("确认")//qsTr("Ok")
+            __acceptButton.visible = true
+        } else if (buttons & StandardButton.Open) {
+            __acceptButton.text = qsTr("打开")//qsTr("Open")
+            __acceptButton.visible = true
+        } else if (buttons & StandardButton.Save) {
+            __acceptButton.text = qsTr("保存")//qsTr("Save")
+            __acceptButton.visible = true
+        } else if (buttons & StandardButton.Apply) {
+            __acceptButton.text = qsTr("应用")//qsTr("Apply")
+            __acceptButton.visible = true
+//        } else if (buttons & StandardButton.Open) {
+//            __acceptButton.text = qsTr("打开")//qsTr("Open")
+//            __acceptButton.visible = true
+        } else if (buttons & StandardButton.SaveAll) {
+            __acceptButton.text = qsTr("保存所有")//qsTr("Save All")
+            __acceptButton.visible = true
+        } else if (buttons & StandardButton.Yes) {
+            __acceptButton.text = qsTr("是")//qsTr("Yes")
+            __acceptButton.visible = true
+        } else if (buttons & StandardButton.YesToAll) {
+            __acceptButton.text = qsTr("全是")//qsTr("Yes to All")
+            __acceptButton.visible = true
+        } else if (buttons & StandardButton.Retry) {
+            __acceptButton.text = qsTr("重试")//qsTr("Retry")
+            __acceptButton.visible = true
+        } else if (buttons & StandardButton.Reset) {
+            __acceptButton.text = qsTr("重置")//qsTr("Reset")
+            __acceptButton.visible = true
+        } else if (buttons & StandardButton.RestoreToDefaults) {
+            __acceptButton.text = qsTr("恢复默认")//qsTr("Restore to Defaults")
+            __acceptButton.visible = true
+        } else if (buttons & StandardButton.Ignore) {
+            __acceptButton.text = qsTr("忽略")//qsTr("Ignore")
+            __acceptButton.visible = true
+=======
+            _acceptButton.text = qsTr("Ok")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.Open) {
-            _acceptButton.text = qsTr("打开")//qsTr("Open")
+            _acceptButton.text = qsTr("Open")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.Save) {
-            _acceptButton.text = qsTr("保存")//qsTr("Save")
+            _acceptButton.text = qsTr("Save")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.Apply) {
-            _acceptButton.text = qsTr("应用")//qsTr("Apply")
+            _acceptButton.text = qsTr("Apply")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.Open) {
             _acceptButton.text = qsTr("Open")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.SaveAll) {
-            _acceptButton.text = qsTr("保存所有")//qsTr("Save All")
+            _acceptButton.text = qsTr("Save All")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.Yes) {
-            _acceptButton.text = qsTr("是")//qsTr("Yes")
+            _acceptButton.text = qsTr("Yes")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.YesToAll) {
-            _acceptButton.text = qsTr("全是")//qsTr("Yes to All")
+            _acceptButton.text = qsTr("Yes to All")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.Retry) {
-            _acceptButton.text = qsTr("重试")//qsTr("Retry")
+            _acceptButton.text = qsTr("Retry")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.Reset) {
-            _acceptButton.text = qsTr("重置")//qsTr("Reset")
+            _acceptButton.text = qsTr("Reset")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.RestoreToDefaults) {
-            _acceptButton.text = qsTr("恢复默认")//qsTr("Restore to Defaults")
+            _acceptButton.text = qsTr("Restore to Defaults")
             _acceptButton.visible = true
         } else if (buttons & StandardButton.Ignore) {
-            _acceptButton.text = qsTr("忽略")//qsTr("Ignore")
+            _acceptButton.text = qsTr("Ignore")
             _acceptButton.visible = true
+>>>>>>> master
         }
 
         // Reject role buttons
         if (buttons & StandardButton.Cancel) {
-            _rejectButton.text = qsTr("取消")//qsTr("Cancel")
+<<<<<<< HEAD
+            __rejectButton.text = qsTr("取消")//qsTr("Cancel")
+            __rejectButton.visible = true
+        } else if (buttons & StandardButton.Close) {
+            __rejectButton.text = qsTr("关闭")//qsTr("Close")
+            __rejectButton.visible = true
+        } else if (buttons & StandardButton.No) {
+            __rejectButton.text = qsTr("否")//qsTr("No")
+            __rejectButton.visible = true
+        } else if (buttons & StandardButton.NoToAll) {
+            __rejectButton.text = qsTr("忽略")//qsTr("No to All")
+            __rejectButton.visible = true
+        } else if (buttons & StandardButton.Abort) {
+            __rejectButton.text = qsTr("终止")//qsTr("Abort")
+            __rejectButton.visible = true
+        }
+    }
+
+    function __stopAllAnimations() {
+        if (__animateHideDialog.running) {
+            __animateHideDialog.stop()
+=======
+            _rejectButton.text = qsTr("Cancel")
             _rejectButton.visible = true
         } else if (buttons & StandardButton.Close) {
-            _rejectButton.text = qsTr("关闭")//qsTr("Close")
+            _rejectButton.text = qsTr("Close")
             _rejectButton.visible = true
         } else if (buttons & StandardButton.No) {
-            _rejectButton.text = qsTr("否")//qsTr("No")
+            _rejectButton.text = qsTr("No")
             _rejectButton.visible = true
         } else if (buttons & StandardButton.NoToAll) {
-            _rejectButton.text = qsTr("忽略")//qsTr("No to All")
+            _rejectButton.text = qsTr("No to All")
             _rejectButton.visible = true
         } else if (buttons & StandardButton.Abort) {
-            _rejectButton.text = qsTr("终止")//qsTr("Abort")
+            _rejectButton.text = qsTr("Abort")
             _rejectButton.visible = true
+>>>>>>> master
         }
     }
 
@@ -109,7 +170,7 @@ FactPanel {
     ///     @param buttons Buttons to show in dialog using StandardButton enum
 
     readonly property int showDialogFullWidth:      -1  ///< Use for full width dialog
-    readonly property int showDialogDefaultWidth:   80  ///< Use for default dialog width
+    readonly property int showDialogDefaultWidth:   40  ///< Use for default dialog width
 
     function showDialog(component, title, charWidth, buttons) {
         if (_checkForEarlyDialog(title)) {
@@ -126,7 +187,15 @@ FactPanel {
 
         _dialogComponent = component
         viewPanel.enabled = false
+<<<<<<< HEAD
+   //     __dialogOverlay.visible = true
+
+        //__dialogComponentLoader.item.forceActiveFocus()
+
+  //      __animateShowDialog.start()
+=======
         _dialogOverlay.visible = true
+>>>>>>> master
     }
 
     function showMessage(title, message, buttons) {
@@ -145,14 +214,26 @@ FactPanel {
 
         _dialogComponent = _messageDialog
         viewPanel.enabled = false
+<<<<<<< HEAD
+        __dialogOverlay.visible = true
+
+        __dialogComponentLoader.item.forceActiveFocus()
+
+   //     __animateShowDialog.start()
+=======
         _dialogOverlay.visible = true
- //       __animateShowDialog.start()
+>>>>>>> master
     }
 
     function hideDialog() {
         viewPanel.enabled = true
+<<<<<<< HEAD
+        __dialogComponent = null
+      //  __animateHideDialog.start()
+=======
         _dialogComponent = null
         _dialogOverlay.visible = false
+>>>>>>> master
     }
 
     QGCPalette { id: _qgcPal; colorGroupEnabled: true }
@@ -191,28 +272,74 @@ FactPanel {
         onHideDialog: _rootItem.hideDialog()
     }
 
-//    Rectangle {
-//        id:      ti
-//        anchors.fill: parent
-//        color: "transparent"
-//        opacity: 0.5
-//    }
+<<<<<<< HEAD
+//    Item {
+//        id:             __dialogOverlay
+//        visible:        false
+//        anchors.fill:   parent
+//        z:              5000
 
-//    FastBlur {
-//        id: fastBlur
+//        readonly property int __animationDuration: 200
 
-//        height: 124
+//        ParallelAnimation {
+//            id: __animateShowDialog
 
-//        width: parent.width
-//        radius: 40
-//        opacity: 0.55
 
-//        source: ShaderEffectSource {
-//            sourceItem: flickable
-//            sourceRect: Qt.rect(0, 0, fastBlur.width, fastBlur.height)
+//            NumberAnimation {
+//                target:     __transparentSection
+//                properties: "opacity"
+//                from:       0.0
+//                to:         0.8
+//                duration:   __dialogOverlay.__animationDuration
+//            }
+
+//            NumberAnimation {
+//                target:     __transparentSection
+//                properties: "width"
+//                from:       __dialogOverlay.width
+//                to:         __dialogOverlay.width - __dialogPanel.width
+//                duration:   __dialogOverlay.__animationDuration
+//            }
 //        }
-//    }
 
+//        ParallelAnimation {
+//            id: __animateHideDialog
+
+//            NumberAnimation {
+//                target:     __transparentSection
+//                properties: "opacity"
+//                from:       0.8
+//                to:         0.0
+//                duration:   __dialogOverlay.__animationDuration
+//            }
+
+//            NumberAnimation {
+//                target:     __transparentSection
+//                properties: "width"
+//                from:       __dialogOverlay.width - __dialogPanel.width
+//                to:         __dialogOverlay.width
+//                duration:   __dialogOverlay.__animationDuration
+//            }
+
+//            onRunningChanged: {
+//                if (!running) {
+//                    __dialogComponent = null
+//                    __dialogOverlay.visible = false
+//                }
+//            }
+//        }
+
+//        // This covers the parent with an transparent section
+//        Rectangle {
+//            id:             __transparentSection
+//            height:         ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
+//            anchors.bottom: parent.bottom
+//            anchors.left:   parent.left
+//            anchors.right:  __dialogPanel.left
+//            opacity:        0.0
+//            color:          __qgcPal.window
+//        }
+=======
     Item {
         id:             _dialogOverlay
         visible:        false
@@ -220,27 +347,25 @@ FactPanel {
         z:              5000
 
         // This covers the parent with an transparent section
-//        Rectangle {
-//            id:             _transparentSection
-//            height:         ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
-//            anchors.bottom: parent.bottom
-//            anchors.left:   parent.left
-//            anchors.right:  _dialogPanel.left
-//            opacity:        0.0
-//            color:          _qgcPal.window
-//        }
+        Rectangle {
+            id:             _transparentSection
+            height:         ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
+            anchors.bottom: parent.bottom
+            anchors.left:   parent.left
+            anchors.right:  _dialogPanel.left
+            opacity:        0.0
+            color:          _qgcPal.window
+        }
+>>>>>>> master
 
         // This is the main dialog panel which is anchored to the right edge
         Rectangle {
             id:                 _dialogPanel
             width:              _dialogCharWidth == showDialogFullWidth ? parent.width : defaultTextWidth * _dialogCharWidth
-          //  anchors.topMargin:  ScreenTools.defaultFontPixelHeight*5
-            height:             Math.max(_dialogComponentLoader.y+_dialogComponentLoader.height+ScreenTools.defaultFontPixelHeight,ScreenTools.defaultFontPixelHeight*5)//ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
-         // anchors.bottom:     parent.bottom
-         // anchors.top:        parent.top
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-         //   anchors.right:      parent.right
+            anchors.topMargin:  topDialogMargin
+            height:             ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
+            anchors.bottom:     parent.bottom
+            anchors.right:      parent.right
             color:              _qgcPal.windowShadeDark
 
             Rectangle {
@@ -304,7 +429,7 @@ FactPanel {
                 anchors.left:       parent.left
                 anchors.right:      parent.right
                 anchors.top:        _spacer.bottom
-//                anchors.bottom:     parent.bottom
+                anchors.bottom:     parent.bottom
                 sourceComponent:    _dialogComponent
 
                 property bool acceptAllowed: _acceptButton.visible

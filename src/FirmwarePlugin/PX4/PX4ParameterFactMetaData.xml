@@ -6734,6 +6734,17 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
         <value code="0">sdlog2 (default)</value>
       </values>
     </parameter>
+    <parameter default="0" name="SYS_LANGUAGE" type="INT32">
+      <short_desc>SYS LANGUAGE</short_desc>
+      <min>0</min>
+      <max>1</max>
+      <reboot_required>true</reboot_required>
+      <scope>modules/systemlib</scope>
+      <values>
+        <value code="1">English</value>
+        <value code="0">Chinese (default)</value>
+      </values>
+    </parameter>
   </group>
   <group name="Testing">
     <parameter default="-1.0" name="TEST_MIN" type="FLOAT">

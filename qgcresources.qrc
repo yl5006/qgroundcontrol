@@ -210,6 +210,7 @@
 	<file alias="altitudeAMSL.svg">src/FlightMap/Images/altitudeAMSL.svg</file>
         <file alias="groundSpeed.svg">src/FlightMap/Images/groundSpeed.svg</file>
         <file alias="airSpeed.svg">src/FlightMap/Images/airSpeed.svg</file>
+	<file alias="Throttle.svg">src/FlightMap/Images/Throttle.svg</file>
         <file alias="climbRate.svg">src/FlightMap/Images/climbRate.svg</file>
         <file alias="Waypoint0.svg">src/FlightMap/Images/Waypoint0.svg</file>
         <file alias="Waypoint.svg">src/FlightMap/Images/Waypoint.svg</file>
@@ -244,6 +245,8 @@
         <file alias="Stop">resources/Stop.svg</file>
         <file alias="TrashDelete.svg">resources/TrashDelete.svg</file>
         <file alias="XDelete.svg">resources/XDelete.svg</file>
+	<file alias="criticalMessage.png">resources/criticalMessage.png</file>
+	<file alias="Messageok.svg">resources/Messageok.svg</file>
         <file alias="XDeleteBlack.svg">resources/XDeleteBlack.svg</file>
 	<file alias="connect.svg">resources/connect.svg</file>
 	<file alias="buttoncircle.svg">resources/buttoncircle.svg</file>

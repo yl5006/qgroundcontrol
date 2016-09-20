@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.1">
 <context>
     <name>APMAirframeComponent</name>
     <message>
@@ -444,16 +444,6 @@
 <context>
     <name>CameraComponent</name>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/CameraComponent.cc" line="21"/>
-        <source>Camera</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/AutoPilotPlugins/PX4/CameraComponent.cc" line="32"/>
-        <source>Camera setup is used to adjust camera and gimbal settings.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/AutoPilotPlugins/PX4/CameraComponent.qml" line="89"/>
         <source>Vehicle must be restarted for changes to take effect. </source>
         <translation type="unfinished"></translation>
@@ -496,6 +486,16 @@
     <message>
         <location filename="src/AutoPilotPlugins/PX4/CameraComponent.qml" line="318"/>
         <source>Trigger Period</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/PX4/CameraComponent.cc" line="21"/>
+        <source>Camera</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/PX4/CameraComponent.cc" line="32"/>
+        <source>Camera setup is used to adjust camera and gimbal settings.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -661,16 +661,6 @@
 <context>
     <name>ESP8266Component</name>
     <message>
-        <location filename="src/AutoPilotPlugins/Common/ESP8266Component.cc" line="16"/>
-        <source>WiFi Bridge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/AutoPilotPlugins/Common/ESP8266Component.cc" line="28"/>
-        <source>The ESP8266 WiFi Bridge Component is used to setup the WiFi link.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/AutoPilotPlugins/Common/ESP8266Component.qml" line="37"/>
         <source>controller WiFi Bridge</source>
         <translation type="unfinished"></translation>
@@ -789,6 +779,16 @@
     <message>
         <location filename="src/AutoPilotPlugins/Common/ESP8266Component.qml" line="468"/>
         <source>Reset Counters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/Common/ESP8266Component.cc" line="16"/>
+        <source>WiFi Bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/Common/ESP8266Component.cc" line="28"/>
+        <source>The ESP8266 WiFi Bridge Component is used to setup the WiFi link.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2406,12 +2406,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.ui" line="110"/>
-        <location filename="src/ui/MainWindow.ui" line="113"/>
-        <source>状态栏</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/ui/MainWindow.ui" line="94"/>
         <source>Mute Audio Output</source>
         <translation type="unfinished"></translation>
@@ -2419,6 +2413,12 @@
     <message>
         <location filename="src/ui/MainWindow.ui" line="102"/>
         <source>Advanced Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/MainWindow.ui" line="110"/>
+        <location filename="src/ui/MainWindow.ui" line="113"/>
+        <source>状态栏</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2453,13 +2453,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="496"/>
-        <source>不能打开信息: %1</source>
+        <location filename="src/ui/MainWindow.cc" line="244"/>
+        <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="244"/>
-        <source>Done</source>
+        <location filename="src/ui/MainWindow.cc" line="496"/>
+        <source>不能打开信息: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3009,16 +3009,6 @@
 <context>
     <name>MotorComponent</name>
     <message>
-        <location filename="src/AutoPilotPlugins/Common/MotorComponent.cc" line="18"/>
-        <source>电机测试</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/AutoPilotPlugins/Common/MotorComponent.cc" line="30"/>
-        <source>Motors Setup is used to manually test motor control and direction.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/AutoPilotPlugins/Common/MotorComponent.qml" line="82"/>
         <source>All</source>
         <translation type="unfinished"></translation>
@@ -3031,6 +3021,16 @@
     <message>
         <location filename="src/AutoPilotPlugins/Common/MotorComponent.qml" line="135"/>
         <source>Propellers are removed - Enable motor sliders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/Common/MotorComponent.cc" line="18"/>
+        <source>电机测试</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/Common/MotorComponent.cc" line="30"/>
+        <source>Motors Setup is used to manually test motor control and direction.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4052,16 +4052,6 @@ Is this really what you want?</source>
 <context>
     <name>PowerComponent</name>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/PowerComponent.cc" line="21"/>
-        <source>电源</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/AutoPilotPlugins/PX4/PowerComponent.cc" line="32"/>
-        <source>Power Setup is used to setup battery parameters as well as advanced settings for propellers.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/AutoPilotPlugins/PX4/PowerComponent.qml" line="93"/>
         <location filename="src/AutoPilotPlugins/PX4/PowerComponent.qml" line="94"/>
         <location filename="src/AutoPilotPlugins/PX4/PowerComponent.qml" line="95"/>
@@ -4244,6 +4234,16 @@ Is this really what you want?</source>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/PowerComponent.qml" line="609"/>
         <source> V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/PX4/PowerComponent.cc" line="21"/>
+        <source>电源</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/PX4/PowerComponent.cc" line="32"/>
+        <source>Power Setup is used to setup battery parameters as well as advanced settings for propellers.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4816,26 +4816,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="115"/>
-        <source>0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="108"/>
-        <source>Barometer Offset [kPa]:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="91"/>
-        <source>Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="84"/>
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="51"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Additional Options:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -4846,8 +4826,28 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="84"/>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="91"/>
+        <source>Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="98"/>
         <source>Sensor HIL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="108"/>
+        <source>Barometer Offset [kPa]:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/QGCHilFlightGearConfiguration.ui" line="115"/>
+        <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5159,21 +5159,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCMapRCToParamDialog.ui" line="85"/>
-        <source>Scale (keep default)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/QGCMapRCToParamDialog.ui" line="99"/>
-        <source>Center value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ui/QGCMapRCToParamDialog.ui" line="188"/>
-        <source>Tuning IDs can be mapped to channels in the RC settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/ui/QGCMapRCToParamDialog.ui" line="64"/>
         <source>Parameter</source>
         <translation type="unfinished"></translation>
@@ -5189,6 +5174,16 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/ui/QGCMapRCToParamDialog.ui" line="85"/>
+        <source>Scale (keep default)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/QGCMapRCToParamDialog.ui" line="99"/>
+        <source>Center value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/ui/QGCMapRCToParamDialog.ui" line="122"/>
         <source>Minimum Value</source>
         <translation type="unfinished"></translation>
@@ -5201,6 +5196,11 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/ui/QGCMapRCToParamDialog.ui" line="168"/>
         <source>Waiting for parameter refresh,,,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/ui/QGCMapRCToParamDialog.ui" line="188"/>
+        <source>Tuning IDs can be mapped to channels in the RC settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

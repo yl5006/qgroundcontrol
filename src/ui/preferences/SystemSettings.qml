@@ -563,16 +563,6 @@ Rectangle {
                 height: ScreenTools.defaultFontPixelHeight / 2
                 width:  parent.width
             }
-            GSSlider {
-                id:                 slider
-                anchors.left:       parent.left
-                height:             ScreenTools.defaultFontPixelHeight*2
-                anchors.right:      parent.right
-                minimumValue:       0
-                maximumValue:       10
-                stepSize:           1
-                tickmarksEnabled:   true
-            }
         }// QGCViewPanel
     }// QGCView
 }

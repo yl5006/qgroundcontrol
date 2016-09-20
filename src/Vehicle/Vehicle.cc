@@ -519,16 +519,16 @@ void Vehicle::_handleCommandAck(mavlink_message_t& message)
 
     switch (ack.result) {
     case MAV_RESULT_TEMPORARILY_REJECTED:
-        qgcApp()->showMessage(tr("%1 command temporarily rejected").arg(commandName));
+   //     qgcApp()->showMessage(tr("%1 command temporarily rejected").arg(commandName));
         break;
     case MAV_RESULT_DENIED:
-        qgcApp()->showMessage(tr("%1 command denied").arg(commandName));
+    //    qgcApp()->showMessage(tr("%1 command denied").arg(commandName));
         break;
     case MAV_RESULT_UNSUPPORTED:
-        qgcApp()->showMessage(tr("%1 command not supported").arg(commandName));
+   //     qgcApp()->showMessage(tr("%1 command not supported").arg(commandName));
         break;
     case MAV_RESULT_FAILED:
-        qgcApp()->showMessage(tr("%1 command failed").arg(commandName));
+  //      qgcApp()->showMessage(tr("%1 command failed").arg(commandName));
         break;
     default:
         // Do nothing

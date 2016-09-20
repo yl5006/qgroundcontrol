@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -48,7 +48,7 @@ void AutoPilotPlugin::_parametersReadyChanged(bool parametersReady)
 	if (parametersReady) {
 		_recalcSetupComplete();
 		if (!_setupComplete) {
-            qgcApp()->showMessage("One or more vehicle components require setup prior to flight.");
+            qgcApp()->showMessage(tr("设置未完成 ！"/*"One or more vehicle components require setup prior to flight."*/));
 			
 			// Take the user to Vehicle Summary
             qgcApp()->showSetupView();

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -23,7 +23,7 @@ import QGroundControl.ScreenTools   1.0
 
 QGCViewDialog {
     id: root
-
+    height:     ScreenTools.defaultFontPixelHeight * 30
     property Fact   fact
     property bool   showRCToParam:  false
     property bool   validate:       false

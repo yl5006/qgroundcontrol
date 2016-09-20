@@ -461,8 +461,8 @@ bool QGCApplication::_initForNormalAppBoot(void)
     if (_settingsUpgraded) {
         settings.clear();
         settings.setValue(_settingsVersionKey, QGC_SETTINGS_VERSION);
-        showMessage("The format for QGroundControl saved settings has been modified. "
-                    "Your saved settings have been reset to defaults.");
+        showMessage(tr("GroundStation配置文件被修改，恢复默认配置"));/*"The format for QGroundControl saved settings has been modified. "*/
+                 //   "Your saved settings have been reset to defaults.");
     }
 
     if (getQGCMapEngine()->wasCacheReset()) {

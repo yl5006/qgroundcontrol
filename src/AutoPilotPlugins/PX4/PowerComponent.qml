@@ -450,7 +450,7 @@ SetupPage {
                         QGCButton {
                             text:      qsTr("校准")// qsTr("Calibrate")
                             width:      ScreenTools.defaultFontPixelWidth * 20
-                            enabled:   false
+                            enabled:     true
                             onClicked:  controller.calibrateEsc()
                         }
 

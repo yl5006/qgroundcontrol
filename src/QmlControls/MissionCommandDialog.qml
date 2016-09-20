@@ -18,15 +18,17 @@ import QGroundControl.Palette       1.0
 
 QGCViewDialog {
     id: root
-
+    height: commandList.y+commandList.height
     property var missionItem
 
     property var _vehicle: QGroundControl.multiVehicleManager.activeVehicle
-
+    property real _editFieldWidth:              ScreenTools.defaultFontPixelWidth * 15
     QGCPalette { id: qgcPal }
 
     QGCLabel {
         id:                 categoryLabel
+        anchors.left:       parent.left
+        anchors.margins:    ScreenTools.defaultFontPixelWidth*2
         anchors.baseline:   categoryCombo.baseline
         text:               qsTr("类别:")//qsTr("Category:")
     }
@@ -35,69 +37,90 @@ QGCViewDialog {
         id:                 categoryCombo
         anchors.margins:    ScreenTools.defaultFontPixelWidth
         anchors.left:       categoryLabel.right
-        anchors.right:      parent.right
+        width:              _editFieldWidth
         model:              QGroundControl.missionCommandTree.categoriesForVehicle(_vehicle)
 
         function categorySelected(category) {
-            commandList.model = QGroundControl.missionCommandTree.getCommandsForCategory(_vehicle, category)
+            commandRepeater.model = QGroundControl.missionCommandTree.getCommandsForCategory(_vehicle, category)
         }
 
         Component.onCompleted: {
             var category  = missionItem.category
             currentIndex = find(category)
-            categorySelected(category)
+            categorySelected(category)          
         }
 
         onActivated: categorySelected(textAt(index))
     }
 
-    ListView {
+    Flow {
         id:                 commandList
         anchors.margins:    ScreenTools.defaultFontPixelHeight
         anchors.left:       parent.left
         anchors.right:      parent.right
         anchors.top:        categoryCombo.bottom
-        anchors.bottom:     parent.bottom
+        height:             ((commandRepeater.count+1)/2)*ScreenTools.defaultFontPixelHeight*5+ScreenTools.defaultFontPixelHeight*2
+        //   anchors.bottom:     parent.bottom
         spacing:            ScreenTools.defaultFontPixelHeight / 2
-        orientation:        ListView.Vertical
-        clip:               true
+        //        orientation:        ListView.Vertical
+        //        clip:               true
+        Repeater {
+            id:     commandRepeater
+            Rectangle {
+                width:  parent.width/2-ScreenTools.defaultFontPixelHeight / 3
+                height: ScreenTools.defaultFontPixelHeight*5
+                color:  "transparent"//qgcPal.button
 
-        delegate: Rectangle {
-            width:  parent.width
-            height: commandColumn.height + ScreenTools.defaultFontPixelHeight
-            color:  qgcPal.button
-
-            property var    mavCmdInfo: modelData
-            property var    textColor:  qgcPal.buttonText
-
-            Column {
-                id:                 commandColumn
-                anchors.margins:    ScreenTools.defaultFontPixelWidth
-                anchors.left:       parent.left
-                anchors.right:      parent.right
-                anchors.top:        parent.top
-
-                QGCLabel {
-                    text:           mavCmdInfo.friendlyName
-                    color:          textColor
-                    font.family:    ScreenTools.demiboldFontFamily
+                Image {
+                    anchors.fill:               parent
+                    mipmap:                     true
+                    source:                     "/qmlimages/safebackground.svg"
+                    smooth:                     true
                 }
 
-                QGCLabel {
+                Image {
+                    anchors.top:                    parent.top
+                    anchors.left:                   parent.left
+                    width:                          parent.width/2
+                  //  fillMode:                       Image.PreserveAspectFit
+                    height:                         ScreenTools.defaultFontPixelHeight*2
+                    anchors.topMargin:              ScreenTools.defaultFontPixelHeight/24
+                    mipmap:                         true
+                    source:                         "/qmlimages/safetitlebg.svg"
+                }
+                property var    mavCmdInfo: modelData
+                property var    textColor:  qgcPal.buttonText
+
+                Column {
+                    id:                 commandColumn
                     anchors.margins:    ScreenTools.defaultFontPixelWidth
                     anchors.left:       parent.left
                     anchors.right:      parent.right
-                    text:               mavCmdInfo.description
-                    wrapMode:           Text.WordWrap
-                    color:              textColor
-                }
-            }
+                    anchors.top:        parent.top
+                    spacing:            ScreenTools.defaultFontPixelHeight / 2
+                    QGCLabel {
+                        text:           mavCmdInfo.friendlyName
+                        color:          textColor
+                        font.family:    ScreenTools.demiboldFontFamily
+                        font.pointSize: ScreenTools.mediumFontPointSize
+                    }
 
-            MouseArea {
-                anchors.fill:   parent
-                onClicked: {
-                    missionItem.command = mavCmdInfo.command
-                    root.reject()
+                    QGCLabel {
+                        anchors.margins:    ScreenTools.defaultFontPixelWidth
+                        anchors.left:       parent.left
+                        anchors.right:      parent.right
+                        text:               mavCmdInfo.description
+                        wrapMode:           Text.WordWrap
+                        color:              textColor
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill:   parent
+                    onClicked: {
+                        missionItem.command = mavCmdInfo.command
+                        root.reject()
+                    }
                 }
             }
         }

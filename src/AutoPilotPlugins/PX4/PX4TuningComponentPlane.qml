@@ -121,6 +121,66 @@ SetupPage {
                         max:            50
                         step:           0.5
                     }
+//                    ListElement {
+//                        title:          qsTr("手动横滚行程")//"Mission mode sensitivity"
+////                        description:    "Slide to the left to make position control more accurate and more aggressive. Slide to the right to make flight in mission mode smoother and less twitchy."
+//                        descriptionleft:    qsTr("向左滑动: 减少手动输入行程")//"Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
+//                        descriptionright:   qsTr("向右滑动: 增加手动输入行程")
+//                        param:          "FW_MAN_R_SC"
+//                        min:            12
+//                        max:            100
+//                        step:           1
+//                    }
+//                    ListElement {
+//                        title:          qsTr("手动仰俯行程")//"Mission mode sensitivity"
+////                        description:    "Slide to the left to make position control more accurate and more aggressive. Slide to the right to make flight in mission mode smoother and less twitchy."
+//                        descriptionleft:    qsTr("向左滑动: 减少手动输入行程")//"Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
+//                        descriptionright:   qsTr("向右滑动: 增加手动输入行程")
+//                        param:          "FW_MAN_P_SC"
+//                        min:            12
+//                        max:            100
+//                        step:           1
+//                    }
+//                    ListElement {
+//                        title:          qsTr("手动航向角行程")//"Mission mode sensitivity"
+////                        description:    "Slide to the left to make position control more accurate and more aggressive. Slide to the right to make flight in mission mode smoother and less twitchy."
+//                        descriptionleft:    qsTr("向左滑动: 减少手动输入行程")//"Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
+//                        descriptionright:   qsTr("向右滑动: 增加手动输入行程")
+//                        param:          "FW_MAN_Y_SC"
+//                        min:            12
+//                        max:            100
+//                        step:           1
+//                    }
+//                    ListElement {
+//                        title:          qsTr("横滚输出中值")//"Mission mode sensitivity"
+////                        description:    "Slide to the left to make position control more accurate and more aggressive. Slide to the right to make flight in mission mode smoother and less twitchy."
+//                        descriptionleft:    qsTr("向左滑动: 减少")//"Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
+//                        descriptionright:   qsTr("向右滑动: 增加")
+//                        param:          "FW_MAN_Y_SC"
+//                        min:            12
+//                        max:            100
+//                        step:           1
+//                    }
+//                    ListElement {
+//                        title:          qsTr("仰俯输出中值")//"Mission mode sensitivity"
+////                        description:    "Slide to the left to make position control more accurate and more aggressive. Slide to the right to make flight in mission mode smoother and less twitchy."
+//                        descriptionleft:    qsTr("向左滑动: 减少")//"Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
+//                        descriptionright:   qsTr("向右滑动: 增加")
+//                        param:          "FW_MAN_Y_SC"
+//                        min:            12
+//                        max:            100
+//                        step:           1
+//                    }
+//                    ListElement {
+//                        title:          qsTr("航向角输出中值")//"Mission mode sensitivity"
+////                        description:    "Slide to the left to make position control more accurate and more aggressive. Slide to the right to make flight in mission mode smoother and less twitchy."
+//                        descriptionleft:    qsTr("向左滑动: 减少")//"Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
+//                        descriptionright:   qsTr("向右滑动: 增加")
+//                        param:          "FW_MAN_Y_SC"
+//                        min:            12
+//                        max:            100
+//                        step:           1
+//                    }
                 }
             }
         }

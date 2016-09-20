@@ -21,8 +21,8 @@ import QGroundControl               1.0
 
 QGCFlickable {
     id:                 _root
-    height:             Math.min(maxHeight, _smallFlow.y + _smallFlow.height)
-    contentHeight:      _smallFlow.y + _smallFlow.height
+    height:             Math.min(maxHeight, _largeColumn.y + _largeColumn.height)
+    contentHeight:      _largeColumn.y + _largeColumn.height
     flickableDirection: Flickable.VerticalFlick
     clip:               true
 
@@ -165,8 +165,9 @@ QGCFlickable {
 
         QGCViewDialog {
             id: _propertyPickerDialog
-
+            height: ScreenTools.defaultFontPixelHeight*20
             QGCFlickable {
+                id:                 pick
                 anchors.fill:       parent
                 contentHeight:      _loader.y + _loader.height
                 flickableDirection: Flickable.VerticalFlick
