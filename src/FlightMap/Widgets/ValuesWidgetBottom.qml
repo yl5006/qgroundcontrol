@@ -81,11 +81,11 @@ QGCFlickable {
                 property Fact fact: _activeVehicle.getFact(modelData.replace("Vehicle.", ""))
                 property bool largeValue: _root.listContains(controller.altitudeProperties, fact.name)
 
-                Image{
-                    width:    ScreenTools.mediumFontPointSize * 1.5
-                    height:   ScreenTools.mediumFontPointSize * 1.5
-                    source:   getIcon(fact.name)
-                }
+//                Image{
+//                    width:    ScreenTools.mediumFontPointSize * 1.5
+//                    height:   ScreenTools.mediumFontPointSize * 1.5
+//                    source:   getIcon(fact.name)
+//                }
 
                 QGCLabel {
                     width:                  parent.width*0.25

@@ -1,0 +1,142 @@
+﻿/****************************************************************************
+ *
+ *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
+ *
+ * QGroundControl is licensed according to the terms in the file
+ * COPYING.md in the root of the source code directory.
+ *
+ ****************************************************************************/
+
+
+import QtQuick              2.5
+import QtQuick.Controls     1.4
+
+import QGroundControl.Controls  1.0
+import QGroundControl.ScreenTools   1.0
+SetupPage {
+    id:             tuningPage
+    pageComponent:  pageComponent
+
+    Component {
+        id: pageComponent
+
+        Item {
+            width:  availableWidth
+            height: sliderpanel.height+ScreenTools.defaultFontPixelHeight*8
+            Rectangle {
+                id:                         title
+                anchors.top:                parent.top
+                anchors.horizontalCenter:   parent.horizontalCenter
+                width:                      parent.width
+                height:                     ScreenTools.defaultFontPixelHeight*6
+                color:                      "transparent"
+                QGCCircleProgress{
+                    id:                     circle
+                    anchors.left:           parent.left
+                    anchors.top:            parent.top
+                    anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*5
+                    anchors.topMargin:      ScreenTools.defaultFontPixelHeight
+                    width:                  ScreenTools.defaultFontPixelHeight*5
+                    value:                  0
+                }
+                QGCColoredImage {
+                    id:                     img
+                    height:                 ScreenTools.defaultFontPixelHeight*2.5
+                    width:                  height
+                    sourceSize.width: width
+                    source:     "/qmlimages/TuningComponentIcon.svg"
+                    fillMode:   Image.PreserveAspectFit
+                    color:      qgcPal.text
+                    anchors.horizontalCenter:circle.horizontalCenter
+                    anchors.verticalCenter: circle.verticalCenter
+                }
+                QGCLabel {
+                    id:             idset
+                    anchors.left:   img.left
+                    anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+                    text:           qsTr("感度")//"safe"
+                    font.pointSize: ScreenTools.mediumFontPointSize
+                    font.bold:              true
+                    color:          qgcPal.text
+                    anchors.verticalCenter: img.verticalCenter
+                }
+                Image {
+                    source:    "/qmlimages/title.svg"
+                    width:      idset.width+ScreenTools.defaultFontPixelHeight*4
+                    height:     ScreenTools.defaultFontPixelHeight*3
+                    anchors.verticalCenter: circle.verticalCenter
+                    anchors.left:          circle.right
+                    //                fillMode: Image.PreserveAspectFit
+                }
+            }
+            FactSliderPanel {
+                id:                      sliderpanel
+                anchors.top:                title.bottom
+                anchors.topMargin:      ScreenTools.defaultFontPixelHeight
+                anchors.horizontalCenter:   parent.horizontalCenter
+                width:          availableWidth*0.8
+                qgcViewPanel:   tuningPage.viewPanel
+
+                sliderModel: ListModel {
+                    //                ListElement {
+                    //                    title:          qsTr("Hover Throttle")
+                    //                    description:    qsTr("Adjust throttle so hover is at mid-throttle. Slide to the left if hover is lower than throttle center. Slide to the right if hover is higher than throttle center.")
+                    //                    param:          "MPC_THR_HOVER"
+                    //                    min:            20
+                    //                    max:            80
+                    //                    step:           1
+                    //                }
+
+                    //                ListElement {
+                    //                    title:          qsTr("Manual minimum throttle")
+                    //                    description:    qsTr("Slide to the left to start the motors with less idle power. Slide to the right if descending in manual flight becomes unstable.")
+                    //                    param:          "MPC_MANTHR_MIN"
+                    //                    min:            0
+                    //                    max:            15
+                    //                    step:           1
+                    //                }
+
+                    ListElement {
+                        title:              qsTr("横滚控制感度")//"Roll sensitivity"
+                        descriptionleft:    qsTr("向左滑动: 控制更快，更准确")//"Slide to the left to make roll control faster and more accurate. Slide to the right if roll oscillates or is too twitchy."
+                        descriptionright:   qsTr("向右滑动: 如果振荡或太颠簸")
+                        param:              "MC_ROLL_TC"
+                        min:                0.15
+                        max:                0.25
+                        step:               0.01
+                    }
+
+                    ListElement {
+                        title:              qsTr("仰俯控制感度")//"Pitch sensitivity"
+                        descriptionleft:    qsTr("向左滑动: 控制更快，更准确")//"Slide to the left to make pitch control faster and more accurate. Slide to the right if pitch oscillates or is too twitchy."
+                        descriptionright:   qsTr("向右滑动: 如果振荡或太颠簸")
+                        param:          "MC_PITCH_TC"
+                        min:            0.15
+                        max:            0.25
+                        step:           0.01
+                    }
+
+                    ListElement {
+                        title:              qsTr("高度控制感度")//"Altitude control sensitivity"
+                        descriptionleft:    qsTr("向左滑动: 使高度控制更顺畅，减少颠簸")//"Slide to the left to make altitude control smoother and less twitchy. Slide to the right to make altitude control more accurate and more aggressive."
+                        descriptionright:   qsTr("向右滑动: 使高度控制更准确，更灵敏")
+                        param:          "MPC_Z_FF"
+                        min:            0
+                        max:            1.0
+                        step:           0.1
+                    }
+
+                    ListElement {
+                        title:              qsTr("位移控制感度")//"Position control sensitivity"
+                        descriptionleft:    qsTr("向左滑动: 使位置控制更顺畅，减少颠簸")//"Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
+                        descriptionright:   qsTr("向右滑动: 使位置控制更准确，更灵敏")
+                        param:          "MPC_XY_FF"
+                        min:            0
+                        max:            1.0
+                        step:           0.1
+                    }
+                }
+            }
+        }
+    } // Component
+} // SetupPage

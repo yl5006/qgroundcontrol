@@ -160,51 +160,24 @@ QGCView {
         }
 
      //-- Video View
-        OpenCVcamera {
-            id:opencvCamera
-            m_cameraId: 1
-            m_run: false
-        }
+//        OpenCVcamera {
+//            id:opencvCamera
+//            m_cameraId: 1
+//            m_run: false
+//        }
 
-        OpenCVshowFrame {
-            //anchors.centerIn: parent
-            id:_flightVideo
-            anchors.left:   _panel.left
-            anchors.bottom: _panel.bottom
-            visible:        QGroundControl.videoManager.hasVideo && (!_mainIsMap || _isPipVisible)
-            m_capture: opencvCamera
-            m_frameRate: 16
-            m_run: true
-            z:               _mainIsMap ? _panel.z + 2 : _panel.z + 1
-            width:          !_mainIsMap ? _panel.width  : pipSize
-            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
-            states: [
-                State {
-                    name:   "pipMode"
-                    PropertyChanges {
-                        target: _flightVideo
-                        anchors.margins:    ScreenTools.defaultFontPixelHeight
-                    }
-                },
-                State {
-                    name:   "fullMode"
-                    PropertyChanges {
-                        target: _flightVideo
-                        anchors.margins:    0
-                    }
-                }
-            ]
-        }
-
-//        //-- Video View
-//        Item {
-//            id:             _flightVideo
-//            z:              _mainIsMap ? _panel.z + 2 : _panel.z + 1
-//            width:          !_mainIsMap ? _panel.width  : pipSize
-//            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
+//        OpenCVshowFrame {
+//            //anchors.centerIn: parent
+//            id:_flightVideo
 //            anchors.left:   _panel.left
 //            anchors.bottom: _panel.bottom
 //            visible:        QGroundControl.videoManager.hasVideo && (!_mainIsMap || _isPipVisible)
+//            m_capture: opencvCamera
+//            m_frameRate: 16
+//            m_run: true
+//            z:               _mainIsMap ? _panel.z + 2 : _panel.z + 1
+//            width:          !_mainIsMap ? _panel.width  : pipSize
+//            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
 //            states: [
 //                State {
 //                    name:   "pipMode"
@@ -221,19 +194,46 @@ QGCView {
 //                    }
 //                }
 //            ]
-//            //-- Video Streaming
-//            FlightDisplayViewVideo {
-//                anchors.fill:   parent
-//                visible:        QGroundControl.videoManager.isGStreamer
-//            }
-//            //-- UVC Video (USB Camera or Video Device)
-//            Loader {
-//                id:             cameraLoader
-//                anchors.fill:   parent
-//                visible:        !QGroundControl.videoManager.isGStreamer
-//                source:         QGroundControl.videoManager.uvcEnabled ? "qrc:/qml/FlightDisplayViewUVC.qml" : "qrc:/qml/FlightDisplayViewDummy.qml"
-//            }
 //        }
+
+        //-- Video View
+        Item {
+            id:             _flightVideo
+            z:              _mainIsMap ? _panel.z + 2 : _panel.z + 1
+            width:          !_mainIsMap ? _panel.width  : pipSize
+            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
+            anchors.left:   _panel.left
+            anchors.bottom: _panel.bottom
+            visible:        QGroundControl.videoManager.hasVideo && (!_mainIsMap || _isPipVisible)
+            states: [
+                State {
+                    name:   "pipMode"
+                    PropertyChanges {
+                        target: _flightVideo
+                        anchors.margins:    ScreenTools.defaultFontPixelHeight
+                    }
+                },
+                State {
+                    name:   "fullMode"
+                    PropertyChanges {
+                        target: _flightVideo
+                        anchors.margins:    0
+                    }
+                }
+            ]
+            //-- Video Streaming
+            FlightDisplayViewVideo {
+                anchors.fill:   parent
+                visible:        QGroundControl.videoManager.isGStreamer
+            }
+            //-- UVC Video (USB Camera or Video Device)
+            Loader {
+                id:             cameraLoader
+                anchors.fill:   parent
+                visible:        !QGroundControl.videoManager.isGStreamer
+                source:         QGroundControl.videoManager.uvcEnabled ? "qrc:/qml/FlightDisplayViewUVC.qml" : "qrc:/qml/FlightDisplayViewDummy.qml"
+            }
+        }
 
         QGCPipable {
             id:                 _flightVideoPipControl

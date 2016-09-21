@@ -103,6 +103,11 @@ const QVariantList& PX4AutoPilotPlugin::vehicleComponents(void)
                 _esp8266Component->setupTriggerSignals();
                 _components.append(QVariant::fromValue((VehicleComponent*)_esp8266Component));
             }
+            //-- Vehicle params
+            _paramsComponent = new PX4VehicleParamsComponent(_vehicle, this);
+            _paramsComponent->setupTriggerSignals();
+            _components.append(QVariant::fromValue((VehicleComponent*)_paramsComponent));
+
         } else {
             qWarning() << "Call to vehicleCompenents prior to parametersReady";
         }
