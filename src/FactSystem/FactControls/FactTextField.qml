@@ -14,6 +14,7 @@ QGCTextField {
     text:       fact ? fact.valueString : ""
     unitsLabel: fact ? fact.units : ""
     showUnits:  true
+    showHelp:   true
 
     showbg:     true
     property Fact   fact:           null
@@ -32,7 +33,7 @@ QGCTextField {
                 fact.value = text
             } else {
              //   _validateString = text
-             //   qgcView.showDialog(editorDialogComponent1, qsTr("Invalid Parameter Value"), qgcView.showDialogDefaultWidth, StandardButton.Ok)
+            //    qgcView.showDialog(validationErrorDialogComponent, qsTr("Invalid Value"), qgcView.showDialogDefaultWidth, StandardButton.Save)
                 if(text>fact.max)
                 {
                     fact.value = fact.max
@@ -48,13 +49,25 @@ QGCTextField {
             fact.valueChanged(fact.value)
         }
     }
+
+    onHelpClicked: qgcView.showDialog(helpDialogComponent, qsTr("Value Details"), qgcView.showDialogDefaultWidth, StandardButton.Save)
+
+
     Component {
-        id: editorDialogComponent
+        id: validationErrorDialogComponent
 
         ParameterEditorDialog {
             validate:       true
             validateValue:  _validateString
             fact:           _textField.fact
+        }
+    }
+
+    Component {
+        id: helpDialogComponent
+
+        ParameterEditorDialog {
+            fact: _textField.fact
         }
     }
 }

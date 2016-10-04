@@ -298,9 +298,13 @@ void PX4FirmwarePlugin::pauseVehicle(Vehicle* vehicle)
     cmd.target_component = vehicle->defaultComponentId();
 
     MAVLinkProtocol* mavlink = qgcApp()->toolbox()->mavlinkProtocol();
-    mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
+    mavlink_msg_command_long_encode_chan(mavlink->getSystemId(),
+                                         mavlink->getComponentId(),
+                                         vehicle->priorityLink()->mavlinkChannel(),
+                                         &msg,
+                                         &cmd);
 
-    vehicle->sendMessageOnPriorityLink(msg);
+    vehicle->sendMessageOnLink(vehicle->priorityLink(), msg);
 }
 
 void PX4FirmwarePlugin::guidedModeRTL(Vehicle* vehicle)
@@ -332,8 +336,12 @@ void PX4FirmwarePlugin::guidedModeOrbit(Vehicle* vehicle, const QGeoCoordinate& 
     cmd.param7 = centerCoord.isValid() ? centerCoord.altitude()  : NAN;
     cmd.target_system = vehicle->id();
     cmd.target_component = vehicle->defaultComponentId();
-    mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
-    vehicle->sendMessageOnPriorityLink(msg);
+    mavlink_msg_command_long_encode_chan(mavlink->getSystemId(),
+                                         mavlink->getComponentId(),
+                                         vehicle->priorityLink()->mavlinkChannel(),
+                                         &msg,
+                                         &cmd);
+    vehicle->sendMessageOnLink(vehicle->priorityLink(), msg);
 }
 
 void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double altitudeRel)
@@ -362,8 +370,12 @@ void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double altitudeRel)
     cmd.target_system = vehicle->id();
     cmd.target_component = vehicle->defaultComponentId();
 
-    mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
-    vehicle->sendMessageOnPriorityLink(msg);
+    mavlink_msg_command_long_encode_chan(mavlink->getSystemId(),
+                                         mavlink->getComponentId(),
+                                         vehicle->priorityLink()->mavlinkChannel(),
+                                         &msg,
+                                         &cmd);
+    vehicle->sendMessageOnLink(vehicle->priorityLink(), msg);
 }
 
 void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoordinate& gotoCoord)
@@ -389,9 +401,13 @@ void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoord
     cmd.target_component = vehicle->defaultComponentId();
 
     MAVLinkProtocol* mavlink = qgcApp()->toolbox()->mavlinkProtocol();
-    mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
+    mavlink_msg_command_long_encode_chan(mavlink->getSystemId(),
+                                         mavlink->getComponentId(),
+                                         vehicle->priorityLink()->mavlinkChannel(),
+                                         &msg,
+                                         &cmd);
 
-    vehicle->sendMessageOnPriorityLink(msg);
+    vehicle->sendMessageOnLink(vehicle->priorityLink(), msg);
 }
 
 void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitudeRel)
@@ -417,9 +433,13 @@ void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitu
     cmd.target_component = vehicle->defaultComponentId();
 
     MAVLinkProtocol* mavlink = qgcApp()->toolbox()->mavlinkProtocol();
-    mavlink_msg_command_long_encode(mavlink->getSystemId(), mavlink->getComponentId(), &msg, &cmd);
+    mavlink_msg_command_long_encode_chan(mavlink->getSystemId(),
+                                         mavlink->getComponentId(),
+                                         vehicle->priorityLink()->mavlinkChannel(),
+                                         &msg,
+                                         &cmd);
 
-    vehicle->sendMessageOnPriorityLink(msg);
+    vehicle->sendMessageOnLink(vehicle->priorityLink(), msg);
 }
 
 void PX4FirmwarePlugin::setGuidedMode(Vehicle* vehicle, bool guidedMode)
@@ -474,7 +494,15 @@ void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_messag
             minorVersion = (version.flight_sw_version >> (8*2)) & 0xFF;
             patchVersion = (version.flight_sw_version >> (8*1)) & 0xFF;
 
-            notifyUser = majorVersion < supportedMajorVersion || minorVersion < supportedMinorVersion || patchVersion < supportedPatchVersion;
+            if (majorVersion < supportedMajorVersion) {
+                notifyUser = true;
+            } else if (majorVersion == supportedMajorVersion) {
+                if (minorVersion < supportedMinorVersion) {
+                    notifyUser = true;
+                } else if (minorVersion == supportedMinorVersion) {
+                    notifyUser = patchVersion < supportedPatchVersion;
+                }
+            }
         } else {
             notifyUser = true;
         }

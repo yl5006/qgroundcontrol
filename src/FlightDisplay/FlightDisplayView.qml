@@ -282,6 +282,8 @@ QGCView {
             anchors.horizontalCenter:   widgetsLoader.horizontalCenter
             source:                     "qrc:/qml/VirtualJoystick.qml"
             active:                     QGroundControl.virtualTabletJoystick
+
+            property bool useLightColors: root.isBackgroundDark
         }
     }
 }
