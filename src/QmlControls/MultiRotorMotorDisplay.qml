@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.5
 
 import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
@@ -12,7 +12,7 @@ Item {
 
     property bool   _unsupportedConfig: motorCount == 3 || (motorCount == 6 && coaxial) // Tricopters NYI
     property var    _qgcPal:            QGCPalette { colorGroupEnabled: enabled }
-    property real   _rotorRadius:       motorRoot.height / 8
+    property real   _rotorRadius:       motorRoot.width / 8
     property int    _motorsPerSide:     motorCount / (coaxial ? 2 : 1)
 
     readonly property string    _cwColor:               "#15ce15"   // Green
@@ -31,6 +31,8 @@ Item {
     readonly property var       _motorNumbers8:         [ 8, 4, 2, 6, 7, 5, 1, 3 ]
     readonly property var       _motorNumbers4Top:      [ 4, 3, 2, 1 ]
     readonly property var       _motorNumbers4Bottom:   [ 7, 8, 5, 6 ]
+
+    signal checked(int i)
 
     Component.onCompleted: {
         if (coaxial) {
@@ -66,8 +68,8 @@ Item {
             Item {
                 x:      motorRepeater.width / 2 + _armXCenter - rotor.radius
                 y:      motorRepeater.height / 2 + _armYCenter - rotor.radius
-                width:  _rotorRadius * 2
-                height: _rotorRadius * 2
+                width:  _rotorRadius * 3
+                height: _rotorRadius * 3
 
                 property real _armOffsetRadians:        ((2 * Math.PI) / _motorsPerSide)
                 property real _armOffsetIndexRadians:   (_armOffsetRadians  * index) + ((xConfig && _motorsPerSide != 6) || (!xConfig && _motorsPerSide == 6) ? _armOffsetRadians / 2 : 0)
@@ -79,37 +81,37 @@ Item {
                     id:             rotor
                     anchors.fill:   parent
                     radius:         _rotorRadius
-                    color:          motorColors[index & 1]
-                    opacity:        topCoaxial ? 0.65 : 1.0
-                    border.color:   topCoaxial ? "black" : color
+                    color:          "transparent"
+               //     color:          motorColors[index & 1]
+               //     opacity:        topCoaxial ? 0.65 : 1.0
+               //     border.color:   topCoaxial ? "black" : color
                     antialiasing:   true
                     readonly property bool topCoaxial: topMotors && coaxial
                     //-- Top Directional Arrow
-                    QGCColoredImage {
-                        color:                      _qgcPal.globalTheme === QGCPalette.Light ? "black" : "white"
-                        height:                     parent.height * 0.2
-                        width:                      height
-                        sourceSize.height:          height
+                    Image {
+                        anchors.fill:   parent
                         mipmap:                     true
                         fillMode:                   Image.PreserveAspectFit
-                        source:                     (index & 1) ? "/qmlimages/ArrowCW.svg" : "/qmlimages/ArrowCCW.svg"
-                        anchors.top:                parent.top
-                        anchors.topMargin:          height * -0.5
-                        anchors.horizontalCenter:   parent.horizontalCenter
+                        source:                     motorColors[index & 1]==_cwColor ? "/qmlimages/ArrowCW.svg" : "/qmlimages/ArrowCCW.svg"
+                        RotationAnimation on rotation {
+                            id:             imageRotation
+                            loops:          5
+                            from:           motorColors[index & 1]==_cwColor ? 0:360
+                            to:             motorColors[index & 1]==_cwColor ? 360:0
+                           // direction:      /(index & 1) ?RotationAnimator.Clockwise:RotationAnimator.Counterclockwise
+                            duration:       500
+                            running:        false
+                        }
                     }
-                    //-- Bottom Directional Arrow
-                    QGCColoredImage {
-                        color:                      _qgcPal.globalTheme === QGCPalette.Light ? "black" : "white"
-                        height:                     parent.height * 0.2
-                        width:                      height
-                        sourceSize.height:          height
-                        mipmap:                     true
-                        fillMode:                   Image.PreserveAspectFit
-                        source:                     (index & 1) ? "/qmlimages/ArrowCCW.svg" : "/qmlimages/ArrowCW.svg"
-                        anchors.bottom:             parent.bottom
-                        anchors.bottomMargin:       height * -0.5
-                        anchors.horizontalCenter:   parent.horizontalCenter
-                    }
+                     MouseArea{
+                            anchors.fill:    parent
+                            anchors.margins: (_rotorRadius/3)*2
+                            onClicked: {
+                                 checked(motorNumbers[index])
+                                 imageRotation.running=true
+                            }
+                        }
+
                     transform: [
                         Rotation {
                             origin.x:           rotor.width  / 2
@@ -118,24 +120,15 @@ Item {
                         }]
                 }
 
-                Rectangle {
-                    anchors.horizontalCenter:   parent.horizontalCenter
-                    anchors.verticalCenter:     parent.verticalCenter
-                    width:                      radius * 2
-                    height:                     radius * 2
-                    radius:                     ScreenTools.defaultFontPixelHeight * 0.666
-                    color:                      Qt.rgba(1,1,1,1)
-                    border.color:               Qt.rgba(0,0,0,0.75)
-                    antialiasing:               true
-
-                    QGCLabel {
-                        anchors.fill:               parent
+                QGCLabel {
+                        anchors.centerIn:           parent
+                        text:                       motorNumbers[index]
                         verticalAlignment:          Text.AlignVCenter
                         horizontalAlignment:        Text.AlignHCenter
-                        text:                       motorNumbers[index]
-                        color:                      parent.border.color
-                    }
-                }
+                        font.bold:                  true
+                        font.pointSize:             ScreenTools.largeFontPointSize*2
+                        //       color:                      parent.border.color
+                 }
             } // Item
         } // Repeater
     } // Component - MotorDisplayComponent
@@ -146,8 +139,9 @@ Item {
 
         Loader {
             id:                 bottomMotors
-            anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+            anchors.topMargin:  parent.width*0.2+ScreenTools.defaultFontPixelHeight
             anchors.fill:       parent
+         //   anchors.bottomMargin: parent.width*0.2-ScreenTools.defaultFontPixelHeight
             sourceComponent:    motorDisplayComponent
             visible:            coaxial
 
@@ -159,7 +153,7 @@ Item {
         Loader {
             id:                     topMotors
             anchors.fill:           parent
-            anchors.bottomMargin:   coaxial ? ScreenTools.defaultFontPixelHeight : 0
+            anchors.bottomMargin:   parent.width*0.2+( coaxial ? ScreenTools.defaultFontPixelHeight : 0)
             sourceComponent:        motorDisplayComponent
 
             property bool   topMotors:      true

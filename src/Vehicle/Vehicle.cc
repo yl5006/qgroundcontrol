@@ -1834,13 +1834,14 @@ void Vehicle::setSoloFirmware(bool soloFirmware)
     }
 }
 
-#if 0
+//#if 0
     // Temporarily removed, waiting for new command implementation
 void Vehicle::motorTest(int motor, int percent, int timeoutSecs)
 {
     doCommandLong(defaultComponentId(), MAV_CMD_DO_MOTOR_TEST, motor, MOTOR_TEST_THROTTLE_PERCENT, percent, timeoutSecs);
+    qDebug()<<"motor"<< motor<<"percent"<<percent<<"timeoutSecs"<<timeoutSecs;
 }
-#endif
+//#endif
 
 void Vehicle::_newMissionItemsAvailable(void)
 {

@@ -902,7 +902,7 @@ QGCView {
             id: syncLoadFromFileOverwrite
             QGCViewMessage {
                 id:         syncLoadFromVehicleCheck
-                message:   qsTr("You have unsaved/unsent mission changes. Loading a mission from a file will lose these changes. Are you sure you want to load a mission from a file?")
+                message:   qsTr("你有未保存的飞行计划，载入任务会丢失改计划，确认从文件载入？")//qsTr("You have unsaved/unsent mission changes. Loading a mission from a file will lose these changes. Are you sure you want to load a mission from a file?")
                 function accept() {
                     hideDialog()
                     _syncDropDownController.loadFromSelectedFile()
@@ -925,7 +925,7 @@ QGCView {
         Component {
             id: syncDropDownComponent
             Column {
-                property string _overwriteText: (_editingLayer == _layerMission) ? qsTr("Mission overwrite") : qsTr("GeoFence overwrite")
+                property string _overwriteText: (_editingLayer == _layerMission) ? qsTr("覆盖任务")/*qsTr("Mission overwrite")*/ : qsTr("GeoFence overwrite")
                 id:                 sendSaveGrid
                 anchors.margins:    _margin
 
@@ -953,7 +953,7 @@ QGCView {
                     onClicked:  {
                         syncButton.hideDropDown()
                         if (_syncDropDownController.dirty) {
-                            qgcView.showDialog(syncLoadFromVehicleOverwrite, columnHolder._overwriteText, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                            qgcView.showDialog(syncLoadFromVehicleOverwrite, sendSaveGrid._overwriteText, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                         } else {
                             _syncDropDownController.loadFromVehicle()
                         }
@@ -987,7 +987,7 @@ QGCView {
                     onClicked:  {
                         syncButton.hideDropDown()
                         if (_syncDropDownController.dirty) {
-                            qgcView.showDialog(syncLoadFromFileOverwrite, columnHolder._overwriteText, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                            qgcView.showDialog(syncLoadFromFileOverwrite, sendSaveGrid._overwriteText, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                         } else {
                             _syncDropDownController.loadFromSelectedFile()
                         }
@@ -1005,7 +1005,7 @@ QGCView {
                     onClicked:  {
                         syncButton.hideDropDown()
                         _syncDropDownController.removeAll()
-                        qgcView.showDialog(removeAllPromptDialog, qsTr("Remove all"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
+                        qgcView.showDialog(removeAllPromptDialog, qsTr("删除所有航点")/*qsTr("Remove all")*/, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
                     }
                 }
             }

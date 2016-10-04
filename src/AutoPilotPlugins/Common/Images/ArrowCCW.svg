@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 72 72" enable-background="new 0 0 72 72" xml:space="preserve">
-<polygon fill="#FFFFFF" points="68.4,36 3.6,3.6 3.6,36 3.6,68.4 "/>
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 170 170" enable-background="new 0 0 170 170" xml:space="preserve">
+<circle opacity="0.5" fill="#E43A3D" cx="84.9" cy="85.3" r="63.4"/>
+<path fill="#E43A3D" d="M69.4,23.6L100.3,3v20.7C127,30.4,147,54,148.2,82.5c-1.4-26.7-21.8-48.3-47.9-51.6v13.3L69.4,23.6z"/>
+<path fill="#E43A3D" d="M100.2,147l-30.9,20.6v-20.7c-26.7-6.7-46.7-30.3-47.9-58.7c1.4,26.7,21.8,48.3,47.9,51.6v-13.3L100.2,147z"
+	/>
 </svg>

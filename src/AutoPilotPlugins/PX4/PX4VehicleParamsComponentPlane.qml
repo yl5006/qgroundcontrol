@@ -11,8 +11,12 @@
 import QtQuick              2.5
 import QtQuick.Controls     1.4
 
-import QGroundControl.Controls  1.0
+import QGroundControl.Palette 1.0
+import QGroundControl.FactSystem    1.0
+import QGroundControl.FactControls  1.0
+import QGroundControl.Controls      1.0
 import QGroundControl.ScreenTools   1.0
+
 SetupPage {
     id:             paramsPage
     pageComponent:  pageComponent
@@ -22,9 +26,16 @@ SetupPage {
 
         Item {
             width:  availableWidth
-            height: rowbutton.height+ScreenTools.defaultFontPixelHeight*8
+            height: availableHeight
             property real _middleRowWidth:  ScreenTools.defaultFontPixelWidth * 20
             property real _editFieldWidth:  ScreenTools.defaultFontPixelWidth * 14
+
+            FactPanelController {
+                id:         controller
+                factPanel:  paramsPage.viewPanel
+            }
+            QGCPalette { id: qgcPal; colorGroupEnabled: true }
+
             Rectangle {
                 id:                         title
                 anchors.top:                parent.top
@@ -69,11 +80,19 @@ SetupPage {
                     anchors.verticalCenter: circle.verticalCenter
                     anchors.left:          circle.right
                 }
+                QGCLabel {
+                    text:           qsTr("注意！在飞行中修改参数可能造成飞行不稳定或坠机，请谨慎")//"safe"
+                    font.pointSize: ScreenTools.mediumFontPointSize
+                    font.bold:              true
+                    color:          qgcPal.warningText
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
             Row{
                 id:             rowbutton
                 anchors.top:    title.bottom
-                anchors.topMargin:      ScreenTools.defaultFontPixelHeight
+                anchors.topMargin:      ScreenTools.defaultFontPixelHeight*0.5
                 ExclusiveGroup { id: paramsGroup }
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing:    ScreenTools.defaultFontPixelWidth*0.5
@@ -81,18 +100,21 @@ SetupPage {
                     exclusiveGroup:     paramsGroup
                     checkable:          true
                     width:              _middleRowWidth
+                    checked:           true
                     text:               qsTr("姿态控制")//att
                     onClicked: {
-                        panelLoader.source = "LinkSettings.qml";
+                        panelLoader.source = "AttitudeControlPlane.qml";
+                        checked  =   true
                     }
                 }
                 QGCButton{
                     exclusiveGroup:     paramsGroup
                     checkable:          true
                     width:              _middleRowWidth
-                    text:               qsTr("位置控制")//pos
+                    text:               qsTr("自动控制")//pos
                     onClicked: {
-                        panelLoader.source = "LinkSettings.qml";
+                        checked  =   true
+                        panelLoader.source = "L1ControlPlane.qml";
                     }
                 }
                 QGCButton{
@@ -101,8 +123,9 @@ SetupPage {
                     width:              _middleRowWidth
                     text:               qsTr("算法控制")//
                     onClicked: {
-                        panelLoader.source = "LinkSettings.qml";
-                    }
+                        checked  =   true
+                        panelLoader.source = "TECSControlPlane.qml";//"TECSControlPlane.qml";
+                     }
                 }
                 QGCButton{
                     exclusiveGroup:     paramsGroup
@@ -110,22 +133,26 @@ SetupPage {
                     width:              _middleRowWidth
                     text:               qsTr("其他设置")//else
                     onClicked: {
+                        checked  =   true
                         panelLoader.source = "LinkSettings.qml";
                     }
                 }
             }
             Rectangle {
                 id:                     loader
-                anchors.fill:           parent
-                anchors.margins:        _defaultTextHeight
-                visible:                true
-                color:                  qgcPal.windowShade
-                z:                       QGroundControl.zOrderTopMost
+                anchors.top:            rowbutton.bottom
+                anchors.topMargin:      ScreenTools.defaultFontPixelHeight*0.5
+                width:                  parent.width*0.9
+                height:                 parent.height*0.8
+                anchors.horizontalCenter: parent.horizontalCenter
+                color:                  "transparent"//qgcPal.window
                 Loader {
                     id:                     panelLoader
                     anchors.fill:           parent
                 }
-
+            }
+            Component.onCompleted: {
+                panelLoader.source = "AttitudeControlPlane.qml";
             }
         }
     }

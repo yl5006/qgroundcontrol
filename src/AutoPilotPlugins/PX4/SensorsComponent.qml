@@ -34,14 +34,14 @@ SetupPage {
             // Help text which is shown both in the status text area prior to pressing a cal button and in the
             // pre-calibration dialog.
 
-            readonly property string boardRotationText: qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
-            readonly property string compassRotationText: qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
+            readonly property string boardRotationText: qsTr("飞控安装方向如何和机头一直，则选择NONE.")//qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
+            readonly property string compassRotationText: qsTr("磁罗盘安装方向如何和机头一直，则选择NONE.")//qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
 
-            readonly property string compassHelp:   qsTr("For Compass calibration you will need to rotate your vehicle through a number of positions.")
-            readonly property string gyroHelp:      qsTr("For Gyroscope calibration you will need to place your vehicle on a surface and leave it still.")
-            readonly property string accelHelp:     qsTr("For Accelerometer calibration you will need to place your vehicle on all six sides on a perfectly level surface and hold it still in each orientation for a few seconds.")
-            readonly property string levelHelp:     qsTr("To level the horizon you need to place the vehicle in its level flight position and press OK.")
-            readonly property string airspeedHelp:  qsTr("For Airspeed calibration you will need to keep your airspeed sensor out of any wind and then blow across the sensor.")
+            readonly property string compassHelp:   qsTr("磁罗盘校准需要不同方位旋转机体.")//qsTr("For Compass calibration you will need to rotate your vehicle through a number of positions.")
+            readonly property string gyroHelp:      qsTr("角速度计校准需要保持机体水平和静止.")//qsTr("For Gyroscope calibration you will need to place your vehicle on a surface and leave it still.")
+            readonly property string accelHelp:     qsTr("加速度校准需要六个面校准.")//qsTr("For Accelerometer calibration you will need to place your vehicle on all six sides on a perfectly level surface and hold it still in each orientation for a few seconds.")
+            readonly property string levelHelp:     qsTr("水平校准校准机体飞行平面.")//qsTr("To level the horizon you need to place the vehicle in its level flight position and press OK.")
+            readonly property string airspeedHelp:  qsTr("空速校准先在无风下校准.然后对传感器吹气或风")//qsTr("For Airspeed calibration you will need to keep your airspeed sensor out of any wind and then blow across the sensor.")
 
             readonly property string statusTextAreaDefaultText: qsTr("选择传感器开始校准")/*qsTr("Start the individual calibration steps by clicking one of the buttons to the left.")*/
 

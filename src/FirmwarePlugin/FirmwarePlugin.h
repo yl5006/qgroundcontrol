@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -204,10 +204,10 @@ public:
     virtual int remapParamNameHigestMinorVersionNumber(int majorVersionNumber) const;
 
     /// @return true: Motors are coaxial like an X8 config, false: Quadcopter for example
-    virtual bool multiRotorCoaxialMotors(Vehicle* vehicle) { Q_UNUSED(vehicle); return false; }
+    virtual bool multiRotorCoaxialMotors(Vehicle* vehicle);// { Q_UNUSED(vehicle); return false; }
 
     /// @return true: X confiuration, false: Plus configuration
-    virtual bool multiRotorXConfig(Vehicle* vehicle) { Q_UNUSED(vehicle); return false; }
+    virtual bool multiRotorXConfig(Vehicle* vehicle);// { Q_UNUSED(vehicle); return false; }
 
     /// Returns a newly create geofence manager for this vehicle. Returns NULL if this vehicle
     /// does not support geofence. You should make sense to check vehicle capabilites for geofence

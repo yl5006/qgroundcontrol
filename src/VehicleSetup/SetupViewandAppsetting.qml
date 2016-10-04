@@ -433,7 +433,7 @@ Rectangle {
               height:         width
               exclusiveGroup: setupButtonGroup
               visible:        QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable
-              text:           "Parameters"
+              text:           qsTr("后台调试")//"Firmware""Parameters"
               onClicked:
               {
                    if(!loader.visible)
@@ -464,7 +464,7 @@ Rectangle {
         width:              ScreenTools.defaultFontPixelHeight * 2
         height:             width
         visible:            loader.visible
-        z:                      QGroundControl.zOrderTopMost+ 1
+        z:                  QGroundControl.zOrderTopMost+ 1
         onClicked:
         {
             panelLoader.sourceComponent = noComponentsVehicleSummaryComponent

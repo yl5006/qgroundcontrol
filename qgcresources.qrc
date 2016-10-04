@@ -78,6 +78,7 @@
 	<file alias="safetitlebg.svg">src/AutoPilotPlugins/PX4/Images/safetitlebg.svg</file>
 	<file alias="batteryminmax.svg">src/AutoPilotPlugins/PX4/Images/batteryminmax.svg</file>
         <file alias="MotorComponentIcon.svg">src/AutoPilotPlugins/Common/Images/MotorComponentIcon.svg</file>
+	<file alias="motortestbg.svg">src/AutoPilotPlugins/Common/Images/motortestbg.svg</file>
         <file alias="PowerComponentBattery_01cell.svg">src/AutoPilotPlugins/PX4/Images/PowerComponentBattery_01cell.svg</file>
         <file alias="PowerComponentBattery_02cell.svg">src/AutoPilotPlugins/PX4/Images/PowerComponentBattery_02cell.svg</file>
         <file alias="PowerComponentBattery_03cell.svg">src/AutoPilotPlugins/PX4/Images/PowerComponentBattery_03cell.svg</file>
@@ -103,6 +104,9 @@
         <file alias="VehicleRight.png">src/AutoPilotPlugins/PX4/Images/VehicleRight.png</file>
         <file alias="VehicleRightRotate.png">src/AutoPilotPlugins/PX4/Images/VehicleRightRotate.png</file>
 	<file alias="calValid.svg">src/AutoPilotPlugins/PX4/Images/calValid.svg</file>
+	<file alias="fw_landing.png">src/AutoPilotPlugins/PX4/Images/fw_landing.png</file>
+	<file alias="paramshelp.svg">src/AutoPilotPlugins/PX4/Images/paramshelp.svg</file>
+	<file alias="paramsreset.svg">src/AutoPilotPlugins/PX4/Images/paramsreset.svg</file>
 	<file alias="uncal.svg">src/AutoPilotPlugins/PX4/Images/uncal.svg</file>
 	<file alias="cal_cancel.svg">src/AutoPilotPlugins/PX4/Images/cal_cancel.svg</file>
         <file alias="VehicleSummaryIcon.png">src/VehicleSetup/VehicleSummaryIcon.png</file>

@@ -10,13 +10,14 @@ ComboBox {
     property var    _qgcPal:        QGCPalette { colorGroupEnabled: enabled }
     property bool   _showHighlight: true//pressed | hovered     //change by yaoling
     property bool   _showBorder:    false//_qgcPal.globalTheme === QGCPalette.Light
-
+    property color  colortext: "White"
     style: ComboBoxStyle {
         font.pointSize: ScreenTools.defaultFontPointSize
+
         textColor: _showHighlight ?
                     control._qgcPal.buttonHighlightText :
-                    control._qgcPal.buttonHighlightText//control._qgcPal.buttonText
-
+                    colortext//control._qgcPal.buttonText
+        selectedTextColor  : "Black"
         background: Item {
             implicitWidth:      Math.round(ScreenTools.defaultFontPixelWidth * 4.5)
             implicitHeight:     ScreenTools.isMobile ? Math.max(25, Math.round(ScreenTools.defaultFontPixelHeight * 2)) : Math.max(25, Math.round(ScreenTools.defaultFontPixelHeight * 1.2))

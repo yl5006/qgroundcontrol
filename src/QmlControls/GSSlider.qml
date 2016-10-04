@@ -30,21 +30,7 @@ Slider {
                 }
             }
 
-//            Item {
-//                clip: true
-//                width: styleData.handlePosition
-//                height: parent.height
-//                Rectangle {
-//                    anchors.fill: parent
-//                    border.color: Qt.darker(fillColor, 1.2)
-//                    radius: height/2
-//                    gradient: Gradient {
-//                        GradientStop {color: Qt.lighter(fillColor, 1.3)  ; position: 0}
-//                        GradientStop {color: fillColor ; position: 1.4}
-//                    }
-//                }
-//            }
- //       }
+
         handle: Rectangle  {
             anchors.centerIn:   parent
             implicitWidth:      36

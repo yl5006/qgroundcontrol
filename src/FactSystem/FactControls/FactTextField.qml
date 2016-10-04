@@ -1,4 +1,4 @@
-import QtQuick                  2.2
+﻿import QtQuick                  2.2
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.2
 import QtQuick.Dialogs          1.2
@@ -15,6 +15,7 @@ QGCTextField {
     unitsLabel: fact ? fact.units : ""
     showUnits:  true
 
+    showbg:     true
     property Fact   fact:           null
     property string _validateString
 
@@ -30,15 +31,23 @@ QGCTextField {
             if (errorString == "") {
                 fact.value = text
             } else {
-                _validateString = text
-                qgcView.showDialog(editorDialogComponent, qsTr("Invalid Parameter Value"), qgcView.showDialogDefaultWidth, StandardButton.Save)
+             //   _validateString = text
+             //   qgcView.showDialog(editorDialogComponent1, qsTr("Invalid Parameter Value"), qgcView.showDialogDefaultWidth, StandardButton.Ok)
+                if(text>fact.max)
+                {
+                    fact.value = fact.max
+                    text=fact.max
+                }else if(text<fact.min)
+                {
+                    fact.value = fact.min
+                    text=fact.min
+                }
             }
         } else {
             fact.value = text
             fact.valueChanged(fact.value)
         }
     }
-
     Component {
         id: editorDialogComponent
 

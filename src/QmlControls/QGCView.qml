@@ -242,19 +242,22 @@ FactPanel {
             anchors.horizontalCenter: parent.horizontalCenter
          //   anchors.right:      parent.right
             color:              _qgcPal.windowShadeDark
-
+            border.width:      ScreenTools.defaultFontPixelHeight/8
+            border.color:      _qgcPal.buttonHighlight
             Rectangle {
                 id:     _header
-                width:  parent.width
+                anchors.top:        parent.top
+                anchors.topMargin:  ScreenTools.defaultFontPixelHeight/8
+                width:  parent.width-ScreenTools.defaultFontPixelHeight/4
                 height: _acceptButton.visible ? _acceptButton.height : _rejectButton.height
                 color:  _qgcPal.windowShade
-
+                anchors.horizontalCenter: parent.horizontalCenter
                 function _hidePanel() {
                     _fullPanel.visible = false
                 }
 
                 QGCLabel {
-                    x:                  defaultTextWidth
+                    anchors.horizontalCenter: parent.horizontalCenter
                     height:             parent.height
                     verticalAlignment:	Text.AlignVCenter
                     text:               _dialogTitle
@@ -300,7 +303,7 @@ FactPanel {
 
             Loader {
                 id:                 _dialogComponentLoader
-                anchors.margins:    5
+                anchors.margins:    ScreenTools.defaultFontPixelHeight
                 anchors.left:       parent.left
                 anchors.right:      parent.right
                 anchors.top:        _spacer.bottom

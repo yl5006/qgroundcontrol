@@ -10,7 +10,8 @@ Button {
     property string imageResource:  "/qmlimages/subMenuButtonImage.png"     ///< Button image
 
     text: "Button"  ///< Pass in your own button text
-
+    property bool   showcolor: true
+    property color  imgcolor: qgcPal.text
     checkable:      false
     implicitHeight: ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 3 : ScreenTools.defaultFontPixelHeight * 2
 
@@ -21,12 +22,11 @@ Button {
             id:                 qgcPal
             colorGroupEnabled:  control.enabled
         }
-
-        property bool showHighlight: control.pressed
+        property bool showHighlight: control.pressed || control.hovered
 
         background: Rectangle {
             id:     innerRect
-            color:  showHighlight ? qgcPal.buttonHighlight : qgcPal.button
+            color:  showHighlight ? qgcPal.buttonHighlight : (showcolor ? qgcPal.button:"transparent")
 
             implicitWidth: titleBar.x + titleBar.contentWidth + ScreenTools.defaultFontPixelWidth
 
@@ -39,7 +39,7 @@ Button {
                 height:                 ScreenTools.defaultFontPixelHeight *1.5
                 fillMode:               Image.PreserveAspectFit
                 smooth:                 true
-                color:                  qgcPal.text
+                color:                  imgcolor
                 source:                 control.imageResource
             }
 
@@ -49,7 +49,7 @@ Button {
                 anchors.left:           image.right
                 anchors.verticalCenter: parent.verticalCenter
                 verticalAlignment:      TextEdit.AlignVCenter
-                color:                  showHighlight ? qgcPal.buttonHighlightText : qgcPal.buttonText
+                color:                  showHighlight ? qgcPal.buttonHighlightText : imgcolor
                 text:                   control.text
             }
         }

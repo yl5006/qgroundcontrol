@@ -413,11 +413,9 @@ SetupPage {
                 }
                 // Attitude Controls
                 Row {
-                    //anchors.left:   parent.left
-                    spacing:      ScreenTools.defaultFontPixelHeight*5
                     anchors.horizontalCenter: parent.horizontalCenter
                     Column {
-                        width:  defaultTextHeight*1.5
+                        width:  ScreenTools.defaultFontPixelWidth * 20
                         spacing:      ScreenTools.defaultFontPixelHeight
                         QGCLabel {
                             id:     rollLabel
@@ -429,11 +427,19 @@ SetupPage {
                             id:                 rollLoader
                             height:             ScreenTools.defaultFontPixelHeight*16
                             width:              radioPage.defaultTextHeight*1.5
+                            anchors.horizontalCenter: parent.horizontalCenter
                             sourceComponent:    channelMonitorDisplayComponent
 
                             property real defaultTextWidth: radioPage.defaultTextWidth
                             property bool mapped:           controller.rollChannelMapped
                             property bool reversed:         controller.rollChannelReversed
+                        }
+
+                        FactComboBox {
+                            width:      ScreenTools.defaultFontPixelWidth * 15
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            fact:       controller.getParameterFact(-1, "RC_MAP_ROLL")
+                            indexModel: false
                         }
 
                         Connections {
@@ -444,7 +450,7 @@ SetupPage {
                     }
 
                     Column {
-                        width:  defaultTextHeight*1.5
+                        width:  ScreenTools.defaultFontPixelWidth * 20
                         height: parent.height
                         spacing:      ScreenTools.defaultFontPixelHeight
                         QGCLabel {
@@ -457,11 +463,19 @@ SetupPage {
                             id:                 pitchLoader
                             height:             ScreenTools.defaultFontPixelHeight*16
                             width:              radioPage.defaultTextHeight*1.5
+                            anchors.horizontalCenter: parent.horizontalCenter
                             sourceComponent:    channelMonitorDisplayComponent
 
                             property real defaultTextWidth: radioPage.defaultTextWidth
                             property bool mapped:           controller.pitchChannelMapped
                             property bool reversed:         controller.pitchChannelReversed
+                        }
+
+                        FactComboBox {
+                            width:      ScreenTools.defaultFontPixelWidth * 15
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            fact:       controller.getParameterFact(-1, "RC_MAP_PITCH")
+                            indexModel: false
                         }
 
                         Connections {
@@ -472,7 +486,7 @@ SetupPage {
                     }
 
                     Column {
-                        width:  defaultTextHeight*1.5
+                        width:  ScreenTools.defaultFontPixelWidth * 20
                         height: parent.height
                         spacing:      ScreenTools.defaultFontPixelHeight
                         QGCLabel {
@@ -483,6 +497,7 @@ SetupPage {
 
                         Loader {
                             id:                 yawLoader
+                            anchors.horizontalCenter: parent.horizontalCenter
                             height:             ScreenTools.defaultFontPixelHeight*16
                             width:              radioPage.defaultTextHeight*1.5
                             sourceComponent:    channelMonitorDisplayComponent
@@ -490,6 +505,13 @@ SetupPage {
                             property real defaultTextWidth: radioPage.defaultTextWidth
                             property bool mapped:           controller.yawChannelMapped
                             property bool reversed:         controller.yawChannelReversed
+                        }
+
+                        FactComboBox {
+                            width:      ScreenTools.defaultFontPixelWidth * 15
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            fact:       controller.getParameterFact(-1, "RC_MAP_YAW")
+                            indexModel: false
                         }
 
                         Connections {
@@ -500,7 +522,7 @@ SetupPage {
                     }
 
                     Column {
-                        width:  defaultTextHeight*1.5
+                        width:  ScreenTools.defaultFontPixelWidth * 20
                         height: parent.height
                         spacing:      ScreenTools.defaultFontPixelHeight
                         QGCLabel {
@@ -511,8 +533,7 @@ SetupPage {
 
                         Loader {
                             id:                 throttleLoader
-                            //                            anchors.left:       throttleLabel.right
-                            //                            anchors.right:      parent.right
+                            anchors.horizontalCenter: parent.horizontalCenter
                             height:             ScreenTools.defaultFontPixelHeight*16
                             width:              radioPage.defaultTextHeight*1.5
                             sourceComponent:    channelMonitorDisplayComponent
@@ -520,6 +541,13 @@ SetupPage {
                             property real defaultTextWidth: radioPage.defaultTextWidth
                             property bool mapped:           controller.throttleChannelMapped
                             property bool reversed:         controller.throttleChannelReversed
+                        }
+
+                        FactComboBox {
+                            width:      ScreenTools.defaultFontPixelWidth * 15
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            fact:       controller.getParameterFact(-1, "RC_MAP_THROTTLE")
+                            indexModel: false
                         }
 
                         Connections {
@@ -611,19 +639,20 @@ SetupPage {
                     border.width:   1
                 }
                 QGCLabel { text: qsTr("更多遥控设置 working") }
+
                 //               QGCLabel { text: "Additional Radio setup:" }
                 Row{
                     spacing: ScreenTools.defaultFontPixelHeight*2
-                    visible:  false
+                    visible:  true
                     QGCButton {
                         id:         bindButton
                         text:       qsTr("Spektrum Bind")
-
+                        visible:   false
                         onClicked: showDialog(spektrumBindDialogComponent, dialogTitle, radioPage.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                     }
 
                     QGCButton {
-                        text:       qsTr("Copy Trims")
+                        text:       qsTr("拷贝中立点")//qsTr("Copy Trims")
                         visible:    QGroundControl.multiVehicleManager.activeVehicle.px4Firmware
                         onClicked:  showDialog(copyTrimsDialogComponent, dialogTitle, radioPage.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                     }

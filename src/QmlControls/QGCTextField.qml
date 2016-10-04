@@ -1,4 +1,4 @@
-import QtQuick 2.2
+﻿import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 
@@ -11,6 +11,7 @@ TextField {
     property bool showUnits: false
     property string unitsLabel: ""
 
+    property bool showbg: true
     Component.onCompleted: {
         if (typeof qgcTextFieldforwardKeysTo !== 'undefined') {
             root.Keys.forwardTo = [qgcTextFieldforwardKeysTo]
@@ -19,7 +20,7 @@ TextField {
 
     property var __qgcPal: QGCPalette { colorGroupEnabled: enabled }
 
-    textColor:          __qgcPal.textFieldText
+    textColor:          showbg ? __qgcPal.textFieldText: " White"
     height:             Math.round(Math.max(25, ScreenTools.defaultFontPixelHeight * (ScreenTools.isMobile ? 2.5 : 1.2)))
 
     QGCLabel {
@@ -35,16 +36,16 @@ TextField {
         background: Item {
             id: backgroundItem
 
-            Rectangle {
-                anchors.fill:           parent
-                anchors.bottomMargin:   -1
-                color:                  "#44ffffff"
-            }
+//            Rectangle {
+//                anchors.fill:           parent
+//                anchors.bottomMargin:   -1
+//                color:                   showbg ? " #44ffffff":"transparent"
+//            }
 
             Rectangle {
                 anchors.fill:           parent
-                border.color:           control.activeFocus ? "#47b" : "#999"
-                color:                  __qgcPal.textField
+                border.color:           control.activeFocus ? "#47b" : "transparent"//"#999"
+                color:                  showbg ?__qgcPal.textField : "transparent"
             }
 
             Text {

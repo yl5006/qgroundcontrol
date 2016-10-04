@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -10,6 +10,7 @@
 
 #include "FirmwarePlugin.h"
 #include "QGCApplication.h"
+#include "PX4AutoPilotPlugin.h"
 
 #include <QDebug>
 
@@ -257,4 +258,27 @@ int FirmwarePlugin::remapParamNameHigestMinorVersionNumber(int majorVersionNumbe
 {
     Q_UNUSED(majorVersionNumber);
     return 0;
+}
+bool FirmwarePlugin::multiRotorCoaxialMotors(Vehicle* vehicle)
+{
+   Q_UNUSED(vehicle);
+   int autostartId=vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, "SYS_AUTOSTART")->rawValue().toInt();
+
+   if(autostartId>=11000&&autostartId<13000)
+       return true;
+   return false;
+}
+bool FirmwarePlugin::multiRotorXConfig(Vehicle* vehicle)
+{
+    Q_UNUSED(vehicle);
+    int autostartId=vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, "SYS_AUTOSTART")->rawValue().toInt();
+    if(autostartId>=4000&&autostartId<5000)
+        return true;
+    if(autostartId>=6000&&autostartId<7000)
+        return true;
+    if(autostartId>=8000&&autostartId<9000)
+        return true;
+    if(autostartId>=11000&&autostartId<13000)
+        return true;
+      return false;
 }

@@ -176,6 +176,7 @@ void SensorsComponentController::_stopCalibration(SensorsComponentController::St
             
         default:
             // Assume failed
+            emit resetStatusTextArea();   //不显示log
             _hideAllCalAreas();
             qgcApp()->showMessage(tr("校准失败")/*"Calibration failed. Calibration log will be displayed."*/);
             break;

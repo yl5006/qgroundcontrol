@@ -158,6 +158,11 @@
         <file alias="PX4TuningComponentPlane.qml">src/AutoPilotPlugins/PX4/PX4TuningComponentPlane.qml</file>
         <file alias="PX4VehicleParamsComponentCopter.qml">src/AutoPilotPlugins/PX4/PX4VehicleParamsComponentCopter.qml</file>
         <file alias="PX4VehicleParamsComponentPlane.qml">src/AutoPilotPlugins/PX4/PX4VehicleParamsComponentPlane.qml</file>
+	<file alias="AttitudeControlPlane.qml">src/AutoPilotPlugins/PX4/AttitudeControlPlane.qml</file>
+	<file alias="AttitudeControlCopter.qml">src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml</file>
+	<file alias="L1ControlPlane.qml">src/AutoPilotPlugins/PX4/L1ControlPlane.qml</file>
+	<file alias="PosControlCopter.qml">src/AutoPilotPlugins/PX4/PosControlCopter.qml</file>
+	<file alias="TECSControlPlane.qml">src/AutoPilotPlugins/PX4/TECSControlPlane.qml</file>
         <file alias="PX4VehicleParamsComponentVTOL.qml">src/AutoPilotPlugins/PX4/PX4VehicleParamsComponentVTOL.qml</file>
         <file alias="APMNotSupported.qml">src/AutoPilotPlugins/APM/APMNotSupported.qml</file>
         <file alias="APMCameraComponent.qml">src/AutoPilotPlugins/APM/APMCameraComponent.qml</file>

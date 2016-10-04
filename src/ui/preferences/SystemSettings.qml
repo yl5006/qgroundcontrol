@@ -40,7 +40,6 @@ Rectangle {
     Rectangle {
         id:         title
         anchors.top:        parent.top
-        anchors.horizontalCenter: parent.parent
         width:      parent.width
         height:     ScreenTools.defaultFontPixelHeight*10
         color:      "transparent"
@@ -591,7 +590,7 @@ Rectangle {
                         QGCLabel {
                             anchors.baseline:   videoSource.baseline
                             text:               qsTr("视频源:")//qsTr("Video Source:")
-                            width:              _labelWidth
+                            width:              _editFieldWidth/2
                         }
                         QGCComboBox {
                             id:                 videoSource
@@ -617,7 +616,7 @@ Rectangle {
                         QGCLabel {
                             anchors.baseline:   udpField.baseline
                             text:               qsTr("UDP Port:")
-                            width:              _labelWidth
+                            width:              _editFieldWidth/2
                         }
                         QGCTextField {
                             id:                 udpField
@@ -636,7 +635,7 @@ Rectangle {
                         QGCLabel {
                             anchors.baseline:   rtspField.baseline
                             text:               qsTr("RTSP URL:")
-                            width:              _labelWidth
+                            width:              _editFieldWidth/2
                         }
                         QGCTextField {
                             id:                 rtspField
