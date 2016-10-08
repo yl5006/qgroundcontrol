@@ -51,14 +51,14 @@ Item {
     property var _viewList: [ settingsViewLoader, setupViewLoader, planViewLoader, flightView, analyzeViewLoader ]
     property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
     
-    readonly property string _planViewSource:       "MissionEditorBottom.qml"
+    readonly property string _planViewSource:       "MissionEditor.qml"
     readonly property string _setupViewSource:      "SetupViewandAppsetting.qml"//"SetupView.qml"
     readonly property string _settingsViewSource:   "AppSettings.qml"
     
-//    readonly property string _settingsViewSource:   "AppSettings.qml"
-//    readonly property string _setupViewSource:      "SetupView.qml"
-//    readonly property string _planViewSource:       "MissionEditor.qml"
-//    readonly property string _analyzeViewSource:    "AnalyzeView.qml"
+    //    readonly property string _settingsViewSource:   "AppSettings.qml"
+    //    readonly property string _setupViewSource:      "SetupView.qml"
+    //    readonly property string _planViewSource:       "MissionEditor.qml"
+    //    readonly property string _analyzeViewSource:    "AnalyzeView.qml"
 
     onHeightChanged: {
         //-- We only deal with the available height if within the Fly or Plan view
@@ -72,8 +72,8 @@ Item {
             _viewList[i].visible = false
         }
         initMap.visible             = false
-    //      toolBar.visible      = true
-     //   rightBar.checkFlyButton()
+        //      toolBar.visible      = true
+        //   rightBar.checkFlyButton()
     }
 
     function showSettingsView() {
@@ -89,9 +89,9 @@ Item {
         hideAllViews()
 
         settingsViewLoader.visible  = true
-	
-     //	rightBar.checkSettingsButton()
-     // toolBar.checkSettingsButton()
+
+        //	rightBar.checkSettingsButton()
+        // toolBar.checkSettingsButton()
     }
 
     function showSetupView() {
@@ -107,7 +107,7 @@ Item {
         initMap.visible          = true
         setupViewLoader.visible  = true
         rightBar.checkSetupButton()
-//	toolBar.checkSetupButton()
+        //	toolBar.checkSetupButton()
     }
 
     function showPlanView() {
@@ -120,8 +120,8 @@ Item {
         ScreenTools.availableHeight = parent.height - toolBar.height
         hideAllViews()
         planViewLoader.visible = true
-	rightBar.checkPlanButton()
-  //      toolBar.checkPlanButton()
+        rightBar.checkPlanButton()
+        //      toolBar.checkPlanButton()
     }
 
     function showFlyView() {
@@ -131,8 +131,8 @@ Item {
         ScreenTools.availableHeight = parent.height - toolBar.height
         hideAllViews()
         flightView.visible = true
-      //  toolBar.checkFlyButton()
-       rightBar.checkFlyButton()
+        //  toolBar.checkFlyButton()
+        rightBar.checkFlyButton()
     }
 
     function showAnalyzeView() {
@@ -145,7 +145,7 @@ Item {
         }
         hideAllViews()
         analyzeViewLoader.visible = true
-     //   toolBar.checkAnalyzeButton()
+        //   toolBar.checkAnalyzeButton()
     }
 
     /// Start the process of closing QGroundControl. Prompts the user are needed.
@@ -264,17 +264,17 @@ Item {
         if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
             activeVehicle.resetMessages()
         }
-//                if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
-//                    messageText.text = formatMessage(activeVehicle.formatedMessages)
-//                    //-- Hack to scroll to last message
-//                    for (var i = 0; i < activeVehicle.messageCount; i++)
-//                        messageFlick.flick(0,-5000)
-//                    activeVehicle.resetMessages()
-//                } else {
-//                    messageText.text = qsTr("无消息")//qsTr("No Messages")
-//                }
-//                currentPopUp = messageArea
-//                messageArea.visible = true
+        //                if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
+        //                    messageText.text = formatMessage(activeVehicle.formatedMessages)
+        //                    //-- Hack to scroll to last message
+        //                    for (var i = 0; i < activeVehicle.messageCount; i++)
+        //                        messageFlick.flick(0,-5000)
+        //                    activeVehicle.resetMessages()
+        //                } else {
+        //                    messageText.text = qsTr("无消息")//qsTr("No Messages")
+        //                }
+        //                currentPopUp = messageArea
+        //                messageArea.visible = true
     }
 
     function showPopUp(dropItem, centerX) {
@@ -358,7 +358,7 @@ Item {
         onShowSetupView:        mainWindow.showSetupView()
         onShowPlanView:         mainWindow.showPlanView()
         onShowFlyView:          mainWindow.showFlyView()
-        onShowAnalyzeView:  mainWindow.showAnalyzeView()
+ //       onShowAnalyzeView:  mainWindow.showAnalyzeView()
         z:                      QGroundControl.zOrderTopMost
         state:                  "Init"
         property real   _barMargin:     0
@@ -385,11 +385,11 @@ Item {
             to:             -mainWindow.tbHeight*1.6
         }
 
- Component.onCompleted: {
+        Component.onCompleted: {
             ScreenTools.availableHeight = parent.height - toolBar.height
         }
-}
-	FlightMap {
+    }
+    FlightMap {
         id:             initMap
         anchors.fill:   parent
         mapName:        "initmap"
@@ -414,14 +414,14 @@ Item {
         }
     }
 
-//    Loader {
-//        id:                 setupViewLoader
-//        anchors.left:       parent.left
-//        anchors.right:      parent.right
-//        anchors.top:        toolBar.bottom
-//        anchors.bottom:     parent.bottom
-//        visible:            false
-//    }
+    //    Loader {
+    //        id:                 setupViewLoader
+    //        anchors.left:       parent.left
+    //        anchors.right:      parent.right
+    //        anchors.top:        toolBar.bottom
+    //        anchors.bottom:     parent.bottom
+    //        visible:            false
+    //    }
 
     Loader {
         id:                 setupViewLoader
@@ -480,89 +480,89 @@ Item {
 
     //-------------------------------------------------------------------------
     //-- System Message Area  do not show
-//        Rectangle {
-//            id:                 messageArea
-//            function close() {
-//                currentPopUp = null
-//                messageText.text    = ""
-//                messageArea.visible = false
-//            }
-//            width:              mainWindow.width  * 0.5
-//            height:             mainWindow.height * 0.4
-//            color:              Qt.rgba(0,0,0,0.8)
-//            visible:            false
-//            radius:             ScreenTools.defaultFontPixelHeight * 0.5
-//            border.color:       "#808080"
-//            border.width:       2
-//            anchors.centerIn:   parent
-//    //        anchors.top:                parent.top
-//    //        anchors.topMargin:          tbHeight + ScreenTools.defaultFontPixelHeight
-//            MouseArea {
-//                // This MouseArea prevents the Map below it from getting Mouse events. Without this
-//                // things like mousewheel will scroll the Flickable and then scroll the map as well.
-//                anchors.fill:       parent
-//                preventStealing:    true
-//                onWheel:            wheel.accepted = true
-//            }
-//            QGCFlickable {
-//                id:                 messageFlick
-//                anchors.margins:    ScreenTools.defaultFontPixelHeight
-//                anchors.fill:       parent
-//                contentHeight:      messageText.height
-//                contentWidth:       messageText.width
-//                pixelAligned:       true
-//                clip:               true
-//                TextEdit {
-//                    id:             messageText
-//                    readOnly:       true
-//                    textFormat:     TextEdit.RichText
-//                    color:          "white"
-//                }
-//            }
+    //        Rectangle {
+    //            id:                 messageArea
+    //            function close() {
+    //                currentPopUp = null
+    //                messageText.text    = ""
+    //                messageArea.visible = false
+    //            }
+    //            width:              mainWindow.width  * 0.5
+    //            height:             mainWindow.height * 0.4
+    //            color:              Qt.rgba(0,0,0,0.8)
+    //            visible:            false
+    //            radius:             ScreenTools.defaultFontPixelHeight * 0.5
+    //            border.color:       "#808080"
+    //            border.width:       2
+    //            anchors.centerIn:   parent
+    //    //        anchors.top:                parent.top
+    //    //        anchors.topMargin:          tbHeight + ScreenTools.defaultFontPixelHeight
+    //            MouseArea {
+    //                // This MouseArea prevents the Map below it from getting Mouse events. Without this
+    //                // things like mousewheel will scroll the Flickable and then scroll the map as well.
+    //                anchors.fill:       parent
+    //                preventStealing:    true
+    //                onWheel:            wheel.accepted = true
+    //            }
+    //            QGCFlickable {
+    //                id:                 messageFlick
+    //                anchors.margins:    ScreenTools.defaultFontPixelHeight
+    //                anchors.fill:       parent
+    //                contentHeight:      messageText.height
+    //                contentWidth:       messageText.width
+    //                pixelAligned:       true
+    //                clip:               true
+    //                TextEdit {
+    //                    id:             messageText
+    //                    readOnly:       true
+    //                    textFormat:     TextEdit.RichText
+    //                    color:          "white"
+    //                }
+    //            }
 
-//        //-- Dismiss System Message
-//        Image {
-//            anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
-//            anchors.top:        parent.top
-//            anchors.right:      parent.right
-//            width:              ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
-//            height:             width
-//            sourceSize.height:  width
-//            source:             "/res/XDelete.svg"
-//            fillMode:           Image.PreserveAspectFit
-//            mipmap:             true
-//            smooth:             true
-//            MouseArea {
-//                anchors.fill:       parent
-//                anchors.margins:    ScreenTools.isMobile ? -ScreenTools.defaultFontPixelHeight : 0
-//                onClicked: {
-//                    messageArea.close()
-//                }
-//            }
-//        }
-//        //-- Clear Messages
-//        Image {
-//            anchors.bottom:     parent.bottom
-//            anchors.right:      parent.right
-//            anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
-//            height:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
-//            width:              height
-//            sourceSize.height:   height
-//            source:             "/res/TrashDelete.svg"
-//            fillMode:           Image.PreserveAspectFit
-//            mipmap:             true
-//            smooth:             true
-//            MouseArea {
-//                anchors.fill:   parent
-//                onClicked: {
-//                    if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
-//                        activeVehicle.clearMessages();
-//                        messageArea.close()
-//                    }
-//                }
-//            }
-//        }
-//    }
+    //        //-- Dismiss System Message
+    //        Image {
+    //            anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
+    //            anchors.top:        parent.top
+    //            anchors.right:      parent.right
+    //            width:              ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
+    //            height:             width
+    //            sourceSize.height:  width
+    //            source:             "/res/XDelete.svg"
+    //            fillMode:           Image.PreserveAspectFit
+    //            mipmap:             true
+    //            smooth:             true
+    //            MouseArea {
+    //                anchors.fill:       parent
+    //                anchors.margins:    ScreenTools.isMobile ? -ScreenTools.defaultFontPixelHeight : 0
+    //                onClicked: {
+    //                    messageArea.close()
+    //                }
+    //            }
+    //        }
+    //        //-- Clear Messages
+    //        Image {
+    //            anchors.bottom:     parent.bottom
+    //            anchors.right:      parent.right
+    //            anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
+    //            height:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
+    //            width:              height
+    //            sourceSize.height:   height
+    //            source:             "/res/TrashDelete.svg"
+    //            fillMode:           Image.PreserveAspectFit
+    //            mipmap:             true
+    //            smooth:             true
+    //            MouseArea {
+    //                anchors.fill:   parent
+    //                onClicked: {
+    //                    if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
+    //                        activeVehicle.clearMessages();
+    //                        messageArea.close()
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
 
     //-------------------------------------------------------------------------
     //-- Critical Message Area
