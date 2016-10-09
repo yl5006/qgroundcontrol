@@ -82,7 +82,7 @@ TextField {
                     anchors.bottom:     parent.bottom
                     anchors.right:      parent.right
                     width:              height * 0.75
-                    color:              control.textColor
+                    color:              showbg ? control.textColor : "transparent"
                     radius:             2
                     visible:            backgroundItem.showHelp
 
@@ -90,7 +90,7 @@ TextField {
                         anchors.fill:           parent
                         verticalAlignment:      Text.AlignVCenter
                         horizontalAlignment:    Text.AlignHCenter
-                        color:                  qgcPal.textField
+                        color:                  showbg ?qgcPal.textField:control.textColor
                         text:                   "?"
                     }
                 }

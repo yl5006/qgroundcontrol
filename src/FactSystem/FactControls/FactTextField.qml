@@ -50,7 +50,7 @@ QGCTextField {
         }
     }
 
-    onHelpClicked: qgcView.showDialog(helpDialogComponent, qsTr("Value Details"), qgcView.showDialogDefaultWidth, StandardButton.Save)
+    onHelpClicked: qgcView.showDialog(helpDialogComponent, qsTr("参数详解"),/*qsTr("Value Details"), */qgcView.showDialogDefaultWidth, StandardButton.Ok)
 
 
     Component {
@@ -68,6 +68,7 @@ QGCTextField {
 
         ParameterEditorDialog {
             fact: _textField.fact
+            showonlyhelp: true
         }
     }
 }

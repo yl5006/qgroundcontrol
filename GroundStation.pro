@@ -7,8 +7,8 @@
 # License terms set in COPYING.md
 # -------------------------------------------------
 
-exists($${OUT_PWD}/qgroundcontrol.pro) {
-    error("You must use shadow build (e.g. mkdir build; cd build; qmake ../qgroundcontrol.pro).")
+exists($${OUT_PWD}/GroundStation.pro) {
+    error("You must use shadow build (e.g. mkdir build; cd build; qmake ../GroundStation.pro).")
 }
 
 message(Qt version $$[QT_VERSION])
@@ -198,7 +198,7 @@ include(QGCExternalLibs.pri)
 #
 
 RESOURCES += \
-    qgroundcontrol.qrc \
+    GroundStation.qrc \
     qgcresources.qrc
 
 DebugBuild {

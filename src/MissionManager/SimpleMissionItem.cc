@@ -18,7 +18,7 @@
 #include "MissionCommandTree.h"
 #include "MissionCommandUIInfo.h"
 
-const double SimpleMissionItem::defaultAltitude =             25.0;//50.0;
+const double SimpleMissionItem::defaultAltitude =             50.0;//50.0;
 
 FactMetaData* SimpleMissionItem::_altitudeMetaData =          NULL;
 FactMetaData* SimpleMissionItem::_commandMetaData =           NULL;

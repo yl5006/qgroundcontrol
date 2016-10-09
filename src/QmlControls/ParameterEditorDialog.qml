@@ -23,9 +23,10 @@ import QGroundControl.ScreenTools   1.0
 
 QGCViewDialog {
     id: root
-    height:     ScreenTools.defaultFontPixelHeight * 30
+    height:    showonlyhelp ? ScreenTools.defaultFontPixelHeight * 15 :  ScreenTools.defaultFontPixelHeight * 30
     property Fact   fact
     property bool   showRCToParam:  false
+    property bool   showonlyhelp:   false
     property bool   validate:       false
     property string validateValue
 
@@ -51,14 +52,19 @@ QGCViewDialog {
             fact.enumIndex = factCombo.currentIndex
             hideDialog()
         } else {
-            var errorString = fact.validate(valueField.text, forceSave.checked)
-            if (errorString === "") {
-                fact.value = valueField.text
-                fact.valueChanged(fact.value)
+            if(showonlyhelp)
+            {
                 hideDialog()
             } else {
-                validationError.text = errorString
-                forceSave.visible = true
+                var errorString = fact.validate(valueField.text, forceSave.checked)
+                if (errorString === "") {
+                    fact.value = valueField.text
+                    fact.valueChanged(fact.value)
+                    hideDialog()
+                } else {
+                    validationError.text = errorString
+                    forceSave.visible = true
+                }
             }
         }
     }
@@ -98,7 +104,7 @@ QGCViewDialog {
 
             Row {
                 spacing: defaultTextWidth
-
+                visible: !showonlyhelp
                 QGCTextField {
                     id:         valueField
                     text:       validate ? validateValue : fact.valueString
@@ -159,7 +165,7 @@ QGCViewDialog {
 
             QGCLabel {
                 text:       fact.name
-                visible:    fact.componentId > 0 // > 0 means it's a parameter fact
+                visible:    showonlyhelp ? false :fact.componentId > 0// > 0 means it's a parameter fact
             }
 
             Column {
@@ -170,7 +176,7 @@ QGCViewDialog {
                 Row {
                     spacing: defaultTextWidth
 
-                    QGCLabel { text: qsTr("Units:") }
+                    QGCLabel { text: qsTr("单位:")/*qsTr("Units:")*/ }
                     QGCLabel { text: fact.units ? fact.units : qsTr("none") }
                 }
 
@@ -178,7 +184,7 @@ QGCViewDialog {
                     spacing: defaultTextWidth
                     visible: !fact.minIsDefaultForType
 
-                    QGCLabel { text: qsTr("Minimum value:") }
+                    QGCLabel { text: qsTr("最小值:")/*qsTr("Minimum value:")*/ }
                     QGCLabel { text: fact.minString }
                 }
 
@@ -186,26 +192,27 @@ QGCViewDialog {
                     spacing: defaultTextWidth
                     visible: !fact.maxIsDefaultForType
 
-                    QGCLabel { text: qsTr("Maximum value:") }
+                    QGCLabel { text: qsTr("最大值:")/*qsTr("Maximum value:")*/ }
                     QGCLabel { text: fact.maxString }
                 }
 
                 Row {
                     spacing: defaultTextWidth
 
-                    QGCLabel { text: qsTr("Default value:") }
+                    QGCLabel { text: qsTr("默认值:")/*qsTr("Default value:")*/ }
                     QGCLabel { text: fact.defaultValueAvailable ? fact.defaultValueString : qsTr("none") }
                 }
 
                 QGCLabel {
                     visible:    fact.rebootRequired
-                    text:       "Reboot required after change"
+                    text:       qsTr("改变后需要重启")//"Reboot required after change"
                 }
             } // Column
 
             QGCLabel {
                 width:      parent.width
                 wrapMode:   Text.WordWrap
+                visible:    !showonlyhelp
                 text:       qsTr("Warning: Modifying values while vehicle is in flight can lead to vehicle instability and possible vehicle loss. ") +
                             qsTr("Make sure you know what you are doing and double-check your values before Save!")
             }
@@ -220,7 +227,7 @@ QGCViewDialog {
             QGCCheckBox {
                 id:         forceSave
                 visible:    false
-                text:       qsTr("Force save (dangerous!)")
+                text:       qsTr("强制保存(危险)")//qsTr("Force save (dangerous!)")
             }
 
             Row {

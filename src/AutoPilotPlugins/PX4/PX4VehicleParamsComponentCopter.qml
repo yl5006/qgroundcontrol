@@ -124,7 +124,7 @@ SetupPage {
                     text:               qsTr("其他设置")//else
                     onClicked: {
                         checked  =   true
-                        panelLoader.source = "LinkSettings.qml";
+                        panelLoader.sourceComponent = elsesetComponent;
                     }
                 }
             }
@@ -143,6 +143,24 @@ SetupPage {
             }
             Component.onCompleted: {
                 panelLoader.source = "AttitudeControlCopter.qml";
+            }
+            Component {
+                id: elsesetComponent
+
+                Rectangle {
+                    color:  "transparent"
+
+                    QGCLabel {
+                        anchors.margins:        _defaultTextWidth * 2
+                        anchors.fill:           parent
+                        verticalAlignment:      Text.AlignVCenter
+                        horizontalAlignment:    Text.AlignHCenter
+                        wrapMode:               Text.WordWrap
+                        font.pointSize:         ScreenTools.largeFontPointSize
+                        text:                   qsTr("if some params want I will add 添加中")
+                        onLinkActivated: Qt.openUrlExternally(link)
+                    }
+                }
             }
         }
     }

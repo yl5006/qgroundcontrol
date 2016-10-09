@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -366,7 +366,7 @@ void ParameterManager::_valueUpdated(const QVariant& value)
     qCDebug(ParameterManagerLog) << "Set parameter (componentId:" << componentId << "name:" << name << value << ")";
 
     if (fact->rebootRequired() && !qgcApp()->runningUnitTests()) {
-        qgcApp()->showMessage(QStringLiteral("Change of parameter %1 requires a Vehicle reboot to take effect").arg(name));
+//        qgcApp()->showMessage(QStringLiteral("Change of parameter %1 requires a Vehicle reboot to take effect").arg(name));
     }
 }
 

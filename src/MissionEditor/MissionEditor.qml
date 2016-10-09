@@ -541,7 +541,7 @@ QGCView {
                     anchors.leftMargin: parent.width - _rightPanelWidth
                     anchors.left:       parent.left
                     spacing:            _horizontalMargin
-
+                    visible:            false
                     readonly property real _buttonRadius: ScreenTools.defaultFontPixelHeight * 0.75
 
                     ExclusiveGroup {
@@ -894,7 +894,7 @@ QGCView {
                                 RoundImageButton {
                                     width:          ScreenTools.defaultFontPixelHeight*3
                                     height:         width
-                                    imageResource:  "/qmlimages/map_mission.svg"
+                                    imageResource:  "/qmlimages/Plan.svg"//"/qmlimages/map_mission.svg"
                                     //    showborder:     true
                                     bordercolor:    qgcPal.text
                                     onClicked: {
