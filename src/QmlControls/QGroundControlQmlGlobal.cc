@@ -20,6 +20,7 @@
 static const char* kQmlGlobalKeyName = "QGCQml";
 
 SettingsFact* QGroundControlQmlGlobal::_distanceUnitsFact =                         NULL;
+SettingsFact* QGroundControlQmlGlobal::_languageFact =                              NULL;
 FactMetaData* QGroundControlQmlGlobal::_distanceUnitsMetaData =                     NULL;
 SettingsFact* QGroundControlQmlGlobal::_areaUnitsFact =                             NULL;
 FactMetaData* QGroundControlQmlGlobal::_areaUnitsMetaData =                         NULL;
@@ -238,6 +239,15 @@ Fact* QGroundControlQmlGlobal::offlineEditingFirmwareType(void)
     }
 
     return _offlineEditingFirmwareTypeFact;
+}
+
+Fact* QGroundControlQmlGlobal::language(void)
+{
+    if (!_languageFact) {
+        _languageFact = _createSettingsFact(QStringLiteral("language"));
+    }
+
+    return _languageFact;
 }
 
 Fact* QGroundControlQmlGlobal::offlineEditingVehicleType(void)

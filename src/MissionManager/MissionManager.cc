@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -185,11 +185,11 @@ void MissionManager::_ackTimeout(void)
     
     if (timedOutAck == AckNone) {
         qCWarning(MissionManagerLog) << "_ackTimeout timeout with AckNone";
-        _sendError(InternalError, "Internal error occurred during Mission Item communication: _ackTimeOut:_retryAck == AckNone");
+        _sendError(InternalError, QStringLiteral("任务传输，内部错误"));//"Internal error occurred during Mission Item communication: _ackTimeOut:_retryAck == AckNone");
         return;
     }
     
-    _sendError(AckTimeoutError, QString("Vehicle did not respond to mission item communication: %1").arg(_ackTypeToString(timedOutAck)));
+    _sendError(AckTimeoutError, QStringLiteral("机体未响应任务传输: %1").arg(_ackTypeToString(timedOutAck)));//"Vehicle did not respond to mission item communication: %1"
     _finishTransaction(false);
 }
 

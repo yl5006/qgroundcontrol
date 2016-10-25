@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -42,10 +42,10 @@ const char* SurveyMissionItem::_jsonManualGridKey =                 "manualGrid"
 const char* SurveyMissionItem::_jsonCameraOrientationLandscapeKey = "orientationLandscape";
 const char* SurveyMissionItem::_jsonFixedValueIsAltitudeKey =       "fixedValueIsAltitude";
 
-const char* SurveyMissionItem::_gridAltitudeFactName =              "Altitude";
-const char* SurveyMissionItem::_gridAngleFactName =                 "Grid angle";
-const char* SurveyMissionItem::_gridSpacingFactName =               "Grid spacing";
-const char* SurveyMissionItem::_turnaroundDistFactName =            "Turnaround dist";
+const char* SurveyMissionItem::_gridAltitudeFactName =              "Altitude";//Altitude
+const char* SurveyMissionItem::_gridAngleFactName =                 "Grid angle";//Grid angle
+const char* SurveyMissionItem::_gridSpacingFactName =               "Grid spacing";//Grid spacing
+const char* SurveyMissionItem::_turnaroundDistFactName =            "Turnaround dist";//Turnaround dist
 const char* SurveyMissionItem::_cameraTriggerDistanceFactName =     "Camera trigger distance";
 const char* SurveyMissionItem::_groundResolutionFactName =          "Ground resolution";
 const char* SurveyMissionItem::_frontalOverlapFactName =            "Frontal overlap";
@@ -87,9 +87,17 @@ SurveyMissionItem::SurveyMissionItem(Vehicle* vehicle, QObject* parent)
     , _cameraFocalLengthFact        (0, _cameraFocalLengthFactName,         FactMetaData::valueTypeDouble)
 {
     if (_metaDataMap.isEmpty()) {
-        _metaDataMap = FactMetaData::createMapFromJsonFile(QStringLiteral(":/json/Survey.FactMetaData.json"), NULL /* metaDataParent */);
-    }
+        QSettings::setDefaultFormat(QSettings::IniFormat);
+        QSettings settings;
+        int language=settings.value("language","0").toInt();
+        if(language==0)
+        {
+            _metaDataMap = FactMetaData::createMapFromJsonFile(QStringLiteral(":/json/Survey.FactMetaDatacn.json"), NULL /* metaDataParent */);
+        }else{
+            _metaDataMap = FactMetaData::createMapFromJsonFile(QStringLiteral(":/json/Survey.FactMetaData.json"), NULL /* metaDataParent */);
 
+        }
+    }
     _gridAltitudeFact.setRawValue(50);
     _gridSpacingFact.setRawValue(30);
     _turnaroundDistFact.setRawValue((_vehicle && _vehicle->multiRotor()) ? 0 : 60);

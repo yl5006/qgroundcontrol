@@ -29,8 +29,8 @@ QGC_LOGGING_CATEGORY(MissionControllerLog, "MissionControllerLog")
 const char* MissionController::jsonSimpleItemsKey = "items";
 
 const char* MissionController::_settingsGroup =                 "MissionController";
-const char* MissionController::_jsonMavAutopilotKey =           "MAV_AUTOPILOT";
-const char* MissionController::_jsonComplexItemsKey =           "complexItems";
+const char* MissionController::_jsonMavAutopilotKey =           "EWT_AUTOPILOT";// "MAV_AUTOPILOT"
+const char* MissionController::_jsonComplexItemsKey =           "ewtItems";//"complexItems"
 const char* MissionController::_jsonPlannedHomePositionKey =    "plannedHomePosition";
 
 MissionController::MissionController(QObject *parent)

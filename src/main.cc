@@ -214,6 +214,22 @@ int main(int argc, char *argv[])
     QGCApplication* app = new QGCApplication(argc, argv, runUnitTests);
     Q_CHECK_PTR(app);
 	
+    /**********************
+        language add by yaoling
+    ***********************/
+      //  settings.beginGroup("GS_EWT_Language");
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+    QSettings settings;
+        int language=settings.value("language","0").toInt();
+        if(language==1)
+        {
+            QString   strLanguageFile= app->applicationDirPath()+QString("/app_en.qm");
+            qDebug()<<strLanguageFile<<"   "<<language;
+            QTranslator *m_translator=new QTranslator;
+            m_translator->load(strLanguageFile);
+            app->installTranslator(m_translator);
+        }
+    //**************************************
 #ifdef Q_OS_LINUX
     QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));
 #endif /* Q_OS_LINUX */

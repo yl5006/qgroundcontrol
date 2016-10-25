@@ -1,4 +1,4 @@
-import QtQuick          2.2
+﻿import QtQuick          2.2
 import QtQuick.Layouts  1.2
 
 import QGroundControl.FactSystem    1.0
@@ -6,14 +6,14 @@ import QGroundControl.Controls      1.0
 
 GridLayout {
     property var factList   ///< List of Facts to show
-
+    columns: 2
     rows: factList.length
     flow: GridLayout.TopToBottom
 
     Repeater {
         model: parent.factList
 
-        QGCLabel { text: modelData.name + ":" }
+        QGCLabel { text: modelData.shortDescription + ":" }
     }
 
     Repeater {

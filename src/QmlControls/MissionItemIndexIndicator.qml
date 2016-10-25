@@ -212,8 +212,8 @@ Rectangle {
 
     QGCButton {
         id:                     commandPicker
-        anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 2
-        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth * 2
+        anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 5
+        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth * 3
         anchors.topMargin:      ScreenTools.defaultFontPixelWidth * 4
         anchors.top:            total.bottom
         anchors.left:           label.right
@@ -245,7 +245,8 @@ Rectangle {
         anchors.fill:       commandPicker
         visible:            _currentMissionItem.sequenceNumber == 0 || !_currentMissionItem.isCurrentItem || !_currentMissionItem.isSimpleItem
         anchors.horizontalCenter: commandPicker.horizontalCenter
-        text:               _currentMissionItem.sequenceNumber == 0 ? "Home Position" : (_currentMissionItem.isSimpleItem ? _currentMissionItem.commandName : "Survey")
+        verticalAlignment:  Text.AlignVCenter
+        text:               _currentMissionItem.sequenceNumber == 0 ? qsTr("Home点")/*"Home Position" */: (_currentMissionItem.isSimpleItem ? _currentMissionItem.commandName : qsTr("测绘"))//Survey
        // color:              _outerTextColor
     }
     QGCLabel {

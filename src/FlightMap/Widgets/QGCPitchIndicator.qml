@@ -23,7 +23,7 @@ Rectangle {
     property real rollAngle:        0
     property real size:             _defaultSize
     property real _reticleHeight:   1
-    property real _reticleSpacing:  size * 0.15
+    property real _reticleSpacing:  size * 0.10
     property real _reticleSlot:     _reticleSpacing + _reticleHeight
     property real _longDash:        size * 0.2//0.40
     property real _shortDash:       size * 0.1

@@ -1,4 +1,4 @@
-﻿ /****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -104,19 +104,19 @@
 #endif
 
 #ifndef __ios__
-    #include "SerialLink.h"
+#include "SerialLink.h"
 #endif
 
 #ifndef __mobile__
-    #include "QGCFileDialog.h"
-    #include "QGCMessageBox.h"
-    #include "FirmwareUpgradeController.h"
-    #include "MainWindow.h"
-    #include "GeoTagController.h"
+#include "QGCFileDialog.h"
+#include "QGCMessageBox.h"
+#include "FirmwareUpgradeController.h"
+#include "MainWindow.h"
+#include "GeoTagController.h"
 #endif
 
 #ifdef QGC_RTLAB_ENABLED
-    #include "OpalLink.h"
+#include "OpalLink.h"
 #endif
 
 #ifdef Q_OS_LINUX
@@ -184,20 +184,20 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
 #ifdef __mobile__
     : QGuiApplication(argc, argv)
     , _qmlAppEngine(NULL)
-#else
+    #else
     : QApplication(argc, argv)
-#endif
+    #endif
     , _runningUnitTests(unitTesting)
-#if defined (__mobile__)
+    #if defined (__mobile__)
     , _styleIsDark(false)
-#else
+    #else
     , _styleIsDark(true)
-#endif
+    #endif
     , _fakeMobile(false)
     , _settingsUpgraded(false)
-#ifdef QT_DEBUG
+    #ifdef QT_DEBUG
     , _testHighDPI(false)
-#endif
+    #endif
     , _toolbox(NULL)
     , _bluetoothAvailable(false)
     , _lastKnownHomePosition(30.5386437,114.3662806)
@@ -264,9 +264,9 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
         { "--clear-settings",   &fClearSettingsOptions, NULL },
         { "--logging",          &logging,               &loggingOptions },
         { "--fake-mobile",      &_fakeMobile,           NULL },
-#ifdef QT_DEBUG
+    #ifdef QT_DEBUG
         { "--test-high-dpi",    &_testHighDPI,          NULL },
-#endif
+    #endif
         // Add additional command line option flags here
     };
 
@@ -287,14 +287,14 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
         // name. Also we want to run unit tests with clean settings every time.
         setApplicationName(QString("%1_unittest").arg(QGC_APPLICATION_NAME));
     } else {
- //     setApplicationName(QGC_APPLICATION_NAME);
+        //     setApplicationName(QGC_APPLICATION_NAME);
         setApplicationName(tr("易瓦特"));
     }
     setOrganizationName(QGC_ORG_NAME);
     setOrganizationDomain(QGC_ORG_DOMAIN);
 
-   // this->setApplicationVersion(QString(GIT_VERSION));
-      this->setApplicationVersion(tr("EWT 2.0"));
+    // this->setApplicationVersion(QString(GIT_VERSION));
+    this->setApplicationVersion(tr("EWT 2.0"));
     // Set settings format
     QSettings::setDefaultFormat(QSettings::IniFormat);
     QSettings settings;
@@ -471,7 +471,7 @@ bool QGCApplication::_initForNormalAppBoot(void)
         settings.clear();
         settings.setValue(_settingsVersionKey, QGC_SETTINGS_VERSION);
         showMessage(tr("GroundStation配置文件被修改，恢复默认配置"));/*"The format for QGroundControl saved settings has been modified. "*/
-                 //   "Your saved settings have been reset to defaults.");
+        //   "Your saved settings have been reset to defaults.");
     }
 
     if (getQGCMapEngine()->wasCacheReset()) {
@@ -567,26 +567,26 @@ void QGCApplication::saveTempFlightDataLogOnMainThread(QString tempLogfile)
     do{
         saveError = false;
         QString saveFilename = QGCFileDialog::getSaveFileName(
-            MainWindow::instance(),
-//          tr("Save Flight Data Log"),
-            tr("保存飞行日志"),
-            QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
-//          tr("Flight Data Log Files (*.mavlink)"),
-            tr("飞行日志文件 (*.log)"),
-//          "mavlink");
-            "log");
+                    MainWindow::instance(),
+                    //          tr("Save Flight Data Log"),
+                    tr("保存飞行日志"),
+                    QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                    //          tr("Flight Data Log Files (*.mavlink)"),
+                    tr("飞行日志文件 (*.log)"),
+                    //          "mavlink");
+                    "log");
 
         if (!saveFilename.isEmpty()) {
             // if file exsits already, try to remove it first to overwrite it
             if(QFile::exists(saveFilename) && !QFile::remove(saveFilename)){
                 // if the file cannot be removed, prompt user and ask new path
                 saveError = true;
-//              QGCMessageBox::warning("File Error","Could not overwrite existing file.\nPlease provide a different file name to save to.");
+                //              QGCMessageBox::warning("File Error","Could not overwrite existing file.\nPlease provide a different file name to save to.");
                 QGCMessageBox::warning(tr("文件错误"),tr("不能覆盖存在的文件.\n请提供一个不同文件名来保存"));
             } else if(!QFile::copy(tempLogfile, saveFilename)) {
                 // if file could not be copied, prompt user and ask new path
                 saveError = true;
-//              QGCMessageBox::warning("File Error","Could not create file.\nPlease provide a different file name to save to.");
+                //              QGCMessageBox::warning("File Error","Could not create file.\nPlease provide a different file name to save to.");
                 QGCMessageBox::warning(tr("文件错误"),tr("不能创建文件.\n请提供一个不同的文件名来保存"));
 
             }

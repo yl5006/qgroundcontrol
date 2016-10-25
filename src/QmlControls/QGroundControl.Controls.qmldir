@@ -12,7 +12,6 @@ MainToolBar             1.0 MainToolBar.qml
 RightToolBar            1.0 RightToolBar.qml
 MainTool                1.0 MainTool.qml
 MissionCommandDialog    1.0 MissionCommandDialog.qml
-MissionItemEditor       1.0 MissionItemEditor.qml
 MissionItemIndex        1.0 MissionItemIndex.qml
 MissionItemIndexIndicator        1.0 MissionItemIndexIndicator.qml
 MissionItemIndexLabel   1.0 MissionItemIndexLabel.qml

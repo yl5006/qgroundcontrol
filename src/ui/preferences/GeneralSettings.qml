@@ -149,7 +149,7 @@ QGCView {
                             FactComboBox {
                                 id:                 offlineTypeCombo
                                 width:              _editFieldWidth
-                                fact:               QGroundControl.offlineEditingFirmwareType
+                                fact:               QGroundControl.language//QGroundControl.offlineEditingFirmwareType
                                 indexModel:         false
                             }
                         }

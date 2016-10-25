@@ -756,7 +756,17 @@ See COM_OBL_ACT and COM_OBL_RC_ACT to configure action</short_desc>
       <unit>deg * 1e7</unit>
       <scope>modules/navigator</scope>
     </parameter>
-    <parameter default="1518423250" name="NAV_AH_LON" type="INT32">
+    <parameter default="1518423250"
+
+
+
+
+
+
+
+
+
+name="NAV_AH_LON" type="INT32">
       <short_desc>Airfield home Lon</short_desc>
       <long_desc>Longitude of airfield home waypoint</long_desc>
       <min>-1800000000</min>

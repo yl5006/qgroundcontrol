@@ -123,7 +123,7 @@ QGCView {
 
         function loadFromSelectedFile() {
             if (ScreenTools.isMobile) {
-                qgcView.showDialog(mobileFilePicker, qsTr("Select Mission File"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                qgcView.showDialog(mobileFilePicker, qsTr("选择任务文件"/*"Select Mission File"*/), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
             } else {
                 missionController.loadFromFilePicker()
                 fitViewportToMissionItems()
@@ -133,7 +133,7 @@ QGCView {
 
         function saveToSelectedFile() {
             if (ScreenTools.isMobile) {
-                qgcView.showDialog(mobileFileSaver, qsTr("Save Mission File"), qgcView.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel)
+                qgcView.showDialog(mobileFileSaver, qsTr("保存任务文件/*Save Mission File*/"), qgcView.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel)
             } else {
                 missionController.saveToFilePicker()
             }

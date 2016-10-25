@@ -23,7 +23,7 @@ Item {
     clip:           true
     anchors.fill:   parent
 
-    property real angularScale: pitchAngle * root.height / 45
+    property real angularScale: pitchAngle * root.height / 45/2
 
     Item {
         id: artificialHorizon

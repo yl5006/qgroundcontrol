@@ -90,7 +90,7 @@ bool LogReplayLink::_connect(void)
 {
     // Disallow replay when any links are connected
     if (qgcApp()->toolbox()->multiVehicleManager()->activeVehicle()) {
-        emit communicationError(_errorTitle, "You must close all connections prior to replaying a log.");
+        emit communicationError(_errorTitle, "你需要关闭所有连接来播放log.");//"You must close all connections prior to replaying a log."
         return false;
     }
 

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -91,6 +91,7 @@ public:
     Q_PROPERTY(int      mavlinkSystemID         READ mavlinkSystemID            WRITE setMavlinkSystemID            NOTIFY mavlinkSystemIDChanged)
 
     Q_PROPERTY(Fact*    offlineEditingFirmwareType      READ offlineEditingFirmwareType         CONSTANT)
+    Q_PROPERTY(Fact*    language                        READ language                           CONSTANT)
     Q_PROPERTY(Fact*    offlineEditingVehicleType       READ offlineEditingVehicleType          CONSTANT)
     Q_PROPERTY(Fact*    offlineEditingCruiseSpeed       READ offlineEditingCruiseSpeed          CONSTANT)
     Q_PROPERTY(Fact*    offlineEditingHoverSpeed        READ offlineEditingHoverSpeed           CONSTANT)
@@ -184,6 +185,7 @@ public:
     QGeoCoordinate lastKnownHomePosition() { return qgcApp()->lastKnownHomePosition(); }
 
     static Fact* offlineEditingFirmwareType     (void);
+    static Fact* language                       (void);
     static Fact* offlineEditingVehicleType      (void);
     static Fact* offlineEditingCruiseSpeed      (void);
     static Fact* offlineEditingHoverSpeed       (void);
@@ -245,6 +247,7 @@ private:
 
     // These are static so they are available to C++ code as well as Qml
     static SettingsFact*    _offlineEditingFirmwareTypeFact;
+    static SettingsFact*    _languageFact;
     static SettingsFact*    _offlineEditingVehicleTypeFact;
     static SettingsFact*    _offlineEditingCruiseSpeedFact;
     static SettingsFact*    _offlineEditingHoverSpeedFact;

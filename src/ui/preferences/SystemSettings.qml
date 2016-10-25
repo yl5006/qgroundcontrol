@@ -32,9 +32,12 @@ Rectangle {
 
     QGCPalette { id: qgcPal }
 
+    FactPanelController {
+        id:         controller
+    }
     //    width:  Math.max(availableWidth, settingsColumn.width)
     //    height: settingsColumn.height
-
+    property Fact sys_language:                 controller.getParameterFact(-1, "SYS_LANGUAGE")
     property Fact _percentRemainingAnnounce:    QGroundControl.batteryPercentRemainingAnnounce
     property real _editFieldWidth:              ScreenTools.defaultFontPixelWidth * 30
     Rectangle {
@@ -391,19 +394,31 @@ Rectangle {
                     text:   qsTr("语言")//"Style"
                 }
 
-                QGCComboBox {
-                    id:             langCombo
-                    width:          _editFieldWidth
-                    model: [ "中文", "English" ]//model: [ "Indoor", "Outdoor" ]
-                    currentIndex:       0//QGroundControl.isDarkStyle ? 0 : 1
-
+                FactComboBox {
+                    id:         langCombo
+                    width:      _editFieldWidth
+                    fact:       QGroundControl.language
+                    indexModel: false
                     onActivated: {
-                        if (index != -1) {
-                            currentIndex = index
-                            //  QGroundControl.isDarkStyle = index === 0 ? true : false
-                        }
+                           if (index != -1) {
+                              sys_language.value = index
+                          }
                     }
                 }
+
+//                QGCComboBox {
+//                    id:             langCombo
+//                    width:          _editFieldWidth
+//                    model: [ "中文", "English" ]//model: [ "Indoor", "Outdoor" ]
+//                    currentIndex:       0//QGroundControl.isDarkStyle ? 0 : 1
+
+//                    onActivated: {
+//                        if (index != -1) {
+//                            currentIndex = index
+//                            //  QGroundControl.isDarkStyle = index === 0 ? true : false
+//                        }
+//                    }
+//                }
             }
 
             //-- Palette Styles

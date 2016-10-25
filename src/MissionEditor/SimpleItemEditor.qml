@@ -44,7 +44,7 @@ Rectangle {
                         wrapMode:       Text.WordWrap
                         font.pointSize: ScreenTools.defaultFontPointSize
                         text:           _currentMissionItem.sequenceNumber == 0 ?
-                                    qsTr("Planned home position.") :
+                                  qsTr("任务的home点"): // qsTr("Planned home position.") :
                                             (_currentMissionItem.rawEdit ?
                                                 qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
                                                 _currentMissionItem.commandDescription)

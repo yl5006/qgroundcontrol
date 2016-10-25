@@ -226,7 +226,7 @@ QGCView {
 
     function setCurrentItem(sequenceNumber) {
         editorMap.polygonDraw.cancelPolygonEdit()
-        _currentMissionItem = undefined
+     //   _currentMissionItem = undefined
         for (var i=0; i<_visualItems.count; i++) {
             var visualItem = _visualItems.get(i)
             if (visualItem.sequenceNumber == sequenceNumber) {
@@ -1015,6 +1015,7 @@ QGCView {
                     visible:            !ScreenTools.isTinyScreen
 
                 }
+
                 MissionItemIndexIndicator {
                     id:              indexIndicator
                     anchors.right:   parent.right
@@ -1032,6 +1033,7 @@ QGCView {
                     readOnly:       false
                     visible:        _editingLayer == _layerMission
                     z:              QGroundControl.zOrderTopMost+100
+
                     onRemove: {
                         itemDragger.clearItem()
                         missionController.removeMissionItem(_currentMissionItem.sequenceNumber)

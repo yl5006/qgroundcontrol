@@ -80,7 +80,7 @@ Row {
         QGCLabel {
                 anchors.left:   batteryimg.left
                 anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-                text:           getBatteryPercentageText()
+                text:           (activeVehicle && activeVehicle.battery.voltage.value != -1) ? (activeVehicle.battery.voltage.valueString + " " + activeVehicle.battery.voltage.units) : "N/A" //getBatteryPercentageText()
                 font.pointSize: ScreenTools.mediumFontPointSize
                 color:          getBatteryColor()
                 anchors.verticalCenter: parent.verticalCenter

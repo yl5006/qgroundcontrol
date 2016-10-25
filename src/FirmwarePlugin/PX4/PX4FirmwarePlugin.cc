@@ -23,7 +23,7 @@
 struct Modes2Name {
     uint8_t     main_mode;
     uint8_t     sub_mode;
-    const char* name;       ///< Name for flight mode
+    const char*  name;       ///< Name for flight mode
     bool        canBeSet;   ///< true: Vehicle can be set to this flight mode
     bool        fixedWing;  /// fixed wing compatible
     bool        multiRotor;  /// multi rotor compatible
@@ -42,7 +42,6 @@ const char* PX4FirmwarePlugin::offboardFlightMode =     QT_TR_NOOP("Offboard");
 const char* PX4FirmwarePlugin::stabilizedFlightMode =   QT_TR_NOOP("自稳");
 const char* PX4FirmwarePlugin::rattitudeFlightMode =    QT_TR_NOOP("半自稳");
 const char* PX4FirmwarePlugin::followMeFlightMode =     QT_TR_NOOP("跟随");
-
 const char* PX4FirmwarePlugin::rtgsFlightMode =         QT_TR_NOOP("Return to Groundstation");
 
 const char* PX4FirmwarePlugin::readyFlightMode =        QT_TR_NOOP("Ready"); // unused
@@ -112,7 +111,7 @@ QStringList PX4FirmwarePlugin::flightModes(Vehicle* vehicle)
             bool other = !vehicle->fixedWing() && !vehicle->multiRotor();
 
             if (fw || mc || other) {
-                flightModes += pModes2Name->name;
+                flightModes += tr(pModes2Name->name);
             }
         }
     }
@@ -133,7 +132,7 @@ QString PX4FirmwarePlugin::flightMode(uint8_t base_mode, uint32_t custom_mode) c
             const struct Modes2Name* pModes2Name = &rgModes2Name[i];
 
             if (pModes2Name->main_mode == px4_mode.main_mode && pModes2Name->sub_mode == px4_mode.sub_mode) {
-                flightMode = pModes2Name->name;
+                flightMode = tr(pModes2Name->name);
                 found = true;
                 break;
             }
@@ -158,7 +157,7 @@ bool PX4FirmwarePlugin::setFlightMode(const QString& flightMode, uint8_t* base_m
     for (size_t i=0; i<sizeof(rgModes2Name)/sizeof(rgModes2Name[0]); i++) {
         const struct Modes2Name* pModes2Name = &rgModes2Name[i];
 
-        if (flightMode.compare(pModes2Name->name, Qt::CaseInsensitive) == 0) {
+        if (flightMode.compare(tr(pModes2Name->name), Qt::CaseInsensitive) == 0) {
             union px4_custom_mode px4_mode;
 
             px4_mode.data = 0;
@@ -348,7 +347,7 @@ void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double altitudeRel)
 {
     Q_UNUSED(altitudeRel);
     if (qIsNaN(vehicle->altitudeAMSL()->rawValue().toDouble())) {
-        qgcApp()->showMessage(QStringLiteral("Unable to takeoff, vehicle position not known."));
+        qgcApp()->showMessage(QStringLiteral("不能起飞，机体位置未知."));//"Unable to takeoff, vehicle position not known.")
         return;
     }
 
@@ -381,7 +380,7 @@ void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double altitudeRel)
 void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoordinate& gotoCoord)
 {
     if (qIsNaN(vehicle->altitudeRelative()->rawValue().toDouble())) {
-        qgcApp()->showMessage(QStringLiteral("Unable to go to location, vehicle position not known."));
+        qgcApp()->showMessage(QStringLiteral("不能去改航点，机体位置未知."));//"Unable to go to location, vehicle position not known."
         return;
     }
 
@@ -413,7 +412,7 @@ void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoord
 void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitudeRel)
 {
     if (qIsNaN(vehicle->altitudeRelative()->rawValue().toDouble())) {
-        qgcApp()->showMessage(QStringLiteral("Unable to change altitude, vehicle altitude not known."));
+        qgcApp()->showMessage(QStringLiteral("不能改变机体高度, 机体高度未知."));//Unable to change altitude, vehicle altitude not known.
         return;
     }
 
@@ -509,7 +508,7 @@ void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_messag
 
         if (notifyUser) {
             _versionNotified = true;
-            qgcApp()->showMessage(QString("QGroundControl supports PX4 Pro firmware Version %1.%2.%3 and above. You are using a version prior to that which will lead to unpredictable results. Please upgrade your firmware.").arg(supportedMajorVersion).arg(supportedMinorVersion).arg(supportedPatchVersion));
+            qgcApp()->showMessage(QString("Groundstation 支持版本 %1.%2.%3 和以上. 请更新固件.").arg(supportedMajorVersion).arg(supportedMinorVersion).arg(supportedPatchVersion));//QGroundControl supports PX4 Pro firmware Version %1.%2.%3 and above. You are using a version prior to that which will lead to unpredictable results. Please upgrade your firmware.
         }
     }
 }

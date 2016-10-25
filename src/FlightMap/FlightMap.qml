@@ -168,20 +168,20 @@ Map {
 
             onDrawingPolygonChanged: {
                 if (polygonDrawer.drawingPolygon) {
-                    polygonHelp.text = qsTr("Click to add point")
+                    polygonHelp.text = qsTr("点击添加")//"Click to add point"
                 }
                 polygonHelp.visible = polygonDrawer.drawingPolygon
             }
 
             onPolygonReadyChanged: {
                 if (polygonDrawer.polygonReady && !ScreenTools.isMobile) {
-                    polygonHelp.text = qsTr("Click to add point - Right Click to end polygon")
+                    polygonHelp.text = qsTr("左键添加，右键结束")//Click to add point - Right Click to end polygon
                 }
             }
 
             onAdjustingPolygonChanged: {
                 if (polygonDrawer.adjustingPolygon) {
-                    polygonHelp.text = qsTr("Adjust polygon by dragging corners")
+                    polygonHelp.text = qsTr("自适应")//("Adjust polygon by dragging corners")
                 }
                 polygonHelp.visible = polygonDrawer.adjustingPolygon
             }

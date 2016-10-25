@@ -463,11 +463,11 @@ void MAVLinkProtocol::checkForLostLogFiles(void)
         }
 
         // Give the user a chance to save the orphaned log file
-        emit protocolStatusMessage(tr("Found unsaved Flight Data"),
-                                   tr("This can happen if QGroundControl crashes during Flight Data collection. "
-                                      "If you want to save the unsaved Flight Data, select the file you want to save it to. "
-                                      "If you do not want to keep the Flight Data, select 'Cancel' on the next dialog."));
-        emit saveTempFlightDataLog(fileInfo.filePath());
+//        emit protocolStatusMessage(tr("Found unsaved Flight Data"),
+//                                   tr("This can happen if QGroundControl crashes during Flight Data collection. "
+//                                      "If you want to save the unsaved Flight Data, select the file you want to save it to. "
+//                                      "If you do not want to keep the Flight Data, select 'Cancel' on the next dialog."));
+//        emit saveTempFlightDataLog(fileInfo.filePath());
     }
 }
 

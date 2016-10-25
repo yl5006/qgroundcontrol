@@ -40,7 +40,7 @@ QGCFlickable {
     }
 
     function showPicker() {
-        qgcView.showDialog(propertyPicker, qsTr("Value Widget Setup"), qgcView.showDialogDefaultWidth, StandardButton.Ok)
+        qgcView.showDialog(propertyPicker, qsTr("显示值设置")/*("Value Widget Setup")*/, qgcView.showDialogDefaultWidth, StandardButton.Ok)
     }
 
     function listContains(list, value) {

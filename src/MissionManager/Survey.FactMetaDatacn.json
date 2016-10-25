@@ -1,24 +1,24 @@
 ﻿[
 {
     "name":             "Altitude",
-    "shortDescription": "Altitude",
-    "longDescription":  "Altitude for all waypoints within the grid.",
+    "shortDescription": "高度",
+    "longDescription":  "网格内所有路点的高度。",
     "type":             "double",
     "units":            "m",
     "decimalPlaces":    1
 },
 {
     "name":             "Grid angle",
-    "shortDescription": "Grid angle",
-    "longDescription":  "Altitude for all waypoints within the grid.",
+    "shortDescription": "网格角度",
+    "longDescription":  "网格线的角度。",
     "type":             "double",
     "units":            "deg",
     "decimalPlaces":    1
 },
 {
     "name":             "Grid spacing",
-    "shortDescription": "Grid spacing",
-    "longDescription":  "Amount of spacing in between parallel grid lines.",
+    "shortDescription": "网格间距",
+    "longDescription":  "网格线之间的间距量。",
     "type":             "double",
     "decimalPlaces":    2,
     "min":              0.1,
@@ -26,8 +26,8 @@
 },
 {
     "name":             "Turnaround dist",
-    "shortDescription": "Turnaround dist",
-    "longDescription":  "Amount of additional distance to add outside the grid area for vehicle turnaround.",
+    "shortDescription": "转弯距离",
+    "longDescription":  "转弯时在网格区域外增加的额外距离量。",
     "type":             "double",
     "decimalPlaces":    2,
     "min":              0,
@@ -35,7 +35,8 @@
 },
 {
     "name":             "Ground resolution",
-    "shortDescription": "Resolution of image in relationship to ground distance.",
+    "shortDescription": "地面分辨率",
+    "longDescription":  "图像分辨率与地面距离的关系。",
     "type":             "double",
     "decimalPlaces":    2,
     "min":              0,

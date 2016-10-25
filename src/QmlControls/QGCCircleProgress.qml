@@ -6,6 +6,7 @@ Rectangle
       property color  valuecolor:         "white"                          ///< true: show setup complete indicator
       property color  ciclectcolor:       "#33444c"
       property real   value:         0
+      property real   setvalue:   value>0.99?0.99:value
       color:  "transparent"
       width:  80
       height: width
@@ -33,8 +34,8 @@ Rectangle
             gradient: Gradient
             {
                GradientStop { position: 0.00;  color: valuecolor }
-               GradientStop { position: value; color: valuecolor }
-               GradientStop { position: value+0.001; color: "transparent" }
+               GradientStop { position: setvalue; color: valuecolor }
+               GradientStop { position: setvalue+0.001; color: "transparent" }
                GradientStop { position: 1;  color: "transparent" }
           //     GradientStop { position: 1;  color: ciclectcolor }
             }

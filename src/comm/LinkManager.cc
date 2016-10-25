@@ -46,7 +46,7 @@ const char* LinkManager::_autoconnect3DRRadioKey =  "AutoconnectEwtRadio";   //u
 const char* LinkManager::_autoconnectPX4FlowKey =   "AutoconnectEwtFlow";    //use EwtFlowkey for AutoconnectPX4Flow
 const char* LinkManager::_autoconnectRTKGPSKey =     "AutoconnectRTKGPS";
 const char* LinkManager::_autoconnectLibrePilotKey = "AutoconnectLibrePilot";
-const char* LinkManager::_defaultUPDLinkName =       "Default UDP Link";
+const char* LinkManager::_defaultUPDLinkName =       QT_TR_NOOP("默认UDP连接");//"Default UDP Link"
 
 const int LinkManager::_autoconnectUpdateTimerMSecs =   1000;
 #ifdef Q_OS_WIN
@@ -63,7 +63,7 @@ LinkManager::LinkManager(QGCApplication* app)
     , _connectionsSuspended(false)
     , _mavlinkChannelsUsedBitMask(1)    // We never use channel 0 to avoid sequence numbering problems
     , _mavlinkProtocol(NULL)
-    , _autoconnectUDP(true)
+    , _autoconnectUDP(false)
     , _autoconnectPixhawk(true)
     , _autoconnect3DRRadio(true)
     , _autoconnectPX4Flow(true)
@@ -77,7 +77,7 @@ LinkManager::LinkManager(QGCApplication* app)
     QSettings settings;
 
     settings.beginGroup(_settingsGroup);
-    _autoconnectUDP =        settings.value(_autoconnectUDPKey, true).toBool();
+    _autoconnectUDP =        settings.value(_autoconnectUDPKey, false).toBool();
     _autoconnectPixhawk =    settings.value(_autoconnectPixhawkKey, true).toBool();
     _autoconnect3DRRadio =   settings.value(_autoconnect3DRRadioKey, true).toBool();
     _autoconnectPX4Flow =    settings.value(_autoconnectPX4FlowKey, true).toBool();
@@ -819,7 +819,7 @@ void LinkManager::_fixUnnamed(LinkConfiguration* config)
                 tname.replace("/dev/cu.", "");
                 tname.replace("/dev/", "");
 #endif
-                config->setName(QString("Serial Device on %1").arg(tname));
+                config->setName(tr("串口 %1").arg(tname));//"Serial Device on %1"
                 break;
                 }
 #endif

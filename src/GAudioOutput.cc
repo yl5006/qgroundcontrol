@@ -41,7 +41,7 @@ GAudioOutput::GAudioOutput(QGCApplication* app)
 #endif
 {
     QSettings settings;
-    muted = settings.value(_mutedKey, false).toBool();
+    muted = settings.value(_mutedKey, true).toBool();
     muted |= app->runningUnitTests();
 #ifndef __android__
     worker->moveToThread(thread);

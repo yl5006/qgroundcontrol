@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -32,7 +32,7 @@ Item {
         spacing:    ScreenTools.defaultFontPixelHeight / 2
         QGCLabel {
             id:     serialLabel
-            text:   qsTr("Serial Link Settings")
+            text:   qsTr("串口设置")/*Serial Link Settings*/
         }
         Rectangle {
             height: 1
@@ -46,12 +46,12 @@ Item {
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
             QGCLabel {
-                text:   qsTr("Serial Port:")
+                text:   qsTr("端口:")/*Serial Port*/
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
             QGCLabel {
-                text:       qsTr("No serial ports available");
+                text:       qsTr("无可用串口");/*No serial ports available*/
                 visible:    QGroundControl.linkManager.serialPortStrings.length == 0
             }
 
@@ -85,7 +85,7 @@ Item {
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
             QGCLabel {
-                text:   qsTr("Baud Rate:")
+                text:   qsTr("波特率:")/*Baud Rate*/
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -119,19 +119,19 @@ Item {
         }
         //-----------------------------------------------------------------
         //-- Advanced Serial Settings
-        QGCCheckBox {
-            id:     showAdvanced
-            text:   qsTr("Show Advanced Serial Settings")
-        }
+//        QGCCheckBox {
+//            id:     showAdvanced
+//            text:   qsTr("Show Advanced Serial Settings")
+//        }
         Item {
             height: ScreenTools.defaultFontPixelHeight / 2
             width:  parent.width
         }
         //-- Flow Control
         QGCCheckBox {
-            text:       qsTr("Enable Flow Control")
+            text:       qsTr("启用流控制:")//qsTr("Enable Flow Control")
             checked:    subEditConfig ? subEditConfig.flowControl !== 0 : false
-            visible:    showAdvanced.checked
+//            visible:    showAdvanced.checked
             onCheckedChanged: {
                 if(subEditConfig) {
                     subEditConfig.flowControl = checked ? 1 : 0
@@ -141,9 +141,9 @@ Item {
         //-- Parity
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
-            visible:    showAdvanced.checked
+//            visible:    showAdvanced.checked
             QGCLabel {
-                text:   qsTr("Parity:")
+                text:   qsTr("校验:")//Parity
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -178,9 +178,9 @@ Item {
         //-- Data Bits
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
-            visible:    showAdvanced.checked
+//            visible:    showAdvanced.checked
             QGCLabel {
-                text:   "Data Bits:"
+                text:   qsTr("数据位:")//"Data Bits:"
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -208,9 +208,9 @@ Item {
         //-- Stop Bits
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
-            visible:    showAdvanced.checked
+//            visible:    showAdvanced.checked
             QGCLabel {
-                text:   qsTr("Stop Bits:")
+                text:   qsTr("停止位:")//qsTr("Stop Bits:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }

@@ -64,13 +64,13 @@ Rectangle {
         }
 
         ListElement {
-            text:           qsTr("Manual Grid (no camera specs)")
+            text:           qsTr("手动网格 (无相机配置)")//qsTr("Manual Grid (no camera specs)")
         }
         ListElement {
-            text:           qsTr("Custom Camera Grid")
+            text:           qsTr("自定义相机网格")//qsTr("Custom Camera Grid")
         }
         ListElement {
-            text:           qsTr("Sony ILCE-QX1") //http://www.sony.co.uk/electronics/interchangeable-lens-cameras/ilce-qx1-body-kit/specifications
+            text:           qsTr("索尼 ILCE-QX1")//qsTr("Sony ILCE-QX1") //http://www.sony.co.uk/electronics/interchangeable-lens-cameras/ilce-qx1-body-kit/specifications
             sensorWidth:    23.2                  //http://www.sony.com/electronics/camera-lenses/sel16f28/specifications
             sensorHeight:   15.4
             imageWidth:     5456
@@ -78,7 +78,7 @@ Rectangle {
             focalLength:    16
         }
         ListElement {
-            text:           qsTr("Canon S100 PowerShot")
+            text:           qsTr("尼康 S100")//qsTr("Canon S100 PowerShot")
             sensorWidth:    7.6
             sensorHeight:   5.7
             imageWidth:     4000
@@ -86,7 +86,7 @@ Rectangle {
             focalLength:    5.2
         }
         ListElement {
-            text:           qsTr("Canon SX260 HS PowerShot")
+            text:           qsTr("尼康 SX260 HS ")//qsTr("Canon SX260 HS PowerShot")
             sensorWidth:    6.17
             sensorHeight:   4.55
             imageWidth:     4000
@@ -94,7 +94,7 @@ Rectangle {
             focalLength:    4.5
         }
         ListElement {
-            text:           qsTr("Canon EOS-M 22mm")
+            text:           qsTr("尼康 EOS-M 22mm")//qsTr("Canon EOS-M 22mm")
             sensorWidth:    22.3
             sensorHeight:   14.9
             imageWidth:     5184
@@ -102,7 +102,7 @@ Rectangle {
             focalLength:    22
         }
         ListElement {
-            text:           qsTr("Sony a6000 16mm") //http://www.sony.co.uk/electronics/interchangeable-lens-cameras/ilce-6000-body-kit#product_details_default
+            text:           qsTr("索尼 a6000 16mm")//qsTr("Sony a6000 16mm") //http://www.sony.co.uk/electronics/interchangeable-lens-cameras/ilce-6000-body-kit#product_details_default
             sensorWidth:    23.5
             sensorHeight:   15.6
             imageWidth:     6000
@@ -267,11 +267,11 @@ Rectangle {
             wrapMode:       Text.WordWrap
             font.pointSize: ScreenTools.smallFontPointSize
             text:           gridTypeCombo.currentIndex == 0 ?
-                                qsTr("Create a flight path which covers a polygonal area by specifying all grid parameters.") :
-                                qsTr("Create a flight path which fully covers a polygonal area using camera specifications.")
+                              qsTr("通过指定所有网格参数创建覆盖多边形区域的航线"): // qsTr("Create a flight path which covers a polygonal area by specifying all grid parameters.") :
+                              qsTr("使用相机规格创建完全覆盖多边形区域的航线。") // qsTr("Create a flight path which fully covers a polygonal area using camera specifications.")
         }
 
-        QGCLabel { text: qsTr("Camera:") }
+        QGCLabel { text: qsTr("相机:") }//qsTr("Camera:")
 
         Rectangle {
             anchors.left:   parent.left
@@ -332,14 +332,14 @@ Rectangle {
                 QGCRadioButton {
                     id:             cameraOrientationLandscape
                     width:          _editFieldWidth
-                    text:           "Landscape"
+                    text:           qsTr("景观")//Landscape
                     checked:        true
                     exclusiveGroup: cameraOrientationGroup
                 }
 
                 QGCRadioButton {
                     id:             cameraOrientationPortrait
-                    text:           "Portrait"
+                    text:           qsTr("影像")//Landscape
                     exclusiveGroup: cameraOrientationGroup
                 }
             }
@@ -358,10 +358,10 @@ Rectangle {
                     property real _fieldWidth: ScreenTools.defaultFontPixelWidth * 10
 
                     QGCLabel { }
-                    QGCLabel { text: qsTr("Width") }
-                    QGCLabel { text: qsTr("Height") }
+                    QGCLabel { text: qsTr("宽") }//qsTr("Width")
+                    QGCLabel { text: qsTr("高") }//qsTr("Height")
 
-                    QGCLabel { text: qsTr("Sensor:") }
+                    QGCLabel { text: qsTr("传感器:") }//qsTr("Sensor:")
                     FactTextField {
                         Layout.preferredWidth:  parent._fieldWidth
                         fact:                   _currentMissionItem.cameraSensorWidth
@@ -371,7 +371,7 @@ Rectangle {
                         fact:                   _currentMissionItem.cameraSensorHeight
                     }
 
-                    QGCLabel { text: qsTr("Image:") }
+                    QGCLabel { text: qsTr("图像:") }//qsTr("Image:")
                     FactTextField {
                         Layout.preferredWidth:  parent._fieldWidth
                         fact:                   _currentMissionItem.cameraResolutionWidth
@@ -388,7 +388,7 @@ Rectangle {
                 }
             } // Column - custom camera
 
-            QGCLabel { text: qsTr("Image Overlap") }
+            QGCLabel { text: qsTr("图像重叠") }//qsTr("Image Overlap")
 
             Row {
                 spacing:        _margin
@@ -400,7 +400,7 @@ Rectangle {
 
                 QGCLabel {
                     anchors.baseline:   frontalOverlapField.baseline
-                    text:               qsTr("Frontal:")
+                    text:               qsTr("正面:")//qsTr("Frontal")
                 }
 
                 FactTextField {
@@ -411,7 +411,7 @@ Rectangle {
 
                 QGCLabel {
                     anchors.baseline:   frontalOverlapField.baseline
-                    text:               qsTr("Side:")
+                    text:               qsTr("边:")//qsTr("Side")
                 }
 
                 FactTextField {
@@ -420,7 +420,7 @@ Rectangle {
                 }
             }
 
-            QGCLabel { text: qsTr("Grid:") }
+            QGCLabel { text: qsTr("网格:") }//qsTr("Grid:")
 
             Rectangle {
                 anchors.left:   parent.left
@@ -453,7 +453,7 @@ Rectangle {
                 QGCRadioButton {
                     id:                 fixedAltitudeRadio
                     anchors.baseline:   gridAltitudeField.baseline
-                    text:               qsTr("Altitude:")
+                    text:               qsTr("高度:")//qsTr("Altitude:")
                     checked:            _currentMissionItem.fixedValueIsAltitude
                     exclusiveGroup:     fixedValueGroup
                     onClicked:          _currentMissionItem.fixedValueIsAltitude = true
@@ -475,7 +475,7 @@ Rectangle {
                 QGCRadioButton {
                     id:                 fixedGroundResolutionRadio
                     anchors.baseline:   groundResolutionField.baseline
-                    text:               qsTr("Ground res:")
+                    text:               qsTr("地面参考:")//qsTr("Ground res:")
                     checked:            !_currentMissionItem.fixedValueIsAltitude
                     exclusiveGroup:     fixedValueGroup
                     onClicked:          _currentMissionItem.fixedValueIsAltitude = false
@@ -497,7 +497,7 @@ Rectangle {
             spacing:        _margin
             visible:        gridTypeCombo.currentIndex == _gridTypeManual
 
-            QGCLabel { text: qsTr("Grid:") }
+            QGCLabel { text: qsTr("网格:") }//qsTr("Grid:")
 
             Rectangle {
                 anchors.left:   parent.left
@@ -516,12 +516,12 @@ Rectangle {
 
             QGCCheckBox {
                 anchors.left:   parent.left
-                text:           qsTr("Relative altitude")
+                text:           qsTr("相对高度")//qsTr("Relative altitude")
                 checked:        _currentMissionItem.gridAltitudeRelative
                 onClicked:      _currentMissionItem.gridAltitudeRelative = checked
             }
 
-            QGCLabel { text: qsTr("Camera:") }
+            QGCLabel { text: qsTr("相机:") }//qsTr("Camera:")
 
             Rectangle {
                 anchors.left:   parent.left
@@ -538,7 +538,7 @@ Rectangle {
                 QGCCheckBox {
                     id:                 cameraTrigger
                     anchors.baseline:   cameraTriggerDistanceField.baseline
-                    text:               qsTr("Trigger Distance:")
+                    text:               qsTr("触发距离:")//qsTr("Trigger Distance:")
                     checked:            _currentMissionItem.cameraTrigger
                     onClicked:          _currentMissionItem.cameraTrigger = checked
                 }
@@ -552,7 +552,7 @@ Rectangle {
             }
         }
 
-        QGCLabel { text: qsTr("Polygon:") }
+        QGCLabel { text: qsTr("多边型:") }//qsTr("Polygon:")
 
         Rectangle {
             anchors.left:   parent.left
@@ -565,7 +565,7 @@ Rectangle {
             spacing: ScreenTools.defaultFontPixelWidth
 
             QGCButton {
-                text:       editorMap.polygonDraw.drawingPolygon ? qsTr("Finish Draw") : qsTr("Draw")
+                text:       editorMap.polygonDraw.drawingPolygon ? qsTr("完成绘制") : qsTr("绘制")//qsTr("Finish Adjust") : qsTr("Adjust")
                 visible:    !editorMap.polygonDraw.adjustingPolygon
                 enabled:    ((editorMap.polygonDraw.drawingPolygon && editorMap.polygonDraw.polygonReady) || !editorMap.polygonDraw.drawingPolygon)
 
@@ -579,7 +579,7 @@ Rectangle {
             }
 
             QGCButton {
-                text:       editorMap.polygonDraw.adjustingPolygon ? qsTr("Finish Adjust") : qsTr("Adjust")
+                text:       editorMap.polygonDraw.adjustingPolygon ? qsTr("完成调整") : qsTr("调整")//qsTr("Finish Adjust") : qsTr("Adjust")
                 visible:    _currentMissionItem.polygonPath.length > 0 && !editorMap.polygonDraw.drawingPolygon
 
                 onClicked: {
@@ -592,7 +592,7 @@ Rectangle {
             }
         }
 
-        QGCLabel { text: qsTr("Statistics:") }
+        QGCLabel { text: qsTr("统计:") }//
 
         Rectangle {
             anchors.left:   parent.left
@@ -605,10 +605,10 @@ Rectangle {
             columns: 2
             spacing: ScreenTools.defaultFontPixelWidth
 
-            QGCLabel { text: qsTr("Survey area:") }
+            QGCLabel { text: qsTr("测绘面积:") }//Survey area
             QGCLabel { text: QGroundControl.squareMetersToAppSettingsAreaUnits(_currentMissionItem.coveredArea).toFixed(2) + " " + QGroundControl.appSettingsAreaUnitsString }
 
-            QGCLabel { text: qsTr("# shots:") }
+            QGCLabel { text: qsTr("# 拍摄数:") }//shots
             QGCLabel { text: _currentMissionItem.cameraShots }
         }
     }

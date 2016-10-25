@@ -959,7 +959,6 @@ include(QGCInstaller.pri)
 #        src/ui/toolbar/MainTool.qml \
 #        src/ui/toolbar/MainToolBarIndicators.qml \
 #        src/ui/toolbar/MainToolBarIndicatorsRight.qml \
-#        src/QmlControls/MissionItemEditor.qml \
 #        src/QmlControls/MissionItemIndex.qml \
 #        src/QmlControls/MissionItemIndexLabel.qml \
 #        src/QmlControls/MissionItemIndexIndicator.qml \
@@ -1060,7 +1059,17 @@ include(QGCInstaller.pri)
 #        src/VehicleSetup/SetupViewandAppsetting.qml \
 #        src/VehicleSetup/VehicleSummary.qml \
 #        src/QmlControls/OfflineMapButton.qml \
-#        src/AutoPilotPlugins/PX4/PX4TuningComponentVTOL.qml
+#        src/AutoPilotPlugins/PX4/PX4TuningComponentVTOL.qml \
+#        src/AutoPilotPlugins/PX4/PX4TuningComponentCopter.qml \
+#        src/AutoPilotPlugins/PX4/PX4TuningComponentPlane.qml  \
+#        src/AutoPilotPlugins/PX4/PX4VehicleParamsComponentCopter.qml \
+#        src/AutoPilotPlugins/PX4/PX4VehicleParamsComponentPlane.qml \
+#        src/AutoPilotPlugins/PX4/AttitudeControlPlane.qml \
+#        src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml \
+#        src/AutoPilotPlugins/PX4/L1ControlPlane.qml \
+#        src/AutoPilotPlugins/PX4/PosControlCopter.qml \
+#        src/AutoPilotPlugins/PX4/TECSControlPlane.qml \
+#        src/AutoPilotPlugins/PX4/PX4VehicleParamsComponentVTOL.qml
 
 TRANSLATIONS+=app_en.ts
 TRANSLATIONS+=app_cn.ts

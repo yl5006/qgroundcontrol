@@ -50,9 +50,9 @@ SetupPage {
             property Fact _disarmLandDelay: controller.getParameterFact(-1, "COM_DISARM_LAND")
             property Fact _landSpeedMC:     controller.getParameterFact(-1, "MPC_LAND_SPEED", false)
 
-            property Fact _throwAction:     controller.getParameterFact(-1, "THROW_ENABLE")
+       //     property Fact _throwAction:     controller.getParameterFact(-1, "THROW_ENABLE")
        //    property Fact _throwderection:  controller.getParameterFact(-1, "THROW_DERECTION")
-            property Fact _disAction:       controller.getParameterFact(-1, "MPC_SAFE_EN", false)
+       //     property Fact _disAction:       controller.getParameterFact(-1, "MPC_SAFE_EN", false)
             property bool _showIcons: !ScreenTools.isTinyScreen
 
             Rectangle {
@@ -110,7 +110,7 @@ SetupPage {
                 width:                                  parent.width*0.8
                 /*
                    **** throw to fly ****
-                */
+
                 Rectangle {
                     width:                          Math.max(parent.width/2-ScreenTools.defaultFontPixelHeight*2, ScreenTools.defaultFontPixelHeight*30)
                     height:                         Math.max(throwColumn.height+throwColumn.y,throwimg.height) + _margins
@@ -216,12 +216,13 @@ SetupPage {
                     }
 
                 }
+                */
                 /*
                    **** safe distance****
                 */
                 Rectangle {
                     width:                          Math.max(parent.width/2-ScreenTools.defaultFontPixelHeight*2, ScreenTools.defaultFontPixelHeight*30)
-                    height:                         Math.max(throwColumn.height+throwColumn.y,throwimg.height) + _margins
+                    height:                         Math.max(disColumn.height+disColumn.y,disimg.height) + _margins
                     color:                          "transparent"
                     visible:                        !controller.vehicle.fixedWing
                     Image {

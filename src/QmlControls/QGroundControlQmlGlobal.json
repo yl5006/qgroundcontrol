@@ -16,6 +16,14 @@
     "defaultValue":     1
 },
 {
+    "name":             "language",
+    "shortDescription": "app language",
+    "type":             "uint32",
+    "enumStrings":      "中文,English",
+    "enumValues":       "0,1",
+    "defaultValue":     0
+},
+{
     "name":             "OfflineEditingCruiseSpeed",
     "shortDescription": "Offline editing cruise speed",
     "longDescription":  "This value defines the cruising speed for forward flight vehicles for use in calculating mission duration when not connected to a vehicle.",

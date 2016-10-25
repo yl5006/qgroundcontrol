@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -20,7 +20,7 @@ const char* JsonHelper::_enumStringsJsonKey =       "enumStrings";
 const char* JsonHelper::_enumValuesJsonKey =        "enumValues";
 const char* JsonHelper::jsonVersionKey =            "version";
 const char* JsonHelper::jsonGroundStationKey =      "groundStation";
-const char* JsonHelper::jsonGroundStationValue =    "QGroundControl";
+const char* JsonHelper::jsonGroundStationValue =    "EWTGroundStation";//"QGroundControl";
 const char* JsonHelper::jsonFileTypeKey =           "fileType";
 
 bool JsonHelper::validateRequiredKeys(const QJsonObject& jsonObject, const QStringList& keys, QString& errorString)

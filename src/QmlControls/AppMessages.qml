@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -116,7 +116,7 @@ QGCView {
                 folder:         shortcuts.home
                 nameFilters:    [qsTr("Log files (*.txt)"), qsTr("All Files (*)")]
                 selectExisting: false
-                title:          qsTr("Select log save file")
+                title:          qsTr("选择日志文件/*Select log save file*/")
                 onAccepted: {
                     debugMessageModel.writeMessages(fileUrl);
                     visible = false;

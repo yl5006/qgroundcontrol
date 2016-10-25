@@ -29,37 +29,37 @@
 },
 {
     "name":             "airSpeed",
-            "shortDescription": "空速",
+    "shortDescription": "空速",
     "type":             "double",
     "decimalPlaces":    1,
     "units":            "m/s"
 },
 {
     "name":             "climbRate",
-            "shortDescription": "爬升率",
+    "shortDescription": "爬升率",
     "type":             "double",
     "decimalPlaces":    1,
     "units":            "m/s"
 },
 {
     "name":             "altitudeRelative",
-            "shortDescription": "高度",
+    "shortDescription": "高度",
     "type":             "double",
     "decimalPlaces":    1,
     "units":            "m"
 },
 {
     "name":             "altitudeAMSL",
-            "shortDescription": "海拔",
+    "shortDescription": "海拔",
     "type":             "double",
     "decimalPlaces":    1,
     "units":            "m"
-        },
-        {
-            "name":             "thrust",
-            "shortDescription": "油门",
-            "type":             "double",
-            "decimalPlaces":    0,
-            "units":            "%"
+},
+{
+    "name":             "thrust",
+    "shortDescription": "油门",
+    "type":             "double",
+    "decimalPlaces":    0,
+    "units":            "%"
 }
 ]

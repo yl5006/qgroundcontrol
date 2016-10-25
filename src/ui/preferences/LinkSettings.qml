@@ -195,8 +195,8 @@ Rectangle {
                                     visible:    false
                                     icon:       StandardIcon.Warning
                                     standardButtons: StandardButton.Yes | StandardButton.No
-                                    title:      qsTr("Remove Link Configuration")
-                                    text:       object ? qsTr("Remove %1. Is this really what you want?").arg(object.name) : ""
+                                    title:      qsTr("删除连接")//Remove Link Configuration
+                                    text:       object ? qsTr("删除 %1. 确认删除?").arg(object.name) : ""//"Remove %1. Is this really what you want?"
                                     onYes: {
                                         if(object)
                                             QGroundControl.linkManager.removeConfiguration(object)
@@ -320,9 +320,10 @@ Rectangle {
                 id:                 settingsFlick
                 clip:               true
                 anchors.top:        parent.top
-                width:              parent.width
+                width:              parent.width*0.8
+                anchors.horizontalCenter: parent.horizontalCenter
                 height:             parent.height - commButtonRow.height
-                anchors.margins:    ScreenTools.defaultFontPixelWidth
+                anchors.margins:    ScreenTools.defaultFontPixelHeight*2
                 contentHeight:      commSettingsColumn.height
                 contentWidth:       _linkRoot.width
                 flickableDirection: Flickable.VerticalFlick
@@ -333,7 +334,7 @@ Rectangle {
                     anchors.margins:    ScreenTools.defaultFontPixelWidth
                     spacing:            ScreenTools.defaultFontPixelHeight / 2
                     QGCLabel {
-                        text:   linkConfig ? qsTr("Edit Link Configuration Settings (WIP)") : qsTr("Create New Link Configuration (WIP)")
+                        text:   linkConfig ? qsTr("编辑连接")/*qsTr("Edit Link Configuration Settings (WIP)") */: qsTr("创建连接")/*qsTr("Create New Link Configuration (WIP)")*/
                         font.pointSize: ScreenTools.mediumFontPointSize
                     }
                     Rectangle {
@@ -348,7 +349,7 @@ Rectangle {
                     Row {
                         spacing:    ScreenTools.defaultFontPixelWidth
                         QGCLabel {
-                            text:   qsTr("Name:")
+                            text:    qsTr("名称:")//qsTr("Name:")
                             width:  _firstColumn
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -362,7 +363,7 @@ Rectangle {
                     Row {
                         spacing:        ScreenTools.defaultFontPixelWidth
                         QGCLabel {
-                            text:       qsTr("Type:")
+                            text:       qsTr("类型:")//("Type:")
                             width:      _firstColumn
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -454,7 +455,7 @@ Rectangle {
                 anchors.right:      parent.right
                 QGCButton {
                     width:      ScreenTools.defaultFontPixelWidth * 10
-                    text:       qsTr("OK")
+                    text:       qsTr("确定")//qsTr("OK")
                     enabled:    nameField.text !== ""
                     onClicked: {
                         // Save editting
@@ -474,7 +475,7 @@ Rectangle {
                 }
                 QGCButton {
                     width:      ScreenTools.defaultFontPixelWidth * 10
-                    text:       qsTr("Cancel")
+                    text:       qsTr("取消")//qsTr("Cancel")
                     onClicked: {
                         QGroundControl.linkManager.cancelConfigurationEditing(editConfig)
                         editConfig = null

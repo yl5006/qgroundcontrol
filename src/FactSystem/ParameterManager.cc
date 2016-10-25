@@ -1019,20 +1019,22 @@ void ParameterManager::_checkInitialLoadComplete(bool failIfNoDefaultComponent)
     _missingParameters = false;
     if (initialLoadFailures) {
         _missingParameters = true;
-        qgcApp()->showMessage("QGroundControl was unable to retrieve the full set of parameters from the vehicle. "
-                              "This will cause QGroundControl to be unable to display its full user interface. "
-                              "If you are using modified firmware, you may need to resolve any vehicle startup errors to resolve the issue. "
-                              "If you are using standard firmware, you may need to upgrade to a newer version to resolve the issue.");
+//        qgcApp()->showMessage("QGroundControl was unable to retrieve the full set of parameters from the vehicle. "
+//                              "This will cause QGroundControl to be unable to display its full user interface. "
+//                              "If you are using modified firmware, you may need to resolve any vehicle startup errors to resolve the issue. "
+//                              "If you are using standard firmware, you may need to upgrade to a newer version to resolve the issue.");
+        qgcApp()->showMessage(QStringLiteral("参数不完整"));
         if (!qgcApp()->runningUnitTests()) {
             qCWarning(ParameterManagerLog) << "The following parameter indices could not be loaded after the maximum number of retries: " << indexList;
         }
     } else if (_defaultComponentId == FactSystem::defaultComponentId && !_defaultComponentIdParam.isEmpty()) {
         // Missing default component when we should have one
         _missingParameters = true;
-        qgcApp()->showMessage("QGroundControl did not receive parameters from the default component. "
-                              "This will cause QGroundControl to be unable to display its full user interface. "
-                              "If you are using modified firmware, you may need to resolve any vehicle startup errors to resolve the issue. "
-                              "If you are using standard firmware, you may need to upgrade to a newer version to resolve the issue.");
+//        qgcApp()->showMessage("QGroundControl did not receive parameters from the default component. "
+//                              "This will cause QGroundControl to be unable to display its full user interface. "
+//                              "If you are using modified firmware, you may need to resolve any vehicle startup errors to resolve the issue. "
+//                              "If you are using standard firmware, you may need to upgrade to a newer version to resolve the issue.");
+        qgcApp()->showMessage(QStringLiteral("默认参数不完整"));
         if (!qgcApp()->runningUnitTests()) {
             qCWarning(ParameterManagerLog) << "Default component was never found, param:" << _defaultComponentIdParam;
         }
@@ -1050,7 +1052,7 @@ void ParameterManager::_initialRequestTimeout(void)
 {
     if (!_vehicle->genericFirmware()) {
         // Generic vehicles (like BeBop) may not have any parameters, so don't annoy the user
-        qgcApp()->showMessage("Vehicle did not respond to request for parameters, retrying");
+        qgcApp()->showMessage(QStringLiteral("机体未响应参数，请重试"));//Vehicle did not respond to request for parameters, retrying
     }
     if (++_initialRequestRetryCount <= _maxInitialRequestListRetry) {
         refreshAllParameters();

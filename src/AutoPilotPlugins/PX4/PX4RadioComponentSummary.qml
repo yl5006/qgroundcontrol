@@ -26,12 +26,15 @@ FactPanel {
         anchors.fill:       parent
         spacing:            ScreenTools.defaultFontPointSize*0.5
         Row{
-            spacing:            ScreenTools.defaultFontPointSize*3
+            //spacing:            ScreenTools.defaultFontPointSize*3
+            width:              parent.width
             Column {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
+                width:              parent.width*0.25
                 QGCLabel {
                     id:     label
                     font.bold:   true
+                    anchors.horizontalCenter: parent.horizontalCenter
                     text:   qsTr("横滚:")//"Roll:"
                     color:  qgcPal.buttonHighlight
                 }
@@ -43,9 +46,11 @@ FactPanel {
             }
             Column {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
+                width:              parent.width*0.25
                 QGCLabel {
                     id:     label1
                     font.bold:   true
+                    anchors.horizontalCenter: parent.horizontalCenter
                     text:   qsTr("仰俯:")//"Pitch:"
                     color:  qgcPal.buttonHighlight
                 }
@@ -57,9 +62,11 @@ FactPanel {
             }
             Column {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
+                width:              parent.width*0.25
                 QGCLabel {
                     id:     label2
                     font.bold:   true
+                    anchors.horizontalCenter: parent.horizontalCenter
                     text:   qsTr("航角:")//"Yaw:"
                     color:  qgcPal.buttonHighlight
                 }
@@ -71,9 +78,11 @@ FactPanel {
             }
             Column {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
+                width:              parent.width*0.25
                 QGCLabel {
                     id:     label3
                     font.bold:   true
+                    anchors.horizontalCenter: parent.horizontalCenter
                     text:   qsTr("油门:")//"Throttle:"
                     color:  qgcPal.buttonHighlight
                 }

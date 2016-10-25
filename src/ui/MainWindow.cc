@@ -77,7 +77,7 @@ enum DockWidgetTypes {
     LOG_DOWNLOAD
 };
 
-static const char *rgDockWidgetNames[] = {
+const char* rgDockWidgetNames[] = {
     QT_TR_NOOP("数据链分析"),//MAVLink Inspector
     QT_TR_NOOP("用户命令"),//Custom Command
     QT_TR_NOOP("机体文件"),//Onboard Files
@@ -249,6 +249,7 @@ MainWindow::MainWindow()
 #ifdef __mobile__
         menuBar()->hide();
 #endif
+
 //#ifndef QT_DEBUG
 //        menuBar()->hide();
 //#endif
@@ -309,7 +310,7 @@ void MainWindow::_buildCommonWidgets(void)
 
     for (int i = 0, end = ARRAY_SIZE(rgDockWidgetNames); i < end; i++) {
 
-        const char* pDockWidgetName = rgDockWidgetNames[i];
+        const char* pDockWidgetName =rgDockWidgetNames[i];
 
         // Add to menu
         QAction* action = new QAction(tr(pDockWidgetName), this);

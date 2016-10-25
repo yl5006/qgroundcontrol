@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -66,7 +66,7 @@ Item {
             selectExisting: true
             onAccepted: {
                 if(subEditConfig) {
-                    subEditConfig.fileName = fileDialog.fileUrl.toString().replace("file://", "")
+                    subEditConfig.fileName = fileDialog.fileUrl.toString().replace("file:///", "")
                 }
                 fileDialog.visible = false
             }

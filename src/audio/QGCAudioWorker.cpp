@@ -1,4 +1,4 @@
-#include <QSettings>
+﻿#include <QSettings>
 #include <QDebug>
 #include <QCoreApplication>
 #include <QFile>
@@ -77,7 +77,7 @@ QGCAudioWorker::QGCAudioWorker(QObject *parent) :
     pVoice(NULL),
     #endif
     emergency(false),
-    muted(false)
+    muted(true)//
 {
     // Load settings
     QSettings settings;

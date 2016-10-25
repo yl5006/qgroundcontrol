@@ -35,12 +35,15 @@ FactPanel {
     Column {
         anchors.fill:       parent
         Row{
-            spacing:            ScreenTools.defaultFontPointSize*5
+        //    spacing:            ScreenTools.defaultFontPointSize*5
+            width:      parent.width
             Column {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
+                width:      parent.width*0.33
                 QGCLabel {
                     id:     label
                     font.bold:   true
+                    anchors.horizontalCenter: parent.horizontalCenter
                     text:   qsTr("满电压")//"Battery Full:"
                     color:  qgcPal.buttonHighlight
                 }
@@ -52,9 +55,11 @@ FactPanel {
             }
             Column {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
+                width:      parent.width*0.33
                 QGCLabel {
                     id:     label1
                     font.bold:   true
+                    anchors.horizontalCenter: parent.horizontalCenter
                     text:   qsTr("空电压")//"Battery Empty:"
                     color:  qgcPal.buttonHighlight
                 }
@@ -66,9 +71,11 @@ FactPanel {
             }
             Column {
                 spacing:            ScreenTools.defaultFontPointSize*0.5
+                width:      parent.width*0.33
                 QGCLabel {
                     font.bold:   true
                     id:     label2
+                    anchors.horizontalCenter: parent.horizontalCenter
                     text:   qsTr("电芯数")//"Number of Cells:"
                     color:  qgcPal.buttonHighlight
                 }

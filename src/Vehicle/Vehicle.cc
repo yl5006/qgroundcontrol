@@ -1426,7 +1426,7 @@ void Vehicle::sendMessageMultiple(mavlink_message_t message)
 void Vehicle::_missionManagerError(int errorCode, const QString& errorMsg)
 {
     Q_UNUSED(errorCode);
-    qgcApp()->showMessage(QString("Error during Mission communication with Vehicle: %1").arg(errorMsg));
+    qgcApp()->showMessage(tr("任务上传下载错误: %1").arg(errorMsg));//"Error during Mission communication with Vehicle: %1"
 }
 
 void Vehicle::_geoFenceManagerError(int errorCode, const QString& errorMsg)
@@ -1762,7 +1762,7 @@ void Vehicle::guidedModeChangeAltitude(double altitudeRel)
 void Vehicle::guidedModeOrbit(const QGeoCoordinate& centerCoord, double radius, double velocity, double altitude)
 {
     if (!orbitModeSupported()) {
-        qgcApp()->showMessage(QStringLiteral("Orbit mode not supported by Vehicle."));
+        qgcApp()->showMessage(QStringLiteral("Orbit不支持"));//"Orbit mode not supported by Vehicle."
         return;
     }
     _firmwarePlugin->guidedModeOrbit(this, centerCoord, radius, velocity, altitude);
@@ -1771,7 +1771,7 @@ void Vehicle::guidedModeOrbit(const QGeoCoordinate& centerCoord, double radius, 
 void Vehicle::pauseVehicle(void)
 {
     if (!pauseVehicleSupported()) {
-        qgcApp()->showMessage(QStringLiteral("Pause not supported by vehicle."));
+        qgcApp()->showMessage(QStringLiteral("不支持暂停模式."));//Pause not supported by vehicle.
         return;
     }
     _firmwarePlugin->pauseVehicle(this);
