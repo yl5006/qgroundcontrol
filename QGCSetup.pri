@@ -49,8 +49,8 @@ iOSBuild | MacBuild {
 MacBuild {
     # Copy non-standard frameworks into app package
     QMAKE_POST_LINK += && rsync -a --delete $$BASEDIR/libs/lib/Frameworks $$DESTDIR/$${TARGET}.app/Contents/
-    # SDL Framework
-    QMAKE_POST_LINK += && install_name_tool -change "@rpath/SDL.framework/Versions/A/SDL" "@executable_path/../Frameworks/SDL.framework/Versions/A/SDL" $$DESTDIR/$${TARGET}.app/Contents/MacOS/$${TARGET}
+    # SDL2 Framework
+    QMAKE_POST_LINK += && install_name_tool -change "@rpath/SDL2.framework/Versions/A/SDL2" "@executable_path/../Frameworks/SDL2.framework/Versions/A/SDL2" $$DESTDIR/$${TARGET}.app/Contents/MacOS/$${TARGET}
 }
 
 WindowsBuild {
@@ -62,7 +62,7 @@ WindowsBuild {
     DebugBuild: DLL_QT_DEBUGCHAR = "d"
     ReleaseBuild: DLL_QT_DEBUGCHAR = ""
     COPY_FILE_LIST = \
-        $$BASEDIR\\libs\\lib\\sdl\\win32\\SDL.dll \
+        $$BASEDIR\\libs\\lib\\sdl2\\msvc\\lib\\x86\\SDL2.dll \
         $$BASEDIR\\libs\\thirdParty\\libxbee\\lib\\libxbee.dll \
         $$BASEDIR\\deploy\\libeay32.dll
 
@@ -105,6 +105,8 @@ LinuxBuild {
             libQt5DBus.so.5 \
             libQt5Gui.so.5 \
             libQt5Location.so.5 \
+            libQt5Multimedia.so.5 \
+            libQt5MultimediaQuick_p.so.5 \
             libQt5Network.so.5 \
             libQt5OpenGL.so.5 \
             libQt5Positioning.so.5 \
@@ -118,12 +120,6 @@ LinuxBuild {
             libQt5Test.so.5 \
             libQt5Widgets.so.5 \
             libQt5XcbQpa.so.5
-
-        !contains (DEFINES, QGC_DISABLE_UVC) {
-            QT_LIB_LIST += \
-                libQt5Multimedia.so.5 \
-                libQt5MultimediaQuick_p.so.5
-        }
 
         !contains(DEFINES, __rasp_pi2__) {
             QT_LIB_LIST += \

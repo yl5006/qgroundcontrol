@@ -51,7 +51,6 @@
 #include "CustomCommandWidget.h"
 #include "QGCDockWidget.h"
 #include "HILDockWidget.h"
-#include "LogDownload.h"
 #include "AppMessages.h"
 #endif
 
@@ -73,8 +72,7 @@ enum DockWidgetTypes {
     ONBOARD_FILES,
     INFO_VIEW,
     HIL_CONFIG,
-    ANALYZE,
-    LOG_DOWNLOAD
+    ANALYZE
 };
 
 const char* rgDockWidgetNames[] = {
@@ -84,7 +82,6 @@ const char* rgDockWidgetNames[] = {
     QT_TR_NOOP("信息显示"),//Info View
     QT_TR_NOOP("仿真设置"),//HIL Config
     QT_TR_NOOP("波形分析"),//Analyze
-    QT_TR_NOOP("日志下载")//Log Download
 };
 
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof(ARRAY[0]))
@@ -308,12 +305,17 @@ void MainWindow::_buildCommonWidgets(void)
     logPlayer = new QGCMAVLinkLogPlayer(statusBar());
     statusBar()->addPermanentWidget(logPlayer);
 
+    // Populate widget menu
     for (int i = 0, end = ARRAY_SIZE(rgDockWidgetNames); i < end; i++) {
+        if (i == ONBOARD_FILES) {
+            // Temporarily removed until twe can fix all the problems with it
+            continue;
+        }
 
-        const char* pDockWidgetName =rgDockWidgetNames[i];
+        const char* pDockWidgetName = rgDockWidgetNames[i];
 
         // Add to menu
-        QAction* action = new QAction(tr(pDockWidgetName), this);
+        QAction* action = new QAction(pDockWidgetName, this);
         action->setCheckable(true);
         action->setData(i);
         connect(action, &QAction::triggered, this, &MainWindow::_showDockWidgetAction);
@@ -325,6 +327,11 @@ void MainWindow::_buildCommonWidgets(void)
 /// Shows or hides the specified dock widget, creating if necessary
 void MainWindow::_showDockWidget(const QString& name, bool show)
 {
+    if (name == rgDockWidgetNames[ONBOARD_FILES]) {
+        // Temporarily disabled due to bugs
+        return;
+    }
+
     // Create the inner widget if we need to
     if (!_mapName2DockWidget.contains(name)) {
         if(!_createInnerDockWidget(name)) {
@@ -355,9 +362,6 @@ bool MainWindow::_createInnerDockWidget(const QString& widgetName)
                 break;
             case ONBOARD_FILES:
                 widget = new QGCUASFileViewMulti(widgetName, action, this);
-                break;
-            case LOG_DOWNLOAD:
-                widget = new LogDownload(widgetName, action, this);
                 break;
             case HIL_CONFIG:
                 widget = new HILDockWidget(widgetName, action, this);

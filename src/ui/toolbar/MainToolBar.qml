@@ -54,7 +54,7 @@ Rectangle {
     MainToolBarController { id: _controller }
 
     function checkSettingsButton() {
-            settingsButton.checked = true
+        settingsButton.checked = true
     }
 
     function checkSetupButton() {
@@ -393,6 +393,7 @@ Rectangle {
         property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
 
         Loader {
+            id:                     indicatorLoader
             source:                 activeVehicle && !parent.vehicleConnectionLost ? "MainToolBarIndicators.qml" : ""
             anchors.left:           parent.left
             anchors.verticalCenter: parent.verticalCenter
@@ -408,7 +409,6 @@ Rectangle {
             anchors.right:          disconnectButton.left
             anchors.verticalCenter: parent.verticalCenter
             visible:                parent.vehicleConnectionLost
-
         }
 
         QGCButton {
@@ -421,6 +421,17 @@ Rectangle {
             primary:                true
             onClicked:              activeVehicle.disconnectInactiveVehicle()
         }
+
+        Image {
+            anchors.rightMargin:    ScreenTools.defaultFontPixelWidth / 2
+            anchors.right:          parent.right
+            anchors.top:            parent.top
+            anchors.bottom:         parent.bottom
+            visible:                x > indicatorLoader.x + indicatorLoader.width && !disconnectButton.visible && source != ""
+            fillMode:               Image.PreserveAspectFit
+            source:                 activeVehicle ? activeVehicle.brandImage : ""
+        }
+
     }
 
     // Progress bar

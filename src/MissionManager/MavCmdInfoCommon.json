@@ -308,7 +308,7 @@
         {
             "id":                   84,
             "rawName":              "MAV_CMD_NAV_VTOL_TAKEOFF",
-            "friendlyName":         "VTOL垂直起飞",
+            "friendlyName":         "VTOL垂直起飞转变",
             "description":          "用垂直起飞模式从地面起飞.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
@@ -323,7 +323,7 @@
        {
             "id":                   85,
             "rawName":              "MAV_CMD_NAV_VTOL_LAND",
-            "friendlyName":         "VTOL垂直降落",
+            "friendlyName":         ""VTOL转变垂直降落",
             "description":          "使用垂直模式降落.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
