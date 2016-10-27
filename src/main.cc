@@ -93,7 +93,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
     return JNI_VERSION_1_6;
 }
 #endif
-
+int language;
 /**
  * @brief Starts the application
  *
@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
       //  settings.beginGroup("GS_EWT_Language");
     QSettings::setDefaultFormat(QSettings::IniFormat);
     QSettings settings;
-        int language=settings.value("language","0").toInt();
+    language=settings.value("language","0").toInt();
         if(language==1)
         {
             QString   strLanguageFile= app->applicationDirPath()+QString("/app_en.qm");

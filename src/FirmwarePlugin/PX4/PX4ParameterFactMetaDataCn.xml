@@ -541,8 +541,8 @@ velocity</short_desc>
   </group>
   <group name="Commander">
     <parameter default="10" name="COM_DL_LOSS_T" type="INT32">
-      <short_desc>Datalink loss time threshold</short_desc>
-      <long_desc>After this amount of seconds without datalink the data link lost mode triggers</long_desc>
+      <short_desc>数据链断开超时时间</short_desc>
+      <long_desc>经过这段时间后出发动作</long_desc>
       <min>5</min>
       <max>300</max>
       <unit>s</unit>
@@ -646,8 +646,8 @@ velocity</short_desc>
       <scope>modules/commander</scope>
     </parameter>
     <parameter default="0" name="COM_DISARM_LAND" type="INT32">
-      <short_desc>Time-out for auto disarm after landing</short_desc>
-      <long_desc>A non-zero, positive value specifies the time-out period in seconds after which the vehicle will be automatically disarmed in case a landing situation has been detected during this period. The vehicle will also auto-disarm right after arming if it has not even flown, however the time will be longer by a factor of 5. A value of zero means that automatic disarming is disabled.</long_desc>
+      <short_desc>降落后加锁时间</short_desc>
+      <long_desc>0 标示禁止自动加锁，非 0 参数标示降落后多少秒自动加锁</long_desc>
       <min>0</min>
       <max>20</max>
       <unit>s</unit>
@@ -1355,8 +1355,9 @@ value will determine the minimum airspeed which will still be fused</short_desc>
   </group>
   <group name="FW Attitude Control">
     <parameter default="0.4" name="FW_R_TC" type="FLOAT">
-      <short_desc>Attitude Roll Time Constant</short_desc>
-      <long_desc>This defines the latency between a roll step input and the achieved setpoint (inverse to a P gain). Half a second is a good start value and fits for most average systems. Smaller systems may require smaller values, but as this will wear out servos faster, the value should only be decreased as needed.</long_desc>
+      <short_desc>姿态横滚时间常数</short_desc>
+      <long_desc>      定义了在横滚输入和获得设置点之间的延迟（与P增益相反）。0.5秒是一个较好的初始值，适合大多数系统。小型系统可能需要较小的数值，但是这容易让伺服电机损耗较大，因此该值需要根据需要降低。
+      </long_desc>
       <min>0.4</min>
       <max>1.0</max>
       <unit>s</unit>
@@ -1365,8 +1366,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.4" name="FW_P_TC" type="FLOAT">
-      <short_desc>Attitude Pitch Time Constant</short_desc>
-      <long_desc>This defines the latency between a pitch step input and the achieved setpoint (inverse to a P gain). Half a second is a good start value and fits for most average systems. Smaller systems may require smaller values, but as this will wear out servos faster, the value should only be decreased as needed.</long_desc>
+      <short_desc>姿态仰俯时间常数</short_desc>
+      <long_desc>定义了在仰俯输入和获得设置点之间的延迟（与P增益相反）。0.5秒是一个较好的初始值，适合大多数系统。小型系统可能需要较小的数值，但是这容易让伺服电机损耗较大，因此该值需要根据需要降低。</long_desc>
       <min>0.2</min>
       <max>1.0</max>
       <unit>s</unit>
@@ -1375,8 +1376,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.08" name="FW_PR_P" type="FLOAT">
-      <short_desc>Pitch rate proportional gain</short_desc>
-      <long_desc>This defines how much the elevator input will be commanded depending on the current body angular rate error.</long_desc>
+      <short_desc>仰俯P比例增益</short_desc>
+      <long_desc>这定义了根据当前车身角速度误差，将控制升降舵输入的程度。</long_desc>
       <min>0.005</min>
       <max>1.0</max>
       <unit>%/rad/s</unit>
@@ -1385,8 +1386,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.02" name="FW_PR_I" type="FLOAT">
-      <short_desc>Pitch rate integrator gain</short_desc>
-      <long_desc>This gain defines how much control response will result out of a steady state error. It trims any constant error.</long_desc>
+      <short_desc>仰俯 I 积分量增益</short_desc>
+      <long_desc>该增益定义了稳态误差将导致多少控制响应。 它修剪任何常数误差。 </long_desc>
       <min>0.005</min>
       <max>0.5</max>
       <unit>%/rad</unit>
@@ -1395,8 +1396,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="60.0" name="FW_P_RMAX_POS" type="FLOAT">
-      <short_desc>Maximum positive / up pitch rate</short_desc>
-      <long_desc>This limits the maximum pitch up angular rate the controller will output (in degrees per second). Setting a value of zero disables the limit.</long_desc>
+      <short_desc>最大正/上俯仰率</short_desc>
+      <long_desc>这限制了控制器输出的最大俯仰角速率（以度/秒为单位）。 设置值为零将禁用限制。</long_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg/s</unit>
@@ -1405,8 +1406,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="60.0" name="FW_P_RMAX_NEG" type="FLOAT">
-      <short_desc>Maximum negative / down pitch rate</short_desc>
-      <long_desc>This limits the maximum pitch down up angular rate the controller will output (in degrees per second). Setting a value of zero disables the limit.</long_desc>
+      <short_desc>最大负/下俯仰速率</short_desc>
+      <long_desc>这限制了控制器将输出的最大音高下降角速率（以度/秒为单位）。 设置值为零将禁用限制。</long_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg/s</unit>
@@ -1415,8 +1416,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.4" name="FW_PR_IMAX" type="FLOAT">
-      <short_desc>Pitch rate integrator limit</short_desc>
-      <long_desc>The portion of the integrator part in the control surface deflection is limited to this value</long_desc>
+      <short_desc>仰俯 I 积分增益限制</short_desc>
+      <long_desc>积分器部分在控制舵面偏转中的部分被限制为该值</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
@@ -1424,8 +1425,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.05" name="FW_RR_P" type="FLOAT">
-      <short_desc>Roll rate proportional Gain</short_desc>
-      <long_desc>This defines how much the aileron input will be commanded depending on the current body angular rate error.</long_desc>
+      <short_desc>横滚P比例增益</short_desc>
+      <long_desc>这定义了根据当前机身角速率误差，将控制副翼输入的多少。</long_desc>
       <min>0.005</min>
       <max>1.0</max>
       <unit>%/rad/s</unit>
@@ -1434,8 +1435,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.01" name="FW_RR_I" type="FLOAT">
-      <short_desc>Roll rate integrator Gain</short_desc>
-      <long_desc>This gain defines how much control response will result out of a steady state error. It trims any constant error.</long_desc>
+      <short_desc>横滚速率I积分增益</short_desc>
+      <long_desc>该增益定义了稳态误差将导致多少控制响应。 它修剪任何常数误差。</long_desc>
       <min>0.005</min>
       <max>0.2</max>
       <unit>%/rad</unit>
@@ -1444,8 +1445,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.2" name="FW_RR_IMAX" type="FLOAT">
-      <short_desc>Roll Integrator Anti-Windup</short_desc>
-      <long_desc>The portion of the integrator part in the control surface deflection is limited to this value.</long_desc>
+      <short_desc>横滚I积分限制</short_desc>
+      <long_desc>积分器部分在控制表面偏转中的部分被限制为该值。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
@@ -1453,8 +1454,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="70.0" name="FW_R_RMAX" type="FLOAT">
-      <short_desc>Maximum Roll Rate</short_desc>
-      <long_desc>This limits the maximum roll rate the controller will output (in degrees per second). Setting a value of zero disables the limit.</long_desc>
+      <short_desc>最大横滚速度</short_desc>
+      <long_desc>这限制了控制器将输出的最大侧倾角（以度/秒为单位）。 设置值为零将禁用限制。</long_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg/s</unit>
@@ -1463,8 +1464,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.05" name="FW_YR_P" type="FLOAT">
-      <short_desc>Yaw rate proportional gain</short_desc>
-      <long_desc>This defines how much the rudder input will be commanded depending on the current body angular rate error.</long_desc>
+      <short_desc>偏航率P比例增益</short_desc>
+      <long_desc>这定义了根据当前车身角速率误差，将控制方向舵输入的程度。</long_desc>
       <min>0.005</min>
       <max>1.0</max>
       <unit>%/rad/s</unit>
@@ -1473,8 +1474,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.0" name="FW_YR_I" type="FLOAT">
-      <short_desc>Yaw rate integrator gain</short_desc>
-      <long_desc>This gain defines how much control response will result out of a steady state error. It trims any constant error.</long_desc>
+      <short_desc>偏航率I积分增益</short_desc>
+      <long_desc>该增益定义了稳态误差将导致多少控制响应。 它修剪任何常数误差。</long_desc>
       <min>0.0</min>
       <max>50.0</max>
       <unit>%/rad</unit>
@@ -1483,8 +1484,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.2" name="FW_YR_IMAX" type="FLOAT">
-      <short_desc>Yaw rate integrator limit</short_desc>
-      <long_desc>The portion of the integrator part in the control surface deflection is limited to this value</long_desc>
+      <short_desc>偏航率I积分限制</short_desc>
+      <long_desc>积分器部分在控制舵面偏转中的部分被限制为该值</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
@@ -1492,8 +1493,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.0" name="FW_Y_RMAX" type="FLOAT">
-      <short_desc>Maximum Yaw Rate</short_desc>
-      <long_desc>This limits the maximum yaw rate the controller will output (in degrees per second). Setting a value of zero disables the limit.</long_desc>
+      <short_desc>最大航偏（转弯）率</short_desc>
+      <long_desc>这限制了控制器将输出的最大横摆角速度（以度/秒为单位）。 设置值为零将禁用限制。</long_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg/s</unit>
@@ -1502,8 +1503,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.5" name="FW_WR_P" type="FLOAT">
-      <short_desc>Wheel steering rate proportional gain</short_desc>
-      <long_desc>This defines how much the wheel steering input will be commanded depending on the current body angular rate error.</long_desc>
+      <short_desc>机身转向P比例增益</short_desc>
+      <long_desc>这定义了根据当前车体角速率误差，将控制机身转向输入的多少。</long_desc>
       <min>0.005</min>
       <max>1.0</max>
       <unit>%/rad/s</unit>
@@ -1512,8 +1513,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.1" name="FW_WR_I" type="FLOAT">
-      <short_desc>Wheel steering rate integrator gain</short_desc>
-      <long_desc>This gain defines how much control response will result out of a steady state error. It trims any constant error.</long_desc>
+      <short_desc>机身转向速率I积分增益</short_desc>
+      <long_desc>该增益定义了稳态误差将导致多少控制响应。 它修剪任何常数误差。</long_desc>
       <min>0.005</min>
       <max>0.5</max>
       <unit>%/rad</unit>
@@ -1522,8 +1523,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="1.0" name="FW_WR_IMAX" type="FLOAT">
-      <short_desc>Wheel steering rate integrator limit</short_desc>
-      <long_desc>The portion of the integrator part in the control surface deflection is limited to this value</long_desc>
+      <short_desc>机身转向速率I积分限制</short_desc>
+      <long_desc>控制面偏差的积分部分受限于该值。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
@@ -1531,8 +1532,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.0" name="FW_W_RMAX" type="FLOAT">
-      <short_desc>Maximum wheel steering rate</short_desc>
-      <long_desc>This limits the maximum wheel steering rate the controller will output (in degrees per second). Setting a value of zero disables the limit.</long_desc>
+      <short_desc>最大机身转向率</short_desc>
+      <long_desc>这个限制了机身输出的最大速率的输出（度/秒）。设定为0时使该限制失效。</long_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg/s</unit>
@@ -1541,8 +1542,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.5" name="FW_RR_FF" type="FLOAT">
-      <short_desc>Roll rate feed forward</short_desc>
-      <long_desc>Direct feed forward from rate setpoint to control surface output. Use this to obtain a tigher response of the controller without introducing noise amplification.</long_desc>
+      <short_desc>横滚率前馈</short_desc>
+      <long_desc>从速率设定点直接前馈到控制舵面输出。 使用它来获得控制器的更大的响应，而不引入噪声放大。</long_desc>
       <min>0.0</min>
       <max>10.0</max>
       <unit>%/rad/s</unit>
@@ -1551,8 +1552,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.5" name="FW_PR_FF" type="FLOAT">
-      <short_desc>Pitch rate feed forward</short_desc>
-      <long_desc>Direct feed forward from rate setpoint to control surface output</long_desc>
+      <short_desc>仰俯率前馈</short_desc>
+      <long_desc>从速率设定点直接前馈到控制舵面输出。</long_desc>
       <min>0.0</min>
       <max>10.0</max>
       <unit>%/rad/s</unit>
@@ -1561,8 +1562,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.3" name="FW_YR_FF" type="FLOAT">
-      <short_desc>Yaw rate feed forward</short_desc>
-      <long_desc>Direct feed forward from rate setpoint to control surface output</long_desc>
+      <short_desc>航向率前馈</short_desc>
+      <long_desc>从速率设定点直接前馈到控制舵面输出。</long_desc>
       <min>0.0</min>
       <max>10.0</max>
       <unit>%/rad/s</unit>
@@ -1571,8 +1572,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.2" name="FW_WR_FF" type="FLOAT">
-      <short_desc>Wheel steering rate feed forward</short_desc>
-      <long_desc>Direct feed forward from rate setpoint to control surface output</long_desc>
+      <short_desc>机身转向速率前馈</short_desc>
+    <long_desc>从设置点到控制面的直接前馈输出</long_desc>
       <min>0.0</min>
       <max>10.0</max>
       <unit>%/rad/s</unit>
@@ -1581,8 +1582,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="1000.0" name="FW_YCO_VMIN" type="FLOAT">
-      <short_desc>Minimal speed for yaw coordination</short_desc>
-      <long_desc>For airspeeds above this value, the yaw rate is calculated for a coordinated turn. Set to a very high value to disable.</long_desc>
+      <short_desc>最小速度航向角协调</short_desc>
+      <long_desc>空速与之相关，航向角速率根据该值计算得到，并产生一个相应的转向。设置一个非常大的值使之失效。</long_desc>
       <min>0.0</min>
       <max>1000.0</max>
       <unit>m/s</unit>
@@ -1591,19 +1592,19 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0" name="FW_YCO_METHOD" type="INT32">
-      <short_desc>Method used for yaw coordination</short_desc>
-      <long_desc>The param value sets the method used to calculate the yaw rate 0: open-loop zero lateral acceleration based on kinematic constraints 1: closed-loop: try to reduce lateral acceleration to 0 by measuring the acceleration</long_desc>
+      <short_desc>用于协调偏航的方法</short_desc>
+      <long_desc>参数值设置用于计算横摆率的方法0：基于运动学约束的开环零横向加速度1：闭环：尝试通过测量加速度来将横向加速度减小到0</long_desc>
       <min>0</min>
       <max>1</max>
       <scope>modules/fw_att_control</scope>
       <values>
-        <value code="1">closed-loop</value>
-        <value code="0">open-loop</value>
+        <value code="1">闭环</value>
+        <value code="0">开环</value>
       </values>
     </parameter>
     <parameter default="0.0" name="FW_RSP_OFF" type="FLOAT">
-      <short_desc>Roll Setpoint Offset</short_desc>
-      <long_desc>An airframe specific offset of the roll setpoint in degrees, the value is added to the roll setpoint and should correspond to the typical cruise speed of the airframe.</long_desc>
+      <short_desc>横滚定点偏移</short_desc>
+      <long_desc>以度为单位的横滚设定点的机身特定偏移，该值被添加到横滚设定点并且应当对应于机身的典型巡航速度。</long_desc>
       <min>-90.0</min>
       <max>90.0</max>
       <unit>deg</unit>
@@ -1612,8 +1613,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0.0" name="FW_PSP_OFF" type="FLOAT">
-      <short_desc>Pitch Setpoint Offset</short_desc>
-      <long_desc>An airframe specific offset of the pitch setpoint in degrees, the value is added to the pitch setpoint and should correspond to the typical cruise speed of the airframe.</long_desc>
+      <short_desc>仰俯设定点偏移</short_desc>
+      <long_desc>以度为单位的俯仰设定点的机身特定偏移，该值被添加到俯仰设定点并且应当对应于机身的典型巡航速度。</long_desc>
       <min>-90.0</min>
       <max>90.0</max>
       <unit>deg</unit>
@@ -1622,8 +1623,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="45.0" name="FW_MAN_R_MAX" type="FLOAT">
-      <short_desc>Max Manual Roll</short_desc>
-      <long_desc>Max roll for manual control in attitude stabilized mode</long_desc>
+      <short_desc>最大手动横滚</short_desc>
+      <long_desc>姿态稳定模式下手动控制的最大滚动</long_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg</unit>
@@ -1632,8 +1633,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="45.0" name="FW_MAN_P_MAX" type="FLOAT">
-      <short_desc>Max Manual Pitch</short_desc>
-      <long_desc>Max pitch for manual control in attitude stabilized mode</long_desc>
+      <short_desc>最大手动仰俯</short_desc>
+      <long_desc>姿态稳定模式下手动控制的最大仰俯</long_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg</unit>
@@ -1660,20 +1661,20 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="0" name="FW_ARSP_MODE" type="INT32">
-      <short_desc>Airspeed mode</short_desc>
-      <long_desc>The param value sets the method used to publish the control state airspeed. For small wings or VTOL without airspeed sensor this parameter can be used to enable flying without an airspeed reading</long_desc>
+      <short_desc>空速模式</short_desc>
+      <long_desc>参数值设置用于发布控制状态空速的方法。 对于小翼或没有空速传感器的VTOL，此参数可用于启用无空速读数的飞行</long_desc>
       <min>0</min>
       <max>2</max>
       <scope>modules/fw_att_control</scope>
       <values>
-        <value code="1">use vehicle ground velocity as airspeed</value>
-        <value code="0">use measured airspeed</value>
-        <value code="2">declare airspeed invalid</value>
+        <value code="1">地速作为空速</value>
+        <value code="0">使用测量空速</value>
+        <value code="2">声明空速无效</value>
       </values>
     </parameter>
     <parameter default="1.0" name="FW_MAN_R_SC" type="FLOAT">
-      <short_desc>Manual roll scale</short_desc>
-      <long_desc>Scale factor applied to the desired roll actuator command in full manual mode. This parameter allows to adjust the throws of the control surfaces.</long_desc>
+      <short_desc>手动横滚比例</short_desc>
+      <long_desc>在全手动模式下应用于所需横滚舵机控制的比例系数。 此参数允许调整控制面的平衡。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -1682,8 +1683,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="1.0" name="FW_MAN_P_SC" type="FLOAT">
-      <short_desc>Manual pitch scale</short_desc>
-      <long_desc>Scale factor applied to the desired pitch actuator command in full manual mode. This parameter allows to adjust the throws of the control surfaces.</long_desc>
+      <short_desc>手动仰俯比例</short_desc>
+      <long_desc>在全手动模式下应用于所需俯仰舵机控制的比例系数。 此参数允许调整控制面的平衡。</long_desc>
       <min>0.0</min>
       <unit>norm</unit>
       <decimal>2</decimal>
@@ -1691,8 +1692,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_att_control</scope>
     </parameter>
     <parameter default="1.0" name="FW_MAN_Y_SC" type="FLOAT">
-      <short_desc>Manual yaw scale</short_desc>
-      <long_desc>Scale factor applied to the desired yaw actuator command in full manual mode. This parameter allows to adjust the throws of the control surfaces.</long_desc>
+      <short_desc>手动偏航比例</short_desc>
+      <long_desc>在全手动模式下应用于所需偏航舵机控制的比例系数。 此参数允许调整控制面的投射平衡。</long_desc>
       <min>0.0</min>
       <unit>norm</unit>
       <decimal>2</decimal>
@@ -1702,8 +1703,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
   </group>
   <group name="FW L1 Control">
     <parameter default="20.0" name="FW_L1_PERIOD" type="FLOAT">
-      <short_desc>L1 period</short_desc>
-      <long_desc>This is the L1 distance and defines the tracking point ahead of the aircraft its following. A value of 18-25 meters works for most aircraft. Shorten slowly during tuning until response is sharp without oscillation.</long_desc>
+      <short_desc>L1算法周期</short_desc>
+      <long_desc>这是L1算法距离，并定义飞机前面的跟踪点。 18-25米的价值适用于大多数飞机。 在调谐期间缓慢缩短，直到响应清晰，没有振荡。</long_desc>
       <min>12.0</min>
       <max>50.0</max>
       <unit>m</unit>
@@ -1712,8 +1713,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.75" name="FW_L1_DAMPING" type="FLOAT">
-      <short_desc>L1 damping</short_desc>
-      <long_desc>Damping factor for L1 control.</long_desc>
+      <short_desc>L1算法阻尼</short_desc>
+      <long_desc>L1控制的阻尼系数。</long_desc>
       <min>0.6</min>
       <max>0.9</max>
       <decimal>2</decimal>
@@ -1721,8 +1722,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.6" name="FW_THR_CRUISE" type="FLOAT">
-      <short_desc>Cruise throttle</short_desc>
-      <long_desc>This is the throttle setting required to achieve the desired cruise speed. Most airframes have a value of 0.5-0.7.</long_desc>
+      <short_desc>巡航油门</short_desc>
+      <long_desc>这是实现所需巡航速度所需的油门设置。 大多数机身的值为0.5-0.7。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -1731,15 +1732,15 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.0" name="FW_THR_SLEW_MAX" type="FLOAT">
-      <short_desc>Throttle max slew rate</short_desc>
-      <long_desc>Maximum slew rate for the commanded throttle</long_desc>
+      <short_desc>油门最大转换速度</short_desc>
+      <long_desc>控制油门的最大转换率</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="-45.0" name="FW_P_LIM_MIN" type="FLOAT">
-      <short_desc>Negative pitch limit</short_desc>
-      <long_desc>The minimum negative pitch the controller will output.</long_desc>
+      <short_desc>负仰俯限制</short_desc>
+      <long_desc>控制输出的最小负仰俯。</long_desc>
       <min>-60.0</min>
       <max>0.0</max>
       <unit>deg</unit>
@@ -1748,8 +1749,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="45.0" name="FW_P_LIM_MAX" type="FLOAT">
-      <short_desc>Positive pitch limit</short_desc>
-      <long_desc>The maximum positive pitch the controller will output.</long_desc>
+      <short_desc>正仰俯限制</short_desc>
+      <long_desc>控制输出的最大正仰俯。</long_desc>
       <min>0.0</min>
       <max>60.0</max>
       <unit>deg</unit>
@@ -1758,8 +1759,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="50.0" name="FW_R_LIM" type="FLOAT">
-      <short_desc>Controller roll limit</short_desc>
-      <long_desc>The maximum roll the controller will output.</long_desc>
+      <short_desc>横滚限制</short_desc>
+      <long_desc>控制器将输出的最大横滚。</long_desc>
       <min>35.0</min>
       <max>65.0</max>
       <unit>deg</unit>
@@ -1768,8 +1769,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="1.0" name="FW_THR_MAX" type="FLOAT">
-      <short_desc>Throttle limit max</short_desc>
-      <long_desc>This is the maximum throttle % that can be used by the controller. For overpowered aircraft, this should be reduced to a value that provides sufficient thrust to climb at the maximum pitch angle PTCH_MAX.</long_desc>
+      <short_desc>油门最大限制</short_desc>
+      <long_desc>这是控制器可以使用的最大油门％。 对于过度飞行的飞行器，这应当被减小到提供足够的推力以在最大仰俯角处爬升的值。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -1778,8 +1779,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.0" name="FW_THR_MIN" type="FLOAT">
-      <short_desc>Throttle limit min</short_desc>
-      <long_desc>This is the minimum throttle % that can be used by the controller. For electric aircraft this will normally be set to zero, but can be set to a small non-zero value if a folding prop is fitted to prevent the prop from folding and unfolding repeatedly in-flight or to provide some aerodynamic drag from a turning prop to improve the descent rate. For aircraft with internal combustion engine this parameter should be set for desired idle rpm.</long_desc>
+      <short_desc>油门最小限制</short_desc>
+      <long_desc>这是控制器可以使用的最小油门％。 对于电动飞机，这通常被设置为零，但是如果安装折叠支柱以防止支柱在飞行中重复折叠和展开，或者提供来自转向支柱的一些空气动力阻力，则可以将其设置为小的非零值 以提高下降率。 对于具有内燃机的飞机，该参数应设置为所需的怠速rpm。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -1788,8 +1789,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.15" name="FW_THR_IDLE" type="FLOAT">
-      <short_desc>Idle throttle</short_desc>
-      <long_desc>This is the minimum throttle while on the ground For aircraft with internal combustion engine this parameter should be set above desired idle rpm.</long_desc>
+      <short_desc>空闲油门</short_desc>
+      <long_desc>对于具有内燃机的飞机，这是在地面上的最小油门，该参数应设置在期望的怠速rpm之上。</long_desc>
       <min>0.0</min>
       <max>0.4</max>
       <unit>norm</unit>
@@ -1798,8 +1799,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="1.0" name="FW_THR_LND_MAX" type="FLOAT">
-      <short_desc>Throttle limit value before flare</short_desc>
-      <long_desc>This throttle value will be set as throttle limit at FW_LND_TLALT, before aircraft will flare.</long_desc>
+      <short_desc>平飘前油门限制</short_desc>
+      <long_desc>在飞行器平飘之前，该油门值将被设置为FW_LND_TLALT的油门限制。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -1808,8 +1809,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="10.0" name="FW_CLMBOUT_DIFF" type="FLOAT">
-      <short_desc>Climbout Altitude difference</short_desc>
-      <long_desc>If the altitude error exceeds this parameter, the system will climb out with maximum throttle and minimum airspeed until it is closer than this distance to the desired altitude. Mostly used for takeoff waypoints / modes. Set to 0 to disable climbout mode (not recommended).</long_desc>
+      <short_desc>爬升高度差</short_desc>
+      <long_desc>如果高度误差超过此参数，系统将以最大油门和最小空速爬升，直到它比这个距离更接近所需的高度。 主要用于起飞航点/模式。 设置为0以禁用爬升模式（不推荐）。</long_desc>
       <min>0.0</min>
       <max>150.0</max>
       <unit>m</unit>
@@ -1818,7 +1819,7 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="5.0" name="FW_LND_ANG" type="FLOAT">
-      <short_desc>Landing slope angle</short_desc>
+      <short_desc>降落角度</short_desc>
       <min>1.0</min>
       <max>15.0</max>
       <unit>deg</unit>
@@ -1827,7 +1828,7 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="10.0" name="FW_LND_HVIRT" type="FLOAT">
-      <short_desc>FW_LND_HVIRT</short_desc>
+      <short_desc>平飘降落虚线高度</short_desc>
       <min>1.0</min>
       <max>15.0</max>
       <unit>m</unit>
@@ -1836,7 +1837,7 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="8.0" name="FW_LND_FLALT" type="FLOAT">
-      <short_desc>Landing flare altitude (relative to landing altitude)</short_desc>
+      <short_desc>降落平飘高度(相对降落高度)</short_desc>
       <min>0.0</min>
       <max>25.0</max>
       <unit>m</unit>
@@ -1845,8 +1846,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="-1.0" name="FW_LND_TLALT" type="FLOAT">
-      <short_desc>Landing throttle limit altitude (relative landing altitude)</short_desc>
-      <long_desc>Default of -1.0 lets the system default to applying throttle limiting at 2/3 of the flare altitude.</long_desc>
+      <short_desc>降落油门限制高度（相对着陆高度）</short_desc>
+      <long_desc>默认值-1.0允许系统默认以2/3的平飘高度应用限制。</long_desc>
       <min>-1.0</min>
       <max>30.0</max>
       <unit>m</unit>
@@ -1855,7 +1856,7 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="15.0" name="FW_LND_HHDIST" type="FLOAT">
-      <short_desc>Landing heading hold horizontal distance</short_desc>
+      <short_desc>降落航向保持水平距离</short_desc>
       <min>0</min>
       <max>30.0</max>
       <unit>m</unit>
@@ -1869,8 +1870,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="2.5" name="FW_LND_FL_PMIN" type="FLOAT">
-      <short_desc>Flare, minimum pitch</short_desc>
-      <long_desc>Minimum pitch during flare, a positive sign means nose up Applied once FW_LND_TLALT is reached</long_desc>
+      <short_desc>平飘最小仰俯</short_desc>
+      <long_desc>平飘中最小仰俯角, 平飘高度一到，机身仰俯抬头</long_desc>
       <min>0</min>
       <max>15.0</max>
       <unit>deg</unit>
@@ -1879,8 +1880,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="15.0" name="FW_LND_FL_PMAX" type="FLOAT">
-      <short_desc>Flare, maximum pitch</short_desc>
-      <long_desc>Maximum pitch during flare, a positive sign means nose up Applied once FW_LND_TLALT is reached</long_desc>
+      <short_desc>平飘最大仰俯角</short_desc>
+      <long_desc>平飘最大仰俯角, 平飘高度一到，机身仰俯抬头</long_desc>
       <min>0</min>
       <max>45.0</max>
       <unit>deg</unit>
@@ -1889,8 +1890,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="1.3" name="FW_LND_AIRSPD_SC" type="FLOAT">
-      <short_desc>Min. airspeed scaling factor for landing</short_desc>
-      <long_desc>Multiplying this factor with the minimum airspeed of the plane gives the target airspeed the landing approach. FW_AIRSPD_MIN * FW_LND_AIRSPD_SC</long_desc>
+      <short_desc>降落时最小空速比例系数</short_desc>
+      <long_desc>将该系数乘以飞机的最小空速给出目标空速的降落。</long_desc>
       <min>1.0</min>
       <max>1.5</max>
       <unit>norm</unit>
@@ -1901,8 +1902,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
   </group>
   <group name="FW TECS">
     <parameter default="15.0" name="FW_AIRSPD_TRIM" type="FLOAT">
-      <short_desc>Cruise Airspeed</short_desc>
-      <long_desc>The fixed wing controller tries to fly at this airspeed.</long_desc>
+      <short_desc>巡航空速</short_desc>
+      <long_desc>固定翼控制器试图在这个空速飞行。</long_desc>
       <min>0.0</min>
       <max>40</max>
       <unit>m/s</unit>
@@ -1911,8 +1912,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/navigator</scope>
     </parameter>
     <parameter default="10.0" name="FW_AIRSPD_MIN" type="FLOAT">
-      <short_desc>Minimum Airspeed</short_desc>
-      <long_desc>If the airspeed falls below this value, the TECS controller will try to increase airspeed more aggressively.</long_desc>
+      <short_desc>最小空速</short_desc>
+      <long_desc>如果空速低于该值，控制器将尝试更积极地增加空速。</long_desc>
       <min>0.0</min>
       <max>40</max>
       <unit>m/s</unit>
@@ -1921,8 +1922,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="20.0" name="FW_AIRSPD_MAX" type="FLOAT">
-      <short_desc>Maximum Airspeed</short_desc>
-      <long_desc>If the airspeed is above this value, the TECS controller will try to decrease airspeed more aggressively.</long_desc>
+      <short_desc>最大空速</short_desc>
+      <long_desc>如果空速高于该值，则控制器将尝试更积极地降低空速。</long_desc>
       <min>0.0</min>
       <max>40</max>
       <unit>m/s</unit>
@@ -1931,8 +1932,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="5.0" name="FW_T_CLMB_MAX" type="FLOAT">
-      <short_desc>Maximum climb rate</short_desc>
-      <long_desc>This is the best climb rate that the aircraft can achieve with the throttle set to THR_MAX and the airspeed set to the default value. For electric aircraft make sure this number can be achieved towards the end of flight when the battery voltage has reduced. The setting of this parameter can be checked by commanding a positive altitude change of 100m in loiter, RTL or guided mode. If the throttle required to climb is close to THR_MAX and the aircraft is maintaining airspeed, then this parameter is set correctly. If the airspeed starts to reduce, then the parameter is set to high, and if the throttle demand required to climb and maintain speed is noticeably less than FW_THR_MAX, then either FW_T_CLMB_MAX should be increased or FW_THR_MAX reduced.</long_desc>
+      <short_desc>最大爬升率</short_desc>
+      <long_desc>最佳爬升率，油门设置为最大油门参数，空速设置为默认值。 对于电动飞机，确保当电池电压降低时，飞行结束时可以达到这个数字。 可以通过在飞行器，返航或引导模式中指令100m的正高度变化来检查此参数的设置。 如果爬升所需的油门接近最大并且飞机正在维持空速，则此参数设置正确。 如果空速开始减小，则将参数设置为高，并且如果爬升和维持速度所需的油门要求显着小于最大油门参数，则应该增大最大爬升率或减小最大油门参数。</long_desc>
       <min>1.0</min>
       <max>15.0</max>
       <unit>m/s</unit>
@@ -1941,8 +1942,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="2.0" name="FW_T_SINK_MIN" type="FLOAT">
-      <short_desc>Minimum descent rate</short_desc>
-      <long_desc>This is the sink rate of the aircraft with the throttle set to THR_MIN and flown at the same airspeed as used to measure FW_T_CLMB_MAX.</long_desc>
+      <short_desc>最小下降速度</short_desc>
+      <long_desc>这是飞机的下降率，其中油门设置为油门最小值参数，并以与用于测量最大爬升率参数的相同的空速飞行。</long_desc>
       <min>1.0</min>
       <max>5.0</max>
       <unit>m/s</unit>
@@ -1951,8 +1952,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="5.0" name="FW_T_SINK_MAX" type="FLOAT">
-      <short_desc>Maximum descent rate</short_desc>
-      <long_desc>This sets the maximum descent rate that the controller will use. If this value is too large, the aircraft can over-speed on descent. This should be set to a value that can be achieved without exceeding the lower pitch angle limit and without over-speeding the aircraft.</long_desc>
+      <short_desc>最大下降速度</short_desc>
+      <long_desc>这将设置控制器将使用的最大下降速率。 如果该值太大，飞机可以在下降时超速。 这应该被设置为可以实现的值，而不超过下俯仰角极限并且不使飞机超速。</long_desc>
       <min>2.0</min>
       <max>15.0</max>
       <unit>m/s</unit>
@@ -1961,8 +1962,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="5.0" name="FW_T_TIME_CONST" type="FLOAT">
-      <short_desc>TECS time constant</short_desc>
-      <long_desc>This is the time constant of the TECS control algorithm (in seconds). Smaller values make it faster to respond, larger values make it slower to respond.</long_desc>
+      <short_desc>TECS算法时间常数</short_desc>
+      <long_desc>这是TECS控制算法的时间常数（以秒为单位）。 更小的值使得响应更快，更大的值使响应更慢。</long_desc>
       <min>1.0</min>
       <max>10.0</max>
       <unit>s</unit>
@@ -1971,8 +1972,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="8.0" name="FW_T_THRO_CONST" type="FLOAT">
-      <short_desc>TECS Throttle time constant</short_desc>
-      <long_desc>This is the time constant of the TECS throttle control algorithm (in seconds). Smaller values make it faster to respond, larger values make it slower to respond.</long_desc>
+      <short_desc>TECS算法油门时间常数</short_desc>
+      <long_desc>这是TECS油门控制算法的时间常数（以秒为单位）。 更小的值使得响应更快，更大的值使响应更慢。</long_desc>
       <min>1.0</min>
       <max>10.0</max>
       <unit>s</unit>
@@ -1981,8 +1982,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.5" name="FW_T_THR_DAMP" type="FLOAT">
-      <short_desc>Throttle damping factor</short_desc>
-      <long_desc>This is the damping gain for the throttle demand loop. Increase to add damping to correct for oscillations in speed and height.</long_desc>
+      <short_desc>油门阻尼系数</short_desc>
+      <long_desc>这是油门需求循环的阻尼增益。 增加阻尼以校正速度和高度的振荡。</long_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>1</decimal>
@@ -1990,8 +1991,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.1" name="FW_T_INTEG_GAIN" type="FLOAT">
-      <short_desc>Integrator gain</short_desc>
-      <long_desc>This is the integrator gain on the control loop. Increasing this gain increases the speed at which speed and height offsets are trimmed out, but reduces damping and increases overshoot.</long_desc>
+      <short_desc>积分增益</short_desc>
+    <long_desc>这是在控制环中的积分增益，增加该值，速度和高度的偏移速率会被修剪，而且会降低阻尼，增加过冲</long_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>2</decimal>
@@ -1999,8 +2000,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="7.0" name="FW_T_VERT_ACC" type="FLOAT">
-      <short_desc>Maximum vertical acceleration</short_desc>
-      <long_desc>This is the maximum vertical acceleration (in m/s/s) either up or down that the controller will use to correct speed or height errors. The default value of 7 m/s/s (equivalent to +- 0.7 g) allows for reasonably aggressive pitch changes if required to recover from under-speed conditions.</long_desc>
+      <short_desc>最大垂直加速度</short_desc>
+      <long_desc>这是控制器将用于校正速度或高度误差的上或下的最大垂直加速度（m / s / s）。 如果需要从低速条件下恢复，默认值为7 m / s / s（相当于+ - 0.7 g）允许相当积极的仰俯变化。</long_desc>
       <min>1.0</min>
       <max>10.0</max>
       <unit>m/s/s</unit>
@@ -2009,8 +2010,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="3.0" name="FW_T_HGT_OMEGA" type="FLOAT">
-      <short_desc>Complementary filter "omega" parameter for height</short_desc>
-      <long_desc>This is the cross-over frequency (in radians/second) of the complementary filter used to fuse vertical acceleration and barometric height to obtain an estimate of height rate and height. Increasing this frequency weights the solution more towards use of the barometer, whilst reducing it weights the solution more towards use of the accelerometer data.</long_desc>
+      <short_desc>为高度提供补充滤波的“欧米伽”参数</short_desc>
+      <long_desc>这是一个频率(rad/s)补偿滤波器，用于融合垂直加速度和气压计高度，获得预估高度变化率和高度。增加频率权重，会更加倾向于使用气压计，相反的会更加倾向于使用加计数据。</long_desc>
       <min>1.0</min>
       <max>10.0</max>
       <unit>rad/s</unit>
@@ -2019,8 +2020,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="2.0" name="FW_T_SPD_OMEGA" type="FLOAT">
-      <short_desc>Complementary filter "omega" parameter for speed</short_desc>
-      <long_desc>This is the cross-over frequency (in radians/second) of the complementary filter used to fuse longitudinal acceleration and airspeed to obtain an improved airspeed estimate. Increasing this frequency weights the solution more towards use of the airspeed sensor, whilst reducing it weights the solution more towards use of the accelerometer data.</long_desc>
+      <short_desc>为速度提供补充滤波的“欧米伽”参数</short_desc>
+      <long_desc>这是一个频率(rad/s)补充滤波器，用于融合经度加速度和空速，获得预估高度变化率和高度。增加频率权重，会更加倾向于使用空速管数据，相反的会更加倾向于使用加计数据</long_desc>
       <min>1.0</min>
       <max>10.0</max>
       <unit>rad/s</unit>
@@ -2029,8 +2030,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="15.0" name="FW_T_RLL2THR" type="FLOAT">
-      <short_desc>Roll -&gt; Throttle feedforward</short_desc>
-      <long_desc>Increasing this gain turn increases the amount of throttle that will be used to compensate for the additional drag created by turning. Ideally this should be set to  approximately 10 x the extra sink rate in m/s created by a 45 degree bank turn. Increase this gain if the aircraft initially loses energy in turns and reduce if the aircraft initially gains energy in turns. Efficient high aspect-ratio aircraft (eg powered sailplanes) can use a lower value, whereas inefficient low aspect-ratio models (eg delta wings) can use a higher value.</long_desc>
+      <short_desc>横滚，油门前向反馈</short_desc>
+    <long_desc>增加该增益会增加油门量，用于补偿转向产生的额外阻力。理想的情况，这个应该设置大约10倍的下沉率（m/s），该下沉力是由45度倾斜转弯产生的。如果飞行器在转弯时，力度不够，则增加这个增益，反之亦然。高效高纵横比的飞行器（例如动力滑翔机）能够用比较低的值，而低效的飞行器（例如三角翼）需要用一个较高的数值。</long_desc>
       <min>0.0</min>
       <max>20.0</max>
       <decimal>1</decimal>
@@ -2038,8 +2039,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="1.0" name="FW_T_SPDWEIGHT" type="FLOAT">
-      <short_desc>Speed &lt;--&gt; Altitude priority</short_desc>
-      <long_desc>This parameter adjusts the amount of weighting that the pitch control applies to speed vs height errors. Setting it to 0.0 will cause the pitch control to control height and ignore speed errors. This will normally improve height accuracy but give larger airspeed errors. Setting it to 2.0 will cause the pitch control loop to control speed and ignore height errors. This will normally reduce airspeed errors, but give larger height errors. The default value of 1.0 allows the pitch control to simultaneously control height and speed. Note to Glider Pilots - set this parameter to 2.0 (The glider will adjust its pitch angle to maintain airspeed, ignoring changes in height).</long_desc>
+      <short_desc>速度高度优先级</short_desc>
+    <long_desc>该参数适配仰俯控制应用于速度和高度误差的权重。设置为0.0会导致仰俯控制用于控制高度误差，而忽略速度误差。这个会增加高度控制的精度，但是产生一个更大的空速误差。设置为2.0会导致仰俯控制与速度误差，而忽略高度误差，这个会降低空速误差，但是产生一个更大的高度误差。默认值为1.0，允许同事控制高度和速度。滑翔机飞行员需要注意，设置该值为2.0（滑翔机会适配仰俯角维持空速，而忽略高度的变化）。</long_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>1</decimal>
@@ -2047,8 +2048,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.0" name="FW_T_PTCH_DAMP" type="FLOAT">
-      <short_desc>Pitch damping factor</short_desc>
-      <long_desc>This is the damping gain for the pitch demand loop. Increase to add damping to correct for oscillations in height. The default value of 0.0 will work well provided the pitch to servo controller has been tuned properly.</long_desc>
+      <short_desc>仰俯阻尼因子</short_desc>
+    <long_desc>该阻尼增益用于仰俯输入。增加该值会增加阻尼修复高度的震动。默认值是0.0，使用默认值能够提供正常的俯仰值到伺服控制。前提是伺服控制需要被调整得比较合适。</long_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>1</decimal>
@@ -2056,7 +2057,7 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.05" name="FW_T_HRATE_P" type="FLOAT">
-      <short_desc>Height rate P factor</short_desc>
+      <short_desc>高度速率P因子</short_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>2</decimal>
@@ -2064,7 +2065,7 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.0" name="FW_T_HRATE_FF" type="FLOAT">
-      <short_desc>Height rate FF factor</short_desc>
+      <short_desc>高度速率FF因子</short_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>2</decimal>
@@ -2072,7 +2073,7 @@ value will determine the minimum airspeed which will still be fused</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.02" name="FW_T_SRATE_P" type="FLOAT">
-      <short_desc>Speed rate P factor</short_desc>
+      <short_desc>速率P因子</short_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>2</decimal>
@@ -2082,8 +2083,8 @@ value will determine the minimum airspeed which will still be fused</short_desc>
   </group>
   <group name="Follow target">
     <parameter default="8.0" name="NAV_MIN_FT_HT" type="FLOAT">
-      <short_desc>Minimum follow target altitude</short_desc>
-      <long_desc>The minimum height in meters relative to home for following a target</long_desc>
+      <short_desc>最小跟随目标高度</short_desc>
+    <long_desc>相对于家的跟随目标的最小高度（单位:米）</long_desc>
       <min>8.0</min>
       <unit>meters</unit>
       <scope>modules/navigator</scope>
@@ -3050,8 +3051,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
   </group>
   <group name="Multicopter Attitude Control">
     <parameter default="0.2" name="MC_ROLL_TC" type="FLOAT">
-      <short_desc>Roll time constant</short_desc>
-      <long_desc>Reduce if the system is too twitchy, increase if the response is too slow and sluggish.</long_desc>
+      <short_desc>横滚时间常数</short_desc>
+    <long_desc>如果系统太敏感就降低该值，如果响应速度过慢则增加该值。</long_desc>
       <min>0.15</min>
       <max>0.25</max>
       <unit>s</unit>
@@ -3060,8 +3061,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.2" name="MC_PITCH_TC" type="FLOAT">
-      <short_desc>Pitch time constant</short_desc>
-      <long_desc>Reduce if the system is too twitchy, increase if the response is too slow and sluggish.</long_desc>
+      <short_desc>仰俯时间常数。</short_desc>
+      <long_desc>如果系统太敏感就降低该值，如果响应速度过慢则增加该值。</long_desc>
       <min>0.15</min>
       <max>0.25</max>
       <unit>s</unit>
@@ -3070,8 +3071,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="6.5" name="MC_ROLL_P" type="FLOAT">
-      <short_desc>Roll P gain</short_desc>
-      <long_desc>Roll proportional gain, i.e. desired angular speed in rad/s for error 1 rad.</long_desc>
+      <short_desc>横滚P增益</short_desc>
+    <long_desc>横滚的P增益，例如，期望的角速度（rad/s）误差为1rad。</long_desc>
       <min>0.0</min>
       <max>8</max>
       <unit>1/s</unit>
@@ -3080,8 +3081,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.15" name="MC_ROLLRATE_P" type="FLOAT">
-      <short_desc>Roll rate P gain</short_desc>
-      <long_desc>Roll rate proportional gain, i.e. control output for angular speed error 1 rad/s.</long_desc>
+      <short_desc>横滚速率的P增益</short_desc>
+    <long_desc>横滚速率P值增益。例如，输出角速度误差为1rad/s。</long_desc>
       <min>0.0</min>
       <max>0.5</max>
       <decimal>3</decimal>
@@ -3089,16 +3090,16 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.05" name="MC_ROLLRATE_I" type="FLOAT">
-      <short_desc>Roll rate I gain</short_desc>
-      <long_desc>Roll rate integral gain. Can be set to compensate static thrust difference or gravity center offset.</long_desc>
+      <short_desc>横滚速率I增益</short_desc>
+    <long_desc>横滚速率I增益。设置该值补偿静态推力和重心偏移。</long_desc>
       <min>0.0</min>
       <decimal>3</decimal>
       <increment>0.01</increment>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.003" name="MC_ROLLRATE_D" type="FLOAT">
-      <short_desc>Roll rate D gain</short_desc>
-      <long_desc>Roll rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.</long_desc>
+      <short_desc>横滚速率D增益</short_desc>
+      <long_desc>横滚速率D增益。较小的值帮助减少快速震荡。如果该值设置过大，震荡会再次出现。</long_desc>
       <min>0.0</min>
       <max>0.01</max>
       <decimal>4</decimal>
@@ -3106,15 +3107,15 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.0" name="MC_ROLLRATE_FF" type="FLOAT">
-      <short_desc>Roll rate feedforward</short_desc>
-      <long_desc>Improves tracking performance.</long_desc>
+      <short_desc>横滚速率前向反馈</short_desc>
+      <long_desc>增加跟踪性能。</long_desc>
       <min>0.0</min>
       <decimal>4</decimal>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="6.5" name="MC_PITCH_P" type="FLOAT">
-      <short_desc>Pitch P gain</short_desc>
-      <long_desc>Pitch proportional gain, i.e. desired angular speed in rad/s for error 1 rad.</long_desc>
+      <short_desc>仰俯P增益</short_desc>
+      <long_desc>仰俯P增益。例如，期望的角速度（rad/s）误差为1rad。</long_desc>
       <min>0.0</min>
       <max>10</max>
       <unit>1/s</unit>
@@ -3123,8 +3124,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.15" name="MC_PITCHRATE_P" type="FLOAT">
-      <short_desc>Pitch rate P gain</short_desc>
-      <long_desc>Pitch rate proportional gain, i.e. control output for angular speed error 1 rad/s.</long_desc>
+      <short_desc>仰俯速率P增益</short_desc>
+      <long_desc>仰俯速率P值增益。例如，输出角速度误差为1rad/s。</long_desc>
       <min>0.0</min>
       <max>0.6</max>
       <decimal>3</decimal>
@@ -3132,31 +3133,31 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.05" name="MC_PITCHRATE_I" type="FLOAT">
-      <short_desc>Pitch rate I gain</short_desc>
-      <long_desc>Pitch rate integral gain. Can be set to compensate static thrust difference or gravity center offset.</long_desc>
+      <short_desc>仰俯速率I增益</short_desc>
+      <long_desc>仰俯速率I增益。设置该值补偿静态推力和重心偏移。</long_desc>
       <min>0.0</min>
       <decimal>3</decimal>
       <increment>0.01</increment>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.003" name="MC_PITCHRATE_D" type="FLOAT">
-      <short_desc>Pitch rate D gain</short_desc>
-      <long_desc>Pitch rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.</long_desc>
+      <short_desc>仰俯速率D增益</short_desc>
+      <long_desc>仰俯速率D增益。较小的值帮助减少快速震荡。如果该值设置过大，震荡会再次出现。</long_desc>
       <min>0.0</min>
       <decimal>4</decimal>
       <increment>0.0005</increment>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.0" name="MC_PITCHRATE_FF" type="FLOAT">
-      <short_desc>Pitch rate feedforward</short_desc>
-      <long_desc>Improves tracking performance.</long_desc>
+      <short_desc>仰俯速率前向反馈</short_desc>
+      <long_desc>增加跟踪性能。</long_desc>
       <min>0.0</min>
       <decimal>4</decimal>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="2.8" name="MC_YAW_P" type="FLOAT">
-      <short_desc>Yaw P gain</short_desc>
-      <long_desc>Yaw proportional gain, i.e. desired angular speed in rad/s for error 1 rad.</long_desc>
+      <short_desc>航向角P增益</short_desc>
+      <long_desc>航向角P增益。例如，期望的角速度（rad/s）误差为1rad。</long_desc>
       <min>0.0</min>
       <max>5</max>
       <unit>1/s</unit>
@@ -3165,8 +3166,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.2" name="MC_YAWRATE_P" type="FLOAT">
-      <short_desc>Yaw rate P gain</short_desc>
-      <long_desc>Yaw rate proportional gain, i.e. control output for angular speed error 1 rad/s.</long_desc>
+      <short_desc>航向角速率P增益</short_desc>
+      <long_desc>航向角速率P值增益。例如，输出角速度误差为1rad/s。</long_desc>
       <min>0.0</min>
       <max>0.6</max>
       <decimal>2</decimal>
@@ -3174,32 +3175,32 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.1" name="MC_YAWRATE_I" type="FLOAT">
-      <short_desc>Yaw rate I gain</short_desc>
-      <long_desc>Yaw rate integral gain. Can be set to compensate static thrust difference or gravity center offset.</long_desc>
+      <short_desc>航向角速率I增益</short_desc>
+      <long_desc>航向角速率I增益。设置该值补偿静态推力和重心偏移。</long_desc>
       <min>0.0</min>
       <decimal>2</decimal>
       <increment>0.01</increment>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.0" name="MC_YAWRATE_D" type="FLOAT">
-      <short_desc>Yaw rate D gain</short_desc>
-      <long_desc>Yaw rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.</long_desc>
+      <short_desc>航向角速率D增益</short_desc>
+      <long_desc>航向角速率D增益。较小的值帮助减少快速震荡。如果该值设置过大，震荡会再次出现。</long_desc>
       <min>0.0</min>
       <decimal>2</decimal>
       <increment>0.01</increment>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.0" name="MC_YAWRATE_FF" type="FLOAT">
-      <short_desc>Yaw rate feedforward</short_desc>
-      <long_desc>Improves tracking performance.</long_desc>
+      <short_desc>航向角速率前向反馈</short_desc>
+      <long_desc>航向角增加跟踪性能。</long_desc>
       <min>0.0</min>
       <decimal>4</decimal>
       <increment>0.01</increment>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="0.5" name="MC_YAW_FF" type="FLOAT">
-      <short_desc>Yaw feed forward</short_desc>
-      <long_desc>Feed forward weight for manual yaw control. 0 will give slow responce and no overshot, 1 - fast responce and big overshot.</long_desc>
+      <short_desc>航向角前向反馈</short_desc>
+      <long_desc>手动航向角控制的前向反馈权重。0会给予慢速响应且不会过冲，1会产生快速响应且大的过冲。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
@@ -3207,8 +3208,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="220.0" name="MC_ROLLRATE_MAX" type="FLOAT">
-      <short_desc>Max roll rate</short_desc>
-      <long_desc>Limit for roll rate, has effect for large rotations in autonomous mode, to avoid large control output and mixer saturation.</long_desc>
+      <short_desc>最大横滚速率</short_desc>
+      <long_desc>限制横滚速率，在自动模式下的大的旋转下生效，避免较大的控制输出以及混合器饱和。</long_desc>
       <min>0.0</min>
       <max>360.0</max>
       <unit>deg/s</unit>
@@ -3217,8 +3218,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="220.0" name="MC_PITCHRATE_MAX" type="FLOAT">
-      <short_desc>Max pitch rate</short_desc>
-      <long_desc>Limit for pitch rate, has effect for large rotations in autonomous mode, to avoid large control output and mixer saturation.</long_desc>
+      <short_desc>最大的仰俯速率</short_desc>
+      <long_desc>限制仰俯速率，在自动模式下的大的旋转下生效，避免较大的控制输出以及混合器饱和。</long_desc>
       <min>0.0</min>
       <max>360.0</max>
       <unit>deg/s</unit>
@@ -3227,8 +3228,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="200.0" name="MC_YAWRATE_MAX" type="FLOAT">
-      <short_desc>Max yaw rate</short_desc>
-      <long_desc>A value of significantly over 120 degrees per second can already lead to mixer saturation.</long_desc>
+      <short_desc>最大航向角速率</short_desc>
+    <long_desc>超过120度/秒回导致混合器饱和。</long_desc>
       <min>0.0</min>
       <max>360.0</max>
       <unit>deg/s</unit>
@@ -3237,8 +3238,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="45.0" name="MC_YAWRAUTO_MAX" type="FLOAT">
-      <short_desc>Max yaw rate in auto mode</short_desc>
-      <long_desc>Limit for yaw rate, has effect for large rotations in autonomous mode, to avoid large control output and mixer saturation. A value of significantly over 60 degrees per second can already lead to mixer saturation. A value of 30 degrees / second is recommended to avoid very audible twitches.</long_desc>
+      <short_desc>自动模式下最大航向角速率</short_desc>
+    <long_desc>限制航向角速率，在自动模式下的大的旋转下生效，避免较大的控制输出以及混合器饱和。超过60度/秒回导致混合器饱和。建议使用30度/秒，以避免机体明显的抽动。</long_desc>
       <min>0.0</min>
       <max>120.0</max>
       <unit>deg/s</unit>
@@ -3247,7 +3248,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="360.0" name="MC_ACRO_R_MAX" type="FLOAT">
-      <short_desc>Max acro roll rate</short_desc>
+      <short_desc>最大的顶点横滚速率</short_desc>
       <min>0.0</min>
       <max>1000.0</max>
       <unit>deg/s</unit>
@@ -3256,7 +3257,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="360.0" name="MC_ACRO_P_MAX" type="FLOAT">
-      <short_desc>Max acro pitch rate</short_desc>
+      <short_desc>最大的顶点仰俯速率</short_desc>
       <min>0.0</min>
       <max>1000.0</max>
       <unit>deg/s</unit>
@@ -3265,7 +3266,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="360.0" name="MC_ACRO_Y_MAX" type="FLOAT">
-      <short_desc>Max acro yaw rate</short_desc>
+      <short_desc>最大的顶点航向角速率</short_desc>
       <min>0.0</min>
       <max>1000.0</max>
       <unit>deg/s</unit>
@@ -3274,8 +3275,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="1.0" name="MC_RATT_TH" type="FLOAT">
-      <short_desc>Threshold for Rattitude mode</short_desc>
-      <long_desc>Manual input needed in order to override attitude control rate setpoints and instead pass manual stick inputs as rate setpoints</long_desc>
+      <short_desc>半自稳模式的临界值</short_desc>
+      <long_desc>需要手动输入去取代姿态控制，并将手动输入值作为控制数据。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
@@ -3283,8 +3284,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="1.0" name="MC_TPA_BREAK" type="FLOAT">
-      <short_desc>Threshold for Throttle PID Attenuation (TPA)</short_desc>
-      <long_desc>Magnitude of throttle setpoint at which to begin attenuating roll/pitch P gain</long_desc>
+      <short_desc>油门PID衰减(TPA)临界值</short_desc>
+      <long_desc>开始横滚/仰俯P增益的油门设定点量级</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
@@ -3292,8 +3293,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="1.0" name="MC_TPA_SLOPE" type="FLOAT">
-      <short_desc>Slope for Throttle PID Attenuation (TPA)</short_desc>
-      <long_desc>Rate at which to attenuate roll/pitch P gain Attenuation factor is 1.0 when throttle magnitude is below the setpoint Above the setpoint, the attenuation factor is (1 - slope*(abs(throttle)-breakpoint))</long_desc>
+      <short_desc>油门PID衰减(TPA)斜率</short_desc>
+      <long_desc>当油门量级低于设定点时，横滚仰俯P增益衰减因子的速率为1.0；当高于设定值时，衰减因子是(1 - slope*(abs(throttle)-breakpoint))</long_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>2</decimal>
@@ -3301,102 +3302,102 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_att_control</scope>
     </parameter>
     <parameter default="35.0" name="MPP_MAN_R_MAX" type="FLOAT">
-      <short_desc>Max manual roll</short_desc>
+      <short_desc>最大手动横滚值</short_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg</unit>
       <scope>examples/mc_pos_control_multiplatform</scope>
     </parameter>
     <parameter default="35.0" name="MPP_MAN_P_MAX" type="FLOAT">
-      <short_desc>Max manual pitch</short_desc>
+      <short_desc>最大手动仰俯值</short_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg</unit>
       <scope>examples/mc_pos_control_multiplatform</scope>
     </parameter>
     <parameter default="120.0" name="MPP_MAN_Y_MAX" type="FLOAT">
-      <short_desc>Max manual yaw rate</short_desc>
+      <short_desc>最大手动航向角值</short_desc>
       <min>0.0</min>
       <unit>deg/s</unit>
       <scope>examples/mc_pos_control_multiplatform</scope>
     </parameter>
     <parameter default="6.0" name="MP_ROLL_P" type="FLOAT">
-      <short_desc>Roll P gain</short_desc>
-      <long_desc>Roll proportional gain, i.e. desired angular speed in rad/s for error 1 rad.</long_desc>
+      <short_desc>横滚P增益</short_desc>
+      <long_desc>横滚的P增益，例如，期望的角速度（rad/s）误差为1rad。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.1" name="MP_ROLLRATE_P" type="FLOAT">
-      <short_desc>Roll rate P gain</short_desc>
-      <long_desc>Roll rate proportional gain, i.e. control output for angular speed error 1 rad/s.</long_desc>
+      <short_desc>横滚速率的P增益</short_desc>
+      <long_desc>横滚速率P值增益。例如，输出角速度误差为1rad/s。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.0" name="MP_ROLLRATE_I" type="FLOAT">
-      <short_desc>Roll rate I gain</short_desc>
-      <long_desc>Roll rate integral gain. Can be set to compensate static thrust difference or gravity center offset.</long_desc>
+      <short_desc>横滚速率I增益</short_desc>
+      <long_desc>横滚速率I增益。设置该值补偿静态推力和重心偏移。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.002" name="MP_ROLLRATE_D" type="FLOAT">
-      <short_desc>Roll rate D gain</short_desc>
-      <long_desc>Roll rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.</long_desc>
+      <short_desc>横滚速率D增益</short_desc>
+      <long_desc>横滚速率D增益。较小的值帮助减少快速震荡。如果该值设置过大，震荡会再次出现。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="6.0" name="MP_PITCH_P" type="FLOAT">
-      <short_desc>Pitch P gain</short_desc>
-      <long_desc>Pitch proportional gain, i.e. desired angular speed in rad/s for error 1 rad.</long_desc>
+      <short_desc>仰俯P增益</short_desc>
+      <long_desc>仰俯P增益。例如，期望的角速度（rad/s）误差为1rad。</long_desc>
       <min>0.0</min>
       <unit>1/s</unit>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.1" name="MP_PITCHRATE_P" type="FLOAT">
-      <short_desc>Pitch rate P gain</short_desc>
-      <long_desc>Pitch rate proportional gain, i.e. control output for angular speed error 1 rad/s.</long_desc>
+      <short_desc>仰俯速率P增益</short_desc>
+      <long_desc>仰俯速率P值增益。例如，输出角速度误差为1rad/s。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.0" name="MP_PITCHRATE_I" type="FLOAT">
-      <short_desc>Pitch rate I gain</short_desc>
-      <long_desc>Pitch rate integral gain. Can be set to compensate static thrust difference or gravity center offset.</long_desc>
+      <short_desc>仰俯速率I增益</short_desc>
+      <long_desc>仰俯速率I增益。设置该值补偿静态推力和重心偏移。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.002" name="MP_PITCHRATE_D" type="FLOAT">
-      <short_desc>Pitch rate D gain</short_desc>
-      <long_desc>Pitch rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.</long_desc>
+      <short_desc>仰俯速率D增益</short_desc>
+      <long_desc>仰俯速率D增益。较小的值帮助减少快速震荡。如果该值设置过大，震荡会再次出现。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="2.0" name="MP_YAW_P" type="FLOAT">
-      <short_desc>Yaw P gain</short_desc>
-      <long_desc>Yaw proportional gain, i.e. desired angular speed in rad/s for error 1 rad.</long_desc>
+      <short_desc>航向角P增益</short_desc>
+      <long_desc>航向角P增益。例如，期望的角速度（rad/s）误差为1rad。</long_desc>
       <min>0.0</min>
       <unit>1/s</unit>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.3" name="MP_YAWRATE_P" type="FLOAT">
-      <short_desc>Yaw rate P gain</short_desc>
-      <long_desc>Yaw rate proportional gain, i.e. control output for angular speed error 1 rad/s.</long_desc>
+      <short_desc>航向角速率P增益</short_desc>
+      <long_desc>航向角速率P值增益。例如，输出角速度误差为1rad/s。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.0" name="MP_YAWRATE_I" type="FLOAT">
-      <short_desc>Yaw rate I gain</short_desc>
-      <long_desc>Yaw rate integral gain. Can be set to compensate static thrust difference or gravity center offset.</long_desc>
+      <short_desc>航向角速率I增益</short_desc>
+      <long_desc>航向角速率I增益。设置该值补偿静态推力和重心偏移。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.0" name="MP_YAWRATE_D" type="FLOAT">
-      <short_desc>Yaw rate D gain</short_desc>
-      <long_desc>Yaw rate differential gain. Small values help reduce fast oscillations. If value is too big oscillations will appear again.</long_desc>
+      <short_desc>航向角速率D增益</short_desc>
+      <long_desc>航向角速率D增益。较小的值帮助减少快速震荡。如果该值设置过大，震荡会再次出现。</long_desc>
       <min>0.0</min>
       <scope>examples/mc_att_control_multiplatform</scope>
     </parameter>
     <parameter default="0.5" name="MP_YAW_FF" type="FLOAT">
-      <short_desc>Yaw feed forward</short_desc>
-      <long_desc>Feed forward weight for manual yaw control. 0 will give slow responce and no overshot, 1 - fast responce and big overshot.</long_desc>
+      <short_desc>航向角前向反馈</short_desc>
+      <long_desc>手动航向角控制的前向反馈权重。0会给予慢速响应且不会过冲，1会产生快速响应且大的过冲。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <scope>examples/mc_att_control_multiplatform</scope>
@@ -3432,8 +3433,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
   </group>
   <group name="Multicopter Position Control">
     <parameter default="0.12" name="MPC_THR_MIN" type="FLOAT">
-      <short_desc>Minimum thrust in auto thrust control</short_desc>
-      <long_desc>It's recommended to set it &gt; 0 to avoid free fall with zero thrust.</long_desc>
+      <short_desc>在自动推力控制下最小的推力</short_desc>
+      <long_desc>建议设置为0避免在0推力下的自由坠落。</long_desc>
       <min>0.05</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -3442,8 +3443,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.5" name="MPC_THR_HOVER" type="FLOAT">
-      <short_desc>Hover thrust</short_desc>
-      <long_desc>Vertical thrust required to hover. This value is mapped to center stick for manual throttle control. With this value set to the thrust required to hover, transition from manual to ALTCTL mode while hovering will occur with the throttle stick near center, which is then interpreted as (near) zero demand for vertical speed.</long_desc>
+      <short_desc>Hover thrust盘旋推力</short_desc>
+      <long_desc>盘旋时需要的垂直方向推力。这个值映射到手动控制油门杆的中值。通过设置需要的推力，从手动到定高模式时，油门杆在中值时开始盘旋。此时垂直方向的速度接近0。</long_desc>
       <min>0.2</min>
       <max>0.8</max>
       <unit>norm</unit>
@@ -3452,8 +3453,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.1" name="MPC_ALTCTL_DZ" type="FLOAT">
-      <short_desc>ALTCTL throttle curve breakpoint</short_desc>
-      <long_desc>Halfwidth of deadband or reduced sensitivity center portion of curve. This is the halfwidth of the center region of the ALTCTL throttle curve. It extends from center-dz to center+dz.</long_desc>
+      <short_desc>定高油门曲线断点</short_desc>
+      <long_desc>死区的一半带宽或者减少的中心曲线的敏感度。这是中心部分定高模式下油门曲线的一般宽度。其宽度为 center-dz 到 center+dz。</long_desc>
       <min>0.0</min>
       <max>0.2</max>
       <unit>norm</unit>
@@ -3462,16 +3463,16 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.0" name="MPC_ALTCTL_DY" type="FLOAT">
-      <short_desc>ALTCTL throttle curve breakpoint height</short_desc>
-      <long_desc>Controls the slope of the reduced sensitivity region. This is the height of the ALTCTL throttle curve at center-dz and center+dz.</long_desc>
+      <short_desc>定高模式油门曲线断点高度</short_desc>
+      <long_desc>控制减少的敏感区斜率。这是高度模式取消的高度，其范围为 center-dz 到 center+dz。</long_desc>
       <min>0.0</min>
       <max>0.2</max>
       <decimal>2</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.9" name="MPC_THR_MAX" type="FLOAT">
-      <short_desc>Maximum thrust in auto thrust control</short_desc>
-      <long_desc>Limit max allowed thrust. Setting a value of one can put the system into actuator saturation as no spread between the motors is possible any more. A value of 0.8 - 0.9 is recommended.</long_desc>
+      <short_desc>自动模式下推力控制的最大推力</short_desc>
+      <long_desc>最大推力限制。设置一个数值可以将系统舵机设置饱和，达到最大速率，无法再增加。推荐设定0.8 - 0.9。</long_desc>
       <min>0.0</min>
       <max>0.95</max>
       <unit>norm</unit>
@@ -3480,8 +3481,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.08" name="MPC_MANTHR_MIN" type="FLOAT">
-      <short_desc>Minimum manual thrust</short_desc>
-      <long_desc>Minimum vertical thrust. It's recommended to set it &gt; 0 to avoid free fall with zero thrust.</long_desc>
+      <short_desc>最小手动推力</short_desc>
+      <long_desc>最小垂直推力。推荐设为0避免0推力的时候产生的自由坠落。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -3490,8 +3491,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.9" name="MPC_MANTHR_MAX" type="FLOAT">
-      <short_desc>Maximum manual thrust</short_desc>
-      <long_desc>Limit max allowed thrust. Setting a value of one can put the system into actuator saturation as no spread between the motors is possible any more. A value of 0.8 - 0.9 is recommended.</long_desc>
+      <short_desc>最大手动推力</short_desc>
+      <long_desc>限制最大允许的推力。设置一个数值可以将系统舵机设置饱和，达到最大速率，无法再增加。推荐设定0.8 - 0.9。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -3500,37 +3501,37 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="1.0" name="MPC_Z_P" type="FLOAT">
-      <short_desc>Proportional gain for vertical position error</short_desc>
+      <short_desc>垂直位置误差的P增益</short_desc>
       <min>0.0</min>
       <max>1.5</max>
       <decimal>2</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.2" name="MPC_Z_VEL_P" type="FLOAT">
-      <short_desc>Proportional gain for vertical velocity error</short_desc>
+      <short_desc>垂直速度误差的P增益</short_desc>
       <min>0.1</min>
       <max>0.4</max>
       <decimal>2</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.02" name="MPC_Z_VEL_I" type="FLOAT">
-      <short_desc>Integral gain for vertical velocity error</short_desc>
-      <long_desc>Non zero value allows hovering thrust estimation on stabilized or autonomous takeoff.</long_desc>
+      <short_desc>垂直速度误差的I增益</short_desc>
+      <long_desc>非0值允许在自稳模式或者自动模式下起飞使用盘旋推力预估。</long_desc>
       <min>0.01</min>
       <max>0.1</max>
       <decimal>3</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.0" name="MPC_Z_VEL_D" type="FLOAT">
-      <short_desc>Differential gain for vertical velocity error</short_desc>
+      <short_desc>垂直速度误差的D增益</short_desc>
       <min>0.0</min>
       <max>0.1</max>
       <decimal>3</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="3.0" name="MPC_Z_VEL_MAX_UP" type="FLOAT">
-      <short_desc>Maximum vertical ascent velocity</short_desc>
-      <long_desc>Maximum vertical velocity in AUTO mode and endpoint for stabilized modes (ALTCTRL, POSCTRL).</long_desc>
+      <short_desc>最大垂直上升速度</short_desc>
+      <long_desc>在自动模式或终点为稳定模式（定高/定点模式）下的最大垂直速度。</long_desc>
       <min>0.5</min>
       <max>8.0</max>
       <unit>m/s</unit>
@@ -3538,60 +3539,60 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="1.0" name="MPC_Z_VEL_MAX" type="FLOAT">
-      <short_desc>Maximum vertical descent velocity</short_desc>
-      <long_desc>Maximum vertical velocity in AUTO mode and endpoint for stabilized modes (ALTCTRL, POSCTRL).</long_desc>
+      <short_desc>最大垂直下降速度</short_desc>
+      <long_desc>在自动模式或终点为稳定模式（定高/定点模式）下的最大垂直速度。</long_desc>
       <min>0.5</min>
       <max>4.0</max>
       <unit>m/s</unit>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="1.0" name="MPC_Z_VEL_MAX_DN" type="FLOAT">
-      <short_desc>Transitional support, do not change / use</short_desc>
+      <short_desc>过渡性支持，不要修改/使用</short_desc>
       <min>0.5</min>
       <max>4.0</max>
       <unit>m/s</unit>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.5" name="MPC_Z_FF" type="FLOAT">
-      <short_desc>Vertical velocity feed forward</short_desc>
-      <long_desc>Feed forward weight for altitude control in stabilized modes (ALTCTRL, POSCTRL). 0 will give slow responce and no overshot, 1 - fast responce and big overshot.</long_desc>
+      <short_desc>垂直速度前向补偿</short_desc>
+      <long_desc>在稳定模式（定高/定点模式）下高度控制的前向补偿权重。0会产生缓慢响应且不会过冲，1会产生快速响应和大的过冲。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.95" name="MPC_XY_P" type="FLOAT">
-      <short_desc>Proportional gain for horizontal position error</short_desc>
+      <short_desc>水平位置误差的P增益</short_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>2</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.09" name="MPC_XY_VEL_P" type="FLOAT">
-      <short_desc>Proportional gain for horizontal velocity error</short_desc>
+      <short_desc>水平速度误差的P增益</short_desc>
       <min>0.06</min>
       <max>0.15</max>
       <decimal>2</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.02" name="MPC_XY_VEL_I" type="FLOAT">
-      <short_desc>Integral gain for horizontal velocity error</short_desc>
-      <long_desc>Non-zero value allows to resist wind.</long_desc>
+      <short_desc>水平速度误差的I增益</short_desc>
+      <long_desc>非0值允许抗风。</long_desc>
       <min>0.0</min>
       <max>0.1</max>
       <decimal>3</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.01" name="MPC_XY_VEL_D" type="FLOAT">
-      <short_desc>Differential gain for horizontal velocity error. Small values help reduce fast oscillations. If value is too big oscillations will appear again</short_desc>
+      <short_desc>水平速度误差的D增益。较小的值帮助减少快速震荡。如果该值设置过大，震荡会再次出现。</short_desc>
       <min>0.005</min>
       <max>0.1</max>
       <decimal>3</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="5.0" name="MPC_XY_CRUISE" type="FLOAT">
-      <short_desc>Nominal horizontal velocity</short_desc>
-      <long_desc>Normal horizontal velocity in AUTO modes (includes also RTL / hold / etc.) and endpoint for position stabilized mode (POSCTRL).</long_desc>
+      <short_desc>正常的水平速度</short_desc>
+      <long_desc>在自动模式(包括返航/定高定点等)和终点为位置稳定模式（定点）的正常水平速度。</long_desc>
       <min>3.0</min>
       <max>20.0</max>
       <unit>m/s</unit>
@@ -3600,8 +3601,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="8.0" name="MPC_XY_VEL_MAX" type="FLOAT">
-      <short_desc>Maximum horizontal velocity</short_desc>
-      <long_desc>Maximum horizontal velocity in AUTO mode. If higher speeds are commanded in a mission they will be capped to this velocity.</long_desc>
+      <short_desc>最大水平速度</short_desc>
+      <long_desc>自动模式下最大水平速度。如果在任务中设定了更高的速度，则设置为此速度。</long_desc>
       <min>0.0</min>
       <max>20.0</max>
       <unit>m/s</unit>
@@ -3610,16 +3611,16 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.5" name="MPC_XY_FF" type="FLOAT">
-      <short_desc>Horizontal velocity feed forward</short_desc>
-      <long_desc>Feed forward weight for position control in position control mode (POSCTRL). 0 will give slow responce and no overshot, 1 - fast responce and big overshot.</long_desc>
+      <short_desc>水平速度前向反馈</short_desc>
+      <long_desc>在位置控制模式（定点模式）下位置控制的前向补偿权重。0会产生缓慢响应且不会过冲，1会产生快速响应和大的过冲。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="45.0" name="MPC_TILTMAX_AIR" type="FLOAT">
-      <short_desc>Maximum tilt angle in air</short_desc>
-      <long_desc>Limits maximum tilt in AUTO and POSCTRL modes during flight.</long_desc>
+      <short_desc>空中最大倾转角度</short_desc>
+      <long_desc>飞行中自动和位置控制模式下最大倾角限制。</long_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg</unit>
@@ -3627,8 +3628,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="12.0" name="MPC_TILTMAX_LND" type="FLOAT">
-      <short_desc>Maximum tilt during landing</short_desc>
-      <long_desc>Limits maximum tilt angle on landing.</long_desc>
+      <short_desc>登陆模式下最大倾转角度</short_desc>
+      <long_desc>登陆模式下最大倾转角度限制。</long_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg</unit>
@@ -3636,14 +3637,14 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.5" name="MPC_LAND_SPEED" type="FLOAT">
-      <short_desc>Landing descend rate</short_desc>
+      <short_desc>着陆下降速率</short_desc>
       <min>0.2</min>
       <unit>m/s</unit>
       <decimal>1</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="1.5" name="MPC_TKO_SPEED" type="FLOAT">
-      <short_desc>Takeoff climb rate</short_desc>
+      <short_desc>起飞爬升速率</short_desc>
       <min>1</min>
       <max>5</max>
       <unit>m/s</unit>
@@ -3651,7 +3652,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="35.0" name="MPC_MAN_R_MAX" type="FLOAT">
-      <short_desc>Max manual roll</short_desc>
+      <short_desc>最大手动横滚速率</short_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg</unit>
@@ -3659,7 +3660,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="35.0" name="MPC_MAN_P_MAX" type="FLOAT">
-      <short_desc>Max manual pitch</short_desc>
+      <short_desc>最大手动俯仰速率</short_desc>
       <min>0.0</min>
       <max>90.0</max>
       <unit>deg</unit>
@@ -3667,7 +3668,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="200.0" name="MPC_MAN_Y_MAX" type="FLOAT">
-      <short_desc>Max manual yaw rate</short_desc>
+      <short_desc>最大手动航向角速率</short_desc>
       <min>0.0</min>
       <max>400</max>
       <unit>deg/s</unit>
@@ -3675,14 +3676,14 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.1" name="MPC_HOLD_XY_DZ" type="FLOAT">
-      <short_desc>Deadzone of X,Y sticks where position hold is enabled</short_desc>
+      <short_desc>定点使能下控制器X,Y杆的死区</short_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.8" name="MPC_HOLD_MAX_XY" type="FLOAT">
-      <short_desc>Maximum horizontal velocity for which position hold is enabled (use 0 to disable check)</short_desc>
+      <short_desc>定点模式使能下最大水平速度（值为0时不检测）</short_desc>
       <min>0.0</min>
       <max>3.0</max>
       <unit>m/s</unit>
@@ -3690,7 +3691,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.6" name="MPC_HOLD_MAX_Z" type="FLOAT">
-      <short_desc>Maximum vertical velocity for which position hold is enabled (use 0 to disable check)</short_desc>
+      <short_desc>定点模式使能下最大垂直速度(值为0时不检测）</short_desc>
       <min>0.0</min>
       <max>3.0</max>
       <unit>m/s</unit>
@@ -3698,7 +3699,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="5.0" name="MPC_VELD_LP" type="FLOAT">
-      <short_desc>Low pass filter cut freq. for numerical velocity derivative</short_desc>
+      <short_desc>低通滤波器降低频率。用作数字速度微分。</short_desc>
       <min>0.0</min>
       <max>10</max>
       <unit>Hz</unit>
@@ -3706,7 +3707,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="5.0" name="MPC_ACC_HOR_MAX" type="FLOAT">
-      <short_desc>Maximum horizonal acceleration in velocity controlled modes</short_desc>
+      <short_desc>速度控制模式中最大水平加速度</short_desc>
       <min>2.0</min>
       <max>15.0</max>
       <unit>m/s/s</unit>
@@ -3715,17 +3716,17 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0" name="MPC_ALT_MODE" type="INT32">
-      <short_desc>Altitude control mode, note mode 1 only tested with LPE</short_desc>
+      <short_desc>高度控制模式，注意只有模式1在LPE下测试。</short_desc>
       <min>0</min>
       <max>1</max>
       <scope>modules/mc_pos_control</scope>
       <values>
-        <value code="1">Terrain following</value>
-        <value code="0">Altitude following</value>
+        <value code="1">地形追踪</value>
+        <value code="0">高度追踪</value>
       </values>
     </parameter>
      <parameter default="5" name="MPC_SAFE_DIS" type="FLOAT">
-      <short_desc>distance to obstacle</short_desc>
+      <short_desc>避障模式下安全距离</short_desc>
       <min>1</min>
       <max>30</max>
       <unit>m</unit>
@@ -3734,7 +3735,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="1" name="MPC_SAFE_EN" type="INT32">
-      <short_desc>distance to obstacle</short_desc>
+      <short_desc>避障使能</short_desc>
       <min>0</min>
       <max>1</max>
       <values>
@@ -3744,31 +3745,31 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/mc_pos_control</scope>
     </parameter>
     <parameter default="0.1" name="MPP_THR_MIN" type="FLOAT">
-      <short_desc>Minimum thrust</short_desc>
-      <long_desc>Minimum vertical thrust. It's recommended to set it &gt; 0 to avoid free fall with zero thrust.</long_desc>
+      <short_desc>最小推力</short_desc>
+      <long_desc>最小垂直推力。推荐设为0避免0推力的时候产生的自由坠落。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <scope>examples/mc_pos_control_multiplatform</scope>
     </parameter>
     <parameter default="1.0" name="MPP_THR_MAX" type="FLOAT">
-      <short_desc>Maximum thrust</short_desc>
-      <long_desc>Limit max allowed thrust.</long_desc>
+      <short_desc>最大推力</short_desc>
+      <long_desc>允许的最大推力。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <scope>examples/mc_pos_control_multiplatform</scope>
     </parameter>
     <parameter default="1.0" name="MPP_Z_P" type="FLOAT">
-      <short_desc>Proportional gain for vertical position error</short_desc>
+      <short_desc>垂直位置误差的P增益</short_desc>
       <min>0.0</min>
       <scope>examples/mc_pos_control_multiplatform</scope>
     </parameter>
     <parameter default="0.1" name="MPP_Z_VEL_P" type="FLOAT">
-      <short_desc>Proportional gain for vertical velocity error</short_desc>
+      <short_desc>垂直速度误差的P增益</short_desc>
       <min>0.0</min>
       <scope>examples/mc_pos_control_multiplatform</scope>
     </parameter>
     <parameter default="0.02" name="MPP_Z_VEL_I" type="FLOAT">
-      <short_desc>Integral gain for vertical velocity error</short_desc>
+      <short_desc>垂直速度误差的I增益</short_desc>
       <long_desc>Non zero value allows hovering thrust estimation on stabilized or autonomous takeoff.</long_desc>
       <min>0.0</min>
       <scope>examples/mc_pos_control_multiplatform</scope>
@@ -7086,7 +7087,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
   </group>
   <group name="VTOL Attitude Control">
     <parameter default="0" name="VT_MOT_COUNT" type="INT32">
-      <short_desc>VTOL number of engines</short_desc>
+      <short_desc>VTOL引擎数量</short_desc>
       <min>0</min>
       <max>8</max>
       <decimal>0</decimal>
@@ -7094,7 +7095,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="900" name="VT_IDLE_PWM_MC" type="INT32">
-      <short_desc>Idle speed of VTOL when in multicopter mode</short_desc>
+      <short_desc>在多旋翼模式下VTOL的怠速</short_desc>
       <min>900</min>
       <max>2000</max>
       <unit>us</unit>
@@ -7103,8 +7104,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="10.0" name="VT_MC_ARSPD_MIN" type="FLOAT">
-      <short_desc>Minimum airspeed in multicopter mode</short_desc>
-      <long_desc>This is the minimum speed of the air flowing over the control surfaces.</long_desc>
+      <short_desc>在多旋翼模式下最小空速</short_desc>
+      <long_desc>控制表面测量到的最小空速。</long_desc>
       <min>0.0</min>
       <max>30.0</max>
       <unit>m/s</unit>
@@ -7113,8 +7114,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="30.0" name="VT_MC_ARSPD_MAX" type="FLOAT">
-      <short_desc>Maximum airspeed in multicopter mode</short_desc>
-      <long_desc>This is the maximum speed of the air flowing over the control surfaces.</long_desc>
+      <short_desc>在多旋翼模式下最大空速</short_desc>
+      <long_desc>控制表面测量到的最大空速。</long_desc>
       <min>0.0</min>
       <max>30.0</max>
       <unit>m/s</unit>
@@ -7123,8 +7124,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="10.0" name="VT_MC_ARSPD_TRIM" type="FLOAT">
-      <short_desc>Trim airspeed when in multicopter mode</short_desc>
-      <long_desc>This is the airflow over the control surfaces for which no airspeed scaling is applied in multicopter mode.</long_desc>
+      <short_desc>在多旋翼模式下修剪空速</short_desc>
+      <long_desc>在多旋翼模式没有使用空速扩展的情况下控制表面测量到的空速。</long_desc>
       <min>0.0</min>
       <max>30.0</max>
       <unit>m/s</unit>
@@ -7133,14 +7134,14 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0" name="VT_FW_PERM_STAB" type="INT32">
-      <short_desc>Permanent stabilization in fw mode</short_desc>
-      <long_desc>If set to one this parameter will cause permanent attitude stabilization in fw mode. This parameter has been introduced for pure convenience sake.</long_desc>
+      <short_desc>固定翼模式下永久稳定</short_desc>
+      <long_desc>如果设置了这个参数，固定翼模式下会一直保持自稳。这个参数的使用是为了方便操作。</long_desc>
       <boolean />
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.0" name="VT_FW_PITCH_TRIM" type="FLOAT">
-      <short_desc>Fixed wing pitch trim</short_desc>
-      <long_desc>This parameter allows to adjust the neutral elevon position in fixed wing mode.</long_desc>
+      <short_desc>固定翼俯仰修剪</short_desc>
+      <long_desc>在固定翼模式下，该参数允许修正中间副翼位置。</long_desc>
       <min>-1.0</min>
       <max>1.0</max>
       <decimal>2</decimal>
@@ -7148,8 +7149,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="120.0" name="VT_POWER_MAX" type="FLOAT">
-      <short_desc>Motor max power</short_desc>
-      <long_desc>Indicates the maximum power the motor is able to produce. Used to calculate propeller efficiency map.</long_desc>
+      <short_desc>最大电机功率</short_desc>
+      <long_desc>表明能输产生的最大功率电机。用于计算螺旋桨效率图。</long_desc>
       <min>1</min>
       <max>10000</max>
       <unit>W</unit>
@@ -7158,8 +7159,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.0" name="VT_PROP_EFF" type="FLOAT">
-      <short_desc>Propeller efficiency parameter</short_desc>
-      <long_desc>Influences propeller efficiency at different power settings. Should be tuned beforehand.</long_desc>
+      <short_desc>螺旋桨效率参数</short_desc>
+      <long_desc>在不同功率设定下影响螺旋桨的效率。应该预先调整。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>3</decimal>
@@ -7167,8 +7168,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.3" name="VT_ARSP_LP_GAIN" type="FLOAT">
-      <short_desc>Total airspeed estimate low-pass filter gain</short_desc>
-      <long_desc>Gain for tuning the low-pass filter for the total airspeed estimate</long_desc>
+      <short_desc>在低通滤波器增益下的总的空速估计</short_desc>
+      <long_desc>用来调试在低通滤波器下总的空速估计的增益。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>3</decimal>
@@ -7176,15 +7177,15 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0" name="VT_TYPE" type="INT32">
-      <short_desc>VTOL Type (Tailsitter=0, Tiltrotor=1, Standard=2)</short_desc>
+      <short_desc>VTOL类型（ 尾坐式超小型无人定翼机 = 0，倾转旋翼机=1，标准机型=2）</short_desc>
       <min>0</min>
       <max>2</max>
       <decimal>0</decimal>
       <scope>modules/vtol_att_control</scope>
       <values>
-        <value code="1">Tiltrotor</value>
-        <value code="0">Tailsitter</value>
-        <value code="2">Standard</value>
+        <value code="1">倾转旋翼机</value>
+        <value code="0">尾坐式超小型无人定翼机</value>
+        <value code="2">标准机型</value>
       </values>
     </parameter>
     <parameter default="0" name="VT_ELEV_MC_LOCK" type="INT32">
@@ -7204,8 +7205,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="2.0" name="VT_B_TRANS_DUR" type="FLOAT">
-      <short_desc>Duration of a back transition</short_desc>
-      <long_desc>Time in seconds used for a back transition</long_desc>
+      <short_desc>反向过度的时间</short_desc>
+      <long_desc>反向变化的时间（秒）</long_desc>
       <min>0.00</min>
       <max>10.00</max>
       <unit>s</unit>
@@ -7214,8 +7215,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="8.0" name="VT_ARSP_BLEND" type="FLOAT">
-      <short_desc>Transition blending airspeed</short_desc>
-      <long_desc>Airspeed at which we can start blending both fw and mc controls. Set to 0 to disable.</long_desc>
+      <short_desc>过渡混合空速</short_desc>
+      <long_desc>我们可以混用在固定翼模式和多旋翼模式下空速。设置为0使之失效。</long_desc>
       <min>0.00</min>
       <max>30.00</max>
       <unit>m/s</unit>
@@ -7224,8 +7225,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="10.0" name="VT_ARSP_TRANS" type="FLOAT">
-      <short_desc>Transition airspeed</short_desc>
-      <long_desc>Airspeed at which we can switch to fw mode</long_desc>
+      <short_desc>过渡空速</short_desc>
+      <long_desc>我们可以切换成固定翼的空速。</long_desc>
       <min>0.00</min>
       <max>30.00</max>
       <unit>m/s</unit>
@@ -7234,13 +7235,13 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0" name="VT_OPT_RECOV_EN" type="INT32">
-      <short_desc>Optimal recovery strategy for pitch-weak tailsitters</short_desc>
+      <short_desc>俯仰较弱的尾坐式超小型无人定翼机最佳恢复策略</short_desc>
       <boolean />
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.15" name="VT_WV_YAWR_SCL" type="FLOAT">
-      <short_desc>Weather-vane yaw rate scale</short_desc>
-      <long_desc>The desired yawrate from the controller will be scaled in order to avoid yaw fighting against the wind.</long_desc>
+      <short_desc>风向标偏航率范围</short_desc>
+      <long_desc>为了避免由于风造成的偏航，所需的偏航率需要从控制器上修正。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>3</decimal>
@@ -7248,8 +7249,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="15.0" name="VT_TRANS_TIMEOUT" type="FLOAT">
-      <short_desc>Front transition timeout</short_desc>
-      <long_desc>Time in seconds after which transition will be cancelled. Disabled if set to 0.</long_desc>
+      <short_desc>前向过渡超时时间</short_desc>
+      <long_desc>过渡动作取消时间（单位：秒）。设置为0时失效。</long_desc>
       <min>0.00</min>
       <max>30.00</max>
       <unit>s</unit>
@@ -7258,28 +7259,28 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="2.0" name="VT_TRANS_MIN_TM" type="FLOAT">
-      <short_desc>Front transition minimum time</short_desc>
-      <long_desc>Minimum time in seconds for front transition.</long_desc>
+      <short_desc>前向过渡最小时间</short_desc>
+      <long_desc>前向过渡最小时间（单位：秒）。</long_desc>
       <min>0.0</min>
       <max>10.0</max>
       <unit>s</unit>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="1" name="VT_NAV_FORCE_VT" type="INT32">
-      <short_desc>Force VTOL mode takeoff and land</short_desc>
+      <short_desc>VTOL模式下强制起飞和着陆</short_desc>
       <min>0</min>
       <max>1</max>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.0" name="VT_FW_MIN_ALT" type="FLOAT">
-      <short_desc>QuadChute</short_desc>
-      <long_desc>Minimum altitude for fixed wing flight, when in fixed wing the altitude drops below this altitude the vehicle will transition back to MC mode and enter failsafe RTL</long_desc>
+      <short_desc>变为旋翼模式的高度值</short_desc>
+      <long_desc>固定翼飞行最小的高度。当固定翼模式飞行时高度低于此值，固定翼就会转变为多旋翼模式，进入安全保护返航。</long_desc>
       <min>0.0</min>
       <max>200.0</max>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.0" name="VT_TILT_MC" type="FLOAT">
-      <short_desc>Position of tilt servo in mc mode</short_desc>
+      <short_desc>】多旋翼模式下伺服系统倾斜的位置</short_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>3</decimal>
@@ -7287,7 +7288,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.3" name="VT_TILT_TRANS" type="FLOAT">
-      <short_desc>Position of tilt servo in transition mode</short_desc>
+      <short_desc>过渡模式下伺服系统倾斜的位置</short_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>3</decimal>
@@ -7295,7 +7296,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="1.0" name="VT_TILT_FW" type="FLOAT">
-      <short_desc>Position of tilt servo in fw mode</short_desc>
+      <short_desc>固定翼模式下伺服系统倾斜的位置</short_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>3</decimal>
@@ -7303,8 +7304,8 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.5" name="VT_TRANS_P2_DUR" type="FLOAT">
-      <short_desc>Duration of front transition phase 2</short_desc>
-      <long_desc>Time in seconds it should take for the rotors to rotate forward completely from the point when the plane has picked up enough airspeed and is ready to go into fixed wind mode.</long_desc>
+      <short_desc>前向过渡第二步的时间</short_desc>
+      <long_desc>飞机获取足够空速，完全使用转子向前推进，并准备进入固定翼模式飞行的时间（单位：秒）。</long_desc>
       <min>0.1</min>
       <max>5.0</max>
       <unit>s</unit>
@@ -7313,7 +7314,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0" name="VT_FW_MOT_OFFID" type="INT32">
-      <short_desc>The channel number of motors that must be turned off in fixed wing mode</short_desc>
+      <short_desc>电机通道在固定翼模式下需要关闭的数量</short_desc>
       <min>0</min>
       <max>12345678</max>
       <decimal>0</decimal>
@@ -7321,7 +7322,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.6" name="VT_TRANS_THR" type="FLOAT">
-      <short_desc>Target throttle value for pusher/puller motor during the transition to fw mode</short_desc>
+      <short_desc>变化到固定翼模式的过程中，推拉电机的目标油门值</short_desc>
       <min>0.0</min>
       <max>1.0</max>
       <decimal>3</decimal>
@@ -7329,16 +7330,14 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="5.0" name="VT_DWN_PITCH_MAX" type="FLOAT">
-      <short_desc>Maximum allowed down-pitch the controller is able to demand. This prevents large, negative
-lift values being created when facing strong winds. The vehicle will use the pusher motor
-to accelerate forward if necessary</short_desc>
+      <short_desc>最大允许的向下俯仰控制量。这能够防止面对强风的时候产生大的负升力。如果必要的话，机体会使用推进电机向前加速。</short_desc>
       <min>0.0</min>
       <max>45.0</max>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.0" name="VT_FWD_THRUST_SC" type="FLOAT">
-      <short_desc>Fixed wing thrust scale for hover forward flight</short_desc>
-      <long_desc>Scale applied to fixed wing thrust being used as source for forward acceleration in multirotor mode. This technique can be used to avoid the plane having to pitch down a lot in order to move forward. Setting this value to 0 (default) will disable this strategy.</long_desc>
+      <short_desc>盘旋向前飞行固定翼推力比例</short_desc>
+      <long_desc>在多旋翼模式下，应用于固定翼的推力比例作为前向加速的依据。这个技术能够用于避免飞机为了向前飞行导致的向下俯冲过度。设置这个值为0（默认值）能够禁用改策略。</long_desc>
       <min>0.0</min>
       <max>2.0</max>
       <scope>modules/vtol_att_control</scope>

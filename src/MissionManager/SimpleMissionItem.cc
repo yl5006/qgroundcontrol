@@ -31,6 +31,7 @@ struct EnumInfo_s {
     const char *    label;
     MAV_FRAME       frame;
 };
+static const char* Altituderel =        QT_TR_NOOP("高度参考home点");
 
 static const struct EnumInfo_s _rgMavFrameInfo[] = {
 { "MAV_FRAME_GLOBAL",                   MAV_FRAME_GLOBAL },
@@ -53,7 +54,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
     , _homePositionSpecialCase(false)
     , _showHomePosition(false)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, QT_TR_NOOP("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -81,7 +82,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, const MissionItem& missio
     , _homePositionSpecialCase(false)
     , _showHomePosition(false)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, QT_TR_NOOP("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -109,7 +110,7 @@ SimpleMissionItem::SimpleMissionItem(const SimpleMissionItem& other, QObject* pa
     , _homePositionSpecialCase(false)
     , _showHomePosition(false)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, QT_TR_NOOP("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)

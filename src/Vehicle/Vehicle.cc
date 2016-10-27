@@ -56,7 +56,7 @@ const char* Vehicle::_windFactGroupName =       "wind";
 const char* Vehicle::_vibrationFactGroupName =  "vibration";
 
 const int Vehicle::_lowBatteryAnnounceRepeatMSecs = 30 * 1000;
-
+extern int language;
 Vehicle::Vehicle(LinkInterface*             link,
                  int                        vehicleId,
                  MAV_AUTOPILOT              firmwareType,
@@ -64,7 +64,7 @@ Vehicle::Vehicle(LinkInterface*             link,
                  FirmwarePluginManager*     firmwarePluginManager,
                  AutoPilotPluginManager*    autopilotPluginManager,
                  JoystickManager*           joystickManager)
-    : FactGroup(_vehicleUIUpdateRateMSecs, ":/json/Vehicle/VehicleFact.json")
+    : FactGroup(_vehicleUIUpdateRateMSecs, language==0?":/json/Vehicle/VehicleFactCn.json":":/json/Vehicle/VehicleFact.json")
     , _id(vehicleId)
     , _active(false)
     , _offlineEditingVehicle(false)
@@ -77,7 +77,6 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _joystickMode(JoystickModeRC)
     , _joystickEnabled(false)
     , _uas(NULL)
-//    , _coordinate(37.803784, -122.462276)
     , _coordinate(30.5386437,114.3662806)
     , _coordinateValid(false)
     , _homePositionAvailable(false)
@@ -257,15 +256,15 @@ Vehicle::Vehicle(LinkInterface*             link,
     _addFact(&_throttleFact,            _throttleFactName); //add yaoling
 
 
-    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
-    _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
-    _addFactGroup(&_windFactGroup,      _windFactGroupName);
-    _addFactGroup(&_vibrationFactGroup, _vibrationFactGroupName);
+//    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
+//    _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
+//    _addFactGroup(&_windFactGroup,      _windFactGroupName);
+//    _addFactGroup(&_vibrationFactGroup, _vibrationFactGroupName);
 
-    _gpsFactGroup.setVehicle(this);
-    _batteryFactGroup.setVehicle(this);
-    _windFactGroup.setVehicle(this);
-    _vibrationFactGroup.setVehicle(this);
+//    _gpsFactGroup.setVehicle(this);
+//    _batteryFactGroup.setVehicle(this);
+//    _windFactGroup.setVehicle(this);
+//    _vibrationFactGroup.setVehicle(this);
 
 }
 
@@ -274,7 +273,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
                  MAV_TYPE                   vehicleType,
                  FirmwarePluginManager*     firmwarePluginManager,
                  QObject*                   parent)
-    : FactGroup(_vehicleUIUpdateRateMSecs, ":/json/Vehicle/VehicleFact.json", parent)
+    : FactGroup(_vehicleUIUpdateRateMSecs, language==0 ? ":/json/Vehicle/VehicleFactCn.json":":/json/Vehicle/VehicleFact.json", parent)
     , _id(0)
     , _active(false)
     , _offlineEditingVehicle(true)
@@ -373,15 +372,15 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     _addFact(&_altitudeAMSLFact,        _altitudeAMSLFactName);
     _addFact(&_throttleFact,            _throttleFactName); //add yaoling
 
-    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
-    _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
-    _addFactGroup(&_windFactGroup,      _windFactGroupName);
-    _addFactGroup(&_vibrationFactGroup, _vibrationFactGroupName);
+//    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
+//    _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
+//    _addFactGroup(&_windFactGroup,      _windFactGroupName);
+//    _addFactGroup(&_vibrationFactGroup, _vibrationFactGroupName);
 
-    _gpsFactGroup.setVehicle(NULL);
-    _batteryFactGroup.setVehicle(NULL);
-    _windFactGroup.setVehicle(NULL);
-    _vibrationFactGroup.setVehicle(NULL);
+//    _gpsFactGroup.setVehicle(NULL);
+//    _batteryFactGroup.setVehicle(NULL);
+//    _windFactGroup.setVehicle(NULL);
+//    _vibrationFactGroup.setVehicle(NULL);
 
 }
 
@@ -570,16 +569,16 @@ void Vehicle::_handleCommandAck(mavlink_message_t& message)
 
     switch (ack.result) {
     case MAV_RESULT_TEMPORARILY_REJECTED:
-   //     qgcApp()->showMessage(tr("%1 command temporarily rejected").arg(commandName));
+       qgcApp()->showMessage(tr("%1 command temporarily rejected").arg(commandName));
         break;
     case MAV_RESULT_DENIED:
-    //    qgcApp()->showMessage(tr("%1 command denied").arg(commandName));
+        qgcApp()->showMessage(tr("%1 command denied").arg(commandName));
         break;
     case MAV_RESULT_UNSUPPORTED:
-   //     qgcApp()->showMessage(tr("%1 command not supported").arg(commandName));
+        qgcApp()->showMessage(tr("%1 command not supported").arg(commandName));
         break;
     case MAV_RESULT_FAILED:
-  //      qgcApp()->showMessage(tr("%1 command failed").arg(commandName));
+        qgcApp()->showMessage(tr("%1 command failed").arg(commandName));
         break;
     default:
         // Do nothing

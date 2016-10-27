@@ -26,13 +26,25 @@ Item {
 
     QGCPalette { id: qgcPal }
 
+    function getsouceimg(command)
+    {
+        switch(command){
+            case 203:
+            case 206: 
+               return   checked  ? "/qmlimages/WayCamera.svg" : "/qmlimages/WayCamera0.svg"
+            default:
+               return   checked  ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
+        }
+
+    }
+
     MouseArea {
         anchors.fill: parent
         onClicked: parent.clicked()
     }
     Image {
         id:         waypoint
-        source:     checked  ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
+        source:     missionItem?getsouceimg(missionItem.command):""
         mipmap:     true
         fillMode:   Image.PreserveAspectFit
         anchors.fill: parent

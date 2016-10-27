@@ -61,36 +61,36 @@ SetupPage {
 
 
             readonly property var rotations: [
-                "ROTATION_NONE",
-                "ROTATION_YAW_45",
-                "ROTATION_YAW_90",
-                "ROTATION_YAW_135",
-                "ROTATION_YAW_180",
-                "ROTATION_YAW_225",
-                "ROTATION_YAW_270",
-                "ROTATION_YAW_315",
-                "ROTATION_ROLL_180",
-                "ROTATION_ROLL_180_YAW_45",
-                "ROTATION_ROLL_180_YAW_90",
-                "ROTATION_ROLL_180_YAW_135",
-                "ROTATION_PITCH_180",
-                "ROTATION_ROLL_180_YAW_225",
-                "ROTATION_ROLL_180_YAW_270",
-                "ROTATION_ROLL_180_YAW_315",
-                "ROTATION_ROLL_90",
-                "ROTATION_ROLL_90_YAW_45",
-                "ROTATION_ROLL_90_YAW_90",
-                "ROTATION_ROLL_90_YAW_135",
-                "ROTATION_ROLL_270",
-                "ROTATION_ROLL_270_YAW_45",
-                "ROTATION_ROLL_270_YAW_90",
-                "ROTATION_ROLL_270_YAW_135",
-                "ROTATION_PITCH_90",
-                "ROTATION_PITCH_270",
-                "ROTATION_ROLL_270_YAW_270",
-                "ROTATION_ROLL_180_PITCH_270",
-                "ROTATION_PITCH_90_YAW_180",
-                "ROTATION_ROLL_90_PITCH_90"
+                qsTr("旋转_NONE"),
+                qsTr("旋转_YAW_45"),
+                qsTr("旋转_YAW_90"),
+                qsTr("旋转_YAW_135"),
+                qsTr("旋转_YAW_180"),
+                qsTr("旋转_YAW_225"),
+                qsTr("旋转_YAW_270"),
+                qsTr("旋转_YAW_315"),
+                qsTr("旋转_ROLL_180"),
+                qsTr("旋转_ROLL_180_YAW_45"),
+                qsTr("旋转_ROLL_180_YAW_90"),
+                qsTr("旋转_ROLL_180_YAW_135"),
+                qsTr("旋转_PITCH_180"),
+                qsTr("旋转_ROLL_180_YAW_225"),
+                qsTr("旋转_ROLL_180_YAW_270"),
+                qsTr("旋转_ROLL_180_YAW_315"),
+                qsTr("旋转_ROLL_90"),
+                qsTr("旋转_ROLL_90_YAW_45"),
+                qsTr("旋转_ROLL_90_YAW_90"),
+                qsTr("旋转_ROLL_90_YAW_135"),
+                qsTr("旋转_ROLL_270"),
+                qsTr("旋转_ROLL_270_YAW_45"),
+                qsTr("旋转_ROLL_270_YAW_90"),
+                qsTr("旋转_ROLL_270_YAW_135"),
+                qsTr("旋转_PITCH_90"),
+                qsTr("旋转_PITCH_270"),
+                qsTr("旋转_ROLL_270_YAW_270"),
+                qsTr("旋转_ROLL_180_PITCH_270"),
+                qsTr("旋转_PITCH_90_YAW_180"),
+                qsTr("旋转_ROLL_90_PITCH_90")
             ]
 
             property Fact cal_mag0_id:      controller.getParameterFact(-1, "CAL_MAG0_ID")
@@ -134,7 +134,7 @@ SetupPage {
                 onSetCompassRotations: {
                     if (showCompass0Rot || showCompass1Rot || showCompass2Rot) {
                         setOrientationsDialogShowBoardOrientation = false
-                        showDialog(setOrientationsDialogComponent, qsTr("Set Compass Rotation(s)"), sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
+                        showDialog(setOrientationsDialogComponent, qsTr("设置磁罗盘安装反向")/*qsTr("Set Compass Rotation(s)")*/, sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
                     }
                 }
 
@@ -198,7 +198,7 @@ SetupPage {
                         Column {
                             visible:    boardRotationHelp.visible
                             QGCLabel {
-                                text: qsTr("Autopilot Orientation:")
+                                text: qsTr("飞控安装方向:")//Autopilot Orientation
                             }
 
                             FactComboBox {
@@ -219,7 +219,7 @@ SetupPage {
 
                 QGCViewDialog {
                     id: setOrientationsDialog
-                    height:    ScreenTools.defaultFontPixelHeight*10
+                    height:    ScreenTools.defaultFontPixelHeight*15
                     QGCFlickable {
                         anchors.fill:   parent
                         contentHeight:  columnLayout.height
@@ -243,7 +243,7 @@ SetupPage {
                                 visible: setOrientationsDialogShowBoardOrientation
 
                                 QGCLabel {
-                                    text: qsTr("Autopilot Orientation:")
+                                    text: qsTr("飞控安装方向:")//Autopilot Orientation
                                 }
 
                                 FactComboBox {
@@ -260,7 +260,7 @@ SetupPage {
                                     id: compass0ComponentLabel2
 
                                     QGCLabel {
-                                        text: qsTr("External Compass Orientation:")
+                                        text: qsTr("外部磁罗盘安装方向:")//qsTr("External Compass Orientation:")
                                     }
                                 }
 
@@ -285,7 +285,7 @@ SetupPage {
                                     id: compass1ComponentLabel2
 
                                     QGCLabel {
-                                        text: qsTr("External Compass 1 Orientation:")
+                                        text: qsTr("外部磁罗盘1安装方向:")//qsTr("External Compass 1 Orientation:")
                                     }
                                 }
 
@@ -312,7 +312,7 @@ SetupPage {
                                     id: compass2ComponentLabel2
 
                                     QGCLabel {
-                                        text: qsTr("Compass 2 Orientation")
+                                        text: qsTr("磁罗盘2安装方向:")//qsTr("Compass 2 Orientation")
                                     }
                                 }
 
@@ -496,7 +496,7 @@ SetupPage {
                     primary:        true
                     onClicked:  {
                         setOrientationsDialogShowBoardOrientation = true
-                        showDialog(setOrientationsDialogComponent, qsTr("Set Orientations"), sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
+                        showDialog(setOrientationsDialogComponent, qsTr("设置安装方向")/*qsTr("Set Orientations")*/, sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
                     }
                 }
             } // Column - Buttons

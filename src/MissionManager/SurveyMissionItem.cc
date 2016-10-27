@@ -57,7 +57,7 @@ const char* SurveyMissionItem::_cameraResolutionHeightFactName =    "Camera reso
 const char* SurveyMissionItem::_cameraFocalLengthFactName =         "Focal length";
 
 const char* SurveyMissionItem::_complexType = "survey";
-
+extern int language;
 QMap<QString, FactMetaData*> SurveyMissionItem::_metaDataMap;
 
 SurveyMissionItem::SurveyMissionItem(Vehicle* vehicle, QObject* parent)
@@ -87,9 +87,9 @@ SurveyMissionItem::SurveyMissionItem(Vehicle* vehicle, QObject* parent)
     , _cameraFocalLengthFact        (0, _cameraFocalLengthFactName,         FactMetaData::valueTypeDouble)
 {
     if (_metaDataMap.isEmpty()) {
-        QSettings::setDefaultFormat(QSettings::IniFormat);
-        QSettings settings;
-        int language=settings.value("language","0").toInt();
+//        QSettings::setDefaultFormat(QSettings::IniFormat);
+//        QSettings settings;
+//        int language=settings.value("language","0").toInt();
         if(language==0)
         {
             _metaDataMap = FactMetaData::createMapFromJsonFile(QStringLiteral(":/json/Survey.FactMetaDatacn.json"), NULL /* metaDataParent */);

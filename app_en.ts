@@ -5,7 +5,8 @@
     <name>APMAirframeComponent</name>
     <message>
         <location filename="src/AutoPilotPlugins/APM/APMAirframeComponent.cc" line="35"/>
-        <source>The Airframe Component is used to select the airframe which matches your vehicle. This will in turn set up the various tuning values for flight parameters.</source>
+        <source>Airframe Setup is used to select the airframe which matches your vehicle. You can also the load default parameter values associated with known vehicle types.</source>
+        <oldsource>The Airframe Component is used to select the airframe which matches your vehicle. This will in turn set up the various tuning values for flight parameters.</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -31,14 +32,15 @@
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/APM/APMCameraComponent.cc" line="32"/>
-        <source>The Camera Component is used to setup camera and gimbal settings.</source>
+        <source>Camera setup is used to adjust camera and gimbal settings.</source>
+        <oldsource>The Camera Component is used to setup camera and gimbal settings.</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>APMFirmwarePlugin</name>
     <message>
-        <location filename="src/FirmwarePlugin/APM/APMFirmwarePlugin.cc" line="709"/>
+        <location filename="src/FirmwarePlugin/APM/APMFirmwarePlugin.cc" line="723"/>
         <source>Error during Solo video link setup: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -48,6 +50,24 @@
     <message>
         <location filename="src/AutoPilotPlugins/APM/APMFlightModesComponent.cc" line="18"/>
         <source>Flight Modes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/APM/APMFlightModesComponent.cc" line="29"/>
+        <source>Flight Modes Setup is used to configure the transmitter switches associated with Flight Modes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>APMLightsComponent</name>
+    <message>
+        <location filename="src/AutoPilotPlugins/APM/APMLightsComponent.cc" line="22"/>
+        <source>Lights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/APM/APMLightsComponent.cc" line="33"/>
+        <source>Lights setup is used to adjust light output channels.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -80,8 +100,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/APM/APMSafetyComponent.cc" line="32"/>
-        <source>The Safety Component is used to setup triggers for Return to Land as well as the settings for Return to Land itself.</source>
+        <location filename="src/AutoPilotPlugins/APM/APMSafetyComponent.cc" line="34"/>
+        <source>Safety Setup is used to setup failsafe actions, geofence limits, leak detection, and arming checks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/AutoPilotPlugins/APM/APMSafetyComponent.cc" line="45"/>
+        <source>Safety Setup is used to setup triggers for Return to Land as well as the settings for Return to Land itself.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -94,7 +119,7 @@
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/APM/APMSensorsComponent.cc" line="33"/>
-        <source>The Sensors Component allows you to calibrate the sensors within your vehicle. Prior to flight you must calibrate the Magnetometer, Gyroscope and Accelerometer.</source>
+        <source>Sensors Setup is used to calibrate the sensors within your vehicle.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -120,87 +145,83 @@
     <name>APMTuningComponent</name>
     <message>
         <location filename="src/AutoPilotPlugins/APM/APMTuningComponent.cc" line="29"/>
-        <source>The Tuning Component is used to tune the flight characteristics of the Vehicle.</source>
+        <source>Tuning Setup is used to tune the flight characteristics of the Vehicle.</source>
+        <oldsource>The Tuning Component is used to tune the flight characteristics of the Vehicle.</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AirframeComponent</name>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="125"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="133"/>
         <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.cc" line="62"/>
         <source>机体</source>
         <translation type="unfinished">Vehicle</translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="151"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="159"/>
         <source>机型未设置</source>
         <translation type="unfinished">Airframe is not set</translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="154"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="162"/>
         <source>改变机型，选择并确认</source>
         <translation type="unfinished">To change this configuration, select the desired airframe below then click “Apply and Restart”</translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="162"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="170"/>
         <source>生效并重启</source>
         <translation type="unfinished">Apply and Restart</translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="164"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="172"/>
         <source>Apply and Restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="188"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="196"/>
         <source>Custom Airframe Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="198"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="206"/>
         <source>Your vehicle is using a custom airframe configuration. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="199"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="207"/>
         <source>This configuration can only be modified through the Parameter Editor.
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="200"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="208"/>
         <source>If you want to reset your airframe configuration and select a standard configuration, click &apos;Reset&apos; above.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="225"/>
-        <source>Clicking “Apply” will save the changes you have made to your airframe configuration. </source>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="233"/>
+        <source>Clicking “Apply” will save the changes you have made to your airframe configuration.&lt;br&gt;&lt;br&gt;All vehicle parameters other than Radio Calibration will be reset.&lt;br&gt;&lt;br&gt;Your vehicle will also be restarted in order to complete the process.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="226"/>
-        <source>Your vehicle will also be restarted in order to complete the process.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="267"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="276"/>
         <source>多旋翼</source>
         <translation type="unfinished">Coper</translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="277"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="286"/>
         <source>固定翼</source>
         <translation type="unfinished">Fixwing</translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="287"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="296"/>
         <source>其他</source>
         <translation type="unfinished">Else</translation>
     </message>
     <message>
-        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="297"/>
+        <location filename="src/AutoPilotPlugins/PX4/AirframeComponent.qml" line="306"/>
         <source>全部</source>
         <translation type="unfinished">All</translation>
     </message>
@@ -319,7 +340,7 @@
     <message>
         <location filename="src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml" line="50"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml" line="90"/>
@@ -346,7 +367,7 @@
     <message>
         <location filename="src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml" line="130"/>
         <source>仰俯速度</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pitch</translation>
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml" line="130"/>
@@ -514,7 +535,7 @@ IMAX(积分部的部分被限制在这个值)
     <message>
         <location filename="src/AutoPilotPlugins/PX4/AttitudeControlPlane.qml" line="50"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/AttitudeControlPlane.qml" line="94"/>
@@ -571,6 +592,9 @@ IMAX(积分部的部分被限制在这个值)
         <source>方法设置用于计算航向Yaw(转弯)速度方法：开环 零横向加速度基于运动学约束  闭环：尝试通过测量加速度，以减少横向加速度为0。
 
 最小空速：高于此值航向(Yaw)计算要协调转弯。设置为非常高的值以禁止</source>
+        <oldsource>方法设置用于计算航向Yaw(转弯)速度方法：开环 零横向加速度基于运动学约束  闭环：尝试通过测量加速度，以减少横向加速度为0。
+
+最小空速：高于此值航向(Yaw)计算要协调转弯。设置为非常高的值以禁止</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2016,132 +2040,142 @@ IMAX(积分部的部分被限制在这个值)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="116"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="130"/>
         <source>Not Mapped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="154"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="170"/>
         <source>Attitude Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="163"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="179"/>
         <source>Roll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="193"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="211"/>
         <source>Pitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="223"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="244"/>
         <source>Yaw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="253"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="276"/>
         <source>Throttle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="283"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="308"/>
         <source>Skip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="290"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="315"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="298"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="323"/>
         <source>Calibrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="328"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="353"/>
         <source>Additional Joystick settings:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="337"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="362"/>
         <source>Enable joystick input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="337"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="362"/>
         <source>Enable not allowed (Calibrate First)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="350"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="375"/>
         <source>Active joystick:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="363"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="388"/>
         <source>Active joystick name not in combo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="379"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="404"/>
         <source>Center stick is zero throttle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="387"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="419"/>
+        <source>Spring loaded throttle smoothing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="427"/>
         <source>Full down stick is zero throttle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="400"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="440"/>
         <source>Use exponential curve on roll, pitch, yaw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="409"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="449"/>
         <source>Advanced settings (careful!)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="426"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="466"/>
         <source>Joystick mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="459"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="487"/>
+        <source>Deadbands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="513"/>
         <source>Button actions:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="467"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="521"/>
         <source>Buttons 0-%1 reserved for firmware use</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="525"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="579"/>
         <source>#</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="530"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="584"/>
         <source>Function: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="535"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="589"/>
         <source>Shift Function: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="608"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="662"/>
         <source>Axis Monitor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/VehicleSetup/JoystickConfig.qml" line="656"/>
+        <location filename="src/VehicleSetup/JoystickConfig.qml" line="710"/>
         <source>Button Monitor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2191,17 +2225,17 @@ IMAX(积分部的部分被限制在这个值)
     <message>
         <location filename="src/AutoPilotPlugins/PX4/L1ControlPlane.qml" line="135"/>
         <source>降落平飘高度</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Flare Alt</translation>
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/L1ControlPlane.qml" line="135"/>
         <source>最小Pitch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Min Pitch</translation>
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/L1ControlPlane.qml" line="135"/>
         <source>最大Pitch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Max Pitch</translation>
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/L1ControlPlane.qml" line="135"/>
@@ -2404,7 +2438,7 @@ IMAX(积分部的部分被限制在这个值)
         <translation type="unfinished">Default UDP Link</translation>
     </message>
     <message>
-        <location filename="src/comm/LinkManager.cc" line="822"/>
+        <location filename="src/comm/LinkManager.cc" line="826"/>
         <source>串口 %1</source>
         <translation type="unfinished">Serial Device on %1</translation>
     </message>
@@ -2481,64 +2515,6 @@ IMAX(积分部的部分被限制在这个值)
     </message>
 </context>
 <context>
-    <name>LogDownload</name>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="58"/>
-        <source>Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="71"/>
-        <source>Date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="82"/>
-        <source>Date Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="93"/>
-        <source>Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="106"/>
-        <source>Status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="126"/>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="139"/>
-        <source>Download</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="163"/>
-        <source>Erase All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="173"/>
-        <source>Delete All Log Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="174"/>
-        <source>All log files will be erased permanently. Is this really what you want?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/ViewWidgets/LogDownload.qml" line="190"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LogReplayLink</name>
     <message>
         <location filename="src/comm/LogReplayLink.cc" line="349"/>
@@ -2574,8 +2550,8 @@ IMAX(积分部的部分被限制在这个值)
     <message>
         <location filename="src/comm/MAVLinkProtocol.cc" line="188"/>
         <location filename="src/comm/MAVLinkProtocol.cc" line="208"/>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="270"/>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="415"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="279"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="424"/>
         <source>MAVLink Protocol</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2590,17 +2566,17 @@ IMAX(积分部的部分被限制在这个值)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="270"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="279"/>
         <source>MAVLink Logging failed. Could not write to file %1, logging disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="353"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="362"/>
         <source>MAVLink protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/comm/MAVLinkProtocol.cc" line="415"/>
+        <location filename="src/comm/MAVLinkProtocol.cc" line="424"/>
         <source>Opening Flight Data file for writing failed. Unable to write to %1. Please choose a different file location.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2867,7 +2843,7 @@ IMAX(积分部的部分被限制在这个值)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/toolbar/MainToolBar.qml" line="403"/>
+        <location filename="src/ui/toolbar/MainToolBar.qml" line="404"/>
         <source>COMMUNICATION LOST</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2944,43 +2920,43 @@ IMAX(积分部的部分被限制在这个值)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="142"/>
+        <location filename="src/ui/MainWindow.cc" line="139"/>
         <source>Setting up user interface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="188"/>
+        <location filename="src/ui/MainWindow.cc" line="185"/>
         <source>Building common widgets.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="190"/>
+        <location filename="src/ui/MainWindow.cc" line="187"/>
         <source>Building common actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="197"/>
-        <location filename="src/ui/MainWindow.cc" line="203"/>
+        <location filename="src/ui/MainWindow.cc" line="194"/>
+        <location filename="src/ui/MainWindow.cc" line="200"/>
         <source>Initializing 3D mouse interface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="211"/>
+        <location filename="src/ui/MainWindow.cc" line="208"/>
         <source>Restoring last view state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="216"/>
+        <location filename="src/ui/MainWindow.cc" line="213"/>
         <source>Restoring last window size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="497"/>
+        <location filename="src/ui/MainWindow.cc" line="501"/>
         <source>不能打开信息: %1</source>
         <translation type="unfinished">Could not open information in browser: %1</translation>
     </message>
     <message>
-        <location filename="src/ui/MainWindow.cc" line="244"/>
+        <location filename="src/ui/MainWindow.cc" line="241"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3145,53 +3121,53 @@ IMAX(积分部的部分被限制在这个值)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1071"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1073"/>
         <source>你有未保存或未发送的任务,从飞机载入任务会丢失这些修改，你确认从飞机载入飞行任务?</source>
         <translation type="unfinished">You have unsaved/unsent mission changes. Loading the mission from the Vehicle will lose these changes. Are you sure you want to load the mission from the Vehicle?</translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1083"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1085"/>
         <source>你有未保存的飞行计划，载入任务会丢失改计划，确认从文件载入？</source>
         <translation type="unfinished">You have unsaved/unsent mission changes. Loading a mission from a file will lose these changes. Are you sure you want to load a mission from a file?</translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1094"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1096"/>
         <source>确认删除所有任务点?</source>
         <translation type="unfinished">Are you sure you want to delete all mission items?</translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1107"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1109"/>
         <source>覆盖任务</source>
         <translation type="unfinished">Mission overwrite</translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1107"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1109"/>
         <source>GeoFence overwrite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1115"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1117"/>
         <source>发送任务..</source>
         <translation type="unfinished">Send to vehicle</translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1131"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1133"/>
         <source>载入任务..</source>
         <translation type="unfinished">Load from vehicle</translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1150"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1152"/>
         <source>存储到文件</source>
         <translation type="unfinished">Save to file...</translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1165"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1167"/>
         <source>从文件载入</source>
         <translation type="unfinished">Load from file...</translation>
     </message>
     <message>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1183"/>
-        <location filename="src/MissionEditor/MissionEditor.qml" line="1187"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1185"/>
+        <location filename="src/MissionEditor/MissionEditor.qml" line="1189"/>
         <source>删除所有航点</source>
         <translation type="unfinished">Remove all</translation>
     </message>
@@ -3298,17 +3274,27 @@ IMAX(积分部的部分被限制在这个值)
         <translation type="unfinished">Select Mission Command</translation>
     </message>
     <message>
-        <location filename="src/QmlControls/MissionItemIndexIndicator.qml" line="258"/>
+        <location filename="src/QmlControls/MissionItemIndexIndicator.qml" line="249"/>
+        <source>Home点</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/QmlControls/MissionItemIndexIndicator.qml" line="249"/>
+        <source>测绘</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/QmlControls/MissionItemIndexIndicator.qml" line="259"/>
         <source>距离</source>
         <translation type="unfinished">Distance</translation>
     </message>
     <message>
-        <location filename="src/QmlControls/MissionItemIndexIndicator.qml" line="266"/>
+        <location filename="src/QmlControls/MissionItemIndexIndicator.qml" line="267"/>
         <source>高度差</source>
         <translation type="unfinished">Alt diff</translation>
     </message>
     <message>
-        <location filename="src/QmlControls/MissionItemIndexIndicator.qml" line="275"/>
+        <location filename="src/QmlControls/MissionItemIndexIndicator.qml" line="276"/>
         <source>方位角</source>
         <translation type="unfinished">Azimuth</translation>
     </message>
@@ -4949,44 +4935,44 @@ Is this really what you want?</source>
 <context>
     <name>QGCApplication</name>
     <message>
-        <location filename="src/QGCApplication.cc" line="291"/>
+        <location filename="src/QGCApplication.cc" line="294"/>
         <source>易瓦特</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/QGCApplication.cc" line="297"/>
+        <location filename="src/QGCApplication.cc" line="300"/>
         <source>EWT 2.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/QGCApplication.cc" line="473"/>
+        <location filename="src/QGCApplication.cc" line="476"/>
         <source>GroundStation配置文件被修改，恢复默认配置</source>
         <translation type="unfinished">The format for QGroundControl saved settings has been modified.</translation>
     </message>
     <message>
-        <location filename="src/QGCApplication.cc" line="572"/>
+        <location filename="src/QGCApplication.cc" line="575"/>
         <source>保存飞行日志</source>
         <translation type="unfinished">Save Flight Data Log</translation>
     </message>
     <message>
-        <location filename="src/QGCApplication.cc" line="575"/>
+        <location filename="src/QGCApplication.cc" line="578"/>
         <source>飞行日志文件 (*.log)</source>
         <translation type="unfinished">Flight Data Log Files</translation>
     </message>
     <message>
-        <location filename="src/QGCApplication.cc" line="585"/>
-        <location filename="src/QGCApplication.cc" line="590"/>
+        <location filename="src/QGCApplication.cc" line="588"/>
+        <location filename="src/QGCApplication.cc" line="593"/>
         <source>文件错误</source>
         <translation type="unfinished">File Error</translation>
     </message>
     <message>
-        <location filename="src/QGCApplication.cc" line="585"/>
+        <location filename="src/QGCApplication.cc" line="588"/>
         <source>不能覆盖存在的文件.
 请提供一个不同文件名来保存</source>
         <translation type="unfinished">&quot;Could not overwrite existing file.\nPlease provide a different file name to save to.</translation>
     </message>
     <message>
-        <location filename="src/QGCApplication.cc" line="590"/>
+        <location filename="src/QGCApplication.cc" line="593"/>
         <source>不能创建文件.
 请提供一个不同的文件名来保存</source>
         <translation type="unfinished">Could not overwrite existing file.\nPlease provide a different file name to save to.</translation>
@@ -5688,24 +5674,24 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="src/ui/QGCMAVLinkInspector.cc" line="25"/>
         <location filename="src/ui/QGCMAVLinkInspector.cc" line="26"/>
-        <location filename="src/ui/QGCMAVLinkInspector.cc" line="27"/>
-        <location filename="src/ui/QGCMAVLinkInspector.cc" line="83"/>
+        <location filename="src/ui/QGCMAVLinkInspector.cc" line="78"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCMAVLinkInspector.cc" line="35"/>
+        <location filename="src/ui/QGCMAVLinkInspector.cc" line="30"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCMAVLinkInspector.cc" line="36"/>
+        <location filename="src/ui/QGCMAVLinkInspector.cc" line="31"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/ui/QGCMAVLinkInspector.cc" line="37"/>
+        <location filename="src/ui/QGCMAVLinkInspector.cc" line="32"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5753,12 +5739,13 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="src/ui/QGCMAVLinkLogPlayer.cc" line="68"/>
-        <source>Log Replay</source>
+        <source>Log 回放</source>
+        <oldsource>Log Replay</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/ui/QGCMAVLinkLogPlayer.cc" line="68"/>
-        <source>You must close all connections prior to replaying a log.</source>
+        <source>你需要关闭所有连接来播放log.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7113,7 +7100,7 @@ Do you want to replace it?</source>
     <name>SimpleItemEditor</name>
     <message>
         <location filename="src/MissionEditor/SimpleItemEditor.qml" line="47"/>
-        <source>Planned home position.</source>
+        <source>任务的home点</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7130,29 +7117,29 @@ Do you want to replace it?</source>
 <context>
     <name>SimpleMissionItem</name>
     <message>
-        <location filename="src/MissionManager/SimpleMissionItem.cc" line="56"/>
-        <location filename="src/MissionManager/SimpleMissionItem.cc" line="84"/>
-        <location filename="src/MissionManager/SimpleMissionItem.cc" line="112"/>
+        <location filename="src/MissionManager/SimpleMissionItem.cc" line="57"/>
+        <location filename="src/MissionManager/SimpleMissionItem.cc" line="85"/>
+        <location filename="src/MissionManager/SimpleMissionItem.cc" line="113"/>
         <source>高度参考home点</source>
         <translation type="unfinished">Altitude is relative to home</translation>
     </message>
     <message>
-        <location filename="src/MissionManager/SimpleMissionItem.cc" line="294"/>
+        <location filename="src/MissionManager/SimpleMissionItem.cc" line="295"/>
         <source>Unknown: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/MissionManager/SimpleMissionItem.cc" line="369"/>
+        <location filename="src/MissionManager/SimpleMissionItem.cc" line="370"/>
         <source>纬度:</source>
         <translation type="unfinished">lat</translation>
     </message>
     <message>
-        <location filename="src/MissionManager/SimpleMissionItem.cc" line="372"/>
+        <location filename="src/MissionManager/SimpleMissionItem.cc" line="373"/>
         <source>经度:</source>
         <translation type="unfinished">lon</translation>
     </message>
     <message>
-        <location filename="src/MissionManager/SimpleMissionItem.cc" line="375"/>
+        <location filename="src/MissionManager/SimpleMissionItem.cc" line="376"/>
         <source>高度:</source>
         <translation type="unfinished">Alt:</translation>
     </message>
@@ -7168,95 +7155,169 @@ Do you want to replace it?</source>
 <context>
     <name>SurveyItemEditor</name>
     <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="73"/>
+        <source>索尼 ILCE-QX1</source>
+        <oldsource>Sony ILCE-QX1</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="67"/>
-        <source>Manual Grid (no camera specs)</source>
+        <source>手动网格 (无相机配置)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="70"/>
-        <source>Custom Camera Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="73"/>
-        <source>Sony ILCE-QX1</source>
+        <source>自定义相机网格</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="81"/>
-        <source>Canon S100 PowerShot</source>
+        <source>尼康 S100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="89"/>
-        <source>Canon SX260 HS PowerShot</source>
+        <source>尼康 SX260 HS </source>
+        <oldsource>Canon SX260 HS PowerShot</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="97"/>
-        <source>Canon EOS-M 22mm</source>
+        <source>尼康 EOS-M 22mm</source>
+        <oldsource>Canon EOS-M 22mm</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="105"/>
-        <source>Sony a6000 16mm</source>
+        <source>索尼 a6000 16mm</source>
+        <oldsource>Sony a6000 16mm</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="270"/>
-        <source>Create a flight path which covers a polygonal area by specifying all grid parameters.</source>
+        <source>通过指定所有网格参数创建覆盖多边形区域的航线</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="271"/>
-        <source>Create a flight path which fully covers a polygonal area using camera specifications.</source>
+        <source>使用相机规格创建完全覆盖多边形区域的航线。</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="274"/>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="524"/>
-        <source>Camera:</source>
+        <source>相机:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="335"/>
+        <source>景观</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="342"/>
+        <source>影像</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="361"/>
-        <source>Width</source>
+        <source>宽</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="362"/>
-        <source>Height</source>
+        <source>高</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="364"/>
-        <source>Sensor:</source>
+        <source>传感器:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="374"/>
-        <source>Image:</source>
+        <source>图像:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="391"/>
-        <source>Image Overlap</source>
+        <source>图像重叠</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="403"/>
-        <source>Frontal:</source>
+        <source>正面:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="414"/>
-        <source>Side:</source>
+        <source>边:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="423"/>
         <location filename="src/MissionEditor/SurveyItemEditor.qml" line="500"/>
-        <source>Grid:</source>
+        <source>网格:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="456"/>
+        <source>高度:</source>
+        <translation type="unfinished">Alt:</translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="478"/>
+        <source>地面参考:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="519"/>
+        <source>相对高度</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="541"/>
+        <source>触发距离:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="555"/>
+        <source>多边型:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="568"/>
+        <source>完成绘制</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="568"/>
+        <source>绘制</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="582"/>
+        <source>完成调整</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="582"/>
+        <source>调整</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="595"/>
+        <source>统计:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="608"/>
+        <source>测绘面积:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="611"/>
+        <source># 拍摄数:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7264,86 +7325,26 @@ Do you want to replace it?</source>
         <source>Which value would you like to keep constant as you adjust other settings:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="456"/>
-        <source>Altitude:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="478"/>
-        <source>Ground res:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="519"/>
-        <source>Relative altitude</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="541"/>
-        <source>Trigger Distance:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="555"/>
-        <source>Polygon:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="568"/>
-        <source>Finish Draw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="568"/>
-        <source>Draw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="582"/>
-        <source>Finish Adjust</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="582"/>
-        <source>Adjust</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="595"/>
-        <source>Statistics:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="608"/>
-        <source>Survey area:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/MissionEditor/SurveyItemEditor.qml" line="611"/>
-        <source># shots:</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SurveyMissionItem</name>
     <message>
-        <location filename="src/MissionManager/SurveyMissionItem.cc" line="360"/>
+        <location filename="src/MissionManager/SurveyMissionItem.cc" line="368"/>
         <source>QGroundControl does not support this version of survey items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/MissionManager/SurveyMissionItem.cc" line="365"/>
+        <location filename="src/MissionManager/SurveyMissionItem.cc" line="373"/>
         <source>QGroundControl does not support loading this complex mission item type: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/MissionManager/SurveyMissionItem.cc" line="387"/>
+        <location filename="src/MissionManager/SurveyMissionItem.cc" line="395"/>
         <source>%1 but %2 is missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/MissionManager/SurveyMissionItem.cc" line="395"/>
+        <location filename="src/MissionManager/SurveyMissionItem.cc" line="403"/>
         <source>%1 but %2 object is missing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7487,7 +7488,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/TECSControlPlane.qml" line="47"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/AutoPilotPlugins/PX4/TECSControlPlane.qml" line="65"/>
@@ -7498,6 +7499,13 @@ Do you want to replace it?</source>
 * - 低速保护，要求最大油门切换俯仰角控制速度优先模式
 
 * - 通过使用直观的时间常数的调整，相对容易一些，修剪率和阻尼参数和使用容易衡量飞机性能数据</source>
+        <oldsource>* - 融合速度和高度，用油门来控制总能量和俯仰角来控制势能和动能可选择的速度或高度优先模式之间的能量交换计算俯仰角
+
+* - 后备模式，当没有空速测量是可用的根据身高速率要求设置油门开关和俯仰角控制，以高度优先
+
+* - 低速保护，要求最大油门切换俯仰角控制速度优先模式
+
+* - 通过使用直观的时间常数的调整，相对容易一些，修剪率和阻尼参数和使用容易衡量飞机性能数据</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7542,6 +7550,9 @@ Do you want to replace it?</source>
         <source>这是最好的爬升率，飞机可以与油门设置为最大油门和空速设定为缺省值实现的。保证在电量减少前执行完飞行任务。此参数的设置可以通过指挥爬升百米高度悬停，返航或引导模式进行检查。如果爬所需的油门接近最大油门，飞机保持着空速，那么这个参数设置是否正确。如果空速开始减少，则该参数被设置为高，并且如果攀登和保持速度所需的油门要求是明显比最大小于油门，然后或者最大爬升率应增加或最大油门减小。
 
  最大降落速度：如果该值过大，飞机可能高速降落。这应该被设置为可以在不超过最低的pitch角和超速</source>
+        <oldsource>这是最好的爬升率，飞机可以与油门设置为最大油门和空速设定为缺省值实现的。保证在电量减少前执行完飞行任务。此参数的设置可以通过指挥爬升百米高度悬停，返航或引导模式进行检查。如果爬所需的油门接近最大油门，飞机保持着空速，那么这个参数设置是否正确。如果空速开始减少，则该参数被设置为高，并且如果攀登和保持速度所需的油门要求是明显比最大小于油门，然后或者最大爬升率应增加或最大油门减小。
+
+ 最大降落速度：如果该值过大，飞机可能高速降落。这应该被设置为可以在不超过最低的pitch角和超速</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7950,139 +7961,145 @@ Do you want to replace it?</source>
 <context>
     <name>Vehicle</name>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1429"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="67"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="277"/>
+        <source>:/json/Vehicle/VehicleFactCn.json</source>
+        <translation type="unfinished">:/json/Vehicle/VehicleFact.json</translation>
+    </message>
+    <message>
+        <location filename="src/Vehicle/Vehicle.cc" line="1435"/>
         <source>任务上传下载错误: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1635"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1641"/>
         <source>Generic micro air vehicle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1636"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1642"/>
         <source>Fixed wing aircraft</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1637"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1643"/>
         <source>Quadrotor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1638"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1644"/>
         <source>Coaxial helicopter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1639"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1645"/>
         <source>Normal helicopter with tail rotor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1640"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1646"/>
         <source>Ground installation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1641"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1647"/>
         <source>Operator control unit / ground control station</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1642"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1648"/>
         <source>Airship, controlled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1643"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1649"/>
         <source>Free balloon, uncontrolled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1644"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1650"/>
         <source>Rocket</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1645"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1651"/>
         <source>Ground rover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1646"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1652"/>
         <source>Surface vessel, boat, ship</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1647"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1653"/>
         <source>Submarine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1648"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1654"/>
         <source>Hexarotor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1649"/>
-        <location filename="src/Vehicle/Vehicle.cc" line="1650"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1655"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1656"/>
         <source>Octorotor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1651"/>
-        <location filename="src/Vehicle/Vehicle.cc" line="1652"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1657"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1658"/>
         <source>Flapping wing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1653"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1659"/>
         <source>Onboard companion controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1654"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1660"/>
         <source>Two-rotor VTOL using control surfaces in vertical operation in addition. Tailsitter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1655"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1661"/>
         <source>Quad-rotor VTOL using a V-shaped quad config in vertical operation. Tailsitter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1656"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1662"/>
         <source>Tiltrotor VTOL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1657"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1663"/>
         <source>VTOL reserved 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1658"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1664"/>
         <source>VTOL reserved 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1659"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1665"/>
         <source>VTOL reserved 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1660"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1666"/>
         <source>VTOL reserved 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1661"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1667"/>
         <source>Onboard gimbal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/Vehicle/Vehicle.cc" line="1662"/>
+        <location filename="src/Vehicle/Vehicle.cc" line="1668"/>
         <source>Onboard ADSB peripheral</source>
         <translation type="unfinished"></translation>
     </message>

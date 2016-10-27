@@ -15,7 +15,7 @@
 #include <QDebug>
 
 const char* guided_mode_not_supported_by_vehicle = "Guided mode not supported by Vehicle.";
-
+//extern int language;
 bool FirmwarePlugin::isCapable(const Vehicle *vehicle, FirmwareCapabilities capabilities)
 {
     Q_UNUSED(vehicle);
@@ -144,9 +144,19 @@ QList<MAV_CMD> FirmwarePlugin::supportedMissionCommands(void)
 
 QString FirmwarePlugin::missionCommandOverrides(MAV_TYPE vehicleType) const
 {
+    int language;
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+    QSettings settings;
+    language=settings.value("language","0").toInt();
     switch (vehicleType) {
     case MAV_TYPE_GENERIC:
-        return QStringLiteral(":/json/MavCmdInfoCommon.json");
+        if(language==0)
+        {
+            return QStringLiteral(":/json/MavCmdInfoCommonCn.json");
+        }else
+        {
+            return QStringLiteral(":/json/MavCmdInfoCommon.json");
+        }
         break;
     case MAV_TYPE_FIXED_WING:
         return QStringLiteral(":/json/MavCmdInfoFixedWing.json");
@@ -262,12 +272,12 @@ int FirmwarePlugin::remapParamNameHigestMinorVersionNumber(int majorVersionNumbe
 }
 bool FirmwarePlugin::multiRotorCoaxialMotors(Vehicle* vehicle)
 {
-   Q_UNUSED(vehicle);
-   int autostartId=vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, "SYS_AUTOSTART")->rawValue().toInt();
+    Q_UNUSED(vehicle);
+    int autostartId=vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, "SYS_AUTOSTART")->rawValue().toInt();
 
-   if(autostartId>=11000&&autostartId<13000)
-       return true;
-   return false;
+    if(autostartId>=11000&&autostartId<13000)
+        return true;
+    return false;
 }
 bool FirmwarePlugin::multiRotorXConfig(Vehicle* vehicle)
 {
@@ -281,5 +291,5 @@ bool FirmwarePlugin::multiRotorXConfig(Vehicle* vehicle)
         return true;
     if(autostartId>=11000&&autostartId<13000)
         return true;
-      return false;
+    return false;
 }

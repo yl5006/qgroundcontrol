@@ -217,6 +217,8 @@
         <file alias="climbRate.svg">src/FlightMap/Images/climbRate.svg</file>
         <file alias="Waypoint0.svg">src/FlightMap/Images/Waypoint0.svg</file>
         <file alias="Waypoint.svg">src/FlightMap/Images/Waypoint.svg</file>
+	<file alias="WayCamera.svg">src/FlightMap/Images/WayCamera.svg</file>
+        <file alias="WayCamera0.svg">src/FlightMap/Images/WayCamera0.svg</file>
 	<file alias="distance.svg">src/FlightMap/Images/distance.svg</file>
 	<file alias="deletepoint.svg">src/FlightMap/Images/deletepoint.svg</file>
 	<file alias="insertpoint.svg">src/FlightMap/Images/insertpoint.svg</file>
@@ -367,7 +369,8 @@
         <file alias="GeoFenceEditor.qml">src/FirmwarePlugin/GeoFenceEditor.qml</file>
     </qresource>
     <qresource prefix="/FirmwarePlugin/PX4">
-        <file alias="PX4ParameterFactMetaData.xml">src/FirmwarePlugin/PX4/PX4ParameterFactMetaData.xml</file>
+        <file alias="PX4ParameterFactMetaDataCn.xml">src/FirmwarePlugin/PX4/PX4ParameterFactMetaDataCn.xml</file>
+	<file alias="PX4ParameterFactMetaData.xml">src/FirmwarePlugin/PX4/PX4ParameterFactMetaData.xml</file>
         <file alias="PX4GeoFenceEditor.qml">src/FirmwarePlugin/PX4/PX4GeoFenceEditor.qml</file>
         <file alias="PX4.OfflineEditing.params">src/FirmwarePlugin/PX4/V1.4.OfflineEditing.params</file>
     </qresource>

@@ -89,12 +89,20 @@ SetupPage {
                     case 13:
                     case 14:
                     case 15:
+                    case 15:
+                    case 21:
                         return false;
                     default:
                         return true;
                     }
                 case 3:
-                    return true;
+                    switch(type)
+                    {
+                    case 21:
+                        return false;
+                    default:
+                        return true;
+                    }
                 }
 
             }
@@ -161,7 +169,7 @@ SetupPage {
                     anchors.right:  parent.right
                     text:           qsTr("生效并重启")//qsTr("Apply and Restart")
 
-                    onClicked:      showDialog(applyRestartDialogComponent, qsTr("Apply and Restart"), qgcView.showDialogDefaultWidth, StandardButton.Apply | StandardButton.Cancel)
+                    onClicked:      showDialog(applyRestartDialogComponent, qsTr("生效并重启"), qgcView.showDialogDefaultWidth, StandardButton.Apply | StandardButton.Cancel)
                 }
             }
             Column {
@@ -213,7 +221,7 @@ SetupPage {
 
                     QGCViewDialog {
                         id: applyRestartDialog
-
+                        height: ScreenTools.defaultFontPixelHeight*10
                         function accept() {
                             controller.changeAutostart()
                             applyRestartDialog.hideDialog()
@@ -222,9 +230,12 @@ SetupPage {
                         QGCLabel {
                             anchors.fill:   parent
                             wrapMode:       Text.WordWrap
-                        text:           qsTr("Clicking “Apply” will save the changes you have made to your airframe configuration.<br><br>\
-All vehicle parameters other than Radio Calibration will be reset.<br><br>\
-Your vehicle will also be restarted in order to complete the process.")
+                        text:           qsTr("点击 确认 会保存你选择的机型配置.<br><br>\
+                                              除了遥控校准参数其他参数会被重置.<br><br>\
+                                              重启完成操作")
+//                       Clicking “Apply” will save the changes you have made to your airframe configuration.<br><br>\
+//                        All vehicle parameters other than Radio Calibration will be reset.<br><br>\
+//                        Your vehicle will also be restarted in order to complete the process.
                         }
                     }
                 }

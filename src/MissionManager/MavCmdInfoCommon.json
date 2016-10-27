@@ -8,18 +8,18 @@
             "comment":              "MAV_CMD_NAV_LAST: Used for fake home position waypoint",
             "id":                   95,
             "rawName":              "HomeRaw",
-            "friendlyName":         "Home位置",
-            "description":          "设置home位置",
+            "friendlyName":         "Home Position",
+            "description":          "Planned home position for mission.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "基本设置",
+            "category":             "Basic",
             "param5": {
-                "label":            "纬度:",
+                "label":            "Latitude:",
                 "default":          37.803784,
                 "decimalPlaces":    7
             },
             "param6": {
-                "label":            "经度:",
+                "label":            "Longitude:",
                 "default":          -122.462276,
                 "decimalPlaces":    7
             }
@@ -27,13 +27,13 @@
         {
             "id":                   16,
             "rawName":              "MAV_CMD_NAV_WAYPOINT",
-            "friendlyName":         "航点",
-            "description":          "运动到三维空间中的一个位置.",
+            "friendlyName":         "Waypoint",
+            "description":          "Travel to a position in 3D space.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "基本设置",
+            "category":             "Basic",
             "param1": {
-                "label":            "停留:",
+                "label":            "Hold:",
                 "units":            "secs",
                 "default":          0,
                 "decimalPlaces":    0
@@ -51,7 +51,7 @@
                 "decimalPlaces":    2
             },
             "param4": {
-                "label":            "机头:",
+                "label":            "Heading:",
                 "units":            "radians",
                 "default":          0.0,
                 "decimalPlaces":    2
@@ -60,19 +60,19 @@
         {
             "id":                   17,
             "rawName":              "MAV_CMD_NAV_LOITER_UNLIM",
-            "friendlyName":         "悬停",
-            "description":          "运动到一个指定位置在一个指定半径区域内悬停.",
+            "friendlyName":         "Loiter",
+            "description":          "Travel to a position and Loiter around the specified radius indefinitely.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "悬停",
+            "category":             "Loiter",
             "param3": {
-                "label":            "半径:",
+                "label":            "Radius:",
                 "units":            "m",
                 "default":          50.0,
                 "decimalPlaces":    2
             }
         },
-	        {
+        {
             "id":                   18,
             "rawName":              "MAV_CMD_NAV_LOITER_TURNS",
             "friendlyName":         "Loiter (turns)",
@@ -102,25 +102,25 @@
         {
             "id":                   19,
             "rawName":              "MAV_CMD_NAV_LOITER_TIME",
-            "friendlyName":         "悬停时间",
-            "description":          "运动到一个指定位置在一段时间内在指定半径区域悬停.",
+            "friendlyName":         "Loiter (time)",
+            "description":          "Travel to a position and Loiter around the specified radius for an amount of time.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "悬停",
+            "category":             "Loiter",
             "param1": {
-                "label":            "停留:",
+                "label":            "Hold:",
                 "units":            "secs",
                 "default":          30,
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "半径:",
+                "label":            "Radius:",
                 "units":            "m",
                 "default":          50.0,
                 "decimalPlaces":    2
             },
             "param4": {
-                "label":            "下一条路径起点:",
+                "label":            "Next waypoint start:",
                 "enumStrings":      "Center,On Loiter",
                 "enumValues":       "0,1",
                 "default":          1,
@@ -130,27 +130,27 @@
         {
             "id":           20,
             "rawName":      "MAV_CMD_NAV_RETURN_TO_LAUNCH",
-            "friendlyName": "回家",
-            "description":  "飞机回起飞点.",
+            "friendlyName": "Return Home",
+            "description":  "Send the vehicle back to the home position.",
             "friendlyEdit": true,
-            "category":     "基本设置"
+            "category":     "Basic"
         },
         {
             "id":                   21,
             "rawName":              "MAV_CMD_NAV_LAND",
-            "friendlyName":         "降落",
-            "description":          "在指定位置降落.",
+            "friendlyName":         "Land",
+            "description":          "Land vehicle at the specified location.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "基本设置",
+            "category":             "Basic",
             "param1": {
-                "label":            "终止高度:",
+                "label":            "Abort Alt:",
                 "units":            "m",
                 "default":          25.0,
                 "decimalPlaces":    2
             },
             "param4": {
-                "label":            "机头:",
+                "label":            "Heading:",
                 "units":            "radians",
                 "default":          0.0,
                 "decimalPlaces":    2
@@ -159,19 +159,19 @@
         {
             "id":                   22,
             "rawName":              "MAV_CMD_NAV_TAKEOFF",
-            "friendlyName":         "起飞",
-            "description":          "从地面起飞，向着指定的位置移动.",
+            "friendlyName":         "Takeoff",
+            "description":          "Take off from the ground and travel towards the specified position.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "基本设置",
+            "category":             "Basic",
             "param1": {
-                "label":            "仰俯:",
+                "label":            "Pitch:",
                 "units":            "deg",
                 "default":          15,
                 "decimalPlaces":    2
             },
             "param4": {
-                "label":            "机头:",
+                "label":            "Heading:",
                 "units":            "radians",
                 "default":          0.0,
                 "decimalPlaces":    2
@@ -205,11 +205,11 @@
         {
             "id":                   31,
             "rawName":              "MAV_CMD_NAV_LOITER_TO_ALT",
-            "friendlyName":         "悬停高度",
-            "description":          "以Loiter模式向指定位置运动直到到达一定高度.",
+            "friendlyName":         "Loiter (altitude)",
+            "description":          "Loiter at specified position until altitude reached.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "悬停",
+            "category":             "Loiter",
             "param1": {
                 "label":            "Heading wait:",
                 "enumStrings":      "False,True",
@@ -218,13 +218,13 @@
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "半径:",
+                "label":            "Radius:",
                 "units":            "m",
                 "default":          50.0,
                 "decimalPlaces":    2
             },
             "param4": {
-                "label":            "下一条路径起点:",
+                "label":            "Next waypoint start:",
                 "enumStrings":      "Center,On Loiter",
                 "enumValues":       "0,1",
                 "default":          1,
@@ -302,34 +302,34 @@
                 "units":            "secs",
                 "default":          0,
                 "decimalPlaces":    0
-            }        
+            }
         },
         { "id": 83, "rawName": "MAV_CMD_NAV_ALTITUDE_WAIT", "friendlyName": "Altitude wait" },
         {
             "id":                   84,
             "rawName":              "MAV_CMD_NAV_VTOL_TAKEOFF",
-            "friendlyName":         "VTOL垂直起飞转变",
-            "description":          "用垂直起飞模式从地面起飞.",
+            "friendlyName":         "VTOL takeoff and transition",
+            "description":          "Takeoff in VTOL mode, transition to forward flight and fly to the specified location.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "飞行控制",
+            "category":             "Control",
             "param4": {
-                "label":            "机头:",
+                "label":            "Heading:",
                 "units":            "deg",
                 "default":          0.0,
                 "decimalPlaces":    2
             }
         },
-       {
+        {
             "id":                   85,
             "rawName":              "MAV_CMD_NAV_VTOL_LAND",
-            "friendlyName":         ""VTOL转变垂直降落",
-            "description":          "使用垂直模式降落.",
+            "friendlyName":         "VTOL transition and land",
+            "description":          "Transition to VTOL mode and land.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "飞行控制",
+            "category":             "Control",
             "param4": {
-                "label":            "机头:",
+                "label":            "Heading:",
                 "units":            "deg",
                 "default":          0.0,
                 "decimalPlaces":    2
@@ -478,17 +478,17 @@
         {
             "id":           177,
             "rawName":      "MAV_CMD_DO_JUMP",
-            "friendlyName": "跳转到指定的项目",
-            "description":  "任务会在指定项目继续.",
+            "friendlyName": "Jump to item",
+            "description":  "Mission will continue at the specified item.",
             "friendlyEdit": true,
-            "category":     "飞行控制",
+            "category":     "Control",
             "param1": {
-                "label":            "项 #:",
+                "label":            "Item #:",
                 "default":          1,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "重复:",
+                "label":            "Repeat:",
                 "default":          10,
                 "decimalPlaces":    0
             }
@@ -496,28 +496,28 @@
         {
             "id":           178,
             "rawName":      "MAV_CMD_DO_CHANGE_SPEED",
-            "friendlyName": "改变速度",
-            "description":  "改变速度 /油门 设置航点.",
-            "category":     "飞行控制",
+            "friendlyName": "Change speed",
+            "description":  "Change speed and/or throttle set points.",
+            "category":     "Control",
             "param1": {
-                "label":            "类型:",
-                "enumStrings":      "空速,地速",
+                "label":            "Type:",
+                "enumStrings":      "Airspeed,Ground Speed",
                 "enumValues":       "0,1",
                 "default":          1
             },
             "param2": {
-                "label":            "速度:",
+                "label":            "Speed:",
                 "units":            "m/s",
                 "default":          -1
             },
             "param3": {
-                "label":            "油门:",
+                "label":            "Throttle:",
                 "units":            "%",
                 "default":          -1
             },
             "param4": {
-                "label":            "偏移:",
-                "enumStrings":      "相对,绝对",
+                "label":            "Offset:",
+                "enumStrings":      "Relative,Absolute",
                 "enumValues":       "1,0",
                 "default":          1
             }
@@ -580,12 +580,12 @@
         {
             "id":           183,
             "rawName":      "MAV_CMD_DO_SET_SERVO",
-            "friendlyName": "设置伺服",
-            "description":  "设置伺服到该pwm值.",
+            "friendlyName": "Set servo",
+            "description":  "Set servo to specified PWM value.",
             "friendlyEdit": true,
-            "category":     "飞行控制",
+            "category":     "Control",
             "param1": {
-                "label":            "伺服:",
+                "label":            "Servo:",
                 "default":          1,
                 "decimalPlaces":    0
             },
@@ -627,10 +627,10 @@
         {
             "id":                   189,
             "rawName":              "MAV_CMD_DO_LAND_START",
-            "friendlyName":         "开始降落",
-            "description":          "标记来指示降落序列的开始",
+            "friendlyName":         "Land start",
+            "description":          "Marker to indicate start of landing sequence.",
             "friendlyEdit":         true,
-            "category":             "飞行控制"
+            "category":             "Control"
         },
         { "id": 190, "rawName": "MAV_CMD_DO_RALLY_LAND", "friendlyName": "Rally land" },
         { "id": 191, "rawName": "MAV_CMD_DO_GO_AROUND", "friendlyName": "Go around" },
@@ -724,17 +724,17 @@
         },
         {
             "id":           203,
-            "friendlyName": "摄像机控制",
+            "friendlyName": "Camera control",
             "rawName":      "MAV_CMD_DO_DIGICAM_CONTROL",
-            "description":  "控制车载摄像机.",
-            "category":     "相机",
+            "description":  "Control onboard camera.",
+            "category":     "Camera",
             "param1": {
                 "label":            "Session:",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "变焦:",
+                "label":            "Zoom:",
                 "default":          0,
                 "decimalPlaces":    3
             },
@@ -744,17 +744,17 @@
                 "decimalPlaces":    3
             },
             "param4": {
-                "label":            "焦点锁定:",
+                "label":            "Focus lock:",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param5": {
-                "label":            "命令:",
+                "label":            "Command:",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param6": {
-                "label":            "帐号:",
+                "label":            "Id:",
                 "default":          0,
                 "decimalPlaces":    0
             }
@@ -828,17 +828,17 @@
         {
             "id":           206,
             "rawName":      "MAV_CMD_DO_SET_CAM_TRIGG_DIST",
-            "friendlyName": "相机触发距离",
-            "description":  "设置相机触发距离.",
-            "category":     "相机",
+            "friendlyName": "Camera trigger distance",
+            "description":  "Set camera trigger distance.",
+            "category":     "Camera",
             "param1": {
-                "label":            "距离:",
+                "label":            "Distance:",
                 "default":          25,
                 "units":            "m",
                 "decimalPlaces":    2
             }
         },
-	{
+        {
             "id":                   207,
             "rawName":              "MAV_CMD_DO_FENCE_ENABLE",
             "friendlyName":         "Enable geofence",
@@ -975,13 +975,13 @@
         {
             "id": 3000,
             "rawName":      "MAV_CMD_DO_VTOL_TRANSITION",
-            "friendlyName": "VTOL 切换",
-            "description":  "飞行模式切换",
-            "category":     "飞行控制",
+            "friendlyName": "VTOL Transition",
+            "description":  "Perform flight mode transition.",
+            "category":     "Control",
             "param1": {
-                "label":            "模式:",
+                "label":            "Mode:",
                 "default":          3,
-                "enumStrings":      "旋翼模式,固定翼模式",
+                "enumStrings":      "Hover Mode,Plane Mode",
                 "enumValues":       "3,4"
             }
         },
