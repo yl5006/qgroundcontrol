@@ -727,8 +727,6 @@
             "friendlyName": "摄像机控制",
             "rawName":      "MAV_CMD_DO_DIGICAM_CONTROL",
             "description":  "控制车载摄像机.",
-            "specifiesCoordinate":  true,
-            "friendlyEdit":         true,
             "category":     "相机",
             "param1": {
                 "label":            "Session:",
@@ -832,8 +830,6 @@
             "rawName":      "MAV_CMD_DO_SET_CAM_TRIGG_DIST",
             "friendlyName": "相机触发距离",
             "description":  "设置相机触发距离",
-            "specifiesCoordinate":  true,
-            "friendlyEdit":         true,
             "category":     "相机",
             "param1": {
                 "label":            "距离:",
