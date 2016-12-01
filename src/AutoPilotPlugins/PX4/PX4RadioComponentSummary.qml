@@ -122,6 +122,7 @@ FactPanel {
         VehicleSummaryRow {
             labelText: qsTr("附翼:")//"Flaps:"
             valueText: mapFlapsFact ? (mapFlapsFact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : mapFlapsFact.valueString) : ""
+            visible:    !controller.vehicle.multiRotor
         }
 
         VehicleSummaryRow {

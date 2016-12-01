@@ -21,6 +21,7 @@
 #include "QGroundControlQmlGlobal.h"
 
 #ifndef __mobile__
+#include "MainWindow.h"
 #include "QGCFileDialog.h"
 #endif
 
@@ -469,7 +470,7 @@ void MissionController::loadFromFile(const QString& filename)
 void MissionController::loadFromFilePicker(void)
 {
 #ifndef __mobile__
-    QString filename = QGCFileDialog::getOpenFileName(NULL, tr("选择任务文件")/*"Select Mission File to load"*/, QString(), "Mission file (*.mission);;All Files (*.*)");
+    QString filename = QGCFileDialog::getOpenFileName(MainWindow::instance(), tr("选择任务文件")/*"Select Mission File to load"*/, QString(), "Mission file (*.mission);;All Files (*.*)");
 
     if (filename.isEmpty()) {
         return;
@@ -554,7 +555,7 @@ void MissionController::saveToFile(const QString& filename)
 void MissionController::saveToFilePicker(void)
 {
 #ifndef __mobile__
-    QString filename = QGCFileDialog::getSaveFileName(NULL, tr("保存任务文件")/*"Select file to save mission to"*/, QString(), "Mission file (*.mission);;All Files (*.*)");
+    QString filename = QGCFileDialog::getSaveFileName(MainWindow::instance(), tr("保存任务文件")/*"Select file to save mission to"*/, QString(), "Mission file (*.mission);;All Files (*.*)");
 
     if (filename.isEmpty()) {
         return;

@@ -145,7 +145,9 @@ Rectangle {
 //            }
 
 //    InstrumentSwipeView {
-//        id:                 _valuesWidget1
+//        id:                 _valuesWidget
+//        anchors.margins:    1
+//        anchors.left:       parent.left
 //        width:              parent.width
 //        qgcView:            instrumentPanel.qgcView
 //        textColor:          qgcPal.text
