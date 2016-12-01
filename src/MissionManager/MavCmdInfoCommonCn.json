@@ -132,7 +132,8 @@
             "rawName":      "MAV_CMD_NAV_RETURN_TO_LAUNCH",
             "friendlyName": "回家",
             "description":  "飞机回起飞点.",
-            "friendlyEdit": true,
+            "specifiesCoordinate":  true,
+            "friendlyEdit":         true,
             "category":     "基本设置"
         },
         {
@@ -582,6 +583,7 @@
             "rawName":      "MAV_CMD_DO_SET_SERVO",
             "friendlyName": "设置伺服",
             "description":  "设置伺服到该pwm值.",
+            "specifiesCoordinate":  true,
             "friendlyEdit": true,
             "category":     "飞行控制",
             "param1": {
@@ -727,6 +729,8 @@
             "friendlyName": "摄像机控制",
             "rawName":      "MAV_CMD_DO_DIGICAM_CONTROL",
             "description":  "控制车载摄像机.",
+            "specifiesCoordinate":  true,
+            "friendlyEdit":         true,
             "category":     "相机",
             "param1": {
                 "label":            "Session:",
@@ -830,6 +834,8 @@
             "rawName":      "MAV_CMD_DO_SET_CAM_TRIGG_DIST",
             "friendlyName": "相机触发距离",
             "description":  "设置相机触发距离",
+            "specifiesCoordinate":  true,
+            "friendlyEdit":         true,
             "category":     "相机",
             "param1": {
                 "label":            "距离:",

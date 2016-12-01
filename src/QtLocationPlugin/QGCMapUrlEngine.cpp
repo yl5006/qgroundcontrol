@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -24,6 +24,7 @@
 #include <QTimer>
 #include <QString>
 #include <QByteArray>
+#include <QtMath>
 
 #if defined(DEBUG_GOOGLE_MAPS)
 #include <QFile>
@@ -85,6 +86,9 @@ UrlFactory::getImageFormat(MapType type, const QByteArray& image)
                 case BingMap:
                 case OpenStreetMap:
                 case StatkartTopo:
+                case GaodeMap:
+                case GaodeSatellite:
+                case GaodeHybrid:
                     format = "png";
                     break;
                 case MapQuestMap:
@@ -147,6 +151,11 @@ UrlFactory::getTileURL(MapType type, int x, int y, int zoom, QNetworkAccessManag
         case StatkartTopo:
             request.setRawHeader("Referrer", "https://www.norgeskart.no/");
             break;
+        case GaodeHybrid:
+        case GaodeMap:
+        case GaodeSatellite:
+            request.setRawHeader("Referrer", "http://map.baidu.com/");
+            break;
         /*
         case OpenStreetMapSurfer:
         case OpenStreetMapSurferTerrain:
@@ -182,6 +191,7 @@ UrlFactory::_getSecGoogleWords(int x, int y, QString &sec1, QString &sec2)
 QString
 UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager* networkManager)
 {
+ //    qDebug()<<x<<" "<<y<<" "<<zoom;
     switch (type) {
 #ifdef QGC_NO_GOOGLE_MAPS
     Q_UNUSED(networkManager);
@@ -206,7 +216,8 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString sec1    = ""; // after &x=...
         QString sec2    = ""; // after &zoom=...
         _getSecGoogleWords(x, y, sec1, sec2);
-        _tryCorrectGoogleVersions(networkManager);
+        _tryCorrectGoogleVersions(networkManager); 
+   //     qDebug()<<QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
         return QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
     }
     break;
@@ -235,7 +246,8 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
 #endif
     case StatkartTopo:
     {
-        return QString("http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo2&zoom=%1&x=%2&y=%3").arg(zoom).arg(x).arg(y);
+      return QString("http://online2.map.bdimg.com/onlinelabel/?qt=tile&x=793&y=209&z=12&styles=pl&udt=20161109&scaler=1&p=0");
+   //     return QString("http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo2&zoom=%1&x=%2&y=%3").arg(zoom).arg(x).arg(y);
     }
     break;
     /*
@@ -291,6 +303,23 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
     {
         char letter = "1234"[_getServerNum(x, y, 4)];
         return QString("http://otile%1.mqcdn.com/tiles/1.0.0/sat/%2/%3/%4.jpg").arg(letter).arg(zoom).arg(x).arg(y);
+    }
+    case GaodeMap:
+    {
+         return QString("http://webst03.is.autonavi.com/appmaptile?x=%1&y=%2&z=%3&lang=zh_cn&size=1&scale=1&style=7").arg(x).arg(y).arg(zoom);
+        //return _tilexyTobaidu(x, y, zoom);
+    }
+    break;
+    case GaodeSatellite:
+    {
+        qDebug()<<QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
+        return QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
+     //   return _tilexyTobaidu(x, y, zoom);
+    }
+    break;
+    case GaodeHybrid:
+    {
+        return _tilexyTobaidu(x, y, zoom);
     }
     break;
 
@@ -389,6 +418,27 @@ UrlFactory::_tileXYToQuadKey(int tileX, int tileY, int levelOfDetail)
         quadKey.append(digit);
     }
     return quadKey;
+}
+
+//-----------------------------------------------------------------------------
+QString
+UrlFactory::_tilexyTobaidu(int x, int y, int zoom)
+{
+    zoom = zoom - 1;
+    int offsetX = qPow(2, zoom);
+    int offsetY = offsetX - 1;
+
+    int numX = x - offsetX;
+    int numY = -y + offsetY;
+
+    zoom = zoom + 1;
+    int num = (x + y)%8 + 1;
+    QString xstr = QString::number(numX).replace("-", "M");
+    QString ystr = QString::number(numY).replace("-", "M");
+    qDebug()<<QString("http://online1.map.bdimg.com/tile/?qt=tile&x=%1&y=%2&z=%3&styles=pl").arg(xstr).arg(ystr).arg(zoom);
+    return QString("http://online1.map.bdimg.com/tile/?qt=tile&x=%1&y=%2&z=%3&styles=pl").arg(xstr).arg(ystr).arg(zoom);
+    //原来：http://q3.baidu.com/it/u=x=721;y=209;z=12;v=014;type=web&fm=44
+    //更新：http://online1.map.bdimg.com/tile/?qt=tile&x=23144&y=6686&z=17&styles=pl
 }
 
 //-----------------------------------------------------------------------------

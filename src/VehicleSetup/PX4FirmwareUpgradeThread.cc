@@ -83,7 +83,6 @@ void PX4FirmwareUpgradeThreadWorker::_startFindBoardLoop(void)
 void PX4FirmwareUpgradeThreadWorker::_findBoardOnce(void)
 {
     qCDebug(FirmwareUpgradeVerboseLog) << "_findBoardOnce";
-    
     QGCSerialPortInfo               portInfo;
     QGCSerialPortInfo::BoardType_t  boardType;
     
@@ -276,11 +275,11 @@ void PX4FirmwareUpgradeThreadWorker::_flash(void)
     qCDebug(FirmwareUpgradeLog) << "PX4FirmwareUpgradeThreadWorker::_flash";
     
     if (_erase()) {
-        emit status("Programming new version...");
+   //     emit status("Programming new version...");
         
         if (_bootloader->program(_bootloaderPort, _controller->image())) {
             qCDebug(FirmwareUpgradeLog) << "Program complete";
-            emit status("Program complete");
+   //         emit status("Program complete");
         } else {
             _bootloaderPort->deleteLater();
             _bootloaderPort = NULL;
@@ -289,11 +288,11 @@ void PX4FirmwareUpgradeThreadWorker::_flash(void)
             return;
         }
         
-        emit status("Verifying program...");
+   //     emit status("Verifying program...");
         
         if (_bootloader->verify(_bootloaderPort, _controller->image())) {
             qCDebug(FirmwareUpgradeLog) << "Verify complete";
-            emit status("Verify complete");
+   //         emit status("Verify complete");
         } else {
             qCDebug(FirmwareUpgradeLog) << "Verify failed:" << _bootloader->errorString();
             emit error(_bootloader->errorString());
@@ -311,11 +310,11 @@ bool PX4FirmwareUpgradeThreadWorker::_erase(void)
     qCDebug(FirmwareUpgradeLog) << "PX4FirmwareUpgradeThreadWorker::_erase";
     
     emit eraseStarted();
-    emit status("Erasing previous program...");
+ //   emit status("Erasing previous program...");
     
     if (_bootloader->erase(_bootloaderPort)) {
         qCDebug(FirmwareUpgradeLog) << "Erase complete";
-        emit status("Erase complete");
+ //       emit status("Erase complete");
         emit eraseComplete();
         return true;
     } else {

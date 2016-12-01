@@ -98,10 +98,10 @@
 #include "QGCMapPolygon.h"
 #include "ParameterManager.h"
 
-#ifdef   QGC_OPENCV_STREAMING
-#include "opencvcamera.h"
-#include "opencvshowframe.h"
-#endif
+//#ifdef   QGC_OPENCV_STREAMING
+//#include "opencvcamera.h"
+//#include "opencvshowframe.h"
+//#endif
 
 #ifndef __ios__
 #include "SerialLink.h"
@@ -296,8 +296,8 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
     setOrganizationName(QGC_ORG_NAME);
     setOrganizationDomain(QGC_ORG_DOMAIN);
 
-    // this->setApplicationVersion(QString(GIT_VERSION));
-    this->setApplicationVersion(tr("EWT 2.0"));
+ //    this->setApplicationVersion(QString(GIT_VERSION));
+ //   this->setApplicationVersion(tr("EWT 1.3"));
     // Set settings format
     QSettings::setDefaultFormat(QSettings::IniFormat);
     QSettings settings;
@@ -435,10 +435,10 @@ void QGCApplication::_initCommon(void)
     qmlRegisterSingletonType<ScreenToolsController>     ("QGroundControl.ScreenToolsController",    1, 0, "ScreenToolsController",  screenToolsControllerSingletonFactory);
     qmlRegisterSingletonType<MavlinkQmlSingleton>       ("QGroundControl.Mavlink",                  1, 0, "Mavlink",                mavlinkQmlSingletonFactory);
 
-#ifdef   QGC_OPENCV_STREAMING
-    qmlRegisterType<OpenCVcamera>("OpenCV", 1, 0, "OpenCVcamera");
-    qmlRegisterType<OpenCVshowFrame>("OpenCV", 1, 0, "OpenCVshowFrame");
-#endif
+//#ifdef   QGC_OPENCV_STREAMING
+//    qmlRegisterType<OpenCVcamera>("OpenCV", 1, 0, "OpenCVcamera");
+//    qmlRegisterType<OpenCVshowFrame>("OpenCV", 1, 0, "OpenCVshowFrame");
+//#endif
 }
 
 bool QGCApplication::_initForNormalAppBoot(void)

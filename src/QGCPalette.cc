@@ -34,7 +34,8 @@ QColor QGCPalette::_windowShade[QGCPalette::_cThemes][QGCPalette::_cColorGroups]
 
 QColor QGCPalette::_windowShadeDark[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#bdbdbd"), QColor("#bdbdbd") },
-    { QColor(40, 40, 40), QColor(40, 40, 40) }
+ //   { QColor(40, 40, 40), QColor(40, 40, 40) }
+     { QColor("#1e2328"), QColor("#1e2328") }
 };
 
 QColor QGCPalette::_text[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {

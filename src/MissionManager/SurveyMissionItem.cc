@@ -761,42 +761,88 @@ QmlObjectListModel* SurveyMissionItem::getMissionItems(void) const
         QGeoCoordinate coord = _gridPoints[i].value<QGeoCoordinate>();
         double altitude = _gridAltitudeFact.rawValue().toDouble();
 
-        MissionItem* item = new MissionItem(seqNum++,                       // sequence number
-                                            MAV_CMD_NAV_WAYPOINT,           // MAV_CMD
-                                            _gridAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,  // MAV_FRAME
-                                            0.0, 0.0, 0.0, 0.0,             // param 1-4
-                                            coord.latitude(),
-                                            coord.longitude(),
-                                            altitude,
-                                            true,                           // autoContinue
-                                            false,                          // isCurrentItem
-                                            pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
-        pMissionItems->append(item);
-
-        if (_cameraTrigger && i == 0) {
+        if(_cameraTrigger && i == 0)
+        {
             MissionItem* item = new MissionItem(seqNum++,                       // sequence number
-                                                MAV_CMD_DO_SET_CAM_TRIGG_DIST,  // MAV_CMD
-                                                MAV_FRAME_MISSION,              // MAV_FRAME
-                                                _cameraTriggerDistanceFact.rawValue().toDouble(),   // trigger distance
-                                                0.0, 0.0, 0.0, 0.0, 0.0, 0.0,   // param 2-7
+                                                MAV_CMD_DO_SET_CAM_TRIGG_DIST,           // MAV_CMD
+                                                _gridAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,  // MAV_FRAME
+                                                _cameraTriggerDistanceFact.rawValue().toDouble(),
+                                                0.0, 0.0, 0.0,             // param 2-4
+                                                coord.latitude(),
+                                                coord.longitude(),
+                                                altitude,
+                                                true,                           // autoContinue
+                                                false,                          // isCurrentItem
+                                                pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
+            pMissionItems->append(item);
+        }else if(_cameraTrigger && i ==(_gridPoints.count()-1))
+        {
+            MissionItem* item = new MissionItem(seqNum++,                       // sequence number
+                                                MAV_CMD_DO_SET_CAM_TRIGG_DIST,           // MAV_CMD
+                                                _gridAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,  // MAV_FRAME
+                                                0.0,
+                                                0.0, 0.0, 0.0,             // param 2-4
+                                                coord.latitude(),
+                                                coord.longitude(),
+                                                altitude,
+                                                true,                           // autoContinue
+                                                false,                          // isCurrentItem
+                                                pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
+            pMissionItems->append(item);
+        }else
+        {
+            MissionItem* item = new MissionItem(seqNum++,                       // sequence number
+                                                MAV_CMD_NAV_WAYPOINT,           // MAV_CMD
+                                                _gridAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,  // MAV_FRAME
+                                                0.0, 0.0, 0.0, 0.0,             // param 1-4
+                                                coord.latitude(),
+                                                coord.longitude(),
+                                                altitude,
                                                 true,                           // autoContinue
                                                 false,                          // isCurrentItem
                                                 pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
             pMissionItems->append(item);
         }
     }
+//        MissionItem* item = new MissionItem(seqNum++,                       // sequence number
+//                                            MAV_CMD_NAV_WAYPOINT,           // MAV_CMD
+//                                            _gridAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,  // MAV_FRAME
+//                                            0.0, 0.0, 0.0, 0.0,             // param 1-4
+//                                            coord.latitude(),
+//                                            coord.longitude(),
+//                                            altitude,
+//                                            true,                           // autoContinue
+//                                            false,                          // isCurrentItem
+//                                            pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
+//        pMissionItems->append(item);
 
-    if (_cameraTrigger) {
-        MissionItem* item = new MissionItem(seqNum++,                       // sequence number
-                                            MAV_CMD_DO_SET_CAM_TRIGG_DIST,  // MAV_CMD
-                                            MAV_FRAME_MISSION,              // MAV_FRAME
-                                            0.0,                            // trigger distance
-                                            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,   // param 2-7
-                                            true,                           // autoContinue
-                                            false,                          // isCurrentItem
-                                            pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
-        pMissionItems->append(item);
-    }
+//        if (_cameraTrigger && i == 0) {
+//            MissionItem* item = new MissionItem(seqNum++,                       // sequence number
+//                                                MAV_CMD_DO_SET_CAM_TRIGG_DIST,  // MAV_CMD
+//                                                 _gridAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,  //MAV_FRAME_MISSION,              // MAV_FRAME
+//                                                _cameraTriggerDistanceFact.rawValue().toDouble(),   // trigger distance
+//                                                0.0, 0.0, 0.0,
+//                                                coord.latitude(),
+//                                                coord.longitude(),
+//                                                altitude,   // param 2-7
+//                                                true,                           // autoContinue
+//                                                false,                          // isCurrentItem
+//                                                pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
+//            pMissionItems->append(item);
+//        }
+//    }
+
+//    if (_cameraTrigger) {
+//        MissionItem* item = new MissionItem(seqNum++,                       // sequence number
+//                                            MAV_CMD_DO_SET_CAM_TRIGG_DIST,  // MAV_CMD
+//                                            _gridAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,  // MAV_FRAME//MAV_FRAME_MISSION,              // MAV_FRAME
+//                                            0.0,                            // trigger distance
+//                                            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,   // param 2-7
+//                                            true,                           // autoContinue
+//                                            false,                          // isCurrentItem
+//                                            pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
+//        pMissionItems->append(item);
+//    }
 
     return pMissionItems;
 }

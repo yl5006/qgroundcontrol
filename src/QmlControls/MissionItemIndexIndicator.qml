@@ -48,7 +48,7 @@ Rectangle {
     readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
     readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
 
-    property bool   _statusValid:       _currentMissionItem.command==16&&_currentMissionItem != undefined
+    property bool   _statusValid:       _currentMissionItem != undefined
     property bool   _vehicleValid:      _activeVehicle != undefined
     property bool   _missionValid:      missionItems != undefined
 

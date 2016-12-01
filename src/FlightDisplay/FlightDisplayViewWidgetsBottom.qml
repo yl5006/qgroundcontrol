@@ -97,7 +97,7 @@ Item {
             anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
             anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
             anchors.bottom:         parent.bottom
-            visible:                !_useAlternateInstruments
+  //          visible:                !_useAlternateInstruments
             size:                   getGadgetWidth()
             active:                 _activeVehicle!= null
             heading:                _heading
@@ -137,7 +137,7 @@ Item {
         anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
         anchors.top:            parent.top
         anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
-        visible:                _useAlternateInstruments
+        visible:                false//_useAlternateInstruments
         width:                  ScreenTools.isTinyScreen ? getGadgetWidth() * 1.5 : getGadgetWidth()
         active:                 _activeVehicle!= null
         heading:                _heading
@@ -352,6 +352,38 @@ Item {
                 if(_flightMap)
                     _flightMap.zoomLevel -= 0.5
                 checked = false
+            }
+        }
+        Rectangle {
+            height:     parent.height*0.8
+            width:      1
+            color:      "grey"
+        }
+        //-- Zoom Map Out
+        RoundButton {
+            id:                 voice
+            buttonImage:        checked?"/qmlimages/novoice.svg":"/qmlimages/voice.svg"
+            z:                  QGroundControl.zOrderWidgets
+            lightBorders:       _lightWidgetBorders
+            checked:            QGroundControl.isAudioMuted
+            onClicked: {
+              QGroundControl.isAudioMuted = checked
+            }
+        }
+        Rectangle {
+            height:     parent.height*0.8
+            width:      1
+            color:      "grey"
+        }
+        //-- Zoom Map Out
+        RoundButton {
+            id:                 yaokong
+            buttonImage:        "/qmlimages/yaokong.svg"
+            z:                  QGroundControl.zOrderWidgets
+            lightBorders:       _lightWidgetBorders
+            checked:            QGroundControl.virtualTabletJoystick
+            onClicked: {
+              QGroundControl.virtualTabletJoystick = checked
             }
         }
     }

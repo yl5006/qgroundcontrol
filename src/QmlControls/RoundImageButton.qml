@@ -33,7 +33,7 @@ Button {
             radius:         width / 2
             border.width:   showborder? width / 20 :0
             border.color:   bordercolor
-                QGCColoredImage {
+            QGCColoredImage {
                 id:                     image
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter

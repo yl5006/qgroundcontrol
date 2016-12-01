@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -52,6 +52,10 @@ stQGeoTileCacheQGCMapTypes kMapTypes[] = {
     {"Bing Satellite Map",      UrlFactory::BingSatellite},
     {"Bing Hybrid Map",         UrlFactory::BingHybrid},
     {"Statkart Topo2",          UrlFactory::StatkartTopo},
+
+    {"Gaode Street Map",          UrlFactory::GaodeMap},
+    {"Gaode Satellite Map",       UrlFactory::GaodeSatellite},
+    {"Gaode Hybrid Map",          UrlFactory::GaodeHybrid},
     {"MapQuest Street Map",     UrlFactory::MapQuestMap},
     {"MapQuest Satellite Map",  UrlFactory::MapQuestSat}
     /*

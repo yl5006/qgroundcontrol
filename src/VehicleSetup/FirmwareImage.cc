@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -54,7 +54,7 @@ bool FirmwareImage::load(const QString& imageFilename, uint32_t boardId)
         return _binLoad(imageFilename);
         _binFormat = true;
         return true;
-    } else if (imageFilename.endsWith(".px4")) {
+    } else if (imageFilename.endsWith(".ewt")) {
         _binFormat = true;
         return _px4Load(imageFilename);
     } else if (imageFilename.endsWith(".ihx")) {
@@ -244,7 +244,7 @@ bool FirmwareImage::_px4Load(const QString& imageFilename)
 
     // What firmware type is this?
     MAV_AUTOPILOT firmwareType = (MAV_AUTOPILOT)px4Json[_jsonMavAutopilotKey].toInt(MAV_AUTOPILOT_PX4);
-    emit statusMessage(QString("MAV_AUTOPILOT = %1").arg(firmwareType));
+  //  emit statusMessage(QString("MAV_AUTOPILOT = %1").arg(firmwareType));
     
     // Decompress the parameter xml and save to file
     QByteArray decompressedBytes;
@@ -253,7 +253,7 @@ bool FirmwareImage::_px4Load(const QString& imageFilename)
                                         _jsonParamXmlSizeKey,  // key which holds byte size
                                         _jsonParamXmlKey,      // key which holds compressed bytes
                                         decompressedBytes);    // Returned decompressed bytes
-    if (success) {
+    if (!success) {  //do not use param file
         // Use settings location as our work directory, this way is something goes wrong the file is still there
         // sitting next to the cache files.
         QSettings settings;
@@ -284,7 +284,7 @@ bool FirmwareImage::_px4Load(const QString& imageFilename)
                                         _jsonAirframeXmlSizeKey,    // key which holds byte size
                                         _jsonAirframeXmlKey,        // key which holds compressed bytes
                                         decompressedBytes);         // Returned decompressed bytes
-    if (success) {
+    if (!success) {   //do not use airframe file
         // We cache the airframe xml in the same location as settings and parameters
         QSettings settings;
         QDir airframeDir = QFileInfo(settings.fileName()).dir();
@@ -400,7 +400,7 @@ bool FirmwareImage::_decompressJsonValue(const QJsonObject&	jsonObject,			///< J
         return false;
     }
     
-    emit statusMessage(QString("Successfully decompressed %1").arg(bytesKey));
+   // emit statusMessage(QString("Successfully decompressed %1").arg(bytesKey));
     
     return true;
 }

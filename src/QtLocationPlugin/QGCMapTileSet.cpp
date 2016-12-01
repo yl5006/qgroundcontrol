@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -237,6 +237,7 @@ void QGCCachedTileSet::_prepareDownload()
             connect(reply, &QNetworkReply::finished, this, &QGCCachedTileSet::_networkReplyFinished);
             connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &QGCCachedTileSet::_networkReplyError);
             _replies.insert(tile->hash(), reply);
+            qDebug()<<tile->hash();
             delete tile;
             //-- Refill queue if running low
             if(!_batchRequested && !_noMoreTiles && _tilesToDownload.count() < (QGCMapEngine::concurrentDownloads(_type) * 10)) {

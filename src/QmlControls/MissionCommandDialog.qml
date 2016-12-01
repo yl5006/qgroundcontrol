@@ -81,7 +81,7 @@ QGCViewDialog {
                 Image {
                     anchors.top:                    parent.top
                     anchors.left:                   parent.left
-                    width:                          parent.width/2
+                    width:                          parent.width/3 * 2
                   //  fillMode:                       Image.PreserveAspectFit
                     height:                         ScreenTools.defaultFontPixelHeight*2
                     anchors.topMargin:              ScreenTools.defaultFontPixelHeight/24

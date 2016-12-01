@@ -387,6 +387,8 @@ public:
     Q_INVOKABLE void motorTest(int motor, int percent, int timeoutSecs);
 //#endif
 
+    Q_INVOKABLE void reposition(double lat, double lon,float alt,float yaw);
+
     bool guidedModeSupported(void) const;
     bool pauseVehicleSupported(void) const;
     bool orbitModeSupported(void) const;

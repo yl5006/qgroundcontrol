@@ -256,12 +256,12 @@ Vehicle::Vehicle(LinkInterface*             link,
     _addFact(&_throttleFact,            _throttleFactName); //add yaoling
 
 
-//    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
+      _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
 //    _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
 //    _addFactGroup(&_windFactGroup,      _windFactGroupName);
 //    _addFactGroup(&_vibrationFactGroup, _vibrationFactGroupName);
 
-//    _gpsFactGroup.setVehicle(this);
+      _gpsFactGroup.setVehicle(this);
 //    _batteryFactGroup.setVehicle(this);
 //    _windFactGroup.setVehicle(this);
 //    _vibrationFactGroup.setVehicle(this);
@@ -372,12 +372,12 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     _addFact(&_altitudeAMSLFact,        _altitudeAMSLFactName);
     _addFact(&_throttleFact,            _throttleFactName); //add yaoling
 
-//    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
+      _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
 //    _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
 //    _addFactGroup(&_windFactGroup,      _windFactGroupName);
 //    _addFactGroup(&_vibrationFactGroup, _vibrationFactGroupName);
 
-//    _gpsFactGroup.setVehicle(NULL);
+      _gpsFactGroup.setVehicle(NULL);
 //    _batteryFactGroup.setVehicle(NULL);
 //    _windFactGroup.setVehicle(NULL);
 //    _vibrationFactGroup.setVehicle(NULL);
@@ -569,16 +569,16 @@ void Vehicle::_handleCommandAck(mavlink_message_t& message)
 
     switch (ack.result) {
     case MAV_RESULT_TEMPORARILY_REJECTED:
-       qgcApp()->showMessage(tr("%1 command temporarily rejected").arg(commandName));
+//       qgcApp()->showMessage(tr("%1 command temporarily rejected").arg(commandName));
         break;
     case MAV_RESULT_DENIED:
-        qgcApp()->showMessage(tr("%1 command denied").arg(commandName));
+//       qgcApp()->showMessage(tr("%1 command denied").arg(commandName));
         break;
     case MAV_RESULT_UNSUPPORTED:
-        qgcApp()->showMessage(tr("%1 command not supported").arg(commandName));
+//        qgcApp()->showMessage(tr("%1 command not supported").arg(commandName));
         break;
     case MAV_RESULT_FAILED:
-        qgcApp()->showMessage(tr("%1 command failed").arg(commandName));
+//        qgcApp()->showMessage(tr("%1 command failed").arg(commandName));
         break;
     default:
         // Do nothing
@@ -659,7 +659,7 @@ void Vehicle::_handleSysStatus(mavlink_message_t& message)
     if (sysStatus.battery_remaining > 0 && sysStatus.battery_remaining < QGroundControlQmlGlobal::batteryPercentRemainingAnnounce()->rawValue().toInt()) {
         if (!_lowBatteryAnnounceTimer.isValid() || _lowBatteryAnnounceTimer.elapsed() > _lowBatteryAnnounceRepeatMSecs) {
             _lowBatteryAnnounceTimer.restart();
-            _say(QString("%1 low battery: %2 percent remaining").arg(_vehicleIdSpeech()).arg(sysStatus.battery_remaining));
+            _say(QString("%1 低电压: 剩下百分之 %2 ").arg(_vehicleIdSpeech()).arg(sysStatus.battery_remaining));//"%1 low battery: %2 percent remaining
         }
     }
 }
@@ -1549,7 +1549,7 @@ void Vehicle::_connectionLostTimeout(void)
         _connectionLost = true;
         _heardFrom = false;
         emit connectionLostChanged(true);
-        _say(QString("%1 communication lost").arg(_vehicleIdSpeech()));
+        _say(tr("%1 连接丢失").arg(_vehicleIdSpeech()));//%1 communication lost
         if (_autoDisconnect) {
             disconnectInactiveVehicle();
         }
@@ -1562,7 +1562,7 @@ void Vehicle::_connectionActive(void)
     if (_connectionLost) {
         _connectionLost = false;
         emit connectionLostChanged(false);
-        _say(QString("%1 communication regained").arg(_vehicleIdSpeech()));
+        _say(QString("%1 重新连接").arg(_vehicleIdSpeech()));//%1 communication regained"
     }
 }
 
@@ -1681,13 +1681,13 @@ QString Vehicle::_vehicleIdSpeech(void)
 
 void Vehicle::_handleFlightModeChanged(const QString& flightMode)
 {
-    _say(QString("%1 %2 flight mode").arg(_vehicleIdSpeech()).arg(flightMode));
+    _say(QString("%1 %2 飞行模式").arg(_vehicleIdSpeech()).arg(flightMode));//%1 %2 flight mode
     emit guidedModeChanged(_firmwarePlugin->isGuidedMode(this));
 }
 
 void Vehicle::_announceArmedChanged(bool armed)
 {
-    _say(QString("%1 %2").arg(_vehicleIdSpeech()).arg(armed ? QStringLiteral("armed") : QStringLiteral("disarmed")));
+    _say(QString("%1 %2").arg(_vehicleIdSpeech()).arg(armed ? QStringLiteral("解锁") : QStringLiteral("加锁")));//QStringLiteral("armed") : QStringLiteral("disarmed")
 }
 
 void Vehicle::clearTrajectoryPoints(void)
@@ -1927,6 +1927,16 @@ void Vehicle::motorTest(int motor, int percent, int timeoutSecs)
     qDebug()<<"motor"<< motor<<"percent"<<percent<<"timeoutSecs"<<timeoutSecs;
 }
 //#endif
+
+
+// RE    POSITION 应急航点
+void Vehicle::reposition(double lat, double lon,float alt,float yaw)
+{
+    doCommandLong(defaultComponentId(), MAV_CMD_DO_REPOSITION, 0.0, 0.0, 0.0, yaw,alt,lat,lon);
+    qDebug()<<"REPOSITION:alt"<<alt<<"lan"<<lat<<"lon"<<lon;
+}
+
+
 
 void Vehicle::_newMissionItemsAvailable(void)
 {

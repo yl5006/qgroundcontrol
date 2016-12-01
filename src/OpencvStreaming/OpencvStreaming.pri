@@ -103,7 +103,7 @@ LinuxBuild {
 
 } else:AndroidBuild {
     #- gstreamer assumed to be installed in $$PWD/../../android/gstreamer-1.0-android-armv7-1.5.2
-    GST_ROOT = $$PWD/../../gstreamer-1.0-android-armv7-1.5.2
+    GST_ROOT = $$PWD/../../opencv
     exists($$GST_ROOT) {
         QMAKE_CXXFLAGS  += -pthread
         CONFIG          += VideoEnabled

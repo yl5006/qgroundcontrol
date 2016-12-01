@@ -237,7 +237,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
         return;
     }
 
-    _appendStatusLog(text);
+  //  _appendStatusLog(text);
     qCDebug(SensorsComponentControllerLog) << text;
     
     if (_unknownFirmwareVersion) {
@@ -250,7 +250,10 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
     if (!text.startsWith(calPrefix)) {
         return;
     }
+
     text = text.right(text.length() - calPrefix.length());
+//only display cal message
+    _appendStatusLog(text);
 
     QString calStartPrefix("calibration started: ");
     if (text.startsWith(calStartPrefix)) {

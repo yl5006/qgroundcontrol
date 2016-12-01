@@ -1070,7 +1070,8 @@ QGCView {
         id: syncLoadFromVehicleOverwrite
         QGCViewMessage {
             id:         syncLoadFromVehicleCheck
-                message:   qsTr("你有未保存或未发送的任务,从飞机载入任务会丢失这些修改，你确认从飞机载入飞行任务?")//"You have unsaved/unsent mission changes. Loading the mission from the Vehicle will lose these changes. Are you sure you want to load the mission from the Vehicle?"
+            height:     ScreenTools.defaultFontPixelHeight*5
+            message:   qsTr("你有未保存或未发送的任务,从飞机载入任务会丢失这些修改，你确认从飞机载入飞行任务?")//"You have unsaved/unsent mission changes. Loading the mission from the Vehicle will lose these changes. Are you sure you want to load the mission from the Vehicle?"
             function accept() {
                 hideDialog()
                 _syncDropDownController.loadFromVehicle()
@@ -1082,7 +1083,8 @@ QGCView {
         id: syncLoadFromFileOverwrite
         QGCViewMessage {
             id:         syncLoadFromVehicleCheck
-                message:   qsTr("你有未保存的飞行计划，载入任务会丢失改计划，确认从文件载入？")//qsTr("You have unsaved/unsent mission changes. Loading a mission from a file will lose these changes. Are you sure you want to load a mission from a file?")
+            height:     ScreenTools.defaultFontPixelHeight*5
+            message:   qsTr("你有未保存的飞行计划，载入任务会丢失改计划，确认从文件载入？")//qsTr("You have unsaved/unsent mission changes. Loading a mission from a file will lose these changes. Are you sure you want to load a mission from a file?")
             function accept() {
                 hideDialog()
                 _syncDropDownController.loadFromSelectedFile()
@@ -1093,7 +1095,8 @@ QGCView {
     Component {
         id: removeAllPromptDialog
         QGCViewMessage {
-                message: qsTr("确认删除所有任务点?")//"Are you sure you want to delete all mission items?"
+            height:     ScreenTools.defaultFontPixelHeight*5
+            message: qsTr("确认删除所有任务点?")//"Are you sure you want to delete all mission items?"
             function accept() {
                 itemDragger.clearItem()
                 _syncDropDownController.removeAll()
@@ -1185,7 +1188,7 @@ QGCView {
                     text:               qsTr("删除所有航点")//"Remove all"
                     onClicked:  {
                         syncButton.hideDropDown()
-                        _syncDropDownController.removeAll()
+                //        _syncDropDownController.removeAll()
                         qgcView.showDialog(removeAllPromptDialog, qsTr("删除所有航点")/*qsTr("Remove all")*/, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
                     }
                 }

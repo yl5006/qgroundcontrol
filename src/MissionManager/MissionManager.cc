@@ -428,17 +428,17 @@ void MissionManager::_handleMissionAck(const mavlink_message_t& message)
 
     switch (savedRetryAck) {
         case AckNone:
-            // State machine is idle. Vehicle is confused.
-            _sendError(VehicleError, QString("Vehicle sent unexpected MISSION_ACK message, error: %1").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));
+            // State machine is idle. Vehicle is confused.//QString to tr
+            _sendError(VehicleError, tr("飞控未发送确定信息, 错误: %1").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));//QString("Vehicle sent unexpected MISSION_ACK message, error: %1")
             break;
         case AckMissionCount:
             // MISSION_COUNT message expected
-            _sendError(VehicleError, QString("Vehicle returned error: %1.").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));
+            _sendError(VehicleError, tr("系统返回错误: %1.").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));//QString("Vehicle returned error: %1.")
             _finishTransaction(false);
             break;
         case AckMissionItem:
             // MISSION_ITEM expected
-            _sendError(VehicleError, QString("Vehicle returned error: %1. Partial list of mission items may have been returned.").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));
+            _sendError(VehicleError, tr("系统返回错误: %1. 可能部分任务航点返回").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));//QString("Vehicle returned error: %1. Partial list of mission items may have been returned.")
             _finishTransaction(false);
             break;
         case AckMissionRequest:
@@ -448,11 +448,11 @@ void MissionManager::_handleMissionAck(const mavlink_message_t& message)
                     qCDebug(MissionManagerLog) << "_handleMissionAck write sequence complete";
                     _finishTransaction(true);
                 } else {
-                    _sendError(MissingRequestsError, QString("Vehicle did not request all items during write sequence, missed count %1. Vehicle only has partial list of mission items.").arg(_itemIndicesToWrite.count()));
+                    _sendError(MissingRequestsError, tr("在写任务中系统没有请求所有任务, 丢失 %1. 机体只有部分任务航点信息.").arg(_itemIndicesToWrite.count()));//QString("Vehicle did not request all items during write sequence, missed count %1. Vehicle only has partial list of mission items.")
                     _finishTransaction(false);
                 }
             } else {
-                _sendError(VehicleError, QString("Vehicle returned error: %1. Vehicle only has partial list of mission items.").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));
+                _sendError(VehicleError, tr("机体返回错误: %1. 机体只有部分任务航点信息.").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));//QString("Vehicle returned error: %1. Vehicle only has partial list of mission items.")
                 _finishTransaction(false);
             }
             break;
@@ -462,7 +462,7 @@ void MissionManager::_handleMissionAck(const mavlink_message_t& message)
                 qCDebug(MissionManagerLog) << "_handleMissionAck guide mode item accepted";
                 _finishTransaction(true);
             } else {
-                _sendError(VehicleError, QString("Vehicle returned error: %1. Vehicle did not accept guided item.").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));
+                _sendError(VehicleError, tr("机体返回错误: %1. 机体未接受引导航点.").arg(_missionResultToString((MAV_MISSION_RESULT)missionAck.type)));//QString("Vehicle returned error: %1. Vehicle did not accept guided item.")
                 _finishTransaction(false);
             }
             break;
@@ -510,18 +510,18 @@ QString MissionManager::_ackTypeToString(AckType_t ackType)
 {
     switch (ackType) {
         case AckNone:
-            return QString("No Ack");
+            return tr("无确认");//QString("No Ack");
         case AckMissionCount:
-            return QString("MISSION_COUNT");
+            return tr("任务条目");//QString("MISSION_COUNT");
         case AckMissionItem:
-            return QString("MISSION_ITEM");
+            return tr("任务航点");//QString("MISSION_ITEM");
         case AckMissionRequest:
-            return QString("MISSION_REQUEST");
+            return tr("任务请求");//QString("MISSION_REQUEST");
         case AckGuidedItem:
-            return QString("Guided Mode Item");
+            return tr("引导模式航点");//QString("Guided Mode Item");
         default:
             qCWarning(MissionManagerLog) << "Fell off end of switch statement";
-            return QString("QGC Internal Error");
+            return tr("内部错误");//QString("QGC Internal Error");
     }    
 }
 
@@ -529,53 +529,53 @@ QString MissionManager::_missionResultToString(MAV_MISSION_RESULT result)
 {
     switch (result) {
         case MAV_MISSION_ACCEPTED:
-            return QString("Mission accepted (MAV_MISSION_ACCEPTED)");
+            return tr("任务正常");//QString("Mission accepted (MAV_MISSION_ACCEPTED)");
             break;
         case MAV_MISSION_ERROR:
-            return QString("Unspecified error (MAV_MISSION_ERROR)");
+            return tr("任务错误");//QString("Unspecified error (MAV_MISSION_ERROR)");
             break;
         case MAV_MISSION_UNSUPPORTED_FRAME:
-            return QString("Coordinate frame is not supported (MAV_MISSION_UNSUPPORTED_FRAME)");
+            return tr("不支持的任务命令");//QString("Coordinate frame is not supported (MAV_MISSION_UNSUPPORTED_FRAME)");
             break;
         case MAV_MISSION_UNSUPPORTED:
-            return QString("Command is not supported (MAV_MISSION_UNSUPPORTED)");
+            return tr("不支持的任务命令");//QString("Command is not supported (MAV_MISSION_UNSUPPORTED)");
             break;
         case MAV_MISSION_NO_SPACE:
-            return QString("Mission item exceeds storage space (MAV_MISSION_NO_SPACE)");
+            return tr("任务存储空间满");//QString("Mission item exceeds storage space (MAV_MISSION_NO_SPACE)");
             break;
         case MAV_MISSION_INVALID:
-            return QString("One of the parameters has an invalid value (MAV_MISSION_INVALID)");
+            return tr("任务参数错误");//QString("One of the parameters has an invalid value (MAV_MISSION_INVALID)");
             break;
         case MAV_MISSION_INVALID_PARAM1:
-            return QString("Param1 has an invalid value (MAV_MISSION_INVALID_PARAM1)");
+            return tr("参数1错误");//QString("Param1 has an invalid value (MAV_MISSION_INVALID_PARAM1)");
             break;
         case MAV_MISSION_INVALID_PARAM2:
-            return QString("Param2 has an invalid value (MAV_MISSION_INVALID_PARAM2)");
+            return tr("参数2错误");//QString("Param2 has an invalid value (MAV_MISSION_INVALID_PARAM2)");
             break;
         case MAV_MISSION_INVALID_PARAM3:
-            return QString("param3 has an invalid value (MAV_MISSION_INVALID_PARAM3)");
+            return tr("参数3错误");//QString("param3 has an invalid value (MAV_MISSION_INVALID_PARAM3)");
             break;
         case MAV_MISSION_INVALID_PARAM4:
-            return QString("Param4 has an invalid value (MAV_MISSION_INVALID_PARAM4)");
+            return tr("参数4错误");//QString("Param4 has an invalid value (MAV_MISSION_INVALID_PARAM4)");
             break;
         case MAV_MISSION_INVALID_PARAM5_X:
-            return QString("X/Param5 has an invalid value (MAV_MISSION_INVALID_PARAM5_X)");
+            return tr("参数错误");QString("X/Param5 has an invalid value (MAV_MISSION_INVALID_PARAM5_X)");
             break;
         case MAV_MISSION_INVALID_PARAM6_Y:
-            return QString("Y/Param6 has an invalid value (MAV_MISSION_INVALID_PARAM6_Y)");
+            return tr("参数错误");QString("Y/Param6 has an invalid value (MAV_MISSION_INVALID_PARAM6_Y)");
             break;
         case MAV_MISSION_INVALID_PARAM7:
-            return QString("Param7 has an invalid value (MAV_MISSION_INVALID_PARAM7)");
+            return tr("参数错误");//QString("Param7 has an invalid value (MAV_MISSION_INVALID_PARAM7)");
             break;
         case MAV_MISSION_INVALID_SEQUENCE:
-            return QString("Received mission item out of sequence (MAV_MISSION_INVALID_SEQUENCE)");
+            return tr("接收任务序列号错误");//QString("Received mission item out of sequence (MAV_MISSION_INVALID_SEQUENCE)");
             break;
         case MAV_MISSION_DENIED:
-            return QString("Not accepting any mission commands (MAV_MISSION_DENIED)");
+            return tr("任务拒绝");//QString("Not accepting any mission commands (MAV_MISSION_DENIED)");
             break;
         default:
             qCWarning(MissionManagerLog) << "Fell off end of switch statement";
-            return QString("QGC Internal Error");
+            return tr("地面站内部错误");//QString("QGC Internal Error");
     }
 }
 

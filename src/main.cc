@@ -25,10 +25,13 @@
 #include <QtPlugin>
 #include <QStringListModel>
 #include <QSplashScreen>
+#include <QTranslator>
 
 #include "QGCApplication.h"
 #include "AppMessages.h"
 
+#include <QSimpleUpdater.h>
+#include <WaitForSignalHelper.h>
 #define  SINGLE_INSTANCE_PORT   14499
 
 #ifndef __mobile__
@@ -102,6 +105,8 @@ int language;
  * @return exit code, 0 for normal exit and !=0 for error cases
  */
 
+static const QString DEFS_URL = "http://101.200.161.194:7070/update/ewatt4/updates.json";
+const char*  _appVersionKey             = "appVersion";
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_UNIX
@@ -213,35 +218,79 @@ int main(int argc, char *argv[])
 
     QGCApplication* app = new QGCApplication(argc, argv, runUnitTests);
     Q_CHECK_PTR(app);
-	
-    /**********************
-        language add by yaoling
-    ***********************/
-      //  settings.beginGroup("GS_EWT_Language");
-    QSettings::setDefaultFormat(QSettings::IniFormat);
-    QSettings settings;
-    language=settings.value("language","0").toInt();
-        if(language==1)
-        {
-            QString   strLanguageFile= app->applicationDirPath()+QString("/app_en.qm");
-            qDebug()<<strLanguageFile<<"   "<<language;
-            QTranslator *m_translator=new QTranslator;
-            m_translator->load(strLanguageFile);
-            app->installTranslator(m_translator);
-        }
-    //**************************************
-#ifdef Q_OS_LINUX
-    QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));
-#endif /* Q_OS_LINUX */
-    //显示启动界面信息
+//************
+//    显示启动界面信息
 #ifndef __mobile__
     QSplashScreen *splash = new QSplashScreen;
     splash->setPixmap(QPixmap(":/res/startpage.png"));
     splash->show();
     Qt::Alignment topRight = Qt::AlignRight | Qt::AlignTop;
-    splash->showMessage(QObject::tr("初始化窗口..."),topRight, Qt::white);
+    splash->showMessage(QObject::tr("检查更新..."),topRight, Qt::white);
 #endif
+//****************
+//check for update
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+    QSettings settings;
+    QEventLoop m_eventLoop;
 
+    /* QSimpleUpdater is single-instance */
+    QSimpleUpdater *m_updater = QSimpleUpdater::getInstance();
+    /* Apply the settings */
+
+    QStringList versionsX = QString(GIT_VERSION).split (".");
+    QString version= QString::number(QString (versionsX.at (0)).toInt()-2);
+    for (int i = 1; i < versionsX.count(); ++i) {
+        version =version +"."+versionsX.at (i);
+    }
+    qDebug()<<version;
+    app->setApplicationVersion(version);
+    settings.setValue(_appVersionKey, version);
+    m_updater->setModuleVersion (DEFS_URL, version);
+    m_updater->setNotifyOnFinish (DEFS_URL, false);
+    m_updater->setNotifyOnUpdate (DEFS_URL, false);
+    m_updater->setDownloaderEnabled (DEFS_URL, true);
+
+    m_updater->checkForUpdates (DEFS_URL);
+
+    WaitForSignalHelper helper(m_updater, SIGNAL(checkingFinished (QString)) );
+    if ( helper.wait( 3000 ) )
+        qDebug()<<"getUpdateAvailable111";
+    else
+        qDebug()<<"getUpdateAvailable";
+//  /* Check for updates */
+ if(m_updater->getUpdateAvailable(DEFS_URL))
+ {
+    QString Startexe=QCoreApplication::applicationDirPath()+ "/Update.exe";
+    QStringList arg;
+    arg<<Startexe<<version;
+    if( QProcess::startDetached(Startexe,arg))
+    {
+       qDebug()<<"lanchok";
+    }
+    delete app;
+    return 0;
+ }
+// qDebug()<<"getUpdateAvailable"<<m_updater->getUpdateAvailable(DEFS_URL);
+//******************
+    /**********************
+        language add by yaoling
+    ***********************/
+    //  settings.beginGroup("GS_EWT_Language");    
+    language=settings.value("language","0").toInt();
+        if(language==1)
+        {
+            QString   strLanguageFile= app->applicationDirPath()+QString("/app_en.qm");
+            qDebug()<<strLanguageFile<<"   "<<language;
+            QTranslator m_translator;//=new QTranslator();
+            m_translator.load(strLanguageFile);
+            app->installTranslator(&m_translator);
+        }
+    //**************************************
+#ifdef Q_OS_LINUX
+    QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));
+#endif /* Q_OS_LINUX */
+
+    splash->showMessage(QObject::tr("初始化..."),topRight, Qt::white);
     // There appears to be a threading issue in qRegisterMetaType which can cause it to throw a qWarning
     // about duplicate type converters. This is caused by a race condition in the Qt code. Still working
     // with them on tracking down the bug. For now we register the type which is giving us problems here

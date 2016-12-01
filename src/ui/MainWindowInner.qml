@@ -234,7 +234,7 @@ Item {
             messageQueue.push(message)
         } else {
             criticalMessageText.append(message)
-            //   criticalMmessageArea.visible = true
+            criticalMmessageArea.visible = true
         }
     }
 

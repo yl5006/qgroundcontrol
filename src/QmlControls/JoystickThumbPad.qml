@@ -1,4 +1,4 @@
-import QtQuick                  2.5
+﻿import QtQuick                  2.5
 import QtQuick.Controls         1.2
 
 import QGroundControl.Palette       1.0
@@ -83,6 +83,13 @@ Item {
         smooth:             true
     }
 
+    Image {
+        anchors.fill:       parent
+        source:             "/res/Joystickback.svg"
+        mipmap:             true
+        smooth:             true
+    }
+
     Rectangle {
         anchors.margins:    parent.width / 4
         anchors.fill:       parent
@@ -92,24 +99,27 @@ Item {
         color:              "transparent"
     }
 
-    Rectangle {
-        anchors.fill:       parent
-        radius:             width / 2
-        border.color:       mapPal.thumbJoystick
-        border.width:       2
-        color:              "transparent"
-    }
+//    Rectangle {
+//        anchors.fill:       parent
+//        radius:             width / 2
+//        border.color:       mapPal.thumbJoystick
+//        border.width:       2
+//        color:              "transparent"
+//    }
 
-    Rectangle {
+    Image {
         width:  hatWidth
         height: hatWidth
-        radius: hatWidthHalf
-        color:  mapPal.thumbJoystick
+        source:             "/res/Joystickcenter.svg"
+        mipmap:             true
+        smooth:             true
+   //    radius: hatWidthHalf
+   //     color:  mapPal.thumbJoystick
         x:      stickPositionX - hatWidthHalf
         y:      stickPositionY - hatWidthHalf
 
-        readonly property real hatWidth:        ScreenTools.defaultFontPixelHeight
-        readonly property real hatWidthHalf:    ScreenTools.defaultFontPixelHeight / 2
+        readonly property real hatWidth:        ScreenTools.defaultFontPixelHeight*2
+        readonly property real hatWidthHalf:    ScreenTools.defaultFontPixelHeight*2/ 2
     }
 
     Connections {

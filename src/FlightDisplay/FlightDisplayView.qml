@@ -25,7 +25,7 @@ import QGroundControl.Palette       1.0
 import QGroundControl.Vehicle       1.0
 import QGroundControl.Controllers   1.0
 import QGroundControl.FactSystem    1.0
-import OpenCV 1.0
+//import OpenCV 1.0
 /// Flight Display View
 QGCView {
     id:             root
@@ -275,7 +275,7 @@ QGCView {
             id:                         virtualJoystickMultiTouch
             z:                          _panel.z + 5
             width:                      parent.width  - (_flightVideoPipControl.width / 2)
-            height:                     Math.min(ScreenTools.availableHeight * 0.25, ScreenTools.defaultFontPixelWidth * 16)
+            height:                     Math.min(ScreenTools.availableHeight * 0.25, ScreenTools.defaultFontPixelWidth * 20)//
             visible:                    QGroundControl.virtualTabletJoystick
             anchors.bottom:             _flightVideoPipControl.top
             anchors.bottomMargin:       ScreenTools.defaultFontPixelHeight * 2

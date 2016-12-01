@@ -68,7 +68,7 @@ extern void iOSSpeak(QString msg);
 #include <espeak/speak_lib.h>
 #endif
 
-#define QGC_GAUDIOOUTPUT_KEY QString("QGC_AUDIOOUTPUT_")
+#define QGC_GAUDIOOUTPUT_KEY QString("Audio")//QGC_AUDIOOUTPUT_
 
 QGCAudioWorker::QGCAudioWorker(QObject *parent) :
     QObject(parent),
@@ -77,11 +77,11 @@ QGCAudioWorker::QGCAudioWorker(QObject *parent) :
     pVoice(NULL),
     #endif
     emergency(false),
-    muted(true)//
+    muted(false)//
 {
     // Load settings
     QSettings settings;
-    muted = settings.value(QGC_GAUDIOOUTPUT_KEY + "muted", muted).toBool();
+    muted = settings.value(QGC_GAUDIOOUTPUT_KEY + "Muted", muted).toBool();
 }
 
 void QGCAudioWorker::init()
@@ -138,11 +138,9 @@ void QGCAudioWorker::say(QString inText)
         threadInit = true;
         init();
     }
-
-    if (!muted)
-    {
+  //  if (!muted)
+ //   {
         QString text = fixTextMessageForAudio(inText);
-
 #if defined _MSC_VER && defined QGC_SPEECH_ENABLED
         HRESULT hr = pVoice->Speak(text.toStdWString().c_str(), SPF_DEFAULT, NULL);
         if (FAILED(hr)) {
@@ -161,7 +159,7 @@ void QGCAudioWorker::say(QString inText)
         // Make sure there isn't an unused variable warning when speech output is disabled
         Q_UNUSED(inText);
 #endif
-    }
+ //   }
 #endif // __android__
 }
 
@@ -172,7 +170,7 @@ void QGCAudioWorker::mute(bool mute)
         this->muted = mute;
         QSettings settings;
         settings.setValue(QGC_GAUDIOOUTPUT_KEY + "muted", this->muted);
-//        emit mutedChanged(muted);
+        // emit mutedChanged(muted);
     }
 }
 

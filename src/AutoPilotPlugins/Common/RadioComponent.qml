@@ -657,6 +657,30 @@ SetupPage {
                         onClicked:  showDialog(copyTrimsDialogComponent, dialogTitle, radioPage.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                     }
                 }
+                Row{
+                    spacing: ScreenTools.defaultFontPixelHeight*0.3
+                    visible: QGroundControl.multiVehicleManager.activeVehicle.px4Firmware
+                    Repeater {
+                        model: QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ? [ "TRIM_PITCH", "TRIM_ROLL", "TRIM_YAW"] : 0
+
+                        Row {
+                            spacing: ScreenTools.defaultFontPixelWidth
+                            property Fact fact: controller.getParameterFact(-1, modelData)
+
+                            QGCLabel {
+                                anchors.baseline:   optCombo.baseline
+                                text:               fact.shortDescription + ":"
+                            }
+                            FactTextField {
+                                id:                 optCombo
+                                showUnits:          true
+                                fact:               parent.fact
+                                width:              ScreenTools.defaultFontPixelWidth * 15
+                          //      textColor:          parent.fact.defaultValueAvailable ? (parent.fact.valueEqualsDefault ? qgcPal.text : qgcPal.buttonHighlight) : qgcPal.text
+                            }
+                        }
+                    } // Repeater
+                }
                 Column{
                     spacing: ScreenTools.defaultFontPixelHeight*0.3
                     visible:  false
@@ -673,7 +697,6 @@ SetupPage {
                             }
 
                             FactComboBox {
-                                id:         optCombo
                                 width:      ScreenTools.defaultFontPixelWidth * 15
                                 fact:       parent.fact
                                 indexModel: false

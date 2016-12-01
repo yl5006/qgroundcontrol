@@ -66,7 +66,7 @@ FirmwareUpgradeController::FirmwareUpgradeController(void)
     connect(&_eraseTimer, &QTimer::timeout, this, &FirmwareUpgradeController::_eraseProgressTick);
 
     _initFirmwareHash();
-    _determinePX4StableVersion();
+//    _determinePX4StableVersion();
 }
 
 FirmwareUpgradeController::~FirmwareUpgradeController()
@@ -166,7 +166,7 @@ void FirmwareUpgradeController::_foundBoard(bool firstAttempt, const QSerialPort
     
     qCDebug(FirmwareUpgradeLog) << _foundBoardType;
     emit boardFound();
-    _loadAPMVersions(_foundBoardType);
+//    _loadAPMVersions(_foundBoardType);
 }
 
 
@@ -189,9 +189,9 @@ void FirmwareUpgradeController::_foundBootloader(int bootloaderVersion, int boar
     _bootloaderBoardID = boardID;
     _bootloaderBoardFlashSize = flashSize;
     
-    _appendStatusLog("Connected to bootloader:");
-    _appendStatusLog(QString("  Version: %1").arg(_bootloaderVersion));
-    _appendStatusLog(QString("  Board ID: %1").arg(_bootloaderBoardID));
+  //   _appendStatusLog("Connected to bootloader:");
+  //  _appendStatusLog(QString("  Version: %1").arg(_bootloaderVersion));
+  //  _appendStatusLog(QString("  Board ID: %1").arg(_bootloaderBoardID));
     _appendStatusLog(QString("  Flash size: %1").arg(_bootloaderBoardFlashSize));
     
     if (_startFlashWhenBootloaderFound) {
@@ -246,7 +246,7 @@ void FirmwareUpgradeController::_initFirmwareHash()
 
     //////////////////////////////////// PX4FMUV2 firmwares //////////////////////////////////////////////////
     FirmwareToUrlElement_t rgPX4FMV2FirmwareArray[] = {
-        { AutoPilotStackPX4, StableFirmware,    DefaultVehicleFirmware, "http://px4-travis.s3.amazonaws.com/Firmware/stable/px4fmu-v2_default.px4"},
+        { AutoPilotStackPX4, StableFirmware,    DefaultVehicleFirmware, "http://192.168.1.104:7070/nuttx-px4fmu-v2-ewt.ewt"},//"http://101.200.161.194:7070/update/ewatt4/firmware_nuttx.bin"},
         { AutoPilotStackPX4, BetaFirmware,      DefaultVehicleFirmware, "http://px4-travis.s3.amazonaws.com/Firmware/beta/px4fmu-v2_default.px4"},
         { AutoPilotStackPX4, DeveloperFirmware, DefaultVehicleFirmware, "http://px4-travis.s3.amazonaws.com/Firmware/master/px4fmu-v2_default.px4"},
         { AutoPilotStackAPM, StableFirmware,    QuadFirmware,           "http://firmware.ardupilot.org/Copter/stable/PX4-quad/ArduCopter-v2.px4"},
@@ -542,8 +542,9 @@ void FirmwareUpgradeController::_downloadFirmware(void)
 {
     Q_ASSERT(!_firmwareFilename.isEmpty());
     
-    _appendStatusLog("Downloading firmware...");
-    _appendStatusLog(QString(" From: %1").arg(_firmwareFilename));
+ //   _appendStatusLog("Downloading firmware...");
+    _progressBar->setProperty("test", tr("下载"));//Downloading
+ //   _appendStatusLog(QString(" From: %1").arg(_firmwareFilename));
     
     QGCFileDownload* downloader = new QGCFileDownload(this);
     connect(downloader, &QGCFileDownload::downloadFinished, this, &FirmwareUpgradeController::_firmwareDownloadFinished);
@@ -566,7 +567,7 @@ void FirmwareUpgradeController::_firmwareDownloadFinished(QString remoteFile, QS
 {
     Q_UNUSED(remoteFile);
 
-    _appendStatusLog("Download complete");
+ //   _appendStatusLog("Download complete");
     
     FirmwareImage* image = new FirmwareImage(this);
     
@@ -620,8 +621,9 @@ void FirmwareUpgradeController::_flashComplete(void)
     delete _image;
     _image = NULL;
     
-    _appendStatusLog("Upgrade complete", true);
-    _appendStatusLog("------------------------------------------", false);
+  //  _appendStatusLog("Upgrade complete", true);
+     _progressBar->setProperty("test", tr("完成"));//complete
+ //   _appendStatusLog("------------------------------------------", false);
     emit flashComplete();
     qgcApp()->toolbox()->linkManager()->setConnectionsAllowed();
 }
@@ -690,11 +692,13 @@ void FirmwareUpgradeController::_eraseStarted(void)
     // We set up our own progress bar for erase since the erase command does not provide one
     _eraseTickCount = 0;
     _eraseTimer.start(_eraseTickMsec);
+    _progressBar->setProperty("test", tr("擦除"));//Erasing
 }
 
 void FirmwareUpgradeController::_eraseComplete(void)
 {
     _eraseTimer.stop();
+     _progressBar->setProperty("test", tr("烧写"));//Programming
 }
 
 void FirmwareUpgradeController::_loadAPMVersions(QGCSerialPortInfo::BoardType_t boardType)

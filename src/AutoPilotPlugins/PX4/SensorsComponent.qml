@@ -179,7 +179,7 @@ SetupPage {
 
                     Column {
                         anchors.fill:   parent
-                        spacing:        5
+                        spacing:        ScreenTools.defaultFontPixelHeight
 
                         QGCLabel {
                             width:      parent.width
@@ -197,6 +197,7 @@ SetupPage {
 
                         Column {
                             visible:    boardRotationHelp.visible
+                            spacing:        ScreenTools.defaultFontPixelHeight
                             QGCLabel {
                                 text: qsTr("飞控安装方向:")//Autopilot Orientation
                             }
@@ -241,7 +242,7 @@ SetupPage {
 
                             Column {
                                 visible: setOrientationsDialogShowBoardOrientation
-
+                                spacing:        ScreenTools.defaultFontPixelHeight
                                 QGCLabel {
                                     text: qsTr("飞控安装方向:")//Autopilot Orientation
                                 }
@@ -536,7 +537,7 @@ SetupPage {
                         width:      parent.calDisplayAreaWidth
                         height:     parent.height
                         visible:    controller.showOrientationCalArea
-                        color:      qgcPal.windowShade
+                        color:    "#1e2328"//#bdbdbd  qgcPal._windowShadeDark
 
                         QGCLabel {
                             id:                 orientationCalAreaHelpText

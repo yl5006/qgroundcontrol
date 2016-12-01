@@ -33,7 +33,7 @@ Rectangle {
     readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
     readonly property real  _PointFieldWidth:   ScreenTools.defaultFontPixelWidth * 9
     property real   _distance:          _statusValid ? missionItem.distance : 0
-    property bool   _statusValid:       missionItem.command==16&&missionItem.sequenceNumber != 0
+    property bool   _statusValid:       missionItem.sequenceNumber != 0
     property string _distanceText:      _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(0) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(1) + "k" + QGroundControl.appSettingsDistanceUnitsString
 
     QGCPalette {

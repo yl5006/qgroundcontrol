@@ -397,7 +397,7 @@ Map {
         id:         polygonDrawerNextPoint
         line.color: "green"
         line.width: 3
-        visible:    polygonDrawer.drawingPolygon
+        visible:   polygonDrawer.drawingPolygon
     }
 
     //---- End Polygon Drawing code

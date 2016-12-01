@@ -44,7 +44,8 @@
 },
 {
     "name":             "Frontal overlap",
-    "shortDescription": "Amount of overlap between images in the forward facing direction.",
+    "shortDescription": "正面重叠",
+    "longDescription":  "向前方向的图像之间的重叠量。",
     "type":             "double",
     "decimalPlaces":    0,
     "max":              75,
@@ -52,7 +53,8 @@
 },
 {
     "name":             "Side overlap",
-    "shortDescription": "Amount of overlap between images in the side facing direction.",
+    "shortDescription": "侧面重叠",
+    "longDescription":  "面向方向的图像之间的重叠量。",
     "type":             "double",
     "decimalPlaces":    0,
     "max":              75,
@@ -98,7 +100,7 @@
 },
 {
     "name":             "Camera trigger distance",
-    "shortDescription": "Distance between each triggering of the camera.",
+    "shortDescription": "每次触发相机之间的距离。",
     "type":             "double",
     "decimalPlaces":    2,
     "min":              0.1,

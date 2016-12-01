@@ -84,6 +84,6 @@ Item {
         anchors.topMargin: ScreenTools.defaultFontPointSize*0.5
         anchors.horizontalCenter: label.horizontalCenter
         font.pointSize: ScreenTools.defaultFontPointSize
-        text:   value*100+" %"
+        text:   (value*100).toFixed(0)+" %"
     }
 }

@@ -34,14 +34,14 @@ const char* GAudioOutput::_mutedKey = "AudioMuted";
 
 GAudioOutput::GAudioOutput(QGCApplication* app)
     : QGCTool(app)
-    , muted(true)
+    , muted(false)
 #ifndef __android__
     , thread(new QThread())
     , worker(new QGCAudioWorker())
 #endif
 {
     QSettings settings;
-    muted = settings.value(_mutedKey, true).toBool();
+    muted = settings.value(_mutedKey, false).toBool();
     muted |= app->runningUnitTests();
 #ifndef __android__
     worker->moveToThread(thread);

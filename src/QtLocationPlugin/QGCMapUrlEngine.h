@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -53,6 +53,10 @@ public:
         MapQuestMap             = 700,
         MapQuestSat             = 701,
 
+        GaodeMap                 = 801,
+        GaodeSatellite           = 802,
+        GaodeHybrid              = 803,
+
         MapBoxStreets           = 6000,
         MapBoxLight             = 6001,
         MapBoxDark              = 6002,
@@ -87,6 +91,7 @@ private slots:
 private:
     QString _getURL                     (MapType type, int x, int y, int zoom, QNetworkAccessManager* networkManager);
     QString _tileXYToQuadKey            (int tileX, int tileY, int levelOfDetail);
+    QString _tilexyTobaidu              (int x, int y, int zoom);
     int     _getServerNum               (int x, int y, int max);
 #ifndef QGC_NO_GOOGLE_MAPS
     void    _getSecGoogleWords          (int x, int y, QString& sec1, QString& sec2);

@@ -52,7 +52,7 @@ SetupPage {
 
        //     property Fact _throwAction:     controller.getParameterFact(-1, "THROW_ENABLE")
        //    property Fact _throwderection:  controller.getParameterFact(-1, "THROW_DERECTION")
-       //     property Fact _disAction:       controller.getParameterFact(-1, "MPC_SAFE_EN", false)
+            property Fact _disAction:       controller.getParameterFact(-1, "MPC_SAFE_EN", false)
             property bool _showIcons: !ScreenTools.isTinyScreen
 
             Rectangle {

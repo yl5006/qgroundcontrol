@@ -197,6 +197,13 @@ include(QGCExternalLibs.pri)
 # Main QGroundControl portion of project file
 #
 
+#
+# External library configuration
+#
+# Fervor autoupdater
+include(libs/QSimpleUpdater/QSimpleUpdater.pri)
+
+
 RESOURCES += \
     GroundStation.qrc \
     qgcresources.qrc
@@ -312,6 +319,7 @@ HEADERS += \
     src/MissionManager/SurveyMissionItem.h \
     src/MissionManager/VisualMissionItem.h \
     src/QGC.h \
+    src/WaitForSignalHelper.h \
     src/QGCApplication.h \
     src/QGCComboBox.h \
     src/QGCConfig.h \
@@ -342,7 +350,8 @@ HEADERS += \
     src/AutoPilotPlugins/APM/APMAirframeLoader.h \
     src/QmlControls/QGCImageProvider.h \
     src/QtLocationPlugin/QMLControl/QGCMapEngineManager.h \
-    src/PositionManager/PositionManager.h
+    src/PositionManager/PositionManager.h \
+    src/WaitForSignalHelper.h
 
 
 AndroidBuild {
@@ -480,6 +489,7 @@ SOURCES += \
     src/MissionManager/SurveyMissionItem.cc \
     src/MissionManager/VisualMissionItem.cc \
     src/QGC.cc \
+    src/WaitForSignalHelper.cc \
     src/QGCApplication.cc \
     src/QGCComboBox.cc \
     src/QGCDockWidget.cc \
@@ -509,6 +519,7 @@ SOURCES += \
     src/QtLocationPlugin/QMLControl/QGCMapEngineManager.cc \
     src/PositionManager/SimulatedPosition.cc \
     src/PositionManager/PositionManager.cpp \
+    src/WaitForSignalHelper.cc
 
 DebugBuild {
 SOURCES += \
@@ -848,23 +859,23 @@ contains (CONFIG, DISABLE_VIDEOSTREAMING) {
     include(src/VideoStreaming/VideoStreaming.pri)
 }
 
-#-------------------------------------------------------------------------------------
-# Video Opencv Streaming
-INCLUDEPATH += \
-    src/OpencvStreaming
+##-------------------------------------------------------------------------------------
+## Video Opencv Streaming
+#INCLUDEPATH += \
+#    src/OpencvStreaming
 
-HEADERS += \
+#HEADERS += \
 
-SOURCES += \
+#SOURCES += \
 
-contains (CONFIG, DISABLE_OPENCVSTREAMING) {
-    message("Skipping support for video opencv streaming (manual override from command line)")
-# Otherwise the user can still disable this feature in the user_config.pri file.
-} else:exists(user_config.pri):infile(user_config.pri, DEFINES, DISABLE_OPENCVSTREAMING) {
-    message("Skipping support for video opencv streaming (manual override from user_config.pri)")
-} else {
-    include(src/OpencvStreaming/OpencvStreaming.pri)
-}
+#contains (CONFIG, DISABLE_OPENCVSTREAMING) {
+#    message("Skipping support for video opencv streaming (manual override from command line)")
+## Otherwise the user can still disable this feature in the user_config.pri file.
+#} else:exists(user_config.pri):infile(user_config.pri, DEFINES, DISABLE_OPENCVSTREAMING) {
+#    message("Skipping support for video opencv streaming (manual override from user_config.pri)")
+#} else {
+#    include(src/OpencvStreaming/OpencvStreaming.pri)
+#}
 
 
 #-------------------------------------------------------------------------------------

@@ -3734,7 +3734,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <increment>0.1</increment>
       <scope>modules/mc_pos_control</scope>
     </parameter>
-    <parameter default="1" name="MPC_SAFE_EN" type="INT32">
+    <parameter default="0" name="MPC_SAFE_EN" type="INT32">
       <short_desc>避障使能</short_desc>
       <min>0</min>
       <max>1</max>
@@ -5541,8 +5541,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/sensors</scope>
     </parameter>
     <parameter default="0.0" name="TRIM_ROLL" type="FLOAT">
-      <short_desc>Roll trim</short_desc>
-      <long_desc>The trim value is the actuator control value the system needs for straight and level flight. It can be calibrated by flying manually straight and level using the RC trims and copying them using the GCS.</long_desc>
+      <short_desc>横滚中立值</short_desc>
+      <long_desc>微调需要用于直线和水平飞行的电机控制值。 它可以通过使用遥控微调手动直线和水平飞行进行校准，并使用地面站进行复制。</long_desc>
       <min>-0.25</min>
       <max>0.25</max>
       <decimal>2</decimal>
@@ -5550,8 +5550,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/commander</scope>
     </parameter>
     <parameter default="0.0" name="TRIM_PITCH" type="FLOAT">
-      <short_desc>Pitch trim</short_desc>
-      <long_desc>The trim value is the actuator control value the system needs for straight and level flight. It can be calibrated by flying manually straight and level using the RC trims and copying them using the GCS.</long_desc>
+      <short_desc>仰俯中立值</short_desc>
+      <long_desc>微调需要用于直线和水平飞行的电机控制值。 它可以通过使用遥控微调手动直线和水平飞行进行校准，并使用地面站进行复制。</long_desc>
       <min>-0.25</min>
       <max>0.25</max>
       <decimal>2</decimal>
@@ -5559,8 +5559,8 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <scope>modules/commander</scope>
     </parameter>
     <parameter default="0.0" name="TRIM_YAW" type="FLOAT">
-      <short_desc>Yaw trim</short_desc>
-      <long_desc>The trim value is the actuator control value the system needs for straight and level flight. It can be calibrated by flying manually straight and level using the RC trims and copying them using the GCS.</long_desc>
+      <short_desc>航向中立值</short_desc>
+      <long_desc>微调需要用于直线和水平飞行的电机控制值。 它可以通过使用遥控微调手动直线和水平飞行进行校准，并使用地面站进行复制。</long_desc>
       <min>-0.25</min>
       <max>0.25</max>
       <decimal>2</decimal>

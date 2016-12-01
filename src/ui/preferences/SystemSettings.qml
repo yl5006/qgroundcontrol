@@ -23,8 +23,11 @@ import QGroundControl.Palette               1.0
 
 
 
-Rectangle {
-    id:                 generalPage
+QGCView {
+    id:                 qgcView
+//    viewPanel:          panel
+//Rectangle {
+//    id:                 generalPage
     color:              qgcPal.window
     anchors.fill:       parent
     // anchors.margins:    ScreenTools.defaultFontPixelWidth
@@ -34,10 +37,11 @@ Rectangle {
 
     FactPanelController {
         id:         controller
+        factPanel:  qgcView
     }
     //    width:  Math.max(availableWidth, settingsColumn.width)
     //    height: settingsColumn.height
-    property Fact sys_language:                 controller.getParameterFact(-1, "SYS_LANGUAGE")
+    property Fact sys_language:                 controller.getParameterFact(-1, "SYS_LANGUAGE", false)
     property Fact _percentRemainingAnnounce:    QGroundControl.batteryPercentRemainingAnnounce
     property real _editFieldWidth:              ScreenTools.defaultFontPixelWidth * 30
     Rectangle {
@@ -92,7 +96,7 @@ Rectangle {
         width:              parent.width
         height:             parent.height -ScreenTools.defaultFontPixelWidth*20
         contentHeight:      settingsColumn.height+ScreenTools.defaultFontPixelWidth*2
-        contentWidth:       generalPage.width
+        contentWidth:       qgcView.width
         flickableDirection: Flickable.VerticalFlick
         Column {
             id:                 settingsColumn
@@ -321,6 +325,7 @@ Rectangle {
                     checked:            QGroundControl.flightMapSettings.mapProviders[0]==QGroundControl.flightMapSettings.mapProvider
                     onClicked: {
                         QGroundControl.flightMapSettings.mapProvider=QGroundControl.flightMapSettings.mapProviders[0]
+                        QGroundControl.flightMapSettings.mapType=
                         console.log(qsTr("New map provider: ") + QGroundControl.flightMapSettings.mapProvider)
                     }
                 }
@@ -346,16 +351,26 @@ Rectangle {
                     imageResource2:             "/qmlimages/checked.svg"
                     img2visible:        true
                     checkable:          true
+                    checked:            QGroundControl.flightMapSettings.mapProviders[2]==QGroundControl.flightMapSettings.mapProvider
+                    onClicked: {
+                        QGroundControl.flightMapSettings.mapProvider=QGroundControl.flightMapSettings.mapProviders[2]
+                        console.log(qsTr("New map provider: ") + QGroundControl.flightMapSettings.mapProvider)
+                    }
                 }
-                ImageButton{
-                    imageResource:             "/qmlimages/baidumap.png"
-                    exclusiveGroup:     mapActionGroup
-                    width:              ScreenTools.defaultFontPixelHeight * 5
-                    height:             ScreenTools.defaultFontPixelHeight * 4
-                    imageResource2:             "/qmlimages/checked.svg"
-                    img2visible:        true
-                    checkable:          true
-                }
+//                ImageButton{
+//                    imageResource:             "/qmlimages/baidumap.png"
+//                    exclusiveGroup:     mapActionGroup
+//                    width:              ScreenTools.defaultFontPixelHeight * 5
+//                    height:             ScreenTools.defaultFontPixelHeight * 4
+//                    imageResource2:             "/qmlimages/checked.svg"
+//                    img2visible:        true
+//                    checkable:          true
+//                    checked:            QGroundControl.flightMapSettings.mapProviders[3]==QGroundControl.flightMapSettings.mapProvider
+//                    onClicked: {
+//                        QGroundControl.flightMapSettings.mapProvider=QGroundControl.flightMapSettings.mapProviders[3]
+//                        console.log(qsTr("New map provider: ") + QGroundControl.flightMapSettings.mapProvider)
+//                    }
+//                }
             }
             //-----------------------------------------------------------------
             //  maybe later              //-- Palette Styles

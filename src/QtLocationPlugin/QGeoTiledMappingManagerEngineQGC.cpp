@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 **
 ** Copyright (C) 2013 Aaron McCarthy <mccarthy.aaron@gmail.com>
 ** Contact: http://www.qt-project.org/legal
@@ -117,6 +117,9 @@ QGeoTiledMappingManagerEngineQGC::QGeoTiledMappingManagerEngineQGC(const QVarian
     // Statkart
     mapTypes << QGeoMapType(QGeoMapType::TerrainMap,             "Statkart Topo2",           "Statkart Topo2",               false,  false,  UrlFactory::StatkartTopo);
 
+    // Gaode
+    mapTypes << QGeoMapType(QGeoMapType::StreetMap,         "Gaode Street Map",          "Gaode street map",              false,  false,  UrlFactory::GaodeMap);
+    mapTypes << QGeoMapType(QGeoMapType::SatelliteMapDay,   "Gaode Satellite Map",       "Gaode satellite map",           false,  false,  UrlFactory::GaodeSatellite);
     /* See: https://wiki.openstreetmap.org/wiki/Tile_usage_policy
     mapTypes << QGeoMapType(QGeoMapType::StreetMap,         "Open Street Map",          "Open Street map",              false, false, UrlFactory::OpenStreetMap);
     */

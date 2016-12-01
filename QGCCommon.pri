@@ -123,16 +123,16 @@ exists ($$PWD/.git) {
         # development version "Development branch:sha date"
         GIT_VERSION = "Development $${GIT_BRANCH}:$${GIT_HASH} $${GIT_TIME}"
     }
-
     VERSION      = $$replace(GIT_DESCRIBE, "v", "")
     VERSION      = $$replace(VERSION, "-", ".")
     VERSION      = $$section(VERSION, ".", 0, 3)
+    GIT_VERSION=  $${VERSION}
     MacBuild {
         MAC_VERSION  = $$section(VERSION, ".", 0, 2)
         MAC_BUILD    = $$section(VERSION, ".", 3, 3)
-        message(QGroundControl version $${MAC_VERSION} build $${MAC_BUILD} describe $${GIT_VERSION})
+        message(GroundStation version $${MAC_VERSION} build $${MAC_BUILD} describe $${GIT_VERSION})
     } else {
-        message(QGroundControl $${GIT_VERSION})
+        message(GroundStation $${GIT_VERSION})
     }
 } else {
     GIT_VERSION     = None

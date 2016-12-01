@@ -131,7 +131,7 @@ Rectangle {
         y:              _topBottomMargin
         size:            parent.height
         active:         instrumentPanel.active
-        visible:        !QGroundControl.virtualTabletJoystick
+//        visible:        !QGroundControl.virtualTabletJoystick
         anchors.verticalCenter:  parent.verticalCenter
      }
 

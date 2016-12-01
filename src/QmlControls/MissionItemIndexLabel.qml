@@ -29,9 +29,17 @@ Item {
     function getsouceimg(command)
     {
         switch(command){
-            case 203:
-            case 206: 
+            case 203:    //MAV_CMD_DO_DIGICAM_CONTROL
+            case 206:    //MAV_CMD_DO_SET_CAM_TRIGG_DIST
                return   checked  ? "/qmlimages/WayCamera.svg" : "/qmlimages/WayCamera0.svg"
+            case 20:   //MAV_CMD_NAV_RETURN_TO_LAUNCH
+            case 80:   //MAV_CMD_NAV_ROI
+            case 84:   //MAV_CMD_NAV_VTOL_TAKEOFF
+            case 85:   //MAV_CMD_NAV_VTOL_LAND
+            case 177:  //MAV_CMD_DO_JUMP
+            case 178:  //MAV_CMD_DO_CHANGE_SPEED
+            case 183:  //MAV_CMD_DO_SET_SERVO
+               return   checked  ? "/qmlimages/WaySet.svg" : "/qmlimages/WaySet0.svg"
             default:
                return   checked  ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
         }
@@ -44,7 +52,7 @@ Item {
     }
     Image {
         id:         waypoint
-        source:     missionItem?getsouceimg(missionItem.command):""
+        source:     missionItem?getsouceimg(missionItem.command): ""
         mipmap:     true
         fillMode:   Image.PreserveAspectFit
         anchors.fill: parent
