@@ -9,9 +9,8 @@
 
 #include "FirmwarePlugin.h"
 #include "QGCApplication.h"
-#include "PX4AutoPilotPlugin.h"
 #include "Generic/GenericAutoPilotPlugin.h"
-
+#include "PX4AutoPilotPlugin.h"
 #include <QDebug>
 
 static FirmwarePluginFactoryRegister* _instance = NULL;

@@ -498,7 +498,6 @@ HEADERS += \
     src/uas/UASInterface.h \
     src/uas/UASMessageHandler.h \
     src/ui/toolbar/MainToolBarController.h \
-    src/WaitForSignalHelper.h
 
 
 DebugBuild {
@@ -661,8 +660,6 @@ SOURCES += \
     src/uas/UAS.cc \
     src/uas/UASMessageHandler.cc \
     src/ui/toolbar/MainToolBarController.cc \
-    src/PositionManager/PositionManager.cpp
-    src/WaitForSignalHelper.cc
 
 DebugBuild {
 SOURCES += \
@@ -842,7 +839,6 @@ APMFirmwarePlugin {
         src/AutoPilotPlugins/APM/APMSensorsComponent.cc \
         src/AutoPilotPlugins/APM/APMSensorsComponentController.cc \
         src/AutoPilotPlugins/APM/APMTuningComponent.cc \
-
         src/FirmwarePlugin/APM/APMFirmwarePlugin.cc \
         src/FirmwarePlugin/APM/APMGeoFenceManager.cc \
         src/FirmwarePlugin/APM/APMParameterMetaData.cc \

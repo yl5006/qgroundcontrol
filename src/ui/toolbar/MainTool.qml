@@ -297,7 +297,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         height:         toolBar.height * 0.02
         radius:         1
-        width:          parent.width * _controller.progressBarValue
+        width:          activeVehicle ? activeVehicle.parameterManager.loadProgress * parent.width : 0//parent.width * _controller.progressBarValue
         color:          colorGreen
     }
     RectangularGlow {

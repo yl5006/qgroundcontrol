@@ -18,7 +18,7 @@
       <maintainer>Simon Wilks &lt;simon@px4.io&gt;</maintainer>
       <type>Flying Wing</type>
     </airframe>
-    <airframe id="3036" maintainer="Simon Wilks &lt;simon@px4.io&gt;" name="Sparkle Tech Pigeon">
+    <airframe id="3035" maintainer="Simon Wilks &lt;simon@px4.io&gt;" name="Viper">
       <maintainer>Simon Wilks &lt;simon@px4.io&gt;</maintainer>
       <type>Flying Wing</type>
     </airframe>
@@ -33,7 +33,7 @@
       <output name="MAIN2">right aileron</output>
       <output name="MAIN4">throttle</output>
     </airframe>
-    <airframe id="3031" maintainer="Simon Wilks &lt;simon@px4.io&gt;" name="Phantom FPV Flying Wing">
+    <airframe id="3033" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="Wing Wing (aka Z-84) Flying Wing">
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Flying Wing</type>
       <url>https://pixhawk.org/platforms/planes/z-84_wing_wing</url>
@@ -55,11 +55,7 @@
       <output name="MAIN2">right aileron</output>
       <output name="MAIN4">throttle</output>
     </airframe>
-<!--    <airframe id="3034" maintainer="Simon Wilks &lt;simon@px4.io&gt;" name="FX-79 Buffalo Flying Wing">
-      <maintainer>Simon Wilks &lt;simon@px4.io&gt;</maintainer>
-      <type>Flying Wing</type>
-    </airframe>
-    <airframe id="3030" maintainer="Simon Wilks &lt;simon@px4.io&gt;" name="IO Camflyer">
+<!--    <airframe id="3030" maintainer="Simon Wilks &lt;simon@px4.io&gt;" name="IO Camflyer">
       <maintainer>Simon Wilks &lt;simon@px4.io&gt;</maintainer>
       <type>Flying Wing</type>
       <url>https://pixhawk.org/platforms/planes/bormatec_camflyer_q</url>
@@ -70,14 +66,10 @@
       <output name="MAIN2">right aileron</output>
       <output name="MAIN4">throttle</output>
     </airframe>
-    <airframe id="3035" maintainer="Simon Wilks &lt;simon@px4.io&gt;" name="Viper">
+    <airframe id="3036" maintainer="Simon Wilks &lt;simon@px4.io&gt;" name="Sparkle Tech Pigeon">
       <maintainer>Simon Wilks &lt;simon@px4.io&gt;</maintainer>
       <type>Flying Wing</type>
-    </airframe>
-    <airframe id="3033" maintainer="长:406mm,翼展:845mm" name="翼机翼(即z - 84)飞翼">
-      <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
-      <type>Flying Wing</type>
-      <url>https://pixhawk.org/platforms/planes/z-84_wing_wing</url>
+      <url>http://www.sparkletech.hk/</url>
       <output name="AUX1">feed-through of RC AUX1 channel</output>
       <output name="AUX2">feed-through of RC AUX2 channel</output>
       <output name="AUX3">feed-through of RC AUX3 channel</output>
@@ -85,7 +77,7 @@
       <output name="MAIN2">right aileron</output>
       <output name="MAIN4">throttle</output>
     </airframe>
-    <airframe id="3100" maintainer="翼展:8500mm" name="TBS卡皮利">
+    <airframe id="3100" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="TBS Caipirinha">
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Flying Wing</type>
     </airframe>-->
@@ -198,10 +190,6 @@
     <airframe id="10018" maintainer="Simon Wilks &lt;simon@px4.io&gt;" name="Team Blacksheep Discovery Endurance">
       <maintainer>Simon Wilks &lt;simon@px4.io&gt;</maintainer>
       <type>Quadrotor Wide</type>
-    </airframe>
-    <airframe id="10017" maintainer="Thomas Gubler &lt;thomas@px4.io&gt;" name="Steadidrone四旋翼">
-      <maintainer>Thomas Gubler &lt;thomas@px4.io&gt;</maintainer>
-      <type>Quadrotor Wide</type>
     </airframe>-->
   </airframe_group>
   <airframe_group image="QuadRotorX" name="X型四旋翼" type="2">
@@ -212,7 +200,7 @@
 <!--    <airframe id="10020" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="3DR DIY 四旋翼">
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Quadrotor x</type>
-    </airframe>-->
+    </airframe>
     <airframe id="4030" maintainer="Andreas Antener &lt;andreas@uaventure.com&gt;" name="3DR Solo">
       <maintainer>Andreas Antener &lt;andreas@uaventure.com&gt;</maintainer>
       <type>Quadrotor x</type>
@@ -221,9 +209,9 @@
       <maintainer>Blankered</maintainer>
       <type>Quadrotor x</type>
     </airframe>
-    <airframe id="4011" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="DJI Flame Wheel F450">
+    <airframe id="4900" maintainer="John Doe &lt;john@example.com&gt;" name="Crazyflie 2.0">
       <type>Quadrotor x</type>
-    </airframe>
+    </airframe>-->
     <airframe id="4050" maintainer="Mark Whitehorn &lt;kd0aij@gmail.com&gt;" name="Generic 250 Racer">
       <maintainer>Mark Whitehorn &lt;kd0aij@gmail.com&gt;</maintainer>
       <type>Quadrotor x</type>
@@ -231,41 +219,20 @@
       <output name="AUX2">feed-through of RC AUX2 channel</output>
       <output name="AUX3">feed-through of RC AUX3 channel</output>
     </airframe>
-<!--    <airframe id="4012" maintainer="Pavel Kirienko &lt;pavel@px4.io&gt;" name="F450 CAN总线">
+    <airframe id="4012" maintainer="Pavel Kirienko &lt;pavel@px4.io&gt;" name="F450-sized quadrotor with CAN">
       <maintainer>Pavel Kirienko &lt;pavel@px4.io&gt;</maintainer>
       <type>Quadrotor x</type>
     </airframe>
-    <airframe id="10021" maintainer="Leon Mueller &lt;thedevleon&gt;" name="H4 680mm with Z1 Tiny2 Gimbal">
+    <airframe id="4002" maintainer="Leon Mueller &lt;thedevleon&gt;" name="Generic Quadrotor X config with mount (e.g. gimbal)">
       <maintainer>Leon Mueller &lt;thedevleon&gt;</maintainer>
       <type>Quadrotor x</type>
-    </airframe>-->
-    <airframe id="4010" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="DJI Flame Wheel F330">
-      <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
-      <type>Quadrotor x</type>
     </airframe>
-<!--    <airframe id="4040" maintainer="Blankered" name="Reaper 500 Quad">
-      <maintainer>Blankered</maintainer>
-      <type>Quadrotor x</type>
-    </airframe>-->
-    <airframe id="4001" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="Generic Quadrotor X config">
-<!--    <airframe id="4050" maintainer="Mark Whitehorn &lt;kd0aij@gmail.com&gt;" name="通用250 Racer">
-      <maintainer>Mark Whitehorn &lt;kd0aij@gmail.com&gt;</maintainer>
-      <type>Quadrotor x</type>
-      <output name="AUX1">feed-through of RC AUX1 channel</output>
-      <output name="AUX2">feed-through of RC AUX2 channel</output>
-      <output name="AUX3">feed-through of RC AUX3 channel</output>
-    </airframe>-->
-    <airframe id="4060" maintainer="James Goppert &lt;james.goppert@gmail.com&gt;" name="DJI Matrice 100">
     <airframe id="4008" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="AR.Drone Frame">
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Quadrotor x</type>
     </airframe>
-    <airframe id="4020" maintainer="Thomas Gubler &lt;thomas@px4.io&gt;" name="Hobbyking Micro PCB">
-      <maintainer>Thomas Gubler &lt;thomas@px4.io&gt;</maintainer>
-      <type>Quadrotor x</type>
-    </airframe>
-    <airframe id="4009" maintainer="Mark Whitehorn &lt;kd0aij@gmail.com&gt;" name="Lumenier QAV250">
-      <maintainer>Mark Whitehorn &lt;kd0aij@gmail.com&gt;</maintainer>
+    <airframe id="4010" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="DJI Flame Wheel F330">
+      <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Quadrotor x</type>
       <output name="AUX1">feed-through of RC AUX1 channel</output>
       <output name="AUX2">feed-through of RC AUX2 channel</output>
@@ -278,11 +245,11 @@
       <output name="AUX2">feed-through of RC AUX2 channel</output>
       <output name="AUX3">feed-through of RC AUX3 channel</output>
     </airframe>
-    <airframe id="4900" maintainer="John Doe &lt;john@example.com&gt;" name="Crazyflie 2.0">
+    <airframe id="4020" maintainer="Thomas Gubler &lt;thomas@px4.io&gt;" name="Hobbyking Micro PCB">
       <maintainer>Thomas Gubler &lt;thomas@px4.io&gt;</maintainer>
       <type>Quadrotor x</type>
     </airframe>
-    <airframe id="4013" maintainer="Michael Schaeuble" name="Parrot Bebop Frame">
+    <airframe id="4060" maintainer="James Goppert &lt;james.goppert@gmail.com&gt;" name="DJI Matrice 100">
       <maintainer>James Goppert &lt;james.goppert@gmail.com&gt;</maintainer>
       <type>Quadrotor x</type>
       <output name="AUX1">feed-through of RC AUX1 channel</output>
@@ -290,18 +257,18 @@
       <output name="AUX3">feed-through of RC AUX3 channel</output>
     </airframe>
     <airframe id="4009" maintainer="Mark Whitehorn &lt;kd0aij@gmail.com&gt;" name="Lumenier QAV250">
-      <maintainer>Michael Schaeuble</maintainer>
+      <maintainer>Mark Whitehorn &lt;kd0aij@gmail.com&gt;</maintainer>
       <type>Quadrotor x</type>
       <output name="AUX1">feed-through of RC AUX1 channel</output>
       <output name="AUX2">feed-through of RC AUX2 channel</output>
       <output name="AUX3">feed-through of RC AUX3 channel</output>
-    </airframe>-->
-    <airframe id="4002" maintainer="Leon Mueller &lt;thedevleon&gt;" name="Generic Quadrotor X config with mount (e.g. gimbal)">
+    </airframe>
+    <airframe id="10021" maintainer="Leon Mueller &lt;thedevleon&gt;" name="H4 680mm with Z1 Tiny2 Gimbal">
       <maintainer>Leon Mueller &lt;thedevleon&gt;</maintainer>
       <type>Quadrotor x</type>
     </airframe>
-    <airframe id="4030" maintainer="Andreas Antener &lt;andreas@uaventure.com&gt;" name="3DR Solo">
-      <maintainer>Andreas Antener &lt;andreas@uaventure.com&gt;</maintainer>
+    <airframe id="4001" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="Generic Quadrotor X config">
+      <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Quadrotor x</type>
       <output name="AUX1">feed-through of RC AUX1 channel</output>
       <output name="AUX2">feed-through of RC AUX2 channel</output>
@@ -316,7 +283,7 @@
     </airframe>
     <airframe id="4070" maintainer="John Doe &lt;john@example.com&gt;" name="Intel Aero RTF">
       <type>Quadrotor x</type>
-    </airframe>-->
+    </airframe>
   </airframe_group>
   <airframe_group image="Rover" name="车" type="10">
     <airframe id="50001" maintainer="John Doe &lt;john@example.com&gt;" name="Axial Racing AX10">
@@ -342,7 +309,7 @@
     </airframe>
   </airframe_group>
   <airframe_group image="Plane" name="标准飞机" type="1">
-    <airframe id="2101" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="Standard AERT Plane">
+    <airframe id="2102" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="Skywalker (3DR Aero)">
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Standard Plane</type>
       <output name="AUX1">feed-through of RC AUX1 channel</output>
@@ -368,7 +335,7 @@
       <output name="MAIN6">wheel</output>
       <output name="MAIN7">flaps</output>
     </airframe>
-    <airframe id="2100" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="Multiplex Easystar">
+    <airframe id="2101" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="Standard AERT Plane">
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Standard Plane</type>
       <output name="AUX1">feed-through of RC AUX1 channel</output>
@@ -379,7 +346,7 @@
       <output name="MAIN3">rudder</output>
       <output name="MAIN4">throttle</output>
       <output name="MAIN5">flaps</output>
-    </airframe>-->
+    </airframe>
     <airframe id="2104" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="标准 AETR 飞机">
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Standard Plane</type>
@@ -402,13 +369,13 @@
       <output name="MAIN2">elevator</output>
       <output name="MAIN4">throttle</output>
     </airframe>
-    <airframe id="2102" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="Skywalker (3DR Aero)">
+    <airframe id="2100" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="Multiplex Easystar">
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
       <type>Standard Plane</type>
     </airframe>
   </airframe_group>
   <airframe_group image="VTOLPlane" name="标准垂直起降" type="20">
-    <airframe id="13007" maintainer="Sander Smeets &lt;sander@droneslab.com&gt;" name="Generic AAVVT v-tail plane airframe with Quad VTOL.">
+    <airframe id="13009" maintainer="Andreas Antener &lt;andreas@uaventure.com&gt;" name="Sparkle Tech Ranger VTOL">
       <maintainer>Andreas Antener &lt;andreas@uaventure.com&gt;</maintainer>
       <type>Standard VTOL</type>
     </airframe>

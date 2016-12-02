@@ -54,7 +54,7 @@ public:
     QString             getDefaultComponentIdParam      (void) const final { return QString("SYS_AUTOSTART"); }
     QString             missionCommandOverrides         (MAV_TYPE vehicleType) const final;
     QString             getVersionParam                 (void) final { return QString("SYS_PARAM_VER"); }
-    QString             internalParameterMetaDataFile   (Vehicle* vehicle) final { Q_UNUSED(vehicle); { return (language==0? QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaDataCn.xml"):QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaData.xml")); }
+    QString             internalParameterMetaDataFile   (Vehicle* vehicle) final { Q_UNUSED(vehicle); return (language==0? QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaDataCn.xml"):QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaData.xml")); }
     void                getParameterMetaDataVersionInfo (const QString& metaDataFile, int& majorVersion, int& minorVersion) final { PX4ParameterMetaData::getParameterMetaDataVersionInfo(metaDataFile, majorVersion, minorVersion); }
     QObject*            loadParameterMetaData           (const QString& metaDataFile);
     bool                adjustIncomingMavlinkMessage    (Vehicle* vehicle, mavlink_message_t* message);

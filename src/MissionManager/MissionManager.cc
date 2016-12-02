@@ -253,7 +253,7 @@ void MissionManager::_ackTimeout(void)
     case AckGuidedItem:
         // MISSION_REQUEST is expected, or MISSION_ACK to end sequence
     default:
-    _sendError(AckTimeoutError, QStringLiteral("机体未响应任务传输: %1").arg(_ackTypeToString(timedOutAck)));//"Vehicle did not respond to mission item communication: %1"
+    _sendError(AckTimeoutError, QStringLiteral("机体未响应任务传输: %1").arg(_ackTypeToString(_expectedAck)));//"Vehicle did not respond to mission item communication: %1"
         _expectedAck = AckNone;
         _finishTransaction(false);
     }
