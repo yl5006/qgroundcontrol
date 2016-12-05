@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -15,7 +15,7 @@
 #include "FirmwarePluginManager.h"
 #include "QGCApplication.h"
 #include "JsonHelper.h"
-
+#include  "QGCGeo.h"
 const char*  MissionItem::_itemType =               "missionItem";
 const char*  MissionItem::_jsonTypeKey =            "type";
 const char*  MissionItem::_jsonIdKey =              "id";
@@ -156,19 +156,33 @@ void MissionItem::save(QJsonObject& json) const
 bool MissionItem::load(QTextStream &loadStream)
 {
     const QStringList &wpParams = loadStream.readLine().split("\t");
-    if (wpParams.size() == 12) {
+    qDebug()<<wpParams.size();
+    if (wpParams.size() == 4) {
         setSequenceNumber(wpParams[0].toInt());
-        setIsCurrentItem(wpParams[1].toInt() == 1 ? true : false);
-        setFrame((MAV_FRAME)wpParams[2].toInt());
-        setCommand((MAV_CMD)wpParams[3].toInt());
-        setParam1(wpParams[4].toDouble());
-        setParam2(wpParams[5].toDouble());
-        setParam3(wpParams[6].toDouble());
-        setParam4(wpParams[7].toDouble());
-        setParam5(wpParams[8].toDouble());
-        setParam6(wpParams[9].toDouble());
-        setParam7(wpParams[10].toDouble());
-        setAutoContinue(wpParams[11].toInt() == 1 ? true : false);
+        setIsCurrentItem(false);
+        setFrame(MAV_FRAME_GLOBAL);
+        setCommand(MAV_CMD_NAV_WAYPOINT);
+        QGeoCoordinate geoCoord;
+        QGeoCoordinate tangentOrigin(wpParams[1].toDouble(),wpParams[2].toDouble(),wpParams[3].toDouble());
+        convertNedToGeo(-100, 0 , 0, tangentOrigin,&geoCoord);
+        setParam5(geoCoord.latitude());
+        setParam6(geoCoord.longitude());
+        setParam7(geoCoord.altitude());
+//        setParam5(wpParams[1].toDouble());
+//        setParam6(wpParams[2].toDouble());
+//        setParam7(wpParams[3].toDouble());
+        setAutoContinue(true);
+//        setIsCurrentItem(wpParams[1].toInt() == 1 ? true : false);
+//        setFrame((MAV_FRAME)wpParams[2].toInt());
+//        setCommand((MAV_CMD)wpParams[3].toInt());
+//        setParam1(wpParams[4].toDouble());
+//        setParam2(wpParams[5].toDouble());
+//        setParam3(wpParams[6].toDouble());
+//        setParam4(wpParams[7].toDouble());
+//        setParam5(wpParams[8].toDouble());
+//        setParam6(wpParams[9].toDouble());
+//        setParam7(wpParams[10].toDouble());
+//        setAutoContinue(wpParams[11].toInt() == 1 ? true : false);
         return true;
     }
 

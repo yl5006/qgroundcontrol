@@ -972,7 +972,7 @@ QGCView {
                                     bordercolor:    qgcPal.text
                                     onClicked: {
                                         centerMapButton.hideDropDown()
-                                        editorMap.center = controller.visualItems.get(0).coordinate
+                                        editorMap.center = missionController.visualItems.get(0).coordinate
                                     }
                                 }
                                 Rectangle {
@@ -992,14 +992,14 @@ QGCView {
                                             fitMapViewportToMissionItems()
                                         }
                                     }
-                                    QGCButton {
-                                        text: qsTr("All items")
-                                        width:  ScreenTools.defaultFontPixelWidth * 10
-                                        onClicked: {
-                                            centerMapButton.hideDropDown()
-                                            fitMapViewportToAllItems()
-                                    }
-                                }
+//                                    QGCButton {
+//                                        text: qsTr("All items")
+//                                        width:  ScreenTools.defaultFontPixelWidth * 10
+//                                        onClicked: {
+//                                            centerMapButton.hideDropDown()
+//                                            fitMapViewportToAllItems()
+//                                    }
+//                                }
                                 Rectangle {
                                     anchors.verticalCenter:         parent.verticalCenter
                                     height:     parent.height*0.8
@@ -1291,5 +1291,61 @@ QGCView {
                 }
             }
         }
+//    Component {
+//        id: loadFileAndGerDialogComponent
+
+//        QGCViewDialog {
+//            id: preCalibrationDialog
+
+//            function accept() {
+//                if (preCalibrationDialogType == "gyro") {
+//                    controller.calibrateGyro()
+//                } else if (preCalibrationDialogType == "accel") {
+//                    controller.calibrateAccel()
+//                } else if (preCalibrationDialogType == "level") {
+//                    controller.calibrateLevel()
+//                } else if (preCalibrationDialogType == "compass") {
+//                    controller.calibrateCompass()
+//                } else if (preCalibrationDialogType == "airspeed") {
+//                    controller.calibrateAirspeed()
+//                }
+//                preCalibrationDialog.hideDialog()
+//            }
+
+//            Column {
+//                anchors.fill:   parent
+//                spacing:        ScreenTools.defaultFontPixelHeight
+
+//                QGCLabel {
+//                    width:      parent.width
+//                    wrapMode:   Text.WordWrap
+//                    text:       preCalibrationDialogHelp
+//                }
+
+//                QGCLabel {
+//                    id:         boardRotationHelp
+//                    width:      parent.width
+//                    wrapMode:   Text.WordWrap
+//                    visible:    (preCalibrationDialogType != "airspeed") && (preCalibrationDialogType != "gyro")
+//                    text:       boardRotationText
+//                }
+
+//                Column {
+//                    visible:    boardRotationHelp.visible
+//                    spacing:        ScreenTools.defaultFontPixelHeight
+//                    QGCLabel {
+//                        text: qsTr("飞控安装方向:")//Autopilot Orientation
+//                    }
+
+//                    FactComboBox {
+//                        id:     boardRotationCombo
+//                        width:  rotationColumnWidth;
+//                        model:  rotations
+//                        fact:   sens_board_rot
+//                    }
+//                }
+//            }
+//        }
+//    }
     }
 } // QGCVIew

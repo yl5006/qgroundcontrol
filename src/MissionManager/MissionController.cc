@@ -365,7 +365,7 @@ bool MissionController::_loadTextMissionFile(QTextStream& stream, QmlObjectListM
     const QStringList& version = firstLine.split(" ");
 
     bool versionOk = false;
-    if (version.size() == 3 && version[0] == "QGC" && version[1] == "WPL") {
+    if (version.size() == 3 && version[0] == "EWT" && version[1] == "WPL") {
         if (version[2] == "110") {
             // ArduPilot file, planned home position is already in position 0
             versionOk = true;
@@ -427,7 +427,7 @@ void MissionController::loadFromFile(const QString& filename)
         QTextStream stream(&bytes);
 
         QString firstLine = stream.readLine();
-        if (firstLine.contains(QRegExp("QGC.*WPL"))) {
+        if (firstLine.contains(QRegExp("EWT.*WPL"))) {
             stream.seek(0);
             _loadTextMissionFile(stream, newVisualItems, errorString);
         } else {
