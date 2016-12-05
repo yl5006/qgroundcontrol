@@ -124,5 +124,5 @@ QGCViewDialog {
                 }
             }
         }
-    } // ListView
+    } // QGCListView
 } // QGCViewDialog

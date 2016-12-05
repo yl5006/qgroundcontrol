@@ -32,10 +32,9 @@
 
 #include <QSimpleUpdater.h>
 #include <WaitForSignalHelper.h>
-#define  SINGLE_INSTANCE_PORT   14499
-
 #ifndef __mobile__
     #include "QGCSerialPortInfo.h"
+    #include "RunGuard.h"
 #endif
 
 #ifdef UNITTEST_BUILD
@@ -110,6 +109,13 @@ static const QString DEFS_URL = "http://101.200.161.194:7070/update/ewatt4/updat
 const char*  _appVersionKey             = "appVersion";
 int main(int argc, char *argv[])
 {
+#ifndef __mobile__
+    RunGuard guard("QGroundControlRunGuardKey");
+    if (!guard.tryToRun()) {
+        return 0;
+    }
+#endif
+
 #ifdef Q_OS_UNIX
     //Force writing to the console on UNIX/BSD devices
     if (!qEnvironmentVariableIsSet("QT_LOGGING_TO_CONSOLE"))
@@ -118,16 +124,6 @@ int main(int argc, char *argv[])
 
     // install the message handler
     AppMessages::installHandler();
-
-#ifndef __mobile__
-    //-- Test for another instance already running. If that's the case, we simply exit.
-    QHostAddress host("127.0.0.1");
-    QUdpSocket socket;
-    if(!socket.bind(host, SINGLE_INSTANCE_PORT, QAbstractSocket::DontShareAddress)) {
-        qWarning() << "Another instance already running. Exiting.";
-        exit(-1);
-    }
-#endif
 
 #ifdef Q_OS_MAC
 #ifndef __ios__

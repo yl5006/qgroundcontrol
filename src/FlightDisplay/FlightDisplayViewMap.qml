@@ -165,13 +165,12 @@ FlightMap {
     }    
 
 //    MapScale {
-//        anchors.topMargin:      ScreenTools.defaultFontPixelHeight * 5
+//        anchors.bottomMargin:   ScreenTools.defaultFontPixelHeight * (0.66)
 //        anchors.rightMargin:    ScreenTools.defaultFontPixelHeight * (0.33)
-//        anchors.top:            parent.top
+//        anchors.bottom:         parent.bottom
 //        anchors.right:          parent.right
-//        z:                      QGroundControl.zOrderWidgets
 //        mapControl:             flightMap
-//        visible:                !ScreenTools.isTinyScreen
+//       visible:                !ScreenTools.isTinyScreen
 //    }
 
     // Handle guided mode clicks

@@ -734,7 +734,7 @@ QGCView {
                         onWheel:            wheel.accepted = true
                     }
 
-                    ListView {
+                    QGCListView {
                         id:             missionItemEditorListView
                         anchors.left:   parent.left
  //                       anchors.right:  parent.right
@@ -769,7 +769,7 @@ QGCView {
 
 //                            onMoveHomeToMapCenter: _visualItems.get(0).coordinate = editorMap.center
                         }
-                    } // ListView
+                    } // QGCListView
                 } // Item - Mission Item editor
 
                 // GeoFence Editor
@@ -1108,7 +1108,6 @@ QGCView {
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     anchors.left:       toolColumn.right
                     anchors.verticalCenter:         toolColumn.verticalCenter
-                    z:                  QGroundControl.zOrderWidgets
                     mapControl:         editorMap
                     visible:            !ScreenTools.isTinyScreen
 
