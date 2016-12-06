@@ -134,7 +134,7 @@ SetupPage {
                     text:               qsTr("其他设置")//else
                     onClicked: {
                         checked  =   true
-                        panelLoader.sourceComponent = elsesetComponent;
+                        panelLoader.source = "ElseControlPlane.qml";
                     }
                 }
             }

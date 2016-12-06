@@ -2855,8 +2855,8 @@ Used to calculate increased terrain random walk nosie due to movement</short_des
       <scope>modules/navigator</scope>
     </parameter>
     <parameter default="50.0" name="NAV_LOITER_RAD" type="FLOAT">
-      <short_desc>Loiter radius (FW only)</short_desc>
-      <long_desc>Default value of loiter radius for missions, loiter, RTL, etc. (fixedwing only).</long_desc>
+      <short_desc>盘旋半径</short_desc>
+      <long_desc> 盘旋半径，比如在：任务模式, 悬停模式, 返航模式.</long_desc>
       <min>25</min>
       <max>1000</max>
       <unit>m</unit>
@@ -2875,8 +2875,8 @@ Used to calculate increased terrain random walk nosie due to movement</short_des
       <scope>modules/navigator</scope>
     </parameter>
     <parameter default="10.0" name="NAV_FW_ALT_RAD" type="FLOAT">
-      <short_desc>FW Altitude Acceptance Radius</short_desc>
-      <long_desc>Acceptance radius for fixedwing altitude.</long_desc>
+      <short_desc>固定翼高度接受半径</short_desc>
+      <long_desc>固定翼高度接受半径</long_desc>
       <min>0.05</min>
       <max>200.0</max>
       <unit>m</unit>
