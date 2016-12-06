@@ -39,13 +39,13 @@
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Acceptance:",
+                "label":            "误差半径:",
                 "units":            "m",
                 "default":          3,
                 "decimalPlaces":    2
             },
             "param3": {
-                "label":            "PassThru:",
+                "label":            "盘旋半径:",
                 "units":            "m",
                 "default":          0,
                 "decimalPlaces":    2
