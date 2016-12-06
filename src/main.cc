@@ -215,6 +215,23 @@ int main(int argc, char *argv[])
 
     QGCApplication* app = new QGCApplication(argc, argv, runUnitTests);
     Q_CHECK_PTR(app);
+    QSettings settings;
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+//******************
+/**********************
+            language add by yaoling
+***********************/
+        //  settings.beginGroup("GS_EWT_Language");
+        language=settings.value("language","0").toInt();
+            if(language==1)
+            {
+                QString   strLanguageFile= app->applicationDirPath()+QString("/app_en.qm");
+                qDebug()<<strLanguageFile<<"   "<<language;
+                QTranslator m_translator;//=new QTranslator();
+                m_translator.load(strLanguageFile);
+                app->installTranslator(&m_translator);
+            }
+//**************************************
 //************
 //    显示启动界面信息
 #ifndef __mobile__
@@ -226,8 +243,7 @@ int main(int argc, char *argv[])
 #endif
 //****************
 //check for update
-    QSettings::setDefaultFormat(QSettings::IniFormat);
-    QSettings settings;
+
     QEventLoop m_eventLoop;
 
     /* QSimpleUpdater is single-instance */
@@ -268,21 +284,7 @@ int main(int argc, char *argv[])
     return 0;
  }
 // qDebug()<<"getUpdateAvailable"<<m_updater->getUpdateAvailable(DEFS_URL);
-//******************
-    /**********************
-        language add by yaoling
-    ***********************/
-    //  settings.beginGroup("GS_EWT_Language");    
-    language=settings.value("language","0").toInt();
-        if(language==1)
-        {
-            QString   strLanguageFile= app->applicationDirPath()+QString("/app_en.qm");
-            qDebug()<<strLanguageFile<<"   "<<language;
-            QTranslator m_translator;//=new QTranslator();
-            m_translator.load(strLanguageFile);
-            app->installTranslator(&m_translator);
-        }
-    //**************************************
+
 #ifdef Q_OS_LINUX
     QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));
 #endif /* Q_OS_LINUX */

@@ -60,11 +60,11 @@
         {
             "id":                   17,
             "rawName":              "MAV_CMD_NAV_LOITER_UNLIM",
-            "friendlyName":         "悬停",
-            "description":          "运动到一个指定位置在一个指定半径区域内悬停.",
+            "friendlyName":         "悬停(盘旋)",
+            "description":          "运动到一个指定位置在一个指定半径区域内悬停(盘旋).",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "悬停",
+            "category":             "悬停(盘旋)",
             "param3": {
                 "label":            "半径:",
                 "units":            "m",
@@ -102,11 +102,11 @@
         {
             "id":                   19,
             "rawName":              "MAV_CMD_NAV_LOITER_TIME",
-            "friendlyName":         "悬停时间",
-            "description":          "运动到一个指定位置在一段时间内在指定半径区域悬停.",
+            "friendlyName":         "悬停(盘旋)时间",
+            "description":          "运动到一个指定位置在一段时间内在指定半径区域悬停(盘旋).",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "悬停",
+            "category":             "悬停(盘旋)",
             "param1": {
                 "label":            "停留:",
                 "units":            "secs",
@@ -206,11 +206,11 @@
         {
             "id":                   31,
             "rawName":              "MAV_CMD_NAV_LOITER_TO_ALT",
-            "friendlyName":         "悬停高度",
-            "description":          "以Loiter模式向指定位置运动直到到达一定高度.",
+            "friendlyName":         "悬停(盘旋)高度",
+            "description":          "以悬停(盘旋)模式向指定位置运动直到到达一定高度.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "悬停",
+            "category":             "悬停(盘旋)",
             "param1": {
                 "label":            "Heading wait:",
                 "enumStrings":      "False,True",

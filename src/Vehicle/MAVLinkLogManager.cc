@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -313,7 +313,7 @@ MAVLinkLogManager::MAVLinkLogManager(QGCApplication* app)
     setDeleteAfterUpload(settings.value(kEnableDeletetKey, false).toBool());
     //-- Logging location
     _logPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    _logPath += "/MAVLinkLogs";
+    _logPath += "/Logs";//"/MAVLinkLogs"
     if(!QDir(_logPath).exists()) {
         if(!QDir().mkpath(_logPath)) {
             qCCritical(MAVLinkLogManagerLog) << "Could not create MAVLink log download path:" << _logPath;

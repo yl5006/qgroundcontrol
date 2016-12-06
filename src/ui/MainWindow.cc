@@ -247,9 +247,9 @@ MainWindow::MainWindow()
         menuBar()->hide();
 #endif
 
-//#ifndef QT_DEBUG
-//        menuBar()->hide();
-//#endif
+#ifndef QT_DEBUG
+        menuBar()->hide();
+#endif
         show();
 #ifdef __macos__
         // TODO HACK
