@@ -432,7 +432,7 @@ Rectangle {
               width:          _defaultTextHeight*8
               height:         width
               exclusiveGroup: setupButtonGroup
-              visible:        false//QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable
+              visible:        QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable
               text:           qsTr("后台调试")//"Firmware""Parameters"
               onClicked:
               {
