@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -45,7 +45,7 @@ public:
     Q_PROPERTY(double               hoverDistance       READ hoverDistance                              NOTIFY hoverDistanceChanged)
 
     Q_INVOKABLE void removeMissionItem(int index);
-
+    Q_INVOKABLE QString getFromFilePicker(void);
     /// Add a new simple mission item to the list
     ///     @param i: index to insert at
     /// @return Sequence number for new item

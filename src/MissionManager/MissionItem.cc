@@ -156,7 +156,6 @@ void MissionItem::save(QJsonObject& json) const
 bool MissionItem::load(QTextStream &loadStream)
 {
     const QStringList &wpParams = loadStream.readLine().split("\t");
-    qDebug()<<wpParams.size();
     if (wpParams.size() == 4) {
         setSequenceNumber(wpParams[0].toInt());
         setIsCurrentItem(false);

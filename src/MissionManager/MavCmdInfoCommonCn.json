@@ -39,7 +39,7 @@
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "误差半径:",
+                "label":            "触发半径:",
                 "units":            "m",
                 "default":          3,
                 "decimalPlaces":    2
@@ -212,7 +212,7 @@
             "friendlyEdit":         true,
             "category":             "悬停(盘旋)",
             "param1": {
-                "label":            "Heading wait:",
+                "label":            "等待机头:",
                 "enumStrings":      "False,True",
                 "enumValues":       "0,1",
                 "default":          0,
@@ -226,7 +226,7 @@
             },
             "param4": {
                 "label":            "下一条路径起点:",
-                "enumStrings":      "Center,On Loiter",
+                "enumStrings":      "中心点,盘旋点",
                 "enumValues":       "0,1",
                 "default":          1,
                 "decimalPlaces":    0

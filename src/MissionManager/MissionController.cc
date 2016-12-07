@@ -470,12 +470,23 @@ void MissionController::loadFromFile(const QString& filename)
 void MissionController::loadFromFilePicker(void)
 {
 #ifndef __mobile__
-    QString filename = QGCFileDialog::getOpenFileName(MainWindow::instance(), tr("选择任务文件")/*"Select Mission File to load"*/, QString(), "Mission file (*.mission);;All Files (*.*)");
+    QString filename = QGCFileDialog::getOpenFileName(MainWindow::instance(), tr("选择任务文件")/*"Select Mission File to load"*/, QString(), "Mission file (*.mission);;Txt file (*.txt);;Txt file (*.kml);;All Files (*.*)");
 
     if (filename.isEmpty()) {
-        return;
+        return ;
     }
     loadFromFile(filename);
+#endif
+}
+QString MissionController::getFromFilePicker(void)
+{
+#ifndef __mobile__
+    QString filename = QGCFileDialog::getOpenFileName(MainWindow::instance(), tr("选择任务文件")/*"Select Mission File to load"*/, QString(), "Mission file (*.mission);;Txt file (*.txt);;Txt file (*.kml);;All Files (*.*)");
+
+    if (filename.isEmpty()) {
+        return "";
+    }
+    return filename;
 #endif
 }
 

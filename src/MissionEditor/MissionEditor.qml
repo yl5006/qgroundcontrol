@@ -210,9 +210,13 @@ QGCView {
             if (ScreenTools.isMobile) {
                 qgcView.showDialog(mobileFilePicker, qsTr("Select Mission File"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
             } else {
-                missionController.loadFromFilePicker()
-                fitMapViewportToMissionItems()
-                _currentMissionItem = _visualItems.get(0)
+                var filename=missionController.getFromFilePicker()
+                if(filename.match(".mission"))
+                {
+                    missionController.loadFromFile(filename)
+                    fitMapViewportToMissionItems()
+                    _currentMissionItem = _visualItems.get(0)
+                }
             }
         }
 
