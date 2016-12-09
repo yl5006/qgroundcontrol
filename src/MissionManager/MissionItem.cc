@@ -188,6 +188,41 @@ bool MissionItem::load(QTextStream &loadStream)
     return false;
 }
 
+bool MissionItem::load(const QString &wayline,double angle,double space,double addalt,int waynum,bool cammer,bool relalt)
+{
+    QStringList wpParams = wayline.split("\t");
+    if (wpParams.size() != 4) {
+        wpParams= wayline.split(",");
+        if(wpParams.size() != 4)
+        {
+            wpParams= wayline.split(" ");
+        }
+    }
+    if (wpParams.size() == 4) {
+        setSequenceNumber(wpParams[0].toInt());
+        setIsCurrentItem(false);
+        setFrame(relalt?MAV_FRAME_GLOBAL_RELATIVE_ALT: MAV_FRAME_GLOBAL);
+        setCommand(MAV_CMD_NAV_WAYPOINT);
+        QGeoCoordinate geoCoord;
+        QGeoCoordinate tangentOrigin(wpParams[1].toDouble(),wpParams[2].toDouble(),wpParams[3].toDouble()+addalt);
+        double radians = (M_PI / 180.0) * angle;
+        space=space*((waynum+1)/2);
+        if(waynum%2==1)
+        {
+            convertNedToGeo(space * cos(radians) , space*sin(radians) , 0, tangentOrigin,&geoCoord);
+        }else
+        {
+            convertNedToGeo(-space* cos(radians),-space*sin(radians) , 0, tangentOrigin,&geoCoord);
+        }
+        setParam5(geoCoord.latitude());
+        setParam6(geoCoord.longitude());
+        setParam7(geoCoord.altitude());
+        setAutoContinue(true);
+        return true;
+    }
+
+    return false;
+}
 bool MissionItem::load(const QJsonObject& json, QString& errorString)
 {
     QStringList requiredKeys;

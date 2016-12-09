@@ -50,8 +50,8 @@ QGCTextField {
         }
     }
 
-    onHelpClicked: qgcView.showDialog(helpDialogComponent, qsTr("参数详解"),/*qsTr("Value Details"), */qgcView.showDialogDefaultWidth, StandardButton.Ok)
-
+    onHelpClicked: showHelp?qgcView.showDialog(helpDialogComponent, qsTr("参数详解"),/*qsTr("Value Details"), */qgcView.showDialogDefaultWidth, StandardButton.Ok):
+0
 
     Component {
         id: validationErrorDialogComponent

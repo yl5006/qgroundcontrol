@@ -9,7 +9,7 @@ GridLayout {
     columns: 2
     rows: factList.length
     flow: GridLayout.TopToBottom
-
+    property bool  showHelpdig:   false
     Repeater {
         model: parent.factList
 
@@ -22,6 +22,7 @@ GridLayout {
         FactTextField {
             Layout.fillWidth:   true
             fact:               modelData
+            showHelp:           showHelpdig
         }
     }
 }

@@ -22,7 +22,7 @@ import QGroundControl.Controls      1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.Mavlink       1.0
 import QGroundControl.Controllers   1.0
-
+import QGroundControl.FactControls  1.0
 /// Mission Editor
 
 QGCView {
@@ -58,6 +58,7 @@ QGCView {
     readonly property int _layerRallyPoints:    3
     property int _editingLayer: _layerMission
 
+    property string   _filename:  ""
     onActiveVehiclePositionChanged: updateMapToVehiclePosition()
 
     Connections {
@@ -208,14 +209,18 @@ QGCView {
 
         function loadFromSelectedFile() {
             if (ScreenTools.isMobile) {
-                qgcView.showDialog(mobileFilePicker, qsTr("Select Mission File"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                qgcView.showDialog(mobileFilePicker, qsTr("选择任务文件"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
             } else {
-                var filename=missionController.getFromFilePicker()
-                if(filename.match(".mission"))
+                _filename=missionController.getFromFilePicker()
+                if(_filename.match(".mission"))
                 {
-                    missionController.loadFromFile(filename)
+                    missionController.loadFromFile(_filename)
                     fitMapViewportToMissionItems()
                     _currentMissionItem = _visualItems.get(0)
+                }
+                else if(_filename.match(".txt"))
+                {
+                    qgcView.showDialog(loadandgenerateDialog, qsTr(""), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                 }
             }
         }
@@ -1294,61 +1299,171 @@ QGCView {
                 }
             }
         }
-//    Component {
-//        id: loadFileAndGerDialogComponent
+    Component {
+        id: loadandgenerateDialog
 
-//        QGCViewDialog {
-//            id: preCalibrationDialog
+        QGCViewDialog {
+            width:          ScreenTools.defaultFontPixelHeight*10
+            height:         ScreenTools.defaultFontPixelHeight*12
+            function accept() {
+             //   var toIndex = toCombo.currentIndex
+                missionController.loadFromTxtFile(_filename,Number(wayangle.text),Number(wayspace.text),Number(addalt.text),Number(waynum.text),camer.checked,relalt.checked)
+                hideDialog()
+            }
+            Rectangle {
+                id:                         title
+                anchors.top:                parent.top
+                anchors.topMargin:          -ScreenTools.defaultFontPixelHeight*2
+                anchors.horizontalCenter:   parent.horizontalCenter
+                width:                      parent.width
+                height:                     ScreenTools.defaultFontPixelHeight*4
+                color:                      "transparent"
+                QGCCircleProgress{
+                    id:                     circle
+                    anchors.left:           parent.left
+                    anchors.top:            parent.top
+                    anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*3
+                    width:                  ScreenTools.defaultFontPixelHeight*3
+                    value:                  0
+                }
+                QGCColoredImage {
+                    id:                     img
+                    height:                 ScreenTools.defaultFontPixelHeight*1.5
+                    width:                  height
+                    sourceSize.width: width
+                    source:     "/qmlimages/loadfromfile.svg"
+                    fillMode:   Image.PreserveAspectFit
+                    color:      qgcPal.text
+                    anchors.horizontalCenter:circle.horizontalCenter
+                    anchors.verticalCenter: circle.verticalCenter
+                }
+                QGCLabel {
+                    id:             idset
+                    anchors.left:   img.left
+                    anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
+                    text:           qsTr("生成航线参数")//"safe"
+                    font.pointSize: ScreenTools.mediumFontPointSize
+                    font.bold:              true
+                    color:          qgcPal.text
+                    anchors.verticalCenter: img.verticalCenter
+                }
+                Image {
+                    source:    "/qmlimages/title.svg"
+                    width:      idset.width+ScreenTools.defaultFontPixelHeight*3
+                    height:     ScreenTools.defaultFontPixelHeight*1.5
+                    anchors.verticalCenter: circle.verticalCenter
+                    anchors.left:          circle.right
+                    //                fillMode: Image.PreserveAspectFit
+                }
+            }
+            Column {
+                anchors.top:                title.bottom
+                anchors.horizontalCenter:   parent.horizontalCenter
+                width:          parent.width*0.8
+                spacing:        ScreenTools.defaultFontPixelHeight
+                Row {
+                    spacing:    ScreenTools.defaultFontPixelHeight*2
+                Row {
+                    spacing:    ScreenTools.defaultFontPixelHeight
+                    QGCLabel {
+                        anchors.baseline:   wayangle.baseline
+                        text:               qsTr("偏移角度:")
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                    }
+                    QGCTextField {
+                        id:                 wayangle
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                        validator:          DoubleValidator {bottom: 0; top: 360;}
+                        inputMethodHints:   Qt.ImhDigitsOnly
+                        text:               "90"
+                    }
+                    QGCLabel {
+                        text:               qsTr("度")
+                    }
+                }
+                Row {
+                    spacing:    ScreenTools.defaultFontPixelHeight
+                    QGCLabel {
+                        anchors.baseline:   wayspace.baseline
+                        text:               qsTr("偏移距离:")
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                    }
+                    QGCTextField {
+                        id:                 wayspace
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                        validator:          DoubleValidator {bottom: 0; top: 5000;}
+                        inputMethodHints:   Qt.ImhDigitsOnly
+                        text:               "0.0"
+                    }
+                    QGCLabel {
+                        text:               qsTr("米")
+                    }
+                }
+                }
+                Row {
+                    spacing: ScreenTools.defaultFontPixelHeight*2
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    ExclusiveGroup { id: modeGroup }
 
-//            function accept() {
-//                if (preCalibrationDialogType == "gyro") {
-//                    controller.calibrateGyro()
-//                } else if (preCalibrationDialogType == "accel") {
-//                    controller.calibrateAccel()
-//                } else if (preCalibrationDialogType == "level") {
-//                    controller.calibrateLevel()
-//                } else if (preCalibrationDialogType == "compass") {
-//                    controller.calibrateCompass()
-//                } else if (preCalibrationDialogType == "airspeed") {
-//                    controller.calibrateAirspeed()
+                    QGCRadioButton {
+                        id:             relalt
+                        exclusiveGroup: modeGroup
+                        text:           qsTr("相对高度")//"Mode 1"
+                        checked:        true
+                    }
+
+                    QGCRadioButton {
+                        exclusiveGroup: modeGroup
+                        text:           qsTr("海拔高度")//"Mode 2"
+                    }
+                }
+//                FactTextFieldGrid {
+//                    width:          ScreenTools.defaultFontPixelHeight*12
+//                    columnSpacing:  _margin
+//                    rowSpacing:     _margin
+//                    showHelpdig:    false
+//                    factList:       [ missionController.genoffsetAngle, missionController.genoffsetSpacing ]
 //                }
-//                preCalibrationDialog.hideDialog()
-//            }
+                Row {
+                    spacing:    ScreenTools.defaultFontPixelHeight
+                    QGCLabel {
+                        anchors.baseline:   addalt.baseline
+                        text:               qsTr("增加高度:")
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                    }
+                    QGCTextField {
+                        id:                 addalt
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                        validator:          DoubleValidator {bottom: 0; top: 5000;}
+                        inputMethodHints:   Qt.ImhDigitsOnly
+                        text:               "0.0"
+                    }
+                    QGCLabel {
+                        text:               qsTr("米")
+                    }
+                }
+                QGCCheckBox {
+                    id:         camer
+                    text:       qsTr("是否拍照:")//qsTr("Enable Flow Control")
+                }
 
-//            Column {
-//                anchors.fill:   parent
-//                spacing:        ScreenTools.defaultFontPixelHeight
-
-//                QGCLabel {
-//                    width:      parent.width
-//                    wrapMode:   Text.WordWrap
-//                    text:       preCalibrationDialogHelp
-//                }
-
-//                QGCLabel {
-//                    id:         boardRotationHelp
-//                    width:      parent.width
-//                    wrapMode:   Text.WordWrap
-//                    visible:    (preCalibrationDialogType != "airspeed") && (preCalibrationDialogType != "gyro")
-//                    text:       boardRotationText
-//                }
-
-//                Column {
-//                    visible:    boardRotationHelp.visible
-//                    spacing:        ScreenTools.defaultFontPixelHeight
-//                    QGCLabel {
-//                        text: qsTr("飞控安装方向:")//Autopilot Orientation
-//                    }
-
-//                    FactComboBox {
-//                        id:     boardRotationCombo
-//                        width:  rotationColumnWidth;
-//                        model:  rotations
-//                        fact:   sens_board_rot
-//                    }
-//                }
-//            }
-//        }
-//    }
+                Row {
+                    spacing:    ScreenTools.defaultFontPixelHeight
+                    QGCLabel {
+                        anchors.baseline:   waynum.baseline
+                        text:               qsTr("路径条数:")
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                    }
+                    QGCTextField {
+                        id:                 waynum
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                        validator:          IntValidator {bottom: 1; top: 5;}
+                        inputMethodHints:   Qt.ImhDigitsOnly
+                        text:               "1"
+                    }
+                }
+            }
+        }
+    }
     }
 } // QGCVIew

@@ -189,5 +189,6 @@
         <file alias="RallyPoint.FactMetaData.json">src/MissionManager/RallyPoint.FactMetaData.json</file>
         <file alias="Survey.FactMetaData.json">src/MissionManager/Survey.FactMetaData.json</file>
 	<file alias="Survey.FactMetaDatacn.json">src/MissionManager/Survey.FactMetaDatacn.json</file>
+	<file alias="Generate.FactMetaDatacn.json">src/MissionManager/Generate.FactMetaDatacn.json</file>
     </qresource>
 </RCC>

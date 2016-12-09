@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -71,6 +71,7 @@ public:
     void setDistance        (double distance);
 
     bool load(QTextStream &loadStream);
+    bool load(const QString &wayline,double angle,double space,double addalt,int waynum,bool cammer,bool relalt);
     bool load(const QJsonObject& json, QString& errorString);
 
     bool relativeAltitude(void) { return _missionItem.frame() == MAV_FRAME_GLOBAL_RELATIVE_ALT; }

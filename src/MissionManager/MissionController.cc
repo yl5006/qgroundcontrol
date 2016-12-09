@@ -34,6 +34,10 @@ const char* MissionController::_jsonMavAutopilotKey =           "EWT_AUTOPILOT";
 const char* MissionController::_jsonComplexItemsKey =           "ewtItems";//"complexItems"
 const char* MissionController::_jsonPlannedHomePositionKey =    "plannedHomePosition";
 
+const char* MissionController::_genoffsetAngleFactName =         "angle";
+const char* MissionController::_genoffsetSpacingFactName =       "spacing";
+QMap<QString, FactMetaData*> MissionController::_metaDataMap;
+
 MissionController::MissionController(QObject *parent)
     : PlanElementController(parent)
     , _visualItems(NULL)
@@ -45,7 +49,17 @@ MissionController::MissionController(QObject *parent)
     , _missionMaxTelemetry(0.0)
     , _cruiseDistance(0.0)
     , _hoverDistance(0.0)
+    , _genoffsetAngleFact             (0, _genoffsetAngleFactName,              FactMetaData::valueTypeDouble)
+    , _genoffsetSpacingFact           (0, _genoffsetSpacingFactName,            FactMetaData::valueTypeDouble)
+
 {
+    if (_metaDataMap.isEmpty()) {
+         _metaDataMap = FactMetaData::createMapFromJsonFile(QStringLiteral(":/json/Generate.FactMetaDatacn.json"), NULL /* metaDataParent */);
+    }
+    _genoffsetAngleFact.setRawValue(90);
+    _genoffsetSpacingFact.setRawValue(0);
+    _genoffsetAngleFact.setMetaData(_metaDataMap[_genoffsetAngleFactName]);
+    _genoffsetSpacingFact.setMetaData(_metaDataMap[_genoffsetSpacingFactName]);
 
 }
 
@@ -359,22 +373,22 @@ bool MissionController::_loadJsonMissionFile(const QByteArray& bytes, QmlObjectL
 
 bool MissionController::_loadTextMissionFile(QTextStream& stream, QmlObjectListModel* visualItems, QString& errorString)
 {
-    bool addPlannedHomePosition = false;
+    bool addPlannedHomePosition = true;
 
-    QString firstLine = stream.readLine();
-    const QStringList& version = firstLine.split(" ");
+//   QString firstLine = stream.readLine();
+//    const QStringList& version = firstLine.split(" ");
 
-    bool versionOk = false;
-    if (version.size() == 3 && version[0] == "EWT" && version[1] == "WPL") {
-        if (version[2] == "110") {
-            // ArduPilot file, planned home position is already in position 0
-            versionOk = true;
-        } else if (version[2] == "120") {
-            // Old QGC file, no planned home position
-            versionOk = true;
-            addPlannedHomePosition = true;
-        }
-    }
+    bool versionOk = true;
+//    if (version.size() == 3 && version[0] == "EWT" && version[1] == "WPL") {
+//        if (version[2] == "110") {
+//            // ArduPilot file, planned home position is already in position 0
+//            versionOk = true;
+//        } else if (version[2] == "120") {
+//            // Old QGC file, no planned home position
+//            versionOk = true;
+//            addPlannedHomePosition = true;
+//        }
+//    }
 
     if (versionOk) {
         while (!stream.atEnd()) {
@@ -467,6 +481,80 @@ void MissionController::loadFromFile(const QString& filename)
     _initAllVisualItems();
 }
 
+void MissionController::loadFromTxtFile(const QString& filename,double angle,double space,double addalt,int waynum,bool cammer,bool relalt)
+{
+    QString errorString;
+    if (filename.isEmpty()) {
+        return;
+    }
+    QmlObjectListModel* newVisualItems = new QmlObjectListModel(this);
+    QmlObjectListModel* newComplexItems = new QmlObjectListModel(this);
+
+    QFile file(filename);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        errorString = file.errorString();
+    } else {
+        QByteArray  bytes = file.readAll();
+        QTextStream stream(&bytes);
+        QStringList wpline;
+        while (!stream.atEnd()) {
+            wpline.append(stream.readLine());
+        }
+        for(int i=0;i<wpline.count();i++)
+        {
+            SimpleMissionItem* item = new SimpleMissionItem(_activeVehicle, this);
+            if (item->load(wpline.at(i),angle,space,addalt,1,cammer,relalt)) {
+                newVisualItems->append(item);
+            } else {
+                errorString = QStringLiteral("航点文件错误.");
+                break ;
+            }
+        }
+        if(waynum==2)
+        for(int i=wpline.count();i>0;i--)
+        {
+            SimpleMissionItem* item = new SimpleMissionItem(_activeVehicle, this);
+            if (item->load(wpline.at(i-1),angle,space,addalt,2,cammer,relalt)) {
+                newVisualItems->append(item);
+            } else {
+                errorString = QStringLiteral("航点文件错误.");
+                break ;
+            }
+        }
+    }
+    _addPlannedHomePosition(newVisualItems, true /* addToCenter */);
+    if (!errorString.isEmpty()) {
+        for (int i=0; i<newVisualItems->count(); i++) {
+            newVisualItems->get(i)->deleteLater();
+        }
+        for (int i=0; i<newComplexItems->count(); i++) {
+            newComplexItems->get(i)->deleteLater();
+        }
+        delete newVisualItems;
+        delete newComplexItems;
+
+        qgcApp()->showMessage(errorString);
+        return;
+    }
+
+    if (_visualItems) {
+        _deinitAllVisualItems();
+        _visualItems->deleteListAndContents();
+    }
+    if (_complexItems) {
+        _complexItems->deleteLater();
+    }
+
+    _visualItems = newVisualItems;
+    _complexItems = newComplexItems;
+
+    if (_visualItems->count() == 0) {
+        _addPlannedHomePosition(_visualItems, true /* addToCenter */);
+    }
+
+    _initAllVisualItems();
+}
 void MissionController::loadFromFilePicker(void)
 {
 #ifndef __mobile__

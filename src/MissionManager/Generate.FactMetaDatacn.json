@@ -1,0 +1,30 @@
+﻿[
+{
+    "name":             "angle",
+    "shortDescription": "偏移角度",
+    "longDescription":  "生成间距点偏移的角度。",
+    "type":             "double",
+    "units":            "deg",
+    "min":              0,
+    "max":              360,
+    "decimalPlaces":    1
+},
+{
+    "name":             "spacing",
+    "shortDescription": "偏移距离",
+    "longDescription":  "生成间距点的偏移距离。",
+    "type":             "double",
+    "decimalPlaces":    1,
+    "min":              0,
+    "units":            "m"
+},
+{
+    "name":             "Turnaround dist",
+    "shortDescription": "转弯距离",
+    "longDescription":  "转弯时在网格区域外增加的额外距离量。",
+    "type":             "double",
+    "decimalPlaces":    2,
+    "min":              0,
+    "units":            "m"
+}
+]

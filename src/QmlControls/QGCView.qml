@@ -244,6 +244,7 @@ FactPanel {
             color:              _qgcPal.windowShadeDark
             border.width:      ScreenTools.defaultFontPixelHeight/8
             border.color:      _qgcPal.buttonHighlight
+            radius:            ScreenTools.defaultFontPixelHeight/4
             Rectangle {
                 id:     _header
                 anchors.top:        parent.top

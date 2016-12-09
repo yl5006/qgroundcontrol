@@ -17,7 +17,7 @@
 #include "QGCLoggingCategory.h"
 #include "MavlinkQmlSingleton.h"
 #include "VisualMissionItem.h"
-
+#include "Fact.h"
 #include <QHash>
 
 class CoordinateVector;
@@ -44,8 +44,14 @@ public:
     Q_PROPERTY(double               cruiseDistance      READ cruiseDistance                             NOTIFY cruiseDistanceChanged)
     Q_PROPERTY(double               hoverDistance       READ hoverDistance                              NOTIFY hoverDistanceChanged)
 
+//    Q_PROPERTY(bool                 genAltitudeRelative            MEMBER _gridAltitudeRelative      CONSTANT)
+//    Q_PROPERTY(Fact*                genAltitudeplus                READ genAltitudeplus              CONSTANT)
+    Q_PROPERTY(Fact*                genoffsetAngle                 READ genoffsetAngle               CONSTANT)
+    Q_PROPERTY(Fact*                genoffsetSpacing               READ genoffsetSpacing             CONSTANT)
+
     Q_INVOKABLE void removeMissionItem(int index);
     Q_INVOKABLE QString getFromFilePicker(void);
+    Q_INVOKABLE void loadFromTxtFile(const QString& filename,double angle,double space,double addalt,int waynum,bool cammer,bool relalt);
     /// Add a new simple mission item to the list
     ///     @param i: index to insert at
     /// @return Sequence number for new item
@@ -82,6 +88,9 @@ public:
     double  missionMaxTelemetry     (void) const { return _missionMaxTelemetry; }
     double  cruiseDistance          (void) const { return _cruiseDistance; }
     double  hoverDistance           (void) const { return _hoverDistance; }
+
+    Fact*   genoffsetAngle          (void)  { return &_genoffsetAngleFact; }
+    Fact*   genoffsetSpacing        (void)  { return &_genoffsetSpacingFact; }
 
     void setMissionDistance         (double missionDistance );
     void setMissionMaxTelemetry     (double missionMaxTelemetry);
@@ -148,6 +157,13 @@ private:
     double              _missionMaxTelemetry;
     double              _cruiseDistance;
     double              _hoverDistance;
+
+    Fact                _genoffsetAngleFact;
+    Fact                _genoffsetSpacingFact;
+
+    static QMap<QString, FactMetaData*> _metaDataMap;
+    static const char*  _genoffsetAngleFactName;
+    static const char*  _genoffsetSpacingFactName;
 
     static const char*  _settingsGroup;
     static const char*  _jsonMavAutopilotKey;

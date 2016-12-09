@@ -249,6 +249,11 @@ bool SimpleMissionItem::load(QTextStream &loadStream)
     return _missionItem.load(loadStream);
 }
 
+bool SimpleMissionItem::load(const QString &wayline,double angle,double space,double addalt,int waynum,bool cammer,bool relalt)
+{
+    return _missionItem.load(wayline,angle,space,addalt,waynum,cammer,relalt);
+}
+
 bool SimpleMissionItem::load(const QJsonObject& json, QString& errorString)
 {
     return _missionItem.load(json, errorString);
