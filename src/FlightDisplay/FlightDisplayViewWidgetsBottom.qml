@@ -387,15 +387,6 @@ Item {
             }
         }
     }
-    MapScale {
-        anchors.margins:    ScreenTools.defaultFontPixelHeight
-        anchors.left:       toolColumn.right
-         anchors.verticalCenter:         toolColumn.verticalCenter
-        z:                  QGroundControl.zOrderWidgets
-        mapControl:         _flightMap
-        visible:            !ScreenTools.isTinyScreen
-
-    }
     //-- Guided mode buttons
     Rectangle {
         id:                         _guidedModeBar

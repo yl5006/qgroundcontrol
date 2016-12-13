@@ -37,6 +37,7 @@ FlightMap {
     property var    _gotoHereCoordinate:            QtPositioning.coordinate()
     property int    _retaskSequence:                0
 
+    readonly property real _toolButtonTopMargin:    parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
     Component.onCompleted: {
         QGroundControl.flightMapPosition = center
         QGroundControl.flightMapZoom = zoomLevel
@@ -163,15 +164,16 @@ FlightMap {
             label:   qsTr("G", "Goto here waypoint") // second string is translator's hint.
         }
     }    
-
-//    MapScale {
+    MapScale {
+        anchors.topMargin:  ScreenTools.isShortScreen ? _toolButtonTopMargin+_toolButtonTopMargin : ScreenTools.defaultFontPixelHeight / 2+_toolButtonTopMargin
+        anchors.top:        parent.top
 //        anchors.bottomMargin:   ScreenTools.defaultFontPixelHeight * (0.66)
-//        anchors.rightMargin:    ScreenTools.defaultFontPixelHeight * (0.33)
+        anchors.rightMargin:    ScreenTools.defaultFontPixelHeight*2
 //        anchors.bottom:         parent.bottom
-//        anchors.right:          parent.right
-//        mapControl:             flightMap
-//       visible:                !ScreenTools.isTinyScreen
-//    }
+        anchors.right:          parent.right
+        mapControl:             flightMap
+        visible:                !ScreenTools.isTinyScreen
+    }
 
     // Handle guided mode clicks
     MouseArea {

@@ -491,7 +491,7 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
     QmlObjectListModel* newComplexItems = new QmlObjectListModel(this);
 
     QFile file(filename);
-
+    bool addPlannedHomePosition = false;
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         errorString = file.errorString();
     } else {
@@ -499,6 +499,14 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
         QTextStream stream(&bytes);
         QStringList wpline;
         while (!stream.atEnd()) {
+            static int init=false;
+            if(!init){
+                if(stream.readLine().at(0)=='0')
+                {
+                    addPlannedHomePosition=true;
+                }
+                init=true;
+            }
             wpline.append(stream.readLine());
         }
         for(int i=0;i<wpline.count();i++)
@@ -523,7 +531,10 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
             }
         }
     }
-    _addPlannedHomePosition(newVisualItems, true /* addToCenter */);
+    if(addPlannedHomePosition)
+    {
+        _addPlannedHomePosition(newVisualItems, true /* addToCenter */);
+    }
     if (!errorString.isEmpty()) {
         for (int i=0; i<newVisualItems->count(); i++) {
             newVisualItems->get(i)->deleteLater();
