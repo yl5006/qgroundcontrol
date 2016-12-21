@@ -816,15 +816,11 @@ void ParameterManager::_saveToEEPROM(void)
     if (_saveRequired) {
         _saveRequired = false;
         if (_vehicle->firmwarePlugin()->isCapable(_vehicle, FirmwarePlugin::MavCmdPreflightStorageCapability)) {
-            mavlink_message_t msg;
-            mavlink_msg_command_long_pack_chan(_mavlink->getSystemId(),
-                                               _mavlink->getComponentId(),
-                                               _vehicle->priorityLink()->mavlinkChannel(),
-                                               &msg,
-                                               _vehicle->id(),
-                                               0,
-                                               MAV_CMD_PREFLIGHT_STORAGE, 1, 1, -1, -1, -1, 0, 0, 0);
-            _vehicle->sendMessageOnLink(_vehicle->priorityLink(), msg);
+            _vehicle->sendMavCommand(MAV_COMP_ID_ALL,
+                                     MAV_CMD_PREFLIGHT_STORAGE,
+                                     true,  // showError
+                                     1,     // Write parameters to EEPROM
+                                     -1);   // Don't do anything with mission storage
             qCDebug(ParameterManagerLog) << _logVehiclePrefix() << "_saveToEEPROM";
         } else {
             qCDebug(ParameterManagerLog) << _logVehiclePrefix() << "_saveToEEPROM skipped due to FirmwarePlugin::isCapable";
@@ -1066,7 +1062,7 @@ void ParameterManager::_initialRequestTimeout(void)
     } else {
         if (!_vehicle->genericFirmware()) {
             // Generic vehicles (like BeBop) may not have any parameters, so don't annoy the user
-            QString errorMsg = tr("Vehicle %1 did not respond to request for parameters"
+            QString errorMsg = tr("Vehicle %1 did not respond to request for parameters. "
                                   "This will cause QGroundControl to be unable to display its full user interface.").arg(_vehicle->id());
             qCDebug(ParameterManagerLog) << errorMsg;
             qgcApp()->showMessage(QStringLiteral("机体未响应参数，请重试"));
@@ -1442,22 +1438,11 @@ bool ParameterManager::loadFromJson(const QJsonObject& json, bool required, QStr
 
 void ParameterManager::resetAllParametersToDefaults(void)
 {
-    mavlink_message_t msg;
-    MAVLinkProtocol* mavlink = qgcApp()->toolbox()->mavlinkProtocol();
-
-    mavlink_msg_command_long_pack_chan(mavlink->getSystemId(),
-                                       mavlink->getComponentId(),
-                                       _vehicle->priorityLink()->mavlinkChannel(),
-                                       &msg,
-                                       _vehicle->id(),                   // Target systeem
-                                       _vehicle->defaultComponentId(),   // Target component
-                                       MAV_CMD_PREFLIGHT_STORAGE,
-                                       0,                                // Confirmation
-                                       2,                                // 2 = Reset params to default
-                                       -1,                               // -1 = No change to mission storage
-                                       0,                                // 0 = Ignore
-                                       0, 0, 0, 0);                      // Unused
-    _vehicle->sendMessageOnLink(_vehicle->priorityLink(), msg);
+    _vehicle->sendMavCommand(MAV_COMP_ID_ALL,
+                             MAV_CMD_PREFLIGHT_STORAGE,
+                             true,  // showError
+                             2,     // Reset params to default
+                             -1);   // Don't do anything with mission storage
 }
 
 QString ParameterManager::_logVehiclePrefix(int componentId)
