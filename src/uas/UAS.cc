@@ -64,7 +64,6 @@ UAS::UAS(MAVLinkProtocol* protocol, Vehicle* vehicle, FirmwarePluginManager * fi
     manualYawAngle(0),
     manualThrust(0),
 
-    thrust(0.0),   //yaoling
 #ifndef __mobile__
     fileManager(this, vehicle),
 #endif
