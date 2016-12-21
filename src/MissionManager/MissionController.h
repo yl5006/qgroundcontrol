@@ -38,6 +38,7 @@ public:
     Q_PROPERTY(QmlObjectListModel*  visualItems         READ visualItems                                NOTIFY visualItemsChanged)
     Q_PROPERTY(QmlObjectListModel*  complexVisualItems  READ complexVisualItems                         NOTIFY complexVisualItemsChanged)
     Q_PROPERTY(QmlObjectListModel*  waypointLines       READ waypointLines                              NOTIFY waypointLinesChanged)
+    Q_PROPERTY(QmlObjectListModel*  jumpwaypointLines   READ jumpwaypointLines                          NOTIFY waypointLinesChanged)
 
     Q_PROPERTY(double               missionDistance     READ missionDistance                            NOTIFY missionDistanceChanged)
     Q_PROPERTY(double               missionMaxTelemetry READ missionMaxTelemetry                        NOTIFY missionMaxTelemetryChanged)
@@ -83,6 +84,7 @@ public:
     QmlObjectListModel* visualItems         (void) { return _visualItems; }
     QmlObjectListModel* complexVisualItems  (void) { return _complexItems; }
     QmlObjectListModel* waypointLines       (void) { return &_waypointLines; }
+    QmlObjectListModel* jumpwaypointLines   (void) { return &_jumpwaypointLines; }
 
     double  missionDistance         (void) const { return _missionDistance; }
     double  missionMaxTelemetry     (void) const { return _missionMaxTelemetry; }
@@ -149,6 +151,7 @@ private:
     QmlObjectListModel* _visualItems;
     QmlObjectListModel* _complexItems;
     QmlObjectListModel  _waypointLines;
+    QmlObjectListModel  _jumpwaypointLines;
     CoordVectHashTable  _linesTable;
     bool                _firstItemsFromVehicle;
     bool                _missionItemsRequested;

@@ -413,7 +413,7 @@ bool MissionController::_loadTextMissionFile(QTextStream& stream, QmlObjectListM
         for (int i=1; i<visualItems->count(); i++) {
             SimpleMissionItem* item = qobject_cast<SimpleMissionItem*>(visualItems->get(i));
             if (item && item->command() == MavlinkQmlSingleton::MAV_CMD_DO_JUMP) {
-                item->missionItem().setParam1((int)item->missionItem().param1() + 1);
+                item->missionItem().setParam8((int)item->missionItem().param8() + 1);
             }
         }
     }
@@ -742,12 +742,27 @@ void MissionController::_recalcWaypointLines(void)
     CoordVectHashTable old_table = _linesTable;
     _linesTable.clear();
     _waypointLines.clear();
-
+    _jumpwaypointLines.clear();
+    QObjectList objsjump;
     bool linkBackToHome = false;
     for (int i=1; i<_visualItems->count(); i++) {
         VisualMissionItem* item = qobject_cast<VisualMissionItem*>(_visualItems->get(i));
 
-
+        if(item->isSimpleItem() &&(qobject_cast<SimpleMissionItem*>(item)->command() == MavlinkQmlSingleton::MAV_CMD_DO_JUMP))
+        {
+            int jumpItem=(int)qobject_cast<SimpleMissionItem*>(item)->missionItem().param8();
+            if(jumpItem<_visualItems->count()&&jumpItem>0)
+            {
+            VisualMissionItem* jump = qobject_cast<VisualMissionItem*>(_visualItems->get(jumpItem));
+            auto linejumpvect       = new CoordinateVector(item->isSimpleItem() ? item->coordinate() : item->exitCoordinate(), jump->coordinate(), this);
+            auto originNotifierjump = item->isSimpleItem() ? &VisualMissionItem::coordinateChanged : &VisualMissionItem::exitCoordinateChanged,
+                 endNotifierjump    = &VisualMissionItem::coordinateChanged;
+            // Use signals/slots to update the coordinate endpoints
+            connect(item, originNotifierjump, linejumpvect, &CoordinateVector::setCoordinate1);
+            connect(jump, endNotifierjump,    linejumpvect, &CoordinateVector::setCoordinate2);
+            objsjump.append(linejumpvect);
+            }
+        }
         // If we still haven't found the first coordinate item and we hit a a takeoff command link back to home
         if (firstCoordinateItem &&
                 item->isSimpleItem() &&
@@ -764,7 +779,7 @@ void MissionController::_recalcWaypointLines(void)
                     if (old_table.contains(pair)) {
                         // Do nothing, this segment already exists and is wired up
                         _linesTable[pair] = old_table.take(pair);
-                    } else {
+                    } else {       
                         // Create a new segment and wire update notifiers
                         auto linevect       = new CoordinateVector(lastCoordinateItem->isSimpleItem() ? lastCoordinateItem->coordinate() : lastCoordinateItem->exitCoordinate(), item->coordinate(), this);
                         auto originNotifier = lastCoordinateItem->isSimpleItem() ? &VisualMissionItem::coordinateChanged : &VisualMissionItem::exitCoordinateChanged,
@@ -795,6 +810,7 @@ void MissionController::_recalcWaypointLines(void)
 
         // We don't delete here because many links may still be valid
         _waypointLines.swapObjectList(objs);
+        _jumpwaypointLines.swapObjectList(objsjump);
     }
 
 
@@ -1105,6 +1121,7 @@ void MissionController::_initVisualItem(VisualMissionItem* visualItem)
     connect(visualItem, &VisualMissionItem::specifiesCoordinateChanged,                 this, &MissionController::_recalcWaypointLines);
     connect(visualItem, &VisualMissionItem::coordinateHasRelativeAltitudeChanged,       this, &MissionController::_recalcWaypointLines);
     connect(visualItem, &VisualMissionItem::exitCoordinateHasRelativeAltitudeChanged,   this, &MissionController::_recalcWaypointLines);
+    connect(visualItem, &VisualMissionItem::dirtyChanged,                               this, &MissionController::_recalcWaypointLines);
 
     if (visualItem->isSimpleItem()) {
         // We need to track commandChanged on simple item since recalc has special handling for takeoff command

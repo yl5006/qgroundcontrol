@@ -155,6 +155,9 @@ private:
     FactMetaData    _param5MetaData;
     FactMetaData    _param6MetaData;
     FactMetaData    _param7MetaData;
+    FactMetaData    _param8MetaData;
+    FactMetaData    _param9MetaData;
+    FactMetaData    _param10MetaData;
 
     bool _syncingAltitudeRelativeToHomeAndFrame;    ///< true: already in a sync signal, prevents signal loop
     bool _syncingHeadingDegreesAndParam4;           ///< true: already in a sync signal, prevents signal loop

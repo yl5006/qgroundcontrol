@@ -33,10 +33,14 @@ Item {
             case 206:    //MAV_CMD_DO_SET_CAM_TRIGG_DIST
                return   checked  ? "/qmlimages/WayCamera.svg" : "/qmlimages/WayCamera0.svg"
             case 20:   //MAV_CMD_NAV_RETURN_TO_LAUNCH
+               return   checked  ? "/qmlimages/gohome.svg" : "/qmlimages/gohome0.svg"
             case 80:   //MAV_CMD_NAV_ROI
+                return   checked  ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
             case 84:   //MAV_CMD_NAV_VTOL_TAKEOFF
             case 85:   //MAV_CMD_NAV_VTOL_LAND
+                return   checked  ? "/qmlimages/votlchange.svg" : "/qmlimages/votlchange0.svg"
             case 177:  //MAV_CMD_DO_JUMP
+                return   checked  ? "/qmlimages/jump.svg" : "/qmlimages/jump0.svg"
             case 178:  //MAV_CMD_DO_CHANGE_SPEED
             case 183:  //MAV_CMD_DO_SET_SERVO
                return   checked  ? "/qmlimages/WaySet.svg" : "/qmlimages/WaySet0.svg"

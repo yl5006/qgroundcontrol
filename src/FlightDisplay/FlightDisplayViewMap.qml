@@ -106,6 +106,10 @@ FlightMap {
     MissionLineView {
         model: _mainIsMap ? missionController.waypointLines : 0
     }
+    // Add lines between waypoints
+    MissionLineView {
+        model: _mainIsMap ? missionController.jumpwaypointLines : 0
+    }
 
     // GeoFence polygon
     MapPolygon {

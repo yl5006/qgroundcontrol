@@ -54,7 +54,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
     , _homePositionSpecialCase(false)
     , _showHomePosition(false)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点1")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -63,6 +63,9 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
     , _param5MetaData(FactMetaData::valueTypeDouble)
     , _param6MetaData(FactMetaData::valueTypeDouble)
     , _param7MetaData(FactMetaData::valueTypeDouble)
+    , _param8MetaData(FactMetaData::valueTypeDouble)
+    , _param9MetaData(FactMetaData::valueTypeDouble)
+    , _param10MetaData(FactMetaData::valueTypeDouble)
     , _syncingAltitudeRelativeToHomeAndFrame    (false)
     , _syncingHeadingDegreesAndParam4           (false)
 {
@@ -82,7 +85,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, const MissionItem& missio
     , _homePositionSpecialCase(false)
     , _showHomePosition(false)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点2")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -91,6 +94,9 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, const MissionItem& missio
     , _param5MetaData(FactMetaData::valueTypeDouble)
     , _param6MetaData(FactMetaData::valueTypeDouble)
     , _param7MetaData(FactMetaData::valueTypeDouble)
+    , _param8MetaData(FactMetaData::valueTypeDouble)
+    , _param9MetaData(FactMetaData::valueTypeDouble)
+    , _param10MetaData(FactMetaData::valueTypeDouble)
     , _syncingAltitudeRelativeToHomeAndFrame    (false)
     , _syncingHeadingDegreesAndParam4           (false)
 {
@@ -110,7 +116,7 @@ SimpleMissionItem::SimpleMissionItem(const SimpleMissionItem& other, QObject* pa
     , _homePositionSpecialCase(false)
     , _showHomePosition(false)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点3")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -149,6 +155,9 @@ void SimpleMissionItem::_connectSignals(void)
     connect(&_missionItem._param5Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
     connect(&_missionItem._param6Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
     connect(&_missionItem._param7Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
+    connect(&_missionItem._param8Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
+    connect(&_missionItem._param9Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
+    connect(&_missionItem._param10Fact, &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
     connect(&_missionItem._frameFact,   &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
     connect(&_missionItem._commandFact, &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
     connect(&_missionItem,              &MissionItem::sequenceNumberChanged,    this, &SimpleMissionItem::_setDirtyFromSignal);
@@ -334,6 +343,16 @@ void SimpleMissionItem::_clearParamMetaData(void)
     _param4MetaData.setRawUnits("");
     _param4MetaData.setDecimalPlaces(FactMetaData::unknownDecimalPlaces);
     _param4MetaData.setBuiltInTranslator();
+
+    _param8MetaData.setRawUnits("");
+    _param8MetaData.setDecimalPlaces(FactMetaData::unknownDecimalPlaces);
+    _param8MetaData.setBuiltInTranslator();
+    _param9MetaData.setRawUnits("");
+    _param9MetaData.setDecimalPlaces(FactMetaData::unknownDecimalPlaces);
+    _param9MetaData.setBuiltInTranslator();
+    _param10MetaData.setRawUnits("");
+    _param10MetaData.setDecimalPlaces(FactMetaData::unknownDecimalPlaces);
+    _param10MetaData.setBuiltInTranslator();
 }
 
 QmlObjectListModel* SimpleMissionItem::textFieldFacts(void)
@@ -362,6 +381,15 @@ QmlObjectListModel* SimpleMissionItem::textFieldFacts(void)
         _missionItem._param7Fact._setName("Alt/Z:");
         _missionItem._param7Fact.setMetaData(_defaultParamMetaData);
         model->append(&_missionItem._param7Fact);
+        _missionItem._param8Fact._setName("Param5:");
+        _missionItem._param8Fact.setMetaData(_defaultParamMetaData);
+        model->append(&_missionItem._param8Fact);
+        _missionItem._param9Fact._setName("Param6:");
+        _missionItem._param9Fact.setMetaData(_defaultParamMetaData);
+        model->append(&_missionItem._param9Fact);
+        _missionItem._param10Fact._setName("Param7:");
+        _missionItem._param10Fact.setMetaData(_defaultParamMetaData);
+        model->append(&_missionItem._param10Fact);
     } else {
         _clearParamMetaData();
 
@@ -383,11 +411,11 @@ QmlObjectListModel* SimpleMissionItem::textFieldFacts(void)
         model->append(&_missionItem._param7Fact);
 
 
-        Fact*           rgParamFacts[7] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact };
-        FactMetaData*   rgParamMetaData[7] =    { &_param1MetaData, &_param2MetaData, &_param3MetaData, &_param4MetaData, &_param5MetaData, &_param6MetaData, &_param7MetaData };
+        Fact*           rgParamFacts[10] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact,&_missionItem._param8Fact, &_missionItem._param9Fact, &_missionItem._param10Fact };
+        FactMetaData*   rgParamMetaData[10] =    { &_param1MetaData, &_param2MetaData, &_param3MetaData, &_param4MetaData, &_param5MetaData, &_param6MetaData, &_param7MetaData,&_param8MetaData, &_param9MetaData, &_param10MetaData };
 
         bool altitudeAdded = false;
-        for (int i=1; i<=7; i++) {
+        for (int i=1; i<=10; i++) {  //10 params
             const MissionCmdParamInfo* paramInfo = _commandTree->getUIInfo(_vehicle, command)->getParamInfo(i);
 
             if (paramInfo && paramInfo->enumStrings().count() == 0) {
@@ -439,8 +467,8 @@ QmlObjectListModel* SimpleMissionItem::comboboxFacts(void)
         model->append(&_missionItem._commandFact);
         model->append(&_missionItem._frameFact);
     } else {
-        Fact*           rgParamFacts[7] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact };
-        FactMetaData*   rgParamMetaData[7] =    { &_param1MetaData, &_param2MetaData, &_param3MetaData, &_param4MetaData, &_param5MetaData, &_param6MetaData, &_param7MetaData };
+        Fact*           rgParamFacts[10] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact, &_missionItem._param8Fact, &_missionItem._param8Fact, &_missionItem._param10Fact };
+        FactMetaData*   rgParamMetaData[10] =    { &_param1MetaData, &_param2MetaData, &_param3MetaData, &_param4MetaData, &_param5MetaData, &_param6MetaData, &_param7MetaData, &_param8MetaData, &_param9MetaData, &_param10MetaData };
 
         MAV_CMD command;
         if (_homePositionSpecialCase) {
@@ -449,7 +477,7 @@ QmlObjectListModel* SimpleMissionItem::comboboxFacts(void)
             command = (MAV_CMD)this->command();
         }
 
-        for (int i=1; i<=7; i++) {
+        for (int i=1; i<=10; i++) {  //10 params
             const MissionCmdParamInfo* paramInfo = _commandTree->getUIInfo(_vehicle, command)->getParamInfo(i);
 
             if (paramInfo && paramInfo->enumStrings().count() != 0) {
@@ -548,10 +576,10 @@ void SimpleMissionItem::setDefaultsForCommand(void)
     MAV_CMD command = (MAV_CMD)this->command();
     const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
     if (uiInfo) {
-        for (int i=1; i<=7; i++) {
+        for (int i=1; i<=10; i++) {  //10 params
             const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i);
             if (paramInfo) {
-                Fact* rgParamFacts[7] = { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact };
+                Fact* rgParamFacts[10] = { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact, &_missionItem._param8Fact, &_missionItem._param9Fact, &_missionItem._param10Fact };
                 rgParamFacts[paramInfo->param()-1]->setRawValue(paramInfo->defaultValue());
             }
         }

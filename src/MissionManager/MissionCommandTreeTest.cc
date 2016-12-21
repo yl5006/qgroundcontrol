@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -69,7 +69,7 @@ void MissionCommandTreeTest::_checkBaseValues(const MissionCommandUIInfo* uiInfo
     QCOMPARE(uiInfo->friendlyName(), _friendlyName(command));
     QCOMPARE(uiInfo->isStandaloneCoordinate(), true);
     QCOMPARE(uiInfo->specifiesCoordinate(), true);
-    for (int i=1; i<=7; i++) {
+    for (int i=1; i<=10; i++) {  //10 params
         const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i);
         QVERIFY(paramInfo);
         QCOMPARE(paramInfo->decimalPlaces(), 1);
@@ -147,7 +147,7 @@ void MissionCommandTreeTest::testJsonLoad(void)
     QCOMPARE(uiInfo->friendlyName(), uiInfo->rawName());
     QCOMPARE(uiInfo->isStandaloneCoordinate(), false);
     QCOMPARE(uiInfo->specifiesCoordinate(), false);
-    for (int i=1; i<=7; i++) {
+    for (int i=1; i<=10; i++) {  //10 params
         QVERIFY(uiInfo->getParamInfo(i) == NULL);
     }
 
@@ -163,7 +163,7 @@ void MissionCommandTreeTest::testJsonLoad(void)
     QCOMPARE(paramInfo->label(), _paramLabel(1));
     QCOMPARE(paramInfo->param(), 1);
     QVERIFY(paramInfo->units().isEmpty());
-    for (int i=2; i<=7; i++) {
+    for (int i=2; i<=10; i++) {  //10 params
         QVERIFY(uiInfo->getParamInfo(i) == NULL);
     }
 

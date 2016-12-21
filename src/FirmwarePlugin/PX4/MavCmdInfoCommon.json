@@ -10,6 +10,11 @@
             "paramRemove":  "2,3"
         },
         {
+            "id":           178,
+            "comment":      "MAV_CMD_DO_CHANGE_SPEED",
+            "paramRemove":  "8"
+        },
+        {
             "id":           95,
             "comment":      "MAV_CMD_NAV_LAST",
             "paramRemove":  "5,6"

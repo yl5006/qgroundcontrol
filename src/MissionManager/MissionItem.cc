@@ -25,6 +25,9 @@ const char*  MissionItem::_jsonParam1Key =          "param1";
 const char*  MissionItem::_jsonParam2Key =          "param2";
 const char*  MissionItem::_jsonParam3Key =          "param3";
 const char*  MissionItem::_jsonParam4Key =          "param4";
+const char*  MissionItem::_jsonParam5Key =          "param5";
+const char*  MissionItem::_jsonParam6Key =          "param6";
+const char*  MissionItem::_jsonParam7Key =          "param7";
 const char*  MissionItem::_jsonAutoContinueKey =    "autoContinue";
 const char*  MissionItem::_jsonCoordinateKey =      "coordinate";
 
@@ -42,6 +45,9 @@ MissionItem::MissionItem(QObject* parent)
     , _param5Fact                   (0, "Latitude:",                    FactMetaData::valueTypeDouble)
     , _param6Fact                   (0, "Longitude:",                   FactMetaData::valueTypeDouble)
     , _param7Fact                   (0, "Altitude:",                    FactMetaData::valueTypeDouble)
+    , _param8Fact                   (0, "Param5:",                      FactMetaData::valueTypeDouble)
+    , _param9Fact                   (0, "Param6:",                      FactMetaData::valueTypeDouble)
+    , _param10Fact                  (0, "Param7:",                      FactMetaData::valueTypeDouble)
 {
     // Need a good command and frame before we start passing signals around
     _commandFact.setRawValue(MAV_CMD_NAV_WAYPOINT);
@@ -60,6 +66,9 @@ MissionItem::MissionItem(int             sequenceNumber,
                          double          param5,
                          double          param6,
                          double          param7,
+                         double          param8,
+                         double          param9,
+                         double          param10,
                          bool            autoContinue,
                          bool            isCurrentItem,
                          QObject*        parent)
@@ -75,6 +84,9 @@ MissionItem::MissionItem(int             sequenceNumber,
     , _param5Fact                   (0, "Lat/X:",                       FactMetaData::valueTypeDouble)
     , _param6Fact                   (0, "Lon/Y:",                       FactMetaData::valueTypeDouble)
     , _param7Fact                   (0, "Alt/Z:",                       FactMetaData::valueTypeDouble)
+    , _param8Fact                   (0, "Param5:",                      FactMetaData::valueTypeDouble)
+    , _param9Fact                   (0, "Param6:",                      FactMetaData::valueTypeDouble)
+    , _param10Fact                  (0, "Param7:",                      FactMetaData::valueTypeDouble)
 {
     // Need a good command and frame before we start passing signals around
     _commandFact.setRawValue(MAV_CMD_NAV_WAYPOINT);
@@ -91,6 +103,9 @@ MissionItem::MissionItem(int             sequenceNumber,
     _param5Fact.setRawValue(param5);
     _param6Fact.setRawValue(param6);
     _param7Fact.setRawValue(param7);
+    _param8Fact.setRawValue(param8);
+    _param9Fact.setRawValue(param9);
+    _param10Fact.setRawValue(param10);
 }
 
 MissionItem::MissionItem(const MissionItem& other, QObject* parent)
@@ -106,6 +121,9 @@ MissionItem::MissionItem(const MissionItem& other, QObject* parent)
     , _param5Fact                   (0, "Lat/X:",                       FactMetaData::valueTypeDouble)
     , _param6Fact                   (0, "Lon/Y:",                       FactMetaData::valueTypeDouble)
     , _param7Fact                   (0, "Alt/Z:",                       FactMetaData::valueTypeDouble)
+    , _param8Fact                   (0, "Param5:",                      FactMetaData::valueTypeDouble)
+    , _param9Fact                   (0, "Param6:",                      FactMetaData::valueTypeDouble)
+    , _param10Fact                  (0, "Param7:",                      FactMetaData::valueTypeDouble)
 {
     // Need a good command and frame before we start passing signals around
     _commandFact.setRawValue(MAV_CMD_NAV_WAYPOINT);
@@ -129,7 +147,9 @@ const MissionItem& MissionItem::operator=(const MissionItem& other)
     _param5Fact.setRawValue(other._param5Fact.rawValue());
     _param6Fact.setRawValue(other._param6Fact.rawValue());
     _param7Fact.setRawValue(other._param7Fact.rawValue());
-
+    _param8Fact.setRawValue(other._param8Fact.rawValue());
+    _param9Fact.setRawValue(other._param9Fact.rawValue());
+    _param10Fact.setRawValue(other._param10Fact.rawValue());
     return *this;
 }
 MissionItem::~MissionItem()
@@ -146,6 +166,9 @@ void MissionItem::save(QJsonObject& json) const
     json[_jsonParam2Key] = param2();
     json[_jsonParam3Key] = param3();
     json[_jsonParam4Key] = param4();
+    json[_jsonParam5Key] = param8();
+    json[_jsonParam6Key] = param9();
+    json[_jsonParam7Key] = param10();
     json[_jsonAutoContinueKey] = autoContinue();
 
     QJsonArray coordinateArray;
@@ -257,6 +280,9 @@ bool MissionItem::load(const QJsonObject& json, QString& errorString)
     setParam2(json[_jsonParam2Key].toDouble());
     setParam3(json[_jsonParam3Key].toDouble());
     setParam4(json[_jsonParam4Key].toDouble());
+    setParam8(json[_jsonParam5Key].toDouble());
+    setParam9(json[_jsonParam6Key].toDouble());
+    setParam10(json[_jsonParam7Key].toDouble());
     setAutoContinue(json[_jsonAutoContinueKey].toBool());
 
     return true;
@@ -346,6 +372,27 @@ void MissionItem::setParam7(double param)
 {
     if (param7() != param) {
         _param7Fact.setRawValue(param);
+    }
+}
+
+void MissionItem::setParam8(double param)
+{
+    if (param8() != param) {
+        _param8Fact.setRawValue(param);
+    }
+}
+
+void MissionItem::setParam9(double param)
+{
+    if (param9() != param) {
+        _param9Fact.setRawValue(param);
+    }
+}
+
+void MissionItem::setParam10(double param)
+{
+    if (param10() != param) {
+        _param10Fact.setRawValue(param);
     }
 }
 

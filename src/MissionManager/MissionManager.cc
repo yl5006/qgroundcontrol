@@ -69,7 +69,7 @@ void MissionManager::writeMissionItems(const QList<MissionItem*>& missionItems)
             // Home is in sequence 0, remainder of items start at sequence 1
             item->setSequenceNumber(item->sequenceNumber() - 1);
             if (item->command() == MAV_CMD_DO_JUMP) {
-                item->setParam1((int)item->param1() - 1);
+                item->setParam8((int)item->param8() - 1);
             }
         }
     }
@@ -134,6 +134,9 @@ void MissionManager::writeArduPilotGuidedMissionItem(const QGeoCoordinate& gotoC
     missionItem.x =                 gotoCoord.latitude();
     missionItem.y =                 gotoCoord.longitude();
     missionItem.z =                 gotoCoord.altitude();
+    missionItem.param8 =            0;
+    missionItem.param9 =            0;
+    missionItem.param10 =           0;
     missionItem.frame =             MAV_FRAME_GLOBAL_RELATIVE_ALT;
     missionItem.current =           altChangeOnly ? 3 : 2;
     missionItem.autocontinue =      true;
@@ -384,13 +387,16 @@ void MissionManager::_handleMissionItem(const mavlink_message_t& message)
                                             missionItem.x,
                                             missionItem.y,
                                             missionItem.z,
+                                            missionItem.param8,
+                                            missionItem.param9,
+                                            missionItem.param10,
                                             missionItem.autocontinue,
                                             missionItem.current,
                                             this);
-
+        qDebug()<<(MAV_CMD)missionItem.command<<" "<<missionItem.param8;
         if (item->command() == MAV_CMD_DO_JUMP && !_vehicle->firmwarePlugin()->sendHomePositionToVehicle()) {
             // Home is in position 0
-            item->setParam1((int)item->param1() + 1);
+            item->setParam8((int)item->param8() + 1);
         }
 
         _missionItems.append(item);
@@ -455,10 +461,13 @@ void MissionManager::_handleMissionRequest(const mavlink_message_t& message)
     missionItem.x =                 item->param5();
     missionItem.y =                 item->param6();
     missionItem.z =                 item->param7();
+    missionItem.param8 =            item->param8();
+    missionItem.param9 =            item->param9();
+    missionItem.param10 =           item->param10();
     missionItem.frame =             item->frame();
     missionItem.current =           missionRequest.seq == 0;
     missionItem.autocontinue =      item->autoContinue();
-    
+    qDebug()<<item->command()<<" red "<<item->param8();
     mavlink_msg_mission_item_encode_chan(qgcApp()->toolbox()->mavlinkProtocol()->getSystemId(),
                                          qgcApp()->toolbox()->mavlinkProtocol()->getComponentId(),
                                          _dedicatedLink->mavlinkChannel(),

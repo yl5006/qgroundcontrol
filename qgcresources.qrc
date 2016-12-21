@@ -224,6 +224,12 @@
         <file alias="WayCamera0.svg">src/FlightMap/Images/WayCamera0.svg</file>
 	<file alias="WaySet.svg">src/FlightMap/Images/WaySet.svg</file>
         <file alias="WaySet0.svg">src/FlightMap/Images/WaySet0.svg</file>
+	<file alias="gohome.svg">src/FlightMap/Images/gohome.svg</file>
+        <file alias="gohome0.svg">src/FlightMap/Images/gohome0.svg</file>
+	<file alias="votlchange.svg">src/FlightMap/Images/votlchange.svg</file>
+        <file alias="votlchange0.svg">src/FlightMap/Images/votlchange0.svg</file>
+	<file alias="jump.svg">src/FlightMap/Images/jump.svg</file>
+        <file alias="jump0.svg">src/FlightMap/Images/jump0.svg</file>
 	<file alias="distance.svg">src/FlightMap/Images/distance.svg</file>
 	<file alias="deletepoint.svg">src/FlightMap/Images/deletepoint.svg</file>
 	<file alias="insertpoint.svg">src/FlightMap/Images/insertpoint.svg</file>

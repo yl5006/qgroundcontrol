@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -173,6 +173,9 @@ private:
     static const char* _param5JsonKey;
     static const char* _param6JsonKey;
     static const char* _param7JsonKey;
+    static const char* _param8JsonKey;
+    static const char* _param9JsonKey;
+    static const char* _param10JsonKey;
     static const char* _paramJsonKeyFormat;
     static const char* _paramRemoveJsonKey;
     static const char* _rawNameJsonKey;

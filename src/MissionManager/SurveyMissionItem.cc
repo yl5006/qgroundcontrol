@@ -771,6 +771,7 @@ QmlObjectListModel* SurveyMissionItem::getMissionItems(void) const
                                                 coord.latitude(),
                                                 coord.longitude(),
                                                 altitude,
+                                                0.0, 0.0, 0.0,             // param 8-10
                                                 true,                           // autoContinue
                                                 false,                          // isCurrentItem
                                                 pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
@@ -785,6 +786,7 @@ QmlObjectListModel* SurveyMissionItem::getMissionItems(void) const
                                                 coord.latitude(),
                                                 coord.longitude(),
                                                 altitude,
+                                                0.0, 0.0, 0.0,             // param 8-10
                                                 true,                           // autoContinue
                                                 false,                          // isCurrentItem
                                                 pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing
@@ -798,6 +800,7 @@ QmlObjectListModel* SurveyMissionItem::getMissionItems(void) const
                                                 coord.latitude(),
                                                 coord.longitude(),
                                                 altitude,
+                                                0.0, 0.0, 0.0,                  // param 8-10
                                                 true,                           // autoContinue
                                                 false,                          // isCurrentItem
                                                 pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing

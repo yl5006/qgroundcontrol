@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -30,6 +30,9 @@ const char* MissionCommandUIInfo::_param4JsonKey                = "param4";
 const char* MissionCommandUIInfo::_param5JsonKey                = "param5";
 const char* MissionCommandUIInfo::_param6JsonKey                = "param6";
 const char* MissionCommandUIInfo::_param7JsonKey                = "param7";
+const char* MissionCommandUIInfo::_param8JsonKey                = "param8";
+const char* MissionCommandUIInfo::_param9JsonKey                = "param9";
+const char* MissionCommandUIInfo::_param10JsonKey               = "param10";
 const char* MissionCommandUIInfo::_paramJsonKeyFormat           = "param%1";
 const char* MissionCommandUIInfo::_paramRemoveJsonKey           = "paramRemove";
 const char* MissionCommandUIInfo::_rawNameJsonKey               = "rawName";
@@ -186,7 +189,7 @@ bool MissionCommandUIInfo::loadJsonInfo(const QJsonObject& jsonObject, bool requ
 
     QStringList allKeys;
     allKeys << _idJsonKey << _rawNameJsonKey << _friendlyNameJsonKey << _descriptionJsonKey << _standaloneCoordinateJsonKey << _specifiesCoordinateJsonKey
-            <<_friendlyEditJsonKey << _param1JsonKey << _param2JsonKey << _param3JsonKey << _param4JsonKey << _param5JsonKey << _param6JsonKey << _param7JsonKey
+            <<_friendlyEditJsonKey << _param1JsonKey << _param2JsonKey << _param3JsonKey << _param4JsonKey << _param5JsonKey << _param6JsonKey << _param7JsonKey<< _param8JsonKey << _param9JsonKey << _param10JsonKey
             << _paramRemoveJsonKey << _categoryJsonKey;
 
     // Look for unknown keys in top level object
@@ -218,7 +221,7 @@ bool MissionCommandUIInfo::loadJsonInfo(const QJsonObject& jsonObject, bool requ
 
     QList<QJsonValue::Type> types;
     types << QJsonValue::Double << QJsonValue::String << QJsonValue::String<< QJsonValue::String << QJsonValue::Bool << QJsonValue::Bool << QJsonValue::Bool
-          << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object
+          << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object << QJsonValue::Object<< QJsonValue::Object << QJsonValue::Object << QJsonValue::Object
           << QJsonValue::String << QJsonValue::String;
     if (!JsonHelper::validateKeyTypes(jsonObject, allKeys, types, internalError)) {
         errorString = _loadErrorString(internalError);
@@ -300,7 +303,7 @@ bool MissionCommandUIInfo::loadJsonInfo(const QJsonObject& jsonObject, bool requ
 
     // Read params
 
-    for (int i=1; i<=7; i++) {
+    for (int i=1; i<=10; i++) {//10 param
         QString paramKey = QString(_paramJsonKeyFormat).arg(i);
 
         if (jsonObject.contains(paramKey)) {

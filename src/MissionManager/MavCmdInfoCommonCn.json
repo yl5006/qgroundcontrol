@@ -134,7 +134,19 @@
             "description":  "飞机回起飞点.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":     "基本设置"
+            "category":     "基本设置",
+            "param1": {
+                "label":            "停留:",
+                "units":            "secs",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param4": {
+                "label":            "机头:",
+                "units":            "radians",
+                "default":          0.0,
+                "decimalPlaces":    2
+            }
         },
         {
             "id":                   21,
@@ -479,16 +491,29 @@
         {
             "id":           177,
             "rawName":      "MAV_CMD_DO_JUMP",
-            "friendlyName": "跳转到指定的项目",
+            "friendlyName": "跳转",
             "description":  "任务会在指定项目继续.",
+            "specifiesCoordinate":  true,
             "friendlyEdit": true,
             "category":     "飞行控制",
             "param1": {
+                "label":            "停留:",
+                "units":            "secs",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param4": {
+                "label":            "机头:",
+                "units":            "radians",
+                "default":          0.0,
+                "decimalPlaces":    2
+            },
+            "param8": {
                 "label":            "项 #:",
                 "default":          1,
                 "decimalPlaces":    0
             },
-            "param2": {
+            "param9": {
                 "label":            "重复:",
                 "default":          10,
                 "decimalPlaces":    0
@@ -499,28 +524,36 @@
             "rawName":      "MAV_CMD_DO_CHANGE_SPEED",
             "friendlyName": "改变速度",
             "description":  "改变速度 /油门 设置航点.",
+            "specifiesCoordinate":  true,
+            "friendlyEdit": true,
             "category":     "飞行控制",
             "param1": {
+                "label":            "停留:",
+                "units":            "secs",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param4": {
+                "label":            "机头:",
+                "units":            "radians",
+                "default":          0.0,
+                "decimalPlaces":    2
+            },
+            "param8": {
                 "label":            "类型:",
                 "enumStrings":      "空速,地速",
                 "enumValues":       "0,1",
                 "default":          1
             },
-            "param2": {
+            "param9": {
                 "label":            "速度:",
                 "units":            "m/s",
                 "default":          -1
             },
-            "param3": {
+            "param10": {
                 "label":            "油门:",
                 "units":            "%",
                 "default":          -1
-            },
-            "param4": {
-                "label":            "偏移:",
-                "enumStrings":      "相对,绝对",
-                "enumValues":       "1,0",
-                "default":          1
             }
         },
         {
@@ -587,11 +620,23 @@
             "friendlyEdit": true,
             "category":     "飞行控制",
             "param1": {
+                "label":            "停留:",
+                "units":            "secs",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param4": {
+                "label":            "机头:",
+                "units":            "radians",
+                "default":          0.0,
+                "decimalPlaces":    2
+            },
+            "param8": {
                 "label":            "伺服:",
                 "default":          1,
                 "decimalPlaces":    0
             },
-            "param2": {
+            "param9": {
                 "label":            "PWM:",
                 "default":          1500,
                 "decimalPlaces":    0
@@ -832,12 +877,24 @@
         {
             "id":           206,
             "rawName":      "MAV_CMD_DO_SET_CAM_TRIGG_DIST",
-            "friendlyName": "相机触发距离",
+            "friendlyName": "定距拍照",
             "description":  "设置相机触发距离",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":     "相机",
             "param1": {
+                "label":            "停留:",
+                "units":            "secs",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param4": {
+                "label":            "机头:",
+                "units":            "radians",
+                "default":          0.0,
+                "decimalPlaces":    2
+            },
+            "param8": {
                 "label":            "距离:",
                 "default":          25,
                 "units":            "m",

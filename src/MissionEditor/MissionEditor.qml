@@ -655,6 +655,11 @@ QGCView {
                     model:      _editingLayer == _layerMission ? missionController.waypointLines : undefined
                 }
 
+                // Add lines between waypoints
+                MissionLineView {
+                    model:      _editingLayer == _layerMission ? missionController.jumpwaypointLines : undefined
+                }
+
                 // Add the vehicles to the map
                 MapItemView {
                     model: QGroundControl.multiVehicleManager.vehicles

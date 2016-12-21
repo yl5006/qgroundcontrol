@@ -51,6 +51,9 @@ public:
                 double          param5,
                 double          param6,
                 double          param7,
+                double          param8,
+                double          param9,
+                double          param10,
                 bool            autoContinue,
                 bool            isCurrentItem,
                 QObject*        parent = NULL);
@@ -73,6 +76,9 @@ public:
     double          param5          (void) const { return _param5Fact.rawValue().toDouble(); }
     double          param6          (void) const { return _param6Fact.rawValue().toDouble(); }
     double          param7          (void) const { return _param7Fact.rawValue().toDouble(); }
+    double          param8          (void) const { return _param8Fact.rawValue().toDouble(); }
+    double          param9          (void) const { return _param9Fact.rawValue().toDouble(); }
+    double          param10          (void) const { return _param10Fact.rawValue().toDouble(); }
     QGeoCoordinate  coordinate      (void) const;
 
     void setCommand         (MAV_CMD command);
@@ -87,6 +93,9 @@ public:
     void setParam5          (double param5);
     void setParam6          (double param6);
     void setParam7          (double param7);
+    void setParam8          (double param8);
+    void setParam9          (double param9);
+    void setParam10          (double param10);
     void setCoordinate      (const QGeoCoordinate& coordinate);
     
     void save(QJsonObject& json) const;
@@ -114,6 +123,9 @@ private:
     Fact    _param5Fact;
     Fact    _param6Fact;
     Fact    _param7Fact;
+    Fact    _param8Fact;
+    Fact    _param9Fact;
+    Fact    _param10Fact;
     
     // Keys for Json save
     static const char*  _itemType;
@@ -125,6 +137,9 @@ private:
     static const char*  _jsonParam2Key;
     static const char*  _jsonParam3Key;
     static const char*  _jsonParam4Key;
+    static const char*  _jsonParam5Key;
+    static const char*  _jsonParam6Key;
+    static const char*  _jsonParam7Key;
     static const char*  _jsonAutoContinueKey;
     static const char*  _jsonCoordinateKey;
 
