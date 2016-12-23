@@ -1988,7 +1988,7 @@ void Vehicle::setSoloFirmware(bool soloFirmware)
     // Temporarily removed, waiting for new command implementation
 void Vehicle::motorTest(int motor, int percent, int timeoutSecs)
 {
-    doCommandLongUnverified(defaultComponentId(), MAV_CMD_DO_MOTOR_TEST, motor, MOTOR_TEST_THROTTLE_PERCENT, percent, timeoutSecs);
+    sendMavCommand(defaultComponentId(), MAV_CMD_DO_MOTOR_TEST, motor, MOTOR_TEST_THROTTLE_PERCENT, percent, timeoutSecs);
 }
 //#endif
 
@@ -1996,7 +1996,7 @@ void Vehicle::motorTest(int motor, int percent, int timeoutSecs)
 // RE    POSITION 应急航点
 void Vehicle::reposition(double lat, double lon,float alt,float yaw)
 {
-    doCommandLong(defaultComponentId(), MAV_CMD_DO_REPOSITION, 0.0, 0.0, 0.0, yaw,alt,lat,lon);
+    sendMavCommand(defaultComponentId(), MAV_CMD_DO_REPOSITION, 0.0, 0.0, 0.0, yaw,alt,lat,lon);
     qDebug()<<"REPOSITION:alt"<<alt<<"lan"<<lat<<"lon"<<lon;
 }
 

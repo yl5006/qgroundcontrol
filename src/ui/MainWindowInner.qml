@@ -36,6 +36,10 @@ Item {
 
     MainToolBarController { id: _controller }
     property real   availableWidth:     width   //add yaoling
+    property real   tbHeight:           ScreenTools.isMobile ? (ScreenTools.isTinyScreen ? (mainWindow.width * 0.0666) : (mainWindow.width * 0.05)) : ScreenTools.defaultFontPixelHeight * 3
+    property int    tbCellHeight:       tbHeight * 0.75
+    property real   tbSpacing:          ScreenTools.isMobile ? width * 0.00824 : 9.54
+    property real   tbButtonWidth:      tbCellHeight * 1.35
     property var    gcsPosition:        QtPositioning.coordinate()  // Starts as invalid coordinate
     property var    currentPopUp:       null
     property real   currentCenterX:     0
