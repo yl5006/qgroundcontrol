@@ -133,7 +133,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _climbRateFact        (0, _climbRateFactName,         FactMetaData::valueTypeDouble)
     , _altitudeRelativeFact (0, _altitudeRelativeFactName,  FactMetaData::valueTypeDouble)
     , _altitudeAMSLFact     (0, _altitudeAMSLFactName,      FactMetaData::valueTypeDouble)
-    , _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeDouble)   //add  yaoling
+    , _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeUint16)   //add  yaoling
     , _gpsFactGroup(this)
     , _batteryFactGroup(this)
     , _windFactGroup(this)
@@ -519,6 +519,7 @@ void Vehicle::_handleVfrHud(mavlink_message_t& message)
     _airSpeedFact.setRawValue(qIsNaN(vfrHud.airspeed) ? 0 : vfrHud.airspeed);
     _groundSpeedFact.setRawValue(qIsNaN(vfrHud.groundspeed) ? 0 : vfrHud.groundspeed);
     _climbRateFact.setRawValue(qIsNaN(vfrHud.climb) ? 0 : vfrHud.climb);
+    _throttleFact.setRawValue(vfrHud.throttle);
 }
 
 void Vehicle::_handleGpsRawInt(mavlink_message_t& message)
@@ -568,10 +569,10 @@ void Vehicle::_handleAltitude(mavlink_message_t& message)
     mavlink_altitude_t altitude;
     mavlink_msg_altitude_decode(&message, &altitude);
 
-    _useAltitudeForAltitude = true;
-    _useGpsRawIntForAltitude = false;
-    _altitudeRelativeFact.setRawValue(altitude.altitude_relative / 1000.0);
-    _altitudeAMSLFact.setRawValue(altitude.altitude_amsl / 1000.0);
+//    _useAltitudeForAltitude = true;
+//    _useGpsRawIntForAltitude = false;
+    _altitudeRelativeFact.setRawValue(altitude.altitude_relative );
+    _altitudeAMSLFact.setRawValue(altitude.altitude_amsl );
 
 }
 
