@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>installlogo.bmp</file>
+    </qresource>
+</RCC>
