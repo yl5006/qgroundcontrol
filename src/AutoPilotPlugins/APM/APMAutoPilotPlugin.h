@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -63,10 +63,10 @@ private:
     APMLightsComponent*         _lightsComponent;
     APMFlightModesComponent*    _flightModesComponent;
     APMPowerComponent*          _powerComponent;
-#if 0
+//#if 0    显示 motor 测试 by  yaoling
     // Temporarily removed, waiting for new command implementation
     MotorComponent*             _motorComponent;
-#endif
+//#endif
     APMRadioComponent*          _radioComponent;
     APMSafetyComponent*         _safetyComponent;
     APMSensorsComponent*        _sensorsComponent;

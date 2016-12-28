@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -61,9 +61,10 @@ const QVariantList& APMAutoPilotPlugin::vehicleComponents(void)
 {
     if (_components.count() == 0 && !_incorrectParameterVersion) {
         if (_vehicle->parameterManager()->parametersReady()) {
-            _airframeComponent = new APMAirframeComponent(_vehicle, this);
-            _airframeComponent->setupTriggerSignals();
-            _components.append(QVariant::fromValue((VehicleComponent*)_airframeComponent));
+//             不显示 Airframe  by yaoling
+//            _airframeComponent = new APMAirframeComponent(_vehicle, this);
+//            _airframeComponent->setupTriggerSignals();
+//            _components.append(QVariant::fromValue((VehicleComponent*)_airframeComponent));
 
             if ( _vehicle->supportsRadio() ) {
                 _radioComponent = new APMRadioComponent(_vehicle, this);
@@ -83,7 +84,7 @@ const QVariantList& APMAutoPilotPlugin::vehicleComponents(void)
             _powerComponent->setupTriggerSignals();
             _components.append(QVariant::fromValue((VehicleComponent*)_powerComponent));
 
-#if 0
+//#if 0     显示motor 测试    by  yaoling
     // Temporarily removed, waiting for new command implementation
 
             if (_vehicle->multiRotor() || _vehicle->vtol()) {
@@ -91,7 +92,7 @@ const QVariantList& APMAutoPilotPlugin::vehicleComponents(void)
                 _motorComponent->setupTriggerSignals();
                 _components.append(QVariant::fromValue((VehicleComponent*)_motorComponent));
             }
-#endif
+//#endif
 
             _safetyComponent = new APMSafetyComponent(_vehicle, this);
             _safetyComponent->setupTriggerSignals();
