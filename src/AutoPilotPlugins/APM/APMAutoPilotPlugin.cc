@@ -62,8 +62,8 @@ const QVariantList& APMAutoPilotPlugin::vehicleComponents(void)
     if (_components.count() == 0 && !_incorrectParameterVersion) {
         if (_vehicle->parameterManager()->parametersReady()) {
 //             不显示 Airframe  by yaoling
-//            _airframeComponent = new APMAirframeComponent(_vehicle, this);
-//            _airframeComponent->setupTriggerSignals();
+              _airframeComponent = new APMAirframeComponent(_vehicle, this);
+              _airframeComponent->setupTriggerSignals();
 //            _components.append(QVariant::fromValue((VehicleComponent*)_airframeComponent));
 
             if ( _vehicle->supportsRadio() ) {
