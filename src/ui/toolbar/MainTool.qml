@@ -284,7 +284,7 @@ Rectangle {
         property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
 
         Loader {            
-            source:                   (QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable&&activeVehicle && !parent.vehicleConnectionLost) ? "MainToolBarIndicatorsRight.qml" : ""
+            source:                   (QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable&&activeVehicle ) ? "MainToolBarIndicatorsRight.qml" : ""
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter:   parent.verticalCenter
         }

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -35,6 +35,7 @@ MainToolBarController::MainToolBarController(QObject* parent)
 {
     _activeVehicleChanged(qgcApp()->toolbox()->multiVehicleManager()->activeVehicle());
     connect(qgcApp()->toolbox()->mavlinkProtocol(),     &MAVLinkProtocol::radioStatusChanged, this, &MainToolBarController::_telemetryChanged);
+    connect(qgcApp()->toolbox()->mavlinkProtocol(),     &MAVLinkProtocol::receiveLossPercentChanged, this, &MainToolBarController::_telemetrylossPercentChanged);
     connect(qgcApp()->toolbox()->multiVehicleManager(), &MultiVehicleManager::activeVehicleChanged, this, &MainToolBarController::_activeVehicleChanged);
 }
 
@@ -88,5 +89,13 @@ void MainToolBarController::_telemetryChanged(LinkInterface*, unsigned rxerrors,
     if(_telemetryRNoise != remnoise) {
         _telemetryRNoise = remnoise;
         emit telemetryRNoiseChanged(_telemetryRNoise);
+    }
+}
+
+void MainToolBarController::_telemetrylossPercentChanged(int uasId, float lossPercent)
+{
+    if(_telemetrylossPercent != lossPercent) {
+        _telemetrylossPercent = lossPercent;
+        emit telemetrylossPercentChanged(_telemetrylossPercent);
     }
 }

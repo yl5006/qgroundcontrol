@@ -343,6 +343,7 @@ void MAVLinkProtocol::receiveBytes(LinkInterface* link, QByteArray b)
                 receiveLossPercent *= 100.0f;
                 currLossCounter[mavlinkChannel] = 0;
                 currReceiveCounter[mavlinkChannel] = 0;
+                qDebug()<<receiveLossPercent;
                 emit receiveLossPercentChanged(message.sysid, receiveLossPercent);
                 emit receiveLossTotalChanged(message.sysid, totalLossCounter[mavlinkChannel]);
             }

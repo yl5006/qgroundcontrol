@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -46,6 +46,8 @@ public:
     Q_PROPERTY(unsigned int telemetryLNoise     READ telemetryLNoise            NOTIFY telemetryLNoiseChanged)
     Q_PROPERTY(unsigned int telemetryRNoise     READ telemetryRNoise            NOTIFY telemetryRNoiseChanged)
 
+    Q_PROPERTY(float        telemetrylossPercent     READ telemetrylossPercent  NOTIFY telemetrylossPercentChanged)
+
     void        viewStateChanged        (const QString& key, bool value);
 
     int         telemetryRRSSI          () { return _telemetryRRSSI; }
@@ -55,7 +57,7 @@ public:
     unsigned int telemetryTXBuffer      () { return _telemetryTXBuffer; }
     unsigned int telemetryLNoise        () { return _telemetryLNoise; }
     unsigned int telemetryRNoise        () { return _telemetryRNoise; }
-
+    float       telemetrylossPercent    () { return _telemetrylossPercent; }
 signals:
     void telemetryRRSSIChanged          (int value);
     void telemetryLRSSIChanged          (int value);
@@ -65,10 +67,11 @@ signals:
     void telemetryTXBufferChanged       (unsigned int value);
     void telemetryLNoiseChanged         (unsigned int value);
     void telemetryRNoiseChanged         (unsigned int value);
-
+    void telemetrylossPercentChanged    (float  value);
 private slots:
     void _activeVehicleChanged          (Vehicle* vehicle);
     void _telemetryChanged              (LinkInterface* link, unsigned rxerrors, unsigned fixed, int rssi, int remrssi, unsigned txbuf, unsigned noise, unsigned remnoise);
+    void _telemetrylossPercentChanged   (int uasId, float lossPercent);
 
 private:
     Vehicle*        _vehicle;
@@ -81,7 +84,7 @@ private:
     uint32_t        _telemetryTXBuffer;
     uint32_t        _telemetryLNoise;
     uint32_t        _telemetryRNoise;
-
+    float           _telemetrylossPercent;
     double          _toolbarHeight;
 
     QStringList     _toolbarMessageQueue;

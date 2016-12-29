@@ -341,7 +341,7 @@ Item {
         anchors.right:      parent.right
         anchors.top:        logo.bottom
         z:                  QGroundControl.zOrderTopMost
-        visible:            !(activeVehicle && !vehicleConnectionLost ? false : true)
+        visible:            activeVehicle
         Component.onCompleted: {
             ScreenTools.availableHeight = parent.height - toolBar.height
         }

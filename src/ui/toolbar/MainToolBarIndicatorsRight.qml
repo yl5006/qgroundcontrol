@@ -185,6 +185,42 @@ Row {
     }
 
     //-------------------------------------------------------------------------
+    //-- telem RSSI
+    Item {
+        id:         telemRs
+        width:      mainWindow.tbHeight * 3
+        height:     parent.height
+        visible:    activeVehicle ? activeVehicle.supportsRadio : false
+        QGCCircleProgress{
+            id:          telemcircle
+            anchors.left:  parent.left
+            width:       mainWindow.tbHeight*1.5
+            value:       activeVehicle ? (100-_controller.telemetrylossPercent)/100:0
+            valuecolor:  getBatteryColor()
+            anchors.verticalCenter: parent.verticalCenter
+        }
+        QGCColoredImage {
+            id:         telemimg
+            height:     mainWindow.tbCellHeight
+            width:      height
+            sourceSize.width: width
+            source:     "/qmlimages/TelemRSSI.svg"
+            fillMode:   Image.PreserveAspectFit
+            color:      qgcPal.text
+            anchors.horizontalCenter:   telemcircle.horizontalCenter
+            anchors.verticalCenter:     telemcircle.verticalCenter
+        }
+        QGCLabel {
+            anchors.left:   telemimg.left
+            anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+            anchors.verticalCenter: parent.verticalCenter
+            color:          qgcPal.buttonText
+            text:           (100-_controller.telemetrylossPercent)+" %"
+        }
+    }
+
+
+    //-------------------------------------------------------------------------
     //-- Telemetry RSSI
     Item {
         id:         telemRssi

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -204,12 +204,12 @@ QGCView {
 
                     property Fact modelFact: object
 
-                    QGCLabel {
-                        id:     nameLabel
-                        width:  ScreenTools.defaultFontPixelWidth  * 20
-                        text:   factRow.modelFact.name
-                        clip:   true
-                    }
+//                    QGCLabel {
+//                        id:     nameLabel
+//                        width:  ScreenTools.defaultFontPixelWidth  * 20
+//                        text:   factRow.modelFact.name
+//                        clip:   true
+//                    }
 
                     QGCLabel {
                         id:     valueLabel
