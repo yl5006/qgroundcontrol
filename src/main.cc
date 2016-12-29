@@ -289,7 +289,9 @@ int main(int argc, char *argv[])
     QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));
 #endif /* Q_OS_LINUX */
 
+#ifndef __mobile__
     splash->showMessage(QObject::tr("初始化..."),topRight, Qt::white);
+#endif
     // There appears to be a threading issue in qRegisterMetaType which can cause it to throw a qWarning
     // about duplicate type converters. This is caused by a race condition in the Qt code. Still working
     // with them on tracking down the bug. For now we register the type which is giving us problems here
