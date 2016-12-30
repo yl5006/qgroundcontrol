@@ -65,12 +65,12 @@ Rectangle {
     }
 
     function getRSSIColor(value) {
-        if(value >= 0)
-            return colorGrey;
-        if(value > -60)
+        if(value >= 90)
             return colorGreen;
-        if(value > -90)
+        if(value > 80)
             return colorOrange;
+        if(value > 90)
+            return colorGreen;
         return colorRed;
     }
     //---------------------------------------------

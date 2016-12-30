@@ -108,7 +108,7 @@ Row {
             anchors.left:  parent.left
             width:       mainWindow.tbHeight*1.5
             value:       activeVehicle ? ((activeVehicle.rcRSSI > 100) ? 0 : activeVehicle.rcRSSI/100) : 0
-            valuecolor:  getBatteryColor()
+            valuecolor:  getRSSIColor(activeVehicle.rcRSSI)
             anchors.verticalCenter: parent.verticalCenter
         }
         QGCColoredImage {
@@ -196,7 +196,7 @@ Row {
             anchors.left:  parent.left
             width:       mainWindow.tbHeight*1.5
             value:       activeVehicle ? (100-_controller.telemetrylossPercent)/100:0
-            valuecolor:  getBatteryColor()
+            valuecolor:  getRSSIColor(100-_controller.telemetrylossPercent)
             anchors.verticalCenter: parent.verticalCenter
         }
         QGCColoredImage {
@@ -215,7 +215,7 @@ Row {
             anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
             anchors.verticalCenter: parent.verticalCenter
             color:          qgcPal.buttonText
-            text:           (100-_controller.telemetrylossPercent)+" %"
+            text:           (100-_controller.telemetrylossPercent).toFixed(1)+" %"
         }
     }
 

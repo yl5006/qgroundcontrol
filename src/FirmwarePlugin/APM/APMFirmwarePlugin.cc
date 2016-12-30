@@ -662,6 +662,9 @@ QList<MAV_CMD> APMFirmwarePlugin::supportedMissionCommands(void)
          << MAV_CMD_DO_GRIPPER
          << MAV_CMD_DO_GUIDED_LIMITS
          << MAV_CMD_DO_AUTOTUNE_ENABLE
+         << MAV_CMD_DO_CAM
+         << MAV_CMD_DO_TIME_CAM
+         << MAV_CMD_NAV_RETURN_TO_WP_LANUCH
          << MAV_CMD_NAV_VTOL_TAKEOFF << MAV_CMD_NAV_VTOL_LAND << MAV_CMD_DO_VTOL_TRANSITION;
 #if 0
     // Waiting for module update

@@ -984,6 +984,45 @@
                 "default":          1
             }
         },
+        {
+            "id":                   214,
+            "rawName":              "MAV_CMD_DO_CAM",
+            "friendlyName":         "航点拍照",
+            "description":          "航点拍照.",
+            "specifiesCoordinate":  false,
+            "friendlyEdit":         true,
+            "category":             "相机",
+            "param1": {
+                "label":            "拍照:",
+                "default":          1,
+                "units":            "",
+                "decimalPlaces":    1
+            }
+        },
+        {
+            "id":                   215,
+            "rawName":              "MAV_CMD_DO_TIME_CAM",
+            "friendlyName":         "定时拍照",
+            "description":          "定时拍照",
+            "specifiesCoordinate":  false,
+            "friendlyEdit":         true,
+            "category":             "相机",
+            "param1": {
+                "label":            "间隔时间:",
+                "default":          5,
+                "units":            "s",
+                "decimalPlaces":    2
+            }
+        },
+        {
+            "id":                   216,
+            "rawName":              "MAV_CMD_NAV_RETURN_TO_WP_LANUCH",
+            "friendlyName":         "返航航点",
+            "description":          "返航航点.",
+            "specifiesCoordinate":  false,
+            "friendlyEdit":         true,
+            "category":             "基本设置"
+        },
         { "id": 220, "rawName": "MAV_CMD_DO_MOUNT_CONTROL_QUAT" },
         { "id": 221, "rawName": "MAV_CMD_DO_GUIDED_MASTER" },
         {

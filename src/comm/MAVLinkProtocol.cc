@@ -311,19 +311,16 @@ void MAVLinkProtocol::receiveBytes(LinkInterface* link, QByteArray b)
             // Determine what the next expected sequence number is, accounting for
             // never having seen a message for this system/component pair.
             int lastSeq = lastIndex[message.sysid][message.compid];
-            int expectedSeq = (lastSeq == -1) ? message.seq : (lastSeq + 1);
-
+            int expectedSeq = (lastSeq == -1) ? message.seq : (lastSeq + 1) % 256;
             // And if we didn't encounter that sequence number, record the error
             if (message.seq != expectedSeq)
             {
-
                 // Determine how many messages were skipped
                 int lostMessages = message.seq - expectedSeq;
-
                 // Out of order messages or wraparound can cause this, but we just ignore these conditions for simplicity
                 if (lostMessages < 0)
                 {
-                    lostMessages = 0;
+                    lostMessages = lostMessages+255;
                 }
 
                 // And log how many were lost for all time and just this timestep
@@ -332,10 +329,10 @@ void MAVLinkProtocol::receiveBytes(LinkInterface* link, QByteArray b)
             }
 
             // And update the last sequence number for this system/component pair
-            lastIndex[message.sysid][message.compid] = expectedSeq;
+            lastIndex[message.sysid][message.compid] = message.seq;
 
             // Update on every 32th packet
-            if ((totalReceiveCounter[mavlinkChannel] & 0x1F) == 0)
+            if (currReceiveCounter[mavlinkChannel]+currLossCounter[mavlinkChannel] >= 0x1FF)
             {
                 // Calculate new loss ratio
                 // Receive loss
@@ -343,7 +340,6 @@ void MAVLinkProtocol::receiveBytes(LinkInterface* link, QByteArray b)
                 receiveLossPercent *= 100.0f;
                 currLossCounter[mavlinkChannel] = 0;
                 currReceiveCounter[mavlinkChannel] = 0;
-                qDebug()<<receiveLossPercent;
                 emit receiveLossPercentChanged(message.sysid, receiveLossPercent);
                 emit receiveLossTotalChanged(message.sysid, totalLossCounter[mavlinkChannel]);
             }
