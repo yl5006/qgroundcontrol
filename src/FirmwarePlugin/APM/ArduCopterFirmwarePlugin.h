@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -38,7 +38,13 @@ public:
         FLIP        = 14,
         AUTOTUNE    = 15,
         POS_HOLD    = 16, // HYBRID LOITER.
-        BRAKE       = 17
+        BRAKE       = 17,
+        THROW       = 18,
+        AVOID_ADSB  = 19,
+        GUIDED_NOGPS= 20,
+        WAYPOINT_RTL= 21
+
+
     };
     static const int modeCount = 18;
 

@@ -12,17 +12,7 @@
             "description":          "设置home位置",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "基本设置",
-            "param5": {
-                "label":            "纬度:",
-                "default":          37.803784,
-                "decimalPlaces":    7
-            },
-            "param6": {
-                "label":            "经度:",
-                "default":          -122.462276,
-                "decimalPlaces":    7
-            }
+            "category":             "基本设置"
         },
         {
             "id":                   16,

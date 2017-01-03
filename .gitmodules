@@ -7,6 +7,3 @@
 [submodule "libs/mavlink/include/mavlink/v2.0"]
 	path = libs/mavlink/include/mavlink/v2.0
 	url = git://github.com/mavlink/c_library_v2.git
-[submodule "fervor"]
-	path = fervor
-	url = https://github.com/pypt/fervor.git

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -110,8 +110,8 @@ SetupPage {
                         anchors.left:       gcsEnableCombo.left
                         anchors.top:        gcsEnableCombo.bottom
                         width:              voltageField.width
-                        model:              [qsTr("Disabled"), qsTr("Always RTL"),
-                            qsTr("Continue with Mission in Auto Mode"), qsTr("Always Land")]
+                        model:              [qsTr("禁用"), qsTr("返航"),
+                            qsTr("继续任务"), qsTr("降落"), qsTr("航线返航")]
                         currentIndex:       _failsafeThrEnable.value
 
                         onActivated: _failsafeThrEnable.value = index
