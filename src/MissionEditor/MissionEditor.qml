@@ -785,6 +785,33 @@ QGCView {
                         }
                     } // QGCListView
                 } // Item - Mission Item editor
+                Image {
+                    id:                     allsetimg
+                    anchors.verticalCenter: missionItemIndex.verticalCenter
+                    anchors.right:          parent.right
+                    anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
+                    height:                 _PointFieldWidth.width/2
+                    width:                  height
+                    smooth:                 true
+                    source:                 "/res/gear-black.svg"
+                    z:              QGroundControl.zOrderTopMost
+                    MouseArea {
+                        anchors.fill:       parent
+                        onClicked: {
+                              //  setimg.visible=!setimg.visible
+                        }
+                    }
+                }
+
+//                SetMutipMissionItem
+//                {
+//                    id:                     setimg
+//                    anchors.centerIn:       parent
+//                    missionItems:           _visualItems
+//                    z:                      QGroundControl.zOrderTopMost
+//                    visible:                false
+//                }
+
 
                 // GeoFence Editor
                 Loader {
