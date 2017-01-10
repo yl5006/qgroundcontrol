@@ -483,7 +483,7 @@ bool MissionController::_loadJsonMissionFileV2(const QJsonObject& json, QmlObjec
                     if (visualItems->value<VisualMissionItem*>(j)->isSimpleItem()) {
                         SimpleMissionItem* targetItem = visualItems->value<SimpleMissionItem*>(j);
                         if (targetItem->missionItem().doJumpId() == findDoJumpId) {
-                            doJumpItem->missionItem().setParam1(targetItem->sequenceNumber());
+                            doJumpItem->missionItem().setParam8(targetItem->sequenceNumber());
                             found = true;
                             break;
                         }
