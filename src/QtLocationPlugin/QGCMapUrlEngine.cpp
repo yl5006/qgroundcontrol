@@ -312,7 +312,7 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
     break;
     case GaodeSatellite:
     {
-        qDebug()<<QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
+  //      qDebug()<<QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
         return QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
      //   return _tilexyTobaidu(x, y, zoom);
     }

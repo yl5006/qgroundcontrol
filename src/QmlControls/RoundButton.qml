@@ -66,8 +66,9 @@ Item {
             MouseArea {
                 anchors.fill:   parent
                 onClicked: {
-                    checked = !checked
+                    checked = !checked      
                     _root.clicked()
+                    forceActiveFocus()
                 }
             }
         }

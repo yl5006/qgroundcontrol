@@ -393,7 +393,6 @@ void MissionManager::_handleMissionItem(const mavlink_message_t& message)
                                             missionItem.autocontinue,
                                             missionItem.current,
                                             this);
-        qDebug()<<(MAV_CMD)missionItem.command<<" "<<missionItem.param8;
         if (item->command() == MAV_CMD_DO_JUMP && !_vehicle->firmwarePlugin()->sendHomePositionToVehicle()) {
             // Home is in position 0
             item->setParam8((int)item->param8() + 1);
@@ -467,7 +466,6 @@ void MissionManager::_handleMissionRequest(const mavlink_message_t& message)
     missionItem.frame =             item->frame();
     missionItem.current =           missionRequest.seq == 0;
     missionItem.autocontinue =      item->autoContinue();
-    qDebug()<<item->command()<<" red "<<item->param8();
     mavlink_msg_mission_item_encode_chan(qgcApp()->toolbox()->mavlinkProtocol()->getSystemId(),
                                          qgcApp()->toolbox()->mavlinkProtocol()->getComponentId(),
                                          _dedicatedLink->mavlinkChannel(),
