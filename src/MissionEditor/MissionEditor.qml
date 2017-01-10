@@ -78,115 +78,6 @@ QGCView {
         }
     }
 
-    function normalizeLat(lat) {
-        // Normalize latitude to range: 0 to 180, S to N
-        return lat + 90.0
-    }
-
-    function normalizeLon(lon) {
-        // Normalize longitude to range: 0 to 360, W to E
-        return lon  + 180.0
-    }
-
-    /// Fits the visible region of the map to inclues all of the specified coordinates. If no coordinates
-    /// are specified the map will fit to the home position
-    function fitMapViewportToAllCoordinates(coordList) {
-        if (coordList.length == 0) {
-            editorMap.center = _visualItems.get(0).coordinate
-            return
-        }
-
-        // Determine the size of the inner portion of the map available for display
-        var toolbarHeight = qgcView.height - ScreenTools.availableHeight
-        var rightPanelWidth = _rightPanelWidth
-        var leftToolWidth = centerMapButton.x + centerMapButton.width
-        var availableWidth = qgcView.width - rightPanelWidth - leftToolWidth
-        var availableHeight = qgcView.height - toolbarHeight
-
-        // Create the normalized lat/lon corners for the coordinate bounding rect from the list of coordinates
-        var north = normalizeLat(coordList[0].latitude)
-        var south = north
-        var east = normalizeLon(coordList[0].longitude)
-        var west = east
-        for (var i=1; i<coordList.length; i++) {
-            var lat = normalizeLat(coordList[i].latitude)
-            var lon = normalizeLon(coordList[i].longitude)
-
-            north = Math.max(north, lat)
-            south = Math.min(south, lat)
-            east = Math.max(east, lon)
-            west = Math.min(west, lon)
-        }        
-
-        // Expand the coordinate bounding rect to make room for the tools around the edge of the map
-        var latDegreesPerPixel = (north - south) / availableWidth
-        var lonDegreesPerPixel = (east - west) / availableHeight
-        north = Math.min(north + (toolbarHeight * latDegreesPerPixel), 180)
-        west = Math.max(west - (leftToolWidth * lonDegreesPerPixel), 0)
-        east = Math.min(east + (rightPanelWidth * lonDegreesPerPixel), 360)
-
-        // Fix the map region to the new bounding rect
-        var topLeftCoord = QtPositioning.coordinate(north - 90.0, west - 180.0)
-        var bottomRightCoord  = QtPositioning.coordinate(south - 90.0, east - 180.0)
-        editorMap.visibleRegion = QtPositioning.rectangle(topLeftCoord, bottomRightCoord)
-    }
-
-    function addMissionItemCoordsForFit(coordList) {
-        for (var i=1; i<qgcView._visualItems.count; i++) {
-            var missionItem = qgcView._visualItems.get(i)
-            if (missionItem.specifiesCoordinate && !missionItem.isStandaloneCoordinate) {
-                coordList.push(missionItem.coordinate)
-            }
-        }
-    }
-
-    function fitMapViewportToMissionItems() {
-        var coordList = [ ]
-        addMissionItemCoordsForFit(coordList)
-        fitMapViewportToAllCoordinates(coordList)
-    }
-
-    function addFenceItemCoordsForFit(coordList) {
-        if (geoFenceController.circleEnabled) {
-            var azimuthList = [ 0, 180, 90, 270 ]
-            for (var i=0; i<azimuthList.length; i++) {
-                var edgeCoordinate = _visualItems.get(0).coordinate.atDistanceAndAzimuth(geoFenceController.circleRadius, azimuthList[i])
-                coordList.push(edgeCoordinate)
-            }
-        }
-        if (geoFenceController.polygonEnabled && geoFenceController.polygon.count() > 2) {
-            for (var i=0; i<geoFenceController.polygon.count(); i++) {
-                coordList.push(geoFenceController.polygon.path[i])
-            }
-        }
-    }
-
-    function fitMapViewportToFenceItems() {
-        var coordList = [ ]
-        addFenceItemCoordsForFit(coordList)
-        fitMapViewportToAllCoordinates(coordList)
-    }
-
-    function addRallyItemCoordsForFit(coordList) {
-        for (var i=0; i<rallyPointController.points.count; i++) {
-            coordList.push(rallyPointController.points.get(i).coordinate)
-        }
-    }
-
-    function fitMapViewportToRallyItems() {
-        var coordList = [ ]
-        addRallyItemCoordsForFit(coordList)
-        fitMapViewportToAllCoordinates(coordList)
-    }
-
-    function fitMapViewportToAllItems() {
-        var coordList = [ ]
-        addMissionItemCoordsForFit(coordList)
-        addFenceItemCoordsForFit(coordList)
-        addRallyItemCoordsForFit(coordList)
-        fitMapViewportToAllCoordinates(coordList)
-    }
-
     property bool _firstMissionLoadComplete:    false
     property bool _firstFenceLoadComplete:      false
     property bool _firstRallyLoadComplete:      false
@@ -195,7 +86,7 @@ QGCView {
     function checkFirstLoadComplete() {
         if (!_firstLoadComplete && _firstMissionLoadComplete && _firstRallyLoadComplete && _firstFenceLoadComplete) {
             _firstLoadComplete = true
-            fitMapViewportToAllItems()
+            centerMapButton.fitMapViewportToAllItems()
         }
     }
 
@@ -215,7 +106,7 @@ QGCView {
                 if(_filename.match(".mission"))
                 {
                     missionController.loadFromFile(_filename)
-                    fitMapViewportToMissionItems()
+                    centerMapButton.fitMapViewportToMissionItems()
                     _currentMissionItem = _visualItems.get(0)
                 }
                 else if(_filename.match(".txt"))
@@ -234,7 +125,7 @@ QGCView {
         }
 
         function fitViewportToItems() {
-            fitMapViewportToMissionItems()
+            centerMapButton.fitMapViewportToMissionItems()
         }
 
         onVisualItemsChanged: {
@@ -242,7 +133,7 @@ QGCView {
         }
 
         onNewItemsFromVehicle: {
-            fitMapViewportToMissionItems()
+            centerMapButton.fitMapViewportToMissionItems()
             setCurrentItem(0)
             _firstMissionLoadComplete = true
             checkFirstLoadComplete()
@@ -267,7 +158,7 @@ QGCView {
                 qgcView.showDialog(mobileFilePicker, qsTr("Select Fence File"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
             } else {
                 geoFenceController.loadFromFilePicker()
-                fitMapViewportToFenceItems()
+                centerMapButton.fitMapViewportToFenceItems()
             }
         }
 
@@ -283,14 +174,14 @@ QGCView {
         }
 
         function fitViewportToItems() {
-            fitMapViewportToFenceItems()
+            centerMapButton.fitMapViewportToFenceItems()
         }
 
         onLoadComplete: {
             _firstFenceLoadComplete = true
             switch (_syncDropDownController) {
             case geoFenceController:
-                fitMapViewportToFenceItems()
+                centerMapButton.fitMapViewportToFenceItems()
                 break
             case missionController:
                 checkFirstLoadComplete()
@@ -325,19 +216,19 @@ QGCView {
                 qgcView.showDialog(mobileFilePicker, qsTr("Select Rally Point File"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
             } else {
                 rallyPointController.loadFromFilePicker()
-                fitMapViewportToRallyItems()
+                centerMapButton.fitMapViewportToRallyItems()
             }
         }
 
         function fitViewportToItems() {
-            fitMapViewportToRallyItems()
+            centerMapButton.fitMapViewportToRallyItems()
         }
 
         onLoadComplete: {
             _firstRallyLoadComplete = true
             switch (_syncDropDownController) {
             case rallyPointController:
-                fitMapViewportToRallyItems()
+                centerMapButton.fitMapViewportToRallyItems()
                 break
             case missionController:
                 checkFirstLoadComplete()
@@ -376,9 +267,8 @@ QGCView {
     Component {
         id: mobileFilePicker
 
-        QGCMobileFileDialog {
-            openDialog:         true
-            fileExtension:      _syncDropDownController.fileExtension
+        QGCMobileFileOpenDialog {
+            fileExtension: _syncDropDownController.fileExtension
             onFilenameReturned: {
                 _syncDropDownController.loadFromFile(filename)
                 _syncDropDownController.fitViewportToItems()
@@ -389,8 +279,7 @@ QGCView {
     Component {
         id: mobileFileSaver
 
-        QGCMobileFileDialog {
-            openDialog:         false
+        QGCMobileFileSaveDialog {
             fileExtension:      _syncDropDownController.fileExtension
             onFilenameReturned: _syncDropDownController.saveToFile(filename)
         }
@@ -710,6 +599,9 @@ QGCView {
                         exclusiveGroup: planElementSelectorGroup
                         text:           qsTr("Mission")
                         checked:        true
+                        color:          mapPal.text
+                        textStyle:      Text.Outline
+                        textStyleColor: mapPal.textOutline
                     }
 
                     Item { height: 1; width: 1 }
@@ -718,6 +610,9 @@ QGCView {
                         id:             planElementGeoFence
                         exclusiveGroup: planElementSelectorGroup
                         text:           qsTr("Fence")
+                        color:          mapPal.text
+                        textStyle:      Text.Outline
+                        textStyleColor: mapPal.textOutline
                     }
 
                     Item { height: 1; width: 1 }
@@ -726,6 +621,9 @@ QGCView {
                         id:             planElementRallyPoints
                         exclusiveGroup: planElementSelectorGroup
                         text:           qsTr("Rally")
+                        color:          mapPal.text
+                        textStyle:      Text.Outline
+                        textStyleColor: mapPal.textOutline
                     }
                 } // Row - Plan Element Selector
 
@@ -922,16 +820,18 @@ QGCView {
                     }
                 }
 /*
-                QGCLabel {
-                    id:         planLabel
-                    text:       qsTr("Plan")
-                    color:      mapPal.text
-                    visible:    !ScreenTools.isShortScreen
+                QGCMapLabel {
+                    id:                         planLabel
+                    map:                        editorMap
+                    text:                       qsTr("Plan")
+                    visible:                    !ScreenTools.isShortScreen
                     anchors.topMargin:          _toolButtonTopMargin
-                    anchors.horizontalCenter:   toolColumn.horizontalCenter
+                    anchors.horizontalCenter:   addMissionItemsButton.horizontalCenter
                     anchors.top:                parent.top
                 }
 */
+                // IMPORTANT NOTE: Drop Buttons must be parented directly to the map. If they are placed in a Column for example the drop control positioning
+                // will not work correctly.
                 //-- horizontal Tool Buttons
                 Row {
                     id:                 toolColumn
@@ -990,8 +890,22 @@ QGCView {
                         width:      1
                         color:      "grey"
                     }
+		    CenterMapDropButton {
+                    id:                     centerMapButton
+                    exclusiveGroup:         _dropButtonsExclusiveGroup
+                    map:                    editorMap
+                    mapFitViewport:         Qt.rect(leftToolWidth, toolbarHeight, editorMap.width - leftToolWidth - rightPanelWidth, editorMap.height - toolbarHeight)
+                    usePlannedHomePosition: true
+                    geoFenceController:     geoFenceController
+                    missionController:      missionController
+                    rallyPointController:   rallyPointController
+
+                    property real toolbarHeight:    qgcView.height - ScreenTools.availableHeight
+                    property real rightPanelWidth:  _rightPanelWidth
+                    property real leftToolWidth:    centerMapButton.x + centerMapButton.width
+                }
                     DropButton {
-                        id:                 centerMapButton
+                        id:                 centerMapButton1
                         dropDirection:      dropDown
                         buttonImage:        "/qmlimages/MapCenter.svg"
                         viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
@@ -1111,37 +1025,42 @@ QGCView {
                         height:     parent.height*0.8
                         width:      1
                         color:      "grey"
-                    }
+                }
 
-                    //-- Zoom Map In
-                    RoundButton {
-                        id:             mapZoomPlus
-                        visible:        !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
-                        buttonImage:    "/qmlimages/ZoomPlus.svg"
-                        lightBorders:   _lightWidgetBorders
+                //-- Zoom Map In
+                RoundButton {
+                    id:                 mapZoomPlus
+                    anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+                    anchors.top:        mapTypeButton.bottom
+                    anchors.left:       mapTypeButton.left
+                    visible:            !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
+                    buttonImage:        "/qmlimages/ZoomPlus.svg"
+                    lightBorders:   _lightWidgetBorders
 
-                        onClicked: {
-                            if(editorMap)
-                                editorMap.zoomLevel += 0.5
-                            checked = false
-                        }
+                    onClicked: {
+                        if(editorMap)
+                            editorMap.zoomLevel += 0.5
+                        checked = false
                     }
+                }
                     Rectangle {
                         height:     parent.height*0.8
                         width:      1
                         color:      "grey"
                     }
-                    //-- Zoom Map Out
-                    RoundButton {
-                        id:             mapZoomMinus
-                        visible:        !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
-                        buttonImage:    "/qmlimages/ZoomMinus.svg"
-                        lightBorders:   _lightWidgetBorders
-                        onClicked: {
-                            if(editorMap)
-                                editorMap.zoomLevel -= 0.5
-                            checked = false
-                        }
+                //-- Zoom Map Out
+                RoundButton {
+                    id:                 mapZoomMinus
+                    anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+                    anchors.top:        mapZoomPlus.bottom
+                    anchors.left:       mapZoomPlus.left
+                    visible:            !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
+                    buttonImage:        "/qmlimages/ZoomMinus.svg"
+                    lightBorders:       _lightWidgetBorders
+                    onClicked: {
+                        if(editorMap)
+                            editorMap.zoomLevel -= 0.5
+                        checked = false
                     }
                 }
 

@@ -90,7 +90,6 @@ Item {
 
         //	rightBar.checkSettingsButton()
         // toolBar.checkSettingsButton()
-        console.log("showSettingsView")
     }
 
     function showSetupView() {
@@ -335,7 +334,7 @@ Item {
     //       }
     MainTool {
         id:                 toolBar
-        height:             ScreenTools.defaultFontPixelHeight * 3 * 1.8
+        height:             ScreenTools.defaultFontPixelHeight * 3
         anchors.left:       parent.left
         mainWindow:         mainWindow
         anchors.right:      parent.right

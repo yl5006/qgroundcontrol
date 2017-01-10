@@ -18,20 +18,19 @@
 #include "MissionCommandTree.h"
 #include "MissionCommandUIInfo.h"
 
-const double SimpleMissionItem::defaultAltitude =             50.0;//50.0;
+const double SimpleMissionItem::defaultAltitude =           50.0;
 
-FactMetaData* SimpleMissionItem::_altitudeMetaData =          NULL;
-FactMetaData* SimpleMissionItem::_commandMetaData =           NULL;
-FactMetaData* SimpleMissionItem::_defaultParamMetaData =      NULL;
-FactMetaData* SimpleMissionItem::_frameMetaData =             NULL;
-FactMetaData* SimpleMissionItem::_latitudeMetaData =          NULL;
-FactMetaData* SimpleMissionItem::_longitudeMetaData =         NULL;
+FactMetaData* SimpleMissionItem::_altitudeMetaData =        NULL;
+FactMetaData* SimpleMissionItem::_commandMetaData =         NULL;
+FactMetaData* SimpleMissionItem::_defaultParamMetaData =    NULL;
+FactMetaData* SimpleMissionItem::_frameMetaData =           NULL;
+FactMetaData* SimpleMissionItem::_latitudeMetaData =        NULL;
+FactMetaData* SimpleMissionItem::_longitudeMetaData =       NULL;
 
 struct EnumInfo_s {
     const char *    label;
     MAV_FRAME       frame;
 };
-static const char* Altituderel =        QT_TR_NOOP("高度参考home点");
 
 static const struct EnumInfo_s _rgMavFrameInfo[] = {
 { "MAV_FRAME_GLOBAL",                   MAV_FRAME_GLOBAL },
@@ -263,9 +262,9 @@ bool SimpleMissionItem::load(const QString &wayline,double angle,double space,do
     return _missionItem.load(wayline,angle,space,addalt,waynum,cammer,relalt);
 }
 
-bool SimpleMissionItem::load(const QJsonObject& json, QString& errorString)
+bool SimpleMissionItem::load(const QJsonObject& json, int sequenceNumber, QString& errorString)
 {
-    return _missionItem.load(json, errorString);
+    return _missionItem.load(json, sequenceNumber, errorString);
 }
 
 bool SimpleMissionItem::isStandaloneCoordinate(void) const

@@ -132,7 +132,8 @@ QGCViewDialog {
 
             QGCComboBox {
                 id:             factCombo
-                width:          valueField.width
+                anchors.left:   parent.left
+                anchors.right:  parent.right
                 visible:        _showCombo
                 model:          fact.enumStrings
 

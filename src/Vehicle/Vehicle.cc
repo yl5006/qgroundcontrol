@@ -182,7 +182,6 @@ Vehicle::Vehicle(LinkInterface*             link,
     // Now connect the new UAS
     connect(_mav, SIGNAL(attitudeChanged                    (UASInterface*,double,double,double,quint64)),              this, SLOT(_updateAttitude(UASInterface*, double, double, double, quint64)));
     connect(_mav, SIGNAL(attitudeChanged                    (UASInterface*,int,double,double,double,quint64)),          this, SLOT(_updateAttitude(UASInterface*,int,double, double, double, quint64)));
-    connect(_mav, SIGNAL(statusChanged                      (UASInterface*,QString,QString)),                           this, SLOT(_updateState(UASInterface*, QString,QString)));
 
     _loadSettings();
 
@@ -575,14 +574,10 @@ void Vehicle::_handleAltitude(mavlink_message_t& message)
 
 void Vehicle::_handleAutopilotVersion(LinkInterface *link, mavlink_message_t& message)
 {
+    Q_UNUSED(link);
+
     mavlink_autopilot_version_t autopilotVersion;
     mavlink_msg_autopilot_version_decode(&message, &autopilotVersion);
-
-    bool isMavlink2 = (autopilotVersion.capabilities & MAV_PROTOCOL_CAPABILITY_MAVLINK2) != 0;
-    if(isMavlink2) {
-        mavlink_status_t* mavlinkStatus = mavlink_get_channel_status(link->mavlinkChannel());
-        mavlinkStatus->flags &= ~MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
-    }
 
     if (autopilotVersion.flight_sw_version != 0) {
         int majorVersion, minorVersion, patchVersion;
@@ -934,8 +929,9 @@ bool Vehicle::_containsLink(LinkInterface* link)
 void Vehicle::_addLink(LinkInterface* link)
 {
     if (!_containsLink(link)) {
-        _links += link;
         qCDebug(VehicleLog) << "_addLink:" << QString("%1").arg((ulong)link, 0, 16);
+        _links += link;
+        _updatePriorityLink();
         connect(qgcApp()->toolbox()->linkManager(), &LinkManager::linkInactive, this, &Vehicle::_linkInactiveOrDeleted);
         connect(qgcApp()->toolbox()->linkManager(), &LinkManager::linkDeleted, this, &Vehicle::_linkInactiveOrDeleted);
     }
@@ -946,6 +942,7 @@ void Vehicle::_linkInactiveOrDeleted(LinkInterface* link)
     qCDebug(VehicleLog) << "_linkInactiveOrDeleted linkCount" << _links.count();
 
     _links.removeOne(link);
+    _updatePriorityLink();
 
     if (_links.count() == 0 && !_allLinksInactiveSent) {
         qCDebug(VehicleLog) << "All links inactive";
@@ -991,26 +988,42 @@ void Vehicle::_sendMessageOnLink(LinkInterface* link, mavlink_message_t message)
     emit messagesSentChanged();
 }
 
-/// @return Direct usb connection link to board if one, NULL if none
-LinkInterface* Vehicle::priorityLink(void)
+void Vehicle::_updatePriorityLink(void)
 {
+    LinkInterface* newPriorityLink = NULL;
+
 #ifndef NO_SERIAL_LINK
-    foreach (LinkInterface* link, _links) {
+    // Note that this routine specificallty does not clear _priorityLink when there are no links remaining.
+    // By doing this we hold a reference on the last link as the Vehicle shuts down. Thus preventing shutdown
+    // ordering NULL pointer crashes where priorityLink() is still called during shutdown sequence.
+    for (int i=0; i<_links.count(); i++) {
+        LinkInterface* link = _links[i];
         if (link->isConnected()) {
             SerialLink* pSerialLink = qobject_cast<SerialLink*>(link);
             if (pSerialLink) {
-                LinkConfiguration* pLinkConfig = pSerialLink->getLinkConfiguration();
-                if (pLinkConfig) {
-                    SerialConfiguration* pSerialConfig = qobject_cast<SerialConfiguration*>(pLinkConfig);
+                LinkConfiguration* config = pSerialLink->getLinkConfiguration();
+                if (config) {
+                    SerialConfiguration* pSerialConfig = qobject_cast<SerialConfiguration*>(config);
                     if (pSerialConfig && pSerialConfig->usbDirect()) {
-                        return link;
+                        if (_priorityLink.data() != link) {
+                            newPriorityLink = link;
+                            break;
+                        }
+                        return;
                     }
                 }
             }
         }
     }
 #endif
-    return _links.count() ? _links[0] : NULL;
+
+    if (!newPriorityLink && !_priorityLink.data() && _links.count()) {
+        newPriorityLink = _links[0];
+    }
+
+    if (newPriorityLink) {
+        _priorityLink = qgcApp()->toolbox()->linkManager()->sharedLinkInterfacePointerForLink(newPriorityLink);
+    }
 }
 
 void Vehicle::setLatitude(double latitude)
@@ -1115,14 +1128,6 @@ void Vehicle::_handletextMessageReceived(UASMessage* message)
     {
         _formatedMessage = message->getFormatedText();
         emit formatedMessageChanged();
-    }
-}
-
-void Vehicle::_updateState(UASInterface*, QString name, QString)
-{
-    if (_currentState != name) {
-        _currentState = name;
-        emit currentStateChanged();
     }
 }
 
@@ -1352,6 +1357,8 @@ void Vehicle::setFlightMode(const QString& flightMode)
 {
     uint8_t     base_mode;
     uint32_t    custom_mode;
+
+    qDebug() << flightMode;
 
     if (_firmwarePlugin->setFlightMode(flightMode, &base_mode, &custom_mode)) {
         // setFlightMode will only set MAV_MODE_FLAG_CUSTOM_MODE_ENABLED in base_mode, we need to move back in the existing
@@ -1884,13 +1891,25 @@ void Vehicle::_sendMavCommandAgain(void)
     }
 
     if (_mavCommandRetryCount > 1) {
-        if (queuedCommand.command == MAV_CMD_START_RX_PAIR) {
-            // Implementation of this command in all firmwares is incorrect. It does not send Ack so we can't retry.
-            return;
-        }
-        if (px4Firmware()) {
-            // PX4 stack is inconsistent with repect to sending back an Ack from a COMMAND_LONG, hence we can't support retry logic for it.
-            return;
+        // We always let AUTOPILOT_CAPABILITIES go through multiple times even if we don't get acks. This is because
+        // we really need to get capabilities and version info back over a lossy link.
+        if (queuedCommand.command != MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES) {
+            if (px4Firmware()) {
+                // Older PX4 firmwares are inconsistent with repect to sending back an Ack from a COMMAND_LONG, hence we can't support retry logic for it.
+                if (_firmwareMajorVersion != versionNotSetValue) {
+                    // If no version set assume lastest master dev build, so acks are suppored
+                    if (_firmwareMajorVersion <= 1 && _firmwareMinorVersion <= 5 && _firmwarePatchVersion <= 3) {
+                        // Acks not supported in this version
+                        return;
+                    }
+                }
+            } else {
+                if (queuedCommand.command == MAV_CMD_START_RX_PAIR) {
+                    // The implementation of this command comes from the IO layer and is shared across stacks. So for other firmwares
+                    // we aren't really sure whether they are correct or not.
+                    return;
+                }
+            }
         }
         qDebug() << "Vehicle::_sendMavCommandAgain retrying command:_mavCommandRetryCount" << queuedCommand.command << _mavCommandRetryCount;
     }
@@ -2154,6 +2173,21 @@ void Vehicle::setFirmwarePluginInstanceData(QObject* firmwarePluginInstanceData)
     _firmwarePluginInstanceData = firmwarePluginInstanceData;
 }
 
+QString Vehicle::missionFlightMode(void) const
+{
+    return _firmwarePlugin->missionFlightMode();
+}
+
+QString Vehicle::rtlFlightMode(void) const
+{
+    return _firmwarePlugin->rtlFlightMode();
+}
+
+QString Vehicle::takeControlFlightMode(void) const
+{
+    return _firmwarePlugin->takeControlFlightMode();
+}
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
@@ -2184,7 +2218,7 @@ VehicleBatteryFactGroup::VehicleBatteryFactGroup(QObject* parent)
     , _voltageFact                  (0, _voltageFactName,                   FactMetaData::valueTypeDouble)
     , _percentRemainingFact         (0, _percentRemainingFactName,          FactMetaData::valueTypeInt32)
     , _mahConsumedFact              (0, _mahConsumedFactName,               FactMetaData::valueTypeInt32)
-    , _currentFact                  (0, _currentFactName,                   FactMetaData::valueTypeInt32)
+    , _currentFact                  (0, _currentFactName,                   FactMetaData::valueTypeFloat)
     , _temperatureFact              (0, _temperatureFactName,               FactMetaData::valueTypeDouble)
     , _cellCountFact                (0, _cellCountFactName,                 FactMetaData::valueTypeInt32)
 {

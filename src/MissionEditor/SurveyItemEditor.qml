@@ -30,28 +30,6 @@ Rectangle {
     readonly property int _gridTypeCustomCamera:    1
     readonly property int _gridTypeCamera:          2
 
-    Component.onCompleted: {
-        console.log("gridAltitude", _currentMissionItem.gridAltitude.value)
-        console.log("gridAltitudeRelative", _currentMissionItem.gridAltitudeRelative)
-        console.log("gridAngle", _currentMissionItem.gridAngle.value)
-        console.log("gridSpacing", _currentMissionItem.gridSpacing.value)
-        console.log("turnaroundDist", _currentMissionItem.turnaroundDist.value)
-        console.log("cameraTrigger", _currentMissionItem.cameraTrigger)
-        console.log("cameraTriggerDistance", _currentMissionItem.cameraTriggerDistance.value)
-        console.log("groundResolution", _currentMissionItem.groundResolution.value)
-        console.log("frontalOverlap", _currentMissionItem.frontalOverlap.value)
-        console.log("sideOverlap", _currentMissionItem.sideOverlap.value)
-        console.log("cameraSensorWidth", _currentMissionItem.cameraSensorWidth.value)
-        console.log("cameraSensorHeight", _currentMissionItem.cameraSensorHeight.value)
-        console.log("cameraResolutionWidth", _currentMissionItem.cameraResolutionWidth.value)
-        console.log("cameraResolutionHeight", _currentMissionItem.cameraResolutionHeight.value)
-        console.log("cameraFocalLength", _currentMissionItem.cameraFocalLength.value)
-        console.log("fixedValueIsAltitude", _currentMissionItem.fixedValueIsAltitude)
-        console.log("cameraOrientationLandscape", _currentMissionItem.cameraOrientationLandscape)
-        console.log("manualGrid", _currentMissionItem.manualGrid)
-        console.log("camera", _currentMissionItem.camera)
-    }
-
     ListModel {
         id: cameraModelList
 

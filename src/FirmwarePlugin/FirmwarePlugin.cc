@@ -292,6 +292,21 @@ int FirmwarePlugin::remapParamNameHigestMinorVersionNumber(int majorVersionNumbe
     Q_UNUSED(majorVersionNumber);
     return 0;
 }
+QString FirmwarePlugin::missionFlightMode(void)
+{
+    return QString();
+}
+
+QString FirmwarePlugin::rtlFlightMode(void)
+{
+    return QString();
+}
+
+QString FirmwarePlugin::takeControlFlightMode(void)
+{
+    return QString();
+}
+
 bool FirmwarePlugin::multiRotorCoaxialMotors(Vehicle* vehicle)
 {
     Q_UNUSED(vehicle);
