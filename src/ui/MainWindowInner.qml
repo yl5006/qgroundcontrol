@@ -334,7 +334,7 @@ Item {
     //       }
     MainTool {
         id:                 toolBar
-        height:             ScreenTools.defaultFontPixelHeight * 3
+        height:             ScreenTools.defaultFontPixelHeight * 3 * 1.8
         anchors.left:       parent.left
         mainWindow:         mainWindow
         anchors.right:      parent.right

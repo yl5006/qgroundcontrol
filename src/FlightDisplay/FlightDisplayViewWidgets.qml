@@ -36,6 +36,7 @@ Item {
     property bool   _useAlternateInstruments:   QGroundControl.virtualTabletJoystick || ScreenTools.isTinyScreen
 
     readonly property real _margins:                ScreenTools.defaultFontPixelHeight / 2
+    readonly property real _toolButtonTopMargin:    parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
 
     QGCMapPalette { id: mapPal; lightColors: isBackgroundDark }
     QGCPalette { id: qgcPal }
@@ -45,7 +46,7 @@ Item {
             return ScreenTools.isTinyScreen ? mainWindow.width * 0.2 : mainWindow.width * 0.15
         }
         var w = mainWindow.width * 0.15
-        return Math.min(w, 200)
+        return Math.min(w, 250)
     }
 
     //-- Map warnings
@@ -60,7 +61,7 @@ Item {
             z:                          QGroundControl.zOrderTopMost
             color:                      mapPal.text
             font.pointSize:             ScreenTools.largeFontPointSize
-            text:                       qsTr("No GPS Lock for Vehicle")
+            text:                       qsTr("GPS未锁定")//"No GPS Lock for Vehicle"
         }
 
         QGCLabel {
@@ -74,12 +75,11 @@ Item {
     }
 
     //-- Instrument Panel
-    QGCInstrumentWidget {
+        QGCInstrumentWidgetBottom {
         id:                     instrumentGadget
         anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
         anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        visible:                !_useAlternateInstruments
+        anchors.bottom:         parent.bottom
         size:                   getGadgetWidth()
         active:                 _activeVehicle != null
         heading:                _heading
@@ -98,7 +98,7 @@ Item {
         anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
         anchors.top:            parent.top
         anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
-        visible:                _useAlternateInstruments
+        visible:                false//_useAlternateInstruments
         width:                  ScreenTools.isTinyScreen ? getGadgetWidth() * 1.5 : getGadgetWidth()
         active:                 _activeVehicle != null
         heading:                _heading
@@ -133,7 +133,8 @@ Item {
         width:                      guidedModeColumn.width  + (_margins * 2)
         height:                     guidedModeColumn.height + (_margins * 2)
         radius:                     ScreenTools.defaultFontPixelHeight * 0.25
-        color:                      _lightWidgetBorders ? Qt.rgba(qgcPal.mapWidgetBorderLight.r, qgcPal.mapWidgetBorderLight.g, qgcPal.mapWidgetBorderLight.b, 0.8) : Qt.rgba(qgcPal.mapWidgetBorderDark.r, qgcPal.mapWidgetBorderDark.g, qgcPal.mapWidgetBorderDark.b, 0.75)
+//        color:                      _lightWidgetBorders ? Qt.rgba(qgcPal.mapWidgetBorderLight.r, qgcPal.mapWidgetBorderLight.g, qgcPal.mapWidgetBorderLight.b, 0.8) : Qt.rgba(qgcPal.mapWidgetBorderDark.r, qgcPal.mapWidgetBorderDark.g, qgcPal.mapWidgetBorderDark.b, 0.75)
+        color:                      "transparent"
         visible:                    _activeVehicle
         z:                          QGroundControl.zOrderWidgets
         state:                      "Shown"
@@ -313,29 +314,11 @@ Item {
             Row {
                 spacing: _margins * 2
 
-                QGCButton {
-                    pointSize:  _guidedModeBar._fontPointSize
-                    text:       (_activeVehicle && _activeVehicle.armed) ? (_activeVehicle.flying ? qsTr("Emergency Stop") : qsTr("Disarm")) :  qsTr("Arm")
-                    visible:    _activeVehicle
-                    onClicked:  _guidedModeBar.confirmAction(_activeVehicle.armed ? (_activeVehicle.flying ? _guidedModeBar.confirmEmergencyStop : _guidedModeBar.confirmDisarm) : _guidedModeBar.confirmArm)
-                }
-
-                QGCButton {
-                    pointSize:  _guidedModeBar._fontPointSize
-                    text:       qsTr("RTL")
-                    visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.guidedModeSupported && _activeVehicle.flying
-                    onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmHome)
-                }
-
-                QGCButton {
-                    pointSize:  _guidedModeBar._fontPointSize
-                    text:       (_activeVehicle && _activeVehicle.flying) ?  qsTr("Land"):  qsTr("Takeoff")
-                    visible:    _activeVehicle && _activeVehicle.guidedModeSupported && _activeVehicle.armed
-                    onClicked:  _guidedModeBar.confirmAction(_activeVehicle.flying ? _guidedModeBar.confirmLand : _guidedModeBar.confirmTakeoff)
-                }
-
-                QGCButton {
-                    pointSize:  _guidedModeBar._fontPointSize
+                RoundImageButton {
+                    width:       ScreenTools.defaultFontPixelHeight*4
+                    height:      width
+                    anchors.verticalCenter: parent.verticalCenter
+                    imageResource: "/qmlimages/PauseUav.svg"
                     text:       qsTr("Pause")
                     visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.pauseVehicleSupported && _activeVehicle.flying
                     onClicked:  {
@@ -343,6 +326,37 @@ Item {
                         _activeVehicle.pauseVehicle()
                     }
                 }
+
+                RoundImageButton {
+                    width:       ScreenTools.defaultFontPixelHeight*6
+                    height:      width
+                    showborder:  true
+                    text:       (_activeVehicle && _activeVehicle.armed) ? (_activeVehicle.flying ? qsTr("Emergency Stop") : qsTr("Disarm")) :  qsTr("Arm")
+                    imageResource: (_activeVehicle && _activeVehicle.armed) ? (_activeVehicle.flying ? "/qmlimages/lock.svg" : "/qmlimages/lock.svg") :  "/qmlimages/unlock.svg"
+                    bordercolor:    qgcPal.buttonHighlight
+                    visible:    _activeVehicle
+                    onClicked:  _guidedModeBar.confirmAction(_activeVehicle.armed ? (_activeVehicle.flying ? _guidedModeBar.confirmEmergencyStop : _guidedModeBar.confirmDisarm) : _guidedModeBar.confirmArm)
+                }
+
+                RoundImageButton {
+                    width:       ScreenTools.defaultFontPixelHeight*4
+                    height:      width
+                    anchors.verticalCenter: parent.verticalCenter
+                    imageResource: (_activeVehicle && _activeVehicle.flying) ?  "/qmlimages/landing.svg":  "/qmlimages/takeoff.svg"
+                    text:       (_activeVehicle && _activeVehicle.flying) ?  qsTr("Land"):  qsTr("Takeoff")
+                    visible:    _activeVehicle && _activeVehicle.guidedModeSupported && _activeVehicle.armed
+                    onClicked:  _guidedModeBar.confirmAction(_activeVehicle.flying ? _guidedModeBar.confirmLand : _guidedModeBar.confirmTakeoff)
+                }
+                RoundImageButton{
+                    width:       ScreenTools.defaultFontPixelHeight*4
+                    height:      width
+                    anchors.verticalCenter: parent.verticalCenter
+                    imageResource: "/qmlimages/Returnhome.svg"
+                    text:       qsTr("RTL")
+                    visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.guidedModeSupported && _activeVehicle.flying
+                    onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmHome)
+                }
+
 
                 QGCButton {
                     pointSize:  _guidedModeBar._fontPointSize

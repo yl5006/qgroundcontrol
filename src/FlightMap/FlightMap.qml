@@ -162,7 +162,7 @@ Map {
     property alias polygonDraw: polygonDrawer
 
     QGCMapLabel {
-        id:                     polygonHelp        
+        id:                     polygonHelp
         anchors.topMargin:      parent.height - ScreenTools.availableHeight
         anchors.top:            parent.top
         anchors.left:           parent.left

@@ -17,14 +17,14 @@ RadioButton {
                 implicitWidth:  16
                 implicitHeight: 16
                 radius: 9
-                border.color: _qgcPal.primaryButton
+                border.color: qgcPal.primaryButton
                 border.width: 2
                 color: "transparent"
                 Rectangle {
                     anchors.fill: parent
                     anchors.margins: 4
                     visible: control.checked
-                    color:  _qgcPal.primaryButton
+                    color:  qgcPal.primaryButton
                     radius: width/2
                 }
         }

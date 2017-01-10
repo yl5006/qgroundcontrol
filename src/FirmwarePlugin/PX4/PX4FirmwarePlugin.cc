@@ -48,8 +48,8 @@ const char* PX4FirmwarePlugin::_offboardFlightMode =     QT_TR_NOOP("Offboard");
 const char* PX4FirmwarePlugin::_stabilizedFlightMode =   QT_TR_NOOP("自稳");
 const char* PX4FirmwarePlugin::_rattitudeFlightMode =    "Rattitude";
 const char* PX4FirmwarePlugin::_followMeFlightMode =     QT_TR_NOOP("跟随");
-const char* PX4FirmwarePlugin::rtgsFlightMode =         "Return to Groundstation";
-const char* PX4FirmwarePlugin::readyFlightMode =        "Ready"; // unused
+const char* PX4FirmwarePlugin::_rtgsFlightMode =         "Return to Groundstation";
+const char* PX4FirmwarePlugin::_readyFlightMode =        "Ready"; // unused
 
 /// Tranlates from PX4 custom modes to flight mode names
 

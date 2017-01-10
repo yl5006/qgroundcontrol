@@ -171,7 +171,7 @@ void MissionItem::save(QJsonObject& json) const
     json[_jsonAutoContinueKey] = autoContinue();
     json[_jsonDoJumpIdKey] = _sequenceNumber;
 
-    QJsonArray rgParams =  { param1(), param2(), param3(), param4(),param8(),param9()，param10() };
+    QJsonArray rgParams =  { param1(), param2(), param3(), param4(),param8(),param9(),param10() };
     json[_jsonParamsKey] = rgParams;
 
     QJsonValue coordinateValue;

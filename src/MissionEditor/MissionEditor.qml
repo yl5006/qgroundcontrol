@@ -249,7 +249,7 @@ QGCView {
 
     function setCurrentItem(sequenceNumber) {
         editorMap.polygonDraw.cancelPolygonEdit()
-     //   _currentMissionItem = undefined
+        _currentMissionItem = undefined
         for (var i=0; i<_visualItems.count; i++) {
             var visualItem = _visualItems.get(i)
             if (visualItem.sequenceNumber == sequenceNumber) {
@@ -410,7 +410,7 @@ QGCView {
 
                     function liveDrag() {
                         if (!itemDragger.preventCoordinateBindingLoop && Drag.active) {
-//                            var point = Qt.point(itemDragger.x + (itemDragger.width  / 2), itemDragger.y + (itemDragger.height / 2))
+                            //                            var point = Qt.point(itemDragger.x + (itemDragger.width  / 2), itemDragger.y + (itemDragger.height / 2))
                             var point = Qt.point(itemDragger.x + (itemDragger.width  / 2), itemDragger.y + (itemDragger.height))
                             var coordinate = editorMap.toCoordinate(point)
                             coordinate.altitude = itemDragger.coordinateItem.coordinate.altitude
@@ -649,12 +649,12 @@ QGCView {
                     QGCListView {
                         id:             missionItemEditorListView
                         anchors.left:   parent.left
- //                       anchors.right:  parent.right
+                        //                       anchors.right:  parent.right
                         anchors.top:    parent.top
                         height:         parent.height
                         width:          parent.width   //add yaoling
                         spacing:        _margin / 2
-//                      orientation:    ListView.Vertical   //change by yaoling
+                        //                      orientation:    ListView.Vertical   //change by yaoling
                         orientation:    ListView.Horizontal
                         model:          missionController.visualItems
                         cacheBuffer:    height * 2
@@ -668,18 +668,18 @@ QGCView {
 
                             onClicked:  setCurrentItem(object.sequenceNumber)
 
-//                            onRemove: {
-//                                itemDragger.clearItem()
-//                                missionController.removeMissionItem(index)
-//                                editorMap.polygonDraw.cancelPolygonEdit()
-//                            }
+                            //                            onRemove: {
+                            //                                itemDragger.clearItem()
+                            //                                missionController.removeMissionItem(index)
+                            //                                editorMap.polygonDraw.cancelPolygonEdit()
+                            //                            }
 
-//                            onInsert: {
-//                                var sequenceNumber = missionController.insertSimpleMissionItem(editorMap.center, index)
-//                                setCurrentItem(sequenceNumber)
-//                            }
+                            //                            onInsert: {
+                            //                                var sequenceNumber = missionController.insertSimpleMissionItem(editorMap.center, index)
+                            //                                setCurrentItem(sequenceNumber)
+                            //                            }
 
-//                            onMoveHomeToMapCenter: _visualItems.get(0).coordinate = editorMap.center
+                            //                            onMoveHomeToMapCenter: _visualItems.get(0).coordinate = editorMap.center
                         }
                     } // QGCListView
                 } // Item - Mission Item editor
@@ -696,19 +696,19 @@ QGCView {
                     MouseArea {
                         anchors.fill:       parent
                         onClicked: {
-                              //  setimg.visible=!setimg.visible
+                            //  setimg.visible=!setimg.visible
                         }
                     }
                 }
 
-//                SetMutipMissionItem
-//                {
-//                    id:                     setimg
-//                    anchors.centerIn:       parent
-//                    missionItems:           _visualItems
-//                    z:                      QGroundControl.zOrderTopMost
-//                    visible:                false
-//                }
+                //                SetMutipMissionItem
+                //                {
+                //                    id:                     setimg
+                //                    anchors.centerIn:       parent
+                //                    missionItems:           _visualItems
+                //                    z:                      QGroundControl.zOrderTopMost
+                //                    visible:                false
+                //                }
 
 
                 // GeoFence Editor
@@ -819,7 +819,7 @@ QGCView {
                         _dropButtonsExclusiveGroup.current = null
                     }
                 }
-/*
+                /*
                 QGCMapLabel {
                     id:                         planLabel
                     map:                        editorMap
@@ -890,94 +890,87 @@ QGCView {
                         width:      1
                         color:      "grey"
                     }
-		    CenterMapDropButton {
-                    id:                     centerMapButton
-                    exclusiveGroup:         _dropButtonsExclusiveGroup
-                    map:                    editorMap
-                    mapFitViewport:         Qt.rect(leftToolWidth, toolbarHeight, editorMap.width - leftToolWidth - rightPanelWidth, editorMap.height - toolbarHeight)
-                    usePlannedHomePosition: true
-                    geoFenceController:     geoFenceController
-                    missionController:      missionController
-                    rallyPointController:   rallyPointController
+                    CenterMapDropButton {
+                        id:                     centerMapButton
+                        exclusiveGroup:         _dropButtonsExclusiveGroup
+                        map:                    editorMap
+                        mapFitViewport:         Qt.rect(leftToolWidth, toolbarHeight, editorMap.width - leftToolWidth - rightPanelWidth, editorMap.height - toolbarHeight)
+                        usePlannedHomePosition: true
+                        geoFenceController:     geoFenceController
+                        missionController:      missionController
+                        rallyPointController:   rallyPointController
 
-                    property real toolbarHeight:    qgcView.height - ScreenTools.availableHeight
-                    property real rightPanelWidth:  _rightPanelWidth
-                    property real leftToolWidth:    centerMapButton.x + centerMapButton.width
-                }
-                    DropButton {
-                        id:                 centerMapButton1
-                        dropDirection:      dropDown
-                        buttonImage:        "/qmlimages/MapCenter.svg"
-                        viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
-                        exclusiveGroup:     _dropButtonsExclusiveGroup
-                        lightBorders:       _lightWidgetBorders
+                        property real toolbarHeight:    qgcView.height - ScreenTools.availableHeight
+                        property real rightPanelWidth:  _rightPanelWidth
+                        property real leftToolWidth:    centerMapButton.x + centerMapButton.width
+                    }
+//                    DropButton {
+//                        id:                 centerMapButton1
+//                        dropDirection:      dropDown
+//                        buttonImage:        "/qmlimages/MapCenter.svg"
+//                        viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
+//                        exclusiveGroup:     _dropButtonsExclusiveGroup
+//                        lightBorders:       _lightWidgetBorders
 
-                        dropDownComponent: Component {
-                            //                            Column {
-                            //                                spacing: ScreenTools.defaultFontPixelWidth * 0.5
-                            //                                QGCLabel { text: qsTr("中心位置") }// "Center map:" }
-                            Row {
-                                spacing: ScreenTools.defaultFontPixelWidth*0.5
-                                RoundImageButton {
-                                    width:          ScreenTools.defaultFontPixelHeight*3
-                                    height:         width
-                                    exclusiveGroup: _mapTypeButtonsExclusiveGroup
-                                    imageResource:  "/qmlimages/map_home.svg"
-                                    // showborder:     true
-                                    bordercolor:    qgcPal.text
-                                    onClicked: {
-                                        centerMapButton.hideDropDown()
-                                        editorMap.center = missionController.visualItems.get(0).coordinate
-                                    }
-                                }
-                                Rectangle {
-                                    anchors.verticalCenter:         parent.verticalCenter
-                                    height:     parent.height*0.8
-                                    width:      1
-                                    color:      "grey"
-                                }
-                                RoundImageButton {
-                                    width:          ScreenTools.defaultFontPixelHeight*3
-                                    height:         width
-                                    imageResource:  "/qmlimages/Plan.svg"//"/qmlimages/map_mission.svg"
-                                    //    showborder:     true
-                                    bordercolor:    qgcPal.text
-                                    onClicked: {
-                                        centerMapButton.hideDropDown()
-                                            fitMapViewportToMissionItems()
-                                        }
-                                    }
-//                                    QGCButton {
-//                                        text: qsTr("All items")
-//                                        width:  ScreenTools.defaultFontPixelWidth * 10
-//                                        onClicked: {
-//                                            centerMapButton.hideDropDown()
-//                                            fitMapViewportToAllItems()
+//                        dropDownComponent: Component {
+//                            //                            Column {
+//                            //                                spacing: ScreenTools.defaultFontPixelWidth * 0.5
+//                            //                                QGCLabel { text: qsTr("中心位置") }// "Center map:" }
+//                            Row {
+//                                spacing: ScreenTools.defaultFontPixelWidth*0.5
+//                                RoundImageButton {
+//                                    width:          ScreenTools.defaultFontPixelHeight*3
+//                                    height:         width
+//                                    exclusiveGroup: _mapTypeButtonsExclusiveGroup
+//                                    imageResource:  "/qmlimages/map_home.svg"
+//                                    // showborder:     true
+//                                    bordercolor:    qgcPal.text
+//                                    onClicked: {
+//                                        centerMapButton.hideDropDown()
+//                                        editorMap.center = missionController.visualItems.get(0).coordinate
 //                                    }
 //                                }
-                                Rectangle {
-                                    anchors.verticalCenter:         parent.verticalCenter
-                                    height:     parent.height*0.8
-                                    width:      1
-                                    color:      "grey"
-                                }
-                                RoundImageButton {
-                                    width:          ScreenTools.defaultFontPixelHeight*3
-                                    height:         width
-                                    imageResource:  "/qmlimages/map_plane.svg"
-                                    //    showborder:     true
-                                    bordercolor:    qgcPal.text
-                                    enabled:    activeVehicle && activeVehicle.latitude != 0 && activeVehicle.longitude != 0
-                                    property var activeVehicle: _activeVehicle
-                                    onClicked: {
-                                        centerMapButton.hideDropDown()
-                                        editorMap.center = activeVehicle.coordinate
-                                    }
-                                }
+//                                Rectangle {
+//                                    anchors.verticalCenter:         parent.verticalCenter
+//                                    height:     parent.height*0.8
+//                                    width:      1
+//                                    color:      "grey"
+//                                }
+//                                RoundImageButton {
+//                                    width:          ScreenTools.defaultFontPixelHeight*3
+//                                    height:         width
+//                                    imageResource:  "/qmlimages/Plan.svg"//"/qmlimages/map_mission.svg"
+//                                    //    showborder:     true
+//                                    bordercolor:    qgcPal.text
+//                                    onClicked: {
+//                                        centerMapButton.hideDropDown()
+//                                        fitMapViewportToMissionItems()
+//                                    }
+//                                }
 
-                            }
-                        }
-                    }
+//                                Rectangle {
+//                                    anchors.verticalCenter:         parent.verticalCenter
+//                                    height:     parent.height*0.8
+//                                    width:      1
+//                                    color:      "grey"
+//                                }
+//                                RoundImageButton {
+//                                    width:          ScreenTools.defaultFontPixelHeight*3
+//                                    height:         width
+//                                    imageResource:  "/qmlimages/map_plane.svg"
+//                                    //    showborder:     true
+//                                    bordercolor:    qgcPal.text
+//                                    enabled:    activeVehicle && activeVehicle.latitude != 0 && activeVehicle.longitude != 0
+//                                    property var activeVehicle: _activeVehicle
+//                                    onClicked: {
+//                                        centerMapButton.hideDropDown()
+//                                        editorMap.center = activeVehicle.coordinate
+//                                    }
+//                                }
+
+//                            }
+//                        }
+//                    }
                     Rectangle {
                         height:     parent.height*0.8
                         width:      1
@@ -1025,45 +1018,45 @@ QGCView {
                         height:     parent.height*0.8
                         width:      1
                         color:      "grey"
-                }
-
-                //-- Zoom Map In
-                RoundButton {
-                    id:                 mapZoomPlus
-                    anchors.topMargin:  ScreenTools.defaultFontPixelHeight
-                    anchors.top:        mapTypeButton.bottom
-                    anchors.left:       mapTypeButton.left
-                    visible:            !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
-                    buttonImage:        "/qmlimages/ZoomPlus.svg"
-                    lightBorders:   _lightWidgetBorders
-
-                    onClicked: {
-                        if(editorMap)
-                            editorMap.zoomLevel += 0.5
-                        checked = false
                     }
-                }
+
+                    //-- Zoom Map In
+                    RoundButton {
+                        id:                 mapZoomPlus
+//                        anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+//                        anchors.top:        mapTypeButton.bottom
+//                        anchors.left:       mapTypeButton.left
+                        visible:            !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
+                        buttonImage:        "/qmlimages/ZoomPlus.svg"
+                        lightBorders:   _lightWidgetBorders
+
+                        onClicked: {
+                            if(editorMap)
+                                editorMap.zoomLevel += 0.5
+                            checked = false
+                        }
+                    }
                     Rectangle {
                         height:     parent.height*0.8
                         width:      1
                         color:      "grey"
                     }
-                //-- Zoom Map Out
-                RoundButton {
-                    id:                 mapZoomMinus
-                    anchors.topMargin:  ScreenTools.defaultFontPixelHeight
-                    anchors.top:        mapZoomPlus.bottom
-                    anchors.left:       mapZoomPlus.left
-                    visible:            !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
-                    buttonImage:        "/qmlimages/ZoomMinus.svg"
-                    lightBorders:       _lightWidgetBorders
-                    onClicked: {
-                        if(editorMap)
-                            editorMap.zoomLevel -= 0.5
-                        checked = false
+                    //-- Zoom Map Out
+                    RoundButton {
+                        id:                 mapZoomMinus
+//                        anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+//                        anchors.top:        mapZoomPlus.bottom
+//                        anchors.left:       mapZoomPlus.left
+                        visible:            !ScreenTools.isTinyScreen && !ScreenTools.isShortScreen
+                        buttonImage:        "/qmlimages/ZoomMinus.svg"
+                        lightBorders:       _lightWidgetBorders
+                        onClicked: {
+                            if(editorMap)
+                                editorMap.zoomLevel -= 0.5
+                            checked = false
+                        }
                     }
                 }
-
                 MapScale {
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     anchors.left:       toolColumn.right
@@ -1087,7 +1080,6 @@ QGCView {
                     cruiseDistance:      missionController.cruiseDistance
                     hoverDistance:       missionController.hoverDistance
                     qgcView:        qgcView
-                    readOnly:       false
                     visible:        _editingLayer == _layerMission
                     z:              QGroundControl.zOrderTopMost+100
 
@@ -1105,65 +1097,65 @@ QGCView {
                     onMoveHomeToMapCenter: _visualItems.get(0).coordinate = editorMap.center
                 }
                 //change by yaoling do not use this
-//                MissionItemStatus {
-//                    id:                     waypointValuesDisplay
-//                    anchors.margins:        ScreenTools.defaultFontPixelWidth
-//                    anchors.left:           parent.left
-//                    anchors.bottom:         parent.bottom
-//                    z:                      QGroundControl.zOrderTopMost
-//                    currentMissionItem:     _currentMissionItem
-//                    missionItems:           missionController.visualItems
-//                    expandedWidth:          missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
-//                    missionDistance:        missionController.missionDistance
-//                    missionMaxTelemetry:    missionController.missionMaxTelemetry
-//                    cruiseDistance:         missionController.cruiseDistance
-//                    hoverDistance:          missionController.hoverDistance
-//                    visible:                _editingLayer == _layerMission && !ScreenTools.isShortScreen
-//                }
+                //                MissionItemStatus {
+                //                    id:                     waypointValuesDisplay
+                //                    anchors.margins:        ScreenTools.defaultFontPixelWidth
+                //                    anchors.left:           parent.left
+                //                    anchors.bottom:         parent.bottom
+                //                    z:                      QGroundControl.zOrderTopMost
+                //                    currentMissionItem:     _currentMissionItem
+                //                    missionItems:           missionController.visualItems
+                //                    expandedWidth:          missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
+                //                    missionDistance:        missionController.missionDistance
+                //                    missionMaxTelemetry:    missionController.missionMaxTelemetry
+                //                    cruiseDistance:         missionController.cruiseDistance
+                //                    hoverDistance:          missionController.hoverDistance
+                //                    visible:                _editingLayer == _layerMission && !ScreenTools.isShortScreen
+                //                }
             } // Item - split view container
         } // QGCViewPanel
 
-    Component {
-        id: syncLoadFromVehicleOverwrite
-        QGCViewMessage {
-            id:         syncLoadFromVehicleCheck
-            height:     ScreenTools.defaultFontPixelHeight*5
-            message:   qsTr("你有未保存或未发送的任务,从飞机载入任务会丢失这些修改，你确认从飞机载入飞行任务?")//"You have unsaved/unsent mission changes. Loading the mission from the Vehicle will lose these changes. Are you sure you want to load the mission from the Vehicle?"
-            function accept() {
-                hideDialog()
-                _syncDropDownController.loadFromVehicle()
+        Component {
+            id: syncLoadFromVehicleOverwrite
+            QGCViewMessage {
+                id:         syncLoadFromVehicleCheck
+                height:     ScreenTools.defaultFontPixelHeight*5
+                message:   qsTr("你有未保存或未发送的任务,从飞机载入任务会丢失这些修改，你确认从飞机载入飞行任务?")//"You have unsaved/unsent mission changes. Loading the mission from the Vehicle will lose these changes. Are you sure you want to load the mission from the Vehicle?"
+                function accept() {
+                    hideDialog()
+                    _syncDropDownController.loadFromVehicle()
+                }
             }
         }
-    }
 
-    Component {
-        id: syncLoadFromFileOverwrite
-        QGCViewMessage {
-            id:         syncLoadFromVehicleCheck
-            height:     ScreenTools.defaultFontPixelHeight*5
-            message:   qsTr("你有未保存的飞行计划，载入任务会丢失改计划，确认从文件载入？")//qsTr("You have unsaved/unsent mission changes. Loading a mission from a file will lose these changes. Are you sure you want to load a mission from a file?")
-            function accept() {
-                hideDialog()
-                _syncDropDownController.loadFromSelectedFile()
+        Component {
+            id: syncLoadFromFileOverwrite
+            QGCViewMessage {
+                id:         syncLoadFromVehicleCheck
+                height:     ScreenTools.defaultFontPixelHeight*5
+                message:   qsTr("你有未保存的飞行计划，载入任务会丢失改计划，确认从文件载入？")//qsTr("You have unsaved/unsent mission changes. Loading a mission from a file will lose these changes. Are you sure you want to load a mission from a file?")
+                function accept() {
+                    hideDialog()
+                    _syncDropDownController.loadFromSelectedFile()
+                }
             }
         }
-    }
 
-    Component {
-        id: removeAllPromptDialog
-        QGCViewMessage {
-            height:     ScreenTools.defaultFontPixelHeight*5
-            message: qsTr("确认删除所有任务点?")//"Are you sure you want to delete all mission items?"
-            function accept() {
-                itemDragger.clearItem()
-                _syncDropDownController.removeAll()
-                hideDialog()
+        Component {
+            id: removeAllPromptDialog
+            QGCViewMessage {
+                height:     ScreenTools.defaultFontPixelHeight*5
+                message: qsTr("确认删除所有任务点?")//"Are you sure you want to delete all mission items?"
+                function accept() {
+                    itemDragger.clearItem()
+                    _syncDropDownController.removeAll()
+                    hideDialog()
+                }
             }
         }
-    }
 
-    Component {
-        id: syncDropDownComponent
+        Component {
+            id: syncDropDownComponent
 
             Column {
                 property string _overwriteText: (_editingLayer == _layerMission) ? qsTr("覆盖任务")/*qsTr("Mission overwrite")*/ : qsTr("GeoFence overwrite")
@@ -1250,171 +1242,171 @@ QGCView {
                 }
             }
         }
-    Component {
-        id: loadandgenerateDialog
+        Component {
+            id: loadandgenerateDialog
 
-        QGCViewDialog {
-            width:          ScreenTools.defaultFontPixelHeight*10
-            height:         ScreenTools.defaultFontPixelHeight*12
-            function accept() {
-             //   var toIndex = toCombo.currentIndex
-                missionController.loadFromTxtFile(_filename,Number(wayangle.text),Number(wayspace.text),Number(addalt.text),Number(waynum.text),camer.checked,relalt.checked)
-                hideDialog()
-            }
-            Rectangle {
-                id:                         title
-                anchors.top:                parent.top
-                anchors.topMargin:          -ScreenTools.defaultFontPixelHeight*2
-                anchors.horizontalCenter:   parent.horizontalCenter
-                width:                      parent.width
-                height:                     ScreenTools.defaultFontPixelHeight*4
-                color:                      "transparent"
-                QGCCircleProgress{
-                    id:                     circle
-                    anchors.left:           parent.left
-                    anchors.top:            parent.top
-                    anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*3
-                    width:                  ScreenTools.defaultFontPixelHeight*3
-                    value:                  0
+            QGCViewDialog {
+                width:          ScreenTools.defaultFontPixelHeight*10
+                height:         ScreenTools.defaultFontPixelHeight*12
+                function accept() {
+                    //   var toIndex = toCombo.currentIndex
+                    missionController.loadFromTxtFile(_filename,Number(wayangle.text),Number(wayspace.text),Number(addalt.text),Number(waynum.text),camer.checked,relalt.checked)
+                    hideDialog()
                 }
-                QGCColoredImage {
-                    id:                     img
-                    height:                 ScreenTools.defaultFontPixelHeight*1.5
-                    width:                  height
-                    sourceSize.width: width
-                    source:     "/qmlimages/loadfromfile.svg"
-                    fillMode:   Image.PreserveAspectFit
-                    color:      qgcPal.text
-                    anchors.horizontalCenter:circle.horizontalCenter
-                    anchors.verticalCenter: circle.verticalCenter
-                }
-                QGCLabel {
-                    id:             idset
-                    anchors.left:   img.left
-                    anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
-                    text:           qsTr("生成航线参数")//"safe"
-                    font.pointSize: ScreenTools.mediumFontPointSize
-                    font.bold:              true
-                    color:          qgcPal.text
-                    anchors.verticalCenter: img.verticalCenter
-                }
-                Image {
-                    source:    "/qmlimages/title.svg"
-                    width:      idset.width+ScreenTools.defaultFontPixelHeight*3
-                    height:     ScreenTools.defaultFontPixelHeight*1.5
-                    anchors.verticalCenter: circle.verticalCenter
-                    anchors.left:          circle.right
-                    //                fillMode: Image.PreserveAspectFit
-                }
-            }
-            Column {
-                anchors.top:                title.bottom
-                anchors.horizontalCenter:   parent.horizontalCenter
-                width:          parent.width*0.8
-                spacing:        ScreenTools.defaultFontPixelHeight
-                Row {
-                    spacing:    ScreenTools.defaultFontPixelHeight*2
-                Row {
-                    spacing:    ScreenTools.defaultFontPixelHeight
-                    QGCLabel {
-                        anchors.baseline:   wayangle.baseline
-                        text:               qsTr("偏移角度:")
-                        width:              ScreenTools.defaultFontPixelHeight*5
+                Rectangle {
+                    id:                         title
+                    anchors.top:                parent.top
+                    anchors.topMargin:          -ScreenTools.defaultFontPixelHeight*2
+                    anchors.horizontalCenter:   parent.horizontalCenter
+                    width:                      parent.width
+                    height:                     ScreenTools.defaultFontPixelHeight*4
+                    color:                      "transparent"
+                    QGCCircleProgress{
+                        id:                     circle
+                        anchors.left:           parent.left
+                        anchors.top:            parent.top
+                        anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*3
+                        width:                  ScreenTools.defaultFontPixelHeight*3
+                        value:                  0
                     }
-                    QGCTextField {
-                        id:                 wayangle
-                        width:              ScreenTools.defaultFontPixelHeight*5
-                        validator:          DoubleValidator {bottom: 0; top: 360;}
-                        inputMethodHints:   Qt.ImhDigitsOnly
-                        text:               "90"
+                    QGCColoredImage {
+                        id:                     img
+                        height:                 ScreenTools.defaultFontPixelHeight*1.5
+                        width:                  height
+                        sourceSize.width: width
+                        source:     "/qmlimages/loadfromfile.svg"
+                        fillMode:   Image.PreserveAspectFit
+                        color:      qgcPal.text
+                        anchors.horizontalCenter:circle.horizontalCenter
+                        anchors.verticalCenter: circle.verticalCenter
                     }
                     QGCLabel {
-                        text:               qsTr("度")
+                        id:             idset
+                        anchors.left:   img.left
+                        anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
+                        text:           qsTr("生成航线参数")//"safe"
+                        font.pointSize: ScreenTools.mediumFontPointSize
+                        font.bold:              true
+                        color:          qgcPal.text
+                        anchors.verticalCenter: img.verticalCenter
+                    }
+                    Image {
+                        source:    "/qmlimages/title.svg"
+                        width:      idset.width+ScreenTools.defaultFontPixelHeight*3
+                        height:     ScreenTools.defaultFontPixelHeight*1.5
+                        anchors.verticalCenter: circle.verticalCenter
+                        anchors.left:          circle.right
+                        //                fillMode: Image.PreserveAspectFit
                     }
                 }
-                Row {
-                    spacing:    ScreenTools.defaultFontPixelHeight
-                    QGCLabel {
-                        anchors.baseline:   wayspace.baseline
-                        text:               qsTr("偏移距离:")
-                        width:              ScreenTools.defaultFontPixelHeight*5
+                Column {
+                    anchors.top:                title.bottom
+                    anchors.horizontalCenter:   parent.horizontalCenter
+                    width:          parent.width*0.8
+                    spacing:        ScreenTools.defaultFontPixelHeight
+                    Row {
+                        spacing:    ScreenTools.defaultFontPixelHeight*2
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelHeight
+                            QGCLabel {
+                                anchors.baseline:   wayangle.baseline
+                                text:               qsTr("偏移角度:")
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                            }
+                            QGCTextField {
+                                id:                 wayangle
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                                validator:          DoubleValidator {bottom: 0; top: 360;}
+                                inputMethodHints:   Qt.ImhDigitsOnly
+                                text:               "90"
+                            }
+                            QGCLabel {
+                                text:               qsTr("度")
+                            }
+                        }
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelHeight
+                            QGCLabel {
+                                anchors.baseline:   wayspace.baseline
+                                text:               qsTr("偏移距离:")
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                            }
+                            QGCTextField {
+                                id:                 wayspace
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                                validator:          DoubleValidator {bottom: 0; top: 5000;}
+                                inputMethodHints:   Qt.ImhDigitsOnly
+                                text:               "0.0"
+                            }
+                            QGCLabel {
+                                text:               qsTr("米")
+                            }
+                        }
                     }
-                    QGCTextField {
-                        id:                 wayspace
-                        width:              ScreenTools.defaultFontPixelHeight*5
-                        validator:          DoubleValidator {bottom: 0; top: 5000;}
-                        inputMethodHints:   Qt.ImhDigitsOnly
-                        text:               "0.0"
-                    }
-                    QGCLabel {
-                        text:               qsTr("米")
-                    }
-                }
-                }
-                Row {
-                    spacing: ScreenTools.defaultFontPixelHeight*2
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    ExclusiveGroup { id: modeGroup }
+                    Row {
+                        spacing: ScreenTools.defaultFontPixelHeight*2
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        ExclusiveGroup { id: modeGroup }
 
-                    QGCRadioButton {
-                        id:             relalt
-                        exclusiveGroup: modeGroup
-                        text:           qsTr("相对高度")//"Mode 1"
-                        checked:        true
+                        QGCRadioButton {
+                            id:             relalt
+                            exclusiveGroup: modeGroup
+                            text:           qsTr("相对高度")//"Mode 1"
+                            checked:        true
+                        }
+
+                        QGCRadioButton {
+                            exclusiveGroup: modeGroup
+                            text:           qsTr("海拔高度")//"Mode 2"
+                        }
+                    }
+                    //                FactTextFieldGrid {
+                    //                    width:          ScreenTools.defaultFontPixelHeight*12
+                    //                    columnSpacing:  _margin
+                    //                    rowSpacing:     _margin
+                    //                    showHelpdig:    false
+                    //                    factList:       [ missionController.genoffsetAngle, missionController.genoffsetSpacing ]
+                    //                }
+                    Row {
+                        spacing:    ScreenTools.defaultFontPixelHeight
+                        QGCLabel {
+                            anchors.baseline:   addalt.baseline
+                            text:               qsTr("增加高度:")
+                            width:              ScreenTools.defaultFontPixelHeight*5
+                        }
+                        QGCTextField {
+                            id:                 addalt
+                            width:              ScreenTools.defaultFontPixelHeight*5
+                            validator:          DoubleValidator {bottom: 0; top: 5000;}
+                            inputMethodHints:   Qt.ImhDigitsOnly
+                            text:               "0.0"
+                        }
+                        QGCLabel {
+                            text:               qsTr("米")
+                        }
+                    }
+                    QGCCheckBox {
+                        id:         camer
+                        text:       qsTr("是否拍照:")//qsTr("Enable Flow Control")
                     }
 
-                    QGCRadioButton {
-                        exclusiveGroup: modeGroup
-                        text:           qsTr("海拔高度")//"Mode 2"
-                    }
-                }
-//                FactTextFieldGrid {
-//                    width:          ScreenTools.defaultFontPixelHeight*12
-//                    columnSpacing:  _margin
-//                    rowSpacing:     _margin
-//                    showHelpdig:    false
-//                    factList:       [ missionController.genoffsetAngle, missionController.genoffsetSpacing ]
-//                }
-                Row {
-                    spacing:    ScreenTools.defaultFontPixelHeight
-                    QGCLabel {
-                        anchors.baseline:   addalt.baseline
-                        text:               qsTr("增加高度:")
-                        width:              ScreenTools.defaultFontPixelHeight*5
-                    }
-                    QGCTextField {
-                        id:                 addalt
-                        width:              ScreenTools.defaultFontPixelHeight*5
-                        validator:          DoubleValidator {bottom: 0; top: 5000;}
-                        inputMethodHints:   Qt.ImhDigitsOnly
-                        text:               "0.0"
-                    }
-                    QGCLabel {
-                        text:               qsTr("米")
-                    }
-                }
-                QGCCheckBox {
-                    id:         camer
-                    text:       qsTr("是否拍照:")//qsTr("Enable Flow Control")
-                }
-
-                Row {
-                    spacing:    ScreenTools.defaultFontPixelHeight
-                    QGCLabel {
-                        anchors.baseline:   waynum.baseline
-                        text:               qsTr("路径条数:")
-                        width:              ScreenTools.defaultFontPixelHeight*5
-                    }
-                    QGCTextField {
-                        id:                 waynum
-                        width:              ScreenTools.defaultFontPixelHeight*5
-                        validator:          IntValidator {bottom: 1; top: 5;}
-                        inputMethodHints:   Qt.ImhDigitsOnly
-                        text:               "1"
+                    Row {
+                        spacing:    ScreenTools.defaultFontPixelHeight
+                        QGCLabel {
+                            anchors.baseline:   waynum.baseline
+                            text:               qsTr("路径条数:")
+                            width:              ScreenTools.defaultFontPixelHeight*5
+                        }
+                        QGCTextField {
+                            id:                 waynum
+                            width:              ScreenTools.defaultFontPixelHeight*5
+                            validator:          IntValidator {bottom: 1; top: 5;}
+                            inputMethodHints:   Qt.ImhDigitsOnly
+                            text:               "1"
+                        }
                     }
                 }
             }
         }
-    }
     }
 } // QGCVIew

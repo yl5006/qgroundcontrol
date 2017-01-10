@@ -39,7 +39,6 @@ FlightMap {
     property int    _retaskSequence:                0
     property real   _toolButtonTopMargin:           parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
 
-    readonly property real _toolButtonTopMargin:    parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
     Component.onCompleted: {
         QGroundControl.flightMapPosition = center
         QGroundControl.flightMapZoom = zoomLevel

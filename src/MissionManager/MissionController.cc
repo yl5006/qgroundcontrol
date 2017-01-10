@@ -52,17 +52,7 @@ MissionController::MissionController(QObject *parent)
     , _missionMaxTelemetry(0.0)
     , _cruiseDistance(0.0)
     , _hoverDistance(0.0)
-    , _genoffsetAngleFact             (0, _genoffsetAngleFactName,              FactMetaData::valueTypeDouble)
-    , _genoffsetSpacingFact           (0, _genoffsetSpacingFactName,            FactMetaData::valueTypeDouble)
-
 {
-    if (_metaDataMap.isEmpty()) {
-         _metaDataMap = FactMetaData::createMapFromJsonFile(QStringLiteral(":/json/Generate.FactMetaDatacn.json"), NULL /* metaDataParent */);
-    }
-    _genoffsetAngleFact.setRawValue(90);
-    _genoffsetSpacingFact.setRawValue(0);
-    _genoffsetAngleFact.setMetaData(_metaDataMap[_genoffsetAngleFactName]);
-    _genoffsetSpacingFact.setMetaData(_metaDataMap[_genoffsetSpacingFactName]);
 
 }
 
