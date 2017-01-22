@@ -307,7 +307,26 @@ QGCView {
             z:                  _panel.z + 4
         }
 
-
+        SetCamera{
+            id:                     setcam
+            anchors.topMargin:      ScreenTools.toolbarHeight + _margins*2
+            anchors.rightMargin:    _margins*2
+            anchors.right:          parent.right
+            anchors.top:            parent.top
+            visible:                false
+            z:                      _panel.z + 5
+        }
+        RoundButton {
+            anchors.topMargin:      ScreenTools.toolbarHeight + _margins*2
+            anchors.rightMargin:    _margins*2
+            anchors.right:          parent.right
+            anchors.top:            parent.top
+            buttonImage:            "/qmlimages/setCammer.svg"
+            z:                      _panel.z + 5
+            onClicked: {
+                setcam.visible=!setcam.visible
+            }
+        }
         //-- Virtual Joystick
         Loader {
             id:                         virtualJoystickMultiTouch

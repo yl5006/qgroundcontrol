@@ -438,6 +438,12 @@
       <type>VTOL Tiltrotor</type>
     </airframe>
   </airframe_group>
+  <airframe_group image="VTOLPlane" name="E3垂直起降" type="19">
+    <airframe id="13020" maintainer="Samay Siga &lt;samay_s@icloud.com&gt;" name="E3垂直起降">
+      <maintainer>Samay Siga &lt;samay_s@icloud.com&gt;</maintainer>
+      <type>VTOL Tiltrotor</type>
+    </airframe>
+  </airframe_group>
   <airframe_group image="AirframeUnknown" name="custom" type="21">
     <airframe id="20000" maintainer="Julian Oes &lt;julian@oes.ch&gt;&#10;This startup can be used on Pixhawk/Pixfalcon/Pixracer for the&#10;passthrough of RC input and PWM output." name="Passthrough mode for Snapdragon">
       <maintainer>Julian Oes &lt;julian@oes.ch&gt;

@@ -42,6 +42,8 @@ public:
     Q_PROPERTY(QmlObjectListModel*  comboboxFacts   READ comboboxFacts  NOTIFY uiModelChanged)
     Q_PROPERTY(QmlObjectListModel*  textFieldFacts  READ textFieldFacts NOTIFY uiModelChanged)
 
+    Q_PROPERTY(double   param1  READ param1 WRITE setparam1)
+
     // Property accesors
     
     QString         category            (void) const;
@@ -97,11 +99,13 @@ public:
     bool exitCoordinateHasRelativeAltitude  (void) const final { return coordinateHasRelativeAltitude(); }
     bool exitCoordinateSameAsEntry          (void) const final { return true; }
 
+    double  param1          (void) const { return _missionItem.param1(); }
+
     void setDirty           (bool dirty) final;
     void setCoordinate      (const QGeoCoordinate& coordinate) final;
     void setSequenceNumber  (int sequenceNumber) final;
     void save               (QJsonObject& saveObject) const final;
-
+    void setparam1          (double param1);
 public slots:
     void setDefaultsForCommand(void);
 
@@ -116,6 +120,7 @@ signals:
 
 private slots:
     void _setDirtyFromSignal(void);
+    void _params8Signal(void);
     void _sendCommandChanged(void);
     void _sendCoordinateChanged(void);
     void _sendFrameChanged(void);

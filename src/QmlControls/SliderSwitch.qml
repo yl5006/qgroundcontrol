@@ -1,4 +1,4 @@
-import QtQuick                  2.5
+﻿import QtQuick                  2.5
 import QtQuick.Controls         1.4
 
 import QGroundControl.ScreenTools   1.0
@@ -28,7 +28,7 @@ Rectangle {
         id:                         label
         anchors.horizontalCenter:   parent.horizontalCenter
         anchors.verticalCenter:     parent.verticalCenter
-        text:                       qsTr("Slide to %1").arg(confirmText)
+        text:                       qsTr("确认 %1").arg(confirmText)
     }
 
     Rectangle {

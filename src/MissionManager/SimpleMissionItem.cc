@@ -161,6 +161,8 @@ void SimpleMissionItem::_connectSignals(void)
     connect(&_missionItem._commandFact, &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
     connect(&_missionItem,              &MissionItem::sequenceNumberChanged,    this, &SimpleMissionItem::_setDirtyFromSignal);
 
+    connect(&_missionItem._param8Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_params8Signal);
+
     // Values from these facts must propagate back and forth between the real object storage
     connect(&_altitudeRelativeToHomeFact,   &Fact::valueChanged,    this, &SimpleMissionItem::_syncAltitudeRelativeToHomeToFrame);
     connect(&_missionItem._frameFact,       &Fact::valueChanged,    this, &SimpleMissionItem::_syncFrameToAltitudeRelativeToHome);
@@ -527,6 +529,13 @@ void SimpleMissionItem::setRawEdit(bool rawEdit)
     }
 }
 
+void SimpleMissionItem::setparam1(double param1)
+{
+    if (_missionItem.param1()!= param1) {
+        _missionItem.setParam1(param1);
+    }
+}
+
 void SimpleMissionItem::setDirty(bool dirty)
 {
     if (!_homePositionSpecialCase || !dirty) {
@@ -537,6 +546,14 @@ void SimpleMissionItem::setDirty(bool dirty)
         // any value within the item changing.
         emit dirtyChanged(_dirty);
     }
+}
+
+void SimpleMissionItem::_params8Signal()
+{
+   if(_missionItem.command()==MAV_CMD_DO_JUMP)
+   {
+       emit jumpitemChanged();
+   }
 }
 
 void SimpleMissionItem::_setDirtyFromSignal(void)

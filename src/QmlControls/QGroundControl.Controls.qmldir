@@ -18,6 +18,7 @@ MissionCommandDialog    1.0 MissionCommandDialog.qml
 MissionItemIndex        1.0 MissionItemIndex.qml
 MissionItemIndexIndicator        1.0 MissionItemIndexIndicator.qml
 SetMutipMissionItem     1.0 SetMutipMissionItem.qml
+SetCamera               1.0 SetCamera.qml
 MissionItemIndexLabel   1.0 MissionItemIndexLabel.qml
 MissionItemStatus       1.0 MissionItemStatus.qml
 ModeSwitchDisplay       1.0 ModeSwitchDisplay.qml

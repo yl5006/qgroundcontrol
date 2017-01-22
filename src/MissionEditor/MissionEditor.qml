@@ -249,7 +249,7 @@ QGCView {
 
     function setCurrentItem(sequenceNumber) {
         editorMap.polygonDraw.cancelPolygonEdit()
-        _currentMissionItem = undefined
+   //     _currentMissionItem = undefined
         for (var i=0; i<_visualItems.count; i++) {
             var visualItem = _visualItems.get(i)
             if (visualItem.sequenceNumber == sequenceNumber) {
@@ -696,19 +696,19 @@ QGCView {
                     MouseArea {
                         anchors.fill:       parent
                         onClicked: {
-                            //  setimg.visible=!setimg.visible
+                              setimg.visible=!setimg.visible
                         }
                     }
                 }
 
-                //                SetMutipMissionItem
-                //                {
-                //                    id:                     setimg
-                //                    anchors.centerIn:       parent
-                //                    missionItems:           _visualItems
-                //                    z:                      QGroundControl.zOrderTopMost
-                //                    visible:                false
-                //                }
+                SetMutipMissionItem
+                {
+                    id:                     setimg
+                    anchors.centerIn:       parent
+                    missionItems:           _visualItems
+                    z:                      QGroundControl.zOrderTopMost
+                    visible:                false
+                }
 
 
                 // GeoFence Editor

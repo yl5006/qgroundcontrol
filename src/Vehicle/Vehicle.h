@@ -330,6 +330,7 @@ public:
     Q_INVOKABLE void        resetMessages();
 
     Q_INVOKABLE void virtualTabletJoystickValue(double roll, double pitch, double yaw, double thrust);
+    Q_INVOKABLE void virtualTabletRCValue(double roll, double pitch);
     Q_INVOKABLE void disconnectInactiveVehicle(void);
 
     Q_INVOKABLE void clearTrajectoryPoints(void);

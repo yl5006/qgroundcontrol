@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -137,9 +137,11 @@ signals:
     void coordinateChanged              (const QGeoCoordinate& coordinate);
     void exitCoordinateChanged          (const QGeoCoordinate& exitCoordinate);
     void dirtyChanged                   (bool dirty);
+    void jumpitemChanged                (void);
     void distanceChanged                (double distance);
     void isCurrentItemChanged           (bool isCurrentItem);
     void sequenceNumberChanged          (int sequenceNumber);
+    void altitudeChanged                (double altitude);
     void isSimpleItemChanged            (bool isSimpleItem);
     void specifiesCoordinateChanged     (void);
     void isStandaloneCoordinateChanged  (void);

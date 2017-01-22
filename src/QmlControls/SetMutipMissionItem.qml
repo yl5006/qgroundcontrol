@@ -14,7 +14,7 @@ Rectangle {
     id:      _root
     height:  ScreenTools.defaultFontPixelHeight*20
     color:   qgcPal.windowShade
-    width:   ScreenTools.defaultFontPixelHeight*40
+    width:   ScreenTools.defaultFontPixelHeight*42
     readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
     property var    missionItems                ///< List of all available mission items
 
@@ -23,14 +23,27 @@ Rectangle {
     readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
     MouseArea {
         anchors.fill: parent
+        onClicked: {
+            forceActiveFocus()
+        }
     }
-    Component.onCompleted: clearcheck()
     function clearcheck() {
-        for(var i = 0; i < reperter.count; i++)
-            reperter.itemAt(i).btn.btncheck=false
+        for(var i = 1; i < reperter.count; i++)
+            reperter.itemAt(i).checked=false
+        allcheck.checked=false
     }
-
+    function setcheck() {
+        for(var i = 1; i < reperter.count; i++)
+        {
+            if(reperter.itemAt(i).checked==true)
+            {
+                missionItems.get(i).coordinate.altitude=Number(altField.text)
+                missionItems.get(i).param1=Number(timeField.text);
+            }
+        }
+    }
     Column {
+        id:         column
         spacing: ScreenTools.defaultFontPixelHeight
         width:          parent.width*0.9
         anchors.top:            parent.top
@@ -52,10 +65,11 @@ Rectangle {
                 anchors.left:           parent.left
                 anchors.leftMargin:     ScreenTools.defaultFontPixelHeight
                 anchors.verticalCenter: parent.verticalCenter
-                text:               qsTr("批量选择航点")//"Alt diff"// + _altText
+                text:               qsTr("批量修改航点")//"Alt diff"// + _altText
             }
         }
         QGCCheckBox{
+            id:     allcheck
             text:   qsTr("全选")
             onClicked: {
                 for(var i = 1; i < reperter.count; i++)
@@ -65,28 +79,98 @@ Rectangle {
 
             }
         }
-
-        //        QGCFlickable {
-        //            clip:               true
-        //            width:              parent.width
-        //            height:             parent.height -title.height
-        //            contentHeight:      buttonFlow.height+ScreenTools.defaultFontPixelWidth*2
-        //            contentWidth:       parent.width
-        //            flickableDirection: Flickable.VerticalFlick
-        Flow
-        {
-            id:             buttonFlow
-            width:          parent.width
-            spacing:        ScreenTools.defaultFontPixelWidth
-            Repeater {
-                id:         reperter
-                model:       missionItems
+    }
+    Row{
+        anchors.top:        column.bottom
+        anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+        anchors.left:       parent.left
+        anchors.leftMargin: ScreenTools.defaultFontPixelHeight*2
+        height:             parent.height -column.height-ScreenTools.defaultFontPixelHeight*4
+        spacing:            ScreenTools.defaultFontPixelHeight
+        QGCFlickable {
+            clip:               true
+            width:              ScreenTools.defaultFontPixelHeight*28
+            height:             parent.height
+            contentHeight:      buttonFlow.height+ScreenTools.defaultFontPixelWidth*2
+            contentWidth:       ScreenTools.defaultFontPixelHeight*28
+            flickableDirection: Flickable.VerticalFlick
+            Flow
+            {
+                id:             buttonFlow
+                width:          parent.width
+                spacing:        ScreenTools.defaultFontPixelWidth
+                Repeater {
+                    id:         reperter
+                    model:       missionItems
+                    QGCButton {
+                        width:         ScreenTools.defaultFontPixelHeight*2
+                        height:        ScreenTools.defaultFontPixelHeight*2
+                        text:          object.abbreviation
+                        visible:       index>0
+                        checkable:     true
+                    }
+                }
+            }        // }
+        }
+        Rectangle {
+            height:    parent.height
+            width:     2
+            color:     "grey"
+        }
+        Column {
+            spacing:            ScreenTools.defaultFontPixelHeight
+            anchors.verticalCenter: parent.verticalCenter
+            Row{
+                spacing:            ScreenTools.defaultFontPixelWidth
+                QGCLabel {
+                    width:          ScreenTools.defaultFontPixelHeight*4
+                    text:            qsTr("高度m")
+                }
+                QGCTextField {
+                    id:             altField
+                    width:           ScreenTools.defaultFontPixelHeight*4
+                    text:           "50"
+                }
+            }
+            Row{
+                spacing:            ScreenTools.defaultFontPixelWidth
+                QGCLabel {
+                    width:          ScreenTools.defaultFontPixelHeight*4
+                    text:           qsTr("停留时间s")
+                }
+                QGCTextField {
+                    id:             timeField
+                    width:          ScreenTools.defaultFontPixelHeight*4
+                    text:           "0"
+                }
+            }
+            Row{
+                spacing:           ScreenTools.defaultFontPixelHeight
                 QGCButton {
-                    width:         ScreenTools.defaultFontPixelHeight*2
+                    width:         ScreenTools.defaultFontPixelHeight*4
                     height:        ScreenTools.defaultFontPixelHeight*2
-                    text:          object.abbreviation
-                    visible:       index>0
-                    checkable:     true
+                    text:          "确认修改"
+                    checkable:     false
+                    primary:       true
+                    onClicked:  {
+                        forceActiveFocus()
+                        setcheck()
+                        _root.visible=false
+                        clearcheck()
+
+                    }
+                }
+                QGCButton {
+                    width:         ScreenTools.defaultFontPixelHeight*4
+                    height:        ScreenTools.defaultFontPixelHeight*2
+                    text:          "取消"
+                    checkable:     false
+                    primary:       true
+                    onClicked:  {
+                        forceActiveFocus()
+                        clearcheck()
+                        _root.visible=false
+                    }
                 }
             }
         }

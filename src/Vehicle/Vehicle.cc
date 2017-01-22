@@ -629,7 +629,7 @@ void Vehicle::_handleCommandAck(mavlink_message_t& message)
     }
 
     emit mavCommandResult(_id, message.compid, ack.command, ack.result, false /* noResponsefromVehicle */);
-
+    showError=false;
     if (showError) {
         QString commandName = qgcApp()->toolbox()->missionCommandTree()->friendlyName((MAV_CMD)ack.command);
 
@@ -1565,6 +1565,68 @@ void Vehicle::virtualTabletJoystickValue(double roll, double pitch, double yaw, 
     }
 }
 
+void Vehicle::virtualTabletRCValue(double roll, double pitch)
+{
+
+    mavlink_message_t               msg;
+    mavlink_cammer_rc_t             cammer_rc;
+
+    // Store the previous manual commands
+    static float cammerRollAngle = 0.0;
+    static float cammerPitchAngle = 0.0;
+
+    static quint8 countSinceLastTransmission = 0; // Track how many calls to this function have occurred since the last MAVLink transmission
+
+    // Transmit the external setpoints only if they've changed OR if it's been a little bit since they were last transmit. To make sure there aren't issues with
+    // response rate, we make sure that a message is transmit when the commands have changed, then one more time, and then switch to the lower transmission rate
+    // if no command inputs have changed.
+
+    // The default transmission rate is 25Hz, but when no inputs have changed it drops down to 1Hz.
+    bool sendCommand = false;
+    if (countSinceLastTransmission++ >= 25) {
+        sendCommand = true;
+        countSinceLastTransmission = 0;
+    } else if ((!qIsNaN(roll) && roll != cammerRollAngle) || (!qIsNaN(pitch) && pitch != cammerPitchAngle)) {
+        sendCommand = true;
+
+        // Ensure that another message will be sent the next time this function is called
+        countSinceLastTransmission = 50;
+    }
+
+    // Now if we should trigger an update, let's do that
+    if (sendCommand) {
+        // Save the new manual control inputs
+        cammerRollAngle = roll;
+        cammerPitchAngle = pitch;
+
+
+        cammer_rc.chan1_raw = 1500+cammerRollAngle*500;
+        cammer_rc.chan2_raw = 1500+cammerPitchAngle*500;
+        cammer_rc.chan3_raw = 1500;  // start
+        cammer_rc.chan4_raw = 1500;  // start
+        cammer_rc.chan5_raw = 1500;  // start
+        cammer_rc.chan6_raw = 1500;  // start
+        cammer_rc.chan7_raw = 1500;  // start
+        cammer_rc.chan8_raw = 1500;  // start
+        cammer_rc.chan9_raw = 1500;  // start
+        cammer_rc.chan10_raw = 1500;  // start
+        cammer_rc.chan11_raw = 1500;  // start
+        cammer_rc.chan12_raw = 1500;  // start
+        cammer_rc.chan13_raw = 1500;  // start
+        cammer_rc.chan14_raw = 1500;  // start
+        cammer_rc.chan15_raw = 1500;  // start
+        cammer_rc.chan16_raw = 1500;  // start
+        cammer_rc.chan17_raw = 0;  // start
+        cammer_rc.chan18_raw = 0;  // start
+        mavlink_msg_cammer_rc_encode_chan(_mavlink->getSystemId(),
+                                          _mavlink->getComponentId(),
+                                          priorityLink()->mavlinkChannel(),
+                                          &msg,
+                                          &cammer_rc);
+        sendMessageOnLink(priorityLink(), msg);
+
+    }
+}
 void Vehicle::setConnectionLostEnabled(bool connectionLostEnabled)
 {
     if (_connectionLostEnabled != connectionLostEnabled) {

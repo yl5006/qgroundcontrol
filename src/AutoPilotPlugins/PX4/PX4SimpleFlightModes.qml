@@ -88,8 +88,7 @@ Item {
                             Row {
                                 spacing: _margins
 
-                                QGCLabel {
-                                    width:              modelabel.width
+                                QGCLabel {         
                                     id:                 modeChannelLabel
                                     anchors.baseline:   modeChannelCombo.baseline
                                     text:               qsTr("模式通道: ")//qsTr("Mode channel:")

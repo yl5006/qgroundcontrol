@@ -478,7 +478,7 @@ bool MissionController::_loadJsonMissionFileV2(const QJsonObject& json, QmlObjec
             SimpleMissionItem* doJumpItem = visualItems->value<SimpleMissionItem*>(i);
             if ((MAV_CMD)doJumpItem->command() == MAV_CMD_DO_JUMP) {
                 bool found = false;
-                int findDoJumpId = doJumpItem->missionItem().param1();
+                int findDoJumpId = doJumpItem->missionItem().param8();
                 for (int j=0; j<visualItems->count(); j++) {
                     if (visualItems->value<VisualMissionItem*>(j)->isSimpleItem()) {
                         SimpleMissionItem* targetItem = visualItems->value<SimpleMissionItem*>(j);
@@ -1241,7 +1241,7 @@ void MissionController::_initVisualItem(VisualMissionItem* visualItem)
     connect(visualItem, &VisualMissionItem::specifiesCoordinateChanged,                 this, &MissionController::_recalcWaypointLines);
     connect(visualItem, &VisualMissionItem::coordinateHasRelativeAltitudeChanged,       this, &MissionController::_recalcWaypointLines);
     connect(visualItem, &VisualMissionItem::exitCoordinateHasRelativeAltitudeChanged,   this, &MissionController::_recalcWaypointLines);
-    connect(visualItem, &VisualMissionItem::dirtyChanged,                               this, &MissionController::_recalcWaypointLines);
+    connect(visualItem, &VisualMissionItem::jumpitemChanged,                            this, &MissionController::_recalcWaypointLines);
 
     if (visualItem->isSimpleItem()) {
         // We need to track commandChanged on simple item since recalc has special handling for takeoff command

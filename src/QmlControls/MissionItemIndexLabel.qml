@@ -56,7 +56,7 @@ Item {
     }
     Image {
         id:         waypoint
-        source:     missionItem?getsouceimg(missionItem.command): ""
+        source:     missionItem?getsouceimg(missionItem.command): "/qmlimages/Waypoint0.svg"
         mipmap:     true
         fillMode:   Image.PreserveAspectFit
         anchors.fill: parent

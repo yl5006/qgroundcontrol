@@ -75,7 +75,7 @@ Item {
     }
 
     //-- Instrument Panel
-        QGCInstrumentWidgetBottom {
+    QGCInstrumentWidgetBottom {
         id:                     instrumentGadget
         anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
         anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
@@ -133,7 +133,7 @@ Item {
         width:                      guidedModeColumn.width  + (_margins * 2)
         height:                     guidedModeColumn.height + (_margins * 2)
         radius:                     ScreenTools.defaultFontPixelHeight * 0.25
-//        color:                      _lightWidgetBorders ? Qt.rgba(qgcPal.mapWidgetBorderLight.r, qgcPal.mapWidgetBorderLight.g, qgcPal.mapWidgetBorderLight.b, 0.8) : Qt.rgba(qgcPal.mapWidgetBorderDark.r, qgcPal.mapWidgetBorderDark.g, qgcPal.mapWidgetBorderDark.b, 0.75)
+        //        color:                      _lightWidgetBorders ? Qt.rgba(qgcPal.mapWidgetBorderLight.r, qgcPal.mapWidgetBorderLight.g, qgcPal.mapWidgetBorderLight.b, 0.8) : Qt.rgba(qgcPal.mapWidgetBorderDark.r, qgcPal.mapWidgetBorderDark.g, qgcPal.mapWidgetBorderDark.b, 0.75)
         color:                      "transparent"
         visible:                    _activeVehicle
         z:                          QGroundControl.zOrderWidgets
@@ -259,35 +259,35 @@ Item {
             confirmActionCode = actionCode
             switch (confirmActionCode) {
             case confirmArm:
-                guidedModeConfirm.confirmText = qsTr("arm")
+                guidedModeConfirm.confirmText = qsTr("解锁")
                 break;
             case confirmDisarm:
-                guidedModeConfirm.confirmText = qsTr("disarm")
+                guidedModeConfirm.confirmText = qsTr("加锁")
                 break;
             case confirmEmergencyStop:
-                guidedModeConfirm.confirmText = qsTr("STOP ALL MOTORS!")
+                guidedModeConfirm.confirmText = qsTr("电机停转!")
                 break;
             case confirmTakeoff:
                 altitudeSlider.visible = true
                 altitudeSlider.setInitialValueMeters(3)
-                guidedModeConfirm.confirmText = qsTr("takeoff")
+                guidedModeConfirm.confirmText = qsTr("起飞")
                 break;
             case confirmLand:
-                guidedModeConfirm.confirmText = qsTr("land")
+                guidedModeConfirm.confirmText = qsTr("降落")
                 break;
             case confirmHome:
-                guidedModeConfirm.confirmText = qsTr("return to land")
+                guidedModeConfirm.confirmText = qsTr("返航")
                 break;
             case confirmChangeAlt:
                 altitudeSlider.visible = true
                 altitudeSlider.setInitialValueAppSettingsDistanceUnits(_activeVehicle.altitudeRelative.value)
-                guidedModeConfirm.confirmText = qsTr("change altitude")
+                guidedModeConfirm.confirmText = qsTr("改变高度")
                 break;
             case confirmGoTo:
                 guidedModeConfirm.confirmText = qsTr("move vehicle")
                 break;
             case confirmRetask:
-                guidedModeConfirm.confirmText = qsTr("active waypoint change")
+                guidedModeConfirm.confirmText = qsTr("改变飞行航点")
                 break;
             case confirmOrbit:
                 guidedModeConfirm.confirmText = qsTr("enter orbit mode")
