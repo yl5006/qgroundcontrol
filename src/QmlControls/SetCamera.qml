@@ -42,35 +42,51 @@ Rectangle {
         anchors.leftMargin: ScreenTools.defaultFontPixelHeight
         anchors.top:  parent.top
         anchors.topMargin: ScreenTools.defaultFontPixelHeight/2
-        QGCButton {
-            width:         ScreenTools.defaultFontPixelHeight*5
-            height:        ScreenTools.defaultFontPixelHeight*2
-            text:          qsTr("变焦  -")
-            checkable:     false
-            primary:       true
-        }
-        QGCButton {
-            width:         ScreenTools.defaultFontPixelHeight*5
-            height:        ScreenTools.defaultFontPixelHeight*2
-            text:          qsTr("变焦  +")
-            checkable:     false
-            primary:       true
-        }
-        QGCButton {
-            width:         ScreenTools.defaultFontPixelHeight*5
-            height:        ScreenTools.defaultFontPixelHeight*2
-            text:          qsTr("对焦  -")
-            checkable:     false
-            primary:       true
-        }
-        QGCButton {
-            width:         ScreenTools.defaultFontPixelHeight*5
-            height:        ScreenTools.defaultFontPixelHeight*2
-            text:          qsTr("对焦  +")
-            checkable:     false
-            primary:       true
-        }
+     QGCLabel {
+                text:               qsTr("RTMP URL:")
+                width:              ScreenTools.defaultFontPixelHeight*5
+            }
+            QGCTextField {
+                id:                 rtspField
+                width:              ScreenTools.defaultFontPixelHeight*15
+                text:               QGroundControl.videoManager.rtspURL
+                onEditingFinished: {
+                  //  QGroundControl.videoManager.rtspURL = text
+                }
+            }
 
+        Row{
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("变焦  -")
+                checkable:     false
+                primary:       true
+            }
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("变焦  +")
+                checkable:     false
+                primary:       true
+            }
+        }
+        Row{
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("对焦  -")
+                checkable:     false
+                primary:       true
+            }
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("对焦  +")
+                checkable:     false
+                primary:       true
+            }
+        }
         JoystickThumbPad {
             id:                     rightStick
             width:                  ScreenTools.defaultFontPixelHeight*15
