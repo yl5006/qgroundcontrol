@@ -41,6 +41,8 @@ Var StartMenuFolder
 
 InstallDir $PROGRAMFILES\GroundStation
 
+SetCompressor /SOLID /FINAL lzma
+
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "installlogo.bmp";
 

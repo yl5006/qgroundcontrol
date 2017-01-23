@@ -1076,9 +1076,8 @@ QGCView {
                     currentMissionItem:  _currentMissionItem
                     missionItems:        missionController.visualItems
                     missionDistance:     missionController.missionDistance
+                    missionTime:         missionController.missionTime
                     missionMaxTelemetry: missionController.missionMaxTelemetry
-                    cruiseDistance:      missionController.cruiseDistance
-                    hoverDistance:       missionController.hoverDistance
                     qgcView:        qgcView
                     visible:        _editingLayer == _layerMission
                     z:              QGroundControl.zOrderTopMost+100

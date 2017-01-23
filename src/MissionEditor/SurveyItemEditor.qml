@@ -580,14 +580,17 @@ Rectangle {
         }
 
         Grid {
-            columns: 2
-            spacing: ScreenTools.defaultFontPixelWidth
+            columns:        2
+            columnSpacing:  ScreenTools.defaultFontPixelWidth
 
             QGCLabel { text: qsTr("测绘面积:") }//Survey area
             QGCLabel { text: QGroundControl.squareMetersToAppSettingsAreaUnits(_currentMissionItem.coveredArea).toFixed(2) + " " + QGroundControl.appSettingsAreaUnitsString }
 
             QGCLabel { text: qsTr("# 拍摄数:") }//shots
             QGCLabel { text: _currentMissionItem.cameraShots }
+
+            QGCLabel { text: qsTr("Shot interval:") }
+            QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("secs")}
         }
     }
 }

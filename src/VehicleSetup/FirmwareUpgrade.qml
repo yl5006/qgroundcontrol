@@ -95,9 +95,9 @@ QGCView {
                 QGroundControl.multiVehicleManager.activeVehicle.autoDisconnect = true
             } else {
                 // We end up here when we detect a board plugged in after we've started upgrade
-                statusTextArea.append(highlightPrefix + qsTr("找到设备")/*qsTr("Found device") */+ highlightSuffix + ": " + controller.boardType)
-                if (controller.boardType == "EWT2.0" || controller.boardType == "AeroCore" || controller.boardType == "PX4 Flow" || controller.boardType == "PX4 FMU V1" || controller.boardType == "MindPX" || controller.boardType == "TAP V1" || controller.boardType == "ASC V1") {
-                    showDialog(pixhawkFirmwareSelectDialogComponent, firwaretitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
+                statusTextArea.append(highlightPrefix + qsTr("找到设备") + highlightSuffix + ": " + controller.boardType)
+                if (controller.pixhawkBoard || controller.px4FlowBoard) {
+                    showDialog(pixhawkFirmwareSelectDialogComponent, title, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                 }
             }
         }
@@ -123,7 +123,7 @@ QGCView {
      //       anchors.fill:   parent
             height:     ScreenTools.defaultFontPixelHeight*20
             property bool showFirmwareTypeSelection:    _advanced.checked
-            property bool px4Flow:                      controller.boardType == "PX4 Flow"
+            property bool px4Flow:                      controller.px4FlowBoard
 
             function updatePX4VersionDisplay() {
                 var versionString = ""
