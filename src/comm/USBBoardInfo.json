@@ -1,13 +1,13 @@
-{
+﻿{
     "comment":  "AutoConnect usb board info",
 
     "version":          1,
     "fileType":         "USBBoardInfo",
-    "groundStation":    "QGroundControl",
+    "groundStation":    "GroundStation",
 
     "boardInfo": [
         { "vendorID": 9900, "productID": 16,        "boardClass": "Pixhawk",    "name": "PX4 FMU V1" },
-        { "vendorID": 9900, "productID": 17,        "boardClass": "Pixhawk",    "name": "PX4 FMU V2" },
+        { "vendorID": 1155, "productID": 22336,     "boardClass": "Pixhawk",    "name": "EWT V2" },
         { "vendorID": 9900, "productID": 18,        "boardClass": "Pixhawk",    "name": "PX4 FMU V4" },
         { "vendorID": 9900, "productID": 22,        "boardClass": "Pixhawk",    "name": "PX4 FMU V2",           "comment": "Bootloader on older Pixhawk V2 boards" },
         { "vendorID": 9900, "productID": 4097,      "boardClass": "Pixhawk",    "name": "AeroCore" },

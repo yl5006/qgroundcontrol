@@ -695,7 +695,7 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
     }
     if(addPlannedHomePosition)
     {
-        _addPlannedHomePosition(newVisualItems, true /* addToCenter */);
+        _addPlannedHomePosition(_activeVehicle,newVisualItems, true /* addToCenter */);
     }
     if (!errorString.isEmpty()) {
         for (int i=0; i<newVisualItems->count(); i++) {
@@ -723,7 +723,7 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
     _complexItems = newComplexItems;
 
     if (_visualItems->count() == 0) {
-        _addPlannedHomePosition(_visualItems, true /* addToCenter */);
+        _addPlannedHomePosition(_activeVehicle,_visualItems, true /* addToCenter */);
     }
 
     _initAllVisualItems();

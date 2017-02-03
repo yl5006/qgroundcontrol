@@ -31,10 +31,9 @@ Rectangle {
     property Fact   _offlineEditingHoverSpeed:      QGroundControl.offlineEditingHoverSpeed
 
     property var    missionItems                ///< List of all available mission items
-    property real   missionDistance
+    property real   missionDistance             ///< Total mission distance
+    property real   missionTime                 ///< Total mission time
     property real   missionMaxTelemetry
-    property real   cruiseDistance
-    property real   hoverDistance
 
 
     signal remove
@@ -52,34 +51,25 @@ Rectangle {
     property bool   _vehicleValid:      _activeVehicle != undefined
     property bool   _missionValid:      missionItems != undefined
 
-    property real   _distance:          _statusValid ? _currentMissionItem.distance : 0
-    property real   _altDifference:     _statusValid ? _currentMissionItem.altDifference : 0
-    property real   _gradient:          _statusValid ? Math.atan(currentMissionItem.altDifference / currentMissionItem.distance) : 0
-    property real   _gradientPercent:   isNaN(_gradient) ? 0 : _gradient * 100
-    property real   _azimuth:           _statusValid ? _currentMissionItem.azimuth : -1
+    property real   _distance:                  _statusValid ? _currentMissionItem.distance : NaN
+    property real   _altDifference:             _statusValid ? _currentMissionItem.altDifference : NaN
+    property real   _gradient:                  _statusValid && _currentMissionItem.distance > 0 ? Math.atan(_currentMissionItem.altDifference / _currentMissionItem.distance) : NaN
+    property real   _gradientPercent:           isNaN(_gradient) ? NaN : _gradient * 100
+    property real   _azimuth:                   _statusValid ? _currentMissionItem.azimuth : NaN
     property bool   _currentSurvey:     _statusValid ? _currentMissionItem.commandName == "Survey" : false
     property bool   _isVTOL:            _vehicleValid ? _activeVehicle.vtol : _offlineEditingVehicleType.enumStringValue == "VTOL" //hardcoded
-    property real   _missionSpeed:      _offlineEditingVehicleType.enumStringValue == "Fixedwing" ? _offlineEditingCruiseSpeed.value : _offlineEditingHoverSpeed.value
 
-    property real   _missionDistance:   _missionValid ? missionDistance : 0
-    property real   _missionMaxTelemetry: _missionValid ? missionMaxTelemetry : 0
-    property real   _missionTime:       _missionValid && _missionSpeed > 0 ?  (_isVTOL ? _hoverTime + _cruiseTime : _missionDistance / _missionSpeed) : 0
-    property real   _hoverDistance:     _missionValid ? hoverDistance : 0
-    property real   _cruiseDistance:    _missionValid ? cruiseDistance : 0
-    property real   _hoverTime:         _missionValid && _offlineEditingHoverSpeed.value > 0 ? _hoverDistance / _offlineEditingHoverSpeed.value : 0
-    property real   _cruiseTime:        _missionValid && _offlineEditingCruiseSpeed.value > 0 ? _cruiseDistance / _offlineEditingCruiseSpeed.value : 0
+    property real   _missionDistance:           _missionValid ? missionDistance : NaN
+    property real   _missionMaxTelemetry:       _missionValid ? missionMaxTelemetry : NaN
+    property real   _missionTime:               _missionValid ? missionTime : NaN
 
-    property string _distanceText:      _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
-    property string _altText:           _statusValid ? QGroundControl.metersToAppSettingsDistanceUnits(_altDifference).toFixed(1)  + QGroundControl.appSettingsDistanceUnitsString : ""
-    property string _gradientText:      _statusValid ? _gradientPercent.toFixed(0) + "%" : ""
-    property string _azimuthText:       _statusValid ? " "+Math.round(_azimuth)+ "°" : ""
-    property string _missionDistanceText: _missionValid ? _missionDistance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_missionDistance).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_missionDistance/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString : " "
-    property string _missionTimeText:     _missionValid ? _missionTime.toFixed(0) + "s" : " "
-    property string _missionMaxTelemetryText:  _missionValid ? _missionMaxTelemetry<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_missionMaxTelemetry).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_missionMaxTelemetry/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString : " "
-    property string _hoverDistanceText: _missionValid ? QGroundControl.metersToAppSettingsDistanceUnits(_hoverDistance).toFixed(2) + " " + QGroundControl.appSettingsDistanceUnitsString : " "
-    property string _cruiseDistanceText: _missionValid ? QGroundControl.metersToAppSettingsDistanceUnits(_cruiseDistance).toFixed(2) + " " + QGroundControl.appSettingsDistanceUnitsString : " "
-    property string _hoverTimeText:     _missionValid ? _hoverTime.toFixed(0) + "s" : " "
-    property string _cruiseTimeText:    _missionValid ? _cruiseTime.toFixed(0) + "s" : " "
+    property string _distanceText:              _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
+    property string _altDifferenceText:         isNaN(_altDifference) ? "-.-" : QGroundControl.metersToAppSettingsDistanceUnits(_altDifference).toFixed(2) + QGroundControl.appSettingsDistanceUnitsString
+    property string _gradientText:              isNaN(_gradient) ? "-.-" : _gradientPercent.toFixed(0) + "%"
+    property string _azimuthText:               isNaN(_azimuth) ? "-.-" : Math.round(_azimuth)
+    property string _missionDistanceText:       isNaN(_missionDistance) ? "-.-" : _missionDistance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_missionDistance).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_missionDistance/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
+    property string _missionTimeText:           isNaN(_missionTime) ? "-.-" : Number(_missionTime / 60).toFixed(1) + "m"
+    property string _missionMaxTelemetryText:   isNaN(_missionMaxTelemetry) ? "-.-" : _missionMaxTelemetry<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_missionMaxTelemetry).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_missionMaxTelemetry/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
 
     Rectangle {
         id:                 total
@@ -298,7 +288,7 @@ Rectangle {
         font.pointSize:     ScreenTools.defaultFontPixelHeight
         font.bold:          true
         color:              Qt.rgba(0.102,0.887,0.609,1)
-        text:               _altText
+        text:               _altDifferenceText
     }
 
 

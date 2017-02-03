@@ -452,46 +452,46 @@ QGCView {
 
             //-----------------------------------------------------------------
             //            -- Autoconnect settings  Maybe here do not use (yaoling)
-            QGCLabel {
-                text: qsTr("自动连接设备")//"Autoconnect to the following devices:"
-            }
+//            QGCLabel {
+//                text: qsTr("自动连接设备")//"Autoconnect to the following devices:"
+//            }
 
-            Row {
-                spacing: ScreenTools.defaultFontPixelWidth * 2
+//            Row {
+//                spacing: ScreenTools.defaultFontPixelWidth * 2
 
-                QGCCheckBox {
-                    text:       qsTr("Ewt2.0")//qsTr("Pixhawk")
-                    visible:    !ScreenTools.isiOS
-                    checked:    QGroundControl.linkManager.autoconnectPixhawk
-                    onClicked:  QGroundControl.linkManager.autoconnectPixhawk = checked
-                }
+//                QGCCheckBox {
+//                    text:       qsTr("Ewt2.0")//qsTr("Pixhawk")
+//                    visible:    !ScreenTools.isiOS
+//                    checked:    QGroundControl.linkManager.autoconnectPixhawk
+//                    onClicked:  QGroundControl.linkManager.autoconnectPixhawk = checked
+//                }
 
-                QGCCheckBox {
-                    text:       qsTr("EWT Radio")//qsTr("SiK Radio")
-                    visible:    !ScreenTools.isiOS
-                    checked:    QGroundControl.linkManager.autoconnect3DRRadio
-                    onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked
-                }
+//                QGCCheckBox {
+//                    text:       qsTr("EWT Radio")//qsTr("SiK Radio")
+//                    visible:    !ScreenTools.isiOS
+//                    checked:    QGroundControl.linkManager.autoconnect3DRRadio
+//                    onClicked:  QGroundControl.linkManager.autoconnect3DRRadio = checked
+//                }
 
-                //                    QGCCheckBox {
-                //                        text:       qsTr("EWT Flow")//qsTr("PX4 Flow")
-                //                        visible:    !ScreenTools.isiOS
-                //                        checked:    QGroundControl.linkManager.autoconnectPX4Flow
-                //                        onClicked:  QGroundControl.linkManager.autoconnectPX4Flow = checked
-                //                    }
+//                //                    QGCCheckBox {
+//                //                        text:       qsTr("EWT Flow")//qsTr("PX4 Flow")
+//                //                        visible:    !ScreenTools.isiOS
+//                //                        checked:    QGroundControl.linkManager.autoconnectPX4Flow
+//                //                        onClicked:  QGroundControl.linkManager.autoconnectPX4Flow = checked
+//                //                    }
 
-                QGCCheckBox {
-                    text:       qsTr("UDP")
-                    checked:    QGroundControl.linkManager.autoconnectUDP
-                    onClicked:  QGroundControl.linkManager.autoconnectUDP = checked
-                }
+//                QGCCheckBox {
+//                    text:       qsTr("UDP")
+//                    checked:    QGroundControl.linkManager.autoconnectUDP
+//                    onClicked:  QGroundControl.linkManager.autoconnectUDP = checked
+//                }
 
-                QGCCheckBox {
-                    text:       qsTr("RTK GPS")
-                    checked:    QGroundControl.linkManager.autoconnectRTKGPS
-                    onClicked:  QGroundControl.linkManager.autoconnectRTKGPS = checked
-                }
-            }
+//                QGCCheckBox {
+//                    text:       qsTr("RTK GPS")
+//                    checked:    QGroundControl.linkManager.autoconnectRTKGPS
+//                    onClicked:  QGroundControl.linkManager.autoconnectRTKGPS = checked
+//                }
+//            }
 
             //-----------------------------------------------------------------
             //                //-- Virtual joystick settings
@@ -500,33 +500,6 @@ QGCView {
             //                    checked:    QGroundControl.virtualTabletJoystick
             //                    onClicked:  QGroundControl.virtualTabletJoystick = checked
             //                }
-
-
-            //-----------------------------------------------------------------
-            //-- Offline mission editing settings
-            Item {
-                height: ScreenTools.defaultFontPixelHeight / 2
-                width:  parent.width
-            }
-            QGCLabel { text: qsTr("离线地图编辑")/*"Offline mission editing"*/ }
-
-            Row {
-                spacing: ScreenTools.defaultFontPixelWidth
-
-                QGCLabel {
-                    text:               qsTr("无人机:")//qsTr("Vehicle:")
-                    width:              baseFontLabel.width
-                    anchors.baseline:   offlineVehicleCombo.baseline
-                }
-
-
-                FactComboBox {
-                    id:         offlineVehicleCombo
-                    width:      _editFieldWidth
-                    fact:       QGroundControl.offlineEditingVehicleType
-                    indexModel: false
-                }
-            }
 
             //-- Palette Styles
             Item {
