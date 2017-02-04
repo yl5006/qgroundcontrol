@@ -209,6 +209,7 @@
         <file alias="Signal100.svg">src/ui/toolbar/Images/Signal100.svg</file>
         <file alias="TelemRSSI.svg">src/ui/toolbar/Images/TelemRSSI.svg</file>
         <file alias="Yield.svg">src/ui/toolbar/Images/Yield.svg</file>
+	<file alias="CameraIcon.svg">src/ui/toolbar/Images/CameraIcon.svg</file>
 	<file alias="title.svg">src/ui/toolbar/Images/title.svg</file>
 	<file alias="googlemap.png">src/ui/toolbar/Images/googlemap.png</file>
 	<file alias="bingmap.png">src/ui/toolbar/Images/bingmap.png</file>

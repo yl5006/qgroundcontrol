@@ -47,6 +47,7 @@ QGroundControlQmlGlobal::QGroundControlQmlGlobal(QGCApplication* app)
     , _videoManager(NULL)
     , _mavlinkLogManager(NULL)
     , _corePlugin(NULL)
+    , _firmwarePluginManager(NULL)
     , _virtualTabletJoystick(false)
     , _baseFontPointSize(0.0)
 {
@@ -75,6 +76,7 @@ void QGroundControlQmlGlobal::setToolbox(QGCToolbox* toolbox)
     _videoManager           = toolbox->videoManager();
     _mavlinkLogManager      = toolbox->mavlinkLogManager();
     _corePlugin             = toolbox->corePlugin();
+    _firmwarePluginManager  = toolbox->firmwarePluginManager();
 }
 
 void QGroundControlQmlGlobal::saveGlobalSetting (const QString& key, const QString& value)
@@ -346,6 +348,12 @@ Fact* QGroundControlQmlGlobal::batteryPercentRemainingAnnounce(void)
 
     return _batteryPercentRemainingAnnounceFact;
 }
+
+int QGroundControlQmlGlobal::supportedFirmwareCount()
+{
+    return _firmwarePluginManager->knownFirmwareTypes().count();
+}
+
 
 bool QGroundControlQmlGlobal::linesIntersect(QPointF line1A, QPointF line1B, QPointF line2A, QPointF line2B)
 {

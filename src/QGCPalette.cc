@@ -45,7 +45,7 @@ QColor QGCPalette::_text[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
 
 QColor QGCPalette::_warningText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#cc0808"), QColor("#cc0808") },
-    { QColor("#e4e428"), QColor("#e4e428") }
+    { QColor("0xed, 0xd4, 0x69"), QColor("0xed, 0xd4, 0x69") }
 };
 
 QColor QGCPalette::_button[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
@@ -62,9 +62,8 @@ QColor QGCPalette::_buttonText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] 
 
 QColor QGCPalette::_buttonHighlight[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#e4e4e4"), QColor("#33b5e5") },
-//    { QColor(0x58, 0x58, 0x58), QColor(237, 235, 51) },
-  //   { QColor("#10ebbf"), QColor("#10ebbf") },
-    { QColor(47, 160, 175), QColor(47, 160, 175) },
+//    { QColor(0x58, 0x58, 0x58), QColor(0xed, 0xd4, 0x69) },
+	{ QColor(47, 160, 175), QColor(47, 160, 175) },
 };
 
 QColor QGCPalette::_buttonHighlightText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {

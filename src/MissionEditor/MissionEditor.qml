@@ -38,7 +38,7 @@ QGCView {
     readonly property var       _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     readonly property real      _PointFieldWidth:       ScreenTools.defaultFontPixelWidth * 11
     readonly property real      _rightPanelWidth:       Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 35)
-    readonly property real      _rightPanelOpacity:     0.8
+    readonly property real      _rightPanelOpacity:     1
     readonly property int       _toolButtonCount:       6
     readonly property real      _toolButtonTopMargin:   parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
     readonly property var       _defaultVehicleCoordinate:   QtPositioning.coordinate(37.803784, -122.462276)
@@ -570,7 +570,8 @@ QGCView {
                     anchors.leftMargin: parent.width - _rightPanelWidth
                     anchors.left:       parent.left
                     spacing:            _horizontalMargin
-                    visible:            false
+                    visible:            QGroundControl.corePlugin.options.enablePlanViewSelector
+
                     readonly property real _buttonRadius: ScreenTools.defaultFontPixelHeight * 0.75
 
                     ExclusiveGroup {
@@ -631,6 +632,7 @@ QGCView {
                 Item {
                     id:             missionItemIndex//missionItemEditor
                     height:         _PointFieldWidth+ScreenTools.defaultFontPixelWidth//mainWindow.availableHeight/5  //change by yaoling
+                    anchors.top:        planElementSelectorRow.visible ? planElementSelectorRow.bottom : planElementSelectorRow.top
                     anchors.bottom:  parent.bottom
                     anchors.horizontalCenter:           parent.horizontalCenter
                     //                  width:          _rightPanelWidth
