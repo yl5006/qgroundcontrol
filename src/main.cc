@@ -30,8 +30,11 @@
 #include "QGCApplication.h"
 #include "AppMessages.h"
 
+#ifndef __mobile__
 #include <QSimpleUpdater.h>
 #include <WaitForSignalHelper.h>
+#endif
+
 #ifndef __mobile__
     #include "QGCSerialPortInfo.h"
     #include "RunGuard.h"
@@ -243,7 +246,7 @@ int main(int argc, char *argv[])
 #endif
 //****************
 //check for update
-
+#ifndef __mobile__
     QEventLoop m_eventLoop;
 
     /* QSimpleUpdater is single-instance */
@@ -284,6 +287,7 @@ int main(int argc, char *argv[])
     return 0;
  }
 // qDebug()<<"getUpdateAvailable"<<m_updater->getUpdateAvailable(DEFS_URL);
+#endif
 
 #ifdef Q_OS_LINUX
     QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));

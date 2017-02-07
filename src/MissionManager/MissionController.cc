@@ -749,6 +749,7 @@ QString MissionController::getFromFilePicker(void)
     }
     return filename;
 #endif
+    return "";
 }
 
 void MissionController::saveToFile(const QString& filename)

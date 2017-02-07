@@ -432,7 +432,7 @@ UrlFactory::_tilexyTobaidu(int x, int y, int zoom)
     int numY = -y + offsetY;
 
     zoom = zoom + 1;
-    int num = (x + y)%8 + 1;
+//    int num = (x + y)%8 + 1;
     QString xstr = QString::number(numX).replace("-", "M");
     QString ystr = QString::number(numY).replace("-", "M");
     qDebug()<<QString("http://online1.map.bdimg.com/tile/?qt=tile&x=%1&y=%2&z=%3&styles=pl").arg(xstr).arg(ystr).arg(zoom);

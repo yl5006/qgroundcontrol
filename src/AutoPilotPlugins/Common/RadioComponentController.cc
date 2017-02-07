@@ -112,8 +112,8 @@ const RadioComponentController::stateMachineEntry* RadioComponentController::_ge
 {
 
     static const char* msgBeginPX4 =        QT_TR_NOOP("移动油门摇杆到如图所示，推荐去掉电机连接，电机下一步继续");//"Lower the Throttle stick all the way down as shown in diagram.\n\n"
-                                            "It is recommended to disconnect all motors for additional safety, however, the system is designed to not arm during the calibration.\n\n"
-                                            "Click Next to continue";
+                                            //"It is recommended to disconnect all motors for additional safety, however, the system is designed to not arm during the calibration.\n\n"
+                                            //"Click Next to continue";
     static const char* msgBeginAPM =        "Lower the Throttle stick all the way down as shown in diagram.\nReset all transmitter trims to center.\n\n"
                                             "Please ensure all motor power is disconnected AND all props are removed from the vehicle.\n\n"
                                             "Click Next to continue";

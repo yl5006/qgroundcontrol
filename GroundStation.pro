@@ -264,8 +264,9 @@ include(QGCExternalLibs.pri)
 # External library configuration
 #
 # Fervor autoupdater
+!MobileBuild {
 include(libs/QSimpleUpdater/QSimpleUpdater.pri)
-
+}
 
 RESOURCES += \
     GroundStation.qrc \
@@ -458,7 +459,6 @@ HEADERS += \
     src/PositionManager/PositionManager.h \
     src/PositionManager/SimulatedPosition.h \
     src/QGC.h \
-    src/WaitForSignalHelper.h \
     src/QGCApplication.h \
     src/QGCComboBox.h \
     src/QGCConfig.h \
@@ -579,6 +579,7 @@ HEADERS += \
     src/ui/uas/UASQuickViewItem.h \
     src/ui/uas/UASQuickViewItemSelect.h \
     src/ui/uas/UASQuickViewTextItem.h \
+    src/WaitForSignalHelper.h \
 }
 
 iOSBuild {
@@ -622,8 +623,7 @@ SOURCES += \
     src/MissionManager/VisualMissionItem.cc \
     src/PositionManager/PositionManager.cpp \
     src/PositionManager/SimulatedPosition.cc \
-    src/QGC.cc \
-    src/WaitForSignalHelper.cc \
+    src/QGC.cc \ 
     src/QGCApplication.cc \
     src/QGCComboBox.cc \
     src/QGCDockWidget.cc \
@@ -727,6 +727,7 @@ SOURCES += \
     src/ui/uas/UASQuickViewItem.cc \
     src/ui/uas/UASQuickViewItemSelect.cc \
     src/ui/uas/UASQuickViewTextItem.cc \
+    src/WaitForSignalHelper.cc \
 }
 
 # Palette test widget in debug builds
