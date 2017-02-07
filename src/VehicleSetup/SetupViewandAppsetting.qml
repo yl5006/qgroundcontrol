@@ -94,7 +94,11 @@ Rectangle {
         panelLoader.source = "PX4FlowSensor.qml";
         loader.visible=true
     }
-
+    function showAnalyzeView()
+    {
+        panelLoader.source = "AnalyzeView.qml";
+        loader.visible=true
+    }
     function showVehicleComponentPanel(vehicleComponent)
     {
         if (QGroundControl.multiVehicleManager.activeVehicle.armed && !vehicleComponent.allowSetupWhileArmed) {
@@ -438,6 +442,19 @@ Rectangle {
               {
                    if(!loader.visible)
                        showParametersPanel()
+                   }
+            }
+        SubMenuButtonModify {
+              width:          _defaultTextHeight*8
+              height:         width
+              exclusiveGroup: setupButtonGroup
+              imageResource:  "/qmlimages/Analyze.svg"
+              visible:        QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable
+              text:           qsTr("日志")//"Firmware"
+              onClicked:
+              {
+                   if(!loader.visible)
+                       showAnalyzeView()
                    }
             }
         }

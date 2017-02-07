@@ -177,6 +177,8 @@
 	<file alias="map_home.svg">src/FlightMap/Images/map_home.svg</file>
 	<file alias="map_mission.svg">src/FlightMap/Images/map_mission.svg</file>
 	<file alias="map_plane.svg">src/FlightMap/Images/map_plane.svg</file>
+	<file alias="CamRecording.svg">src/FlightMap/Images/CamRecording.svg</file>
+	<file alias="stopCamRecording.svg">src/FlightMap/Images/stopCamRecording.svg</file>
         <file alias="Armed.svg">src/ui/toolbar/Images/Armed.svg</file>
         <file alias="Battery.svg">src/ui/toolbar/Images/Battery.svg</file>
         <file alias="connect.svg">src/ui/toolbar/Images/connect.svg</file>

@@ -302,30 +302,50 @@ QGCView {
             z:                  _flightVideoPipControl.z + 1
             anchors.margins:    ScreenTools.defaultFontPixelHeight / 2
             anchors.bottom:     _flightVideo.bottom
+      //      anchors.horizontalCenter: _flightVideo.horizontalCenter
             anchors.right:      _flightVideo.right
             height:             ScreenTools.defaultFontPixelHeight * 2
             width:              height
-            visible:            QGroundControl.videoManager.videoRunning
+      //      visible:            QGroundControl.videoManager.videoRunning
             opacity:            0.75
 
-            Rectangle {
-                anchors.top:        parent.top
-                anchors.bottom:     parent.bottom
-                width:              height
-                radius:             QGroundControl.videoManager.videoReceiver && QGroundControl.videoManager.videoReceiver.recording ? 0 : height
-                color:              "red"
-            }
-
-            QGCColoredImage {
+//            Rectangle {
+//                anchors.top:        parent.top
+//                anchors.bottom:     parent.bottom
+//                width:              height
+//                radius:             QGroundControl.videoManager.videoReceiver && QGroundControl.videoManager.videoReceiver.recording ? 0 : height
+//                color:              "red"
+//            }
+            Image {
                 anchors.top:                parent.top
                 anchors.bottom:             parent.bottom
                 anchors.horizontalCenter:   parent.horizontalCenter
-                width:                      height * 0.625
+                width:                      height
                 sourceSize.width:           width
-                source:                     "/qmlimages/CameraIcon.svg"
+                source:                     "/qmlimages/CamRecording.svg"
                 fillMode:                   Image.PreserveAspectFit
-                color:                      "white"
+                visible:                    QGroundControl.videoManager.videoReceiver.recording
             }
+            Image {
+                anchors.top:                parent.top
+                anchors.bottom:             parent.bottom
+                anchors.horizontalCenter:   parent.horizontalCenter
+                width:                      height
+                sourceSize.width:           width
+                source:                     "/qmlimages/stopCamRecording.svg"
+                fillMode:                   Image.PreserveAspectFit
+                visible:                    !QGroundControl.videoManager.videoReceiver.recording
+            }
+//            QGCColoredImage {
+//                anchors.top:                parent.top
+//                anchors.bottom:             parent.bottom
+//                anchors.horizontalCenter:   parent.horizontalCenter
+//                width:                      height * 0.625
+//                sourceSize.width:           width
+//                source:                     "/qmlimages/CameraIcon.svg"
+//                fillMode:                   Image.PreserveAspectFit
+//                color:                      "white"
+//            }
 
             MouseArea {
                 anchors.fill:   parent
@@ -345,7 +365,7 @@ QGCView {
 
         SetCamera{
             id:                     setcam
-            anchors.topMargin:      ScreenTools.toolbarHeight + _margins*2
+            anchors.topMargin:      ScreenTools.toolbarHeight*1.8 + _margins*2
             anchors.rightMargin:    _margins*2
             anchors.right:          parent.right
             anchors.top:            parent.top
@@ -353,7 +373,7 @@ QGCView {
             z:                      _panel.z + 5
         }
         RoundButton {
-            anchors.topMargin:      ScreenTools.toolbarHeight + _margins*2
+            anchors.topMargin:      ScreenTools.toolbarHeight*1.8 + _margins*2
             anchors.rightMargin:    _margins*2
             anchors.right:          parent.right
             anchors.top:            parent.top

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -35,7 +35,7 @@ GeoTagController::~GeoTagController()
 
 void GeoTagController::pickLogFile(void)
 {
-    QString filename = QGCFileDialog::getOpenFileName(MainWindow::instance(), "Select log file load", QString(), "PX4 log file (*.px4log);;All Files (*.*)");
+    QString filename = QGCFileDialog::getOpenFileName(MainWindow::instance(), "Select log file load", QString(), "EWT log file (*.log);;All Files (*.*)");
     if (!filename.isEmpty()) {
         _worker.setLogFile(filename);
         emit logFileChanged(filename);

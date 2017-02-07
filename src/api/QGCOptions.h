@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -82,5 +82,5 @@ public:
     /*!
         @return True or false
     */
-    virtual bool        enablePlanViewSelector      () { return true; }
+    virtual bool        enablePlanViewSelector      () { return false; }
 };

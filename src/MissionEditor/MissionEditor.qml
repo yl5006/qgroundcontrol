@@ -632,7 +632,7 @@ QGCView {
                 Item {
                     id:             missionItemIndex//missionItemEditor
                     height:         _PointFieldWidth+ScreenTools.defaultFontPixelWidth//mainWindow.availableHeight/5  //change by yaoling
-                    anchors.top:        planElementSelectorRow.visible ? planElementSelectorRow.bottom : planElementSelectorRow.top
+//                    anchors.top:        planElementSelectorRow.visible ? planElementSelectorRow.bottom : planElementSelectorRow.top
                     anchors.bottom:  parent.bottom
                     anchors.horizontalCenter:           parent.horizontalCenter
                     //                  width:          _rightPanelWidth

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -584,9 +584,9 @@ LogDownloadController::_prepareLogDownload()
     _downloadData = new LogDownloadData(entry);
     _downloadData->filename = QString("log_") + QString::number(entry->id()) + "_" + ftime;
     if(_vehicle->firmwareType() == MAV_AUTOPILOT_PX4) {
-        _downloadData->filename += ".px4log";
+        _downloadData->filename += ".log"; //px4
     } else {
-        _downloadData->filename += ".bin";
+        _downloadData->filename += ".GPX";
     }
     _downloadData->file.setFileName(_downloadPath + _downloadData->filename);
     //-- Append a number to the end if the filename already exists

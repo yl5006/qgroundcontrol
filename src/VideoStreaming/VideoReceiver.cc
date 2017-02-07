@@ -487,7 +487,7 @@ void VideoReceiver::startRecording(void)
     }
 
     QString videoFile;
-    videoFile = _path + "/QGC-" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh.mm.ss") + ".mkv";
+    videoFile = _path + "/EWT-" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh.mm.ss") + ".mkv";
 
     g_object_set(G_OBJECT(_sink->filesink), "location", qPrintable(videoFile), NULL);
     qCDebug(VideoReceiverLog) << "New video file:" << videoFile;

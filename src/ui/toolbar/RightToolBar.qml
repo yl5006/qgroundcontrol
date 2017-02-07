@@ -45,6 +45,7 @@ Rectangle {
     signal showSetupView()
     signal showPlanView()
     signal showFlyView()
+    signal showAnalyzeView()
 
     //-------------------------------------------------------------------------
     function getMessageColor() {
@@ -81,7 +82,9 @@ Rectangle {
     function checkFlyButton() {
         flyButton.checked = true
     }
-
+    function checkAnalyzeButton() {
+        analyzeButton.checked = true
+    }
     Component.onCompleted: {
         //-- TODO: Get this from the actual state
         flyButton.checked = true
@@ -146,6 +149,16 @@ Rectangle {
             exclusiveGroup:      mainActionGroup
             source:             "/qmlimages/Hamburger.svg"
             onClicked:          rightbar.showSetupView()
+        }
+        QGCToolBarButton {
+            id:                  analyzeButton
+            height:              mainWindow.tbButtonWidth
+            anchors.left:        parent.left
+            anchors.right:       parent.right
+            exclusiveGroup:      mainActionGroup
+            source:              "/qmlimages/Analyze.svg"
+            visible:             false&&!ScreenTools.isMobile
+            onClicked:           rightbar.showAnalyzeView()
         }
         //-------------------------------------------------------------------------
         //-- Message Indicator

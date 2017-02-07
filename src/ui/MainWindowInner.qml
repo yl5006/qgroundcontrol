@@ -52,7 +52,8 @@ Item {
     readonly property string _planViewSource:       "MissionEditor.qml"
     readonly property string _setupViewSource:      "SetupViewandAppsetting.qml"//"SetupView.qml"
     readonly property string _settingsViewSource:   "AppSettings.qml"
-    
+    readonly property string _analyzeViewSource:    "AnalyzeView.qml"
+
     //    readonly property string _settingsViewSource:   "AppSettings.qml"
     //    readonly property string _setupViewSource:      "SetupView.qml"
     //    readonly property string _planViewSource:       "MissionEditor.qml"
@@ -143,7 +144,7 @@ Item {
         }
         hideAllViews()
         analyzeViewLoader.visible = true
-        //   toolBar.checkAnalyzeButton()
+        rightBar.checkAnalyzeButton()
     }
 
     /// Start the process of closing QGroundControl. Prompts the user are needed.
@@ -357,7 +358,7 @@ Item {
         onShowSetupView:        mainWindow.showSetupView()
         onShowPlanView:         mainWindow.showPlanView()
         onShowFlyView:          mainWindow.showFlyView()
- //       onShowAnalyzeView:  mainWindow.showAnalyzeView()
+        onShowAnalyzeView:      mainWindow.showAnalyzeView()
         z:                      QGroundControl.zOrderTopMost
         state:                  "Init"
         property real   _barMargin:     0

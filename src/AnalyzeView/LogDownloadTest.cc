@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -57,7 +57,7 @@ void LogDownloadTest::downloadTest(void)
     }
     _multiSpyLogDownloadController->clearAllSignals();
 
-    QString downloadFile = QDir(downloadTo).filePath("log_0_UnknownDate.px4log");
+    QString downloadFile = QDir(downloadTo).filePath("log_0_UnknownDate.log");
     QVERIFY(UnitTest::fileCompare(downloadFile, _mockLink->logDownloadFile()));
 
     QFile::remove(downloadFile);
