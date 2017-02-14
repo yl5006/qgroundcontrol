@@ -106,6 +106,11 @@ int FirmwarePlugin::manualControlReservedButtonCount(void)
     return -1;
 }
 
+int FirmwarePlugin::defaultJoystickTXMode(void)
+{
+    return 2;
+}
+
 bool FirmwarePlugin::supportsThrottleModeCenterZero(void)
 {
     // By default, this is supported
@@ -307,6 +312,23 @@ QString FirmwarePlugin::takeControlFlightMode(void)
     return QString();
 }
 
+QString FirmwarePlugin::vehicleImageOpaque(const Vehicle* vehicle) const
+{
+    Q_UNUSED(vehicle);
+    return QStringLiteral("/qmlimages/vehicleArrowOpaque.svg");
+}
+
+QString FirmwarePlugin::vehicleImageOutline(const Vehicle* vehicle) const
+{
+    Q_UNUSED(vehicle);
+    return QStringLiteral("/qmlimages/vehicleArrowOutline.svg");
+}
+
+QString FirmwarePlugin::vehicleImageCompass(const Vehicle* vehicle) const
+{
+    Q_UNUSED(vehicle);
+    return QStringLiteral("/qmlimages/compassInstrumentArrow.svg");
+}
 bool FirmwarePlugin::multiRotorCoaxialMotors(Vehicle* vehicle)
 {
     Q_UNUSED(vehicle);

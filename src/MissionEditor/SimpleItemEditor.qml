@@ -2,6 +2,7 @@
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.2
 import QtQuick.Dialogs          1.2
+import QtQuick.Layouts          1.2
 
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
@@ -42,66 +43,66 @@ Rectangle {
                     QGCLabel {
                         width:          parent.width
                         wrapMode:       Text.WordWrap
-                        font.pointSize: ScreenTools.defaultFontPointSize
-                        text:           _currentMissionItem.sequenceNumber == 0 ?
-                                  qsTr("任务的home点"): // qsTr("Planned home position.") :
-                                            (_currentMissionItem.rawEdit ?
-                                                qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
-                                                _currentMissionItem.commandDescription)
+                        font.pointSize: ScreenTools.smallFontPointSize
+                        text:           missionItem.rawEdit ?
+                                            qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
+                                            missionItem.commandDescription
                     }
 
-                    Repeater {
-                        model: _currentMissionItem.comboboxFacts
+                    GridLayout {
+                        anchors.left:   parent.left
+                        anchors.right:  parent.right
+                        columns:        2
 
-                        Item {
-                            width:  valuesColumn.width
-                            height: comboBoxFact.height
+                        Repeater {
+                            model: _currentMissionItem.comboboxFacts
 
                             QGCLabel {
-                                id:                 comboBoxLabel
-                                anchors.baseline:   comboBoxFact.baseline
-                                text:               object.name
-                                visible:            object.name != ""
+                                text:           object.name
+                                visible:        object.name != ""
+                                Layout.column:  0
+                                Layout.row:     index
                             }
+                        }
+
+                        Repeater {
+                            model: _currentMissionItem.comboboxFacts
 
                             FactComboBox {
-                                id:             comboBoxFact
-                                anchors.right:  parent.right
-                                width:          comboBoxLabel.visible ? _editFieldWidth : parent.width
-                                indexModel:     false
-                                model:          object.enumStrings
-                                fact:           object
+                                indexModel:         false
+                                model:              object.enumStrings
+                                fact:               object
+                                Layout.column:      1
+                                Layout.row:         index
+                                Layout.fillWidth:   true
                             }
                         }
                     }
 
-                    Repeater {
+                    GridLayout {
+                        anchors.left:   parent.left
+                        anchors.right:  parent.right
+                        columns:        2
+
+                        Repeater {
                         model: _currentMissionItem.textFieldFacts
 
-                        Item {
-                            width:  valuesColumn.width
-                            height: textField.height
-
                             QGCLabel {
-                                id:                 textFieldLabel
-                                anchors.baseline:   textField.baseline
-                                text:               object.name
+                                text:           object.name
+                                Layout.column:  0
+                                Layout.row:     index
                             }
+                        }
+
+                        Repeater {
+                            model: _currentMissionItem.textFieldFacts
 
                             FactTextField {
-                                id:             textField
-                                anchors.right:  parent.right
-                                width:          _editFieldWidth
-                                showUnits:      true
-                                fact:           object
-                                visible:        !_root.readOnly
-                            }
-
-                            FactLabel {
-                                anchors.baseline:   textFieldLabel.baseline
-                                anchors.right:      parent.right
+                                showUnits:          true
                                 fact:               object
-                                visible:            _root.readOnly
+                                Layout.column:      1
+                                Layout.row:         index
+                                Layout.fillWidth:   true
                             }
                         }
                     }
@@ -113,13 +114,6 @@ Rectangle {
                             text:   object.name
                             fact:   object
                         }
-                    }
-
-                    QGCButton {
-                        text:       qsTr("移动Home点到地图中心")//qsTr("Move Home to map center")
-                        visible:    _currentMissionItem.sequenceNumber == 0
-                        onClicked:  editorRoot.moveHomeToMapCenter()
-                        anchors.horizontalCenter: parent.horizontalCenter
                     }
                 } // Column
             } // Item

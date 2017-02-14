@@ -64,7 +64,7 @@ Button {
 
                 Rectangle {
                     anchors.fill:   parent
-                    border.width:   _showBorder ? 2: 0
+                    border.width:   _showBorder ? 1: 0
                     border.color:   bordercolor
                     radius:         3
                     color:          _showHighlight ?(primary ? control._qgcPal.primaryButton : control._qgcPal.buttonHighlight) :

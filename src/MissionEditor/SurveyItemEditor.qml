@@ -23,8 +23,9 @@ Rectangle {
     //property real   availableWidth    ///< Width for control
     //property var    missionItem       ///< Mission Item for editor
 
-    property real   _margin:        ScreenTools.defaultFontPixelWidth / 2
+    property real   _margin:        ScreenTools.defaultFontPixelWidth * 0.25
     property int    _cameraIndex:   1
+    property real   _fieldWidth:    ScreenTools.defaultFontPixelWidth * 10.5
 
     readonly property int _gridTypeManual:          0
     readonly property int _gridTypeCustomCamera:    1
@@ -34,11 +35,11 @@ Rectangle {
         id: cameraModelList
 
         Component.onCompleted: {
-            cameraModelList.setProperty(_gridTypeCustomCamera, "sensorWidth", _currentMissionItem.cameraSensorWidth.rawValue)
-            cameraModelList.setProperty(_gridTypeCustomCamera, "sensorHeight", _currentMissionItem.cameraSensorHeight.rawValue)
-            cameraModelList.setProperty(_gridTypeCustomCamera, "imageWidth", _currentMissionItem.cameraResolutionWidth.rawValue)
-            cameraModelList.setProperty(_gridTypeCustomCamera, "imageHeight", _currentMissionItem.cameraResolutionHeight.rawValue)
-            cameraModelList.setProperty(_gridTypeCustomCamera, "focalLength", _currentMissionItem.cameraFocalLength.rawValue)
+            cameraModelList.setProperty(_gridTypeCustomCamera, "sensorWidth",   _currentMissionItem.cameraSensorWidth.rawValue)
+            cameraModelList.setProperty(_gridTypeCustomCamera, "sensorHeight",  _currentMissionItem.cameraSensorHeight.rawValue)
+            cameraModelList.setProperty(_gridTypeCustomCamera, "imageWidth",    _currentMissionItem.cameraResolutionWidth.rawValue)
+            cameraModelList.setProperty(_gridTypeCustomCamera, "imageHeight",   _currentMissionItem.cameraResolutionHeight.rawValue)
+            cameraModelList.setProperty(_gridTypeCustomCamera, "focalLength",   _currentMissionItem.cameraFocalLength.rawValue)
         }
 
         ListElement {
@@ -46,6 +47,14 @@ Rectangle {
         }
         ListElement {
             text:           qsTr("自定义相机网格")//qsTr("Custom Camera Grid")
+        }
+        ListElement {
+            text:           qsTr("Typhoon H CGO3+")
+            sensorWidth:    6.264
+            sensorHeight:   4.698
+            imageWidth:     4000
+            imageHeight:    3000
+            focalLength:    14
         }
         ListElement {
             text:           qsTr("索尼 ILCE-QX1")//qsTr("Sony ILCE-QX1") //http://www.sony.co.uk/electronics/interchangeable-lens-cameras/ilce-qx1-body-kit/specifications
@@ -90,16 +99,16 @@ Rectangle {
     }
 
     function recalcFromCameraValues() {
-        var focalLength = _currentMissionItem.cameraFocalLength.rawValue
-        var sensorWidth = _currentMissionItem.cameraSensorWidth.rawValue
-        var sensorHeight = _currentMissionItem.cameraSensorHeight.rawValue
-        var imageWidth = _currentMissionItem.cameraResolutionWidth.rawValue
-        var imageHeight = _currentMissionItem.cameraResolutionHeight.rawValue
+        var focalLength     = _currentMissionItem.cameraFocalLength.rawValue
+        var sensorWidth     = _currentMissionItem.cameraSensorWidth.rawValue
+        var sensorHeight    = _currentMissionItem.cameraSensorHeight.rawValue
+        var imageWidth      = _currentMissionItem.cameraResolutionWidth.rawValue
+        var imageHeight     = _currentMissionItem.cameraResolutionHeight.rawValue
 
-        var altitude = _currentMissionItem.gridAltitude.rawValue
-        var groundResolution = _currentMissionItem.groundResolution.rawValue
-        var frontalOverlap = _currentMissionItem.frontalOverlap.rawValue
-        var sideOverlap = _currentMissionItem.sideOverlap.rawValue
+        var altitude        = _currentMissionItem.gridAltitude.rawValue
+        var groundResolution= _currentMissionItem.groundResolution.rawValue
+        var frontalOverlap  = _currentMissionItem.frontalOverlap.rawValue
+        var sideOverlap     = _currentMissionItem.sideOverlap.rawValue
 
         if (focalLength <= 0 || sensorWidth <= 0 || sensorHeight <= 0 || imageWidth <= 0 || imageHeight <= 0 || groundResolution <= 0) {
             return
@@ -111,17 +120,17 @@ Rectangle {
         var cameraTriggerDistance
 
         if (_currentMissionItem.fixedValueIsAltitude) {
-            groundResolution = (altitude * sensorWidth * 100) /  (imageWidth * focalLength)
+            groundResolution = (altitude * sensorWidth * 100) / (imageWidth * focalLength)
         } else {
             altitude = (imageWidth * groundResolution * focalLength) / (sensorWidth * 100)
         }
 
         if (cameraOrientationLandscape.checked) {
-            imageSizeSideGround = (imageWidth * groundResolution) / 100
+            imageSizeSideGround  = (imageWidth  * groundResolution) / 100
             imageSizeFrontGround = (imageHeight * groundResolution) / 100
         } else {
-            imageSizeSideGround = (imageHeight * groundResolution) / 100
-            imageSizeFrontGround = (imageWidth * groundResolution) / 100
+            imageSizeSideGround  = (imageHeight * groundResolution) / 100
+            imageSizeFrontGround = (imageWidth  * groundResolution) / 100
         }
 
         gridSpacing = imageSizeSideGround * ( (100-sideOverlap) / 100 )
@@ -239,25 +248,6 @@ Rectangle {
         anchors.right:      parent.right
         spacing:            _margin
 
-        QGCLabel {
-            anchors.left:   parent.left
-            anchors.right:  parent.right
-            wrapMode:       Text.WordWrap
-            font.pointSize: ScreenTools.smallFontPointSize
-            text:           gridTypeCombo.currentIndex == 0 ?
-                              qsTr("通过指定所有网格参数创建覆盖多边形区域的航线"): // qsTr("Create a flight path which covers a polygonal area by specifying all grid parameters.") :
-                              qsTr("使用相机规格创建完全覆盖多边形区域的航线。") // qsTr("Create a flight path which fully covers a polygonal area using camera specifications.")
-        }
-
-        QGCLabel { text: qsTr("相机:") }//qsTr("Camera:")
-
-        Rectangle {
-            anchors.left:   parent.left
-            anchors.right:  parent.right
-            height:         1
-            color:          qgcPal.text
-        }
-
         QGCComboBox {
             id:             gridTypeCombo
             anchors.left:   parent.left
@@ -286,15 +276,25 @@ Rectangle {
                     _currentMissionItem.manualGrid = false
                     _currentMissionItem.camera = gridTypeCombo.textAt(index)
                     _noCameraValueRecalc = true
-                    _currentMissionItem.cameraSensorWidth.rawValue = cameraModelList.get(index).sensorWidth
-                    _currentMissionItem.cameraSensorHeight.rawValue = cameraModelList.get(index).sensorHeight
-                    _currentMissionItem.cameraResolutionWidth.rawValue = cameraModelList.get(index).imageWidth
+                    _currentMissionItem.cameraSensorWidth.rawValue      = cameraModelList.get(index).sensorWidth
+                    _currentMissionItem.cameraSensorHeight.rawValue     = cameraModelList.get(index).sensorHeight
+                    _currentMissionItem.cameraResolutionWidth.rawValue  = cameraModelList.get(index).imageWidth
                     _currentMissionItem.cameraResolutionHeight.rawValue = cameraModelList.get(index).imageHeight
-                    _currentMissionItem.cameraFocalLength.rawValue = cameraModelList.get(index).focalLength
+                    _currentMissionItem.cameraFocalLength.rawValue      = cameraModelList.get(index).focalLength
                     _noCameraValueRecalc = false
                     recalcFromCameraValues()
                 }
             }
+        }
+
+        QGCLabel { text: qsTr("相机"); color: qgcPal.buttonHighlight; visible: gridTypeCombo.currentIndex !== _gridTypeManual}
+
+        Rectangle {
+            anchors.left:   parent.left
+            anchors.right:  parent.right
+            height:         1
+            color:          qgcPal.text
+            visible:        gridTypeCombo.currentIndex !== _gridTypeManual
         }
 
         // Camera based grid ui
@@ -306,6 +306,7 @@ Rectangle {
 
             Row {
                 spacing: _margin
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 QGCRadioButton {
                     id:             cameraOrientationLandscape
@@ -323,82 +324,104 @@ Rectangle {
             }
 
             Column {
+                id:             custCameraCol
                 anchors.left:   parent.left
                 anchors.right:  parent.right
                 spacing:        _margin
-                visible:        gridTypeCombo.currentIndex == _gridTypeCustomCamera
+                visible:        gridTypeCombo.currentIndex === _gridTypeCustomCamera
 
-                GridLayout {
-                    columns:        3
-                    columnSpacing:  _margin
-                    rowSpacing:     _margin
+                RowLayout {
+                    anchors.left:   parent.left
+                    anchors.right:  parent.right
+                    spacing:        _margin
+                    Item { Layout.fillWidth: true }
+                    QGCLabel {
+                        Layout.preferredWidth:  _root._fieldWidth
+                        text:                   qsTr("宽")
+                    }
+                    QGCLabel {
+                        Layout.preferredWidth:  _root._fieldWidth
+                        text:                   qsTr("高")
+                    }
+                }
 
-                    property real _fieldWidth: ScreenTools.defaultFontPixelWidth * 10
-
-                    QGCLabel { }
-                    QGCLabel { text: qsTr("宽") }//qsTr("Width")
-                    QGCLabel { text: qsTr("高") }//qsTr("Height")
-
-                    QGCLabel { text: qsTr("传感器:") }//qsTr("Sensor:")
+                RowLayout {
+                    anchors.left:   parent.left
+                    anchors.right:  parent.right
+                    spacing:        _margin
+                    QGCLabel { text: qsTr("传感器:"); Layout.fillWidth: true }
                     FactTextField {
-                        Layout.preferredWidth:  parent._fieldWidth
+                        Layout.preferredWidth:  _root._fieldWidth
                         fact:                   _currentMissionItem.cameraSensorWidth
                     }
                     FactTextField {
-                        Layout.preferredWidth:  parent._fieldWidth
+                        Layout.preferredWidth:  _root._fieldWidth
                         fact:                   _currentMissionItem.cameraSensorHeight
                     }
+                }
 
-                    QGCLabel { text: qsTr("图像:") }//qsTr("Image:")
+                RowLayout {
+                    anchors.left:   parent.left
+                    anchors.right:  parent.right
+                    spacing:        _margin
+                    QGCLabel { text: qsTr("图像:"); Layout.fillWidth: true }
                     FactTextField {
-                        Layout.preferredWidth:  parent._fieldWidth
+                        Layout.preferredWidth:  _root._fieldWidth
                         fact:                   _currentMissionItem.cameraResolutionWidth
                     }
                     FactTextField {
-                        Layout.preferredWidth:  parent._fieldWidth
+                        Layout.preferredWidth:  _root._fieldWidth
                         fact:                   _currentMissionItem.cameraResolutionHeight
                     }
                 }
 
-                FactTextFieldRow {
-                    spacing: _margin
+                RowLayout {
+                    anchors.left:   parent.left
+                    anchors.right:  parent.right
+                    spacing:        _margin
+                    QGCLabel {
+                        text:                   _currentMissionItem.cameraFocalLength.name + ":"
+                        Layout.fillWidth:       true
+                    }
+                    FactTextField {
+                        Layout.preferredWidth:  _root._fieldWidth
                     fact:       _currentMissionItem.cameraFocalLength
+                    }
                 }
+
             } // Column - custom camera
 
-            QGCLabel { text: qsTr("图像重叠") }//qsTr("Image Overlap")
-
-            Row {
+            RowLayout {
+                anchors.left:   parent.left
+                anchors.right:  parent.right
                 spacing:        _margin
-
-                Item {
-                    width:  ScreenTools.defaultFontPixelWidth * 2
-                    height: 1
-                }
-
+                Item { Layout.fillWidth: true }
                 QGCLabel {
-                    anchors.baseline:   frontalOverlapField.baseline
-                    text:               qsTr("正面:")//qsTr("Frontal")
+                    Layout.preferredWidth:  _root._fieldWidth
+                    text:                   qsTr("正面:")
                 }
-
-                FactTextField {
-                    id:     frontalOverlapField
-                    width:  ScreenTools.defaultFontPixelWidth * 7
-                    fact:   _currentMissionItem.frontalOverlap
-                }
-
                 QGCLabel {
-                    anchors.baseline:   frontalOverlapField.baseline
-                    text:               qsTr("边:")//qsTr("Side")
-                }
-
-                FactTextField {
-                    width:  frontalOverlapField.width
-                    fact:   _currentMissionItem.sideOverlap
+                    Layout.preferredWidth:  _root._fieldWidth
+                    text:                   qsTr("边:")
                 }
             }
 
-            QGCLabel { text: qsTr("网格:") }//qsTr("Grid:")
+            RowLayout {
+                anchors.left:   parent.left
+                anchors.right:  parent.right
+                spacing:        _margin
+                QGCLabel { text: qsTr("图像重叠:"); Layout.fillWidth: true }
+                FactTextField {
+                    Layout.preferredWidth:  _root._fieldWidth
+                    fact:                   _currentMissionItem.frontalOverlap
+                }
+                FactTextField {
+                    Layout.preferredWidth:  _root._fieldWidth
+                    fact:                   _currentMissionItem.sideOverlap
+                }
+            }
+
+            QGCLabel { text: qsTr("网格:"); color: qgcPal.buttonHighlight;}
 
             Rectangle {
                 anchors.left:   parent.left
@@ -407,12 +430,36 @@ Rectangle {
                 color:          qgcPal.text
             }
 
-            FactTextFieldGrid {
+            RowLayout {
                 anchors.left:   parent.left
                 anchors.right:  parent.right
-                columnSpacing:  _margin
-                rowSpacing:     _margin
-                factList:       [ _currentMissionItem.gridAngle, _currentMissionItem.turnaroundDist ]
+                spacing:        _margin
+                QGCLabel {
+                    text:                   _currentMissionItem.gridAngle.name + ":"
+                    Layout.fillWidth:       true
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                FactTextField {
+                    fact:                   _currentMissionItem.gridAngle
+                    anchors.verticalCenter: parent.verticalCenter
+                    Layout.preferredWidth:  _root._fieldWidth
+                }
+            }
+
+            RowLayout {
+                anchors.left:   parent.left
+                anchors.right:  parent.right
+                spacing:        _margin
+                QGCLabel {
+                    text:                   _currentMissionItem.turnaroundDist.name + ":"
+                    Layout.fillWidth:       true
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                FactTextField {
+                    fact:                   _currentMissionItem.turnaroundDist
+                    anchors.verticalCenter: parent.verticalCenter
+                    Layout.preferredWidth:  _root._fieldWidth
+                }
             }
 
             QGCLabel {
@@ -429,19 +476,20 @@ Rectangle {
                 spacing:        _margin
 
                 QGCRadioButton {
-                    id:                 fixedAltitudeRadio
-                    anchors.baseline:   gridAltitudeField.baseline
-                    text:               qsTr("高度:")//qsTr("Altitude:")
-                    checked:            _currentMissionItem.fixedValueIsAltitude
-                    exclusiveGroup:     fixedValueGroup
-                    onClicked:          _currentMissionItem.fixedValueIsAltitude = true
+                    id:                     fixedAltitudeRadio
+                    text:                   qsTr("高度:")
+                    checked:                _currentMissionItem.fixedValueIsAltitude
+                    exclusiveGroup:         fixedValueGroup
+                    onClicked:              _currentMissionItem.fixedValueIsAltitude = true
+                    Layout.fillWidth:       true
+                    anchors.verticalCenter: parent.verticalCenter
                 }
 
                 FactTextField {
-                    id:                 gridAltitudeField
-                    Layout.fillWidth:   true
-                    fact:               _currentMissionItem.gridAltitude
-                    enabled:            fixedAltitudeRadio.checked
+                    fact:                   _currentMissionItem.gridAltitude
+                    enabled:                fixedAltitudeRadio.checked
+                    Layout.preferredWidth:  _root._fieldWidth
+                    anchors.verticalCenter: parent.verticalCenter
                 }
             }
 
@@ -451,19 +499,20 @@ Rectangle {
                 spacing:        _margin
 
                 QGCRadioButton {
-                    id:                 fixedGroundResolutionRadio
-                    anchors.baseline:   groundResolutionField.baseline
-                    text:               qsTr("地面参考:")//qsTr("Ground res:")
-                    checked:            !_currentMissionItem.fixedValueIsAltitude
-                    exclusiveGroup:     fixedValueGroup
-                    onClicked:          _currentMissionItem.fixedValueIsAltitude = false
+                    id:                     fixedGroundResolutionRadio
+                    text:                   qsTr("地面参考:")
+                    checked:                !_currentMissionItem.fixedValueIsAltitude
+                    exclusiveGroup:         fixedValueGroup
+                    onClicked:              _currentMissionItem.fixedValueIsAltitude = false
+                    Layout.fillWidth:       true
+                    anchors.verticalCenter: parent.verticalCenter
                 }
 
                 FactTextField {
-                    id:                 groundResolutionField
-                    Layout.fillWidth:   true
-                    fact:               _currentMissionItem.groundResolution
-                    enabled:            fixedGroundResolutionRadio.checked
+                    fact:                   _currentMissionItem.groundResolution
+                    enabled:                fixedGroundResolutionRadio.checked
+                    Layout.preferredWidth:  _root._fieldWidth
+                    anchors.verticalCenter: parent.verticalCenter
                 }
             }
         }
@@ -475,7 +524,7 @@ Rectangle {
             spacing:        _margin
             visible:        gridTypeCombo.currentIndex == _gridTypeManual
 
-            QGCLabel { text: qsTr("网格:") }//qsTr("Grid:")
+            QGCLabel { text: qsTr("网格:"); color: qgcPal.buttonHighlight;}
 
             Rectangle {
                 anchors.left:   parent.left
@@ -487,7 +536,7 @@ Rectangle {
             FactTextFieldGrid {
                 anchors.left:   parent.left
                 anchors.right:  parent.right
-                columnSpacing:  _margin
+                columnSpacing:  _margin * 10
                 rowSpacing:     _margin
                 factList:       [ _currentMissionItem.gridAngle, _currentMissionItem.gridSpacing, _currentMissionItem.gridAltitude, _currentMissionItem.turnaroundDist ]
             }
@@ -499,7 +548,7 @@ Rectangle {
                 onClicked:      _currentMissionItem.gridAltitudeRelative = checked
             }
 
-            QGCLabel { text: qsTr("相机:") }//qsTr("Camera:")
+            QGCLabel { text: qsTr(""相机:"); color: qgcPal.buttonHighlight;}
 
             Rectangle {
                 anchors.left:   parent.left
@@ -530,7 +579,7 @@ Rectangle {
             }
         }
 
-        QGCLabel { text: qsTr("多边型:") }//qsTr("Polygon:")
+        QGCLabel { text: qsTr("多边型:"); color: qgcPal.buttonHighlight;}
 
         Rectangle {
             anchors.left:   parent.left
@@ -541,9 +590,11 @@ Rectangle {
 
         Row {
             spacing: ScreenTools.defaultFontPixelWidth
+            anchors.horizontalCenter: parent.horizontalCenter
 
             QGCButton {
-                text:       editorMap.polygonDraw.drawingPolygon ? qsTr("完成绘制") : qsTr("绘制")//qsTr("Finish Adjust") : qsTr("Adjust")
+                width:      _root.width * 0.45
+                text:       editorMap.polygonDraw.drawingPolygon ? qsTr("完成绘制") : qsTr("绘制")//qsTr("Finish Draw") : qsTr("Draw")
                 visible:    !editorMap.polygonDraw.adjustingPolygon
                 enabled:    ((editorMap.polygonDraw.drawingPolygon && editorMap.polygonDraw.polygonReady) || !editorMap.polygonDraw.drawingPolygon)
 
@@ -557,6 +608,7 @@ Rectangle {
             }
 
             QGCButton {
+                width:      _root.width * 0.4
                 text:       editorMap.polygonDraw.adjustingPolygon ? qsTr("完成调整") : qsTr("调整")//qsTr("Finish Adjust") : qsTr("Adjust")
                 visible:    _currentMissionItem.polygonPath.length > 0 && !editorMap.polygonDraw.drawingPolygon
 
@@ -570,7 +622,7 @@ Rectangle {
             }
         }
 
-        QGCLabel { text: qsTr("统计:") }//
+        QGCLabel { text: qsTr("统计:"); color: qgcPal.buttonHighlight;}
 
         Rectangle {
             anchors.left:   parent.left
@@ -586,11 +638,19 @@ Rectangle {
             QGCLabel { text: qsTr("测绘面积:") }//Survey area
             QGCLabel { text: QGroundControl.squareMetersToAppSettingsAreaUnits(_currentMissionItem.coveredArea).toFixed(2) + " " + QGroundControl.appSettingsAreaUnitsString }
 
-            QGCLabel { text: qsTr("# 拍摄数:") }//shots
+            QGCLabel { text: qsTr("#拍摄数:") }
             QGCLabel { text: _currentMissionItem.cameraShots }
 
-            QGCLabel { text: qsTr("Shot interval:") }
-            QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("secs")}
+            QGCLabel { text: qsTr("Photo interval:") }
+            QGCLabel {
+                text: {
+                    var timeVal = _currentMissionItem.timeBetweenShots
+                    if(!isFinite(timeVal) || _currentMissionItem.cameraShots === 0) {
+                        return qsTr("N/A")
+                    }
+                    return timeVal.toFixed(1) + " " + qsTr("secs")
+                }
+            }
         }
     }
 }

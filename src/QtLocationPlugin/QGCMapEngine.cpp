@@ -134,11 +134,13 @@ QGCMapEngine::QGCMapEngine()
     , _maxMemCache(0)
     , _prunning(false)
     , _cacheWasReset(false)
+    , _isInternetActive(false)
 {
     qRegisterMetaType<QGCMapTask::TaskType>();
     qRegisterMetaType<QGCTile>();
     qRegisterMetaType<QList<QGCTile*>>();
-    connect(&_worker, &QGCCacheWorker::updateTotals, this, &QGCMapEngine::_updateTotals);
+    connect(&_worker, &QGCCacheWorker::updateTotals,   this, &QGCMapEngine::_updateTotals);
+    connect(&_worker, &QGCCacheWorker::internetStatus, this, &QGCMapEngine::_internetStatus);
 }
 
 //-----------------------------------------------------------------------------
@@ -485,6 +487,20 @@ QGCCreateTileSetTask::~QGCCreateTileSetTask()
     //-- If not sent out, delete it
     if(!_saved && _tileSet)
         delete _tileSet;
+}
+
+//-----------------------------------------------------------------------------
+void
+QGCMapEngine::testInternet()
+{
+    getQGCMapEngine()->addTask(new QGCTestInternetTask());
+}
+
+//-----------------------------------------------------------------------------
+void
+QGCMapEngine::_internetStatus(bool active)
+{
+    _isInternetActive = active;
 }
 
 // Resolution math: https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Resolution_and_Scale

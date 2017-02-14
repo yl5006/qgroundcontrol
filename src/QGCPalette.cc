@@ -46,14 +46,13 @@ QColor QGCPalette::_text[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
 QColor QGCPalette::_warningText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#cc0808"), QColor("#cc0808") },
     { QColor("#e4e428"), QColor("#e4e428") }
- //   { QColor("0xed, 0xd4, 0x69"), QColor("0xed, 0xd4, 0x69") }
+//    { QColor("#fd5d13"), QColor("#fd5d13") }
 };
 
 QColor QGCPalette::_button[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {
     { QColor("#ffffff"),  QColor("#ffffff") },
  //   { QColor(0x58, 0x58, 0x58), QColor(98, 98, 100) },
     { QColor("#33444c"),  QColor("#33444c") },
-//    { QColor(46, 187, 217), QColor(46, 187, 217) },
 };
 
 QColor QGCPalette::_buttonText[QGCPalette::_cThemes][QGCPalette::_cColorGroups] = {

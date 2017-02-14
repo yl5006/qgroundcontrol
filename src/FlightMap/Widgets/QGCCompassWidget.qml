@@ -17,15 +17,16 @@
 import QtQuick 2.4
 import QtGraphicalEffects 1.0
 
-import QGroundControl.Controls 1.0
-import QGroundControl.ScreenTools 1.0
+import QGroundControl.Controls      1.0
+import QGroundControl.ScreenTools   1.0
+import QGroundControl.Vehicle       1.0
 
 Item {
     id:                     root
 
-    property bool active:   false  ///< true: actively connected to data provider, false: show inactive control
-    property real heading:  0
     property real size:     _defaultSize
+    property real heading:  0
+    property var  vehicle:  null
 
     property real _defaultSize: ScreenTools.defaultFontPixelHeight * (10)
     property real _sizeRatio:   ScreenTools.isTinyScreen ? (size / _defaultSize) * 0.5 : size / _defaultSize
@@ -48,11 +49,10 @@ Item {
 
         Image {
             id:                 pointer
-            source:             "/qmlimages/compassInstrumentArrow.svg"
+            source:             vehicle ? vehicle.vehicleImageCompass : ""
             mipmap:             true
             width:              size * 1.2
             height:             size * 1.2
-//          width:              size * 0.75
             sourceSize.width:   width
             fillMode:           Image.PreserveAspectFit
             anchors.centerIn:   parent
@@ -84,8 +84,8 @@ Item {
             color:              Qt.rgba(0,0,0,0)
 
             QGCLabel {
-                text:           active ? " "+heading.toFixed(0)+"°" : qsTr("OFF")
-                font.family:    active ? ScreenTools.demiboldFontFamily : ScreenTools.normalFontFamily
+                text:           vehicle ? " "+heading.toFixed(0)+"°" : qsTr("OFF")
+                font.family:    vehicle ? ScreenTools.demiboldFontFamily : ScreenTools.normalFontFamily
                 font.pointSize: _fontSize < 8 ? 8 : _fontSize;
                 color:          "white"
                 anchors.centerIn: parent
