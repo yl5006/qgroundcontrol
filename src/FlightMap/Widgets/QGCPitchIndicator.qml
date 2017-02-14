@@ -29,7 +29,7 @@ Rectangle {
     property real _shortDash:       size * 0.1
     property real _fontSize:        ScreenTools.defaultFontPointSize * (size / _defaultSize)
 
-    property real _defaultSize:     ScreenTools.isAndroid ? 300 : 100
+    property real _defaultSize:     ScreenTools.isAndroid ? 200 : 100
 
     height: size
     width:  size

@@ -1,4 +1,4 @@
-﻿/* Copyright 2012 Google Inc.
+/* Copyright 2012 Google Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -33,8 +33,8 @@ public final class UsbId {
     public static final int FTDI_FT232R = 0x6001;
     public static final int FTDI_FT231X = 0x6015;
 
-    public static final int VENDOR_PX4    = 0x0483;//0x26AC;
-    public static final int DEVICE_PX4FMU = 0x5740;//0x11;
+    public static final int VENDOR_PX4    = 0x26AC;
+    public static final int DEVICE_PX4FMU = 0x11;
 
     public static final int VENDOR_ATMEL = 0x03EB;
     public static final int ATMEL_LUFA_CDC_DEMO_APP = 0x2044;

@@ -17,7 +17,7 @@
 
 #include "QGCConfig.h"
 
-//#pragma execution_character_set("utf-8")
+#pragma execution_character_set("utf-8")
 
 namespace QGC
 {

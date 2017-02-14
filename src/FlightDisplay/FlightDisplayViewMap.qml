@@ -106,7 +106,7 @@ FlightMap {
     //-- Vertical Tool Buttons
     Row {
         id:                 toolColumn
-        anchors.topMargin:  ScreenTools.isShortScreen ? _toolButtonTopMargin+_toolButtonTopMargin : ScreenTools.defaultFontPixelHeight / 2+_toolButtonTopMargin
+        anchors.topMargin:  ScreenTools.toolbarHeight*1.8 + ScreenTools.defaultFontPixelWidth
         anchors.top:        parent.top
         anchors.horizontalCenter:   parent.horizontalCenter
         visible:            _mainIsMap

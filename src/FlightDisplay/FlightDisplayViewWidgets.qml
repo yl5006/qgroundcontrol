@@ -284,7 +284,7 @@ Item {
                 guidedModeConfirm.confirmText = qsTr("改变高度")
                 break;
             case confirmGoTo:
-                guidedModeConfirm.confirmText = qsTr("move vehicle")
+                guidedModeConfirm.confirmText = qsTr("移动机体")
                 break;
             case confirmRetask:
                 guidedModeConfirm.confirmText = qsTr("改变飞行航点")
@@ -360,7 +360,8 @@ Item {
 
                 QGCButton {
                     pointSize:  _guidedModeBar._fontPointSize
-                    text:       qsTr("Change Altitude")
+                    text:       qsTr("改变高度")
+                    anchors.verticalCenter: parent.verticalCenter
                     visible:    (_activeVehicle && _activeVehicle.flying) && _activeVehicle.guidedModeSupported && _activeVehicle.armed
                     onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmChangeAlt)
                 }

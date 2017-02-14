@@ -48,7 +48,7 @@ QGCView {
         id:         title
         anchors.top:        parent.top
         width:      parent.width
-        height:     ScreenTools.defaultFontPixelHeight*10
+        height:     ScreenTools.defaultFontPixelHeight*8
         color:      "transparent"
     QGCCircleProgress{
         id:                 setcircle

@@ -175,7 +175,7 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
     #endif
     , _runningUnitTests(unitTesting)
     #if defined (__mobile__)
-    , _styleIsDark(false)
+    , _styleIsDark(true)
     #else
     , _styleIsDark(true)
     #endif

@@ -37,7 +37,7 @@ QGCView {
     readonly property real      _margin:                ScreenTools.defaultFontPixelHeight * 0.5
     readonly property var       _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     readonly property real      _PointFieldWidth:       ScreenTools.defaultFontPixelWidth * 11
-    readonly property real      _rightPanelWidth:       Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 35)
+    readonly property real      _rightPanelWidth:       Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 30)
     readonly property real      _rightPanelOpacity:     1
     readonly property int       _toolButtonCount:       6
     readonly property real      _toolButtonTopMargin:   parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
@@ -837,7 +837,7 @@ QGCView {
                 //-- horizontal Tool Buttons
                 Row {
                     id:                 toolColumn
-                    anchors.topMargin:  ScreenTools.isShortScreen ? _toolButtonTopMargin+_toolButtonTopMargin : ScreenTools.defaultFontPixelHeight / 2+_toolButtonTopMargin
+                    anchors.topMargin:  ScreenTools.toolbarHeight*1.8 + ScreenTools.defaultFontPixelWidth
                     anchors.top:        parent.top//ScreenTools.isShortScreen ? parent.top : planLabel.bottom
                     anchors.horizontalCenter:   parent.horizontalCenter
                     z:                  QGroundControl.zOrderWidgets
@@ -1072,7 +1072,7 @@ QGCView {
                     id:              indexIndicator
                     anchors.right:   parent.right
                     anchors.top:     parent.top
-                    anchors.topMargin:     ScreenTools.isShortScreen ? _toolButtonTopMargin+_toolButtonTopMargin : ScreenTools.defaultFontPixelHeight / 2+_toolButtonTopMargin
+                    anchors.topMargin:     ScreenTools.toolbarHeight*1.8 + ScreenTools.defaultFontPixelWidth
                     anchors.rightMargin:   _margin*2
                     width:               _rightPanelWidth
                     currentMissionItem:  _currentMissionItem

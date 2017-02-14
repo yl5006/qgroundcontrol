@@ -26,7 +26,7 @@ Rectangle {
     property var _currentSelection: null
     property int _firstColumn:      ScreenTools.defaultFontPixelWidth * 12
     property int _secondColumn:     ScreenTools.defaultFontPixelWidth * 30
-
+    property int _defaultHeght:     ScreenTools.isMobile ? ScreenTools. defaultFontPixelHeight*0.8:ScreenTools. defaultFontPixelHeight
     ExclusiveGroup { id: linkGroup }
 
     QGCPalette {
@@ -87,7 +87,7 @@ Rectangle {
     QGCFlickable {
         clip:               true
         anchors.top:        setimg.bottom
-        anchors.margins:    ScreenTools.defaultFontPixelWidth*5
+        anchors.margins:    ScreenTools.defaultFontPixelWidth*2
         width:              parent.width
         height:             parent.height -ScreenTools.defaultFontPixelWidth*20
         contentHeight:      settingsColumn.height+ScreenTools.defaultFontPixelWidth*2
@@ -101,12 +101,12 @@ Rectangle {
             anchors.leftMargin: ScreenTools.defaultFontPixelWidth*20
             anchors.top:        parent.top
             anchors.topMargin:  ScreenTools.defaultFontPixelWidth
-            spacing:            ScreenTools.defaultFontPixelHeight*4
+            spacing:            _defaultHeght*4
             Repeater {
                 model: QGroundControl.linkManager.linkConfigurations
                 delegate: Rectangle{
-                    width:              ScreenTools.defaultFontPixelHeight * 24
-                    height:             ScreenTools.defaultFontPixelHeight * 10
+                    width:              _defaultHeght * 24
+                    height:             _defaultHeght * 10
                     color:              "transparent"
                     ImageButton {
                         id:                  con
@@ -116,8 +116,8 @@ Rectangle {
                         anchors.top:         parent.top
                         anchors.left:        parent.left
                         checkable:           true
-                        width:               ScreenTools.defaultFontPixelHeight * 24
-                        height:              ScreenTools.defaultFontPixelHeight * 3
+                        width:               _defaultHeght * 24
+                        height:              _defaultHeght * 3
                         text:                object.name
                         onClicked: {
                             //  checked=  true
@@ -130,8 +130,8 @@ Rectangle {
                         anchors.horizontalCenter:   con.horizontalCenter
                         source:             "/qmlimages/connecticonbg.svg"
                         fillMode:            Image.PreserveAspectFit
-                        width:               ScreenTools.defaultFontPixelHeight * 20
-                        height:              ScreenTools.defaultFontPixelHeight * 4
+                        width:               _defaultHeght * 20
+                        height:              _defaultHeght * 4
                     }
                     Row{
                         anchors.horizontalCenter: parent.horizontalCenter

@@ -33,8 +33,8 @@ Rectangle {
 
     ExclusiveGroup { id: setupButtonGroup }
 
-    readonly property real      _defaultTextHeight: ScreenTools.defaultFontPixelHeight
-    readonly property real      _defaultTextWidth:  ScreenTools.defaultFontPixelWidth
+    readonly property real      _defaultTextHeight: ScreenTools.isMobile?ScreenTools.defaultFontPixelHeight*0.8:ScreenTools.defaultFontPixelHeight
+    readonly property real      _defaultTextWidth:  ScreenTools.isMobile?ScreenTools.defaultFontPixelWidth*0.8:ScreenTools.defaultFontPixelWidth
     readonly property real      _horizontalMargin:  _defaultTextWidth / 2
     readonly property real      _verticalMargin:    _defaultTextHeight / 2
     readonly property real      _buttonWidth:       _defaultTextWidth * 18
@@ -325,7 +325,7 @@ Rectangle {
         id:                     rowscroll
         height:                 _defaultTextHeight*8
         anchors.bottom:         parent.bottom
-        anchors.bottomMargin:   _defaultTextHeight*4
+        anchors.bottomMargin:   _defaultTextHeight*2
         anchors.left:           parent.left
         anchors.right:          parent.right
         anchors.leftMargin:     _defaultTextHeight*5
@@ -381,6 +381,7 @@ Rectangle {
              height:         width
              imageResource:  "/qmlimages/FirmwareUpgradeIcon.svg"
              exclusiveGroup: setupButtonGroup
+             visible:        !ScreenTools.isMobile//&&ScreenTools.isDebug
              text:           qsTr("固件下载")//"Firmware"
              onClicked:
              {
@@ -449,7 +450,7 @@ Rectangle {
               height:         width
               exclusiveGroup: setupButtonGroup
               imageResource:  "/qmlimages/Analyze.svg"
-              visible:        QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable
+              visible:        !ScreenTools.isMobile&&QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable
               text:           qsTr("日志")//"Firmware"
               onClicked:
               {
