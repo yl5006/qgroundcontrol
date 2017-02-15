@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -84,7 +84,7 @@ VideoManager::setToolbox(QGCToolbox *toolbox)
        }
    } else {
        setUdpPort(settings.value(kVideoUDPPortKey, 5600).toUInt());
-       setRtspURL(settings.value(kVideoRTSPUrlKey, "rtsp://192.168.42.1:554/live").toString()); //-- Example RTSP URL
+       setRtspURL(settings.value(kVideoRTSPUrlKey, "rtsp://192.168.1.168:554/main").toString()); //-- Example RTSP URL
    }
 #if defined(QGC_ENABLE_VIDEORECORDING)
    setVideoSavePath(settings.value(kVideoSavePathKey, QDir::homePath()).toString());

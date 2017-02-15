@@ -1,4 +1,4 @@
-{
+﻿{
     "comment":  "PX4 Pro, Fixed Wing",
 
     "version": 1,
@@ -7,13 +7,7 @@
         {
             "id":           21,
             "comment":      "MAV_CMD_NAV_LAND",
-            "paramRemove":  "1,4",
-            "param7": {
-                "label":            "Altitude:",
-                "units":            "m",
-                "default":          0,
-                "decimalPlaces":    1
-            }
+            "paramRemove":  "1,4"
         },
         {
             "id":           22,

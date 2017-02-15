@@ -92,7 +92,8 @@
 },
 {
     "name":             "Focal length",
-    "shortDescription": "Amount of overlap between images in the side facing direction.",
+    "shortDescription": "焦距：",
+    "longDescription":  "面向方向的图像之间的重叠量。",
     "type":             "double",
     "decimalPlaces":    1,
     "min":              1,

@@ -102,7 +102,7 @@ SetupPage {
                     Item{
                         height:                     width
                         width:                      parent.height
-
+                        visible:                    false
                         Rectangle {
                             id:                souce
                             anchors.fill:      parent

@@ -33,7 +33,7 @@ MapQuickItem {
 
     sourceItem: Image {
         id:                 vehicleIcon
-        source:             vehicle.multiRotor?/*isSatellite ?*/ vehicle.vehicleImageOpaque : vehicle.vehicleImageOutline
+        source:             vehicle.multiRotor?"/qmlimages/airplaneCoper.svg":"/qmlimages/airplanePlane.svg"  /*isSatellite ? vehicle.vehicleImageOpaque : vehicle.vehicleImageOutline*/
         mipmap:             true
         width:      size / 2
         sourceSize.width:   size

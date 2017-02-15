@@ -130,8 +130,7 @@ Rectangle {
         anchors.right:   parent.right
         y:              _topBottomMargin
         size:            parent.height
-        active:         instrumentPanel.active
-//        visible:        !QGroundControl.virtualTabletJoystick
+        active:         _activeVehicle
         anchors.verticalCenter:  parent.verticalCenter
      }
 

@@ -380,12 +380,12 @@ Rectangle {
                     anchors.right:  parent.right
                     spacing:        _margin
                     QGCLabel {
-                        text:                   _currentMissionItem.cameraFocalLength.name + ":"
+                        text:                   _currentMissionItem.cameraFocalLength.shortDescription + ":"
                         Layout.fillWidth:       true
                     }
                     FactTextField {
                         Layout.preferredWidth:  _root._fieldWidth
-                    fact:       _currentMissionItem.cameraFocalLength
+                        fact:       _currentMissionItem.cameraFocalLength
                     }
                 }
 
@@ -435,7 +435,7 @@ Rectangle {
                 anchors.right:  parent.right
                 spacing:        _margin
                 QGCLabel {
-                    text:                   _currentMissionItem.gridAngle.name + ":"
+                    text:                   _currentMissionItem.gridAngle.shortDescription + ":"
                     Layout.fillWidth:       true
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -451,7 +451,7 @@ Rectangle {
                 anchors.right:  parent.right
                 spacing:        _margin
                 QGCLabel {
-                    text:                   _currentMissionItem.turnaroundDist.name + ":"
+                    text:                   _currentMissionItem.turnaroundDist.shortDescription + ":"
                     Layout.fillWidth:       true
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -467,7 +467,7 @@ Rectangle {
                 anchors.right:  parent.right
                 wrapMode:       Text.WordWrap
                 font.pointSize: ScreenTools.smallFontPointSize
-                text:           qsTr("Which value would you like to keep constant as you adjust other settings:")
+                text:           qsTr("保持该值不变,调整其他值")
             }
 
             RowLayout {
@@ -548,7 +548,7 @@ Rectangle {
                 onClicked:      _currentMissionItem.gridAltitudeRelative = checked
             }
 
-            QGCLabel { text: qsTr(""相机:"); color: qgcPal.buttonHighlight;}
+            QGCLabel { text: qsTr("相机:"); color: qgcPal.buttonHighlight;}
 
             Rectangle {
                 anchors.left:   parent.left
@@ -641,14 +641,14 @@ Rectangle {
             QGCLabel { text: qsTr("#拍摄数:") }
             QGCLabel { text: _currentMissionItem.cameraShots }
 
-            QGCLabel { text: qsTr("Photo interval:") }
+            QGCLabel { text: qsTr("拍照间隔:") }
             QGCLabel {
                 text: {
                     var timeVal = _currentMissionItem.timeBetweenShots
                     if(!isFinite(timeVal) || _currentMissionItem.cameraShots === 0) {
                         return qsTr("N/A")
                     }
-                    return timeVal.toFixed(1) + " " + qsTr("secs")
+                    return timeVal.toFixed(1) + " " + qsTr("秒")
                 }
             }
         }
