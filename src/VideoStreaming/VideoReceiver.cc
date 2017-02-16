@@ -192,13 +192,6 @@ void VideoReceiver::start()
         } else {
             dataSource = gst_element_factory_make("rtspsrc", "rtsp-source");
         }
-        guint major, minor, micro, nano;
-        gst_version (&major, &minor, &micro, &nano);
-        qDebug()<< "This program is linked against GStreamer"<<major<<","<<minor<<","<<micro<<","<<nano<<endl;
-//        if ((dataSource = gst_element_factory_make("v4l2src", "v4l2-source")) == NULL) {
-//            qCritical() << "VideoReceiver::start() failed. Error with gst_element_factory_make('v4l2src')";
-//            break;
-//        }
 
         if (!dataSource) {
             qCritical() << "VideoReceiver::start() failed. Error with data source for gst_element_factory_make()";
@@ -496,6 +489,8 @@ void VideoReceiver::startRecording(void)
 
     g_object_set(G_OBJECT(_sink->filesink), "location", qPrintable(videoFile), NULL);
     qCDebug(VideoReceiverLog) << "New video file:" << videoFile;
+
+//    g_object_set(G_OBJECT(_sink->filesink), "location" ,"rtmp://192.168.1.107/rtmp/live live=1" ,  NULL);
 
     gst_object_ref(_sink->queue);
     gst_object_ref(_sink->mux);
