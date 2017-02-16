@@ -21,10 +21,9 @@ QGCTextField {
     property string _validateString
 
     // At this point all Facts are numeric
-    validator:          DoubleValidator {}
-    inputMethodHints:   ScreenTools.isiOS ?
-                            Qt.ImhNone :                // iOS numeric keyboard has not done button, we can't use it
-                            Qt.ImhFormattedNumbersOnly  // Forces use of virtual numeric keyboard
+    inputMethodHints: ScreenTools.isiOS ?
+                          Qt.ImhNone :                // iOS numeric keyboard has not done button, we can't use it
+                          Qt.ImhFormattedNumbersOnly  // Forces use of virtual numeric keyboard
 
     onEditingFinished: {
         if (typeof qgcView !== 'undefined' && qgcView) {
@@ -50,8 +49,8 @@ QGCTextField {
         }
     }
 
-    onHelpClicked: showHelp?qgcView.showDialog(helpDialogComponent, qsTr("参数详解"),/*qsTr("Value Details"), */qgcView.showDialogDefaultWidth, StandardButton.Ok):
-0
+    onHelpClicked:  showHelp ? qgcView.showDialog(helpDialogComponent, qsTr("Value Details"), qgcView.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel):0
+
 
     Component {
         id: validationErrorDialogComponent

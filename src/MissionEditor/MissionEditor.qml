@@ -478,6 +478,24 @@ QGCView {
                         missionItem:    object
                         sequenceNumber: object.lastSequenceNumber
                         visible:        object.specifiesCoordinate
+
+                        // These are the non-coordinate child mission items attached to this item
+                        Row {
+                            anchors.top:    parent.top
+                            anchors.left:   parent.right
+
+                            Repeater {
+                                model: !object.isSimpleItem ? object.childItems : 0
+
+                                delegate: MissionItemIndexLabel {
+                                    label:      object.abbreviation
+                                    checked:    object.isCurrentItem
+                                    z:          2
+
+                                    onClicked: setCurrentItem(object.sequenceNumber)
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -525,7 +543,7 @@ QGCView {
                             anchors.left:   parent.right
 
                             Repeater {
-                                model: object.childItems
+                                model: object.isSimpleItem ? object.childItems : 0
 
                                 delegate: MissionItemIndexLabel {
                                     label:      object.abbreviation

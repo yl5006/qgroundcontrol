@@ -59,12 +59,14 @@ const int Vehicle::_lowBatteryAnnounceRepeatMSecs = 30 * 1000;
 extern int language;
 Vehicle::Vehicle(LinkInterface*             link,
                  int                        vehicleId,
+                 int                        defaultComponentId,
                  MAV_AUTOPILOT              firmwareType,
                  MAV_TYPE                   vehicleType,
                  FirmwarePluginManager*     firmwarePluginManager,
                  JoystickManager*           joystickManager)
     : FactGroup(_vehicleUIUpdateRateMSecs, language==0?":/json/Vehicle/VehicleFactCn.json":":/json/Vehicle/VehicleFact.json")
     , _id(vehicleId)
+    , _defaultComponentId(defaultComponentId)
     , _active(false)
     , _offlineEditingVehicle(false)
     , _firmwareType(firmwareType)
@@ -143,6 +145,8 @@ Vehicle::Vehicle(LinkInterface*             link,
 {
     _addLink(link);
 
+    connect(_joystickManager, &JoystickManager::activeJoystickChanged, this, &Vehicle::_activeJoystickChanged);
+
     _mavlink = qgcApp()->toolbox()->mavlinkProtocol();
 
     connect(_mavlink, &MAVLinkProtocol::messageReceived,     this, &Vehicle::_mavlinkMessageReceived);
@@ -213,6 +217,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
                  QObject*                   parent)
     : FactGroup(_vehicleUIUpdateRateMSecs, language==0 ? ":/json/Vehicle/VehicleFactCn.json":":/json/Vehicle/VehicleFact.json", parent)
     , _id(0)
+    , _defaultComponentId(MAV_COMP_ID_ALL)
     , _active(false)
     , _offlineEditingVehicle(true)
     , _firmwareType(firmwareType)
@@ -1302,6 +1307,12 @@ QStringList Vehicle::joystickModes(void)
     return list;
 }
 
+void Vehicle::_activeJoystickChanged(void)
+{
+	_loadSettings();
+	_startJoystick(true);
+}
+
 bool Vehicle::joystickEnabled(void)
 {
     return _joystickEnabled;
@@ -1354,7 +1365,7 @@ QGeoCoordinate Vehicle::homePosition(void)
 void Vehicle::setArmed(bool armed)
 {
     // We specifically use COMMAND_LONG:MAV_CMD_COMPONENT_ARM_DISARM since it is supported by more flight stacks.
-    sendMavCommand(defaultComponentId(),
+    sendMavCommand(_defaultComponentId,
                    MAV_CMD_COMPONENT_ARM_DISARM,
                    true,    // show error if fails
                    armed ? 1.0f : 0.0f);
@@ -1435,7 +1446,7 @@ void Vehicle::requestDataStream(MAV_DATA_STREAM stream, uint16_t rate, bool send
     dataStream.req_message_rate = rate;
     dataStream.start_stop = 1;  // start
     dataStream.target_system = id();
-    dataStream.target_component = defaultComponentId();
+    dataStream.target_component = _defaultComponentId;
 
     mavlink_msg_request_data_stream_encode_chan(_mavlink->getSystemId(),
                                                 _mavlink->getComponentId(),
@@ -1919,7 +1930,7 @@ void Vehicle::setGuidedMode(bool guidedMode)
 
 void Vehicle::emergencyStop(void)
 {
-    sendMavCommand(defaultComponentId(),
+    sendMavCommand(_defaultComponentId,
                    MAV_CMD_COMPONENT_ARM_DISARM,
                    true,        // show error if fails
                    0.0f,
@@ -2088,12 +2099,7 @@ QString Vehicle::firmwareVersionTypeString(void) const
 
 void Vehicle::rebootVehicle()
 {
-    sendMavCommand(defaultComponentId(), MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN, true, 1.0f);
-}
-
-int Vehicle::defaultComponentId(void)
-{
-    return _parameterManager->defaultComponentId();
+    sendMavCommand(_defaultComponentId, MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN, true, 1.0f);
 }
 
 void Vehicle::setSoloFirmware(bool soloFirmware)
@@ -2108,7 +2114,7 @@ void Vehicle::setSoloFirmware(bool soloFirmware)
     // Temporarily removed, waiting for new command implementation
 void Vehicle::motorTest(int motor, int percent, int timeoutSecs)
 {
-    sendMavCommand(defaultComponentId(), MAV_CMD_DO_MOTOR_TEST, motor, MOTOR_TEST_THROTTLE_PERCENT, percent, timeoutSecs);
+    doCommandLongUnverified(defaultComponentId(), MAV_CMD_DO_MOTOR_TEST, motor, MOTOR_TEST_THROTTLE_PERCENT, percent, timeoutSecs);
 }
 //#endif
 
@@ -2192,6 +2198,14 @@ QStringList Vehicle::unhealthySensors(void) const
     return sensorList;
 }
 
+void Vehicle::setOfflineEditingDefaultComponentId(int defaultComponentId)
+{
+    if (_offlineEditingVehicle) {
+        _defaultComponentId = defaultComponentId;
+    } else {
+        qWarning() << "Call to Vehicle::setOfflineEditingDefaultComponentId on vehicle which is not offline";
+    }
+}
 
 const char* VehicleGPSFactGroup::_hdopFactName =                "hdop";
 const char* VehicleGPSFactGroup::_vdopFactName =                "vdop";
@@ -2220,12 +2234,12 @@ VehicleGPSFactGroup::VehicleGPSFactGroup(QObject* parent)
 
 void Vehicle::startMavlinkLog()
 {
-    sendMavCommand(defaultComponentId(), MAV_CMD_LOGGING_START, false /* showError */);
+    sendMavCommand(_defaultComponentId, MAV_CMD_LOGGING_START, false /* showError */);
 }
 
 void Vehicle::stopMavlinkLog()
 {
-    sendMavCommand(defaultComponentId(), MAV_CMD_LOGGING_STOP, false /* showError */);
+    sendMavCommand(_defaultComponentId, MAV_CMD_LOGGING_STOP, false /* showError */);
 }
 
 void Vehicle::_ackMavlinkLogData(uint16_t sequence)
@@ -2233,7 +2247,7 @@ void Vehicle::_ackMavlinkLogData(uint16_t sequence)
     mavlink_message_t msg;
     mavlink_logging_ack_t ack;
     ack.sequence = sequence;
-    ack.target_component = defaultComponentId();
+    ack.target_component = _defaultComponentId;
     ack.target_system = id();
     mavlink_msg_logging_ack_encode_chan(
         _mavlink->getSystemId(),

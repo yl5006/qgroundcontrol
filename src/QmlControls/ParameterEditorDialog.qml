@@ -7,12 +7,9 @@
  *
  ****************************************************************************/
 
-
-/// @file
-///     @author Don Gagne <don@thegagnes.com>
-
 import QtQuick          2.5
 import QtQuick.Controls 1.3
+import QtQuick.Layouts  1.2
 
 import QGroundControl.Controls      1.0
 import QGroundControl.Palette       1.0
@@ -30,7 +27,8 @@ QGCViewDialog {
     property bool   validate:       false
     property string validateValue
 
-    property real   _editFieldWidth:  ScreenTools.defaultFontPixelWidth * 20
+    property real   _editFieldWidth:            ScreenTools.defaultFontPixelWidth * 20
+    property bool   _longDescriptionAvailable:  fact.longDescription != ""
 
     ParameterEditorController { id: controller; factPanel: parent }
 
@@ -74,7 +72,6 @@ QGCViewDialog {
             validationError.text = fact.validate(validateValue, false /* convertOnly */)
             forceSave.visible = true
         }
-        //valueField.forceActiveFocus()
     }
 
     QGCFlickable {
@@ -89,28 +86,24 @@ QGCViewDialog {
             anchors.right:  parent.right
 
             QGCLabel {
+                id:         validationError
                 width:      parent.width
                 wrapMode:   Text.WordWrap
-                visible:    fact.shortDescription
-                text:       fact.shortDescription
+                color:      qgcPal.warningText
             }
 
-            QGCLabel {
-                width:      parent.width
-                wrapMode:   Text.WordWrap
-                visible:    fact.longDescription
-                text:       fact.longDescription
-            }
-
-            Row {
-                spacing: defaultTextWidth
+            RowLayout {
+                spacing:        defaultTextWidth
+                anchors.left:   parent.left
+                anchors.right:  parent.right
                 visible: !showonlyhelp
                 QGCTextField {
-                    id:         valueField
-                    text:       validate ? validateValue : fact.valueString
-                    visible:    fact.enumStrings.length == 0 || validate
-                    //focus:  true
-
+                    id:                 valueField
+                    text:               validate ? validateValue : fact.valueString
+                    visible:            fact.enumStrings.length == 0 || validate
+                    unitsLabel:         fact.units
+                    showUnits:          fact.units != ""
+                    Layout.fillWidth:   true
                     inputMethodHints:   ScreenTools.isiOS ?
                                             Qt.ImhNone :                // iOS numeric keyboard has not done button, we can't use it
                                             Qt.ImhFormattedNumbersOnly  // Forces use of virtual numeric keyboard
@@ -119,7 +112,6 @@ QGCViewDialog {
                 QGCButton {
                     anchors.baseline:   valueField.baseline
                     visible:            fact.defaultValueAvailable
-                    width:              _editFieldWidth
                     text:               qsTr("Reset to default")
 
                     onClicked: {
@@ -165,50 +157,50 @@ QGCViewDialog {
             }
 
             QGCLabel {
-                text:       fact.name
-                visible:    showonlyhelp ? false :fact.componentId > 0// > 0 means it's a parameter fact
+                width:      parent.width
+                wrapMode:   Text.WordWrap
+                visible:    !longDescriptionLabel.visible
+                text:       fact.shortDescription
+                visible:    showonlyhelp ? false : !longDescriptionLabel.visible
             }
 
-            Column {
-                spacing:        defaultTextHeight / 2
-                anchors.left:   parent.left
-                anchors.right:  parent.right
+            QGCLabel {
+                id:         longDescriptionLabel
+                width:      parent.width
+                wrapMode:   Text.WordWrap
+                visible:    fact.longDescription != ""
+                text:       fact.longDescription
+            }
 
-                Row {
-                    spacing: defaultTextWidth
+            Row {
+                spacing: defaultTextWidth
 
-                    QGCLabel { text: qsTr("单位:")/*qsTr("Units:")*/ }
-                    QGCLabel { text: fact.units ? fact.units : qsTr("none") }
-                }
-
-                Row {
-                    spacing: defaultTextWidth
-                    visible: !fact.minIsDefaultForType
-
-                    QGCLabel { text: qsTr("最小值:")/*qsTr("Minimum value:")*/ }
-                    QGCLabel { text: fact.minString }
-                }
-
-                Row {
-                    spacing: defaultTextWidth
-                    visible: !fact.maxIsDefaultForType
-
-                    QGCLabel { text: qsTr("最大值:")/*qsTr("Maximum value:")*/ }
-                    QGCLabel { text: fact.maxString }
-                }
-
-                Row {
-                    spacing: defaultTextWidth
-
-                    QGCLabel { text: qsTr("默认值:")/*qsTr("Default value:")*/ }
-                    QGCLabel { text: fact.defaultValueAvailable ? fact.defaultValueString : qsTr("none") }
+                QGCLabel {
+                    id:         minValueDisplay
+                    text:       qsTr("最小值:")/*qsTr("Min: ")*/ + fact.minString
+                    visible:    !fact.minIsDefaultForType
                 }
 
                 QGCLabel {
-                    visible:    fact.rebootRequired
-                    text:       qsTr("改变后需要重启")//"Reboot required after change"
+                    text:       qsTr("最大值:")/*qsTr("Max: ")*/ + fact.maxString
+                    visible:    !fact.maxIsDefaultForType
                 }
-            } // Column
+
+                QGCLabel {
+                    text:       qsTr("默认值:")/*qsTr("Default: ")*/ + fact.defaultValueString
+                    visible:    fact.defaultValueAvailable
+                }
+            }
+
+            QGCLabel {
+                text:       qsTr("参数名:")/*qsTr("Parameter name: ")*/ + fact.name
+                visible:    fact.componentId > 0 // > 0 means it's a parameter fact
+            }
+
+            QGCLabel {
+                visible:    fact.rebootRequired
+                text:       qsTr("改变后需要重启")//"Reboot required after change"
+            }
 
             QGCLabel {
                 width:      parent.width
@@ -216,13 +208,6 @@ QGCViewDialog {
                 visible:    !showonlyhelp
                 text:       qsTr("Warning: Modifying values while vehicle is in flight can lead to vehicle instability and possible vehicle loss. ") +
                             qsTr("Make sure you know what you are doing and double-check your values before Save!")
-            }
-
-            QGCLabel {
-                id:         validationError
-                width:      parent.width
-                wrapMode:   Text.WordWrap
-                color:      qsTr("yellow")
             }
 
             QGCCheckBox {

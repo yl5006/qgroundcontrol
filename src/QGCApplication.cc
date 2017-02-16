@@ -444,8 +444,8 @@ bool QGCApplication::_initForNormalAppBoot(void)
     // Load known link configurations
     toolbox()->linkManager()->loadLinkConfigurationList();
 
-    // Probe for joysticks - TODO: manage on a timer or use events to deal with hotplug
-    toolbox()->joystickManager()->discoverJoysticks();
+    // Probe for joysticks
+    toolbox()->joystickManager()->init();
 
     if (_settingsUpgraded) {
         settings.clear();
@@ -453,6 +453,9 @@ bool QGCApplication::_initForNormalAppBoot(void)
         showMessage(tr("GroundStation配置文件被修改，恢复默认配置"));/*"The format for QGroundControl saved settings has been modified. "*/
         //   "Your saved settings have been reset to defaults.");
     }
+
+    // Connect links with flag AutoconnectLink
+    toolbox()->linkManager()->startAutoConnectedLinks();
 
     if (getQGCMapEngine()->wasCacheReset()) {
         showMessage("The Offline Map Cache database has been upgraded. "

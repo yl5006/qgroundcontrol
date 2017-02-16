@@ -191,6 +191,7 @@ class Vehicle : public FactGroup
 public:
     Vehicle(LinkInterface*          link,
             int                     vehicleId,
+            int                     defaultComponentId,
             MAV_AUTOPILOT           firmwareType,
             MAV_TYPE                vehicleType,
             FirmwarePluginManager*  firmwarePluginManager,
@@ -572,7 +573,10 @@ public:
     bool soloFirmware(void) const { return _soloFirmware; }
     void setSoloFirmware(bool soloFirmware);
 
-    int defaultComponentId(void);
+    int defaultComponentId(void) { return _defaultComponentId; }
+
+    /// Sets the default component id for an offline editing vehicle
+    void setOfflineEditingDefaultComponentId(int defaultComponentId);
 
     /// @return -1 = Unknown, Number of motors on vehicle
     int motorCount(void);
@@ -702,6 +706,8 @@ private slots:
     void _newGeoFenceAvailable(void);
     void _sendMavCommandAgain(void);
 
+    void _activeJoystickChanged(void);
+
 private:
     bool _containsLink(LinkInterface* link);
     void _addLink(LinkInterface* link);
@@ -741,6 +747,7 @@ private:
     void _commonInit(void);
 
     int     _id;                    ///< Mavlink system id
+    int     _defaultComponentId;
     bool    _active;
     bool    _offlineEditingVehicle; ///< This Vehicle is a "disconnected" vehicle for ui use while offline editing
 
