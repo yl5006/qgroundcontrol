@@ -2181,7 +2181,7 @@ but also ignore less noise</short_desc>
       <value code="1">警告</value>
       <value code="0">不处理</value>
       <value code="3">返航</value>
-      <value code="2">悬停</value>
+      <value code="2">悬停(盘旋)</value>
      <!--   <value code="1">Warning</value>
         <value code="0">None</value>
         <value code="3">Return to Land</value>
@@ -2903,7 +2903,7 @@ Used to calculate increased terrain random walk nosie due to movement</short_des
        <value code="0">Disabled</value>
        <value code="3">Land at current position</value>
        <value code="2">Return to Land</value>-->
-        <value code="1">悬停</value>
+        <value code="1">悬停(盘旋)</value>
         <value code="0">禁用</value>
         <value code="3">在当前位置降落</value>
         <value code="2">返航</value>
@@ -2914,7 +2914,7 @@ Used to calculate increased terrain random walk nosie due to movement</short_des
       <long_desc>The RC loss failsafe will only be entered after a timeout, set by COM_RC_LOSS_T in seconds. If RC input checks have been disabled by setting the COM_RC_IN_MODE param it will not be triggered. Setting this parameter to 4 will enable CASA Outback Challenge rules, which are only recommended to participants of that competition.</long_desc>
       <scope>modules/navigator</scope>
       <values>
-        <value code="1">悬停</value>
+        <value code="1">悬停(盘旋)</value>
         <value code="0">禁用</value>
         <value code="3">在当前位置降落</value>
         <value code="2">返航</value>
@@ -7656,7 +7656,7 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
         <value code="3">任务</value>
         <value code="2">定点</value>
         <value code="-1">未分配</value>
-        <value code="4">悬停</value>
+        <value code="4">悬停(盘旋)</value>
 <!--    <value code="7">Offboard</value>-->
         <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
@@ -7677,7 +7677,7 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <value code="3">任务</value>
       <value code="2">定点</value>
       <value code="-1">未分配</value>
-      <value code="4">悬停</value>
+      <value code="4">悬停(盘旋)</value>
 <!--    <value code="7">Offboard</value>-->
       <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
@@ -7698,7 +7698,7 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <value code="3">任务</value>
       <value code="2">定点</value>
       <value code="-1">未分配</value>
-      <value code="4">悬停</value>
+      <value code="4">悬停(盘旋)</value>
 <!--    <value code="7">Offboard</value>-->
       <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
@@ -7719,7 +7719,7 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <value code="3">任务</value>
       <value code="2">定点</value>
       <value code="-1">未分配</value>
-      <value code="4">悬停</value>
+      <value code="4">悬停(盘旋)</value>
 <!--    <value code="7">Offboard</value>-->
       <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
@@ -7740,7 +7740,7 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <value code="3">任务</value>
       <value code="2">定点</value>
       <value code="-1">未分配</value>
-      <value code="4">悬停</value>
+      <value code="4">悬停(盘旋)</value>
 <!--    <value code="7">Offboard</value>-->
       <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
@@ -7761,7 +7761,7 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <value code="3">任务</value>
       <value code="2">定点</value>
       <value code="-1">未分配</value>
-      <value code="4">悬停</value>
+      <value code="4">悬停(盘旋)</value>
 <!--    <value code="7">Offboard</value>-->
       <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->

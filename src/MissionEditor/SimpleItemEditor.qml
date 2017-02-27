@@ -44,7 +44,7 @@ Rectangle {
                         width:          parent.width
                         wrapMode:       Text.WordWrap
                         font.pointSize: ScreenTools.smallFontPointSize
-                        text:           missionItem.rawEdit ?
+                        text:           _currentMissionItem.rawEdit ?
                                             qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
                                             missionItem.commandDescription
                     }

@@ -27,6 +27,8 @@ import QGroundControl.Controllers   1.0
 Row {   
     spacing:  tbSpacing * 6
     AirframeComponentController { id: controllerair; factPanel: qgcView }
+    FactPanelController { id: controller; factPanel: qgcView }
+    property Fact battNumCells:         controller.getParameterFact(-1, "BAT_N_CELLS",false)
     QGCPalette { id: qgcPal }
     //-------------------------------------------------------------------------
     function getBatteryVoltageText() {
@@ -77,14 +79,23 @@ Row {
             anchors.horizontalCenter:batterycircle.horizontalCenter
             anchors.verticalCenter: batterycircle.verticalCenter
         }
+        Column{
+               id:                  batvolt
+               anchors.left:        batteryimg.left
+               anchors.leftMargin:  ScreenTools.defaultFontPixelHeight*5
+               anchors.verticalCenter: parent.verticalCenter
+               spacing:             ScreenTools.defaultFontPixelWidth
         QGCLabel {
-                anchors.left:   batteryimg.left
-                anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
                 text:           (activeVehicle && activeVehicle.battery.voltage.value != -1) ? (activeVehicle.battery.voltage.valueString + " " + activeVehicle.battery.voltage.units) : "N/A" //getBatteryPercentageText()
                 font.pointSize: ScreenTools.mediumFontPointSize
-                color:          getBatteryColor()
-                anchors.verticalCenter: parent.verticalCenter
+                color:          getBatteryColor()            
             }
+        QGCLabel {
+                text:           " " +battNumCells.value+battNumCells.units
+                font.pointSize: ScreenTools.mediumFontPointSize
+                color:          getBatteryColor()
+            }
+        }
 
         MouseArea {
             anchors.fill:   parent

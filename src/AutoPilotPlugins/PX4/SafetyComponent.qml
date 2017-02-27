@@ -725,21 +725,21 @@ SetupPage {
                                     id:             homeLoiterNoLandRadio
                                     checked:        _rtlLandDelay.value < 0
                                     exclusiveGroup: homeLoiterGroup
-                                    text:           qsTr("悬停")//"Loiter and do not land"
+                                    text:           qsTr("悬停(盘旋)")//"Loiter and do not land"
                                     onClicked:      _rtlLandDelay.value = -1
                                 }
                                 QGCRadioButton {
                                     id:             homeLoiterLandRadio
                                     checked:        _rtlLandDelay.value > 0
                                     exclusiveGroup: homeLoiterGroup
-                                    text:           qsTr("悬停一定时间后降落")//qsTr("Loiter and land after specified time")
+                                    text:           qsTr("悬停(盘旋)一定时间后降落")//qsTr("Loiter and land after specified time")
                                     onClicked:      _rtlLandDelay.value = 60
                                 }
                             }
                         }
                         Row {
                             QGCLabel {
-                                text:                qsTr("悬停时间")//qsTr("Loiter Time")
+                                text:                qsTr("悬停(盘旋)时间")//qsTr("Loiter Time")
                                 width:              _middleRowWidth
                                 anchors.baseline:   landDelayField.baseline
                                 color:              qgcPal.text
@@ -755,7 +755,7 @@ SetupPage {
                         }
                         Row {
                             QGCLabel {
-                                text:               qsTr("悬停高度")//qsTr("Loiter Altitude")
+                                text:               qsTr("悬停(盘旋)高度")//qsTr("Loiter Altitude")
                                 width:              _middleRowWidth
                                 anchors.baseline:   descendField.baseline
                                 color:              qgcPal.text

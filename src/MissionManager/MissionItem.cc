@@ -306,8 +306,8 @@ bool MissionItem::load(const QJsonObject& json, int sequenceNumber, QString& err
     }
 
     QJsonArray rgParams = v2Json[_jsonParamsKey].toArray();
-    if (rgParams.count() != 4) {
-        errorString = tr("%1 key must contains 4 values").arg(_jsonParamsKey);
+    if (rgParams.count() != 7) {// 7个参数
+        errorString = tr("%1 key must contains 7 values").arg(_jsonParamsKey);
         return false;
     }
 

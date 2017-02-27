@@ -95,7 +95,7 @@ Item {
                         source:                     motorColors[index & 1]==_cwColor ? "/qmlimages/ArrowCW.svg" : "/qmlimages/ArrowCCW.svg"
                         RotationAnimation on rotation {
                             id:             imageRotation
-                            loops:          5
+                            loops:          4
                             from:           motorColors[index & 1]==_cwColor ? 0:360
                             to:             motorColors[index & 1]==_cwColor ? 360:0
                            // direction:      /(index & 1) ?RotationAnimator.Clockwise:RotationAnimator.Counterclockwise

@@ -98,7 +98,7 @@ SetupPage {
                 Row {
                     id:         motorSliders
                     spacing:    ScreenTools.defaultFontPixelWidth * 10
-
+                    height:     ScreenTools.defaultFontPixelHeight * _sliderHeight
                     Item{
                         height:                     width
                         width:                      parent.height
@@ -129,7 +129,7 @@ SetupPage {
 
                     Column {
                         property alias motorSlider: slider
-
+                        visible:                    false
 
                         GSSlider {
                             id:                         slider
@@ -146,7 +146,7 @@ SetupPage {
 
                     MultiRotorMotorDisplay {
                         id:             disp
-                        enabled:        slider.value!=0
+                      //  enabled:        slider.value!=0
                         anchors.top:    parent.top
                         anchors.bottom: parent.bottom
                         width:          height*0.8
@@ -155,14 +155,14 @@ SetupPage {
                         coaxial:        controller.vehicle.coaxialMotors
                         property int _motor: 0
                         onChecked: {
-                            controller.vehicle.motorTest( i, slider.value, 1)
+                            controller.vehicle.motorTest( i, 30, 1)
                             _motor=i
                             trig.running=true
                             disp.enabled=    false
                         }
                         Timer {
                             id:             trig
-                            interval:       3000
+                            interval:       2000
                             running:        false
                             repeat:         false
 

@@ -159,7 +159,6 @@ QGCViewDialog {
             QGCLabel {
                 width:      parent.width
                 wrapMode:   Text.WordWrap
-                visible:    !longDescriptionLabel.visible
                 text:       fact.shortDescription
                 visible:    showonlyhelp ? false : !longDescriptionLabel.visible
             }
@@ -194,7 +193,7 @@ QGCViewDialog {
 
             QGCLabel {
                 text:       qsTr("参数名:")/*qsTr("Parameter name: ")*/ + fact.name
-                visible:    fact.componentId > 0 // > 0 means it's a parameter fact
+                visible:    showonlyhelp ? false : fact.componentId > 0 // > 0 means it's a parameter fact
             }
 
             QGCLabel {

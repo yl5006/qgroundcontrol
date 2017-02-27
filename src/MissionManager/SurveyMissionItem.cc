@@ -709,6 +709,7 @@ void SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLi
         polygon << polygonPoints[i];
     }
     polygon << polygonPoints[0];
+
     QRectF smallBoundRect = polygon.boundingRect();
     QPointF center = smallBoundRect.center();
     qCDebug(SurveyMissionItemLog) << "Bounding rect" << smallBoundRect.topLeft().x() << smallBoundRect.topLeft().y() << smallBoundRect.bottomRight().x() << smallBoundRect.bottomRight().y();
@@ -726,10 +727,10 @@ void SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLi
     // Create set of rotated parallel lines within the expanded bounding rect. Make the lines larger than the
     // bounding box to guarantee intersection.
     QList<QLineF> lineList;
-    float x = largeBoundRect.topLeft().x() - (gridSpacing / 2);
+    float x = largeBoundRect.topLeft().x() - (gridSpacing/2);
     while (x < largeBoundRect.bottomRight().x()) {
-        float yTop =    largeBoundRect.topLeft().y() - 100.0;
-        float yBottom = largeBoundRect.bottomRight().y() + 100.0;
+        float yTop =    largeBoundRect.topLeft().y() - 100;
+        float yBottom = largeBoundRect.bottomRight().y()+ 100;
 
         lineList += QLineF(_rotatePoint(QPointF(x, yTop), center, gridAngle), _rotatePoint(QPointF(x, yBottom), center, gridAngle));
         qCDebug(SurveyMissionItemLog) << "line(" << lineList.last().x1() << ", " << lineList.last().y1() << ")-(" << lineList.last().x2() <<", " << lineList.last().y2() << ")";
@@ -753,24 +754,113 @@ void SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLi
 
     // Turn into a path
     float turnaroundDist = _turnaroundDistFact.rawValue().toDouble();
-
+    QLineF &beforeline=QLineF();
     for (int i=0; i<resultLines.count(); i++) {
-        const QLineF& line = resultLines[i];
-
+        const QLineF& line = resultLines[i]; 
+        QLineF &temp=QLineF();
         QPointF turnaroundOffset = line.p2() - line.p1();
         turnaroundOffset = turnaroundOffset * turnaroundDist / sqrt(pow(turnaroundOffset.x(),2.0) + pow(turnaroundOffset.y(),2.0));
-
-        if (i & 1) {
-            if (turnaroundDist > 0.0) {
-                gridPoints << line.p2() + turnaroundOffset << line.p2() << line.p1() << line.p1() - turnaroundOffset;
-            } else {
-                gridPoints << line.p2() << line.p1();
-            }
-        } else {
+        if(i==0)
+        {
+            temp.setP1(line.p2() + turnaroundOffset);
+            temp.setLength(gridSpacing);
+            temp.setAngle(-gridAngle+180);
+            gridPoints<<temp.p2();
+            temp.setP1(line.p2());
+            temp.setLength(gridSpacing);
+            temp.setAngle(-gridAngle+180);
+            gridPoints<<temp.p2();
+            temp.setP1(line.p1());
+            temp.setLength(gridSpacing);
+            temp.setAngle(-gridAngle+180);
+            gridPoints<<temp.p2();
+            temp.setP1(line.p1()-turnaroundOffset);
+            temp.setLength(gridSpacing);
+            temp.setAngle(-gridAngle+180);
+            gridPoints<<temp.p2();
             if (turnaroundDist > 0.0) {
                 gridPoints << line.p1() - turnaroundOffset << line.p1() << line.p2() << line.p2() + turnaroundOffset;
             } else {
                 gridPoints << line.p1() << line.p2();
+            }
+        }
+        else{
+            if (i & 1) {
+                temp.setP1(beforeline.p2()+ turnaroundOffset);
+                temp.setLength(gridSpacing);
+                temp.setAngle(-gridAngle);
+                QLineF &tp=QLineF(temp.p2(),line.p1());
+                if(tp.length()<(line.length()+turnaroundDist))
+               {
+                    gridPoints.removeLast();
+                    temp.setP1(line.p2() + turnaroundOffset);
+                    temp.setLength(gridSpacing);
+                    temp.setAngle(-gridAngle+180);
+                    gridPoints << temp.p2();
+                    gridPoints << line.p2() + turnaroundOffset << line.p2() << line.p1() << line.p1() - turnaroundOffset;
+                }
+                else
+                {
+                    gridPoints << temp.p2() << line.p2() << line.p1() << line.p1() - turnaroundOffset;
+                }
+            } else {
+                temp.setP1(beforeline.p1()- turnaroundOffset);
+                temp.setLength(gridSpacing);
+                temp.setAngle(-gridAngle);
+                QLineF &tp=QLineF(temp.p2(),line.p2());
+                if(tp.length()<(line.length()+turnaroundDist))
+               {
+                    gridPoints.removeLast();
+                    temp.setP1(line.p1() - turnaroundOffset);
+                    temp.setLength(gridSpacing);
+                    temp.setAngle(-gridAngle+180);
+                    gridPoints << temp.p2();
+                    gridPoints << line.p1() - turnaroundOffset << line.p1() << line.p2() << line.p2() + turnaroundOffset;
+                }else
+                {
+                    gridPoints << temp.p2()<< line.p1() << line.p2() << line.p2() + turnaroundOffset;
+                }
+            }
+        }
+        beforeline= line ;
+        if(i==resultLines.count()-1)
+        {
+          if (i& 1){
+            temp.setP1(line.p1() - turnaroundOffset);
+            temp.setLength(gridSpacing);
+            temp.setAngle(-gridAngle);
+            gridPoints<<temp.p2();
+            temp.setP1(line.p1());
+            temp.setLength(gridSpacing);
+            temp.setAngle(-gridAngle);
+            gridPoints<<temp.p2();
+            temp.setP1(line.p2());
+            temp.setLength(gridSpacing);
+            temp.setAngle(-gridAngle);
+            gridPoints<<temp.p2();
+            temp.setP1(line.p2()+turnaroundOffset);
+            temp.setLength(gridSpacing);
+            temp.setAngle(-gridAngle);
+            gridPoints<<temp.p2();
+            }
+            else
+            {
+              temp.setP1(line.p2() + turnaroundOffset);
+              temp.setLength(gridSpacing);
+              temp.setAngle(-gridAngle);
+              gridPoints<<temp.p2();
+              temp.setP1(line.p2());
+              temp.setLength(gridSpacing);
+              temp.setAngle(-gridAngle);
+              gridPoints<<temp.p2();
+              temp.setP1(line.p1());
+              temp.setLength(gridSpacing);
+              temp.setAngle(-gridAngle);
+              gridPoints<<temp.p2();
+              temp.setP1(line.p1()-turnaroundOffset);
+              temp.setLength(gridSpacing);
+              temp.setAngle(-gridAngle);
+              gridPoints<<temp.p2();
             }
         }
     }
