@@ -24,6 +24,7 @@
 #include "MotorComponent.h"
 #include "PX4TuningComponent.h"
 #include "PX4VehicleParamsComponent.h"
+#include "MixersComponent.h"
 #include "Vehicle.h"
 
 #include <QImage>
@@ -55,7 +56,8 @@ public:
     PowerComponent*         powerComponent(void)        { return _powerComponent; }
     MotorComponent*         motorComponent(void)        { return _motorComponent; }
     PX4TuningComponent*     tuningComponent(void)       { return _tuningComponent; }
-    PX4VehicleParamsComponent*     paramsComponent(void)       { return _paramsComponent; }
+    MixersComponent*        mixersComponent(void)       { return _mixersComponent; }
+	PX4VehicleParamsComponent*     paramsComponent(void)       { return _paramsComponent; }
 
 private:
     PX4AirframeLoader*      _airframeFacts;
@@ -70,6 +72,7 @@ private:
     PowerComponent*         _powerComponent;
     MotorComponent*         _motorComponent;
     PX4TuningComponent*     _tuningComponent;
+	MixersComponent*        _mixersComponent;
     PX4VehicleParamsComponent*     _paramsComponent;
     bool                    _incorrectParameterVersion; ///< true: parameter version incorrect, setup not allowed
 };

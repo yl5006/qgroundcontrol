@@ -15,6 +15,9 @@
  */
 
 #include "VideoReceiver.h"
+#include "SettingsManager.h"
+#include "QGCApplication.h"
+
 #include <QDebug>
 #include <QUrl>
 #include <QDir>
@@ -205,9 +208,7 @@ void VideoReceiver::start()
             }
             g_object_set(G_OBJECT(dataSource), "uri", qPrintable(_uri), "caps", caps, NULL);
         } else {
-            g_object_set(G_OBJECT(dataSource), "location", qPrintable(_uri), "latency", 0, NULL);
-
-    //        g_object_set(G_OBJECT(dataSource), "location", qPrintable(_uri), "latency", 0, "udp-reconnect", 1, "timeout", 5000000, NULL);
+            g_object_set(G_OBJECT(dataSource), "location", qPrintable(_uri), "latency", 17, "udp-reconnect", 1, "timeout", static_cast<guint64>(5000000), NULL);
         }
 
         if ((demux = gst_element_factory_make("rtph264depay", "rtp-h264-depacketizer")) == NULL) {
@@ -350,16 +351,6 @@ void VideoReceiver::setUri(const QString & uri)
     _uri = uri;
 }
 
-void VideoReceiver::setVideoSavePath(const QString& path)
-{
-#if defined(QGC_ENABLE_VIDEORECORDING)
-    _path = path;
-    qCDebug(VideoReceiverLog) << "New Path:" << _path;
-#else
-    Q_UNUSED(path);
-#endif
-}
-
 #if defined(QGC_GST_STREAMING)
 void VideoReceiver::_shutdownPipeline() {
     if(!_pipeline) {
@@ -469,8 +460,9 @@ void VideoReceiver::startRecording(void)
         return;
     }
 
-    if(_path.isEmpty()) {
-        qWarning() << "VideoReceiver::startRecording Empty Path!";
+    QString savePath = qgcApp()->toolbox()->settingsManager()->videoSettings()->videoSavePath()->rawValue().toString();
+    if(savePath.isEmpty()) {
+        qgcApp()->showMessage("Unabled to record video. Video save path must be specified in Settings.");
         return;
     }
 
@@ -487,12 +479,10 @@ void VideoReceiver::startRecording(void)
     }
 
     QString videoFile;
-    videoFile = _path + "/EWT-" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh.mm.ss") + ".mkv";
+    videoFile = savePath + "/EWT-" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh.mm.ss") + ".mkv";
 
     g_object_set(G_OBJECT(_sink->filesink), "location", qPrintable(videoFile), NULL);
     qCDebug(VideoReceiverLog) << "New video file:" << videoFile;
-
-//    g_object_set(G_OBJECT(_sink->filesink), "location" ,"rtmp://192.168.1.107/rtmp/live live=1" ,  NULL);
 
     gst_object_ref(_sink->queue);
     gst_object_ref(_sink->mux);

@@ -142,9 +142,7 @@ Rectangle {
         anchors.fill:       commandPicker
         visible:            missionItem.sequenceNumber == 0 || !missionItem.isCurrentItem || !missionItem.isSimpleItem
         verticalAlignment:  Text.AlignVCenter
-        text:               missionItem.sequenceNumber == 0 ?
-                                qsTr("Mission Settings") :
-                                (missionItem.isSimpleItem ? missionItem.commandName : qsTr("Survey"))
+        text:               missionItem.sequenceNumber == 0 ? qsTr("Mission Settings") : missionItem.commandName
         color:              _outerTextColor
     }
 
@@ -155,7 +153,7 @@ Rectangle {
         anchors.left:       parent.left
         anchors.top:        commandPicker.bottom
         height:             item ? item.height : 0
-        source:             missionItem.sequenceNumber == 0 ? "qrc:/qml/MissionSettingsEditor.qml" : (missionItem.isSimpleItem ? "qrc:/qml/SimpleItemEditor.qml" : "qrc:/qml/SurveyItemEditor.qml")
+        source:             missionItem.sequenceNumber == 0 ? "qrc:/qml/MissionSettingsEditor.qml" : missionItem.editorQml
 
         onLoaded: {
             item.visible = Qt.binding(function() { return _currentItem; })

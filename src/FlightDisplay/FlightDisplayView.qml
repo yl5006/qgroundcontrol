@@ -33,25 +33,14 @@ QGCView {
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
 
+    property bool activeVehicleJoystickEnabled: _activeVehicle ? _activeVehicle.joystickEnabled : false
+
     property var _activeVehicle:        QGroundControl.multiVehicleManager.activeVehicle
     property bool _mainIsMap:           QGroundControl.videoManager.hasVideo ? QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true) : true
     property bool _isPipVisible:        QGroundControl.videoManager.hasVideo ? QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true) : false
-
-    property real _roll:                _activeVehicle ? _activeVehicle.roll.value    : _defaultRoll
-    property real _pitch:               _activeVehicle ? _activeVehicle.pitch.value   : _defaultPitch
-    property real _heading:             _activeVehicle ? _activeVehicle.heading.value : _defaultHeading
-
-    property Fact _emptyFact:               Fact { }
-    property Fact _groundSpeedFact:         _activeVehicle ? _activeVehicle.groundSpeed      : _emptyFact
-    property Fact _airSpeedFact:            _activeVehicle ? _activeVehicle.airSpeed         : _emptyFact
-
-    property bool activeVehicleJoystickEnabled: _activeVehicle ? _activeVehicle.joystickEnabled : false
-
-    property real _savedZoomLevel:  0
-    property real _margins:         ScreenTools.defaultFontPixelWidth / 2
-
-
-    property real pipSize:              mainWindow.width * 0.2
+    property real _savedZoomLevel:      0
+    property real _margins:             ScreenTools.defaultFontPixelWidth / 2
+    property real _pipSize:             mainWindow.width * 0.2
 
     readonly property bool      isBackgroundDark:       _mainIsMap ? (_flightMap ? _flightMap.isSatelliteMap : true) : true
     readonly property real      _defaultRoll:           0
@@ -92,7 +81,7 @@ QGCView {
     }
 
     function px4JoystickCheck() {
-        if ( _activeVehicle && !_activeVehicle.supportsManualControl && (QGroundControl.virtualTabletJoystick || _activeVehicle.joystickEnabled)) {
+        if ( _activeVehicle && !_activeVehicle.supportsManualControl && (QGroundControl.settingsManager.appSettings.virtualJoystick.value || _activeVehicle.joystickEnabled)) {
             px4JoystickSupport.open()
         }
     }
@@ -110,8 +99,8 @@ QGCView {
     }
 
     Connections {
-        target: QGroundControl
-        onVirtualTabletJoystickChanged: px4JoystickCheck()
+        target:         QGroundControl.settingsManager.appSettings.virtualJoystick
+        onValueChanged: px4JoystickCheck()
     }
 
     onActiveVehicleJoystickEnabledChanged: px4JoystickCheck()
@@ -136,8 +125,8 @@ QGCView {
             anchors.left:   _panel.left
             anchors.bottom: _panel.bottom
             visible:        _mainIsMap || _isPipVisible
-            width:          _mainIsMap ? _panel.width  : pipSize
-            height:         _mainIsMap ? _panel.height : pipSize * (9/16)
+            width:          _mainIsMap ? _panel.width  : _pipSize
+            height:         _mainIsMap ? _panel.height : _pipSize * (9/16)
             states: [
                 State {
                     name:   "pipMode"
@@ -203,8 +192,8 @@ QGCView {
         Item {
             id:             _flightVideo
             z:              _mainIsMap ? _panel.z + 2 : _panel.z + 1
-            width:          !_mainIsMap ? _panel.width  : pipSize
-            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
+            width:          !_mainIsMap ? _panel.width  : _pipSize
+            height:         !_mainIsMap ? _panel.height : _pipSize * (9/16)
             anchors.left:   _panel.left
             anchors.bottom: _panel.bottom
             visible:        QGroundControl.videoManager.hasVideo && (!_mainIsMap || _isPipVisible)
@@ -241,8 +230,8 @@ QGCView {
         QGCPipable {
             id:                 _flightVideoPipControl
             z:                  _flightVideo.z + 3
-            width:              pipSize
-            height:             pipSize * (9/16)
+            width:              _pipSize
+            height:             _pipSize * (9/16)
             anchors.left:       _panel.left
             anchors.bottom:     _panel.bottom
             anchors.margins:    ScreenTools.defaultFontPixelHeight
@@ -388,14 +377,16 @@ QGCView {
             z:                          _panel.z + 5
             width:                      parent.width  - (_flightVideoPipControl.width / 2)
             height:                     Math.min(ScreenTools.availableHeight * 0.25, ScreenTools.defaultFontPixelWidth * 20)//
-            visible:                    QGroundControl.virtualTabletJoystick
+            visible:                    _virtualJoystick.value
             anchors.bottom:             _flightVideoPipControl.top
             anchors.bottomMargin:       ScreenTools.defaultFontPixelHeight * 2
             anchors.horizontalCenter:   flightDisplayViewWidgets.horizontalCenter
             source:                     "qrc:/qml/VirtualJoystick.qml"
-            active:                     QGroundControl.virtualTabletJoystick
+            active:                     _virtualJoystick.value
 
             property bool useLightColors: root.isBackgroundDark
+
+            property Fact _virtualJoystick: QGroundControl.settingsManager.appSettings.virtualJoystick
         }
     }
 }

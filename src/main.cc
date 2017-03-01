@@ -339,6 +339,7 @@ int main(int argc, char *argv[])
         exitCode = app->exec();
     }
 
+    app->_shutdown();
     delete app;
     //-- Shutdown Cache System
     destroyMapEngine();
