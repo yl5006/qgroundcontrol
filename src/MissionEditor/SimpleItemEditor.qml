@@ -46,7 +46,7 @@ Rectangle {
                         font.pointSize: ScreenTools.smallFontPointSize
                         text:           _currentMissionItem.rawEdit ?
                                             qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
-                                            missionItem.commandDescription
+                                            _currentMissionItem.commandDescription
                     }
 
                     GridLayout {

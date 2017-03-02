@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -22,7 +22,7 @@ import QGroundControl.Palette               1.0
 //-- GPS Indicator
 Item {
     id:             satelitte
-    width:          (gpsValuesColumn.x + gpsValuesColumn.width) * 1.1
+    width:          mainWindow.tbHeight * 3//(gpsValuesColumn.x + gpsValuesColumn.width) * 1.1
     anchors.top:    parent.top
     anchors.bottom: parent.bottom
 
@@ -45,7 +45,7 @@ Item {
 
                 QGCLabel {
                     id:             gpsLabel
-                    text:           (activeVehicle && activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("GPS Data Unavailable")
+                    text:           (activeVehicle && activeVehicle.gps.count.value >= 0) ? qsTr("GPS 状态") /*qsTr("GPS Status")*/ : qsTr("GPS 信息不可用") /*qsTr("GPS Data Unavailable")*/
                     font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -58,15 +58,15 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
 
-                    QGCLabel { text: qsTr("GPS Count:") }
+                    QGCLabel { text: qsTr("卫星颗数:")/*qsTr("GPS Count:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.count.valueString : qsTr("N/A", "No data to display") }
-                    QGCLabel { text: qsTr("GPS Lock:") }
+                    QGCLabel { text: qsTr("锁定模式:")/*qsTr("GPS Lock:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.lock.enumStringValue : qsTr("N/A", "No data to display") }
-                    QGCLabel { text: qsTr("HDOP:") }
+                    QGCLabel { text: qsTr("水平精度:")/*qsTr("HDOP:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.hdop.valueString : qsTr("--.--", "No data to display") }
-                    QGCLabel { text: qsTr("VDOP:") }
+                    QGCLabel { text: qsTr("垂直精度:")/*qsTr("VDOP:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.vdop.valueString : qsTr("--.--", "No data to display") }
-                    QGCLabel { text: qsTr("Course Over Ground:") }
+                    QGCLabel { text: qsTr("地面速度:") /*qsTr("Course Over Ground:")*/ }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.courseOverGround.valueString : qsTr("--.--", "No data to display") }
                 }
             }
@@ -79,39 +79,44 @@ Item {
         }
     }
 
+    QGCCircleProgress{
+        id:       gpsycircle
+        anchors.left:  parent.left
+        width:    mainWindow.tbHeight*1.5
+        value:    activeVehicle ? activeVehicle.gps.count>15?0.99:activeVehicle.gps.count/15:0
+        valuecolor:     colorGrey
+        anchors.verticalCenter: parent.verticalCenter
+    }
     QGCColoredImage {
-        id:                 gpsIcon
-        width:              height
-        anchors.top:        parent.top
-        anchors.bottom:     parent.bottom
-        source:             "/qmlimages/Gps.svg"
-        fillMode:           Image.PreserveAspectFit
-        sourceSize.height:  height
-        opacity:            (activeVehicle && activeVehicle.gps.count.value >= 0) ? 1 : 0.5
-        color:              qgcPal.buttonText
+        id:             gpsIcon
+        source:         "/qmlimages/Gps.svg"
+        height:     mainWindow.tbCellHeight
+        width:      height
+        sourceSize.height: height
+        color:          qgcPal.text
+        fillMode:       Image.PreserveAspectFit
+        anchors.horizontalCenter:gpsycircle.horizontalCenter
+        anchors.verticalCenter: gpsycircle.verticalCenter
     }
 
-    Column {
-        id:                     gpsValuesColumn
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin:     ScreenTools.defaultFontPixelWidth / 2
-        anchors.left:           gpsIcon.right
+    QGCLabel {
+            anchors.top:    gpsIcon.top
+            anchors.right:  gpsIcon.right
+            visible:    activeVehicle && !isNaN(activeVehicle.gps.hdop.value)
+            color:     (activeVehicle && activeVehicle.gps.fix > 2 )? colorGreen :qgcPal.buttonText
+            text:       activeVehicle ? activeVehicle.gps.count.valueString : ""
+    }
 
-        QGCLabel {
-            anchors.horizontalCenter:   hdopValue.horizontalCenter
-            visible:                    activeVehicle && !isNaN(activeVehicle.gps.hdop.value)
-            color:                      qgcPal.buttonText
-            text:                       activeVehicle ? activeVehicle.gps.count.valueString : ""
-        }
-
-        QGCLabel {
+     QGCLabel {
             id:         hdopValue
+            anchors.left:   gpsIcon.left
+            anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+            anchors.verticalCenter: parent.verticalCenter
             visible:    activeVehicle && !isNaN(activeVehicle.gps.hdop.value)
             color:      qgcPal.buttonText
             text:       activeVehicle ? activeVehicle.gps.hdop.value.toFixed(1) : ""
-        }
-    }
-    
+      }
+
     MouseArea {
         anchors.fill:   parent
         onClicked: {

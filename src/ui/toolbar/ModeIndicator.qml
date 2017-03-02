@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -16,15 +16,57 @@ import QGroundControl.Controls              1.0
 import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.ScreenTools           1.0
 import QGroundControl.Palette               1.0
-
+import QGroundControl.Controllers           1.0
+import QGroundControl.AutoPilotPlugin       1.0
 //-------------------------------------------------------------------------
 //-- Mode Indicator
-QGCLabel {
-    id:                     flightModeSelector
-    text:                   activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
-    font.pointSize:         ScreenTools.mediumFontPointSize
-    color:                  qgcPal.buttonText
-    anchors.verticalCenter: parent.verticalCenter
+Item {
+    id:             flightModeSelector
+    width:          mainWindow.tbHeight * 3//(gpsValuesColumn.x + gpsValuesColumn.width) * 1.1
+    anchors.top:    parent.top
+    anchors.bottom: parent.bottom
+    function getVehicleimg(activeVehicle)
+    {
+        if(activeVehicle.multiRotor)
+        {
+            return "/qmlimages/Quad.svg"
+        }
+        else if(activeVehicle.fixedWing)
+        {
+            return "/qmlimages/AirframeStandardPlane.svg"
+        }
+        else
+            return "/qmlimages/Quad.svg"
+    }
+
+    QGCCircleProgress{
+        id:                     modeircle
+        anchors.left:           parent.left
+        width:                  mainWindow.tbHeight*1.5
+        value:                  0
+        valuecolor:             colorGrey
+        anchors.verticalCenter: parent.verticalCenter
+    }
+    QGCColoredImage {
+        id:             modeIcon
+        source:         activeVehicle ? getVehicleimg(activeVehicle):"/qmlimages/Quad.svg"
+        height:         mainWindow.tbCellHeight
+        width:          height
+        sourceSize.height: height
+        color:          qgcPal.text
+        fillMode:       Image.PreserveAspectFit
+        anchors.horizontalCenter:   modeircle.horizontalCenter
+        anchors.verticalCenter:     modeircle.verticalCenter
+    }
+    QGCLabel {
+        id:                 mod
+        anchors.left:       modeIcon.left
+        anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+        text:               activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
+        font.pointSize:     ScreenTools.mediumFontPointSize
+        color:              qgcPal.buttonText
+        anchors.verticalCenter: parent.verticalCenter
+    }
     Menu {
         id: flightModesMenu
     }
@@ -57,7 +99,7 @@ QGCLabel {
     }
     MouseArea {
         visible:        activeVehicle && activeVehicle.flightModeSetAvailable
-        anchors.fill:   parent
+        anchors.fill:   mod//parent
         onClicked:      flightModesMenu.popup()
     }
 }

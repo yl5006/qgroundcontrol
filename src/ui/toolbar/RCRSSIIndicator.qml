@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -21,10 +21,18 @@ import QGroundControl.Palette               1.0
 //-------------------------------------------------------------------------
 //-- GPS Indicator
 Item {
-    width:          rssiRow.width * 1.1
+    width:          mainWindow.tbHeight * 3//rssiRow.width * 1.1
     anchors.top:    parent.top
     anchors.bottom: parent.bottom
     visible:        activeVehicle ? activeVehicle.supportsRadio : true
+
+    function getRSSIColor(value) {
+        if(value >= 90)
+            return colorGreen;
+        if(value > 80)
+            return colorOrange;
+        return colorRed;
+    }
 
     Component {
         id: rcRSSIInfo
@@ -45,7 +53,7 @@ Item {
 
                 QGCLabel {
                     id:             rssiLabel
-                    text:           activeVehicle ? (activeVehicle.rcRSSI != 255 ? qsTr("RC RSSI Status") : qsTr("RC RSSI Data Unavailable")) : qsTr("N/A", "No data available")
+                    text:           activeVehicle ? (activeVehicle.rcRSSI != 255 ? qsTr("遥控信号状态")/*qsTr("RC RSSI Status")*/ : qsTr("遥控信号强度不可用")/*qsTr("RC RSSI Data Unavailable")*/) : qsTr("N/A", qsTr("无数据")/*"No data avaliable"*/)
                     font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -70,31 +78,25 @@ Item {
             }
         }
     }
-
-    Row {
-        id:             rssiRow
-        anchors.top:    parent.top
-        anchors.bottom: parent.bottom
-        spacing:        ScreenTools.defaultFontPixelWidth
-
-        QGCColoredImage {
-            width:              height
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            sourceSize.height:  height
-            source:             "/qmlimages/RC.svg"
-            fillMode:           Image.PreserveAspectFit
-            opacity:            activeVehicle ? (((activeVehicle.rcRSSI < 0) || (activeVehicle.rcRSSI > 100)) ? 0.5 : 1) : 0.5
-            color:              qgcPal.buttonText
-        }
-
-        SignalStrength {
-            anchors.verticalCenter: parent.verticalCenter
-            size:                   parent.height * 0.5
-            percent:                activeVehicle ? ((activeVehicle.rcRSSI > 100) ? 0 : activeVehicle.rcRSSI) : 0
-        }
+    QGCCircleProgress{
+        id:          rccircle
+        anchors.left:  parent.left
+        width:       mainWindow.tbHeight*1.5
+        value:       activeVehicle ? ((activeVehicle.rcRSSI > 100) ? 0 : activeVehicle.rcRSSI/100) : 0
+        valuecolor:  getRSSIColor(activeVehicle ?activeVehicle.rcRSSI:0)
+        anchors.verticalCenter: parent.verticalCenter
     }
-
+    QGCColoredImage {
+        id:         rcimg
+        height:     mainWindow.tbCellHeight
+        width:      height
+        sourceSize.width: width
+        source:     "/qmlimages/RC.svg"
+        fillMode:   Image.PreserveAspectFit
+        color:      qgcPal.text
+        anchors.horizontalCenter:   rccircle.horizontalCenter
+        anchors.verticalCenter:     rccircle.verticalCenter
+    }
     MouseArea {
         anchors.fill:   parent
         onClicked: {

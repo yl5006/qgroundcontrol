@@ -23,6 +23,11 @@
             "id":           206,
             "comment":      "MAV_CMD_DO_SET_CAM_TRIGG_DIST",
             "paramRemove":  "4"
-        }
+        },
+        {
+            "id":           189,
+            "comment":      "MAV_CMD_DO_LAND_START",
+            "paramRemove":  "4"
+        },
     ]
 }

@@ -69,7 +69,7 @@ Item {
                 instrumentsLoader.source = "qrc:/qml/QGCInstrumentWidgetAlternate.qml"
                 instrumentsLoader.state  = "topMode"
             } else {
-                instrumentsLoader.source = "qrc:/qml/QGCInstrumentWidget.qml"
+                instrumentsLoader.source = "qrc:/qml/QGCInstrumentWidgetBottom.qml"  //QGCInstrumentWidget
                 instrumentsLoader.state  = "centerMode"
             }
         }
@@ -77,11 +77,11 @@ Item {
 
     Connections {
         target:         QGroundControl.settingsManager.appSettings.virtualJoystick
-        onValueChanged: _setInstrumentWidget()
+    //    onValueChanged: _setInstrumentWidget()
     }
 
     Component.onCompleted: {
-        _setInstrumentWidget()
+     //   _setInstrumentWidget()
     }
 
     //-- Map warnings
@@ -109,53 +109,57 @@ Item {
         }
     }
 
+ //-- Instrument Panel
+//    Loader {
+//        id:                     instrumentsLoader
+//        anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
+//        anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
+//        z:                      QGroundControl.zOrderWidgets
+//        property var  qgcView:  _root.qgcView
+//        property real maxHeight:parent.height - (anchors.margins * 2)
+//        states: [
+//            State {
+//                name:   "topMode"
+//                AnchorChanges {
+//                    target:                 instrumentsLoader
+//                    anchors.verticalCenter: undefined
+//                    anchors.bottom:         undefined
+//                    anchors.top:            _root ? _root.top : undefined
+//                }
+//            },
+//            State {
+//                name:   "centerMode"
+//                AnchorChanges {
+//                    target:                 instrumentsLoader
+//                    anchors.top:            undefined
+//                    anchors.bottom:         undefined
+//                    anchors.verticalCenter: _root ? _root.verticalCenter : undefined
+//                }
+//            },
+//            State {
+//                name:   "bottomMode"
+//                AnchorChanges {
+//                    target:                 instrumentsLoader
+//                    anchors.top:            undefined
+//                    anchors.verticalCenter: undefined
+//                    anchors.bottom:         _root ? _root.bottom : undefined
+//                }
+//            }
+//        ]
+//    }
+    
     //-- Instrument Panel
     QGCInstrumentWidgetBottom {
         id:                     instrumentGadget
         anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
         anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
         anchors.bottom:         parent.bottom
-        size:                   getGadgetWidth()
-        heading:                _heading
-        rollAngle:              _roll
-        pitchAngle:             _pitch
-        groundSpeedFact:        _groundSpeedFact
-        airSpeedFact:           _airSpeedFact
-        lightBorders:           _lightWidgetBorders
         z:                      QGroundControl.zOrderWidgets
-        qgcView:                _root.qgcView
-        maxHeight:              parent.height - (anchors.margins * 2)
+        _qgcView:                _root.qgcView
+        _maxHeight:              parent.height - (anchors.margins * 2)
     }
 
-    QGCInstrumentWidgetAlternate {
-        id:                     instrumentGadgetAlternate
-        anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
-        anchors.top:            parent.top
-        anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
-        visible:                false//_useAlternateInstruments
-        width:                  ScreenTools.isTinyScreen ? getGadgetWidth() * 1.5 : getGadgetWidth()
-        heading:                _heading
-        rollAngle:              _roll
-        pitchAngle:             _pitch
-        groundSpeedFact:        _groundSpeedFact
-        airSpeedFact:           _airSpeedFact
-        lightBorders:           _lightWidgetBorders
-        qgcView:                _root.qgcView
-        maxHeight:              parent.height - (anchors.margins * 2)
-        z:                      QGroundControl.zOrderWidgets
-    }
 
-    /*
-    ValuesWidget {
-        anchors.topMargin:          ScreenTools.defaultFontPixelHeight
-        anchors.top:                instrumentGadgetAlternate.bottom
-        anchors.horizontalCenter:   instrumentGadgetAlternate.horizontalCenter
-        width:                      getGadgetWidth()
-        qgcView:                    _root.qgcView
-        textColor:                  _isSatellite ? "white" : "black"
-        visible:                    _useAlternateInstruments
-        maxHeight:                  virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.y - y : parent.height - anchors.margins - y
-    }*/
 
     //-- Guided mode buttons
     Rectangle {

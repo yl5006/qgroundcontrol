@@ -17,23 +17,20 @@
 import QtQuick 2.4
 import QtGraphicalEffects 1.0
 
+import QGroundControl          1.0
 import QGroundControl.Controls 1.0
+
 Item {
     id: root
 
-    property bool active:       false  ///< true: actively connected to data provider, false: show inactive control
-    property real rollAngle :   _defaultRollAngle
-    property real pitchAngle:   _defaultPitchAngle
-    property real heading:      0
     property bool showPitch:    true
+    property var  vehicle:      null
     property real size
 
-    readonly property real _defaultRollAngle:   0
-    readonly property real _defaultPitchAngle:  0
-
-    property real _rollAngle:   active ? rollAngle  : _defaultRollAngle
-    property real _pitchAngle:  active ? pitchAngle : _defaultPitchAngle
-
+    property real _rollAngle:   vehicle ? vehicle.roll.rawValue  : 0
+    property real _pitchAngle:  vehicle ? vehicle.pitch.rawValue : 0
+    property real heading:      vehicle ? vehicle.heading.rawValue : 0
+    	
     width:  size
     height: size
 
@@ -104,7 +101,7 @@ Item {
             anchors.topMargin:   size*0.30
             anchors.leftMargin:  size*0.55
             horizontalAlignment: Text.AlignRight;
-            text:               active ? heading.toFixed(0)+"°" :qsTr("OFF")
+            text:               vehicle ? heading.toFixed(0)+"°" :qsTr("OFF")
             font.pointSize:     size*0.07
             font.bold:          true
         }

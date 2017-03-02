@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -21,7 +21,7 @@ import QGroundControl.Controls      1.0
 Item {
     property var map    ///< Map control to place item in
 
-    property var _missionItem:  object
+    property var missionItem:  object
     property var _polygon
     property var _grid
     property var _entryCoordinate
@@ -52,7 +52,7 @@ Item {
         MapPolygon {
             color: "green"
             opacity:    0.5
-            path:       _missionItem.polygonPath
+            path:       missionItem.polygonPath
         }
     }
 
@@ -63,7 +63,7 @@ Item {
         MapPolyline {
             line.color: "white"
             line.width: 2
-            path:       _missionItem.gridPoints
+            path:       missionItem.gridPoints
         }
     }
 
@@ -75,7 +75,7 @@ Item {
             anchorPoint.x:  sourceItem.width  / 2
             anchorPoint.y:  sourceItem.height / 2
             z:              QGroundControl.zOrderMapItems
-            coordinate:     _missionItem.coordinate
+            coordinate:     missionItem.coordinate
 
             sourceItem:
                 MissionItemIndexLabel {
@@ -84,7 +84,7 @@ Item {
         }
     }
 
-    // Exit point
+   // Exit point
     Component {
         id: exitPointComponent
 
@@ -92,7 +92,7 @@ Item {
             anchorPoint.x:  sourceItem.width  / 2
             anchorPoint.y:  sourceItem.height / 2
             z:              QGroundControl.zOrderMapItems
-            coordinate:     _missionItem.exitCoordinate
+            coordinate:     missionItem.exitCoordinate
 
             sourceItem:
                 MissionItemIndexLabel {

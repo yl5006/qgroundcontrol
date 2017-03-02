@@ -1,10 +1,10 @@
-[
+﻿[
 {
     "name":             "AutoconnectUDP",
     "shortDescription": "Automatically open a connection over UDP",
     "longDescription":  "If this option is enabled GroundControl will automatically connect to a vehicle which is detected on a UDP communication link.",
     "type":             "bool",
-    "defaultValue":     true
+    "defaultValue":     false
 },
 {
     "name":             "AutoconnectPixhawk",

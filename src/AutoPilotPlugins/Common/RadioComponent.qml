@@ -241,6 +241,14 @@ SetupPage {
                     anchors.horizontalCenter:circle.horizontalCenter
                     anchors.verticalCenter: circle.verticalCenter
                 }
+                Image {
+                    source:    "/qmlimages/title.svg"
+                    width:      idset.width+ScreenTools.defaultFontPixelHeight*4
+                    height:     ScreenTools.defaultFontPixelHeight*3
+                    anchors.verticalCenter: circle.verticalCenter
+                    anchors.left:          circle.right
+                    //                fillMode: Image.PreserveAspectFit
+                }
                 QGCLabel {
                     id:             idset
                     anchors.left:   img.left
@@ -251,14 +259,7 @@ SetupPage {
                     color:          qgcPal.text
                     anchors.verticalCenter: img.verticalCenter
                 }
-                Image {
-                    source:    "/qmlimages/title.svg"
-                    width:      idset.width+ScreenTools.defaultFontPixelHeight*4
-                    height:     ScreenTools.defaultFontPixelHeight*3
-                    anchors.verticalCenter: circle.verticalCenter
-                    anchors.left:          circle.right
-                    //                fillMode: Image.PreserveAspectFit
-                }
+
             }
             //            // Left side column
             //            Column {
@@ -638,7 +639,7 @@ SetupPage {
                     border.color:   qgcPal.text
                     border.width:   1
                 }
-                QGCLabel { text: qsTr("更多遥控设置 working") }
+                //  QGCLabel { text: qsTr("更多遥控设置 working") }
 
                 //               QGCLabel { text: "Additional Radio setup:" }
                 Row{
@@ -676,7 +677,7 @@ SetupPage {
                                 showUnits:          true
                                 fact:               parent.fact
                                 width:              ScreenTools.defaultFontPixelWidth * 15
-                          //      textColor:          parent.fact.defaultValueAvailable ? (parent.fact.valueEqualsDefault ? qgcPal.text : qgcPal.buttonHighlight) : qgcPal.text
+                                //      textColor:          parent.fact.defaultValueAvailable ? (parent.fact.valueEqualsDefault ? qgcPal.text : qgcPal.buttonHighlight) : qgcPal.text
                             }
                         }
                     } // Repeater
@@ -685,23 +686,23 @@ SetupPage {
                     spacing: ScreenTools.defaultFontPixelHeight*0.3
                     visible:  false
                     Repeater {
-                    model: QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ?
-                               (QGroundControl.multiVehicleManager.activeVehicle.multiRotor ?
-                                   [ "RC_MAP_AUX1", "RC_MAP_AUX2", "RC_MAP_PARAM1", "RC_MAP_PARAM2", "RC_MAP_PARAM3"] :
-                                   [ "RC_MAP_FLAPS", "RC_MAP_AUX1", "RC_MAP_AUX2", "RC_MAP_PARAM1", "RC_MAP_PARAM2", "RC_MAP_PARAM3"]) :
-                               0
+                        model: QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ?
+                                   (QGroundControl.multiVehicleManager.activeVehicle.multiRotor ?
+                                        [ "RC_MAP_AUX1", "RC_MAP_AUX2", "RC_MAP_PARAM1", "RC_MAP_PARAM2", "RC_MAP_PARAM3"] :
+                                        [ "RC_MAP_FLAPS", "RC_MAP_AUX1", "RC_MAP_AUX2", "RC_MAP_PARAM1", "RC_MAP_PARAM2", "RC_MAP_PARAM3"]) :
+                                   0
 
                         Row {
                             spacing: ScreenTools.defaultFontPixelWidth
                             property Fact fact: controller.getParameterFact(-1, modelData)
 
                             QGCLabel {
-                                anchors.baseline:   optCombo.baseline
+                                anchors.baseline:   optCombo1.baseline
                                 text:               fact.shortDescription + ":"
                             }
 
                             FactComboBox {
-                                id:         optCombo
+                                id:         optCombo1
                                 width:      ScreenTools.defaultFontPixelWidth * 15
                                 fact:       parent.fact
                                 indexModel: false

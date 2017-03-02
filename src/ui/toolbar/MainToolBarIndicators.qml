@@ -28,8 +28,9 @@ Item {
         id:             indicatorRow
         anchors.top:    parent.top
         anchors.bottom: parent.bottom
-        spacing:        ScreenTools.defaultFontPixelWidth * 1.5
+        spacing:        ScreenTools.defaultFontPixelWidth * 10
         visible:        !communicationLost
+        anchors.horizontalCenter: parent.horizontalCenter
         Repeater {
             model:  QGroundControl.corePlugin.toolBarIndicators
             Loader {
@@ -40,14 +41,14 @@ Item {
         }
     }
 
-    Image {
-        anchors.right:          parent.right
-        anchors.top:            parent.top
-        anchors.bottom:         parent.bottom
-        visible:                x > indicatorRow.width && !communicationLost
-        fillMode:               Image.PreserveAspectFit
-        source:                 activeVehicle ? activeVehicle.brandImage : ""
-    }
+//    Image {
+//        anchors.right:          parent.right
+//        anchors.top:            parent.top
+//        anchors.bottom:         parent.bottom
+//        visible:                x > indicatorRow.width && !communicationLost
+//        fillMode:               Image.PreserveAspectFit
+//        source:                 activeVehicle ? activeVehicle.brandImage : ""
+//    }
 
     Row {
         anchors.fill:       parent
@@ -58,7 +59,7 @@ Item {
         QGCButton {
             id:                     disconnectButton
             anchors.verticalCenter: parent.verticalCenter
-            text:                   qsTr("Disconnect")
+            text:                   qsTr("断开连接")
             primary:                true
             onClicked:              activeVehicle.disconnectInactiveVehicle()
         }
@@ -66,7 +67,7 @@ Item {
         QGCLabel {
             id:                     connectionLost
             anchors.verticalCenter: parent.verticalCenter
-            text:                   qsTr("COMMUNICATION LOST")
+            text:                   qsTr("连接丢失")
             font.pointSize:         ScreenTools.largeFontPointSize
             font.family:            ScreenTools.demiboldFontFamily
             color:                  colorRed

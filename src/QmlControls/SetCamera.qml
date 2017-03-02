@@ -49,7 +49,7 @@ Rectangle {
             QGCTextField {
                 id:                 rtspField
                 width:              ScreenTools.defaultFontPixelHeight*15
-                text:               QGroundControl.videoManager.rtspURL
+                text:               ""//QGroundControl.videoManager.rtspURL
                 onEditingFinished: {
                   //  QGroundControl.videoManager.rtspURL = text
                 }

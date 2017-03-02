@@ -1,11 +1,11 @@
-[
+﻿[
 {
     "name":             "OfflineEditingFirmwareType",
     "shortDescription": "Offline editing firmware type",
     "type":             "uint32",
     "enumStrings":      "ArduPilot,PX4 Pro,Mavlink Generic",
     "enumValues":       "3,12,0",
-    "defaultValue":     3
+    "defaultValue":     12
 },
 {
     "name":             "OfflineEditingVehicleType",

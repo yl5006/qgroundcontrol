@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -141,7 +141,7 @@ signals:
     /** @brief Emitted if a new system ID was set */
     void systemIdChanged(int systemId);
 
-    void receiveLossPercentChanged(int uasId, float lossPercent);
+    void receiveLossPercentChanged(LinkInterface* link, float lossPercent);
     void receiveLossTotalChanged(int uasId, int totalLoss);
 
     /**

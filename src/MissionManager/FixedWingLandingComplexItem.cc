@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -141,8 +141,9 @@ QmlObjectListModel* FixedWingLandingComplexItem::getMissionItems(void) const
 
     MissionItem* item = new MissionItem(seqNum++,                           // sequence number
                                         MAV_CMD_DO_LAND_START,              // MAV_CMD
-                                        MAV_FRAME_GLOBAL_RELATIVE_ALT,      // MAV_FRAME
+                                        MAV_FRAME_MISSION,//MAV_FRAME_GLOBAL_RELATIVE_ALT,      // MAV_FRAME
                                         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  // param 1-7
+                                        0.0, 0.0, 0.0,                      // param 8-10
                                         true,                               // autoContinue
                                         false,                              // isCurrentItem
                                         pMissionItems);                     // parent - allow delete on pMissionItems to delete everthing
@@ -159,6 +160,7 @@ QmlObjectListModel* FixedWingLandingComplexItem::getMissionItems(void) const
                            _loiterCoordinate.latitude(),
                            _loiterCoordinate.longitude(),
                            _loiterCoordinate.altitude(),
+                           0.0, 0.0, 0.0,                   // param 8-10
                            true,                            // autoContinue
                            false,                           // isCurrentItem
                            pMissionItems);                  // parent - allow delete on pMissionItems to delete everthing
@@ -171,6 +173,7 @@ QmlObjectListModel* FixedWingLandingComplexItem::getMissionItems(void) const
                            _landingCoordinate.latitude(),
                            _landingCoordinate.longitude(),
                            0.0,                                // altitude
+                           0.0, 0.0, 0.0,                      // param 8-10
                            true,                               // autoContinue
                            false,                              // isCurrentItem
                            pMissionItems);                     // parent - allow delete on pMissionItems to delete everthing

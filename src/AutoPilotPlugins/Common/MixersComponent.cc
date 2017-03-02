@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -28,7 +28,7 @@ QString MixersComponent::description(void) const
 
 QString MixersComponent::iconResource(void) const
 {
-    return QStringLiteral("/qmlimages/TuningComponentIcon.png");
+    return QStringLiteral("/qmlimages/Gears.svg");
 }
 
 bool MixersComponent::requiresSetup(void) const

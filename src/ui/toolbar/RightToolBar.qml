@@ -65,7 +65,6 @@ Rectangle {
         //-- It can only get here when closing (vehicle gone while window active)
         return "white";
     }
-    MainToolBarController { id: _controller }
 
     function checkSettingsButton() {
         preferencesButton.checked = true

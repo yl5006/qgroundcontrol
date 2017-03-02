@@ -23,7 +23,6 @@ Item {
 //    color:         checked ? "green" : qgcPal.mapButtonHighlight
 
     property real _width: small ? ScreenTools.defaultFontPixelHeight * ScreenTools.smallFontPointRatio * 1.75 : ScreenTools.defaultFontPixelHeight * 1.75
-
     QGCPalette { id: qgcPal }
 
     function getsouceimg(command)
@@ -56,7 +55,7 @@ Item {
     }
     Image {
         id:         waypoint
-        source:     missionItem?getsouceimg(missionItem.command): "/qmlimages/Waypoint0.svg"
+        source:     getsouceimg(missionItem.command)
         mipmap:     true
         fillMode:   Image.PreserveAspectFit
         anchors.fill: parent

@@ -14,8 +14,6 @@ import QtQuick.Dialogs  1.2
 import QtPositioning    5.2
 
 import QGroundControl                       1.0
-
-
 import QGroundControl.Palette               1.0
 import QGroundControl.Controls              1.0
 import QGroundControl.FlightDisplay         1.0
@@ -34,7 +32,6 @@ Item {
 
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
-    MainToolBarController { id: _controller }
     property real   availableWidth:     width   //add yaoling
     property real   tbHeight:           ScreenTools.isMobile ? (ScreenTools.isTinyScreen ? (mainWindow.width * 0.0666) : (mainWindow.width * 0.05)) : ScreenTools.defaultFontPixelHeight * 3
     property int    tbCellHeight:       tbHeight * 0.75
@@ -53,11 +50,6 @@ Item {
     readonly property string _setupViewSource:      "SetupViewandAppsetting.qml"//"SetupView.qml"
     readonly property string _settingsViewSource:   "AppSettings.qml"
     readonly property string _analyzeViewSource:    "AnalyzeView.qml"
-
-    //    readonly property string _settingsViewSource:   "AppSettings.qml"
-    //    readonly property string _setupViewSource:      "SetupView.qml"
-    //    readonly property string _planViewSource:       "MissionEditor.qml"
-    //    readonly property string _analyzeViewSource:    "AnalyzeView.qml"
 
     onHeightChanged: {
         //-- We only deal with the available height if within the Fly or Plan view
@@ -316,35 +308,17 @@ Item {
         }
     }
     //-- Main UI
-    //    MainToolBar {
-    //           id:                 toolBar
-    //           height:             tbHeight
-    //           anchors.left:       parent.left
-    //           anchors.right:      parent.right
-    //           anchors.top:        parent.top
-    //           mainWindow:         mainWindow
-    //           isBackgroundDark:   flightView.isBackgroundDark
-    //           z:                  QGroundControl.zOrderTopMost
-    //           onShowSetupView:    mainWindow.showSetupView()
-    //           onShowPlanView:     mainWindow.showPlanView()
-    //           onShowFlyView:      mainWindow.showFlyView()
-    //           onShowSettingsView: mainWindow.showSettingsView()
-    //           Component.onCompleted: {
-    //               ScreenTools.availableHeight = parent.height - toolBar.height
-    //           }
-    //       }
-    MainTool {
+
+     MainTool {
         id:                 toolBar
-        height:             ScreenTools.defaultFontPixelHeight * 3 * 1.8
+        height:             ScreenTools.toolbarHeight * 1.8
         anchors.left:       parent.left
         mainWindow:         mainWindow
         anchors.right:      parent.right
         anchors.top:        logo.bottom
         z:                  QGroundControl.zOrderTopMost
         visible:            activeVehicle
-        Component.onCompleted: {
-            ScreenTools.availableHeight = parent.height - toolBar.height
-        }
+        Component.onCompleted:  ScreenTools.availableHeight = parent.height - toolBar.height
     }
     RightToolBar {
         id:                     rightBar
@@ -410,15 +384,6 @@ Item {
             }
         }*/
     }
-
-    //    Loader {
-    //        id:                 setupViewLoader
-    //        anchors.left:       parent.left
-    //        anchors.right:      parent.right
-    //        anchors.top:        toolBar.bottom
-    //        anchors.bottom:     parent.bottom
-    //        visible:            false
-    //    }
 
     Loader {
         id:                 setupViewLoader
@@ -565,8 +530,8 @@ Item {
     //-- Critical Message Area
     Rectangle {
         id:                         criticalMmessageArea
-        width:                      ScreenTools.defaultFontPixelHeight * 68.5
-        height:                     ScreenTools.defaultFontPixelHeight * 15
+        width:                      mainWindow.width  * 0.685
+        height:                     mainWindow.width  * 0.15
         color:                      "transparent"//#eecc44"
         visible:                    false
         radius:                     ScreenTools.defaultFontPixelHeight * 0.5
@@ -660,7 +625,7 @@ Item {
             }
         }
         QGCLabel {
-            text:           qsTr("朕知道了")//"Systemseting"
+            text:           qsTr("知道了")//"Systemseting"
             font.pointSize: ScreenTools.mediumFontPointSize
             font.bold:             true
             color:          qgcPal.text

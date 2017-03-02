@@ -14,6 +14,7 @@ import QtQuick.Controls.Styles  1.2
 import QtQuick.Layouts          1.2
 import QtGraphicalEffects       1.0
 
+import QGroundControl                       1.0
 import QGroundControl.FactSystem    1.0
 import QGroundControl.FactControls  1.0
 import QGroundControl.Controls      1.0
@@ -55,6 +56,7 @@ SetupPage {
             property Fact _disAction:       controller.getParameterFact(-1, "MPC_SAFE_EN", false)
             property bool _showIcons: !ScreenTools.isTinyScreen
 
+            property Fact _percentRemainingAnnounce:    QGroundControl.settingsManager.appSettings.batteryPercentRemainingAnnounce
             Rectangle {
                 id:                         title
                 anchors.top:                parent.top
@@ -82,6 +84,14 @@ SetupPage {
                     anchors.horizontalCenter:circle.horizontalCenter
                     anchors.verticalCenter: circle.verticalCenter
                 }
+                Image {
+                    source:    "/qmlimages/title.svg"
+                    width:      idset.width+ScreenTools.defaultFontPixelHeight*4
+                    height:     ScreenTools.defaultFontPixelHeight*3
+                    anchors.verticalCenter: circle.verticalCenter
+                    anchors.left:          circle.right
+                    //                fillMode: Image.PreserveAspectFit
+                }
                 QGCLabel {
                     id:             idset
                     anchors.left:   img.left
@@ -91,15 +101,7 @@ SetupPage {
                     font.bold:              true
                     color:          qgcPal.text
                     anchors.verticalCenter: img.verticalCenter
-                }
-                Image {
-                    source:    "/qmlimages/title.svg"
-                    width:      idset.width+ScreenTools.defaultFontPixelHeight*4
-                    height:     ScreenTools.defaultFontPixelHeight*3
-                    anchors.verticalCenter: circle.verticalCenter
-                    anchors.left:          circle.right
-                    //                fillMode: Image.PreserveAspectFit
-                }
+                }               
             }
             Flow {
                 id:                                     mainCol
@@ -384,6 +386,18 @@ SetupPage {
                                 id:                 batCritLevelField
                                 fact:               controller.getParameterFact(-1, "BAT_CRIT_THR")
                                 showUnits:          true
+                                width:              _editFieldWidth
+                            }
+                        }
+                        Row {
+                            QGCLabel {
+                                anchors.baseline:   batAnnounce.baseline
+                                width:              _middleRowWidth
+                                text:               qsTr("地面站报警")//qsTr("Battery Failsafe Level:")
+                            }
+                            FactTextField {
+                                id:                 batAnnounce
+                                fact:               _percentRemainingAnnounce
                                 width:              _editFieldWidth
                             }
                         }

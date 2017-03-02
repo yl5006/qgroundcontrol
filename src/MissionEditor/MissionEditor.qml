@@ -22,7 +22,7 @@ import QGroundControl.Controls      1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.Mavlink       1.0
 import QGroundControl.Controllers   1.0
-import QGroundControl.FactControls  1.0
+
 /// Mission Editor
 
 QGCView {
@@ -49,6 +49,7 @@ QGCView {
     property bool   _firstVehiclePosition:  true
     property var    activeVehiclePosition:  _activeVehicle ? _activeVehicle.coordinate : QtPositioning.coordinate()
     property bool   _lightWidgetBorders:    editorMap.isSatelliteMap
+    property bool   _addWaypointOnClick:    false
 
     /// The controller which should be called for load/save, send to/from vehicle calls
     property var _syncDropDownController: missionController
@@ -86,8 +87,22 @@ QGCView {
     function checkFirstLoadComplete() {
         if (!_firstLoadComplete && _firstMissionLoadComplete && _firstRallyLoadComplete && _firstFenceLoadComplete) {
             _firstLoadComplete = true
-            centerMapButton.fitMapViewportToAllItems()
+            mapFitFunctions.fitMapViewportToAllItems()
         }
+    }
+
+    MapFitFunctions {
+        id:                         mapFitFunctions
+        map:                        editorMap
+        mapFitViewport:             Qt.rect(leftToolWidth, toolbarHeight, editorMap.width - leftToolWidth - rightPanelWidth, editorMap.height - toolbarHeight)
+        usePlannedHomePosition:     true
+        mapGeoFenceController:      geoFenceController
+        mapMissionController:       missionController
+        mapRallyPointController:    rallyPointController
+
+        property real toolbarHeight:    qgcView.height - ScreenTools.availableHeight
+        property real rightPanelWidth:  _rightPanelWidth
+        property real leftToolWidth:    0//toolStrip.x + toolStrip.width
     }
 
     MissionController {
@@ -106,7 +121,7 @@ QGCView {
                 if(_filename.match(".mission"))
                 {
                     missionController.loadFromFile(_filename)
-                    centerMapButton.fitMapViewportToMissionItems()
+                    mapFitFunctions.fitMapViewportToMissionItems()
                     _currentMissionItem = _visualItems.get(0)
                 }
                 else if(_filename.match(".txt"))
@@ -125,7 +140,7 @@ QGCView {
         }
 
         function fitViewportToItems() {
-            centerMapButton.fitMapViewportToMissionItems()
+            mapFitFunctions.fitMapViewportToMissionItems()
         }
 
         onVisualItemsChanged: {
@@ -133,7 +148,7 @@ QGCView {
         }
 
         onNewItemsFromVehicle: {
-            centerMapButton.fitMapViewportToMissionItems()
+            mapFitFunctions.fitMapViewportToMissionItems()
             setCurrentItem(0)
             _firstMissionLoadComplete = true
             checkFirstLoadComplete()
@@ -158,7 +173,7 @@ QGCView {
                 qgcView.showDialog(mobileFilePicker, qsTr("Select Fence File"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
             } else {
                 geoFenceController.loadFromFilePicker()
-                centerMapButton.fitMapViewportToFenceItems()
+                mapFitFunctions.fitMapViewportToFenceItems()
             }
         }
 
@@ -174,14 +189,14 @@ QGCView {
         }
 
         function fitViewportToItems() {
-            centerMapButton.fitMapViewportToFenceItems()
+            mapFitFunctions.fitMapViewportToFenceItems()
         }
 
         onLoadComplete: {
             _firstFenceLoadComplete = true
             switch (_syncDropDownController) {
             case geoFenceController:
-                centerMapButton.fitMapViewportToFenceItems()
+                mapFitFunctions.fitMapViewportToFenceItems()
                 break
             case missionController:
                 checkFirstLoadComplete()
@@ -216,19 +231,19 @@ QGCView {
                 qgcView.showDialog(mobileFilePicker, qsTr("Select Rally Point File"), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
             } else {
                 rallyPointController.loadFromFilePicker()
-                centerMapButton.fitMapViewportToRallyItems()
+                mapFitFunctions.fitMapViewportToRallyItems()
             }
         }
 
         function fitViewportToItems() {
-            centerMapButton.fitMapViewportToRallyItems()
+            mapFitFunctions.fitMapViewportToRallyItems()
         }
 
         onLoadComplete: {
             _firstRallyLoadComplete = true
             switch (_syncDropDownController) {
             case rallyPointController:
-                centerMapButton.fitMapViewportToRallyItems()
+                mapFitFunctions.fitMapViewportToRallyItems()
                 break
             case missionController:
                 checkFirstLoadComplete()
@@ -249,7 +264,7 @@ QGCView {
 
     function setCurrentItem(sequenceNumber) {
         editorMap.polygonDraw.cancelPolygonEdit()
-   //     _currentMissionItem = undefined
+        //     _currentMissionItem = undefined
         for (var i=0; i<_visualItems.count; i++) {
             var visualItem = _visualItems.get(i)
             if (visualItem.sequenceNumber == sequenceNumber) {
@@ -441,61 +456,12 @@ QGCView {
                     }
                 }
 
-                // Add the complex mission item polygon to the map
-                MapItemView {
+                // Add the complex mission item to the map
+                Repeater {
                     model: missionController.complexVisualItems
 
-                    delegate: MapPolygon {
-                        color:      'green'
-                        path:       object.polygonPath
-                        opacity:    0.5
-                    }
-                }
-
-                // Add the complex mission item grid to the map
-                MapItemView {
-                    model: missionController.complexVisualItems
-
-                    delegate: MapPolyline {
-                        line.color: "white"
-                        line.width: 2
-                        path:       object.gridPoints
-                    }
-                }
-
-                // Add the complex mission item exit coordinates
-                MapItemView {
-                    model: missionController.complexVisualItems
-                    delegate:   exitCoordinateComponent
-                }
-
-                Component {
-                    id: exitCoordinateComponent
-
-                    MissionItemIndicator {
-                        coordinate:     object.exitCoordinate
-                        z:              QGroundControl.zOrderMapItems
-                        missionItem:    object
-                        sequenceNumber: object.lastSequenceNumber
-                        visible:        object.specifiesCoordinate
-
-                        // These are the non-coordinate child mission items attached to this item
-                        Row {
-                            anchors.top:    parent.top
-                            anchors.left:   parent.right
-
-                            Repeater {
-                                model: !object.isSimpleItem ? object.childItems : 0
-
-                                delegate: MissionItemIndexLabel {
-                                    label:      object.abbreviation
-                                    checked:    object.isCurrentItem
-                                    z:          2
-
-                                    onClicked: setCurrentItem(object.sequenceNumber)
-                                }
-                            }
-                        }
+                    delegate: ComplexMissionItem {
+                        map: editorMap
                     }
                 }
 
@@ -511,7 +477,7 @@ QGCView {
                     MissionItemIndicator {
                         id:             itemIndicator
                         coordinate:     object.coordinate
-                        visible:        object.specifiesCoordinate
+                        visible:        object.isSimpleItem && object.specifiesCoordinate
                         z:              QGroundControl.zOrderMapItems
                         missionItem:    object
                         sequenceNumber: object.sequenceNumber
@@ -566,6 +532,18 @@ QGCView {
                 MissionLineView {
                     model:      _editingLayer == _layerMission ? missionController.jumpwaypointLines : undefined
                 }
+
+//                Repeater {
+//                    model:          missionController.visualItems
+//                    delegate: MapCircle {
+//                        border.color:   "#80FF0000"
+//                        border.width:   3
+//                        center:         modelData.coordinate
+//                        radius:         75
+//                        z:              QGroundControl.zOrderMapItems
+//                        visible:        modelData.command == 31
+//                    }
+//                }
 
                 // Add the vehicles to the map
                 MapItemView {
@@ -650,7 +628,7 @@ QGCView {
                 Item {
                     id:             missionItemIndex//missionItemEditor
                     height:         _PointFieldWidth+ScreenTools.defaultFontPixelWidth//mainWindow.availableHeight/5  //change by yaoling
-//                    anchors.top:        planElementSelectorRow.visible ? planElementSelectorRow.bottom : planElementSelectorRow.top
+                    //                    anchors.top:        planElementSelectorRow.visible ? planElementSelectorRow.bottom : planElementSelectorRow.top
                     anchors.bottom:  parent.bottom
                     anchors.horizontalCenter:           parent.horizontalCenter
                     //                  width:          _rightPanelWidth
@@ -716,7 +694,7 @@ QGCView {
                     MouseArea {
                         anchors.fill:       parent
                         onClicked: {
-                              setimg.visible=!setimg.visible
+                            setimg.visible=!setimg.visible
                         }
                     }
                 }
@@ -871,22 +849,45 @@ QGCView {
                         width:      1
                         color:      "grey"
                     }
-                    RoundButton {
+                    RoundButton{//DropButton
                         id:             addShapeButton
+           //             dropDirection:      dropDown
                         buttonImage:    "/qmlimages/MapDrawShape.svg"
                         lightBorders:   _lightWidgetBorders
                         visible:        _editingLayer == _layerMission
-
                         onClicked: {
                             var coordinate = editorMap.center
                             coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
                             coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
                             coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
-                            var sequenceNumber = missionController.insertComplexMissionItem(coordinate, missionController.visualItems.count)
+                            var sequenceNumber = missionController.insertComplexMissionItem("Survey", coordinate, missionController.visualItems.count)
                             setCurrentItem(sequenceNumber)
                             checked = false
                             addMissionItemsButton.checked = false
                         }
+//                        dropDownComponent: Component {
+//                            Column {
+//                                spacing: ScreenTools.defaultFontPixelWidth
+//                                Repeater {
+//                                    model: missionController.complexMissionItemNames
+
+//                                    QGCButton {
+//                                        text:               modelData
+//                                        Layout.fillWidth:   true
+
+//                                        onClicked: {
+//                                            var coordinate = editorMap.center
+//                                            coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
+//                                            coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
+//                                            coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
+//                                            var sequenceNumber = missionController.insertComplexMissionItem(modelData, coordinate, missionController.visualItems.count)
+//                                            setCurrentItem(sequenceNumber)
+//                                            addShapeButton.hideDropDown()
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
                     }
                     Rectangle {
                         height:     parent.height*0.8
@@ -900,7 +901,7 @@ QGCView {
                         imgcolor:           _syncDropDownController.dirty ? "red":"White"
                         viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
                         exclusiveGroup:     _dropButtonsExclusiveGroup
-                        dropDownComponent:  syncDropDownComponent
+                        dropDownComponent:  syncDropPanel//syncDropDownComponent
                         enabled:            !_syncDropDownController.syncInProgress
                         rotateImage:        _syncDropDownController.syncInProgress
                         lightBorders:       _lightWidgetBorders
@@ -924,73 +925,6 @@ QGCView {
                         property real rightPanelWidth:  _rightPanelWidth
                         property real leftToolWidth:    centerMapButton.x + centerMapButton.width
                     }
-//                    DropButton {
-//                        id:                 centerMapButton1
-//                        dropDirection:      dropDown
-//                        buttonImage:        "/qmlimages/MapCenter.svg"
-//                        viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
-//                        exclusiveGroup:     _dropButtonsExclusiveGroup
-//                        lightBorders:       _lightWidgetBorders
-
-//                        dropDownComponent: Component {
-//                            //                            Column {
-//                            //                                spacing: ScreenTools.defaultFontPixelWidth * 0.5
-//                            //                                QGCLabel { text: qsTr("中心位置") }// "Center map:" }
-//                            Row {
-//                                spacing: ScreenTools.defaultFontPixelWidth*0.5
-//                                RoundImageButton {
-//                                    width:          ScreenTools.defaultFontPixelHeight*3
-//                                    height:         width
-//                                    exclusiveGroup: _mapTypeButtonsExclusiveGroup
-//                                    imageResource:  "/qmlimages/map_home.svg"
-//                                    // showborder:     true
-//                                    bordercolor:    qgcPal.text
-//                                    onClicked: {
-//                                        centerMapButton.hideDropDown()
-//                                        editorMap.center = missionController.visualItems.get(0).coordinate
-//                                    }
-//                                }
-//                                Rectangle {
-//                                    anchors.verticalCenter:         parent.verticalCenter
-//                                    height:     parent.height*0.8
-//                                    width:      1
-//                                    color:      "grey"
-//                                }
-//                                RoundImageButton {
-//                                    width:          ScreenTools.defaultFontPixelHeight*3
-//                                    height:         width
-//                                    imageResource:  "/qmlimages/Plan.svg"//"/qmlimages/map_mission.svg"
-//                                    //    showborder:     true
-//                                    bordercolor:    qgcPal.text
-//                                    onClicked: {
-//                                        centerMapButton.hideDropDown()
-//                                        fitMapViewportToMissionItems()
-//                                    }
-//                                }
-
-//                                Rectangle {
-//                                    anchors.verticalCenter:         parent.verticalCenter
-//                                    height:     parent.height*0.8
-//                                    width:      1
-//                                    color:      "grey"
-//                                }
-//                                RoundImageButton {
-//                                    width:          ScreenTools.defaultFontPixelHeight*3
-//                                    height:         width
-//                                    imageResource:  "/qmlimages/map_plane.svg"
-//                                    //    showborder:     true
-//                                    bordercolor:    qgcPal.text
-//                                    enabled:    activeVehicle && activeVehicle.latitude != 0 && activeVehicle.longitude != 0
-//                                    property var activeVehicle: _activeVehicle
-//                                    onClicked: {
-//                                        centerMapButton.hideDropDown()
-//                                        editorMap.center = activeVehicle.coordinate
-//                                    }
-//                                }
-
-//                            }
-//                        }
-//                    }
                     Rectangle {
                         height:     parent.height*0.8
                         width:      1
@@ -1006,12 +940,6 @@ QGCView {
                         lightBorders:       _lightWidgetBorders
 
                         dropDownComponent: Component {
-                            //                            Rectangle {
-                            //                                  height:     ScreenTools.defaultFontPixelHeight*2
-                            //                                  width:      parent.width*0.7
-                            //                                  color:      "grey"
-                            //                                  anchors.centerIn: parent
-                            //                                }
                             Row {
                                 spacing: ScreenTools.defaultFontPixelWidth
                                 Repeater {
@@ -1173,12 +1101,14 @@ QGCView {
             }
         }
 
+        //- ToolStrip DropPanel Components
+
         Component {
-            id: syncDropDownComponent
+            id: syncDropPanel
 
             Column {
+                id:         columnHolder
                 property string _overwriteText: (_editingLayer == _layerMission) ? qsTr("覆盖任务")/*qsTr("Mission overwrite")*/ : qsTr("GeoFence overwrite")
-                id:                 sendSaveGrid
                 anchors.margins:    _margin
 
                 SubMenuButton {
@@ -1205,7 +1135,7 @@ QGCView {
                     onClicked:  {
                         syncButton.hideDropDown()
                         if (_syncDropDownController.dirty) {
-                            qgcView.showDialog(syncLoadFromVehicleOverwrite, sendSaveGrid._overwriteText, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                            qgcView.showDialog(syncLoadFromVehicleOverwrite, columnHolder._overwriteText, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                         } else {
                             _syncDropDownController.loadFromVehicle()
                         }
@@ -1239,7 +1169,7 @@ QGCView {
                     onClicked:  {
                         syncButton.hideDropDown()
                         if (_syncDropDownController.dirty) {
-                            qgcView.showDialog(syncLoadFromFileOverwrite, sendSaveGrid._overwriteText, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+                            qgcView.showDialog(syncLoadFromFileOverwrite, columnHolder._overwriteText, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                         } else {
                             _syncDropDownController.loadFromSelectedFile()
                         }
@@ -1257,6 +1187,70 @@ QGCView {
                     onClicked:  {
                         syncButton.hideDropDown()
                         qgcView.showDialog(removeAllPromptDialog, qsTr("删除所有航点")/*qsTr("Remove all")*/, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
+                    }
+                }
+            }
+        }
+        Component {
+            id: centerMapDropPanel
+
+            CenterMapDropPanel {
+                map:            editorMap
+                fitFunctions:   mapFitFunctions
+            }
+        }
+        Component {
+            id: mapTypeDropPanel
+
+            Column {
+                spacing: _margin
+
+                QGCLabel { text: qsTr("Map type:") }
+                Row {
+                    spacing: ScreenTools.defaultFontPixelWidth
+                    Repeater {
+                        model: QGroundControl.flightMapSettings.mapTypes
+
+                        QGCButton {
+                            checkable:      true
+                            checked:        QGroundControl.flightMapSettings.mapType === text
+                            text:           modelData
+                            exclusiveGroup: _mapTypeButtonsExclusiveGroup
+
+                            onClicked: {
+                                QGroundControl.flightMapSettings.mapType = text
+                                syncButton.hideDropDown()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Component {
+            id: patternDropPanel
+
+            ColumnLayout {
+                spacing:    ScreenTools.defaultFontPixelWidth * 0.5
+
+                QGCLabel { text: qsTr("Create complex pattern:") }
+
+                Repeater {
+                    model: missionController.complexMissionItemNames
+
+                    QGCButton {
+                        text:               modelData
+                        Layout.fillWidth:   true
+
+                        onClicked: {
+                            var coordinate = editorMap.center
+                            coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
+                            coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
+                            coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
+                            var sequenceNumber = missionController.insertComplexMissionItem(modelData, coordinate, missionController.visualItems.count)
+                            setCurrentItem(sequenceNumber)
+                            syncButton.hideDropDown()
+                        }
                     }
                 }
             }

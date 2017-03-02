@@ -307,7 +307,7 @@ public:
     Q_PROPERTY(unsigned int         telemetryTXBuffer       READ telemetryTXBuffer                                      NOTIFY telemetryTXBufferChanged)
     Q_PROPERTY(unsigned int         telemetryLNoise         READ telemetryLNoise                                        NOTIFY telemetryLNoiseChanged)
     Q_PROPERTY(unsigned int         telemetryRNoise         READ telemetryRNoise                                        NOTIFY telemetryRNoiseChanged)
-
+    Q_PROPERTY(float                telemetryLost           READ telemetryLost                                          NOTIFY telemetryLostChanged)
     /// true: Vehicle is flying, false: Vehicle is on ground
     Q_PROPERTY(bool flying      READ flying     WRITE setFlying     NOTIFY flyingChanged)
 
@@ -583,6 +583,7 @@ public:
     unsigned int    telemetryTXBuffer       () { return _telemetryTXBuffer; }
     unsigned int    telemetryLNoise         () { return _telemetryLNoise; }
     unsigned int    telemetryRNoise         () { return _telemetryRNoise; }
+    float           telemetryLost           () { return _telemetryLost; }
 
     Fact* roll              (void) { return &_rollFact; }
     Fact* heading           (void) { return &_headingFact; }
@@ -713,6 +714,7 @@ signals:
     void telemetryTXBufferChanged   (unsigned int value);
     void telemetryLNoiseChanged     (unsigned int value);
     void telemetryRNoiseChanged     (unsigned int value);
+    void telemetryLostChanged       (float value);
 
     void firmwareMajorVersionChanged(int major);
     void firmwareMinorVersionChanged(int minor);
@@ -748,6 +750,7 @@ signals:
 private slots:
     void _mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message);
     void _telemetryChanged(LinkInterface* link, unsigned rxerrors, unsigned fixed, int rssi, int remrssi, unsigned txbuf, unsigned noise, unsigned remnoise);
+    void _telemetryLostChanged(LinkInterface* link, float percent);
     void _linkInactiveOrDeleted(LinkInterface* link);
     void _sendMessageOnLink(LinkInterface* link, mavlink_message_t message);
     void _sendMessageMultipleNext(void);
@@ -874,6 +877,7 @@ private:
     uint32_t        _telemetryTXBuffer;
     uint32_t        _telemetryLNoise;
     uint32_t        _telemetryRNoise;
+    float           _telemetryLost;
 
     typedef struct {
         int     component;

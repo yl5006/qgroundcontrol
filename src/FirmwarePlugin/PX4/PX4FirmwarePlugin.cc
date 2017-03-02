@@ -30,7 +30,7 @@ const char* PX4FirmwarePlugin::_manualFlightMode =      QT_TR_NOOP("手动");
 const char* PX4FirmwarePlugin::_altCtlFlightMode =      QT_TR_NOOP("定高");
 const char* PX4FirmwarePlugin::_posCtlFlightMode =      QT_TR_NOOP("GPS");
 const char* PX4FirmwarePlugin::_missionFlightMode =     QT_TR_NOOP("任务");
-const char* PX4FirmwarePlugin::_holdFlightMode =        QT_TR_NOOP("悬停")
+const char* PX4FirmwarePlugin::_holdFlightMode =        QT_TR_NOOP("悬停");
 const char* PX4FirmwarePlugin::_takeoffFlightMode =     QT_TR_NOOP("起飞");
 const char* PX4FirmwarePlugin::_landingFlightMode =     QT_TR_NOOP("降落");
 const char* PX4FirmwarePlugin::_rtlFlightMode =         QT_TR_NOOP("返航");
@@ -67,11 +67,11 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
         { PX4_CUSTOM_MAIN_MODE_MANUAL,      0,                                      PX4FirmwarePlugin::_manualFlightMode,       true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_STABILIZED,  0,                                      PX4FirmwarePlugin::_stabilizedFlightMode,   true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_ACRO,        0,                                      PX4FirmwarePlugin::_acroFlightMode,         true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_RATTITUDE,   0,                                      PX4FirmwarePlugin::_rattitudeFlightMode,    true,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_RATTITUDE,   0,                                      PX4FirmwarePlugin::_rattitudeFlightMode,    false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_ALTCTL,      0,                                      PX4FirmwarePlugin::_altCtlFlightMode,       true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_POSCTL,      0,                                      PX4FirmwarePlugin::_posCtlFlightMode,       true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_SIMPLE,      0,                                      PX4FirmwarePlugin::_simpleFlightMode,       true,   false,  true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LOITER,        PX4FirmwarePlugin::_holdFlightMode,         false,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LOITER,        PX4FirmwarePlugin::_holdFlightMode,         false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,       PX4FirmwarePlugin::_missionFlightMode,      true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,           PX4FirmwarePlugin::_rtlFlightMode,          true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET, PX4FirmwarePlugin::_followMeFlightMode,     false,   false,  true },

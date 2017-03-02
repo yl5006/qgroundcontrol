@@ -21,6 +21,7 @@ import QGroundControl.Controls      1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.Vehicle       1.0
 import QGroundControl.Controllers   1.0
+import QGroundControl.FactSystem    1.0
 
 FlightMap {
     id:             flightMap
@@ -274,9 +275,14 @@ FlightMap {
             buttonImage:        checked?"/qmlimages/novoice.svg":"/qmlimages/voice.svg"
             z:                  QGroundControl.zOrderWidgets
             lightBorders:       isSatelliteMap
-            checked:            QGroundControl.isAudioMuted
+            property Fact _audioMuted: QGroundControl.settingsManager.appSettings.audioMuted
+            checked: _audioMuted ?
+                              (_audioMuted.typeIsBool ?
+                                   (_audioMuted.value === true ? Qt.Checked : Qt.Unchecked) :
+                                   (_audioMuted.value === 1 ? Qt.Checked : Qt.Unchecked)) :
+                              Qt.Unchecked
             onClicked: {
-              QGroundControl.isAudioMuted = checked
+              _audioMuted.value = checked ? 1 : 0
             }
         }
         Rectangle {
@@ -290,9 +296,14 @@ FlightMap {
             buttonImage:        "/qmlimages/yaokong.svg"
             z:                  QGroundControl.zOrderWidgets
             lightBorders:       isSatelliteMap
-            checked:            QGroundControl.virtualTabletJoystick
+            property Fact       _virtualJoystick: QGroundControl.settingsManager.appSettings.virtualJoystick
+            checked: _virtualJoystick ?
+                              (_virtualJoystick.typeIsBool ?
+                                   (_virtualJoystick.value === true ? Qt.Checked : Qt.Unchecked) :
+                                   (_virtualJoystick.value === 1 ? Qt.Checked : Qt.Unchecked)) :
+                              Qt.Unchecked
             onClicked: {
-              QGroundControl.virtualTabletJoystick = checked
+              _virtualJoystick.value = checked ? 1 : 0
             }
         }
     }

@@ -25,31 +25,21 @@ import QGroundControl.Palette       1.0
 import QtGraphicalEffects 1.0
 Rectangle {
     id:     instrumentPanel
-    height: size//attitudeWidget.y + attitudeWidget.height + _topBottomMargin
-    width:  attitudeWidget.width + mask.width_+_topBottomMargin
+    height: getPreferredInstrumentWidth()
+    width:  attitudeWidget.width + mask.width+_topBottomMargin
     color:          Qt.rgba(0,0,0,0)
-    property alias  heading:        attitudeWidget.heading//compass.heading
-    property alias  rollAngle:      attitudeWidget.rollAngle
-    property alias  pitchAngle:     attitudeWidget.pitchAngle
-    property real   size:           _defaultSize
-    property bool   lightBorders:   true
-    property bool   active:         false
-    property var    qgcView
-    property real   maxHeight
 
-    property Fact   _emptyFact:         Fact { }
-    property Fact   groundSpeedFact:    _emptyFact
-    property Fact   airSpeedFact:       _emptyFact
+    property var    _qgcView:           qgcView
+    property real   _maxHeight:         maxHeight
 
     property real   _defaultSize:   ScreenTools.defaultFontPixelHeight * (9)
 
     property color  _backgroundColor:   qgcPal.window
     property real   _spacing:           ScreenTools.defaultFontPixelHeight * 0.33
-    property real   _topBottomMargin:   (size * 0.05) / 2
- //   property real   _availableValueHeight: maxHeight - (attitudeWidget.height + _spacer1.height + _spacer2.height + (_spacing * 4)) - (_showCompass ? compass.height : 0)
-    property real   _availableValueHeight: maxHeight - (_spacing * 4)
+    property real   _topBottomMargin:   (instrumentPanel.height * 0.05) / 2
+ //   property real   _availableValueHeight: _maxHeight - (attitudeWidget.height + _spacer1.height + _spacer2.height + (_spacing * 4)) - (_showCompass ? compass.height : 0)
+    property real   _availableValueHeight: _maxHeight - (_spacing * 4)
     property var    _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
-    readonly property bool _showCompass:    true // !ScreenTools.isShortScreen
 
     QGCPalette { id: qgcPal }
 
@@ -118,10 +108,10 @@ Rectangle {
         anchors.left:       mask.left
         anchors.leftMargin: _spacing*12
         width:              parent.height
-        qgcView:            instrumentPanel.qgcView
+        qgcView:            instrumentPanel._qgcView
         textColor:          "white"//isSatellite ? "black" : "white"
         maxHeight:          parent.height
-        visible:            _showCompass
+
     }
 
     QGCAttitudeCompassWidget {
@@ -130,7 +120,7 @@ Rectangle {
         anchors.right:   parent.right
         y:              _topBottomMargin
         size:            parent.height
-        active:         _activeVehicle
+        vehicle:         _activeVehicle
         anchors.verticalCenter:  parent.verticalCenter
      }
 

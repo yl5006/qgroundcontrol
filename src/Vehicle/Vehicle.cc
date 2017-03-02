@@ -162,6 +162,7 @@ Vehicle::Vehicle(LinkInterface*             link,
 
     connect(_mavlink, &MAVLinkProtocol::messageReceived,     this, &Vehicle::_mavlinkMessageReceived);
     connect(_mavlink, &MAVLinkProtocol::radioStatusChanged,  this, &Vehicle::_telemetryChanged);
+    connect(_mavlink, &MAVLinkProtocol::receiveLossPercentChanged,  this, &Vehicle::_telemetryLostChanged);
 
     connect(this, &Vehicle::_sendMessageOnLinkOnThread, this, &Vehicle::_sendMessageOnLink, Qt::QueuedConnection);
     connect(this, &Vehicle::flightModeChanged,          this, &Vehicle::_handleFlightModeChanged);
@@ -461,6 +462,12 @@ void Vehicle::_telemetryChanged(LinkInterface*, unsigned rxerrors, unsigned fixe
         emit telemetryRNoiseChanged(_telemetryRNoise);
     }
 }
+void Vehicle::_telemetryLostChanged(LinkInterface*, float percent)
+{
+    _telemetryLost=percent;
+    emit telemetryLostChanged(_telemetryLost);
+}
+
 void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message)
 {
 

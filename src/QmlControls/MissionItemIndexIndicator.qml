@@ -166,7 +166,7 @@ Rectangle {
     QGCLabel {
         id:                     label
         anchors.verticalCenter: commandPicker.verticalCenter
-        anchors.leftMargin:     _margin*4
+        anchors.leftMargin:     _margin*2
         font.pointSize:         ScreenTools.defaultFontPixelHeight*2
         font.bold:              true
         anchors.left:           parent.left
@@ -205,8 +205,8 @@ Rectangle {
 
     QGCButton {
         id:                     commandPicker
-        anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 5
-        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth * 3
+        anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 1
+        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth * 1
         anchors.topMargin:      ScreenTools.defaultFontPixelWidth * 4
         anchors.top:            total.bottom
         anchors.left:           label.right
