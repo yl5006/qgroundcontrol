@@ -882,12 +882,12 @@ QmlObjectListModel* SurveyMissionItem::getMissionItems(void) const
             MissionItem* item = new MissionItem(seqNum++,                       // sequence number
                                                 MAV_CMD_DO_SET_CAM_TRIGG_DIST,           // MAV_CMD
                                                 _gridAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,  // MAV_FRAME
-                                                _cameraTriggerDistanceFact.rawValue().toDouble(),
+                                                0.0,
                                                 0.0, 0.0, 0.0,             // param 2-4
                                                 coord.latitude(),
                                                 coord.longitude(),
                                                 altitude,
-                                                0.0, 0.0, 0.0,             // param 8-10
+                                                _cameraTriggerDistanceFact.rawValue().toDouble(),0.0, 0.0,             // param 8-10
                                                 true,                           // autoContinue
                                                 false,                          // isCurrentItem
                                                 pMissionItems);                 // parent - allow delete on pMissionItems to delete everthing

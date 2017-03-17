@@ -80,6 +80,7 @@ Item {
             sourceItem:
                 MissionItemIndexLabel {
                 label:      "S"
+                simple:  true
             }
         }
     }
@@ -97,6 +98,7 @@ Item {
             sourceItem:
                 MissionItemIndexLabel {
                 label:      "S"
+                simple:  true
             }
         }
     }

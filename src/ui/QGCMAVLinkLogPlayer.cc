@@ -80,7 +80,7 @@ void QGCMAVLinkLogPlayer::_selectLogFileForPlayback(void)
     }
 
     LinkInterface* createConnectedLink(LinkConfiguration* config);
-
+    qDebug()<<logFilename;
     LogReplayLinkConfiguration* linkConfig = new LogReplayLinkConfiguration(QString("Log Replay"));
     linkConfig->setLogFilename(logFilename);
     linkConfig->setName(linkConfig->logFilenameShort());
@@ -108,11 +108,11 @@ void QGCMAVLinkLogPlayer::_playbackError(void)
     _enablePlaybackControls(false);
 }
 
-QString QGCMAVLinkLogPlayer::_secondsToHMS(int seconds)
+QString QGCMAVLinkLogPlayer::_secondsToHMS(uint seconds)
 {
-    int secondsPart  = seconds;
-    int minutesPart  = secondsPart / 60;
-    int hoursPart    = minutesPart / 60;
+    uint secondsPart  = seconds;
+    uint minutesPart  = secondsPart / 60;
+    uint hoursPart    = minutesPart / 60;
     secondsPart -= 60 * minutesPart;
     minutesPart -= 60 * hoursPart;
 
@@ -121,7 +121,7 @@ QString QGCMAVLinkLogPlayer::_secondsToHMS(int seconds)
 
 /// Signalled from LogReplayLink once log file information is known
 void QGCMAVLinkLogPlayer::_logFileStats(bool    logTimestamped,         ///< true: timestamped log
-                                        int     logDurationSeconds,     ///< Log duration
+                                        uint    logDurationSeconds,     ///< Log duration
                                         int     binaryBaudRate)         ///< Baud rate for non-timestamped log
 {
     Q_UNUSED(logTimestamped);

@@ -1,4 +1,4 @@
-#ifndef QGCMAVLINKLOGPLAYER_H
+﻿#ifndef QGCMAVLINKLOGPLAYER_H
 #define QGCMAVLINKLOGPLAYER_H
 
 #include <QWidget>
@@ -36,7 +36,7 @@ private slots:
 #if 0
     void _setAccelerationFromSlider(int value);
 #endif
-    void _logFileStats(bool logTimestamped, int logDurationSeconds, int binaryBaudRate);
+    void _logFileStats(bool logTimestamped, uint logDurationSeconds, int binaryBaudRate);
     void _playbackStarted(void);
     void _playbackPaused(void);
     void _playbackPercentCompleteChanged(int percentComplete);
@@ -45,7 +45,7 @@ private slots:
 
 private:
     void _finishPlayback(void);
-    QString _secondsToHMS(int seconds);
+    QString _secondsToHMS(uint seconds);
     void _enablePlaybackControls(bool enabled);
 
     LogReplayLink*  _replayLink;

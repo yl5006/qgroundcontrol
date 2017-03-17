@@ -21,12 +21,12 @@
 
 QGC_LOGGING_CATEGORY(MAVLinkLogManagerLog, "MAVLinkLogManagerLog")
 
-static const char* kMAVLinkLogGroup         = "MAVLinkLogGroup";
+static const char* kMAVLinkLogGroup         = "EWTLogGroup";//MAVLink
 static const char* kEmailAddressKey         = "Email";
 static const char* kDescriptionsKey         = "Description";
-static const char* kDefaultDescr            = "QGroundControl Session";
+static const char* kDefaultDescr            = "GroundStation Session";
 static const char* kPx4URLKey               = "LogURL";
-static const char* kDefaultPx4URL           = "http://logs.px4.io/upload";
+static const char* kDefaultPx4URL           = "http://logs.ewt.io/upload";//px4
 static const char* kEnableAutoUploadKey     = "EnableAutoUpload";
 static const char* kEnableAutoStartKey      = "EnableAutoStart";
 static const char* kEnableDeletetKey        = "EnableDelete";

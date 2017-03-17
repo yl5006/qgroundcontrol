@@ -212,10 +212,10 @@ bool MissionItem::load(const QString &wayline,double angle,double space,double a
 {
     QStringList wpParams = wayline.split("\t");
     if (wpParams.size() != 4) {
-        wpParams= wayline.split(",");
+        wpParams= wayline.split(" ");
         if(wpParams.size() != 4)
         {
-            wpParams= wayline.split(" ");
+            wpParams= wayline.split(",");
         }
     }
     if (wpParams.size() == 4) {
@@ -240,7 +240,20 @@ bool MissionItem::load(const QString &wayline,double angle,double space,double a
         setAutoContinue(true);
         return true;
     }
+    else  if (wpParams.size() == 2)
+    {
+        qDebug()<<wpParams[0]<<"   "<<wpParams[1];
+        setIsCurrentItem(false);
+        setFrame(relalt?MAV_FRAME_GLOBAL_RELATIVE_ALT: MAV_FRAME_GLOBAL);
+        setCommand(MAV_CMD_NAV_WAYPOINT);
 
+        setParam5(wpParams[1].toDouble());
+        setParam6(wpParams[0].toDouble());
+        setParam7(50);
+        setAutoContinue(true);
+        return true;
+    }
+    qDebug()<<wpParams.size()<<"   "<<wpParams[0];
     return false;
 }
 bool MissionItem::_convertJsonV1ToV2(const QJsonObject& json, QJsonObject& v2Json, QString& errorString)

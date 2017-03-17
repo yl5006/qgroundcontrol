@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -88,7 +88,7 @@ private slots:
     virtual void _writeBytes(const QByteArray bytes);
 
 signals:
-    void logFileStats(bool logTimestamped, int logDurationSecs, int binaryBaudRate);
+    void logFileStats(bool logTimestamped, uint logDurationSecs, int binaryBaudRate);
     void playbackStarted(void);
     void playbackPaused(void);
     void playbackAtEnd(void);
@@ -113,7 +113,7 @@ private:
 
     void _replayError(const QString& errorMsg);
     quint64 _parseTimestamp(const QByteArray& bytes);
-    quint64 _seekToNextMavlinkMessage(mavlink_message_t* nextMsg);
+    quint64 _seekToNextMavlinkMessage(mavlink_message_t* nextMsg,bool seekback=true);
     bool _loadLogFile(void);
     void _finishPlayback(void);
     void _playbackError(void);

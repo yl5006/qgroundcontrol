@@ -163,7 +163,7 @@ quint64 LogReplayLink::_parseTimestamp(const QByteArray& bytes)
 /// Seeks to the beginning of the next successfully parsed mavlink message in the log file.
 ///     @param nextMsg[output] Parsed next message that was found
 /// @return A Unix timestamp in microseconds UTC for found message or 0 if parsing failed
-quint64 LogReplayLink::_seekToNextMavlinkMessage(mavlink_message_t* nextMsg)
+quint64 LogReplayLink::_seekToNextMavlinkMessage(mavlink_message_t* nextMsg,bool seekback)
 {
     char nextByte;
     mavlink_status_t comm;
@@ -173,7 +173,16 @@ quint64 LogReplayLink::_seekToNextMavlinkMessage(mavlink_message_t* nextMsg)
         // If we've found a message, jump back to the start of the message, grab the timestamp,
         // and go back to the end of this file.
         if (messageFound) {
-            _logFile.seek(_logFile.pos() - (nextMsg->len + MAVLINK_NUM_NON_PAYLOAD_BYTES + cbTimestamp));
+            if(seekback)
+            {   if(nextMsg->magic==MAVLINK_STX_MAVLINK1)
+                {
+                    _logFile.seek(_logFile.pos() - (nextMsg->len + MAVLINK_CORE_HEADER_MAVLINK1_LEN+2+MAVLINK_NUM_CHECKSUM_BYTES+ cbTimestamp));
+                }
+                else
+                {
+                    _logFile.seek(_logFile.pos() - (nextMsg->len + MAVLINK_NUM_NON_PAYLOAD_BYTES + cbTimestamp));
+                }
+            }
             QByteArray rawTime = _logFile.read(cbTimestamp);
             return _parseTimestamp(rawTime);
         }
@@ -187,7 +196,7 @@ bool LogReplayLink::_loadLogFile(void)
     QString errorMsg;
     QString logFilename = _logReplayConfig->logFilename();
     QFileInfo logFileInfo;
-    int logDurationSecondsTotal;
+    uint logDurationSecondsTotal;
     
     if (_logFile.isOpen()) {
         errorMsg = "Attempt to load new log while log being played";
@@ -209,7 +218,6 @@ bool LogReplayLink::_loadLogFile(void)
         // This should be a big-endian uint64.
         QByteArray timestamp = _logFile.read(cbTimestamp);
         quint64 startTimeUSecs = _parseTimestamp(timestamp);
-        
         // Now find the last timestamp by scanning for the last MAVLink packet and
         // find the timestamp before it. To do this we start searchin a little before
         // the end of the file, specifically the maximum MAVLink packet size + the
@@ -229,13 +237,11 @@ bool LogReplayLink::_loadLogFile(void)
             errorMsg = QString("The log file '%1' is corrupt. No valid timestamps were found at the end of the file.").arg(logFilename);
             goto Error;
         }
-        
         // Remember the start and end time so we can move around this _logFile with the slider.
         _logEndTimeUSecs = endTimeUSecs;
         _logStartTimeUSecs = startTimeUSecs;
         _logDurationUSecs = endTimeUSecs - startTimeUSecs;
         _logCurrentTimeUSecs = startTimeUSecs;
-        
         // Reset our log file so when we go to read it for the first time, we start at the beginning.
         _logFile.reset();
         
@@ -261,7 +267,7 @@ bool LogReplayLink::_loadLogFile(void)
             }
         }
         
-        logDurationSecondsTotal = logFileInfo.size() / (_binaryBaudRate / 10);
+        logDurationSecondsTotal = logFileInfo.size() / (_binaryBaudRate / 10); 
     }
     
     emit logFileStats(_logTimestamped, logDurationSecondsTotal, _binaryBaudRate);
@@ -296,9 +302,9 @@ void LogReplayLink::_readNextLogEntry(void)
         // is necessary because we don't know how big each MAVLink message is until we finish parsing
         // one, and since we only output arrays of bytes, we need to know the size of that array.
         mavlink_message_t msg;
-        _seekToNextMavlinkMessage(&msg);
+       _logCurrentTimeUSecs= _seekToNextMavlinkMessage(&msg);
         
-        while (timeToNextExecutionMSecs < 3) {
+        while (timeToNextExecutionMSecs<3) {
             
             // Now we're sitting at the start of a MAVLink message, so read it all into a byte array for feeding to our parser.
             QByteArray message = _logFile.read(msg.len + MAVLINK_NUM_NON_PAYLOAD_BYTES);
@@ -317,9 +323,10 @@ void LogReplayLink::_readNextLogEntry(void)
             
             // Calculate how long we should wait in real time until parsing this message.
             // We pace ourselves relative to the start time of playback to fix any drift (initially set in play())
-            qint64 timeDiffMSecs = ((_logCurrentTimeUSecs - _logStartTimeUSecs) / 1000) / _replayAccelerationFactor;
+            quint64 timeDiffMSecs = ((_logCurrentTimeUSecs - _logStartTimeUSecs) / 1000) / _replayAccelerationFactor;
             quint64 desiredPacedTimeMSecs = _playbackStartTimeMSecs + timeDiffMSecs;
             quint64 currentTimeMSecs = (quint64)QDateTime::currentMSecsSinceEpoch();
+  //          qDebug()<<currentTimeMSecs<<" "<<_playbackStartTimeMSecs<<" "<<_logCurrentTimeUSecs<<"start"<<_logStartTimeUSecs<<timeDiffMSecs;
             timeToNextExecutionMSecs = desiredPacedTimeMSecs - currentTimeMSecs;
         }
         
@@ -360,7 +367,6 @@ void LogReplayLink::_play(void)
     // Always correct the current start time such that the next message will play immediately at playback.
     // We do this by subtracting the current file playback offset  from now()
     _playbackStartTimeMSecs = (quint64)QDateTime::currentMSecsSinceEpoch() - ((_logCurrentTimeUSecs - _logStartTimeUSecs) / 1000);
-    
     // Start timer
     if (_logTimestamped) {
         _readTickTimer.start(1);

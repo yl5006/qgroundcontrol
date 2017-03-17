@@ -573,7 +573,7 @@ Item {
             QGCLabel {
                 anchors.horizontalCenter: parent.horizontalCenter
                 color:      _lightWidgetBorders ? qgcPal.mapWidgetBorderDark : qgcPal.mapWidgetBorderLight
-                text:       "Click in map to move vehicle"
+                text:       qsTr("点击地图引导飞行")
                 visible:    gotoEnabled
             }
 

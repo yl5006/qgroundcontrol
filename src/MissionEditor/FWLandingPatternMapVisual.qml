@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -222,6 +222,7 @@ Item {
             sourceItem:
                 MissionItemIndexLabel {
                 label:      "L"
+                simple:     true
             }
         }
     }
@@ -254,6 +255,7 @@ Item {
                 MissionItemIndexLabel {
                 label:      "L"
                 checked:    _missionItem.isCurrentItem
+                simple:     true
             }
         }
     }

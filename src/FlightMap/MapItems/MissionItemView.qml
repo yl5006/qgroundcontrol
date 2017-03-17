@@ -46,6 +46,7 @@ MapItemView {
                     label:      object.abbreviation
                     checked:    object.isCurrentItem
                     z:          2
+                    simple:     true
                 }
             }
         }

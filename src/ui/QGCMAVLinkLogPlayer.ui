@@ -39,10 +39,10 @@
       <string>Start to replay Flight Data</string>
      </property>
      <property name="statusTip">
-      <string>Start to replay Flight Data</string>
+      <string>开始播放飞行数据</string>
      </property>
      <property name="whatsThis">
-      <string>Start to replay Flight Data</string>
+      <string>开始播放飞行数据</string>
      </property>
      <property name="text">
       <string>...</string>

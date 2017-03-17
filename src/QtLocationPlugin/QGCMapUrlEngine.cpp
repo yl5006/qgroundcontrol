@@ -205,6 +205,7 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString sec2    = ""; // after &zoom=...
         _getSecGoogleWords(x, y, sec1, sec2);
         _tryCorrectGoogleVersions(networkManager);
+        qDebug()<<QString("http://%1%2.google.com/%3/lyrs=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleMap).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
         return QString("http://%1%2.google.com/%3/lyrs=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleMap).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
     }
     break;
@@ -217,7 +218,7 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString sec2    = ""; // after &zoom=...
         _getSecGoogleWords(x, y, sec1, sec2);
         _tryCorrectGoogleVersions(networkManager); 
-   //     qDebug()<<QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
+        qDebug()<<QString("https://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
         return QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
     }
     break;
@@ -246,8 +247,7 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
 #endif
     case StatkartTopo:
     {
-      return QString("http://online2.map.bdimg.com/onlinelabel/?qt=tile&x=793&y=209&z=12&styles=pl&udt=20161109&scaler=1&p=0");
-   //     return QString("http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo2&zoom=%1&x=%2&y=%3").arg(zoom).arg(x).arg(y);
+        return QString("http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo2&zoom=%1&x=%2&y=%3").arg(zoom).arg(x).arg(y);
     }
     break;
     /*
@@ -306,20 +306,24 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
     }
     case GaodeMap:
     {
-         return QString("http://webst03.is.autonavi.com/appmaptile?x=%1&y=%2&z=%3&lang=zh_cn&size=1&scale=1&style=7").arg(x).arg(y).arg(zoom);
+        return QString("http://api.aeromap.cn/map/normal/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
+   //      return QString("http://webst03.is.autonavi.com/appmaptile?x=%1&y=%2&z=%3&lang=zh_cn&size=1&scale=1&style=7").arg(x).arg(y).arg(zoom);
         //return _tilexyTobaidu(x, y, zoom);
     }
     break;
     case GaodeSatellite:
     {
-  //      qDebug()<<QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
-        return QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
-     //   return _tilexyTobaidu(x, y, zoom);
+         qDebug()<<QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
+         return QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
+  //      return QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
+  //      return _tilexyTobaidu(x, y, zoom);
     }
     break;
     case GaodeHybrid:
     {
-        return _tilexyTobaidu(x, y, zoom);
+        return QString("http://api.aeromap.cn/map/terrain/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
+
+  //      return _tilexyTobaidu(x, y, zoom);
     }
     break;
 

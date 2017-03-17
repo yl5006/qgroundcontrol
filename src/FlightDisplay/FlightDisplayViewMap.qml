@@ -495,7 +495,10 @@ FlightMap {
         anchorPoint:    Qt.point(sourceItem.width / 2, sourceItem.height / 2)
         coordinate:     geoFenceController.breachReturnPoint
         visible:        geoFenceController.breachReturnEnabled
-        sourceItem:     MissionItemIndexLabel { label: "F" }
+        sourceItem:     MissionItemIndexLabel{
+            label: "F"
+            simple:  true
+        }
         z:              QGroundControl.zOrderMapItems
     }
 
@@ -512,6 +515,7 @@ FlightMap {
             sourceItem: MissionItemIndexLabel {
                 id:         itemIndexLabel
                 label:      qsTr("R", "rally point map item label")
+                simple:  true
             }
         }
     }
@@ -527,6 +531,7 @@ FlightMap {
         sourceItem: MissionItemIndexLabel {
             checked: true
             label:   qsTr("G", "Goto here waypoint") // second string is translator's hint.
+            simple:  true
         }
     }    
 

@@ -39,7 +39,7 @@ Item {
         anchors.left:  parent.left
         width:       mainWindow.tbHeight*1.5
         value:       activeVehicle ? (100-activeVehicle.telemetryLost)/100:0
-        valuecolor:  getRSSIColor(100-activeVehicle.telemetryLost)
+        valuecolor:  activeVehicle?getRSSIColor(100-activeVehicle.telemetryLost):qgcPal.text
         anchors.verticalCenter: parent.verticalCenter
     }
     QGCColoredImage {
@@ -58,6 +58,6 @@ Item {
         anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
         anchors.verticalCenter: parent.verticalCenter
         color:          qgcPal.buttonText
-        text:           (100-activeVehicle.telemetryLost).toFixed(1)+" %"
+        text:            activeVehicle ?(100-activeVehicle.telemetryLost).toFixed(1)+" %":"0"
     }
 }

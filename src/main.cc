@@ -286,6 +286,8 @@ int main(int argc, char *argv[])
     delete app;
     return 0;
  }
+    m_eventLoop.destroyed();
+    m_updater->destroyed();
 // qDebug()<<"getUpdateAvailable"<<m_updater->getUpdateAvailable(DEFS_URL);
 #endif
 

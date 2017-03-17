@@ -746,7 +746,10 @@ QGCView {
                     anchorPoint:    Qt.point(sourceItem.width / 2, sourceItem.height / 2)
                     coordinate:     geoFenceController.breachReturnPoint
                     visible:        geoFenceController.breachReturnEnabled
-                    sourceItem:     MissionItemIndexLabel { label: "F" }
+                    sourceItem:     MissionItemIndexLabel {
+                        label: "F"
+                        simple:  true
+                    }
                     z:              QGroundControl.zOrderMapItems
                 }
 
@@ -792,7 +795,7 @@ QGCView {
                             id:         itemIndexLabel
                             label:      qsTr("R", "rally point map item label")
                             checked:    _editingLayer == _layerRallyPoints ? object == rallyPointController.currentRallyPoint : false
-
+                            simple:     true
                             onClicked: rallyPointController.currentRallyPoint = object
 
                             onCheckedChanged: {

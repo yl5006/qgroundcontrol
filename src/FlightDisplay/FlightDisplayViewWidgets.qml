@@ -351,7 +351,7 @@ Item {
             QGCLabel {
                 anchors.horizontalCenter: parent.horizontalCenter
                 color:      _isSatellite ? qgcPal.mapWidgetBorderDark : qgcPal.mapWidgetBorderLight
-                text:       "Click in map to move vehicle"
+                text:       qsTr("点击地图引导飞行")//"Click in map to move vehicle"
                 visible:    gotoEnabled
             }
 
@@ -413,14 +413,14 @@ Item {
                 QGCButton {
                     pointSize:  _guidedModeBar._fontPointSize
                     text:       qsTr("Orbit")
-                    visible:    (_activeVehicle && _activeVehicle.flying) && _activeVehicle.orbitModeSupported && _activeVehicle.armed
+                    visible:    false//(_activeVehicle && _activeVehicle.flying) && _activeVehicle.orbitModeSupported && _activeVehicle.armed
                     onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmOrbit)
                 }
 
                 QGCButton {
                     pointSize:  _guidedModeBar._fontPointSize
                     text:       qsTr("Abort")
-                    visible:    _activeVehicle && _activeVehicle.flying && _activeVehicle.fixedWing
+                    visible:    false//_activeVehicle && _activeVehicle.flying && _activeVehicle.fixedWing
                     onClicked:  _guidedModeBar.confirmAction(_guidedModeBar.confirmAbort)
                 }
 

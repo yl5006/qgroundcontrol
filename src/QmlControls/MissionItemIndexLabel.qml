@@ -14,7 +14,7 @@ Item {
     property bool   small:      false
 
     signal clicked
-
+    property bool   simple:      false
     width:          _width*1.5
     height:         _width*1.5
 //  radius:         _width / 2
@@ -46,7 +46,6 @@ Item {
             default:
                return   checked  ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
         }
-
     }
 
     MouseArea {
@@ -55,7 +54,7 @@ Item {
     }
     Image {
         id:         waypoint
-        source:     getsouceimg(missionItem.command)
+        source:     simple?"/qmlimages/Waypoint0.svg":getsouceimg(missionItem.command)
         mipmap:     true
         fillMode:   Image.PreserveAspectFit
         anchors.fill: parent

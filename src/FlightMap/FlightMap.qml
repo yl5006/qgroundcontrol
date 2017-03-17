@@ -134,7 +134,8 @@ Map {
         visible:        mainWindow.gcsPosition.isValid
         coordinate:     mainWindow.gcsPosition
         sourceItem:     MissionItemIndexLabel {
-            label: "Q"
+            label:  "Q"
+            simple:  true
         }
     }
 
