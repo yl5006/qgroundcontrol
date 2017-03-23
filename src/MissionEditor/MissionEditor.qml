@@ -687,6 +687,7 @@ QGCView {
                     anchors.right:          parent.right
                     anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
                     height:                 _PointFieldWidth.width/2
+                    fillMode: Image.TileVertically
                     width:                  height
                     smooth:                 true
                     source:                 "/res/gear-black.svg"
@@ -846,6 +847,40 @@ QGCView {
                         buttonImage:    "/qmlimages/MapAddMission.svg"
                         lightBorders:   _lightWidgetBorders
                         visible:        _editingLayer == _layerMission
+                    }
+                    Rectangle {
+                        height:     parent.height*0.8
+                        width:      1
+                        color:      "grey"
+                    }
+                    DropButton {
+                        id:             setMissionItemsButton
+                        buttonImage:    "/qmlimages/MapAddMission.svg"
+                        lightBorders:   _lightWidgetBorders
+                        dropDirection:  dropDown
+                        dropDownComponent: Component {
+                            Column {
+                                spacing: ScreenTools.defaultFontPixelWidth
+                                SubMenuButton {
+                                    imageResource:      "/qmlimages/sendvehicle.svg"
+                                    Layout.fillWidth:   true
+                                    text:               qsTr("相对航点")//"Send to vehicle"
+                                    onClicked:  {
+                                        setMissionItemsButton.hideDropDown()
+                                        qgcView.showDialog(setmissionItemDialog, qsTr(""), qgcView.showDialogDefaultWidth*0.6, StandardButton.Cancel)
+                                    }
+                                }
+                                SubMenuButton {
+                                    imageResource:      "/qmlimages/sendvehicle.svg"
+                                    Layout.fillWidth:   true
+                                    text:               qsTr("圆形航线")//"Send to vehicle"
+                                    onClicked:  {
+                                        setMissionItemsButton.hideDropDown()
+                                        qgcView.showDialog(setCircleItemDialog, qsTr(""), qgcView.showDialogDefaultWidth*0.6, StandardButton.Cancel)
+                                    }
+                                }
+                            }
+                        }
                     }
                     Rectangle {
                         height:     parent.height*0.8
@@ -1421,6 +1456,278 @@ QGCView {
                             text:               "1"
                         }
                     }
+                }
+            }
+        }
+
+        Component {
+            id: setmissionItemDialog
+
+            QGCViewDialog {
+                width:          ScreenTools.defaultFontPixelHeight*4
+                height:         ScreenTools.defaultFontPixelHeight*8
+                function accept() {
+                        hideDialog()
+                }
+                Rectangle {
+                    id:                         title
+                    anchors.top:                parent.top
+                    anchors.topMargin:          -ScreenTools.defaultFontPixelHeight*2.5
+                    anchors.horizontalCenter:   parent.horizontalCenter
+                    width:                      parent.width
+                    height:                     ScreenTools.defaultFontPixelHeight*4
+                    color:                      "transparent"
+                    QGCCircleProgress{
+                        id:                     circle
+                        anchors.left:           parent.left
+                        anchors.top:            parent.top
+                        anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*2
+                        width:                  ScreenTools.defaultFontPixelHeight*3
+                        value:                  0
+                    }
+                    QGCColoredImage {
+                        id:                     img
+                        height:                 ScreenTools.defaultFontPixelHeight*1.5
+                        width:                  height
+                        sourceSize.width: width
+                        source:     "/qmlimages/loadfromfile.svg"
+                        fillMode:   Image.PreserveAspectFit
+                        color:      qgcPal.text
+                        anchors.horizontalCenter:circle.horizontalCenter
+                        anchors.verticalCenter: circle.verticalCenter
+                    }
+                    QGCLabel {
+                        id:             idset
+                        anchors.left:   img.left
+                        anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
+                        text:           qsTr("相对航点生成")//"safe"
+                        color:          qgcPal.text
+                        anchors.verticalCenter: img.verticalCenter
+                    }
+                    Image {
+                        source:    "/qmlimages/title.svg"
+                        width:      idset.width+ScreenTools.defaultFontPixelHeight*3.5
+                        height:     ScreenTools.defaultFontPixelHeight*1.5
+                        anchors.verticalCenter: circle.verticalCenter
+                        anchors.left:          circle.right
+                        //                fillMode: Image.PreserveAspectFit
+                    }
+                }
+                Row{
+                    anchors.top:                title.bottom
+                    anchors.horizontalCenter:   parent.horizontalCenter
+                    spacing:        ScreenTools.defaultFontPixelHeight*2
+                    Column {
+                        id:             setitem
+                        spacing:        ScreenTools.defaultFontPixelHeight/2
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelHeight
+                            QGCLabel {
+                                anchors.baseline:   distance.baseline
+                                text:               qsTr("距离:")
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                            }
+                            QGCTextField {
+                                id:                 distance
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                                inputMethodHints:   Qt.ImhDigitsOnly
+                                text:               "100"
+                            }
+                            QGCLabel {
+                                text:               qsTr("m")
+                            }
+                        }
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelHeight
+                            QGCLabel {
+                                anchors.baseline:   angle.baseline
+                                text:               qsTr("偏移角度:")
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                            }
+                            QGCTextField {
+                                id:                 angle
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                                inputMethodHints:   Qt.ImhDigitsOnly
+                                text:               "90"
+                            }
+                            QGCLabel {
+                                text:               qsTr("度")
+                            }
+                        }
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelHeight
+                            QGCLabel {
+                                anchors.baseline:   height.baseline
+                                text:               qsTr("高度差:")
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                            }
+                            QGCTextField {
+                                id:                 height
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                                inputMethodHints:   Qt.ImhDigitsOnly
+                                text:               "0"
+                            }
+                            QGCLabel {
+                                text:               qsTr("m")
+                            }
+                        }
+                    }
+                    QGCButton {
+                        text:               qsTr("添加")
+                        Layout.fillWidth:   true
+                        anchors.verticalCenter: setitem.verticalCenter
+                        onClicked: {
+                            var coordinate =_currentMissionItem.coordinate
+                            var sequenceNumber = missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(distance.text),Number(angle.text)), _currentMissionItem.sequenceNumber+1)
+                            setCurrentItem(sequenceNumber)
+                        }
+                    }
+
+                }
+            }
+        }
+
+        Component {
+            id: setCircleItemDialog
+
+            QGCViewDialog {
+                width:          ScreenTools.defaultFontPixelHeight*4
+                height:         ScreenTools.defaultFontPixelHeight*8
+                function accept() {
+                        hideDialog()
+                }
+                Rectangle {
+                    id:                         title
+                    anchors.top:                parent.top
+                    anchors.topMargin:          -ScreenTools.defaultFontPixelHeight*2.5
+                    anchors.horizontalCenter:   parent.horizontalCenter
+                    width:                      parent.width
+                    height:                     ScreenTools.defaultFontPixelHeight*4
+                    color:                      "transparent"
+                    QGCCircleProgress{
+                        id:                     circle
+                        anchors.left:           parent.left
+                        anchors.top:            parent.top
+                        anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*2
+                        width:                  ScreenTools.defaultFontPixelHeight*3
+                        value:                  0
+                    }
+                    QGCColoredImage {
+                        id:                     img
+                        height:                 ScreenTools.defaultFontPixelHeight*1.5
+                        width:                  height
+                        sourceSize.width: width
+                        source:     "/qmlimages/loadfromfile.svg"
+                        fillMode:   Image.PreserveAspectFit
+                        color:      qgcPal.text
+                        anchors.horizontalCenter:circle.horizontalCenter
+                        anchors.verticalCenter: circle.verticalCenter
+                    }
+                    QGCLabel {
+                        id:             idset
+                        anchors.left:   img.left
+                        anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
+                        text:           qsTr("圆形航线")//"safe"
+                        color:          qgcPal.text
+                        anchors.verticalCenter: img.verticalCenter
+                    }
+                    Image {
+                        source:    "/qmlimages/title.svg"
+                        width:      idset.width+ScreenTools.defaultFontPixelHeight*3.5
+                        height:     ScreenTools.defaultFontPixelHeight*1.5
+                        anchors.verticalCenter: circle.verticalCenter
+                        anchors.left:          circle.right
+                        //                fillMode: Image.PreserveAspectFit
+                    }
+                }
+                Row{
+                    anchors.top:                title.bottom
+                    anchors.horizontalCenter:   parent.horizontalCenter
+                    spacing:        ScreenTools.defaultFontPixelHeight*2
+                    Column {
+                        id:             setitem
+                        spacing:        ScreenTools.defaultFontPixelHeight/2
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelHeight
+                            QGCLabel {
+                                anchors.baseline:   radius.baseline
+                                text:               qsTr("半径:")
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                            }
+                            QGCTextField {
+                                id:                 radius
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                                inputMethodHints:   Qt.ImhDigitsOnly
+                                text:               "100"
+                            }
+                            QGCLabel {
+                                text:               qsTr("m")
+                            }
+                        }
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelHeight
+                            QGCLabel {
+                                anchors.baseline:   number.baseline
+                                text:               qsTr("航点个数:")
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                            }
+                            QGCTextField {
+                                id:                 number
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                                inputMethodHints:   Qt.ImhDigitsOnly
+                                text:               "10"
+                            }
+                        }
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelHeight
+                            QGCLabel {
+                                anchors.baseline:   startangle.baseline
+                                text:               qsTr("起始点角度:")
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                            }
+                            QGCTextField {
+                                id:                 startangle
+                                width:              ScreenTools.defaultFontPixelHeight*5
+                                inputMethodHints:   Qt.ImhDigitsOnly
+                                text:               "0"
+                            }
+                            QGCLabel {
+                                text:               qsTr("度")
+                            }
+                        }
+                        Row {
+                            spacing: ScreenTools.defaultFontPixelHeight*2
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            ExclusiveGroup { id: modeGroup }
+
+                            QGCRadioButton {
+                                id:             relalt
+                                exclusiveGroup: modeGroup
+                                text:           qsTr("相对前一点")//"Mode 1"
+                                checked:        true
+                            }
+
+                            QGCRadioButton {
+                                exclusiveGroup: modeGroup
+                                text:           qsTr("圆心：")//"Mode 2"
+                            }
+                        }
+                    }
+                    QGCButton {
+                        text:               qsTr("生成")
+                        Layout.fillWidth:   true
+                        anchors.verticalCenter: setitem.verticalCenter
+                        onClicked: {
+                            var coordinate =_currentMissionItem.coordinate
+                            for (var i=0; i<Number(number.text); i++) {
+                            var sequenceNumber=missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
+                                console.log(_currentMissionItem.sequenceNumber+"  "+ i)
+                            }
+                            setCurrentItem(sequenceNumber)
+                            hideDialog()
+                        }
+                    }
+
                 }
             }
         }

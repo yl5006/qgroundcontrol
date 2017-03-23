@@ -78,7 +78,7 @@ void MAVLinkDecoder::receiveMessage(LinkInterface* link,mavlink_message_t messag
     }
     else
     {
-
+#if 0
         // See if first value is a time value and if it is, use that as the arrival time for this data.
         uint8_t fieldid = 0;
         uint8_t* m = (uint8_t*)(msgDict[msgid].payload64);
@@ -92,8 +92,9 @@ void MAVLinkDecoder::receiveMessage(LinkInterface* link,mavlink_message_t messag
             time = *((quint64*)(m+msgInfo->fields[fieldid].wire_offset));
             time = (time+500)/1000; // Scale to milliseconds, round up/down correctly
         }
+#endif
     }
-
+#if 0
     // Align UAS time to global time
     time = getUnixTimeFromMs(message.sysid, time);
 
@@ -102,7 +103,7 @@ void MAVLinkDecoder::receiveMessage(LinkInterface* link,mavlink_message_t messag
     {
         emitFieldValue(&message, i, time);
     }
-
+#endif
     // Send out combined math expressions
     // FIXME XXX TODO
 }

@@ -37,6 +37,7 @@ Map {
     readonly property real  maxZoomLevel: 20
     property variant        scaleLengths: [5, 10, 25, 50, 100, 150, 250, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000]
 
+    property string polygonstr:         ""
     function formatDistance(meters)
     {
         var dist = Math.round(meters)
@@ -164,13 +165,14 @@ Map {
 
     QGCMapLabel {
         id:                     polygonHelp
-        anchors.topMargin:      parent.height - ScreenTools.availableHeight
+        anchors.topMargin:      parent.height - ScreenTools.availableHeight+ScreenTools.toolbarHeight
         anchors.top:            parent.top
         anchors.left:           parent.left
         anchors.right:          parent.right
         horizontalAlignment:    Text.AlignHCenter
         map:                    _map
-        text:                   qsTr("Click to add point %1").arg(ScreenTools.isMobile || !polygonDrawer.polygonReady ? "" : qsTr("- Right Click to end polygon"))
+        text:                   qsTr("点击添加点 %1").arg(ScreenTools.isMobile || !polygonDrawer.polygonReady ? "" : qsTr("- Right Click to end polygon"))
+        color:                  "white"
         visible:                polygonDrawer.drawingPolygon
 
         Connections {
@@ -178,22 +180,28 @@ Map {
 
             onDrawingPolygonChanged: {
                 if (polygonDrawer.drawingPolygon) {
-                    polygonHelp.text = qsTr("点击添加")//"Click to add point"
+                    polygonHelp.text = qsTr("点击添加")+ " "+polygonstr//"Click to add point"
                 }
                 polygonHelp.visible = polygonDrawer.drawingPolygon
             }
 
             onPolygonReadyChanged: {
                 if (polygonDrawer.polygonReady && !ScreenTools.isMobile) {
-                    polygonHelp.text = qsTr("左键添加，右键结束")//Click to add point - Right Click to end polygon
+                    polygonHelp.text = qsTr("左键添加，右键结束")+ " "+polygonstr//Click to add point - Right Click to end polygon
                 }
             }
 
             onAdjustingPolygonChanged: {
                 if (polygonDrawer.adjustingPolygon) {
-                    polygonHelp.text = qsTr("自适应")//("Adjust polygon by dragging corners")
+                    polygonHelp.text = qsTr("自适应")+ " "+polygonstr//("Adjust polygon by dragging corners")
                 }
                 polygonHelp.visible = polygonDrawer.adjustingPolygon
+            }
+            onPositionChanged:{
+                if(polygonDrawer.drawingPolygon) {
+                    polygonHelp.text = polygonstr
+                }
+
             }
         }
     }
@@ -391,8 +399,8 @@ Map {
                     polygonPath.push(dragCoordinate)
                     polygonDrawer.justClicked = false
                 }
-
-                // Update drag line
+            //    polygonstr=dragCoordinate.distanceTo(polygonPath[polygonDrawerPolygon.path.length - 2]).+" "+ dragCoordinate.azimuthTo(polygonPath[polygonDrawerPolygon.path.length - 2]));
+                polygonstr= "距离:"+QGroundControl.metersToAppSettingsDistanceUnits(dragCoordinate.distanceTo(polygonPath[polygonDrawerPolygon.path.length - 2])).toFixed(2)+"角度:"+((dragCoordinate.azimuthTo(polygonPath[polygonDrawerPolygon.path.length - 2])+180)%360).toFixed(1)
                 polygonDrawerNextPoint.path = [ polygonDrawerPolygon.path[polygonDrawerPolygon.path.length - 2], dragCoordinate ]
 
                 polygonPath[polygonDrawerPolygon.path.length - 1] = dragCoordinate

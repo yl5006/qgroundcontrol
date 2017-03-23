@@ -1,4 +1,4 @@
-import QtQuick          2.2
+﻿import QtQuick          2.2
 import QtQuick.Controls 1.2
 
 import QGroundControl.Controls  1.0
@@ -10,7 +10,7 @@ QGCLabel {
 
     QGCMapPalette { id: mapPal; lightColors: map.isSatelliteMap }
 
-    color:      mapPal.text
-    style:      Text.Outline
-    styleColor: mapPal.textOutline
+    color:      "white"
+//    style:      Text.Outline
+//    styleColor: mapPal.textOutline
 }
