@@ -123,7 +123,7 @@ Rectangle {
             Row{
                 spacing:            ScreenTools.defaultFontPixelWidth
                 QGCLabel {
-                    width:          ScreenTools.defaultFontPixelHeight*4
+                    width:          ScreenTools.defaultFontPixelHeight*5
                     text:            qsTr("高度m")
                 }
                 QGCTextField {
@@ -135,13 +135,25 @@ Rectangle {
             Row{
                 spacing:            ScreenTools.defaultFontPixelWidth
                 QGCLabel {
-                    width:          ScreenTools.defaultFontPixelHeight*4
+                    width:          ScreenTools.defaultFontPixelHeight*5
                     text:           qsTr("停留时间s")
                 }
                 QGCTextField {
                     id:             timeField
                     width:          ScreenTools.defaultFontPixelHeight*4
                     text:           "0"
+                }
+            }
+            Row{
+                spacing:            ScreenTools.defaultFontPixelWidth
+                QGCLabel {
+                    width:          ScreenTools.defaultFontPixelHeight*5
+                    text:           qsTr("飞行速度m/s")
+                }
+                QGCTextField {
+                    id:             flyField
+                    width:          ScreenTools.defaultFontPixelHeight*4
+                    text:           "15"
                 }
             }
             Row{

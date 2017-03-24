@@ -26,9 +26,9 @@ Rectangle {
 
     readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
 
-    property Fact   _offlineEditingVehicleType:     QGroundControl.offlineEditingVehicleType
-    property Fact   _offlineEditingCruiseSpeed:     QGroundControl.offlineEditingCruiseSpeed
-    property Fact   _offlineEditingHoverSpeed:      QGroundControl.offlineEditingHoverSpeed
+//    property Fact   _offlineEditingVehicleType:     QGroundControl.offlineEditingVehicleType
+//    property Fact   _offlineEditingCruiseSpeed:     QGroundControl.offlineEditingCruiseSpeed
+//    property Fact   _offlineEditingHoverSpeed:      QGroundControl.offlineEditingHoverSpeed
 
     property var    missionItems                ///< List of all available mission items
     property real   missionDistance             ///< Total mission distance
@@ -57,7 +57,7 @@ Rectangle {
     property real   _gradientPercent:           isNaN(_gradient) ? NaN : _gradient * 100
     property real   _azimuth:                   _statusValid ? _currentMissionItem.azimuth : NaN
     property bool   _currentSurvey:     _statusValid ? _currentMissionItem.commandName == "Survey" : false
-    property bool   _isVTOL:            _vehicleValid ? _activeVehicle.vtol : _offlineEditingVehicleType.enumStringValue == "VTOL" //hardcoded
+//    property bool   _isVTOL:            _vehicleValid ? _activeVehicle.vtol : _offlineEditingVehicleType.enumStringValue == "VTOL" //hardcoded
 
     property real   _missionDistance:           _missionValid ? missionDistance : NaN
     property real   _missionMaxTelemetry:       _missionValid ? missionMaxTelemetry : NaN
