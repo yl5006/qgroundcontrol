@@ -688,7 +688,7 @@ QGCView {
                     anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
                     height:                 _PointFieldWidth.width/2
                     fillMode: Image.TileVertically
-                    width:                  height
+                    width:                  allsetimg.height
                     smooth:                 true
                     source:                 "/res/gear-black.svg"
                     z:              QGroundControl.zOrderTopMost

@@ -30,8 +30,11 @@ Item {
         switch(command){
             case 203:    //MAV_CMD_DO_DIGICAM_CONTROL
             case 206:    //MAV_CMD_DO_SET_CAM_TRIGG_DIST
+            case 214:    //MAV_CMD_DO_CAM
+            case 215:    //MAV_CMD_DO_CAM
                return   checked  ? "/qmlimages/WayCamera.svg" : "/qmlimages/WayCamera0.svg"
             case 20:   //MAV_CMD_NAV_RETURN_TO_LAUNCH
+            case 216:   //MAV_CMD_NAV_RETURN_TO_LAUNCH
                return   checked  ? "/qmlimages/gohome.svg" : "/qmlimages/gohome0.svg"
             case 80:   //MAV_CMD_NAV_ROI
                 return   checked  ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"

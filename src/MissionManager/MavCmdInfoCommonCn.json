@@ -979,10 +979,22 @@
             "rawName":              "MAV_CMD_DO_CAM",
             "friendlyName":         "航点拍照",
             "description":          "航点拍照.",
-            "specifiesCoordinate":  false,
+            "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "相机",
+            "category":     "相机",
             "param1": {
+                "label":            "停留:",
+                "units":            "secs",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param4": {
+                "label":            "机头:",
+                "units":            "radians",
+                "default":          0.0,
+                "decimalPlaces":    2
+            },
+            "param8": {
                 "label":            "拍照:",
                 "default":          1,
                 "units":            "",
@@ -994,10 +1006,22 @@
             "rawName":              "MAV_CMD_DO_TIME_CAM",
             "friendlyName":         "定时拍照",
             "description":          "定时拍照",
-            "specifiesCoordinate":  false,
+            "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "相机",
             "param1": {
+                "label":            "停留:",
+                "units":            "secs",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param4": {
+                "label":            "机头:",
+                "units":            "radians",
+                "default":          0.0,
+                "decimalPlaces":    2
+            },
+            "param8": {
                 "label":            "间隔时间:",
                 "default":          5,
                 "units":            "s",
@@ -1007,9 +1031,9 @@
         {
             "id":                   216,
             "rawName":              "MAV_CMD_NAV_RETURN_TO_WP_LANUCH",
-            "friendlyName":         "返航航点",
-            "description":          "返航航点.",
-            "specifiesCoordinate":  false,
+            "friendlyName":         "应急航点",
+            "description":          "后续航点为应急航点，发生返航后自动跳到应急航线.",
+            "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "基本设置"
         },
