@@ -228,7 +228,7 @@ Rectangle {
     Rectangle {
         width:           commandPicker.width*0.8
         height:          1
-        visible:                _currentMissionItem.sequenceNumber != 0
+        visible:         _currentMissionItem.isSimpleItem&&_currentMissionItem.sequenceNumber != 0
         anchors.top:     commandPicker.bottom
         anchors.horizontalCenter: commandPicker.horizontalCenter
         color:            "White"
@@ -239,7 +239,7 @@ Rectangle {
         visible:            _currentMissionItem.sequenceNumber == 0 || !_currentMissionItem.isCurrentItem || !_currentMissionItem.isSimpleItem
         anchors.horizontalCenter: commandPicker.horizontalCenter
         verticalAlignment:  Text.AlignVCenter
-        text:               _currentMissionItem.sequenceNumber == 0 ? qsTr("Home点")/*"Home Position" */: (_currentMissionItem.isSimpleItem ? _currentMissionItem.commandName : qsTr("测绘"))//Survey
+        text:               _currentMissionItem.sequenceNumber == 0 ? qsTr("Home点")/*"Home Position" */: (_currentMissionItem.isSimpleItem ? _currentMissionItem.commandName : qsTr("网格航线"))//Survey
        // color:              _outerTextColor
     }
     QGCLabel {

@@ -153,6 +153,7 @@
         <file alias="MapAddMission.svg">src/FlightMap/Images/MapAddMission.svg</file>
 	<file alias="relwaypoint.svg">src/FlightMap/Images/relwaypoint.svg</file>
 	<file alias="nextwaypoint.svg">src/FlightMap/Images/nextwaypoint.svg</file>
+	<file alias="circlepoint.svg">src/FlightMap/Images/circlepoint.svg</file>
         <file alias="MapAddMissionBlack.svg">src/FlightMap/Images/MapAddMissionBlack.svg</file>
         <file alias="MapCenter.svg">src/FlightMap/Images/MapCenter.svg</file>
         <file alias="MapCenterBlack.svg">src/FlightMap/Images/MapCenterBlack.svg</file>

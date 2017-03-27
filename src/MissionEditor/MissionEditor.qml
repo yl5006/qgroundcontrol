@@ -748,7 +748,7 @@ QGCView {
                             height:                 ScreenTools.defaultFontPixelHeight*1.5
                             width:                  height
                             sourceSize.width: width
-                            source:     "/qmlimages/loadfromfile.svg"
+                            source:     "/qmlimages/circlepoint.svg"
                             fillMode:   Image.PreserveAspectFit
                             color:      qgcPal.text
                             anchors.horizontalCenter:circle.horizontalCenter
@@ -1179,7 +1179,7 @@ QGCView {
                                     }
                                 }
                                 SubMenuButton {
-                                    imageResource:      "/qmlimages/sendvehicle.svg"
+                                    imageResource:      "/qmlimages/circlepoint.svg"
                                     Layout.fillWidth:   true
                                     text:               qsTr("圆形航线")//"Send to vehicle"
                                     onClicked:  {
