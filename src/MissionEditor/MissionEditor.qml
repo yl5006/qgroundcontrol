@@ -977,6 +977,7 @@ QGCView {
                             }
                             Row {
                                 spacing:    ScreenTools.defaultFontPixelHeight
+                                visible:    false
                                 QGCLabel {
                                     anchors.baseline:   height.baseline
                                     text:               qsTr("高度差:")
@@ -1001,7 +1002,7 @@ QGCView {
                             Layout.fillWidth:   true
                             onClicked: {
                                 var coordinate =_currentMissionItem.coordinate
-                                var sequenceNumber = missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(distance.text),Number(angle.text)), _currentMissionItem.sequenceNumber+1)
+                                var sequenceNumber = missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(distance.text),Number(angle.text)), _currentMissionItem.sequenceNumber+1,false)
                                 setCurrentItem(sequenceNumber)
                             }
                         }
