@@ -756,10 +756,10 @@ void SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLi
 
     // Turn into a path
     float turnaroundDist = _turnaroundDistFact.rawValue().toDouble();
-    QLineF &beforeline=QLineF();
+    QLineF beforeline=QLineF();
     for (int i=0; i<resultLines.count(); i++) {
-        const QLineF& line = resultLines[i]; 
-        QLineF &temp=QLineF();
+        const QLineF line = resultLines[i];
+        QLineF temp=QLineF();
         QPointF turnaroundOffset = line.p2() - line.p1();
         turnaroundOffset = turnaroundOffset * turnaroundDist / sqrt(pow(turnaroundOffset.x(),2.0) + pow(turnaroundOffset.y(),2.0));
         if(i==0)
@@ -791,7 +791,7 @@ void SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLi
                 temp.setP1(beforeline.p2()+ turnaroundOffset);
                 temp.setLength(gridSpacing);
                 temp.setAngle(-gridAngle);
-                QLineF &tp=QLineF(temp.p2(),line.p1());
+                QLineF tp=QLineF(temp.p2(),line.p1());
                 if(tp.length()<(line.length()+turnaroundDist))
                {
                     gridPoints.removeLast();
@@ -809,7 +809,7 @@ void SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLi
                 temp.setP1(beforeline.p1()- turnaroundOffset);
                 temp.setLength(gridSpacing);
                 temp.setAngle(-gridAngle);
-                QLineF &tp=QLineF(temp.p2(),line.p2());
+                QLineF tp=QLineF(temp.p2(),line.p2());
                 if(tp.length()<(line.length()+turnaroundDist))
                {
                     gridPoints.removeLast();

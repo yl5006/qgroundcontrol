@@ -106,6 +106,7 @@
     "longDescription":  "The color scheme for the QGroundControl user interface.",
     "type":             "uint32",
     "enumStrings":      "Indoor,Outdoor",
-    "enumValues":       "1,0"
+    "enumValues":       "1,0",
+    "defaultValue":     0
 }
 ]

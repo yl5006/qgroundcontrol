@@ -17,8 +17,9 @@
 
 #include "QGCConfig.h"
 
+#ifndef __mobile__
 #pragma execution_character_set("utf-8")
-
+#endif
 namespace QGC
 {
 
