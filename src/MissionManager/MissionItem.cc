@@ -59,6 +59,7 @@ MissionItem::MissionItem(QObject* parent)
     setAutoContinue(true);
 
     connect(&_param2Fact, &Fact::rawValueChanged, this, &MissionItem::_param2Changed);
+    connect(&_param3Fact, &Fact::rawValueChanged, this, &MissionItem::_param3Changed);
 }
 
 MissionItem::MissionItem(int             sequenceNumber,
@@ -113,6 +114,7 @@ MissionItem::MissionItem(int             sequenceNumber,
     _param9Fact.setRawValue(param9);
     _param10Fact.setRawValue(param10);
 	connect(&_param2Fact, &Fact::rawValueChanged, this, &MissionItem::_param2Changed);
+    connect(&_param3Fact, &Fact::rawValueChanged, this, &MissionItem::_param3Changed);
 }
 
 MissionItem::MissionItem(const MissionItem& other, QObject* parent)
@@ -140,6 +142,7 @@ MissionItem::MissionItem(const MissionItem& other, QObject* parent)
     *this = other;
 
     connect(&_param2Fact, &Fact::rawValueChanged, this, &MissionItem::_param2Changed);
+    connect(&_param3Fact, &Fact::rawValueChanged, this, &MissionItem::_param3Changed);
 }
 
 const MissionItem& MissionItem::operator=(const MissionItem& other)
@@ -475,7 +478,7 @@ QGeoCoordinate MissionItem::coordinate(void) const
     return QGeoCoordinate(param5(), param6(), param7());
 }
 
-double MissionItem::flightSpeed(void) const
+double MissionItem::specifiedFlightSpeed(void) const
 {
     double flightSpeed = std::numeric_limits<double>::quiet_NaN();
 
@@ -486,9 +489,33 @@ double MissionItem::flightSpeed(void) const
     return flightSpeed;
 }
 
+double MissionItem::specifiedGimbalYaw(void) const
+{
+    double gimbalYaw = std::numeric_limits<double>::quiet_NaN();
+
+    if (_commandFact.rawValue().toInt() == MAV_CMD_DO_MOUNT_CONTROL && _param7Fact.rawValue().toInt() == MAV_MOUNT_MODE_MAVLINK_TARGETING) {
+        gimbalYaw = _param3Fact.rawValue().toDouble();
+    }
+
+    return gimbalYaw;
+}
+
 void MissionItem::_param2Changed(QVariant value)
 {
-    if (_commandFact.rawValue().toInt() == MAV_CMD_DO_CHANGE_SPEED && _param2Fact.rawValue().toDouble() > 0) {
-        emit flightSpeedChanged(value.toDouble());
+    Q_UNUSED(value);
+
+    double flightSpeed = specifiedFlightSpeed();
+    if (!qIsNaN(flightSpeed)) {
+        emit specifiedFlightSpeedChanged(flightSpeed);
+    }
+}
+
+void MissionItem::_param3Changed(QVariant value)
+{
+    Q_UNUSED(value);
+
+    double gimbalYaw = specifiedGimbalYaw();
+    if (!qIsNaN(gimbalYaw)) {
+        emit specifiedGimbalYawChanged(gimbalYaw);
     }
 }

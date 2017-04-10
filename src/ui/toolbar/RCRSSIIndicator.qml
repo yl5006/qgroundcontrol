@@ -8,7 +8,7 @@
  ****************************************************************************/
 
 
-import QtQuick          2.5
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Layouts  1.2
 
@@ -24,8 +24,8 @@ Item {
     width:          mainWindow.tbHeight * 3//rssiRow.width * 1.1
     anchors.top:    parent.top
     anchors.bottom: parent.bottom
-    visible:        activeVehicle ? activeVehicle.supportsRadio : true
-
+    visible:        _activeVehicle ? _activeVehicle.supportsRadio : true
+    property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle	
     function getRSSIColor(value) {
         if(value >= 90)
             return colorGreen;
@@ -53,21 +53,21 @@ Item {
 
                 QGCLabel {
                     id:             rssiLabel
-                    text:           activeVehicle ? (activeVehicle.rcRSSI != 255 ? qsTr("遥控信号状态")/*qsTr("RC RSSI Status")*/ : qsTr("遥控信号强度不可用")/*qsTr("RC RSSI Data Unavailable")*/) : qsTr("N/A", qsTr("无数据")/*"No data avaliable"*/)
+                    text:           _activeVehicle ? (_activeVehicle.rcRSSI != 255 ? qsTr("RC RSSI Status") : qsTr("RC RSSI Data Unavailable")) : qsTr("N/A", "No data available")
                     font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 GridLayout {
                     id:                 rcrssiGrid
-                    visible:            activeVehicle && activeVehicle.rcRSSI != 255
+                    visible:            _activeVehicle && _activeVehicle.rcRSSI != 255
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     columnSpacing:      ScreenTools.defaultFontPixelWidth
                     columns:            2
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     QGCLabel { text: qsTr("RSSI:") }
-                    QGCLabel { text: activeVehicle ? (activeVehicle.rcRSSI + "%") : 0 }
+                    QGCLabel { text: _activeVehicle ? (_activeVehicle.rcRSSI + "%") : 0 }
                 }
             }
 
@@ -82,7 +82,7 @@ Item {
         id:          rccircle
         anchors.left:  parent.left
         width:       mainWindow.tbHeight*1.5
-        value:       activeVehicle ? ((activeVehicle.rcRSSI > 100) ? 0 : activeVehicle.rcRSSI/100) : 0
+        value:       _activeVehicle ? ((_activeVehicle.rcRSSI > 100) ? 0 : _activeVehicle.rcRSSI/100) : 0
         valuecolor:  getRSSIColor(activeVehicle ?activeVehicle.rcRSSI:0)
         anchors.verticalCenter: parent.verticalCenter
     }

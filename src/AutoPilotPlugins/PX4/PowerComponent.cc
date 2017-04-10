@@ -67,13 +67,3 @@ QUrl PowerComponent::summaryQmlSource(void) const
 {
     return QUrl::fromUserInput("qrc:/qml/PowerComponentSummary.qml");
 }
-
-QString PowerComponent::prerequisiteSetup(void) const
-{
-    PX4AutoPilotPlugin* plugin = dynamic_cast<PX4AutoPilotPlugin*>(_autopilot);
-    Q_ASSERT(plugin);
-    if (!plugin->airframeComponent()->setupComplete()) {
-        return plugin->airframeComponent()->name();
-    }
-    return QString();
-}

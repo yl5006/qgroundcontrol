@@ -7,18 +7,18 @@
  *
  ****************************************************************************/
 
+import QtQuick                  2.3
+import QtQuick.Controls         1.2
+import QtQuick.Controls.Styles  1.4
+import QtQuick.Dialogs          1.2
 
-import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Dialogs 1.2
-
-import QGroundControl.FactSystem 1.0
-import QGroundControl.FactControls 1.0
-import QGroundControl.Palette 1.0
-import QGroundControl.Controls 1.0
-import QGroundControl.ScreenTools 1.0
-import QGroundControl.Controllers 1.0
+import QGroundControl               1.0
+import QGroundControl.FactSystem    1.0
+import QGroundControl.FactControls  1.0
+import QGroundControl.Palette       1.0
+import QGroundControl.Controls      1.0
+import QGroundControl.ScreenTools   1.0
+import QGroundControl.Controllers   1.0
 
 SetupPage {
     id:             sensorsPage
@@ -37,9 +37,9 @@ SetupPage {
             readonly property string boardRotationText: qsTr("飞控安装方向如何和机头一直，则选择NONE.")//qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
             readonly property string compassRotationText: qsTr("磁罗盘安装方向如何和机头一直，则选择NONE.")//qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
 
-            readonly property string compassHelp:   qsTr("磁罗盘校准需要不同方位旋转机体.")//qsTr("For Compass calibration you will need to rotate your vehicle through a number of positions.")
-            readonly property string gyroHelp:      qsTr("角速度计校准需要保持机体水平和静止.")//qsTr("For Gyroscope calibration you will need to place your vehicle on a surface and leave it still.")
-            readonly property string accelHelp:     qsTr("加速度校准需要六个面校准.")//qsTr("For Accelerometer calibration you will need to place your vehicle on all six sides on a perfectly level surface and hold it still in each orientation for a few seconds.")
+            readonly property string compassHelp:   qsTr("For Compass calibration you will need to rotate your vehicle through a number of positions.")
+            readonly property string gyroHelp:      qsTr("For Gyroscope calibration you will need to place your vehicle on a surface and leave it still.")
+            readonly property string accelHelp:     qsTr("For Accelerometer calibration you will need to place your vehicle on all six sides on a perfectly level surface and hold it still in each orientation for a few seconds.")
             readonly property string levelHelp:     qsTr("水平校准校准机体飞行平面.")//qsTr("To level the horizon you need to place the vehicle in its level flight position and press OK.")
             readonly property string airspeedHelp:  qsTr("空速校准先在无风下校准.然后对传感器吹气或风")//qsTr("For Airspeed calibration you will need to keep your airspeed sensor out of any wind and then blow across the sensor.")
 
@@ -116,6 +116,8 @@ SetupPage {
             property bool showCompass1Rot: cal_mag1_id.value > 0 && cal_mag1_rot.value >= 0
             property bool showCompass2Rot: cal_mag2_id.value > 0 && cal_mag2_rot.value >= 0
 
+            property bool _sensorsHaveFixedOrientation: QGroundControl.corePlugin.options.sensorsHaveFixedOrientation
+            property bool _wifiReliableForCalibration:  QGroundControl.corePlugin.options.wifiReliableForCalibration
             property bool calmagtime: false
             SensorsComponentController {
                 id:                         controller
@@ -134,9 +136,9 @@ SetupPage {
                 onResetStatusTextArea: statusLog.text = statusTextAreaDefaultText
 
                 onSetCompassRotations: {
-                    if (showCompass0Rot || showCompass1Rot || showCompass2Rot) {
+                    if (!_sensorsHaveFixedOrientation && (showCompass0Rot || showCompass1Rot || showCompass2Rot)) {
                         setOrientationsDialogShowBoardOrientation = false
-                        showDialog(setOrientationsDialogComponent, qsTr("设置磁罗盘安装反向")/*qsTr("Set Compass Rotation(s)")*/, sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
+                        showDialog(setOrientationsDialogComponent, qsTr("设置磁罗盘安装反向"), sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
                     }
                 }
 
@@ -152,8 +154,7 @@ SetupPage {
 
             Component.onCompleted: {
                 var usingUDP = controller.usingUDPLink()
-                if (usingUDP) {
-                    console.log("onUsingUDPLink")
+                if (usingUDP && !_wifiReliableForCalibration) {
                     showMessage("Sensor Calibration", "Performing sensor calibration over a WiFi connection is known to be unreliable. You should disconnect and perform calibration using a direct USB connection instead.", StandardButton.Ok)
                 }
             }
@@ -189,26 +190,32 @@ SetupPage {
                             text:       preCalibrationDialogHelp
                         }
 
-                        QGCLabel {
-                            id:         boardRotationHelp
-                            width:      parent.width
-                            wrapMode:   Text.WordWrap
-                            visible:    (preCalibrationDialogType != "airspeed") && (preCalibrationDialogType != "gyro")
-                            text:       boardRotationText
-                        }
-
                         Column {
-                            visible:    boardRotationHelp.visible
-                            spacing:        ScreenTools.defaultFontPixelHeight
+                            anchors.fill:   parent
+                            spacing:        5
+                            visible:        !_sensorsHaveFixedOrientation
+
                             QGCLabel {
-                                text: qsTr("飞控安装方向:")//Autopilot Orientation
+                                id:         boardRotationHelp
+                                width:      parent.width
+                                wrapMode:   Text.WordWrap
+                                visible:    (preCalibrationDialogType != "airspeed") && (preCalibrationDialogType != "gyro")
+                                text:       boardRotationText
                             }
 
-                            FactComboBox {
-                                id:     boardRotationCombo
-                                width:  rotationColumnWidth;
-                                model:  rotations
-                                fact:   sens_board_rot
+                            Column {
+                                visible:    boardRotationHelp.visible
+                            	spacing:        ScreenTools.defaultFontPixelHeight
+                                QGCLabel {
+                                    text: qsTr("飞控安装方向:")
+                                }
+
+                                FactComboBox {
+                                    id:     boardRotationCombo
+                                    width:  rotationColumnWidth;
+                                    model:  rotations
+                                    fact:   sens_board_rot
+                                }
                             }
                         }
                     }
@@ -398,6 +405,7 @@ SetupPage {
                     text:           qsTr("磁罗盘")//qsTr("Compass")
                     primary:        true
                     bordercolor:    cal_mag0_id.value !== 0?qgcPal.primaryButton:"red"
+		    visible:        QGroundControl.corePlugin.options.showSensorCalibrationCompass
                     _showBorder:    true
                     onClicked: {
                          calmagtime=true
@@ -416,6 +424,7 @@ SetupPage {
                     text:           qsTr("加速度")//qsTr("Accelerometer")
                     primary:        true
                     bordercolor:    cal_acc0_id.value !== 0 ? qgcPal.primaryButton:"red"
+                    visible:        QGroundControl.corePlugin.options.showSensorCalibrationGyro
                     _showBorder:    true
                     onClicked: {
                         calmagtime=false
@@ -435,6 +444,7 @@ SetupPage {
                     text:           qsTr("角速度")//qsTr("Gyroscope")
                     primary:        true
                     bordercolor:    (cal_gyro0_id.value !== 0) ? qgcPal.primaryButton:"red"
+                    visible:        QGroundControl.corePlugin.options.showSensorCalibrationAccel
                     _showBorder:    true
                     onClicked: {                           
                         controller.calibrateGyro()
@@ -455,6 +465,7 @@ SetupPage {
                     bordercolor:    (sens_board_x_off.value != 0 || sens_board_y_off != 0 | sens_board_z_off != 0)?qgcPal.primaryButton:"red"
                     _showBorder:    true
                     enabled:        cal_acc0_id.value !== 0 && cal_gyro0_id.value != 0
+                    visible:        QGroundControl.corePlugin.options.showSensorCalibrationLevel
 
                     onClicked: {
                         controller.calibrateLevel()
@@ -471,7 +482,7 @@ SetupPage {
                     text:           qsTr("空速计")//qsTr("Airspeed")
                     checkable:      true
                     primary:        true
-                    visible:        (controller.vehicle.fixedWing || controller.vehicle.vtol) && controller.getParameterFact(-1, "CBRK_AIRSPD_CHK").value != 162128
+                    visible:        (controller.vehicle.fixedWing || controller.vehicle.vtol) && controller.getParameterFact(-1, "CBRK_AIRSPD_CHK").value != 162128 && QGroundControl.corePlugin.options.showSensorCalibrationAirspeed
                     bordercolor:    (sens_dpres_off.value !== 0)?qgcPal.primaryButton:"red"
                     _showBorder:    true
                     onClicked: {
@@ -496,6 +507,7 @@ SetupPage {
                     width:      parent.buttonWidth
                     height:         ScreenTools.defaultFontPixelWidth * 5
                     text:       qsTr("安装方向")//qsTr("Set Orientations")
+                    visible:    !_sensorsHaveFixedOrientation
                     primary:        true
                     onClicked:  {
                         setOrientationsDialogShowBoardOrientation = true

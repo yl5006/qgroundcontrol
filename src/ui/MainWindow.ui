@@ -54,7 +54,7 @@
      <height>26</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuMGround">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>文件</string>
     </property>
@@ -68,7 +68,7 @@
      <string>工具</string>
     </property>
    </widget>
-   <addaction name="menuMGround"/>
+   <addaction name="menuFile"/>
    <addaction name="menuWidgets"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -98,10 +98,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>状态栏</string>
-   </property>
-   <property name="toolTip">
-    <string>状态栏</string>
+    <string>数据回放</string>
    </property>
   </action>
  </widget>

@@ -1,6 +1,6 @@
 ﻿pragma Singleton
 
-import QtQuick 2.4
+import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Window 2.2
 
@@ -60,9 +60,21 @@ Item {
     property bool isTinyScreen:     (Screen.width / Screen.pixelDensity) < 120 // 120mm
     property bool isShortScreen:    ScreenToolsController.isMobile && ((Screen.height / Screen.width) < 0.6) // Nexus 7 for example
 
-    readonly property string normalFontFamily:      "opensans"// "Droid Sans"//
-    readonly property string demiboldFontFamily:    "opensans-demibold"
+    readonly property real minTouchMillimeters: 10      ///< Minimum touch size in millimeters
+    property real minTouchPixels:               0       ///< Minimum touch size in pixels
 
+    // The implicit heights/widths for our custom control set
+    property real implicitButtonWidth:      Math.round(defaultFontPixelWidth *  (isMobile ? 7.0 : 5.0))
+    property real implicitButtonHeight:     Math.round(defaultFontPixelHeight * (isMobile ? 2.0 : 1.6))
+    property real implicitCheckBoxWidth:    Math.round(defaultFontPixelHeight * (isMobile ? 1.5 : 1.0))
+    property real implicitTextFieldHeight:  Math.round(defaultFontPixelHeight * (isMobile ? 2.0 : 1.6))
+    property real implicitComboBoxHeight:   Math.round(defaultFontPixelHeight * (isMobile ? 2.0 : 1.6))
+    property real implicitComboBoxWidth:    Math.round(defaultFontPixelWidth *  (isMobile ? 7.0 : 5.0))
+    property real implicitSliderHeight:     isMobile ? Math.Max(defaultFontPixelHeight, minTouchPixels) : defaultFontPixelHeight
+
+    readonly property string normalFontFamily:      "opensans"
+    readonly property string demiboldFontFamily:    "opensans-demibold"
+    readonly property string fixedFontFamily:       ScreenToolsController.fixedFontFamily
     /* This mostly works but for some reason, reflowWidths() in SetupView doesn't change size.
        I've disabled (in release builds) until I figure out why. Changes require a restart for now.
     */
@@ -93,7 +105,8 @@ Item {
         smallFontPointSize      = defaultFontPointSize  * _screenTools.smallFontPointRatio
         mediumFontPointSize     = defaultFontPointSize  * _screenTools.mediumFontPointRatio
         largeFontPointSize      = defaultFontPointSize  * _screenTools.largeFontPointRatio
-        toolbarHeight           = defaultFontPixelHeight * 3 * QGroundControl.corePlugin.options.toolbarHeightMultiplier
+        minTouchPixels          = Math.round(minTouchMillimeters * Screen.pixelDensity)
+        toolbarHeight           = isMobile ? minTouchPixels : defaultFontPixelHeight * 3
     }
 
     Text {

@@ -1,6 +1,6 @@
-﻿import QtQuick                  2.2
+﻿import QtQuick                  2.3
 import QtQuick.Controls         1.2
-import QtQuick.Controls.Styles  1.2
+import QtQuick.Controls.Styles  1.4
 import QtQuick.Dialogs          1.2
 
 import QGroundControl.FactSystem    1.0
@@ -21,7 +21,7 @@ QGCTextField {
     property string _validateString
 
     // At this point all Facts are numeric
-    inputMethodHints: (fact.typeIsString || ScreenTools.isiOS) ?
+    inputMethodHints: (fact || fact.typeIsString || ScreenTools.isiOS) ?
                           Qt.ImhNone :                // iOS numeric keyboard has no done button, we can't use it
                           Qt.ImhFormattedNumbersOnly  // Forces use of virtual numeric keyboard
 

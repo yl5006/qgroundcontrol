@@ -10,7 +10,7 @@
 
 import QtQuick 2.3
 import QtQuick.Controls 1.2
-import QtQuick.Controls.Styles 1.2
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
 
 import QGroundControl               1.0
@@ -43,6 +43,8 @@ QGCView {
     property bool   controllerCompleted:      false
     property bool   initialBoardSearch:       true
     property string firmwareName
+
+    property bool _singleFirmwareMode: QGroundControl.corePlugin.options.firmwareUpgradeSingleURL.length != 0   ///< true: running in special single firmware download mode
 
     function cancelFlash() {
         statusTextArea.append(highlightPrefix + qsTr("更新固件取消") + highlightSuffix)//Upgrade cancelled
@@ -146,17 +148,21 @@ QGCView {
 
             function accept() {
                 hideDialog()
-                var stack = apmFlightStack.checked ? FirmwareUpgradeController.AutoPilotStackAPM : FirmwareUpgradeController.AutoPilotStackPX4
-                if (px4Flow) {
-                    stack = FirmwareUpgradeController.PX4Flow
-                }
+                if (_singleFirmwareMode) {
+                    controller.flashSingleFirmwareMode()
+                } else {
+                    var stack = apmFlightStack.checked ? FirmwareUpgradeController.AutoPilotStackAPM : FirmwareUpgradeController.AutoPilotStackPX4
+                    if (px4Flow) {
+                        stack = FirmwareUpgradeController.PX4Flow
+                    }
 
-                var firmwareType = firmwareVersionCombo.model.get(firmwareVersionCombo.currentIndex).firmwareType
-                var vehicleType = FirmwareUpgradeController.DefaultVehicleFirmware
-                if (apmFlightStack.checked) {
-                    vehicleType = controller.vehicleTypeFromVersionIndex(vehicleTypeSelectionCombo.currentIndex)
+                    var firmwareType = firmwareVersionCombo.model.get(firmwareVersionCombo.currentIndex).firmwareType
+                    var vehicleType = FirmwareUpgradeController.DefaultVehicleFirmware
+                    if (apmFlightStack.checked) {
+                        vehicleType = controller.vehicleTypeFromVersionIndex(vehicleTypeSelectionCombo.currentIndex)
+                    }
+                    controller.flash(stack, firmwareType, vehicleType)
                 }
-                controller.flash(stack, firmwareType, vehicleType)
             }
 
             function reject() {
@@ -202,6 +208,19 @@ QGCView {
                 }
             }
 
+            ListModel {
+                id: singleFirmwareModeTypeList
+
+                ListElement {
+                    text:           qsTr("Standard Version")
+                    firmwareType:   FirmwareUpgradeController.StableFirmware
+                }
+                ListElement {
+                    text:           qsTr("Custom firmware file...")
+                    firmwareType:   FirmwareUpgradeController.CustomFirmware
+                }
+            }
+
             Column {
                 anchors.fill:   parent
                 spacing:        defaultTextHeight
@@ -209,7 +228,11 @@ QGCView {
                 QGCLabel {
                     width:      parent.width
                     wrapMode:   Text.WordWrap
-                    text:       px4Flow ? "Detected PX4 Flow board. You can select from the following firmware:" : "Detected Pixhawk board. You can select from the following flight stacks:"
+                    text:       _singleFirmwareMode ? _singleFirmwareLabel : (px4Flow ? _px4FlowLabel : _pixhawkLabel)
+
+                    readonly property string _px4FlowLabel:          qsTr("Detected PX4 Flow board. You can select from the following firmware:")
+                    readonly property string _pixhawkLabel:          qsTr("Detected Pixhawk board. You can select from the following flight stacks:")
+                    readonly property string _singleFirmwareLabel:   qsTr("Press Ok to upgrade your vehicle.")
                 }
 
                 function firmwareVersionChanged(model) {
@@ -228,7 +251,7 @@ QGCView {
                     checked:        true
                     exclusiveGroup: firmwareGroup
                     text:           qsTr("EWT2.0 Flight Stack ")
-                    visible:        !px4Flow
+                    visible:        !_singleFirmwareMode && !px4Flow
 
                     onClicked: parent.firmwareVersionChanged(firmwareTypeList)
                 }
@@ -237,7 +260,7 @@ QGCView {
                     id:             apmFlightStack
                     exclusiveGroup: firmwareGroup
                     text:           qsTr("ArduPilot Flight Stack")
-                    visible:        !px4Flow
+                    visible:        !_singleFirmwareMode && !px4Flow
 
                     onClicked: parent.firmwareVersionChanged(firmwareTypeList)
                 }
@@ -294,7 +317,7 @@ QGCView {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     visible:        showFirmwareTypeSelection
-                    model:          px4Flow ? px4FlowTypeList : firmwareTypeList
+                    model:          _singleFirmwareMode ? singleFirmwareModeTypeList: (px4Flow ? px4FlowTypeList : firmwareTypeList)
                     currentIndex:   controller.selectedFirmwareType
 
                     onActivated: {

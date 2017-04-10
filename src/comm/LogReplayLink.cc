@@ -211,7 +211,7 @@ bool LogReplayLink::_loadLogFile(void)
     logFileInfo.setFile(logFilename);
     _logFileSize = logFileInfo.size();
     
-    _logTimestamped = logFilename.endsWith(".log");  //mavlink change
+    _logTimestamped = logFilename.endsWith(".tlog");
     
     if (_logTimestamped) {
         // Get the first timestamp from the log

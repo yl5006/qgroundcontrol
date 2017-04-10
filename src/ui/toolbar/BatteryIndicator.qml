@@ -8,7 +8,7 @@
  ****************************************************************************/
 
 
-import QtQuick          2.5
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Layouts  1.2
 
@@ -26,31 +26,33 @@ Item {
     anchors.top:    parent.top
     anchors.bottom: parent.bottom
     width:          mainWindow.tbHeight * 3//batteryIndicatorRow.width
+    property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+
     function getBatteryColor() {
-        if(activeVehicle) {
-            if(activeVehicle.battery.percentRemaining.value > 75) {
-                return colorGreen
+        if(_activeVehicle) {
+            if(_activeVehicle.battery.percentRemaining.value > 75) {
+                return qgcPal.colorGreen
             }
-            if(activeVehicle.battery.percentRemaining.value > 50) {
-                return colorOrange
+            if(_activeVehicle.battery.percentRemaining.value > 50) {
+                return qgcPal.colorOrange
             }
-            if(activeVehicle.battery.percentRemaining.value > 0.1) {
-                return colorRed
+            if(_activeVehicle.battery.percentRemaining.value > 0.1) {
+                return qgcPal.colorRed
             }
         }
-        return colorGrey
+        return qgcPal.colorGrey
     }
 
     function getBatteryPercentageText() {
-        if(activeVehicle) {
-            if(activeVehicle.battery.percentRemaining.value > 98.9) {
+        if(_activeVehicle) {
+            if(_activeVehicle.battery.percentRemaining.value > 98.9) {
                 return "100%"
             }
-            if(activeVehicle.battery.percentRemaining.value > 0.1) {
-                return activeVehicle.battery.percentRemaining.valueString + activeVehicle.battery.percentRemaining.units
+            if(_activeVehicle.battery.percentRemaining.value > 0.1) {
+                return _activeVehicle.battery.percentRemaining.valueString + _activeVehicle.battery.percentRemaining.units
             }
-            if(activeVehicle.battery.voltage.value >= 0) {
-                return activeVehicle.battery.voltage.valueString + activeVehicle.battery.voltage.units
+            if(_activeVehicle.battery.voltage.value >= 0) {
+                return _activeVehicle.battery.voltage.valueString + _activeVehicle.battery.voltage.units
             }
         }
         return "N/A"
@@ -88,9 +90,9 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     QGCLabel { text: qsTr("电压:") /*qsTr("Voltage:")*/ }
-                    QGCLabel { text: (activeVehicle && activeVehicle.battery.voltage.value != -1) ? (activeVehicle.battery.voltage.valueString + " " + activeVehicle.battery.voltage.units) : "N/A" }
+                    QGCLabel { text: (_activeVehicle && _activeVehicle.battery.voltage.value != -1) ? (_activeVehicle.battery.voltage.valueString + " " + _activeVehicle.battery.voltage.units) : "N/A" }
                     QGCLabel { text: qsTr("消耗:")/*qsTr("Accumulated Consumption:")*/ }
-                    QGCLabel { text: (activeVehicle && activeVehicle.battery.mahConsumed.value != -1) ? (activeVehicle.battery.mahConsumed.valueString + " " + activeVehicle.battery.mahConsumed.units) : "N/A" }
+                    QGCLabel { text: (_activeVehicle && _activeVehicle.battery.mahConsumed.value != -1) ? (_activeVehicle.battery.mahConsumed.valueString + " " + _activeVehicle.battery.mahConsumed.units) : "N/A" }
                 }
             }
 
@@ -106,7 +108,7 @@ Item {
         id:             batterycircle
         anchors.left:   parent.left
         width:          mainWindow.tbHeight*1.5
-        value:          (activeVehicle && activeVehicle.battery.percentRemaining.value > 0 )? activeVehicle.battery.percentRemaining.value/100:0
+        value:          (_activeVehicle && _activeVehicle.battery.percentRemaining.value > 0 )? _activeVehicle.battery.percentRemaining.value/100:0
         valuecolor:     getBatteryColor()
         anchors.verticalCenter: parent.verticalCenter
     }
@@ -133,7 +135,7 @@ Item {
             color:          getBatteryColor()
         }
     QGCLabel {
-            text:           activeVehicle ?activeVehicle.battery.cellCount.valueString+" "+"S":" "
+            text:           _activeVehicle ?_activeVehicle.battery.cellCount.valueString+" "+"S":" "
             font.pointSize: ScreenTools.mediumFontPointSize
             color:          getBatteryColor()
         }

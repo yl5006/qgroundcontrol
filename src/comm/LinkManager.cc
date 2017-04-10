@@ -866,7 +866,7 @@ void LinkManager::_activeLinkCheck(void)
         }
 
 //        qgcApp()->showMessage(foundNSHPrompt ?
-//                                  QStringLiteral("Please check to make sure you have an SD Card inserted in your Vehicle and try again.") :
+//                                  tr("Please check to make sure you have an SD Card inserted in your Vehicle and try again.") :
 //                                  tr("数据无响应，如果持续无响应，关闭GroundStation，重启飞控，然后重启GroundStation")/*("Your Vehicle is not responding. If this continues shutdown QGroundControl, restart the Vehicle letting it boot completely, then start QGroundControl.")*/);
     }
 }

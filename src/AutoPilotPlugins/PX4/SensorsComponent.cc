@@ -95,15 +95,3 @@ QUrl SensorsComponent::summaryQmlSource(void) const
     
     return QUrl::fromUserInput(summaryQml);
 }
-
-QString SensorsComponent::prerequisiteSetup(void) const
-{
-    PX4AutoPilotPlugin* plugin = dynamic_cast<PX4AutoPilotPlugin*>(_autopilot);
-    Q_ASSERT(plugin);
-    
-    if (!plugin->airframeComponent()->setupComplete()) {
-        return plugin->airframeComponent()->name();
-    }
-    
-    return QString();
-}

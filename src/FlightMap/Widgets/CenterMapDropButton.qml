@@ -7,8 +7,8 @@
  *
  ****************************************************************************/
 
-import QtQuick          2.4
-import QtQuick.Controls 1.3
+import QtQuick          2.3
+import QtQuick.Controls 1.2
 import QtQuick.Layouts  1.2
 import QtPositioning    5.3
 
@@ -197,7 +197,7 @@ DropButton {
                 RoundImageButton {
                     width:          ScreenTools.defaultFontPixelHeight*3
                     height:         width
-                    imageResource:  "/qmlimages/Plan.svg"//"/qmlimages/map_mission.svg"
+                    imageResource:  "/qmlimages/Plan.svg"
                     //    showborder:     true
                     bordercolor:    qgcPal.text
                     onClicked: {
@@ -208,10 +208,29 @@ DropButton {
 
                 Rectangle {
                     anchors.verticalCenter:         parent.verticalCenter
+                    height:     parent.height*0.8                
+                    width:      1
+                    color:      "grey"
+                }
+		RoundImageButton {
+                    width:          ScreenTools.defaultFontPixelHeight*3
+                    height:         width
+                    imageResource:  "/qmlimages/Plan.svg"
+                    visiable:       mainWindow.gcsPosition.isValid && !followVehicleCheckBox.checked
+                    bordercolor:    qgcPal.text
+                    onClicked: {
+                        dropButton.hideDropDown()
+                        fitMapViewportToMissionItems()
+                    }
+                }
+		
+		Rectangle {
+                    anchors.verticalCenter:         parent.verticalCenter
                     height:     parent.height*0.8
                     width:      1
                     color:      "grey"
                 }
+		
                 RoundImageButton {
                     width:          ScreenTools.defaultFontPixelHeight*3
                     height:         width
@@ -226,63 +245,6 @@ DropButton {
                     }
                 }
             }
-
-            //            QGCButton {
-            //                text:               qsTr("Mission")
-            //                Layout.fillWidth:   true
-            //                visible:            showMission
-            //                enabled:            !followVehicleCheckBox.checked
-
-            //                onClicked: {
-            //                    dropButton.hideDropDown()
-            //                    fitMapViewportToMissionItems()
-            //                }
-            //            }
-
-            //            QGCButton {
-            //                text:               qsTr("All items")
-            //                Layout.fillWidth:   true
-            //                visible:            showAllItems
-            //                enabled:            !followVehicleCheckBox.checked
-
-            //                onClicked: {
-            //                    dropButton.hideDropDown()
-            //                    fitMapViewportToAllItems()
-            //                }
-            //            }
-
-            //            QGCButton {
-            //                text:               qsTr("Home")
-            //                Layout.fillWidth:   true
-            //                enabled:            !followVehicleCheckBox.checked
-
-            //                onClicked: {
-            //                    dropButton.hideDropDown()
-            //                    map.center = fitHomePosition()
-            //                }
-            //            }
-
-            //            QGCButton {
-            //                text:               qsTr("Current Location")
-            //                Layout.fillWidth:   true
-            //                enabled:            mainWindow.gcsPosition.isValid && !followVehicleCheckBox.checked
-
-            //                onClicked: {
-            //                    dropButton.hideDropDown()
-            //                    map.center = mainWindow.gcsPosition
-            //                }
-            //            }
-
-            //            QGCButton {
-            //                text:               qsTr("Vehicle")
-            //                Layout.fillWidth:   true
-            //                enabled:            _activeVehicle && _activeVehicle.latitude != 0 && _activeVehicle.longitude != 0 && !followVehicleCheckBox.checked
-
-            //                onClicked: {
-            //                    dropButton.hideDropDown()
-            //                    map.center = activeVehicle.coordinate
-            //                }
-            //            }
 
             //            QGCCheckBox {
             //                id:         followVehicleCheckBox

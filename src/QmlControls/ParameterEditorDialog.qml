@@ -7,8 +7,8 @@
  *
  ****************************************************************************/
 
-import QtQuick          2.5
-import QtQuick.Controls 1.3
+import QtQuick          2.3
+import QtQuick.Controls 1.2
 import QtQuick.Layouts  1.2
 
 import QGroundControl.Controls      1.0
@@ -207,6 +207,7 @@ QGCViewDialog {
                 visible:    !showonlyhelp
                 text:       qsTr("Warning: Modifying values while vehicle is in flight can lead to vehicle instability and possible vehicle loss. ") +
                             qsTr("Make sure you know what you are doing and double-check your values before Save!")
+                visible:    fact.componentId != -1
             }
 
             QGCCheckBox {

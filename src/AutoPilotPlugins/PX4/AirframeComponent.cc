@@ -148,8 +148,3 @@ QUrl AirframeComponent::summaryQmlSource(void) const
 {
     return QUrl::fromUserInput("qrc:/qml/AirframeComponentSummary.qml");
 }
-
-QString AirframeComponent::prerequisiteSetup(void) const
-{
-    return QString();
-}

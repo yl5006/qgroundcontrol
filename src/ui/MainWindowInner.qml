@@ -8,10 +8,10 @@
  ****************************************************************************/
 
 
-import QtQuick          2.5
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs  1.2
-import QtPositioning    5.2
+import QtPositioning    5.3
 
 import QGroundControl                       1.0
 import QGroundControl.Palette               1.0
@@ -19,7 +19,6 @@ import QGroundControl.Controls              1.0
 import QGroundControl.FlightDisplay         1.0
 import QGroundControl.ScreenTools           1.0
 import QGroundControl.MultiVehicleManager   1.0
-import QGroundControl.QGCPositionManager    1.0
 import QGroundControl.Controllers           1.0
 
 import QGroundControl.FlightMap     1.0
@@ -46,7 +45,7 @@ Item {
     property var _viewList: [ settingsViewLoader, setupViewLoader, planViewLoader, flightView, analyzeViewLoader ]
     property bool vehicleConnectionLost: activeVehicle ? activeVehicle.connectionLost : false
     
-    readonly property string _planViewSource:       "MissionEditor.qml"
+    readonly property string _planViewSource:       "PlanView.qml"
     readonly property string _setupViewSource:      "SetupViewandAppsetting.qml"//"SetupView.qml"
     readonly property string _settingsViewSource:   "AppSettings.qml"
     readonly property string _analyzeViewSource:    "AnalyzeView.qml"
@@ -62,9 +61,8 @@ Item {
         for (var i=0; i<_viewList.length; i++) {
             _viewList[i].visible = false
         }
-        initMap.visible             = false
-        //      toolBar.visible      = true
-        //   rightBar.checkFlyButton()
+        planToolBar.visible = false
+	initMap.visible             = false
     }
 
     function showSettingsView() {
@@ -111,8 +109,8 @@ Item {
         ScreenTools.availableHeight = parent.height - toolBar.height
         hideAllViews()
         planViewLoader.visible = true
-        rightBar.checkPlanButton()
-        //      toolBar.checkPlanButton()
+	rightBar.checkPlanButton()
+        planToolBar.visible = true
     }
 
     function showFlyView() {
@@ -154,7 +152,7 @@ Item {
 
     MessageDialog {
         id:                 unsavedMissionCloseDialog
-        title:              qsTr("GroundStation close")//qsTr("QGroundControl close")
+        title:              qsTr("%1 close").arg(QGroundControl.appName)
         text:               qsTr("有未保存任务，关闭后会丢失，确认关闭?")//qsTr("You have a mission edit in progress which has not been saved/sent. If you close you will lose changes. Are you sure you want to close?")
         standardButtons:    StandardButton.Yes | StandardButton.No
         modality:           Qt.ApplicationModal
@@ -173,7 +171,7 @@ Item {
 
     MessageDialog {
         id:                 activeConnectionsCloseDialog
-        title:              qsTr("GroundStation close")//qsTr("GroundStation close")
+        title:              qsTr("%1 close").arg(QGroundControl.appName)
         text:               qsTr("无人机仍在连接中， 关闭并断开连接?")//qsTr("There are still active connections to vehicles. Do you want to disconnect these before closing?")
         standardButtons:    StandardButton.Yes | StandardButton.Cancel
         modality:           Qt.ApplicationModal
@@ -197,24 +195,6 @@ Item {
 
         onTriggered: {
             mainWindow.reallyClose()
-        }
-    }
-
-    //-- Detect tablet position
-    Connections {
-        target: QGroundControl.qgcPositionManger
-        onLastPositionUpdated: {
-            if(valid) {
-                if(lastPosition.latitude) {
-                    if(Math.abs(lastPosition.latitude)  > 0.001) {
-                        if(lastPosition.longitude) {
-                            if(Math.abs(lastPosition.longitude)  > 0.001) {
-                                gcsPosition = QtPositioning.coordinate(lastPosition.latitude,lastPosition.longitude)
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -316,6 +296,7 @@ Item {
         mainWindow:         mainWindow
         anchors.right:      parent.right
         anchors.top:        logo.bottom
+        opacity:            planToolBar.visible ? 0 : 1
         z:                  QGroundControl.zOrderTopMost
         visible:            activeVehicle
         Component.onCompleted:  ScreenTools.availableHeight = parent.height - toolBar.height
@@ -394,12 +375,15 @@ Item {
         anchors.bottom:     parent.bottom
         visible:            false
 
+        property var planToolBar: planToolBar
     }
-    
+
     Loader {
         id:                 planViewLoader
         anchors.fill:       parent
         visible:            false
+
+        property var toolbar: planToolBar
     }
 
     FlightDisplayView {
@@ -539,7 +523,7 @@ Item {
         //        anchors.top:                parent.top
         //	  anchors.topMargin:          toolBar.height + ScreenTools.defaultFontPixelHeight / 2
         anchors.centerIn:           parent
-        //        border.color:               "#808080"
+        //border.color:               qgcPal.alertBorder
         //        border.width:               2
 
         readonly property real _textMargins: ScreenTools.defaultFontPixelHeight
@@ -602,7 +586,7 @@ Item {
                 font.pointSize: ScreenTools.mediumFontPointSize
                 font.family:    ScreenTools.demiboldFontFamily
                 wrapMode:       TextEdit.WordWrap
-                color:          "#fff100"
+                color:          "#fff100"   //qgcPal.alertText
             }
         }
 
@@ -642,7 +626,7 @@ Item {
             source:             "/res/ArrowDown.svg"
             fillMode:           Image.PreserveAspectFit
             visible:            criticalMessageText.lineCount > 5
-            color:              "black"
+            color:              qgcPal.alertText
             MouseArea {
                 anchors.fill:   parent
                 onClicked: {

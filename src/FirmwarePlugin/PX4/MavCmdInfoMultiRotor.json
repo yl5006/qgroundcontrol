@@ -20,8 +20,8 @@
             "paramRemove":  "3,4"
         },
         {
-            "id":           21,
-            "comment":      "MAV_CMD_NAV_LAND",
+            "id":           22,
+            "comment":      "MAV_CMD_NAV_TAKEOFF",
             "paramRemove":  "1"
         }
     ]

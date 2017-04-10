@@ -211,6 +211,7 @@ WindowsBuild {
     }
     QMAKE_CFLAGS_RELEASE -= -Zc:strictStrings
     QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO -= -Zc:strictStrings
+
     QMAKE_CXXFLAGS_RELEASE -= -Zc:strictStrings
     QMAKE_CXXFLAGS_RELEASE_WITH_DEBUGINFO -= -Zc:strictStrings
     QMAKE_CXXFLAGS_WARN_ON += /W3 \

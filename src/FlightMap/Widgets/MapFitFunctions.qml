@@ -7,7 +7,7 @@
  *
  ****************************************************************************/
 
-import QtQuick          2.4
+import QtQuick          2.3
 import QtPositioning    5.3
 
 import QGroundControl 1.0
@@ -15,7 +15,6 @@ import QGroundControl 1.0
 /// Set of functions for fitting the map viewpoer to a specific constraint
 Item {
     property var    map
-    property rect   mapFitViewport
     property bool   usePlannedHomePosition      ///< true: planned home position used for calculations, false: vehicle home position use for calculations
     property var    mapGeoFenceController
     property var    mapMissionController
@@ -47,6 +46,7 @@ Item {
     /// Fits the visible region of the map to inclues all of the specified coordinates. If no coordinates
     /// are specified the map will center to fitHomePosition()
     function fitMapViewportToAllCoordinates(coordList) {
+        var mapFitViewport = Qt.rect(0, 0, map.width, map.height)
         if (coordList.length == 0) {
             map.center = fitHomePosition()
             return
@@ -79,6 +79,9 @@ Item {
         var topLeftCoord = QtPositioning.coordinate(north - 90.0, west - 180.0)
         var bottomRightCoord  = QtPositioning.coordinate(south - 90.0, east - 180.0)
         map.setVisibleRegion(QtPositioning.rectangle(topLeftCoord, bottomRightCoord))
+
+        // Back off on zoom level
+        map.zoomLevel = Math.abs(map.zoomLevel) - 1
     }
 
     function addMissionItemCoordsForFit(coordList) {
@@ -95,6 +98,10 @@ Item {
     }
 
     function fitMapViewportToMissionItems() {
+        if (!mapMissionController.visualItems) {
+            // Being called prior to controller.start
+            return
+        }
         var coordList = [ ]
         addMissionItemCoordsForFit(coordList)
         fitMapViewportToAllCoordinates(coordList)
@@ -109,9 +116,9 @@ Item {
                 coordList.push(edgeCoordinate)
             }
         }
-        if (mapGeoFenceController.polygonEnabled && mapGeoFenceController.polygon.count() > 2) {
-            for (var i=0; i<mapGeoFenceController.polygon.count(); i++) {
-                coordList.push(mapGeoFenceController.polygon.path[i])
+        if (mapGeoFenceController.polygonEnabled && mapGeoFenceController.mapPolygon.path.count > 2) {
+            for (var i=0; i<mapGeoFenceController.mapPolygon.path.count; i++) {
+                coordList.push(mapGeoFenceController.mapPolygon.path[i])
             }
         }
     }
@@ -135,6 +142,10 @@ Item {
     }
 
     function fitMapViewportToAllItems() {
+        if (!mapMissionController.visualItems) {
+            // Being called prior to controller.start
+            return
+        }
         var coordList = [ ]
         addMissionItemCoordsForFit(coordList)
         addFenceItemCoordsForFit(coordList)

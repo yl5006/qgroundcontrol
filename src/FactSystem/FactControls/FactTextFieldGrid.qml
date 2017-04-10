@@ -1,19 +1,20 @@
-﻿import QtQuick          2.2
+﻿import QtQuick          2.3
 import QtQuick.Layouts  1.2
 
 import QGroundControl.FactSystem    1.0
 import QGroundControl.Controls      1.0
 
 GridLayout {
-    property var factList   ///< List of Facts to show
-    columns: 2
+    property var factList       ///< List of Facts to show
+    property var factLabels     ///< Labels for facts, if not set, use Fact.name
+
     rows: factList.length
     flow: GridLayout.TopToBottom
     property bool  showHelpdig:   false
     Repeater {
         model: parent.factList
 
-        QGCLabel { text: modelData.shortDescription + ":" }
+        QGCLabel { text: factLabels ? factLabels[index] : modelData.shortDescription }
     }
 
     Repeater {

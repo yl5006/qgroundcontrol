@@ -8,13 +8,12 @@
  ****************************************************************************/
 
 
-import QtQuick                  2.5
+import QtQuick                  2.3
 import QtQuick.Controls         1.2
-import QtQuick.Controls.Styles  1.2
+import QtQuick.Controls.Styles  1.4
 import QtQuick.Layouts          1.2
 import QtGraphicalEffects       1.0
 
-import QGroundControl                       1.0
 import QGroundControl.FactSystem    1.0
 import QGroundControl.FactControls  1.0
 import QGroundControl.Controls      1.0
@@ -38,8 +37,8 @@ SetupPage {
             }
 
             property real _margins:         ScreenTools.defaultFontPixelHeight
-            property real _middleRowWidth:  ScreenTools.defaultFontPixelWidth * 20
-            property real _editFieldWidth:  ScreenTools.defaultFontPixelWidth * 14
+            property real _editFieldWidth:  ScreenTools.defaultFontPixelWidth * 20
+            property real _imageWidth:      ScreenTools.defaultFontPixelWidth * 20
 
             property Fact _fenceAction:     controller.getParameterFact(-1, "GF_ACTION")
             property Fact _fenceRadius:     controller.getParameterFact(-1, "GF_MAX_HOR_DIST")

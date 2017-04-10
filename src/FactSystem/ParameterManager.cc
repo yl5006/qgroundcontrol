@@ -59,6 +59,7 @@ ParameterManager::ParameterManager(Vehicle* vehicle)
     , _prevWaitingWriteParamNameCount(0)
     , _initialRequestRetryCount(0)
     , _disableAllRetries(false)
+    , _indexBatchQueueActive(false)
     , _totalParamCount(0)
 {
     _versionParam = vehicle->firmwarePlugin()->getVersionParam();
@@ -107,14 +108,23 @@ void ParameterManager::_parameterUpdate(int vehicleId, int componentId, QString 
                                             "value:" << value <<
                                             ")";
 
+    // ArduPilot has this strange behavior of streaming parameters that we didn't ask for. This even happens before it responds to the
+    // PARAM_REQUEST_LIST. We disregard any of this until the initial request is responded to.
+    if (parameterId == 65535 && _initialRequestTimeoutTimer.isActive()) {
+        qCDebug(ParameterManagerVerbose1Log) << "Disregarding unrequested param prior to intial list response" << parameterName;
+        return;
+    }
+
     _initialRequestTimeoutTimer.stop();
 
 #if 0
-    // Handy for testing retry logic
-    static int counter = 0;
-    if (counter++ & 0x8) {
-        qCDebug(ParameterManagerLog) << "Artificial discard" << counter;
-        return;
+    if (!_initialLoadComplete && !_indexBatchQueueActive) {
+        // Handy for testing retry logic
+        static int counter = 0;
+        if (counter++ & 0x8) {
+            qCDebug(ParameterManagerLog) << "Artificial discard" << counter;
+            return;
+        }
     }
 #endif
 
@@ -172,7 +182,11 @@ void ParameterManager::_parameterUpdate(int vehicleId, int componentId, QString 
     }
 
     // Remove this parameter from the waiting lists
-    _waitingReadParamIndexMap[componentId].remove(parameterId);
+    if (_waitingReadParamIndexMap[componentId].contains(parameterId)) {
+        _waitingReadParamIndexMap[componentId].remove(parameterId);
+        _indexBatchQueue.removeOne(parameterId);
+        _fillIndexBatchQueue(false /* waitingParamTimeout */);
+    }
     _waitingReadParamNameMap[componentId].remove(parameterName);
     _waitingWriteParamNameMap[componentId].remove(parameterName);
     if (_waitingReadParamIndexMap[componentId].count()) {
@@ -500,25 +514,39 @@ const QMap<int, QMap<QString, QStringList> >& ParameterManager::getGroupMap(void
     return _mapGroup2ParameterName;
 }
 
-void ParameterManager::_waitingParamTimeout(void)
+/// Requests missing index based parameters from the vehicle.
+///     @param waitingParamTimeout: true: being called due to timeout, false: being called to re-fill the batch queue
+/// return true: Parameters were requested, false: No more requests needed
+bool ParameterManager::_fillIndexBatchQueue(bool waitingParamTimeout)
 {
-    bool paramsRequested = false;
+    if (!_indexBatchQueueActive) {
+        return false;
+    }
+
     const int maxBatchSize = 10;
-    int batchCount = 0;
 
-    qCDebug(ParameterManagerLog) << _logVehiclePrefix() << "_waitingParamTimeout";
+    if (waitingParamTimeout) {
+        // We timed out, clear the queue and try again
+        qCDebug(ParameterManagerLog) << "Refilling index based batch queue due to timeout";
+        _indexBatchQueue.clear();
+    } else {
+        qCDebug(ParameterManagerLog) << "Refilling index based batch queue due to received parameter";
+    }
 
-    // First check for any missing parameters from the initial index based load
-
-    batchCount = 0;
     foreach(int componentId, _waitingReadParamIndexMap.keys()) {
         if (_waitingReadParamIndexMap[componentId].count()) {
-            qCDebug(ParameterManagerLog) << _logVehiclePrefix() << "_waitingReadParamIndexMap" << _waitingReadParamIndexMap[componentId];
+            qCDebug(ParameterManagerLog) << _logVehiclePrefix() << "_waitingReadParamIndexMap count" << _waitingReadParamIndexMap[componentId].count();
+            qCDebug(ParameterManagerVerbose1Log) << _logVehiclePrefix() << "_waitingReadParamIndexMap" << _waitingReadParamIndexMap[componentId];
         }
 
-        foreach(int paramIndex, _waitingReadParamIndexMap[componentId].keys()) {            
-            if (++batchCount > maxBatchSize) {
-                goto Out;
+        foreach(int paramIndex, _waitingReadParamIndexMap[componentId].keys()) {
+            if (_indexBatchQueue.contains(paramIndex)) {
+                // Don't add more than once
+                continue;
+            }
+
+            if (_indexBatchQueue.count() > maxBatchSize) {
+                break;
             }
 
             _waitingReadParamIndexMap[componentId][paramIndex]++;   // Bump retry count
@@ -529,12 +557,29 @@ void ParameterManager::_waitingParamTimeout(void)
                 _waitingReadParamIndexMap[componentId].remove(paramIndex);
             } else {
                 // Retry again
-                paramsRequested = true;
+                _indexBatchQueue.append(paramIndex);
                 _readParameterRaw(componentId, "", paramIndex);
                 qCDebug(ParameterManagerLog) << _logVehiclePrefix(componentId) << "Read re-request for (paramIndex:" << paramIndex << "retryCount:" << _waitingReadParamIndexMap[componentId][paramIndex] << ")";
             }
         }
     }
+
+    return _indexBatchQueue.count() != 0;
+}
+
+void ParameterManager::_waitingParamTimeout(void)
+{
+    bool paramsRequested = false;
+    const int maxBatchSize = 10;
+    int batchCount = 0;
+
+    qCDebug(ParameterManagerLog) << _logVehiclePrefix() << "_waitingParamTimeout";
+
+    // Now that we have timed out for possibly the first time we can activate the index batch queue
+    _indexBatchQueueActive = true;
+
+    // First check for any missing parameters from the initial index based load
+    paramsRequested = _fillIndexBatchQueue(true /* waitingParamTimeout */);
 
     if (!paramsRequested && !_waitingForDefaultComponent && !_mapParameterName2Variant.contains(_vehicle->defaultComponentId())) {
         // Initial load is complete but we still don't have any default component params. Wait one more cycle to see if the
@@ -843,6 +888,17 @@ void ParameterManager::writeParametersToStream(QTextStream &stream)
 {
     stream << "# Onboard parameters for Vehicle " << _vehicle->id() << "\n";
     stream << "#\n";
+
+    stream << "# Stack: " << _vehicle->firmwareTypeString() << "\n";
+    stream << "# Vehicle: " << _vehicle->vehicleTypeString() << "\n";
+    stream << "# Version: "
+           << _vehicle->firmwareMajorVersion() << "."
+           << _vehicle->firmwareMinorVersion() << "."
+           << _vehicle->firmwarePatchVersion() << " "
+           << _vehicle->firmwareVersionTypeString() << "\n";
+    stream << "# Git Revision: " << _vehicle->gitHash() << "\n";
+
+    stream << "#\n";
     stream << "# Vehicle-Id Component-Id Name Value Type\n";
 
     foreach (int componentId, _mapParameterName2Variant.keys()) {
@@ -982,10 +1038,10 @@ void ParameterManager::_checkInitialLoadComplete(void)
     _missingParameters = false;
     if (initialLoadFailures) {
         _missingParameters = true;
-        QString errorMsg = tr("QGroundControl was unable to retrieve the full set of parameters from vehicle %1. "
-                              "This will cause QGroundControl to be unable to display its full user interface. "
+        QString errorMsg = tr("%1 was unable to retrieve the full set of parameters from vehicle %2. "
+                              "This will cause %1 to be unable to display its full user interface. "
                               "If you are using modified firmware, you may need to resolve any vehicle startup errors to resolve the issue. "
-                              "If you are using standard firmware, you may need to upgrade to a newer version to resolve the issue.").arg(_vehicle->id());
+                              "If you are using standard firmware, you may need to upgrade to a newer version to resolve the issue.").arg(qgcApp()->applicationName()).arg(_vehicle->id());
         qCDebug(ParameterManagerLog) << errorMsg;
         qgcApp()->showMessage(QStringLiteral("参数不完整"));
         if (!qgcApp()->runningUnitTests()) {
@@ -1009,7 +1065,7 @@ void ParameterManager::_initialRequestTimeout(void)
     } else {
         if (!_vehicle->genericFirmware()) {
             QString errorMsg = tr("Vehicle %1 did not respond to request for parameters. "
-                                  "This will cause QGroundControl to be unable to display its full user interface.").arg(_vehicle->id());
+                                  "This will cause %2 to be unable to display its full user interface.").arg(_vehicle->id()).arg(qgcApp()->applicationName());
             qCDebug(ParameterManagerLog) << errorMsg;
             qgcApp()->showMessage(QStringLiteral("机体未响应参数，请重试"));
         }

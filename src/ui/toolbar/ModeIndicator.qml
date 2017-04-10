@@ -8,7 +8,7 @@
  ****************************************************************************/
 
 
-import QtQuick          2.5
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 
 import QGroundControl                       1.0
@@ -25,13 +25,14 @@ Item {
     width:          mainWindow.tbHeight * 3//(gpsValuesColumn.x + gpsValuesColumn.width) * 1.1
     anchors.top:    parent.top
     anchors.bottom: parent.bottom
-    function getVehicleimg(activeVehicle)
+    property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+    function getVehicleimg(_activeVehicle)
     {
-        if(activeVehicle.multiRotor)
+        if(_activeVehicle.multiRotor)
         {
             return "/qmlimages/Quad.svg"
         }
-        else if(activeVehicle.fixedWing)
+        else if(_activeVehicle.fixedWing)
         {
             return "/qmlimages/AirframeStandardPlane.svg"
         }
@@ -49,7 +50,7 @@ Item {
     }
     QGCColoredImage {
         id:             modeIcon
-        source:         activeVehicle ? getVehicleimg(activeVehicle):"/qmlimages/Quad.svg"
+        source:         _activeVehicle ? getVehicleimg(_activeVehicle):"/qmlimages/Quad.svg"
         height:         mainWindow.tbCellHeight
         width:          height
         sourceSize.height: height
@@ -62,7 +63,7 @@ Item {
         id:                 mod
         anchors.left:       modeIcon.left
         anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-        text:               activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
+        text:               _activeVehicle ? _activeVehicle.flightMode : qsTr("N/A", "No data to display")
         font.pointSize:     ScreenTools.mediumFontPointSize
         color:              qgcPal.buttonText
         anchors.verticalCenter: parent.verticalCenter
@@ -73,12 +74,12 @@ Item {
     Component {
         id: flightModeMenuItemComponent
         MenuItem {
-            onTriggered: activeVehicle.flightMode = text
+            onTriggered: _activeVehicle.flightMode = text
         }
     }
     property var flightModesMenuItems: []
     function updateFlightModesMenu() {
-        if (activeVehicle && activeVehicle.flightModeSetAvailable) {
+        if (_activeVehicle && _activeVehicle.flightModeSetAvailable) {
             // Remove old menu items
             for (var i = 0; i < flightModesMenuItems.length; i++) {
                 flightModesMenu.removeItem(flightModesMenuItems[i])
@@ -86,7 +87,7 @@ Item {
             flightModesMenuItems.length = 0
             // Add new items
             for (var i = 0; i < activeVehicle.flightModes.length; i++) {
-                var menuItem = flightModeMenuItemComponent.createObject(null, { "text": activeVehicle.flightModes[i] })
+                var menuItem = flightModeMenuItemComponent.createObject(null, { "text": _activeVehicle.flightModes[i] })
                 flightModesMenuItems.push(menuItem)
                 flightModesMenu.insertItem(i, menuItem)
             }
@@ -98,7 +99,7 @@ Item {
         onActiveVehicleChanged: flightModeSelector.updateFlightModesMenu()
     }
     MouseArea {
-        visible:        activeVehicle && activeVehicle.flightModeSetAvailable
+        visible:        _activeVehicle && _activeVehicle.flightModeSetAvailable
         anchors.fill:   mod//parent
         onClicked:      flightModesMenu.popup()
     }

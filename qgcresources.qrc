@@ -48,6 +48,7 @@
 	<file alias="planebg.svg">src/AutoPilotPlugins/Common/Images/planebg.svg</file>
 	<file alias="planebgselect.svg">src/AutoPilotPlugins/Common/Images/planebgselect.svg</file>
         <file alias="arrow-down.png">src/QmlControls/arrow-down.png</file>        
+        <file alias="check.png">src/QmlControls/check.png</file>
    	<file alias="FirmwareUpgradeIcon.svg">src/VehicleSetup/FirmwareUpgradeIcon.svg</file>
 	<file alias="offlinemap.svg">src/AutoPilotPlugins/PX4/Images/offlinemap.svg</file>	
         <file alias="FlightModesComponentIcon.svg">src/AutoPilotPlugins/PX4/Images/FlightModesComponentIcon.svg</file>
@@ -58,6 +59,7 @@
         <file alias="GeoFence.svg">src/AutoPilotPlugins/PX4/Images/GeoFence.svg</file>
         <file alias="GeoFenceLight.svg">src/AutoPilotPlugins/PX4/Images/GeoFenceLight.svg</file>
         <file alias="GeoTagIcon">src/AnalyzeView/GeoTagIcon.svg</file>
+        <file alias="MavlinkConsoleIcon">src/AnalyzeView/MavlinkConsoleIcon.svg</file>
         <file alias="LandMode.svg">src/AutoPilotPlugins/PX4/Images/LandMode.svg</file>
         <file alias="LandModeCopter.svg">src/AutoPilotPlugins/PX4/Images/LandModeCopter.svg</file>
         <file alias="LightsComponentIcon.png">src/AutoPilotPlugins/APM/Images/LightsComponentIcon.png</file>

@@ -1,6 +1,6 @@
-﻿import QtQuick                  2.4
+﻿import QtQuick                  2.3
 import QtQuick.Controls         1.2
-import QtQuick.Controls.Styles  1.2
+import QtQuick.Controls.Styles  1.4
 
 import QGroundControl               1.0
 import QGroundControl.ScreenTools   1.0
@@ -13,7 +13,6 @@ Item {
     signal          clicked()
     property alias  buttonImage:        roundButton.buttonImage
     property alias  rotateImage:        roundButton.rotateImage
-    property alias  imgcolor:           roundButton.imgcolor
     property real   radius:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.75 : ScreenTools.defaultFontPixelHeight * 1.25
     property int    dropDirection:      dropDown
     property alias  dropDownComponent:  dropDownLoader.sourceComponent

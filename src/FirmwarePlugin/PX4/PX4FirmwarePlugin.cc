@@ -26,25 +26,24 @@
 
 #include "px4_custom_mode.h"
 
-const char* PX4FirmwarePlugin::_manualFlightMode =      QT_TR_NOOP("手动");
-const char* PX4FirmwarePlugin::_altCtlFlightMode =      QT_TR_NOOP("定高");
-const char* PX4FirmwarePlugin::_posCtlFlightMode =      QT_TR_NOOP("GPS");
-const char* PX4FirmwarePlugin::_missionFlightMode =     QT_TR_NOOP("任务");
-const char* PX4FirmwarePlugin::_holdFlightMode =        QT_TR_NOOP("悬停");
-const char* PX4FirmwarePlugin::_takeoffFlightMode =     QT_TR_NOOP("起飞");
-const char* PX4FirmwarePlugin::_landingFlightMode =     QT_TR_NOOP("降落");
-const char* PX4FirmwarePlugin::_rtlFlightMode =         QT_TR_NOOP("返航");
-const char* PX4FirmwarePlugin::_acroFlightMode =        QT_TR_NOOP("运动");
-const char* PX4FirmwarePlugin::_offboardFlightMode =    QT_TR_NOOP("Offboard");
-const char* PX4FirmwarePlugin::_stabilizedFlightMode =  QT_TR_NOOP("自稳");
-const char* PX4FirmwarePlugin::_rattitudeFlightMode =   "Rattitude";
-const char* PX4FirmwarePlugin::_followMeFlightMode =    QT_TR_NOOP("跟随");
-const char* PX4FirmwarePlugin::_rtgsFlightMode =        "Return to Groundstation";
-const char* PX4FirmwarePlugin::_readyFlightMode =       "Ready";
-const char* PX4FirmwarePlugin::_simpleFlightMode =      QT_TR_NOOP("简单");
-
 PX4FirmwarePlugin::PX4FirmwarePlugin(void)
-    : _versionNotified(false)
+    : _manualFlightMode(tr("手动"))
+    , _acroFlightMode(tr("运动"))
+    , _stabilizedFlightMode(tr("增稳"))
+    , _rattitudeFlightMode(tr("Rattitude"))
+    , _altCtlFlightMode(tr("定高"))
+    , _posCtlFlightMode(tr("GPS"))
+    , _offboardFlightMode(tr("Offboard"))
+    , _readyFlightMode(tr("Ready"))
+    , _takeoffFlightMode(tr("起飞"))
+    , _holdFlightMode(tr("悬停"))
+    , _missionFlightMode(tr("任务"))
+    , _rtlFlightMode(tr("返航"))
+    , _landingFlightMode(tr("降落"))
+    , _rtgsFlightMode(tr("Return to Groundstation"))
+    , _followMeFlightMode(tr("跟随"))
+    , _simpleFlightMode(tr("简单"))
+    , _versionNotified(false)
 {
     qmlRegisterType<PX4AdvancedFlightModesController>   ("QGroundControl.Controllers", 1, 0, "PX4AdvancedFlightModesController");
     qmlRegisterType<PX4SimpleFlightModesController>     ("QGroundControl.Controllers", 1, 0, "PX4SimpleFlightModesController");
@@ -56,31 +55,50 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
     struct Modes2Name {
         uint8_t     main_mode;
         uint8_t     sub_mode;
-        const char* name;       ///< Name for flight mode
         bool        canBeSet;   ///< true: Vehicle can be set to this flight mode
         bool        fixedWing;  /// fixed wing compatible
         bool        multiRotor;  /// multi rotor compatible
     };
 
     static const struct Modes2Name rgModes2Name[] = {
-        //main_mode                         sub_mode                                name                                        canBeSet  FW      MC
-        { PX4_CUSTOM_MAIN_MODE_MANUAL,      0,                                      PX4FirmwarePlugin::_manualFlightMode,       true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_STABILIZED,  0,                                      PX4FirmwarePlugin::_stabilizedFlightMode,   true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_ACRO,        0,                                      PX4FirmwarePlugin::_acroFlightMode,         true,   true,   true },
+        //main_mode                         sub_mode                                canBeSet  FW      MC
+        { PX4_CUSTOM_MAIN_MODE_MANUAL,      0,                                      true,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_STABILIZED,  0,                                      true,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_ACRO,        0,                                      true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_RATTITUDE,   0,                                      PX4FirmwarePlugin::_rattitudeFlightMode,    false,  true,   true },
-        { PX4_CUSTOM_MAIN_MODE_ALTCTL,      0,                                      PX4FirmwarePlugin::_altCtlFlightMode,       true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_POSCTL,      0,                                      PX4FirmwarePlugin::_posCtlFlightMode,       true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_SIMPLE,      0,                                      PX4FirmwarePlugin::_simpleFlightMode,       true,   false,  true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LOITER,        PX4FirmwarePlugin::_holdFlightMode,         false,  true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,       PX4FirmwarePlugin::_missionFlightMode,      true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,           PX4FirmwarePlugin::_rtlFlightMode,          true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET, PX4FirmwarePlugin::_followMeFlightMode,     false,   false,  true },
+        { PX4_CUSTOM_MAIN_MODE_ALTCTL,      0,                                      true,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_POSCTL,      0,                                      true,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_SIMPLE,      0,                                      true,   false,  true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LOITER,        PX4FirmwarePlugin::_holdFlightMode,         false,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,       true,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,           true,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET, PX4FirmwarePlugin::_followMeFlightMode,     true,   false,  true },
         { PX4_CUSTOM_MAIN_MODE_OFFBOARD,    0,                                      PX4FirmwarePlugin::_offboardFlightMode,     false,   false,  true },
         // modes that can't be directly set by the user
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,          PX4FirmwarePlugin::_landingFlightMode,      false,  true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_READY,         PX4FirmwarePlugin::_readyFlightMode,        false,  true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,          PX4FirmwarePlugin::_rtgsFlightMode,         false,  true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,       PX4FirmwarePlugin::_takeoffFlightMode,      false,  true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,          false,  true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_READY,         false,  true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,          false,  true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,       false,  true,   true },
+    };
+
+    // Must be in same order as above structure
+    const QString* rgModeNames[] = {
+        &_manualFlightMode,
+        &_stabilizedFlightMode,
+        &_acroFlightMode,
+        &_rattitudeFlightMode,
+        &_altCtlFlightMode,
+        &_posCtlFlightMode,
+        &_simpleFlightMode,
+        &_holdFlightMode,
+        &_missionFlightMode,
+        &_rtlFlightMode,
+        &_followMeFlightMode,
+        &_offboardFlightMode,
+        &_landingFlightMode,
+        &_readyFlightMode,
+        &_rtgsFlightMode,
+        &_takeoffFlightMode,
     };
 
     // Convert static information to dynamic list. This allows for plugin override class to manipulate list.
@@ -91,7 +109,7 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
 
         info.main_mode =    pModes2Name->main_mode;
         info.sub_mode =     pModes2Name->sub_mode;
-        info.name =         pModes2Name->name;
+        info.name =         rgModeNames[i];
         info.canBeSet =     pModes2Name->canBeSet;
         info.fixedWing =    pModes2Name->fixedWing;
         info.multiRotor =   pModes2Name->multiRotor;
@@ -125,7 +143,7 @@ QStringList PX4FirmwarePlugin::flightModes(Vehicle* vehicle)
             bool other = !vehicle->fixedWing() && !vehicle->multiRotor();
 
             if (fw || mc || other) {
-                flightModes += info.name;
+                flightModes += *info.name;
             }
         }
     }
@@ -144,7 +162,7 @@ QString PX4FirmwarePlugin::flightMode(uint8_t base_mode, uint32_t custom_mode) c
         bool found = false;
         foreach (const FlightModeInfo_t& info, _flightModeInfoList) {
             if (info.main_mode == px4_mode.main_mode && info.sub_mode == px4_mode.sub_mode) {
-                flightMode = info.name;
+                flightMode = *info.name;
                 found = true;
                 break;
             }
@@ -202,7 +220,7 @@ bool PX4FirmwarePlugin::supportsManualControl(void)
 bool PX4FirmwarePlugin::isCapable(const Vehicle *vehicle, FirmwareCapabilities capabilities)
 {
     if (vehicle->multiRotor()) {
-        return (capabilities & (MavCmdPreflightStorageCapability | GuidedModeCapability | SetFlightModeCapability | PauseVehicleCapability | OrbitModeCapability)) == capabilities;
+        return (capabilities & (MavCmdPreflightStorageCapability | GuidedModeCapability | SetFlightModeCapability | PauseVehicleCapability /*| OrbitModeCapability still NYI*/)) == capabilities;
     } else {
         return (capabilities & (MavCmdPreflightStorageCapability | GuidedModeCapability | SetFlightModeCapability | PauseVehicleCapability)) == capabilities;
     }
@@ -246,9 +264,11 @@ QList<MAV_CMD> PX4FirmwarePlugin::supportedMissionCommands(void)
          << MAV_CMD_DO_SET_CAM_TRIGG_DIST << MAV_CMD_DO_CAM << MAV_CMD_DO_TIME_CAM << MAV_CMD_NAV_RETURN_TO_WP_LANUCH
          << MAV_CMD_DO_SET_SERVO
          << MAV_CMD_DO_CHANGE_SPEED
-         << MAV_CMD_DO_LAND_START;
+         << MAV_CMD_DO_LAND_START
     //     << MAV_CMD_DO_MOUNT_CONFIGURE
     //     << MAV_CMD_DO_MOUNT_CONTROL;
+         << MAV_CMD_IMAGE_START_CAPTURE << MAV_CMD_IMAGE_STOP_CAPTURE << MAV_CMD_VIDEO_START_CAPTURE << MAV_CMD_VIDEO_STOP_CAPTURE
+         << MAV_CMD_NAV_DELAY;
 
     return list;
 }
@@ -331,24 +351,33 @@ void PX4FirmwarePlugin::guidedModeOrbit(Vehicle* vehicle, const QGeoCoordinate& 
                             centerCoord.isValid() ? centerCoord.altitude()  : NAN);
 }
 
-void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double altitudeRel)
+void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle)
 {
-    Q_UNUSED(altitudeRel);
+    QString takeoffAltParam("MIS_TAKEOFF_ALT");
+
     if (qIsNaN(vehicle->altitudeAMSL()->rawValue().toDouble())) {
         qgcApp()->showMessage(tr("不能起飞，机体位置未知."));//"Unable to takeoff, vehicle position not known.")
         return;
     }
 
+    if (!vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, takeoffAltParam)) {
+        qgcApp()->showMessage(tr("不能起飞，起飞高度参数缺失"));
+        return;
+    }
+    Fact* takeoffAlt = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, takeoffAltParam);
+
+    if (!_armVehicle(vehicle)) {
+        qgcApp()->showMessage(tr("不能起飞:不能解锁."));
+        return;
+    }
+
     vehicle->sendMavCommand(vehicle->defaultComponentId(),
                             MAV_CMD_NAV_TAKEOFF,
-                            true,   // show error is fails
-                            -1.0f,
-                            0.0f,
-                            0.0f,
-                            NAN,
-                            NAN,
-                            NAN,
-                            vehicle->altitudeAMSL()->rawValue().toDouble() + altitudeRel);
+                            true,                           // show error is fails
+                            -1,                             // No pitch requested
+                            0, 0,                           // param 2-4 unused
+                            NAN, NAN, NAN,                  // No yaw, lat, lon
+                            vehicle->altitudeAMSL()->rawValue().toDouble() + takeoffAlt->rawValue().toDouble());
 }
 
 void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoordinate& gotoCoord)
@@ -370,9 +399,9 @@ void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoord
                             vehicle->altitudeAMSL()->rawValue().toFloat());
 }
 
-void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitudeRel)
+void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitudeChange)
 {
-    if (!vehicle->homePositionAvailable()) {
+    if (!vehicle->homePosition().isValid()) {
         qgcApp()->showMessage(tr("不能改变机体高度, home点未知."));
         return;
     }
@@ -380,6 +409,17 @@ void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitu
         qgcApp()->showMessage(tr("不能改变机体高度, 机体高度未知."));//Unable to change altitude, vehicle altitude not known.
         return;
     }
+
+    // Don't allow altitude to fall below 3 meters above home
+    double currentAltRel = vehicle->altitudeRelative()->rawValue().toDouble();
+    double newAltRel = currentAltRel;
+    if (altitudeChange <= 0 && currentAltRel <= 3) {
+        return;
+    }
+    if (currentAltRel + altitudeChange < 3) {
+        altitudeChange = 3 - currentAltRel;
+    }
+    newAltRel = currentAltRel + altitudeChange;
 
     vehicle->sendMavCommand(vehicle->defaultComponentId(),
                             MAV_CMD_DO_REPOSITION,
@@ -390,7 +430,17 @@ void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitu
                             NAN,
                             NAN,
                             NAN,
-                            vehicle->homePosition().altitude() + altitudeRel);
+                            vehicle->homePosition().altitude() + newAltRel);
+}
+
+void PX4FirmwarePlugin::startMission(Vehicle* vehicle)
+{
+    if (!_armVehicle(vehicle)) {
+        qgcApp()->showMessage(tr("不能开始任务: 不能解锁."));
+        return;
+    }
+
+    vehicle->setFlightMode(missionFlightMode());
 }
 
 void PX4FirmwarePlugin::setGuidedMode(Vehicle* vehicle, bool guidedMode)
@@ -465,17 +515,11 @@ void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_messag
     }
 }
 
-QString PX4FirmwarePlugin::missionFlightMode(void)
+bool PX4FirmwarePlugin::vehicleYawsToNextWaypointInMission(const Vehicle* vehicle) const
 {
-    return QString(_missionFlightMode);
-}
-
-QString PX4FirmwarePlugin::rtlFlightMode(void)
-{
-    return QString(_rtlFlightMode);
-}
-
-QString PX4FirmwarePlugin::takeControlFlightMode(void)
-{
-    return QString(_manualFlightMode);
+    if ( vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, QStringLiteral("MIS_YAWMODE"))) {
+        Fact* yawMode = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, QStringLiteral("MIS_YAWMODE"));
+        return yawMode && yawMode->rawValue().toInt() == 1;
+    }
+    return false;
 }
