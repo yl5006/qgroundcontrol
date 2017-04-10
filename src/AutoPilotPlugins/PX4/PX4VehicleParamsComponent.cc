@@ -85,17 +85,3 @@ QUrl PX4VehicleParamsComponent::summaryQmlSource(void) const
 {
     return QUrl();
 }
-
-QString PX4VehicleParamsComponent::prerequisiteSetup(void) const
-{
-    PX4AutoPilotPlugin* plugin = dynamic_cast<PX4AutoPilotPlugin*>(_autopilot);
-    if (plugin) {
-        if (!plugin->airframeComponent()->setupComplete()) {
-            return plugin->airframeComponent()->name();
-        }
-    } else {
-        qWarning() << "Internal error: plugin cast failed";
-    }
-
-    return QString();
-}

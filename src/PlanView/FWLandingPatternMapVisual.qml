@@ -211,7 +211,6 @@ Item {
                 index:      _missionItem.sequenceNumber
                 label:      "Loiter"
                 checked:    _missionItem.isCurrentItem
-		simple:     true
                 onClicked: _root.clicked(_missionItem.sequenceNumber)
             }
         }
@@ -246,7 +245,6 @@ Item {
                 index:      _missionItem.lastSequenceNumber
                 label:      "Land"
                 checked:    _missionItem.isCurrentItem
-		simple:     true
                 onClicked: _root.clicked(_missionItem.sequenceNumber)
             }
         }

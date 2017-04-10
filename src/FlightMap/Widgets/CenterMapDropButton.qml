@@ -216,7 +216,7 @@ DropButton {
                     width:          ScreenTools.defaultFontPixelHeight*3
                     height:         width
                     imageResource:  "/qmlimages/Plan.svg"
-                    visiable:       mainWindow.gcsPosition.isValid && !followVehicleCheckBox.checked
+                    visible:       mainWindow.gcsPosition.isValid && !followVehicleCheckBox.checked
                     bordercolor:    qgcPal.text
                     onClicked: {
                         dropButton.hideDropDown()

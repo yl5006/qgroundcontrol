@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -28,19 +28,76 @@ ColumnLayout {
 
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
 
-    QGCLabel { text: qsTr("Center map on:") }
+    QGCLabel { text: qsTr("地图中心:") }
+    Row {
+        spacing: ScreenTools.defaultFontPixelWidth*0.5
+        RoundImageButton {
+            width:          ScreenTools.defaultFontPixelHeight*3
+            height:         width
+            imageResource:  "/qmlimages/map_home.svg"
+            bordercolor:    qgcPal.text
+            onClicked: {
+                dropPanel.hideDropDown()
+                map.center = fitFunctions.fitHomePosition()
+            }
+        }
+        Rectangle {
+            anchors.verticalCenter:         parent.verticalCenter
+            height:     parent.height*0.8
+            width:      1
+            color:      "grey"
+        }
+        RoundImageButton {
+            width:          ScreenTools.defaultFontPixelHeight*3
+            height:         width
+            imageResource:  "/qmlimages/Plan.svg"
+            bordercolor:    qgcPal.text
+            onClicked: {
+                dropPanel.hideDropDown()
+                fitFunctions.fitMapViewportToMissionItems()
+            }
+        }
 
-    QGCButton {
-        text:               qsTr("Mission")
-        Layout.fillWidth:   true
-        visible:            showMission
+        Rectangle {
+            anchors.verticalCenter:         parent.verticalCenter
+            height:     parent.height*0.8
+            width:      1
+            color:      "grey"
+            visible:        map.gcsPosition.isValid
+        }
+        RoundImageButton {
+            width:          ScreenTools.defaultFontPixelHeight*3
+            height:         width
+            imageResource:  "/qmlimages/Plan.svg" //"Current Location"
+            visible:        map.gcsPosition.isValid
+            bordercolor:    qgcPal.text
+            onClicked: {
+                dropPanel.hideDropDown()
+                map.center = map.gcsPosition
+            }
+        }
 
-        onClicked: {
-            dropPanel.hide()
-            fitFunctions.fitMapViewportToMissionItems()
+        Rectangle {
+            anchors.verticalCenter:         parent.verticalCenter
+            height:     parent.height*0.8
+            width:      1
+            color:      "grey"
+            visible:        _activeVehicle && _activeVehicle.coordinate.isValid
+        }
+
+        RoundImageButton {
+            width:          ScreenTools.defaultFontPixelHeight*3
+            height:         width
+            imageResource:  "/qmlimages/map_plane.svg"
+            bordercolor:    qgcPal.text
+            visible:        _activeVehicle && _activeVehicle.coordinate.isValid
+            onClicked: {
+                dropPanel.hideDropDown()
+                map.center = activeVehicle.coordinate
+            }
         }
     }
-
+/*
     QGCButton {
         text:               qsTr("All items")
         Layout.fillWidth:   true
@@ -50,37 +107,5 @@ ColumnLayout {
             dropPanel.hide()
             fitFunctions.fitMapViewportToAllItems()
         }
-    }
-
-    QGCButton {
-        text:               qsTr("Home")
-        Layout.fillWidth:   true
-
-        onClicked: {
-            dropPanel.hide()
-            map.center = fitFunctions.fitHomePosition()
-        }
-    }
-
-    QGCButton {
-        text:               qsTr("Current Location")
-        Layout.fillWidth:   true
-        enabled:            map.gcsPosition.isValid
-
-        onClicked: {
-            dropPanel.hide()
-            map.center = map.gcsPosition
-        }
-    }
-
-    QGCButton {
-        text:               qsTr("Vehicle")
-        Layout.fillWidth:   true
-        enabled:            _activeVehicle && _activeVehicle.coordinate.isValid
-
-        onClicked: {
-            dropPanel.hide()
-            map.center = activeVehicle.coordinate
-        }
-    }
+    }*/
 } // Column

@@ -25,13 +25,14 @@ Canvas {
     property real   vehicleYaw
     property bool   showGimbalYaw:          false
 
+    property int    simpleindex:                  0   ///
     property real   _width:             showGimbalYaw ? Math.max(_gimbalYawWidth, labelControl.visible ? labelControl.width : indicator.width) : (labelControl.visible ? labelControl.width : indicator.width)
     property real   _height:            showGimbalYaw ? _gimbalYawWidth : (labelControl.visible ? labelControl.height : indicator.height)
     property real   _gimbalYawRadius:   ScreenTools.defaultFontPixelHeight
     property real   _gimbalYawWidth:    _gimbalYawRadius * 2
     property real   _indicatorRadius:   small ? (ScreenTools.defaultFontPixelHeight * ScreenTools.smallFontPointRatio * 1.25 / 2) : (ScreenTools.defaultFontPixelHeight * 0.66)
     property real   _gimbalRadians:     degreesToRadians(vehicleYaw + gimbalYaw - 90)
-    property real   _labelMargin:       2
+    property real   _labelMargin:       0//2
     property real   _labelRadius:       _indicatorRadius + _labelMargin
     property string _label:             index === 0 ? "" : label
     property string _index:             index === 0 ? label : index
@@ -70,6 +71,7 @@ Canvas {
                return   checked  ? "/qmlimages/WaySet.svg" : "/qmlimages/WaySet0.svg"
             default:
                return   checked  ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
+        }
     }
 
     function paintGimbalYaw(context) {
@@ -95,13 +97,13 @@ Canvas {
     Rectangle {
         id:                 labelControl
         anchors.leftMargin: -_labelMargin
-        anchors.topMargin:  -_labelMargin
+        anchors.topMargin:  2//-_labelMargin
         anchors.left:       indicator.left
         anchors.top:        indicator.top
-        height:             _labelRadius * 2
+        height:             _labelRadius * 4  //2
         width:              labelControlLabel.contentWidth + (_labelMargin * 3) + indicator.width
-        color:              "white"
-        opacity:            0.5
+        color:              "black"
+        opacity:            0.3
         radius:             _labelRadius
         visible:            _label.length !== 0
     }
@@ -122,23 +124,31 @@ Canvas {
         text:                   _label
     }
 
+    Image {
+        id:         waypoint
+        source:     simpleindex==0?getsouceimg(missionItem.command):"/qmlimages/Waypoint0.svg"
+        mipmap:     true
+        fillMode:   Image.PreserveAspectFit
+        anchors.fill: indicator
+    }
     Rectangle {
         id:                             indicator
         anchors.horizontalCenter:       parent.left
         anchors.verticalCenter:         parent.top
         anchors.horizontalCenterOffset: anchorPointX
         anchors.verticalCenterOffset:   anchorPointY
-        width:                          _indicatorRadius * 2
+        width:                          _indicatorRadius * 4 //2
         height:                         width
-        color:                          root.color
+        color:                          "transparent"//root.color
         radius:                         _indicatorRadius
 
         QGCLabel {
             anchors.fill:           parent
+            anchors.topMargin:      _indicatorRadius*0.8
             horizontalAlignment:    Text.AlignHCenter
-            verticalAlignment:      Text.AlignVCenter
+          //  verticalAlignment:      Text.AlignVCenter
             color:                  "white"
-            font.pointSize:         ScreenTools.defaultFontPointSize
+            font.pointSize:         ScreenTools.defaultFontPointSize*1.1
             fontSizeMode:           Text.HorizontalFit
             text:                   _index
         }

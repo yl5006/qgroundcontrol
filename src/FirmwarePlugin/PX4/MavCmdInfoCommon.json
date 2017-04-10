@@ -10,6 +10,41 @@
             "paramRemove":  "2,3,4"
         },
         {
+            "id":           206,
+            "comment":      "MAV_CMD_DO_SET_CAM_TRIGG_DIST",
+            "paramRemove":  "2,3,4"
+        },
+        {
+            "id":           183,
+            "comment":      "MAV_CMD_DO_SET_SERVO",
+            "paramRemove":  "2,3,4"
+        },
+        {
+            "id":           178,
+            "comment":      "MAV_CMD_DO_CHANGE_SPEED",
+            "paramRemove":  "2,3,4"
+        },
+        {
+            "id":           177,
+            "comment":      "MAV_CMD_DO_JUMP",
+            "paramRemove":  "2,3,4"
+        },
+        {
+            "id":           215,
+            "comment":      "MAV_CMD_DO_TIME_CAM",
+            "paramRemove":  "2,3,4"
+        },
+        {
+            "id":           216,
+            "comment":      "MAV_CMD_NAV_RETURN_TO_WP_LANUCH",
+            "paramRemove":  "2,3,4"
+        },
+        {
+            "id":           214,
+            "comment":      "MAV_CMD_DO_CAM",
+            "paramRemove":  "2,3,4"
+        },
+        {
             "id":           21,
             "comment":      "MAV_CMD_NAV_LAND",
             "paramRemove":  "1"

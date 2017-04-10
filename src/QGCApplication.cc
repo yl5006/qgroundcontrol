@@ -423,7 +423,7 @@ bool QGCApplication::_initForNormalAppBoot(void)
 
     // Now that main window is up check for lost log files
     connect(this, &QGCApplication::checkForLostLogFiles, toolbox()->mavlinkProtocol(), &MAVLinkProtocol::checkForLostLogFiles);
-    emit checkForLostLogFiles();
+//  emit checkForLostLogFiles();   //do not check
 #endif
 
     // Load known link configurations

@@ -192,6 +192,9 @@ FlightMap {
     ExclusiveGroup {
         id: _mapTypeButtonsExclusiveGroup
     }    
+    ExclusiveGroup {
+        id: dropButtonsExclusiveGroup
+    }
     //--Tool Buttons
     Row {
         id:                 toolColumn
@@ -242,19 +245,19 @@ FlightMap {
                     Row {
                         spacing: ScreenTools.defaultFontPixelWidth
                         Repeater {
-                            model: QGroundControl.flightMapSettings.mapTypes
+                            model: QGroundControl.settingsManager.flightMapSettings.mapType.enumStrings
                             RoundImageButton {
                                 width:          ScreenTools.defaultFontPixelHeight*3
                                 height:         width
-                                exclusiveGroup: mapTypeButtonsExclusiveGroup
-                                checked:        QGroundControl.flightMapSettings.mapType === QGroundControl.flightMapSettings.mapTypes[index]
+                                exclusiveGroup: _mapTypeButtonsExclusiveGroup
+                                checked:        QGroundControl.settingsManager.flightMapSettings.mapType.value == index
                                 imageResource:  index==0?"/qmlimages/map_street.svg":index==1?"/qmlimages/map_gps.svg" :"/qmlimages/map_terrain.svg"
                                 bordercolor:    qgcPal.buttonHighlight
                                 showcheckcolor: true
                                 onClicked: {
-                                    QGroundControl.flightMapSettings.mapType = QGroundControl.flightMapSettings.mapTypes[index]
+                                    QGroundControl.settingsManager.flightMapSettings.mapType.value = index
                                     checked = true
-                                    dropButtonsExclusiveGroup.current = null
+                                    mapTypeButton.hideDropDown()
                                 }
                             }
                         }
@@ -425,7 +428,7 @@ FlightMap {
             sourceItem: MissionItemIndexLabel {
                 id:         itemIndexLabel
                 label:      qsTr("R", "rally point map item label")
-                simple:  true
+                simpleindex:   1
             }
         }
     }
@@ -441,7 +444,7 @@ FlightMap {
         sourceItem: MissionItemIndexLabel {
             checked: true
             label:   qsTr("G", "Goto here waypoint") // second string is translator's hint.
-	    simple:  true
+            simpleindex:   1
         }
     }    
 

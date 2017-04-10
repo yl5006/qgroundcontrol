@@ -271,11 +271,11 @@ include(libs/QSimpleUpdater/QSimpleUpdater.pri)
 }
 
 CustomBuild {
-    exists($$PWD/custom/qgroundcontrol.qrc) {
-        message("Using custom qgroundcontrol.qrc")
-        RESOURCES += $$PWD/custom/qgroundcontrol.qrc
+    exists($$PWD/custom/GroundStation.qrc) {
+        message("Using custom GroundStation.qrc")
+        RESOURCES += $$PWD/custom/GroundStation.qrc
     } else {
-        RESOURCES += $$PWD/qgroundcontrol.qrc
+        RESOURCES += $$PWD/GroundStation.qrc
     }
     exists($$PWD/custom/qgcresources.qrc) {
         message("Using custom qgcresources.qrc")
@@ -284,16 +284,16 @@ CustomBuild {
         RESOURCES += $$PWD/qgcresources.qrc
     }
 } else {
-    DEFINES += QGC_APPLICATION_NAME=\"\\\"QGroundControl\\\"\"
-    DEFINES += QGC_ORG_NAME=\"\\\"QGroundControl.org\\\"\"
-    DEFINES += QGC_ORG_DOMAIN=\"\\\"org.qgroundcontrol\\\"\"
+    DEFINES += QGC_APPLICATION_NAME=\"\\\"GroundStation\\\"\"
+    DEFINES += QGC_ORG_NAME=\"\\\"GroundStation.org\\\"\"
+    DEFINES += QGC_ORG_DOMAIN=\"\\\"org.GroundStation\\\"\"
     RESOURCES += \
-        $$PWD/qgroundcontrol.qrc \
+        $$PWD/GroundStation.qrc \
         $$PWD/qgcresources.qrc
 }
 
 #
-# Main QGroundControl portion of project file
+# Main GroundStation portion of project file
 #
 
 DebugBuild {

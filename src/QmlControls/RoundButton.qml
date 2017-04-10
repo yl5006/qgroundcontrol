@@ -62,14 +62,13 @@ Item {
                 duration:       500
                 running:        false
             }
-
-            MouseArea {
-                anchors.fill:   parent
-                onClicked: {
-                    checked = !checked      
-                    _root.clicked()
-                    forceActiveFocus()
-                }
+        }
+        MouseArea {
+            anchors.fill:   parent
+            onClicked: {
+                checked = !checked
+                _root.clicked()
+                forceActiveFocus()
             }
         }
     }

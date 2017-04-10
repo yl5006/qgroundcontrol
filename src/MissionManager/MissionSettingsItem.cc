@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -166,6 +166,7 @@ void MissionSettingsItem::appendMissionItems(QList<MissionItem*>& items, QObject
                                         coordinate().latitude(),
                                         coordinate().longitude(),
                                         _plannedHomePositionAltitudeFact.rawValue().toDouble(),
+                                        0, 0, 0,
                                         true,                   // autoContinue
                                         false,                  // isCurrentItem
                                         missionItemParent);
@@ -180,7 +181,7 @@ void MissionSettingsItem::appendMissionItems(QList<MissionItem*>& items, QObject
                                             _missionFlightSpeedFact.rawValue().toDouble(),
                                             -1,                                                                 // No throttle change
                                             0,                                                                  // Absolute speed change
-                                            0, 0, 0,                                                            // param 5-7 not used
+                                            0, 0, 0, 0, 0, 0,                                                           // param 5-7 not used
                                             true,                                                               // autoContinue
                                             false,                                                              // isCurrentItem
                                             missionItemParent);
@@ -228,6 +229,7 @@ bool MissionSettingsItem::addMissionEndAction(QList<MissionItem*>& items, int se
                                lastWaypointCoord.latitude(),
                                lastWaypointCoord.longitude(),
                                lastWaypointCoord.altitude(),
+                               0, 0, 0,
                                true,                        // autoContinue
                                false,                       // isCurrentItem
                                missionItemParent);
@@ -237,7 +239,7 @@ bool MissionSettingsItem::addMissionEndAction(QList<MissionItem*>& items, int se
         item = new MissionItem(seqNum,
                                MAV_CMD_NAV_RETURN_TO_LAUNCH,
                                MAV_FRAME_MISSION,
-                               0, 0, 0, 0, 0, 0, 0,        // param 1-7 not used
+                               0, 0, 0, 0, 0, 0, 0,0, 0, 0,// param 1-7 not used
                                true,                       // autoContinue
                                false,                      // isCurrentItem
                                missionItemParent);

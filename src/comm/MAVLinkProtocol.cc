@@ -193,7 +193,7 @@ void MAVLinkProtocol::receiveBytes(LinkInterface* link, QByteArray b)
                 {
                     warnedUserNonMavlink = true;
                     emit protocolStatusMessage(tr("数据链"), tr("数据链不匹配""检查数传波特率等设置"));
-                                                                          "Please check if the baud rates of QGroundControl and your autopilot are the same."));
+                                                                          //"Please check if the baud rates of QGroundControl and your autopilot are the same."));
                 }
             }
         }

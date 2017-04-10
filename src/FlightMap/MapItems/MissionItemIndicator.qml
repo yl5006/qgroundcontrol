@@ -24,8 +24,8 @@ MapQuickItem {
 
     signal clicked
 
-    anchorPoint.x:  sourceItem.anchorPointX  / 2
-    anchorPoint.y:  sourceItem.anchorPointY   
+    anchorPoint.x:  sourceItem.anchorPointX
+    anchorPoint.y:  sourceItem.anchorPointY * 2
 
     sourceItem:
         MissionItemIndexLabel {

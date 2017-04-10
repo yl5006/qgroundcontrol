@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -32,11 +32,11 @@ Item {
     signal showConfirmAction(string title, string message, int action, var actionData)
 
     readonly property string emergencyStopTitle:    qsTr("Emergency Stop")
-    readonly property string armTitle:              qsTr("Arm")
-    readonly property string disarmTitle:           qsTr("Disarm")
-    readonly property string rtlTitle:              qsTr("RTL")
-    readonly property string takeoffTitle:          qsTr("Takeoff")
-    readonly property string landTitle:             qsTr("Land")
+    readonly property string armTitle:              qsTr("解锁")
+    readonly property string disarmTitle:           qsTr("加锁")
+    readonly property string rtlTitle:              qsTr("返航")
+    readonly property string takeoffTitle:          qsTr("起飞")
+    readonly property string landTitle:             qsTr("降落")
     readonly property string startMissionTitle:     qsTr("Start Mission")
     readonly property string resumeMissionTitle:    qsTr("Resume Mission")
     readonly property string pauseTitle:            qsTr("Pause")

@@ -837,14 +837,39 @@ void SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLi
         _setCameraShots(cameraShots);
     }
 
-    // Turn into a path
-    for (int i=0; i<resultLines.count(); i++) {
+    // Turn into a path   //add two line
+    QLineF line=QLineF();
+    QLineF temp=QLineF();
+    if(resultLines.count()>0)
+    {
+    line.setP1(resultLines[0].p1());
+    line.setLength(gridSpacing);
+    line.setAngle(-gridAngle+180);
+    temp.setP1(line.p2());
+    temp.setLength(resultLines[0].length());
+    temp.setAngle(resultLines[0].angle());
+    //first line
+    resultLines.insert(0,temp);
+
+    line.setP1(resultLines[resultLines.count()-1].p1());
+    line.setLength(gridSpacing);
+    line.setAngle(-gridAngle);
+    temp.setP1(line.p2());
+    temp.setLength(resultLines[resultLines.count()-1].length());
+    temp.setAngle(resultLines[resultLines.count()-1].angle());
+    //last line
+    resultLines.append(temp);
+    resultLines.append(temp); //多加一条
+    }
+    bool uselast=true;
+    QPointF lastpoint;
+    for (int i=0; i<resultLines.count()-1; i++) {
         QLineF          transectLine;
         QList<QPointF>  transectPoints;
-        const QLineF&   line = resultLines[i];
-
+        const QLineF   line = resultLines[i];
+        const QLineF    nextline = resultLines[i+1];
         float turnaroundPosition = _turnaroundDistance() / line.length();
-
+        float nextturnaroundPosition = _turnaroundDistance() / nextline.length();
         if (i & 1) {
             transectLine = QLineF(line.p2(), line.p1());
         } else {
@@ -852,9 +877,15 @@ void SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLi
         }
 
         // Build the points along the transect
-
         if (_hasTurnaround()) {
-            transectPoints.append(transectLine.pointAt(-turnaroundPosition));
+            if(uselast)
+            {
+                transectPoints.append(transectLine.pointAt(-turnaroundPosition));
+            }
+            else
+            {
+              transectPoints.append(lastpoint);
+            }
         }
 
         // Polygon entry point
@@ -876,7 +907,49 @@ void SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLi
         transectPoints.append(transectLine.p2());
 
         if (_hasTurnaround()) {
-            transectPoints.append(transectLine.pointAt(1 + turnaroundPosition));
+            if(i==0||i==resultLines.count()-3)
+            {
+                transectPoints.append(transectLine.pointAt(1 + turnaroundPosition));
+                uselast=true;
+            }
+            else
+            {
+                transectPoints.append(transectLine.pointAt(1 + turnaroundPosition));
+                temp.setP1(transectPoints.last());
+                temp.setLength(gridSpacing);
+                temp.setAngle(-gridAngle);
+                lastpoint=temp.p2();
+                QLineF tp =QLineF();
+                QLineF tp1 =QLineF();
+                if (i & 1)
+                {
+                    tp=QLineF(temp.p2(),nextline.p1());
+                    tp1=QLineF(temp.p2(),nextline.p2());
+                }else
+                {
+                    tp=QLineF(temp.p2(),nextline.p2());
+                    tp1=QLineF(temp.p2(),nextline.p1());
+                }
+                if(tp.length()< _turnaroundDistance() || tp1.length() < nextline.length())
+                {
+                    transectPoints.removeLast();
+                    if (i & 1)
+                    {
+                        temp.setP1(nextline.pointAt(-nextturnaroundPosition));
+                    }
+                    else
+                    {
+                        temp.setP1(nextline.pointAt(1+nextturnaroundPosition));
+                    }
+                    temp.setLength(gridSpacing);
+                    temp.setAngle(-gridAngle+180);
+                    transectPoints.append(temp.p2());
+                    uselast=true;
+                }
+                else{
+                    uselast=false;
+                }
+            }
         }
 
         simpleGridPoints.append(transectPoints[0]);
@@ -890,30 +963,21 @@ int SurveyMissionItem::_appendWaypointToMission(QList<MissionItem*>& items, int 
 {
     double  altitude =          _gridAltitudeFact.rawValue().toDouble();
     bool    altitudeRelative =  _gridAltitudeRelativeFact.rawValue().toBool();
-
+    MissionItem* item;
     qCDebug(SurveyMissionItemLog) << "_appendWaypointToMission seq:trigger" << seqNum << (cameraTrigger != CameraTriggerNone);
-
-    MissionItem* item = new MissionItem(seqNum++,
-                                        MAV_CMD_NAV_WAYPOINT,
-                                        altitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,
-                                        cameraTrigger == CameraTriggerHoverAndCapture ? 1 : 0,  // Hold time (1 second for hover and capture to settle vehicle before image is taken)
-                                        0.0, 0.0, 0.0,                                          // param 2-4 unused
-                                        coord.latitude(),
-                                        coord.longitude(),
-                                        altitude,
-                                        true,                                                   // autoContinue
-                                        false,                                                  // isCurrentItem
-                                        missionItemParent);
-    items.append(item);
-
     switch (cameraTrigger) {
     case CameraTriggerOff:
     case CameraTriggerOn:
         item = new MissionItem(seqNum++,
                                MAV_CMD_DO_SET_CAM_TRIGG_DIST,
-                               MAV_FRAME_MISSION,
+                               altitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,//MAV_FRAME_MISSION,
+                               cameraTrigger == CameraTriggerHoverAndCapture ? 1 : 0,
+                               0, 0, 0,
+                               coord.latitude(),
+                               coord.longitude(),
+                               altitude,
                                cameraTrigger == CameraTriggerOn ? _triggerDistance() : 0,
-                               0, 0, 0, 0, 0, 0,               // param 2-7 unused
+                               0, 0,                        // param 8-10 unused
                                true,                           // autoContinue
                                false,                          // isCurrentItem
                                missionItemParent);
@@ -929,6 +993,7 @@ int SurveyMissionItem::_appendWaypointToMission(QList<MissionItem*>& items, int 
                                0, 0,               // Param 4-5 unused
                                0,                  // Camera ID
                                7,                  // Param 7 unused
+                               0, 0, 0,
                                true,               // autoContinue
                                false,              // isCurrentItem
                                missionItemParent);
@@ -947,6 +1012,19 @@ int SurveyMissionItem::_appendWaypointToMission(QList<MissionItem*>& items, int 
         items.append(item);
 #endif
     default:
+        item = new MissionItem(seqNum++,
+                               MAV_CMD_NAV_WAYPOINT,
+                               altitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,
+                               0,  // Hold time (1 second for hover and capture to settle vehicle before image is taken)
+                               0.0, 0.0, 0.0,                                          // param 2-4 unused
+                               coord.latitude(),
+                               coord.longitude(),
+                               altitude,
+                               0, 0, 0,
+                               true,                                                   // autoContinue
+                               false,                                                  // isCurrentItem
+                               missionItemParent);
+        items.append(item);
         break;
     }
 
@@ -975,7 +1053,7 @@ void SurveyMissionItem::appendMissionItems(QList<MissionItem*>& items, QObject* 
                                             MAV_CMD_DO_SET_CAM_TRIGG_DIST,
                                             MAV_FRAME_MISSION,
                                             _triggerDistance(),
-                                            0, 0, 0, 0, 0, 0,       // param 2-7 unused
+                                            0, 0, 0, 0, 0, 0, 0, 0, 0,       // param 2-7 unused
                                             true,                   // autoContinue
                                             false,                  // isCurrentItem
                                             missionItemParent);
@@ -1041,7 +1119,7 @@ void SurveyMissionItem::appendMissionItems(QList<MissionItem*>& items, QObject* 
                                             MAV_CMD_DO_SET_CAM_TRIGG_DIST,
                                             MAV_FRAME_MISSION,
                                             0.0,                    // trigger distance (off)
-                                            0, 0, 0, 0, 0, 0,       // param 2-7 unused
+                                            0, 0, 0, 0, 0, 0, 0, 0, 0,      // param 2-7 unused
                                             true,                   // autoContinue
                                             false,                  // isCurrentItem
                                             missionItemParent);

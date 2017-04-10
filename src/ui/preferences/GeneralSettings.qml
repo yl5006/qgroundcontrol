@@ -48,17 +48,66 @@ QGCView {
     QGCViewPanel {
         id:             panel
         anchors.fill:   parent
+        Rectangle {
+            id:         title
+            anchors.top:        parent.top
+            width:      parent.width
+            height:     ScreenTools.defaultFontPixelHeight*8
+            color:      "transparent"
+            QGCCircleProgress{
+                id:                 setcircle
+                anchors.left:       parent.left
+                anchors.top:        parent.top
+                anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+                anchors.topMargin:  ScreenTools.defaultFontPixelHeight
+                width:              ScreenTools.defaultFontPixelHeight*5
+                value:              0
+            }
+            QGCColoredImage {
+                id:         setimg
+                height:     ScreenTools.defaultFontPixelHeight*2.5
+                width:      height
+                sourceSize.width: width
+                source:     "/qmlimages/tool-01.svg"
+                fillMode:   Image.PreserveAspectFit
+                color:      qgcPal.text
+                anchors.horizontalCenter:setcircle.horizontalCenter
+                anchors.verticalCenter: setcircle.verticalCenter
+            }
+
+            Image {
+                source:    "/qmlimages/title.svg"
+                width:      idset.width+ScreenTools.defaultFontPixelHeight*4
+                height:     ScreenTools.defaultFontPixelHeight*3
+                anchors.verticalCenter: setcircle.verticalCenter
+                anchors.left:          setcircle.right
+                //                fillMode: Image.PreserveAspectFit
+            }
+            QGCLabel {
+                id:             idset
+                anchors.left:   setimg.left
+                anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
+                text:           qsTr("系统设置")//"Systemseting"
+                font.pointSize: ScreenTools.mediumFontPointSize
+                font.bold:              true
+                color:          qgcPal.text
+                anchors.verticalCenter: setimg.verticalCenter
+            }
+        }
         QGCFlickable {
             clip:               true
-            anchors.fill:       parent
-            contentHeight:      settingsColumn.height
-            contentWidth:       settingsColumn.width
+            anchors.top:        title.bottom
+            width:              parent.width
+            height:             parent.height -ScreenTools.defaultFontPixelWidth*20
+            contentHeight:      settingsColumn.height+ScreenTools.defaultFontPixelWidth*2
+            contentWidth:       _qgcView.width
+            flickableDirection: Flickable.VerticalFlick
             Column {
                 id:                 settingsColumn
                 width:              _qgcView.width
                 spacing:            ScreenTools.defaultFontPixelHeight * 0.5
                 anchors.margins:    ScreenTools.defaultFontPixelWidth
-
+                anchors.top:        parent.top
                 //-----------------------------------------------------------------
                 //-- Units
                 Item {
@@ -66,7 +115,7 @@ QGCView {
                     height:                     unitLabel.height
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.unitsSettings.visible
+                    visible:                    false//QGroundControl.settingsManager.unitsSettings.visible
                     QGCLabel {
                         id:             unitLabel
                         text:           qsTr("Units (Requires Restart)")
@@ -89,7 +138,7 @@ QGCView {
                             id:     unitsRepeater
                             model:  [ QGroundControl.settingsManager.unitsSettings.distanceUnits, QGroundControl.settingsManager.unitsSettings.areaUnits, QGroundControl.settingsManager.unitsSettings.speedUnits ]
 
-                            property var names: [ qsTr("Distance:"), qsTr("Area:"), qsTr("Speed:") ]
+                            property var names: [ qsTr("距离:"), qsTr("面积:"), qsTr("速度:") ]
 
                             Row {
                                 spacing:    ScreenTools.defaultFontPixelWidth
@@ -118,7 +167,7 @@ QGCView {
                     height:                     miscLabel.height
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.appSettings.visible
+                    visible:                    false//QGroundControl.settingsManager.appSettings.visible
                     QGCLabel {
                         id:             miscLabel
                         text:           qsTr("Miscellaneous")
@@ -143,7 +192,7 @@ QGCView {
                             spacing: ScreenTools.defaultFontPixelWidth
                             QGCLabel {
                                 id:     baseFontLabel
-                                text:   qsTr("Font size:")
+                                text:   qsTr("字体大小:")
                                 anchors.verticalCenter: parent.verticalCenter
                             }
                             Row {
@@ -180,13 +229,14 @@ QGCView {
                             QGCLabel {
                                 anchors.verticalCenter: parent.verticalCenter
                                 text:                   _requiresRestart
+                                visible:                false
                             }
                         }
                         //-----------------------------------------------------------------
                         //-- Palette Styles
                         Row {
                             spacing: ScreenTools.defaultFontPixelWidth
-                            visible: QGroundControl.settingsManager.appSettings.indoorPalette.visible
+                            visible: false//QGroundControl.settingsManager.appSettings.indoorPalette.visible
                             QGCLabel {
                                 text:           qsTr("Color scheme:")
                                 width:          _labelWidth
@@ -200,10 +250,59 @@ QGCView {
                             }
                         }
                         //-----------------------------------------------------------------
-                        //-- Map Provider
+                        //-- Map Provider 
                         Row {
+                            id:         map
                             spacing:    ScreenTools.defaultFontPixelWidth
                             visible:    _mapProvider.visible
+                            QGCLabel {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text:               qsTr("地图")//qsTr("Map Provider:")
+                            }
+                            ExclusiveGroup { id: mapActionGroup }
+                            ImageButton{
+                                imageResource:        "/qmlimages/bingmap.png"
+                                exclusiveGroup:      mapActionGroup
+                                width:               ScreenTools.defaultFontPixelHeight * 5
+                                height:              ScreenTools.defaultFontPixelHeight * 4
+                                imageResource2:             "/qmlimages/checked.svg"
+                                img2visible:        true
+                                checkable:          true
+                                checked:            _mapProvider.value==0
+                                onClicked: {
+                                   _mapProvider.value=0
+                                }
+                            }
+                            ImageButton{
+                                imageResource:             "/qmlimages/googlemap.png"
+                                exclusiveGroup:     mapActionGroup
+                                width:              ScreenTools.defaultFontPixelHeight * 5
+                                height:             ScreenTools.defaultFontPixelHeight * 4
+                                imageResource2:             "/qmlimages/checked.svg"
+                                img2visible:        true
+                                checkable:          true
+                                checked:            _mapProvider.value==1
+                                onClicked: {
+                                    _mapProvider.value=1
+                                }
+                            }
+                            ImageButton{
+                                imageResource:             "/qmlimages/gaodemap.png"
+                                exclusiveGroup:     mapActionGroup
+                                width:              ScreenTools.defaultFontPixelHeight * 5
+                                height:             ScreenTools.defaultFontPixelHeight * 4
+                                imageResource2:             "/qmlimages/checked.svg"
+                                img2visible:        true
+                                checkable:          true
+                                checked:            _mapProvider.value==2
+                                onClicked: {
+                                   _mapProvider.value=2
+                                }
+                            }
+                        }
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelWidth
+                            visible:    false//_mapProvider.visible
                             QGCLabel {
                                 text:       qsTr("Map Provider:")
                                 width:      _labelWidth
@@ -220,7 +319,7 @@ QGCView {
                         //-- Map Type
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    _mapType.visible
+                            visible:    false//_mapType.visible
                             QGCLabel {
                                 text:               qsTr("Map Type:")
                                 width:              _labelWidth
@@ -245,14 +344,14 @@ QGCView {
                         FactCheckBox {
                             text:       qsTr("Mute all audio output")
                             fact:       _audioMuted
-                            visible:    _audioMuted.visible
+                            visible:    false//_audioMuted.visible
                             property Fact _audioMuted: QGroundControl.settingsManager.appSettings.audioMuted
                         }
                         //-----------------------------------------------------------------
                         //-- Save telemetry log
                         FactCheckBox {
                             id:         promptSaveLog
-                            text:       qsTr("Save telemetry log after each flight")
+                            text:       qsTr("在每次飞行中存储飞行日志")//"Prompt to save Flight Data Log after each flight"
                             fact:       _telemetrySave
                             visible:    !ScreenTools.isMobile && _telemetrySave.visible
                             property Fact _telemetrySave: QGroundControl.settingsManager.appSettings.telemetrySave
@@ -260,7 +359,7 @@ QGCView {
                         //-----------------------------------------------------------------
                         //-- Save even if not armed
                         FactCheckBox {
-                            text:       qsTr("Save telemetry log even if vehicle was not armed")
+                            text:       qsTr("即使未解锁也存储飞行日志")//"Prompt to save Flight Data Log even if vehicle was not armed"
                             fact:       _telemetrySaveNotArmed
                             visible:    !ScreenTools.isMobile && _telemetrySaveNotArmed.visible
                             enabled:    promptSaveLog.checked
@@ -270,7 +369,7 @@ QGCView {
                         //-- Clear settings
                         QGCCheckBox {
                             id:         clearCheck
-                            text:       qsTr("Clear all settings on next start")
+                            text:       qsTr("每次启动清除配置文件")//"Clear all settings on next start"
                             checked:    false
                             onClicked: {
                                 checked ? clearDialog.visible = true : QGroundControl.clearDeleteAllSettingsNextBoot()
@@ -280,8 +379,8 @@ QGCView {
                                 visible:    false
                                 icon:       StandardIcon.Warning
                                 standardButtons: StandardButton.Yes | StandardButton.No
-                                title:      qsTr("Clear Settings")
-                                text:       qsTr("All saved settings will be reset the next time you start %1. Is this really what you want?").arg(QGroundControl.appName)
+                            	title:      qsTr("清除设置")//"Clear Settings"
+                            	text:       qsTr("所有保持设置会在下次重启都清除,你确认要这样做？")//"All saved settings will be reset the next time you start QGroundControl. Is this really what you want?"
                                 onYes: {
                                     QGroundControl.deleteAllSettingsNextBoot()
                                     clearDialog.visible = false
@@ -296,6 +395,7 @@ QGCView {
                         //-- Battery talker
                         Row {
                             spacing: ScreenTools.defaultFontPixelWidth
+                            visible: false
                             QGCCheckBox {
                                 id:                 announcePercentCheckbox
                                 text:               qsTr("Announce battery lower than:")
@@ -322,7 +422,7 @@ QGCView {
                         //-- Virtual joystick settings
                         FactCheckBox {
                             text:       qsTr("Virtual Joystick")
-                            visible:    _virtualJoystick.visible
+                            visible:    false//_virtualJoystick.visible
                             fact:       _virtualJoystick
 
                             property Fact _virtualJoystick: QGroundControl.settingsManager.appSettings.virtualJoystick
@@ -331,11 +431,11 @@ QGCView {
                         //-- Default mission item altitude
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude.visible
+                            visible:    false//QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude.visible
                             QGCLabel {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width:  (_labelWidth + _editFieldWidth) * 0.65
-                                text:   qsTr("Default mission altitude:")
+                                text:   qsTr("默认任务高度:")
                             }
                             FactTextField {
                                 id:     defaultItemAltitudeField
@@ -350,7 +450,7 @@ QGCView {
                         FactCheckBox {
                             text:       qsTr("AutoLoad missions")
                             fact:       _autoLoad
-                            visible:    _autoLoad.visible
+                            visible:    false//_autoLoad.visible
 
                             property Fact _autoLoad: QGroundControl.settingsManager.appSettings.autoLoadMissions
                         }
@@ -359,7 +459,7 @@ QGCView {
                         //-- Save path
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    _savePath.visible
+                            visible:    false//_savePath.visible
 
                             QGCLabel {
                                 anchors.baseline:   savePathBrowse.baseline
@@ -396,7 +496,7 @@ QGCView {
                     height:                     autoConnectLabel.height
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.autoConnectSettings.visible
+                    visible:                    false//QGroundControl.settingsManager.autoConnectSettings.visible
                     QGCLabel {
                         id:             autoConnectLabel
                         text:           qsTr("AutoConnect to the following devices:")
@@ -409,7 +509,7 @@ QGCView {
                     color:                      qgcPal.windowShade
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.autoConnectSettings.visible
+                    visible:                    false//QGroundControl.settingsManager.autoConnectSettings.visible
 
                     Column {
                         id:         autoConnectCol
@@ -448,7 +548,7 @@ QGCView {
                     height:                     videoLabel.height
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.videoSettings.visible
+                    visible:                    false//QGroundControl.settingsManager.videoSettings.visible
                     QGCLabel {
                         id:             videoLabel
                         text:           qsTr("Video (Requires Restart)")
@@ -474,7 +574,7 @@ QGCView {
                             visible:    QGroundControl.settingsManager.videoSettings.videoSource.visible
                             QGCLabel {
                                 anchors.baseline:   videoSource.baseline
-                                text:               qsTr("Video Source:")
+                                text:               qsTr("视频源:")
                                 width:              _labelWidth
                             }
                             FactComboBox {
@@ -489,7 +589,7 @@ QGCView {
                             visible:    QGroundControl.settingsManager.videoSettings.udpPort.visible && QGroundControl.videoManager.isGStreamer && videoSource.currentIndex === 0
                             QGCLabel {
                                 anchors.baseline:   udpField.baseline
-                                text:               qsTr("UDP Port:")
+                                text:               qsTr("UDP 端口:")
                                 width:              _labelWidth
                             }
                             FactTextField {
@@ -546,7 +646,7 @@ QGCView {
 
                             QGCLabel {
                                 anchors.baseline:   videoBrowse.baseline
-                                text:               qsTr("Save path:")
+                                text:               qsTr("保存路径:")
                                 enabled:            promptSaveLog.checked
                             }
                             QGCLabel {
@@ -555,12 +655,12 @@ QGCView {
                             }
                             QGCButton {
                                 id:         videoBrowse
-                                text:       "Browse"
+                                text:       qsTr("选择:")//"Browse"
                                 onClicked:  videoDialog.openForLoad()
 
                                 QGCFileDialog {
                                     id:             videoDialog
-                                    title:          "Choose a location to save video files."
+                                    title:          qsTr("选择一个路径保存视频文件:")//"Choose a location to save video files."
                                     folder:         "file://" + _videoPath.value
                                     selectFolder:   true
 
@@ -576,6 +676,7 @@ QGCView {
                 QGCLabel {
                     anchors.horizontalCenter:   parent.horizontalCenter
                     text:                       qsTr("%1 Version: %2").arg(QGroundControl.appName).arg(QGroundControl.qgcVersion)
+                    visible:                    false
                 }
             } // settingsColumn
         } // QGCFlickable

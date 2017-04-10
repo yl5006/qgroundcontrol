@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -102,6 +102,7 @@ void CameraSection::appendMissionItems(QList<MissionItem*>& items, QObject* miss
                                             _gimbalYawFact.rawValue().toDouble(),
                                             0, 0, 0,                                // param 4-6 not used
                                             MAV_MOUNT_MODE_MAVLINK_TARGETING,
+                                            0, 0, 0,
                                             true,                                   // autoContinue
                                             false,                                  // isCurrentItem
                                             missionItemParent);
@@ -121,7 +122,7 @@ void CameraSection::appendMissionItems(QList<MissionItem*>& items, QObject* miss
                                    -1,                                              // Max resolution
                                    0, 0,                                            // param 4-5 not used
                                    0,                                               // Camera ID
-                                   0,                                               // param 7 not used
+                                   0,0,0,0,                                          // param 7 not used
                                    true,                                            // autoContinue
                                    false,                                           // isCurrentItem
                                    missionItemParent);
@@ -132,7 +133,7 @@ void CameraSection::appendMissionItems(QList<MissionItem*>& items, QObject* miss
                                    MAV_CMD_DO_SET_CAM_TRIGG_DIST,
                                    MAV_FRAME_MISSION,
                                    _cameraPhotoIntervalDistanceFact.rawValue().toDouble(),  // Trigger distance
-                                   0, 0, 0, 0, 0, 0,                                        // param 2-7 not used
+                                   0, 0, 0, 0, 0, 0,0,0,0,                                        // param 2-7 not used
                                    true,                                                    // autoContinue
                                    false,                                                   // isCurrentItem
                                    missionItemParent);
@@ -145,7 +146,7 @@ void CameraSection::appendMissionItems(QList<MissionItem*>& items, QObject* miss
                                    0,                           // Camera ID
                                    -1,                          // Max fps
                                    -1,                          // Max resolution
-                                   0, 0, 0, 0,                  // param 5-7 not used
+                                   0, 0, 0, 0, 0, 0, 0,                  // param 5-7 not used
                                    true,                        // autoContinue
                                    false,                       // isCurrentItem
                                    missionItemParent);
@@ -156,7 +157,7 @@ void CameraSection::appendMissionItems(QList<MissionItem*>& items, QObject* miss
                                    MAV_CMD_VIDEO_STOP_CAPTURE,
                                    MAV_FRAME_MISSION,
                                    0,                           // Camera ID
-                                   0, 0, 0, 0, 0, 0,            // param 2-7 not used
+                                   0, 0, 0, 0, 0, 0,0, 0, 0,            // param 2-7 not used
                                    true,                        // autoContinue
                                    false,                       // isCurrentItem
                                    missionItemParent);
@@ -167,7 +168,7 @@ void CameraSection::appendMissionItems(QList<MissionItem*>& items, QObject* miss
                                    MAV_CMD_DO_SET_CAM_TRIGG_DIST,
                                    MAV_FRAME_MISSION,
                                    0,                               // Trigger distance = 0 means stop
-                                   0, 0, 0, 0, 0, 0,                // param 2-7 not used
+                                   0, 0, 0, 0, 0, 0, 0, 0, 0,               // param 2-7 not used
                                    true,                            // autoContinue
                                    false,                           // isCurrentItem
                                    missionItemParent);
@@ -176,7 +177,7 @@ void CameraSection::appendMissionItems(QList<MissionItem*>& items, QObject* miss
                                    MAV_CMD_IMAGE_STOP_CAPTURE,
                                    MAV_FRAME_MISSION,
                                    0,                           // camera id
-                                   0, 0, 0, 0, 0, 0,            // param 2-7 not used
+                                   0, 0, 0, 0, 0, 0, 0, 0, 0,            // param 2-7 not used
                                    true,                        // autoContinue
                                    false,                       // isCurrentItem
                                    missionItemParent);

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -77,12 +77,12 @@ Item {
         if (_missionItem.polygonPath.length < 3) {
             // Initial polygon is inset to take 2/3rds space
             var rect = Qt.rect(map.centerViewport.x, map.centerViewport.y, map.centerViewport.width, map.centerViewport.height)
-            console.log(map.centerViewport)
+//            console.log(map.centerViewport)
             rect.x += (rect.width * 0.25) / 2
             rect.y += (rect.height * 0.25) / 2
             rect.width *= 0.75
             rect.height *= 0.75
-            console.log(map.centerViewport)
+//            console.log(map.centerViewport)
             var topLeft = Qt.point(rect.x, rect.y)
             var topRight = Qt.point(rect.x + rect.width, rect.y)
             var bottomLeft = Qt.point(rect.x, rect.y + rect.height)
@@ -147,7 +147,7 @@ Item {
 
         MapQuickItem {
             anchorPoint.x:  sourceItem.anchorPointX
-            anchorPoint.y:  sourceItem.anchorPointY
+            anchorPoint.y:  sourceItem.anchorPointY * 2
             z:              QGroundControl.zOrderMapItems
             coordinate:     _missionItem.coordinate
             visible:        _missionItem.exitCoordinate.isValid
@@ -157,6 +157,7 @@ Item {
                 label:      "Entry"
                 checked:    _missionItem.isCurrentItem
                 onClicked:  _root.clicked(_missionItem.sequenceNumber)
+                simpleindex: 1
             }
         }
     }
@@ -167,7 +168,7 @@ Item {
 
         MapQuickItem {
             anchorPoint.x:  sourceItem.anchorPointX
-            anchorPoint.y:  sourceItem.anchorPointY
+            anchorPoint.y:  sourceItem.anchorPointY * 2
             z:              QGroundControl.zOrderMapItems
             coordinate:     _missionItem.exitCoordinate
             visible:        _missionItem.exitCoordinate.isValid
@@ -177,6 +178,7 @@ Item {
                 label:      "Exit"
                 checked:    _missionItem.isCurrentItem
                 onClicked:  _root.clicked(_missionItem.sequenceNumber)
+                simpleindex: 1
             }
         }
     }

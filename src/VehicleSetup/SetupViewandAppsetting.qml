@@ -125,7 +125,7 @@ Rectangle {
 
     function showGeneralPanel()
     {
-        panelLoader.source ="SystemSettings.qml";//"GeneralSettings.qml"
+        panelLoader.source ="GeneralSettings.qml";
         loader.visible=true
     }
     function showLinksPanel()

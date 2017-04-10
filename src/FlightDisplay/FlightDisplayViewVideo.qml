@@ -32,7 +32,7 @@ Item {
         color:          Qt.rgba(0,0,0,0.75)
         visible:        !QGroundControl.videoManager.videoRunning
         QGCLabel {
-            text:               qsTr("WAITING FOR VIDEO")
+            text:               qsTr("等待视频")
             font.family:        ScreenTools.demiboldFontFamily
             color:              "white"
             font.pointSize:     _mainIsMap ? ScreenTools.smallFontPointSize : ScreenTools.largeFontPointSize

@@ -61,7 +61,7 @@ public:
 
     Q_PROPERTY(QmlObjectListModel*  visualItems             READ visualItems                NOTIFY visualItemsChanged)
     Q_PROPERTY(QmlObjectListModel*  waypointLines           READ waypointLines              NOTIFY waypointLinesChanged)
-	Q_PROPERTY(QmlObjectListModel*  jumpwaypointLines   READ jumpwaypointLines                          NOTIFY waypointLinesChanged)
+    Q_PROPERTY(QmlObjectListModel*  jumpwaypointLines       READ jumpwaypointLines          NOTIFY jumpwaypointLinesChanged)
     Q_PROPERTY(QStringList          complexMissionItemNames READ complexMissionItemNames    NOTIFY complexMissionItemNamesChanged)
     Q_PROPERTY(QGeoCoordinate       plannedHomePosition     READ plannedHomePosition        NOTIFY plannedHomePositionChanged)
 
@@ -79,7 +79,7 @@ public:
     Q_PROPERTY(int                  batteriesRequired       READ batteriesRequired          NOTIFY batteriesRequiredChanged)
 
     Q_INVOKABLE void removeMissionItem(int index);
-    Q_INVOKABLE QString getFromFilePicker(void);
+
     Q_INVOKABLE void loadFromTxtFile(const QString& filename,double angle,double space,double addalt,int waynum,bool cammer,bool relalt);
     /// Add a new simple mission item to the list
     ///     @param i: index to insert at
@@ -128,6 +128,8 @@ public:
 
     QmlObjectListModel* visualItems             (void) { return _visualItems; }
     QmlObjectListModel* waypointLines           (void) { return &_waypointLines; }
+    QmlObjectListModel* jumpwaypointLines       (void) { return &_jumpwaypointLines; }
+    QStringList         complexMissionItemNames (void) const;
     QGeoCoordinate      plannedHomePosition     (void) const;
 
     /// Returns the item index two which a mission should be resumed. -1 indicates resume mission not available.
@@ -147,6 +149,7 @@ public:
 signals:
     void visualItemsChanged(void);
     void waypointLinesChanged(void);
+    void jumpwaypointLinesChanged(void);
     void newItemsFromVehicle(void);
     void missionDistanceChanged(double missionDistance);
     void missionTimeChanged(void);
@@ -210,7 +213,7 @@ private:
     QmlObjectListModel*     _visualItems;
     MissionSettingsItem*    _settingsItem;
     QmlObjectListModel      _waypointLines;
-    QmlObjectListModel  _jumpwaypointLines;
+    QmlObjectListModel      _jumpwaypointLines;
     CoordVectHashTable      _linesTable;
     bool                    _firstItemsFromVehicle;
     bool                    _missionItemsRequested;

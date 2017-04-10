@@ -123,7 +123,7 @@ Map {
         coordinate:     gcsPosition
         sourceItem:     MissionItemIndexLabel {
         label:          "Q"
-        simple:  	true
+        simpleindex:     2
         }
     }
 } // Map

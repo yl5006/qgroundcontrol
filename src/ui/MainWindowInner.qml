@@ -61,8 +61,7 @@ Item {
         for (var i=0; i<_viewList.length; i++) {
             _viewList[i].visible = false
         }
-        planToolBar.visible = false
-	initMap.visible             = false
+        initMap.visible     = false
     }
 
     function showSettingsView() {
@@ -109,8 +108,7 @@ Item {
         ScreenTools.availableHeight = parent.height - toolBar.height
         hideAllViews()
         planViewLoader.visible = true
-	rightBar.checkPlanButton()
-        planToolBar.visible = true
+        rightBar.checkPlanButton()
     }
 
     function showFlyView() {
@@ -120,7 +118,6 @@ Item {
         ScreenTools.availableHeight = parent.height - toolBar.height
         hideAllViews()
         flightView.visible = true
-        //  toolBar.checkFlyButton()
         rightBar.checkFlyButton()
     }
 
@@ -289,14 +286,13 @@ Item {
     }
     //-- Main UI
 
-     MainTool {
+    MainTool {
         id:                 toolBar
         height:             ScreenTools.toolbarHeight * 1.8
         anchors.left:       parent.left
         mainWindow:         mainWindow
         anchors.right:      parent.right
         anchors.top:        logo.bottom
-        opacity:            planToolBar.visible ? 0 : 1
         z:                  QGroundControl.zOrderTopMost
         visible:            activeVehicle
         Component.onCompleted:  ScreenTools.availableHeight = parent.height - toolBar.height
@@ -341,6 +337,19 @@ Item {
         }
 
     }
+//    PlanToolBar {
+//        id:                 planToolBar
+//        height:             ScreenTools.toolbarHeight
+//        anchors.left:       parent.left
+//        anchors.right:      parent.right
+//        anchors.top:        parent.top
+//        z:                  rightBar.z + 1
+
+//        onShowFlyView: {
+//            planToolBar.visible = false
+//            mainWindow.showFlyView()
+//        }
+//    }
     FlightMap {
         id:             initMap
         anchors.fill:   parent
@@ -375,7 +384,7 @@ Item {
         anchors.bottom:     parent.bottom
         visible:            false
 
-        property var planToolBar: planToolBar
+//      property var planToolBar: planToolBar
     }
 
     Loader {
@@ -383,7 +392,7 @@ Item {
         anchors.fill:       parent
         visible:            false
 
-        property var toolbar: planToolBar
+//      property var toolbar: planToolBar
     }
 
     FlightDisplayView {

@@ -764,7 +764,7 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
     }
     if(addPlannedHomePosition)
     {
-        _addPlannedHomePosition(_activeVehicle,newVisualItems, true /* addToCenter */);
+//        _addMissionSettings(vehicle, visualItems, true /* addToCenter */);
     }
     if (!errorString.isEmpty()) {
         for (int i=0; i<newVisualItems->count(); i++) {
@@ -784,19 +784,15 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
         _deinitAllVisualItems();
         _visualItems->deleteListAndContents();
     }
-    if (_complexItems) {
-        _complexItems->deleteLater();
-    }
 
     _visualItems = newVisualItems;
-    _complexItems = newComplexItems;
 
     if (_visualItems->count() == 0) {
-        _addPlannedHomePosition(_activeVehicle,_visualItems, true /* addToCenter */);
-    }
-
+//        _addMissionSettings(vehicle, visualItems, true /* addToCenter */);
+     }
     _initAllVisualItems();
 }
+#if 0
 QString MissionController::getFromFilePicker(void)
 {
 #ifndef __mobile__
@@ -809,6 +805,7 @@ QString MissionController::getFromFilePicker(void)
 #endif
     return "";
 }
+#endif
 void MissionController::saveToFile(const QString& filename)
 {
     if (filename.isEmpty()) {

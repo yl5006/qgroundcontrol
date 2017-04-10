@@ -1,4 +1,4 @@
-import QtQuick          2.3
+﻿import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Layouts  1.2
 
@@ -18,7 +18,7 @@ Rectangle {
     height:             deferedload.status == Loader.Ready ? (visible ? deferedload.item.height : 0) : 0
     color:              qgcPal.windowShadeDark
     visible:            missionItem.isCurrentItem
-    radius:             _radius
+    radius:             _margin/2
 
     property var    _missionVehicle:            missionController.vehicle
     property bool   _vehicleHasHomePosition:    _missionVehicle.homePosition.isValid
@@ -82,7 +82,7 @@ Rectangle {
 
             SectionHeader {
                 id:         missionDefaultsSectionHeader
-                text:       qsTr("Mission Defaults")
+                text:       qsTr("任务默认参数:")
                 checked:    true
                 showSpacer: false
             }
@@ -101,7 +101,7 @@ Rectangle {
                     columns:        2
 
                     QGCLabel {
-                        text:       qsTr("Waypoint alt")
+                        text:       qsTr("航点高度:")
                     }
                     FactTextField {
                         fact:               QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude
@@ -110,7 +110,7 @@ Rectangle {
 
                     QGCCheckBox {
                         id:         flightSpeedCheckBox
-                        text:       qsTr("Flight speed")
+                        text:       qsTr("飞行速度:")
                         visible:    !_missionVehicle.vtol
                         checked:    missionItem.specifyMissionFlightSpeed
                         onClicked:  missionItem.specifyMissionFlightSpeed = checked
@@ -175,7 +175,7 @@ Rectangle {
                 }
 
                 QGCLabel {
-                    text:               qsTr("Cruise speed")
+                    text:               qsTr("巡航速度")
                     visible:            _showCruiseSpeed
                     Layout.fillWidth:   true
                 }
@@ -199,7 +199,7 @@ Rectangle {
 
             SectionHeader {
                 id:         plannedHomePositionSection
-                text:       qsTr("Planned Home Position")
+                text:       qsTr("Home点位置")
                 visible:    !_vehicleHasHomePosition
                 checked:    false
             }
@@ -230,12 +230,12 @@ Rectangle {
                     width:                  parent.width
                     wrapMode:               Text.WordWrap
                     font.pointSize:         ScreenTools.smallFontPointSize
-                    text:                   qsTr("Actual position set by vehicle at flight time.")
+                    text:                   qsTr("实际位置由飞行确定.")
                     horizontalAlignment:    Text.AlignHCenter
                 }
 
                 QGCButton {
-                    text:                       qsTr("Set Home To Map Center")
+                    text:                       qsTr("移动Home到地图中心")
                     onClicked:                  missionItem.coordinate = map.center
                     anchors.horizontalCenter:   parent.horizontalCenter
                 }

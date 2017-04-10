@@ -1,6 +1,6 @@
-﻿import QtQuick          2.5
-import QtQuick.Controls 1.3
-import QtQuick.Layouts  1.2
+﻿import QtQuick          2.3
+import QtQuick.Controls 1.2
+import QtQuick.Dialogs  1.2
 
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Controls      1.0
@@ -105,7 +105,7 @@ Rectangle {
                     QGCButton {
                         width:         ScreenTools.defaultFontPixelHeight*2
                         height:        ScreenTools.defaultFontPixelHeight*2
-                        text:          object.abbreviation
+                        text:          object.sequenceNumber
                         visible:       index>0
                         checkable:     true
                     }

@@ -1,4 +1,4 @@
-import QtQuick          2.3
+﻿import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs  1.2
 import QtQuick.Layouts  1.2
@@ -17,7 +17,7 @@ Rectangle {
     height:     visible ? (editorColumn.height + (_margin * 2)) : 0
     width:      availableWidth
     color:      qgcPal.windowShadeDark
-    radius:     _radius
+    radius:     _margin/2
 
     // The following properties must be available up the hierarchy chain
     //property real   availableWidth    ///< Width for control
@@ -181,7 +181,7 @@ Rectangle {
 
         SectionHeader {
             id:         cameraHeader
-            text:       qsTr("Camera")
+            text:       qsTr("相机")
             showSpacer: false
         }
 
@@ -231,7 +231,7 @@ Rectangle {
 
                 FactCheckBox {
                     anchors.baseline:   cameraTriggerDistanceField.baseline
-                    text:               qsTr("Trigger Distance")
+                    text:               qsTr("触发距离")
                     fact:               missionItem.cameraTrigger
                 }
 
@@ -244,7 +244,7 @@ Rectangle {
             }
 
             FactCheckBox {
-                text:       qsTr("Hover and capture image")
+                text:       qsTr("悬停拍照")
                 fact:       missionItem.hoverAndCapture
                 visible:    missionItem.hoverAndCaptureAllowed
             }
@@ -379,7 +379,7 @@ Rectangle {
 
             SectionHeader {
                 id:     gridHeader
-                text:   qsTr("Grid")
+                text:   qsTr("网格参数")
             }
 
             GridLayout {
@@ -390,13 +390,13 @@ Rectangle {
                 columns:        2
                 visible:        gridHeader.checked
 
-                QGCLabel { text: qsTr("Angle") }
+                QGCLabel { text: qsTr("角度") }
                 FactTextField {
                     fact:               missionItem.gridAngle
                     Layout.fillWidth:   true
                 }
 
-                QGCLabel { text: qsTr("Turnaround dist") }
+                QGCLabel { text: qsTr("转弯距离") }
                 FactTextField {
                     fact:                   missionItem.turnaroundDist
                     Layout.fillWidth:       true
@@ -412,7 +412,7 @@ Rectangle {
 
                 QGCRadioButton {
                     id:                     fixedAltitudeRadio
-                    text:                   qsTr("Altitude")
+                    text:                   qsTr("高度")
                     checked:                !!missionItem.fixedValueIsAltitude.value
                     exclusiveGroup:         fixedValueGroup
                     onClicked:              missionItem.fixedValueIsAltitude.value = 1
@@ -443,7 +443,7 @@ Rectangle {
         // Manual grid ui
         SectionHeader {
             id:         manualGridHeader
-            text:       qsTr("Grid")
+            text:       qsTr("网格参数")
             visible:    gridTypeCombo.currentIndex == _gridTypeManual
         }
 
@@ -459,39 +459,44 @@ Rectangle {
                 columnSpacing:  ScreenTools.defaultFontPixelWidth
                 rowSpacing:     _margin
                 factList:       [ missionItem.gridAngle, missionItem.gridSpacing, missionItem.gridAltitude, missionItem.turnaroundDist ]
-                factLabels:     [ qsTr("Angle"), qsTr("Spacing"), qsTr("Altitude"), qsTr("Turnaround dist")]
+                factLabels:     [ qsTr("角度"), qsTr("间隔"), qsTr("高度"), qsTr("转弯距离")]
             }
 
             FactCheckBox {
                 anchors.left:   parent.left
-                text:           qsTr("Relative altitude")
+                text:           qsTr("高度参考Home")
                 fact:           missionItem.gridAltitudeRelative
             }
         }
 
+        QGCMapPolygonControls
+        {
+
+        }
+
         SectionHeader {
             id:     statsHeader
-            text:   qsTr("Statistics") }
+            text:   qsTr("统计") }
 
         Grid {
             columns:        2
             columnSpacing:  ScreenTools.defaultFontPixelWidth
             visible:        statsHeader.checked
 
-            QGCLabel { text: qsTr("Survey area") }
+            QGCLabel { text: qsTr("扫描面积") }
             QGCLabel { text: QGroundControl.squareMetersToAppSettingsAreaUnits(missionItem.coveredArea).toFixed(2) + " " + QGroundControl.appSettingsAreaUnitsString }
 
-            QGCLabel { text: qsTr("Photo count") }
+            QGCLabel { text: qsTr("拍照数") }
             QGCLabel { text: missionItem.cameraShots }
 
-            QGCLabel { text: qsTr("Photo interval") }
+            QGCLabel { text: qsTr("拍照间隔") }
             QGCLabel {
                 text: {
                     var timeVal = missionItem.timeBetweenShots
                     if(!isFinite(timeVal) || missionItem.cameraShots === 0) {
                         return qsTr("N/A")
                     }
-                    return timeVal.toFixed(1) + " " + qsTr("secs")
+                    return timeVal.toFixed(1) + " " + qsTr("s")
                 }
             }
         }

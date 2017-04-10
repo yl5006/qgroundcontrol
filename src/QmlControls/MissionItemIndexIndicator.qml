@@ -1,75 +1,81 @@
-﻿import QtQuick                  2.2
-import QtQuick.Controls         1.2
-import QtQuick.Controls.Styles  1.2
-import QtQuick.Dialogs          1.2
+﻿import QtQuick          2.3
+import QtQuick.Controls 1.2
+import QtQuick.Layouts  1.2
+import QtQuick.Dialogs  1.2
 
-import QGroundControl.ScreenTools   1.0
-import QGroundControl.Vehicle       1.0
-import QGroundControl.Controls      1.0
-import QGroundControl.Palette       1.0
-import QGroundControl               1.0
+import QGroundControl                   1.0
+import QGroundControl.ScreenTools       1.0
+import QGroundControl.Controls          1.0
+import QGroundControl.FactControls      1.0
+import QGroundControl.Palette           1.0
 
-import QGroundControl.FactSystem    1.0
-import QGroundControl.FactControls  1.0
-
-/// Mission item edit control
+// indicator Plan View
 Rectangle {
-    id:      _root
-    height:  editorLoader.y + editorLoader.height + (_margin * 2)
-    color:  "transparent"//Qt.rgba(0.102,0.122,0.133,0.9)//qgcPal.windowShade
- //   radius: _radius
-    visible: _currentMissionItem != undefined
-    property var    currentMissionItem ///< MissionItem associated with this editor
-    property bool   readOnly    ///< true: read only view, false: full editing view
-    property var    qgcView     ///< QGCView control used for showing dialogs
+    id:                 _root
+    height:             editorLoader.y + editorLoader.height + (_margin * 2)
+    anchors.left:       parent.left
+    anchors.right:      parent.right
+    anchors.top:        parent.top
+    color:              "transparent"//qgcPal.globalTheme === QGCPalette.Light ? Qt.rgba(1,1,1,0.8) : Qt.rgba(0,0,0,0.75)
 
+    property var    missionController
+    property var    currentMissionItem          ///< Mission item to display status for
+    property var    missionItem
+    property var    map
+    property bool   readOnly        ///< true: read only view, false: full editing view
+    property var    rootQgcView
 
-    readonly property var       _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
+    property var    missionItems:               _controllerValid ? missionController.visualItems : undefined
+    property real   missionDistance:            _controllerValid ? missionController.missionDistance : NaN
+    property real   missionTime:                _controllerValid ? missionController.missionTime : NaN
+    property real   missionMaxTelemetry:        _controllerValid ? missionController.missionMaxTelemetry : NaN
+    property bool   missionDirty:               _controllerValid ? missionController.dirty : false
 
-//    property Fact   _offlineEditingVehicleType:     QGroundControl.offlineEditingVehicleType
-//    property Fact   _offlineEditingCruiseSpeed:     QGroundControl.offlineEditingCruiseSpeed
-//    property Fact   _offlineEditingHoverSpeed:      QGroundControl.offlineEditingHoverSpeed
+    property var    _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
 
-    property var    missionItems                ///< List of all available mission items
-    property real   missionDistance             ///< Total mission distance
-    property real   missionTime                 ///< Total mission time
-    property real   missionMaxTelemetry
+    property bool   _statusValid:               currentMissionItem != undefined
+    property bool   _missionValid:              missionItems != undefined
+    property bool   _controllerValid:           missionController != undefined
+    property bool   _manualUpload:              QGroundControl.settingsManager.appSettings.automaticMissionUpload.rawValue == 0
 
-
-    signal remove
-    signal insert(int i)
-    signal moveHomeToMapCenter
-
-//    property bool   _currentItem:       _currentMissionItem.isCurrentItem
-    property color  _outerTextColor:    "black"
-
-    readonly property real  _editFieldWidth:    Math.min(width - _margin * 2, ScreenTools.defaultFontPixelWidth * 16)
+    readonly property real  _editFieldWidth:    Math.min(width - _margin * 2, ScreenTools.defaultFontPixelWidth * 12)
     readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
     readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
+    readonly property real  _hamburgerSize:     commandPicker.height * 0.75
+    Connections {
+        target: QGroundControl.settingsManager.appSettings.automaticMissionUpload
+        onRawValueChanged: console.log("changed", QGroundControl.settingsManager.appSettings.automaticMissionUpload.rawValue)
+    }
 
-    property bool   _statusValid:       _currentMissionItem != undefined
-    property bool   _vehicleValid:      _activeVehicle != undefined
-    property bool   _missionValid:      missionItems != undefined
-
-    property real   _distance:                  _statusValid ? _currentMissionItem.distance : NaN
-    property real   _altDifference:             _statusValid ? _currentMissionItem.altDifference : NaN
-    property real   _gradient:                  _statusValid && _currentMissionItem.distance > 0 ? Math.atan(_currentMissionItem.altDifference / _currentMissionItem.distance) : NaN
+    property real   _largeValueWidth:           ScreenTools.defaultFontPixelWidth * 8
+    property real   _smallValueWidth:           ScreenTools.defaultFontPixelWidth * 4
+    property real   _labelToValueSpacing:       ScreenTools.defaultFontPixelWidth
+    property real   _distance:                  _statusValid ? currentMissionItem.distance : NaN
+    property real   _altDifference:             _statusValid ? currentMissionItem.altDifference : NaN
+    property real   _gradient:                  _statusValid && currentMissionItem.distance > 0 ? Math.atan(currentMissionItem.altDifference / currentMissionItem.distance) : NaN
     property real   _gradientPercent:           isNaN(_gradient) ? NaN : _gradient * 100
-    property real   _azimuth:                   _statusValid ? _currentMissionItem.azimuth : NaN
-    property bool   _currentSurvey:     _statusValid ? _currentMissionItem.commandName == "Survey" : false
-//    property bool   _isVTOL:            _vehicleValid ? _activeVehicle.vtol : _offlineEditingVehicleType.enumStringValue == "VTOL" //hardcoded
-
+    property real   _azimuth:                   _statusValid ? currentMissionItem.azimuth : NaN
     property real   _missionDistance:           _missionValid ? missionDistance : NaN
     property real   _missionMaxTelemetry:       _missionValid ? missionMaxTelemetry : NaN
     property real   _missionTime:               _missionValid ? missionTime : NaN
+    property int    _batteryChangePoint:        _controllerValid ? missionController.batteryChangePoint : -1
+    property int    _batteriesRequired:         _controllerValid ? missionController.batteriesRequired : -1
 
-    property string _distanceText:              _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
-    property string _altDifferenceText:         isNaN(_altDifference) ? "-.-" : QGroundControl.metersToAppSettingsDistanceUnits(_altDifference).toFixed(2) + QGroundControl.appSettingsDistanceUnitsString
-    property string _gradientText:              isNaN(_gradient) ? "-.-" : _gradientPercent.toFixed(0) + "%"
-    property string _azimuthText:               isNaN(_azimuth) ? "-.-" : Math.round(_azimuth)
-    property string _missionDistanceText:       isNaN(_missionDistance) ? "-.-" : _missionDistance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_missionDistance).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_missionDistance/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
-    property string _missionTimeText:           isNaN(_missionTime) ? "-.-" : Number(_missionTime / 60).toFixed(1) + "m"
-    property string _missionMaxTelemetryText:   isNaN(_missionMaxTelemetry) ? "-.-" : _missionMaxTelemetry<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_missionMaxTelemetry).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_missionMaxTelemetry/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
+    property string _distanceText:              isNaN(_distance) ?              "-.-" : _distance < 1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
+    property string _altDifferenceText:         isNaN(_altDifference) ? 	"-.-" : QGroundControl.metersToAppSettingsDistanceUnits(_altDifference).toFixed(2) + QGroundControl.appSettingsDistanceUnitsString
+    property string _gradientText:              isNaN(_gradient) ? 		"-.-" : _gradientPercent.toFixed(0) + "%"
+    property string _azimuthText:               isNaN(_azimuth) ? 		"-.-" : Math.round(_azimuth)
+    property string _missionDistanceText:       isNaN(_missionDistance) ? 	"-.-" : _missionDistance < 1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_missionDistance).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_missionDistance/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
+    property string _missionTimeText:           isNaN(_missionTime) ? 		"-.-" : Number(_missionTime / 60).toFixed(1) + "m"
+    property string _missionMaxTelemetryText:   isNaN(_missionMaxTelemetry) ? 	"-.-" : _missionMaxTelemetry < 1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_missionMaxTelemetry).toFixed(1) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_missionMaxTelemetry/1000).toFixed(2) + "k" + QGroundControl.appSettingsDistanceUnitsString
+    property string _batteryChangePointText:    _batteryChangePoint < 0 ?       "N/A" : _batteryChangePoint
+    property string _batteriesRequiredText:     _batteriesRequired < 0 ?        "N/A" : _batteriesRequired
+
+    QGCPalette { id: qgcPal }
+
+    signal remove
+
+    signal insert
 
     Rectangle {
         id:                 total
@@ -77,63 +83,63 @@ Rectangle {
         height:             ScreenTools.defaultFontPixelHeight*5
         anchors.top:        parent.top
         color:              Qt.rgba(0.102,0.122,0.133,0.9)//qgcPal.windowShade
-        radius: _radius
-       Column{
-           anchors.topMargin:  _margin*4
-           anchors.top:        parent.top
-           width:               parent.width*0.9
-           anchors.horizontalCenter: parent.horizontalCenter
-           spacing:          ScreenTools.defaultFontPixelHeight/2
-        Row{
-           width:                   parent.width
-        QGCLabel {
-            width:              parent.width/3
-            horizontalAlignment:    Text.AlignHCenter
-            color:              Qt.rgba(0.555,0.648,0.691,1)
-            text:               qsTr("任务距离")//"Distance" //+ _distanceText
-            }
-        QGCLabel {
-            width:              parent.width/3
-            horizontalAlignment:    Text.AlignHCenter
-            color:              Qt.rgba(0.555,0.648,0.691,1)
-            text:               qsTr("任务时间")//"Alt diff"// + _altText
-            }
+        radius:             _margin
+        Column{
+            anchors.topMargin:  _margin*2
+            anchors.top:        parent.top
+            width:               parent.width*0.9
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing:          ScreenTools.defaultFontPixelHeight/2
+            Row{
+                width:                   parent.width
+                QGCLabel {
+                    width:              parent.width/3
+                    horizontalAlignment:    Text.AlignHCenter
+                    color:              Qt.rgba(0.555,0.648,0.691,1)
+                    text:               qsTr("任务距离")//"Distance" //+ _distanceText
+                }
+                QGCLabel {
+                    width:              parent.width/3
+                    horizontalAlignment:    Text.AlignHCenter
+                    color:              Qt.rgba(0.555,0.648,0.691,1)
+                    text:               qsTr("任务时间")//"Alt diff"// + _altText
+                }
 
-        QGCLabel {
-            width:              parent.width/3
-            horizontalAlignment:    Text.AlignHCenter
-            color:              Qt.rgba(0.555,0.648,0.691,1)
-            text:               qsTr("最大距离")//"Azimuth" //+ _azimuthText
+                QGCLabel {
+                    width:              parent.width/3
+                    horizontalAlignment:    Text.AlignHCenter
+                    color:              Qt.rgba(0.555,0.648,0.691,1)
+                    text:               qsTr("最大距离")//"Azimuth" //+ _azimuthText
+                }
             }
-        }
-        Row{
-             width:                   parent.width
-        QGCLabel {
-            width:              parent.width/3
-            horizontalAlignment:    Text.AlignHCenter
-            font.pointSize:     ScreenTools.defaultFontPixelHeight
-            font.bold:          true
-            color:              Qt.rgba(0.102,0.887,0.609,1)
-            text:               _missionDistanceText
-        }
+            Row{
+                width:                   parent.width
+                QGCLabel {
+                    width:              parent.width/3
+                    horizontalAlignment:    Text.AlignHCenter
+                    font.pointSize:     ScreenTools.defaultFontPixelHeight
+                    font.bold:          true
+                    color:              Qt.rgba(0.102,0.887,0.609,1)
+                    text:               _missionDistanceText
+                }
 
-        QGCLabel {
-            width:              parent.width/3
-            horizontalAlignment:    Text.AlignHCenter
-            font.pointSize:     ScreenTools.defaultFontPixelHeight
-            font.bold:          true
-            color:              Qt.rgba(0.102,0.887,0.609,1)
-            text:               _missionTimeText
-        }
-        QGCLabel {
-            width:              parent.width/3
-            horizontalAlignment:    Text.AlignHCenter
-            font.pointSize:     ScreenTools.defaultFontPixelHeight
-            font.bold:          true
-            color:              Qt.rgba(0.102,0.887,0.609,1)
-            text:               _missionMaxTelemetryText
+                QGCLabel {
+                    width:              parent.width/3
+                    horizontalAlignment:    Text.AlignHCenter
+                    font.pointSize:     ScreenTools.defaultFontPixelHeight
+                    font.bold:          true
+                    color:              Qt.rgba(0.102,0.887,0.609,1)
+                    text:               _missionTimeText
+                }
+                QGCLabel {
+                    width:              parent.width/3
+                    horizontalAlignment:    Text.AlignHCenter
+                    font.pointSize:     ScreenTools.defaultFontPixelHeight
+                    font.bold:          true
+                    color:              Qt.rgba(0.102,0.887,0.609,1)
+                    text:               _missionMaxTelemetryText
+                }
             }
-          }
         }
     }
 
@@ -149,7 +155,7 @@ Rectangle {
     Rectangle {
         width:           parent.width
         anchors.top:     total.bottom
-        anchors.topMargin:  _margin*4
+        anchors.topMargin:  _margin*2
         anchors.bottom:  parent.bottom
 
         color:      Qt.rgba(0.102,0.122,0.133,0.9)//qgcPal.windowShade
@@ -157,7 +163,7 @@ Rectangle {
     Rectangle {
         width:           parent.width
         anchors.top:     total.bottom
-        anchors.topMargin:  _margin*4
+        anchors.topMargin:  _margin*2
         anchors.bottom:  distanceLabel.top
         anchors.bottomMargin: _margin
         color:     Qt.rgba(0.2,0.267,0.306,1)//qgcPal.windowShade
@@ -170,7 +176,7 @@ Rectangle {
         font.pointSize:         ScreenTools.defaultFontPixelHeight*2
         font.bold:              true
         anchors.left:           parent.left
-        text:                   _currentMissionItem.abbreviation
+        text:                   missionItem.sequenceNumber
         color:                  Qt.rgba(1,0.675,0.290,1)
     }
 
@@ -182,10 +188,10 @@ Rectangle {
         width:                  ScreenTools.defaultFontPixelHeight*2
         height:                 ScreenTools.defaultFontPixelHeight*2
         source:                 "qrc:/qmlimages/insertpoint.svg"
-        visible:                _currentMissionItem.sequenceNumber != 0
+        visible:                missionItem.isCurrentItem && missionItem.sequenceNumber != 0
         MouseArea {
                    anchors.fill: parent
-                   onClicked: insert(_currentMissionItem.sequenceNumber)
+                   onClicked: insert(missionItem.sequenceNumber)
                   }
     }
     Image {
@@ -196,7 +202,7 @@ Rectangle {
         width:                  ScreenTools.defaultFontPixelHeight*2
         height:                 ScreenTools.defaultFontPixelHeight*2
         source:                 "qrc:/qmlimages/deletepoint.svg"
-        visible:                _currentMissionItem.sequenceNumber != 0
+        visible:                missionItem.sequenceNumber != 0
         MouseArea {
                    anchors.fill: parent
                    onClicked: remove()
@@ -211,14 +217,14 @@ Rectangle {
         anchors.top:            total.bottom
         anchors.left:           label.right
         anchors.right:          deletepoint.left
-        visible:                _currentMissionItem.sequenceNumber != 0 && _currentMissionItem.isCurrentItem && !_currentMissionItem.rawEdit && _currentMissionItem.isSimpleItem
-        text:                   _currentMissionItem.commandName
+        visible:                missionItem.isCurrentItem && !missionItem.rawEdit && missionItem.isSimpleItem
+        text:                   missionItem.commandName
 
         Component {
             id: commandDialog
 
             MissionCommandDialog {
-                missionItem:_currentMissionItem//_root.currentMissionItem
+                missionItem: _root.missionItem
             }
         }
 
@@ -228,7 +234,7 @@ Rectangle {
     Rectangle {
         width:           commandPicker.width*0.8
         height:          1
-        visible:         _currentMissionItem.isSimpleItem&&_currentMissionItem.sequenceNumber != 0
+        visible:         missionItem.isCurrentItem && !missionItem.rawEdit && missionItem.isSimpleItem
         anchors.top:     commandPicker.bottom
         anchors.horizontalCenter: commandPicker.horizontalCenter
         color:            "White"
@@ -236,10 +242,10 @@ Rectangle {
 
     QGCLabel {
         anchors.fill:       commandPicker
-        visible:            _currentMissionItem.sequenceNumber == 0 || !_currentMissionItem.isCurrentItem || !_currentMissionItem.isSimpleItem
+        visible:            !missionItem.isCurrentItem || !missionItem.isSimpleItem
         anchors.horizontalCenter: commandPicker.horizontalCenter
         verticalAlignment:  Text.AlignVCenter
-        text:               _currentMissionItem.sequenceNumber == 0 ? qsTr("Home点")/*"Home Position" */: (_currentMissionItem.isSimpleItem ? _currentMissionItem.commandName : qsTr("网格航线"))//Survey
+        text:               missionItem.commandName
        // color:              _outerTextColor
     }
     QGCLabel {
@@ -304,7 +310,7 @@ Rectangle {
         }
     Rectangle {
         id:                 space
-        anchors.topMargin:  _margin*3
+        anchors.topMargin:  _margin
         anchors.top:        distance.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         width:              parent.width*0.8
@@ -314,11 +320,15 @@ Rectangle {
     Loader {
         id:                 editorLoader
         anchors.leftMargin: _margin
-        anchors.topMargin:  _margin*2
+        anchors.topMargin:  _margin
         anchors.left:       parent.left
         anchors.top:        space.bottom
         height:             item ? item.height : 0
-        source:             _currentMissionItem.isSimpleItem ? "qrc:/qml/SimpleItemEditor.qml" : "qrc:/qml/SurveyItemEditor.qml"
+        source:             missionItem.editorQml
+
+        onLoaded: {
+            item.visible = Qt.binding(function() { return missionItem.isCurrentItem; })
+        }
 
         property real   availableWidth: _root.width - (_margin * 2) ///< How wide the editor should be
         property var    editorRoot:     _root

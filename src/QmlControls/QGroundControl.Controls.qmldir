@@ -23,6 +23,8 @@ MissionItemIndex        1.0 MissionItemIndex.qml
 MissionItemIndexIndicator        1.0 MissionItemIndexIndicator.qml
 MissionItemEditor       1.0 MissionItemEditor.qml
 SetMutipMissionItem     1.0 SetMutipMissionItem.qml
+SetmissionItemDialog    1.0 SetmissionItemDialog.qml
+SetCircleItemDialog     1.0 SetCircleItemDialog.qml
 SetCamera               1.0 SetCamera.qml
 MissionItemIndexLabel   1.0 MissionItemIndexLabel.qml
 MissionItemMapVisual    1.0 MissionItemMapVisual.qml

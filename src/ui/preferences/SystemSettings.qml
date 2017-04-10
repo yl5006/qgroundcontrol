@@ -611,12 +611,15 @@ QGCView {
                                 text:       qsTr("选择:")//"Browse"
                                 onClicked:  videoLocationFileDialog.visible = true
 
-                                FileDialog {
-                                    id:             videoLocationFileDialog
-                                    title:          qsTr("选择一个路径保存视频文件:")//"Choose a location to save video files."
-                                    folder:         shortcuts.home
+                                QGCFileDialog {
+                                    id:             savePathBrowseDialog
+                                    qgcView:        _qgcView
+                                    title:          qsTr("选择一个路径保存视频文件:")//qsTr("Choose the location to save files:")
+                                    folder:         _savePath.rawValue
+                                    selectExisting: true
                                     selectFolder:   true
-                                    onAccepted:     QGroundControl.settingsManager.videoSettings.videoSavePath.value = QGroundControl.urlToLocalFile(videoLocationFileDialog.fileUrl)
+
+                                    onAcceptedForLoad: _savePath.rawValue = file
                                 }
                             }
                         }

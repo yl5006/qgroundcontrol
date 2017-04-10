@@ -15,10 +15,8 @@ Rectangle {
     id:                 valuesRect
     width:              availableWidth
     height:             deferedload.status == Loader.Ready ? (visible ? deferedload.item.height : 0) : 0
-  //  color:              qgcPal.windowShadeDark
     color:              Qt.rgba(0.102,0.887,0.609,0)
-    //visible:            _currentMissionItem.isCurrentItem
-    radius:             _radius
+    radius:             _margin
 
     Loader {
         id:              deferedload
@@ -45,9 +43,9 @@ Rectangle {
                         width:          parent.width
                         wrapMode:       Text.WordWrap
                         font.pointSize: ScreenTools.smallFontPointSize
-                        text:           _currentMissionItem.rawEdit ?
+                        text:           missionItem.rawEdit ?
                                             qsTr("Provides advanced access to all commands/parameters. Be very careful!") :
-                                            _currentMissionItem.commandDescription
+                                            missionItem.commandDescription
                     }
 
                     GridLayout {
@@ -56,7 +54,7 @@ Rectangle {
                         columns:        2
 
                         Repeater {
-                            model: _currentMissionItem.comboboxFacts
+                            model: missionItem.comboboxFacts
 
                             QGCLabel {
                                 text:           object.name
@@ -67,7 +65,7 @@ Rectangle {
                         }
 
                         Repeater {
-                            model: _currentMissionItem.comboboxFacts
+                            model: missionItem.comboboxFacts
 
                             FactComboBox {
                                 indexModel:         false
@@ -86,7 +84,7 @@ Rectangle {
                         columns:        2
 
                         Repeater {
-                        model: _currentMissionItem.textFieldFacts
+                        model: missionItem.textFieldFacts
 
                             QGCLabel {
                                 text:           object.name
@@ -96,7 +94,7 @@ Rectangle {
                         }
 
                         Repeater {
-                            model: _currentMissionItem.textFieldFacts
+                            model: missionItem.textFieldFacts
 
                             FactTextField {
                                 showUnits:          true
@@ -109,7 +107,7 @@ Rectangle {
                     }
 
                     Repeater {
-                        model: _currentMissionItem.checkboxFacts
+                        model: missionItem.checkboxFacts
 
                         FactCheckBox {
                             text:   object.name
@@ -117,10 +115,10 @@ Rectangle {
                         }
                     }
 
-                    CameraSection {
-                        checked:    missionItem.cameraSection.settingsSpecified
-                        visible:    missionItem.cameraSection.available
-                    }
+//                    CameraSection {
+//                        checked:    missionItem.cameraSection.settingsSpecified
+//                        visible:    missionItem.cameraSection.available
+//                    }
                 } // Column
             } // Item
         } // Component
