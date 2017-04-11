@@ -416,19 +416,17 @@ QGCView {
             property Fact _virtualJoystick: QGroundControl.settingsManager.appSettings.virtualJoystick
         }
 
-        ToolStrip {
+        ToolStripRow {
             visible:            _activeVehicle ? _activeVehicle.guidedModeSupported : false
             id:                 toolStrip
-            anchors.leftMargin: ScreenTools.defaultFontPixelWidth
-            anchors.left:       _panel.left
-            anchors.topMargin:  ScreenTools.toolbarHeight + _margins
-            anchors.top:        _panel.top
+            anchors.horizontalCenter:   parent.horizontalCenter
+            anchors.bottomMargin:  ScreenTools.toolbarHeight + _margins
+            anchors.bottom:        _panel.bottom
             z:                  _panel.z + 4
             title:              qsTr("Fly")
-            maxHeight:          (_flightVideo.visible ? _flightVideo.y : parent.height) - toolStrip.y
+            maxHeight:          ScreenTools.defaultFontPixelWidth//(_flightVideo.visible ? _flightVideo.y : parent.height) - toolStrip.y
             buttonVisible:      [ guidedController.showTakeoff || !guidedController.showLand, guidedController.showLand && !guidedController.showTakeoff, true, true, true, guidedController.smartShotsAvailable ]
             buttonEnabled:      [ guidedController.showTakeoff, guidedController.showLand, guidedController.showRTL, guidedController.showPause, _anyActionAvailable, _anySmartShotAvailable ]
-
             property bool _anyActionAvailable: guidedController.showEmergenyStop || guidedController.showStartMission || guidedController.showResumeMission || guidedController.showChangeAlt || guidedController.showLandAbort
             property bool _anySmartShotAvailable: guidedController.showOrbit
             property var _actionModel: [
@@ -469,26 +467,26 @@ QGCView {
             model: [
                 {
                     name:       guidedController.takeoffTitle,
-                    iconSource: "/res/takeoff.svg",
+                    iconSource: "/qmlimages/takeoff.svg",
                     action:     guidedController.actionTakeoff
                 },
                 {
                     name:       guidedController.landTitle,
-                    iconSource: "/res/land.svg",
+                    iconSource: "/qmlimages/landing.svg",
                     action:     guidedController.actionLand
                 },
                 {
                     name:       guidedController.rtlTitle,
-                    iconSource: "/res/rtl.svg",
+                    iconSource: "/qmlimages/Returnhome.svg",
                     action:     guidedController.actionRTL
                 },
                 {
                     name:       guidedController.pauseTitle,
-                    iconSource: "/res/pause-mission.svg",
+                    iconSource: "/qmlimages/PauseUav.svg",
                     action:     guidedController.actionPause
                 },
                 {
-                    name:       qsTr("Action"),
+                    name:       qsTr("执行"),
                     iconSource: "/res/action.svg",
                     action:     -1
                 },
@@ -546,8 +544,7 @@ QGCView {
             width:                      confirmColumn.width  + (_margins * 4)
             height:                     confirmColumn.height + (_margins * 4)
             radius:                     ScreenTools.defaultFontPixelHeight / 2
-            color:                      qgcPal.alertBackground
-            opacity:                    0.9
+            color:                      qgcPal.windowShade
             z:                          guidedController.z
             visible:                    false
 
@@ -570,11 +567,12 @@ QGCView {
                     anchors.left:           slider.left
                     anchors.right:          slider.right
                     horizontalAlignment:    Text.AlignHCenter
+                    visible:                false
                 }
 
                 QGCLabel {
                     id:                     messageText
-                    color:                  qgcPal.alertText
+                    color:                  qgcPal.text
                     anchors.left:           slider.left
                     anchors.right:          slider.right
                     horizontalAlignment:    Text.AlignHCenter
@@ -584,7 +582,7 @@ QGCView {
                 // Action confirmation control
                 SliderSwitch {
                     id:             slider
-                    confirmText:    qsTr("Slide to confirm")
+                    confirmText:    qsTr("->滑动")
                     width:          Math.max(implicitWidth, ScreenTools.defaultFontPixelWidth * 30)
 
                     onAccept: {
@@ -607,12 +605,12 @@ QGCView {
                 anchors.margins:    _margins
                 anchors.top:        parent.top
                 anchors.right:      parent.right
-                width:              ScreenTools.defaultFontPixelHeight
+                width:              ScreenTools.defaultFontPixelHeight*1.5
                 height:             width
                 sourceSize.height:  width
                 source:             "/res/XDelete.svg"
                 fillMode:           Image.PreserveAspectFit
-                color:              qgcPal.alertText
+                color:              qgcPal.text
                 QGCMouseArea {
                     fillItem:   parent
                     onClicked: {
@@ -650,6 +648,7 @@ QGCView {
                 QGCLabel {
                     text:               qsTr("Select Action")
                     Layout.alignment:   Qt.AlignHCenter
+                    visible:            false
                 }
 
                 QGCFlickable {
@@ -709,7 +708,7 @@ QGCView {
                 anchors.margins:    _margins
                 anchors.top:        parent.top
                 anchors.right:      parent.right
-                width:              ScreenTools.defaultFontPixelHeight
+                width:              ScreenTools.defaultFontPixelHeight*1.5
                 height:             width
                 sourceSize.height:  width
                 source:             "/res/XDelete.svg"

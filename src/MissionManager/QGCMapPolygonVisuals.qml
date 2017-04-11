@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -69,7 +69,7 @@ Item {
         id: polygonComponent
 
         MapPolygon {
-            color: "green"
+            color:      "#10ebbf"
             opacity:    0.5
             path:       mapPolygon.path
         }
@@ -91,7 +91,7 @@ Item {
                 width:      ScreenTools.defaultFontPixelHeight * 1.5
                 height:     width
                 radius:     width / 2
-                color:      "white"
+                color:      "#8cb3be"
                 opacity:    .50
 
                 QGCLabel {

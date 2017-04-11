@@ -209,9 +209,10 @@ Item {
             sourceItem:
                 MissionItemIndexLabel {
                 index:      _missionItem.sequenceNumber
-                label:      "Loiter"
+                label:      "盘旋"
                 checked:    _missionItem.isCurrentItem
                 onClicked: _root.clicked(_missionItem.sequenceNumber)
+                simpleindex:   1
             }
         }
     }
@@ -243,9 +244,10 @@ Item {
             sourceItem:
                 MissionItemIndexLabel {
                 index:      _missionItem.lastSequenceNumber
-                label:      "Land"
+                label:      "降落"
                 checked:    _missionItem.isCurrentItem
                 onClicked: _root.clicked(_missionItem.sequenceNumber)
+                simpleindex:   1
             }
         }
     }

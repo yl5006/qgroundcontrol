@@ -147,6 +147,7 @@ FlightMap {
         id: rallyPointController
         Component.onCompleted: start(false /* editMode */)
     }
+
     // The following code is used to track vehicle states such that we prompt to remove mission from vehicle when mission completes
 
     property bool vehicleArmed:                 _activeVehicle ? _activeVehicle.armed : false
@@ -190,9 +191,20 @@ FlightMap {
         }
     }
 
+    MapFitFunctions {
+        id:                         mapFitFunctions
+        map:                        _flightMap
+        usePlannedHomePosition:     false
+        mapMissionController:      missionController
+        mapGeoFenceController:     geoFenceController
+        mapRallyPointController:   rallyPointController
+
+        property real leftToolWidth: 0//   toolStrip.x + toolStrip.width
+    }
+
     ExclusiveGroup {
         id: _mapTypeButtonsExclusiveGroup
-    }    
+    }
     ExclusiveGroup {
         id: dropButtonsExclusiveGroup
     }
@@ -216,8 +228,8 @@ FlightMap {
             missionController:      missionController
             rallyPointController:   rallyPointController
             showFollowVehicle:      true
-            followVehicle:          _followVehicle
-            onFollowVehicleChanged: _followVehicle = followVehicle
+            followVehicle:          _keepVehicleCentered
+            onFollowVehicleChanged: _keepVehicleCentered = followVehicle
 
             property real leftToolWidth:    centerMapDropButton.x + centerMapDropButton.width
         }
@@ -237,7 +249,7 @@ FlightMap {
             exclusiveGroup:     dropButtonsExclusiveGroup
             z:                  QGroundControl.zOrderWidgets
             lightBorders:       isSatelliteMap
-
+            visible:            false
             dropDownComponent: Component {
                 Column {
                     spacing: ScreenTools.defaultFontPixelWidth
@@ -286,7 +298,6 @@ FlightMap {
             visible:            !ScreenTools.isTinyScreen && _mainIsMap
             buttonImage:        "/qmlimages/ZoomPlus.svg"
             exclusiveGroup:     dropButtonsExclusiveGroup
-            z:                  QGroundControl.zOrderWidgets
             lightBorders:       isSatelliteMap
             onClicked: {
                 if(_flightMap)
@@ -305,7 +316,6 @@ FlightMap {
             visible:            !ScreenTools.isTinyScreen && _mainIsMap
             buttonImage:        "/qmlimages/ZoomMinus.svg"
             exclusiveGroup:     dropButtonsExclusiveGroup
-            z:                  QGroundControl.zOrderWidgets
             lightBorders:       isSatelliteMap
             onClicked: {
                 if(_flightMap)
@@ -321,17 +331,12 @@ FlightMap {
         //-- 声音
         RoundButton {
             id:                 voice
-            buttonImage:        checked?"/qmlimages/novoice.svg":"/qmlimages/voice.svg"
-            z:                  QGroundControl.zOrderWidgets
+            buttonImage:        checked ? "/qmlimages/novoice.svg":"/qmlimages/voice.svg"
             lightBorders:       isSatelliteMap
             property Fact _audioMuted: QGroundControl.settingsManager.appSettings.audioMuted
-            checked: _audioMuted ?
-                              (_audioMuted.typeIsBool ?
-                                   (_audioMuted.value === true ? Qt.Checked : Qt.Unchecked) :
-                                   (_audioMuted.value === 1 ? Qt.Checked : Qt.Unchecked)) :
-                              Qt.Unchecked
+            checked:      _audioMuted.value==1
             onClicked: {
-              _audioMuted.value = checked ? 1 : 0
+                _audioMuted.value = checked ? 1 : 0
             }
         }
         Rectangle {
@@ -343,16 +348,15 @@ FlightMap {
         RoundButton {
             id:                 yaokong
             buttonImage:        "/qmlimages/yaokong.svg"
-            z:                  QGroundControl.zOrderWidgets
             lightBorders:       isSatelliteMap
             property Fact       _virtualJoystick: QGroundControl.settingsManager.appSettings.virtualJoystick
             checked: _virtualJoystick ?
-                              (_virtualJoystick.typeIsBool ?
-                                   (_virtualJoystick.value === true ? Qt.Checked : Qt.Unchecked) :
-                                   (_virtualJoystick.value === 1 ? Qt.Checked : Qt.Unchecked)) :
-                              Qt.Unchecked
+                         (_virtualJoystick.typeIsBool ?
+                              (_virtualJoystick.value === true ? Qt.Checked : Qt.Unchecked) :
+                              (_virtualJoystick.value === 1 ? Qt.Checked : Qt.Unchecked)) :
+                         Qt.Unchecked
             onClicked: {
-              _virtualJoystick.value = checked ? 1 : 0
+                _virtualJoystick.value = checked ? 1 : 0
             }
         }
     }
@@ -447,7 +451,7 @@ FlightMap {
             label:   qsTr("G", "Goto here waypoint") // second string is translator's hint.
             simpleindex:   1
         }
-    }    
+    }
 
     // Handle guided mode clicks
     MouseArea {
@@ -462,11 +466,25 @@ FlightMap {
     }
 
     MapScale {
+        id:                     mapScale
         anchors.verticalCenter:         toolColumn.verticalCenter
-        anchors.leftMargin:    ScreenTools.defaultFontPixelHeight*2
+        anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*2
         anchors.left:           toolColumn.right
         mapControl:             flightMap
         visible:                !ScreenTools.isTinyScreen
+        state:                  "bottomMode"
+        states: [
+            State {
+                name:   "topMode"
+                AnchorChanges {
+                }
+            },
+            State {
+                name:   "bottomMode"
+                AnchorChanges {
+                }
+            }
+        ]
     }
 
 }

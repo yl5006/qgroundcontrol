@@ -17,7 +17,7 @@ Rectangle {
     id:         _root
     color:      "transparent"//qgcPal.window
     width:      buttonStripRow.width + (buttonStripRow.anchors.margins * 2)
-    height:     ScreenTools.isMobile ? ScreenTools.minTouchPixels : ScreenTools.defaultFontPixelWidth * 8//buttonStripColumn.height + (buttonStripColumn.anchors.margins * 2)
+    height:     ScreenTools.isMobile ? ScreenTools.minTouchPixels : ScreenTools.defaultFontPixelWidth * 10//buttonStripColumn.height + (buttonStripColumn.anchors.margins * 2)
     radius:     _radius
 
     property string title:              "Title"
@@ -90,7 +90,7 @@ Rectangle {
         anchors.top:        parent.top
         anchors.bottom:     parent.bottom
         anchors.left:       parent.left
-        spacing:            ScreenTools.defaultFontPixelWidth  / 2
+        spacing:            ScreenTools.defaultFontPixelWidth
         QGCLabel {
             anchors.verticalCenter:     parent.verticalCenter
             text:                       title
@@ -113,7 +113,7 @@ Rectangle {
             delegate: Column {
                 id:         buttonColumn
                 width:      buttonStripRow.height
-                visible:    _root.buttonVisible ? _root.buttonVisible[index] : true
+                visible:    _root.buttonEnabled ? _root.buttonEnabled[index] : true//_root.buttonVisible ? _root.buttonVisible[index] : true
 
                 property bool checked: false
                 property ExclusiveGroup exclusiveGroup: dropButtonsExclusiveGroup
@@ -164,17 +164,20 @@ Rectangle {
 
                     Rectangle {
                         anchors.fill:   parent
-                        color:          checked ? _repeaterPal.buttonHighlight : _repeaterPal.button
-
+                        color:          _repeaterPal.button //: _repeaterPal.button
+                        radius:         width/2
+                        border.color:   _repeaterPal.buttonHighlight
+                        border.width:   ScreenTools.defaultFontPixelWidth/2
                         QGCColoredImage {
                             id:                 button
                             anchors.fill:       parent
+                            anchors.margins:    ScreenTools.defaultFontPixelWidth*2
                             source:             _source
                             sourceSize.height:  parent.height
                             fillMode:           Image.PreserveAspectFit
                             mipmap:             true
                             smooth:             true
-                            color:              checked ? _repeaterPal.buttonHighlightText : _repeaterPal.buttonText
+                            color:              _repeaterPal.buttonHighlight//checked ? _repeaterPal.buttonHighlightText : _repeaterPal.buttonText
 
                             RotationAnimation on rotation {
                                 id:             imageRotation

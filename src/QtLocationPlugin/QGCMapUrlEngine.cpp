@@ -205,7 +205,7 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString sec2    = ""; // after &zoom=...
         _getSecGoogleWords(x, y, sec1, sec2);
         _tryCorrectGoogleVersions(networkManager);
-        qDebug()<<QString("http://%1%2.google.com/%3/lyrs=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleMap).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
+//       qDebug()<<QString("http://%1%2.google.com/%3/lyrs=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleMap).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
         return QString("http://%1%2.google.com/%3/lyrs=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleMap).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
     }
     break;
@@ -218,7 +218,7 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString sec2    = ""; // after &zoom=...
         _getSecGoogleWords(x, y, sec1, sec2);
         _tryCorrectGoogleVersions(networkManager); 
-        qDebug()<<QString("https://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
+//        qDebug()<<QString("https://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
         return QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
     }
     break;
@@ -306,6 +306,7 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
     }
     case GaodeMap:
     {
+        qDebug()<<"gaode";
         return QString("http://api.aeromap.cn/map/normal/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
    //      return QString("http://webst03.is.autonavi.com/appmaptile?x=%1&y=%2&z=%3&lang=zh_cn&size=1&scale=1&style=7").arg(x).arg(y).arg(zoom);
         //return _tilexyTobaidu(x, y, zoom);
@@ -313,7 +314,8 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
     break;
     case GaodeSatellite:
     {
-         qDebug()<<QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
+         qDebug()<<"gaodeSatellite";
+  //       qDebug()<<QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
          return QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
   //      return QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
   //      return _tilexyTobaidu(x, y, zoom);

@@ -51,11 +51,11 @@ stQGeoTileCacheQGCMapTypes kMapTypes[] = {
     {"Bing Street Map",         UrlFactory::BingMap},
     {"Bing Satellite Map",      UrlFactory::BingSatellite},
     {"Bing Hybrid Map",         UrlFactory::BingHybrid},
-    {"Statkart Topo2",          UrlFactory::StatkartTopo},
+    {"Gaode Street Map",        UrlFactory::GaodeMap},
+    {"Gaode Satellite Map",     UrlFactory::GaodeSatellite},
+    {"Gaode Hybrid Map",        UrlFactory::GaodeHybrid},
 
-    {"Gaode Street Map",          UrlFactory::GaodeMap},
-    {"Gaode Satellite Map",       UrlFactory::GaodeSatellite},
-    {"Gaode Hybrid Map",          UrlFactory::GaodeHybrid},
+    {"Statkart Topo2",          UrlFactory::StatkartTopo},   
     {"MapQuest Street Map",     UrlFactory::MapQuestMap},
     {"MapQuest Satellite Map",  UrlFactory::MapQuestSat}
     /*

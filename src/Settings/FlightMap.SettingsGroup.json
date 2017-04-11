@@ -1,9 +1,9 @@
-[
+﻿[
 {
     "name":             "MapProvider",
     "shortDescription": "Currently selected map provider for flight maps",
     "type":             "uint32",
-    "enumStrings":      "Bing,Google,Statkart",
+    "enumStrings":      "Bing,Google,Gaode",
     "enumValues":       "0,1,2",
     "defaultValue":     0
 },

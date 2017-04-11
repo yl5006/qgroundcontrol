@@ -239,11 +239,11 @@ Item {
 
     function showMessageArea() {
         rootLoader.sourceComponent = null
-        var currentlyVisible = messageArea.visible
-        if(currentPopUp) {
-            currentPopUp.close()
-        }
-	criticalMmessageArea.visible = true
+//        var currentlyVisible = messageArea.visible
+//        if(currentPopUp) {
+//            currentPopUp.close()
+//        }
+        criticalMmessageArea.visible = true
 	        if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
             activeVehicle.resetMessages()
         }
@@ -336,7 +336,6 @@ Item {
         onShowFlyView:          mainWindow.showFlyView()
         onShowAnalyzeView:      mainWindow.showAnalyzeView()
         z:                      QGroundControl.zOrderTopMost
-	z:                      QGroundControl.zOrderTopMost
         state:                  "Init"
         property real   _barMargin:     0
         states: [

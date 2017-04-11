@@ -307,7 +307,7 @@ QGCView {
     ///     @param coordinate Location to insert item
     ///     @param index Insert item at this index
     function insertSimpleMissionItem(coordinate, index) {
-        setCurrentItem(-1)
+//        setCurrentItem(-1)
         var sequenceNumber = missionController.insertSimpleMissionItem(coordinate, index)
         setCurrentItem(sequenceNumber)
     }
@@ -772,13 +772,15 @@ QGCView {
                     width:      1
                     color:      "grey"
                 }
-                RoundButton{//DropButton
-                    id:             addShapeButton
-                    //             dropDirection:      dropDown
-                    buttonImage:    "/qmlimages/MapDrawShape.svg"
-                    lightBorders:   _lightWidgetBorders
-                    visible:        _editingLayer == _layerMission
-                    exclusiveGroup:    _dropButtonsExclusiveGroup
+                DropButton{//DropButton
+                    id:                 addShapeButton
+                    dropDirection:      dropDown
+                    buttonImage:        "/qmlimages/MapDrawShape.svg"
+                    lightBorders:       _lightWidgetBorders
+                    visible:            _editingLayer == _layerMission
+                    exclusiveGroup:     _dropButtonsExclusiveGroup
+                    dropDownComponent:  patternDropPanel
+          /*
                     onClicked: {
                         var coordinate = editorMap.center
                         coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
@@ -790,6 +792,7 @@ QGCView {
                         addMissionItemsButton.checked = false
                         _addWaypointOnClick = false
                     }
+          */
                 }
                 Rectangle {
                     height:     parent.height*0.8
@@ -1003,13 +1006,21 @@ QGCView {
                 z:              QGroundControl.zOrderTopMost+100
 
                 onRemove: {
-                    var removeIndex = _currentMissionItem.sequenceNumber
-                    itemDragger.clearItem()
-                    missionController.removeMissionItem(removeIndex)
-                    if (removeIndex >= missionController.visualItems.count) {
-                        removeIndex--
+                    for(var i=0;i<missionController.visualItems.count;i++)
+                    {
+                        var visualItem = _visualItems.get(i)
+                        if (visualItem.sequenceNumber == _currentMissionItem.sequenceNumber)
+                        {
+                            var removeIndex = i//_currentMissionItem.sequenceNumber
+                            console.log(i)
+                            itemDragger.clearItem()
+                            missionController.removeMissionItem(removeIndex)
+//                            if (removeIndex >= missionController.visualItems.count) {
+//                                removeIndex--
+//                            }
+                            setCurrentItem(removeIndex-1)
+                        }
                     }
-                    setCurrentItem(removeIndex-1)
                 }
 
                 onInsert: {
@@ -1077,7 +1088,7 @@ QGCView {
         id: syncLoadFromVehicleOverwrite
         QGCViewMessage {
             id:         syncLoadFromVehicleCheck
-            message:   qsTr("You have unsaved/unsent changes. Loading from the Vehicle will lose these changes. Are you sure you want to load from the Vehicle?")
+            message:   qsTr("你有未保存或发送任务. 从飞机载入会丢失，确认载入?")
             function accept() {
                 hideDialog()
                 _syncDropDownController.loadFromVehicle()
@@ -1089,7 +1100,7 @@ QGCView {
         id: syncLoadFromFileOverwrite
         QGCViewMessage {
             id:         syncLoadFromVehicleCheck
-            message:   qsTr("You have unsaved/unsent changes. Loading a from a file will lose these changes. Are you sure you want to load from a file?")
+            message:   qsTr("你有未保存或发送任务. 从文件载入会丢失，确认载入?")
             function accept() {
                 hideDialog()
                 _syncDropDownController.loadFromSelectedFile()
@@ -1100,7 +1111,7 @@ QGCView {
     Component {
         id: removeAllPromptDialog
         QGCViewMessage {
-            message: qsTr("Are you sure you want to remove all items?")
+            message: qsTr("确认删除所有航点?")
             function accept() {
                 itemDragger.clearItem()
                 _syncDropDownController.removeAll()
@@ -1140,18 +1151,19 @@ QGCView {
         ColumnLayout {
             spacing:    ScreenTools.defaultFontPixelWidth * 0.5
 
-            QGCLabel { text: qsTr("Create complex pattern:") }
+//            QGCLabel { text: qsTr("Create complex pattern:") }
 
             Repeater {
                 model: missionController.complexMissionItemNames
 
-                QGCButton {
+                SubMenuButton {
+                    imageResource:      "/qmlimages/MapDrawShape.svg"
                     text:               modelData
                     Layout.fillWidth:   true
 
                     onClicked: {
                         addComplexItem(modelData)
-                        dropPanel.hide()
+                        addShapeButton.hideDropDown()
                     }
                 }
             }

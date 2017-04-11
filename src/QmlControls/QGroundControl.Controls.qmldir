@@ -70,6 +70,7 @@ SliderSwitch            1.0 SliderSwitch.qml
 SubMenuButton           1.0 SubMenuButton.qml
 SurveyMapVisuals        1.0 SurveyMapVisuals.qml
 ToolStrip               1.0 ToolStrip.qml
+ToolStripRow            1.0 ToolStripRow.qml
 ImageButton             1.0 ImageButton.qml
 PathDraw                1.0 PathDraw.qml
 QGCVariantButton        1.0 QGCVariantButton.qml

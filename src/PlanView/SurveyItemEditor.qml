@@ -403,7 +403,7 @@ Rectangle {
                 }
 
                 QGCCheckBox {
-                    text:       qsTr("Refly at 90 degree offset")
+                    text:       qsTr("以90度偏移重飞该区域")
                     checked:    missionItem.refly90Degrees
                     onClicked:  missionItem.refly90Degrees = checked
                     Layout.columnSpan: 2
@@ -470,7 +470,7 @@ Rectangle {
             }
 
             QGCCheckBox {
-                text:       qsTr("Refly at 90 degree offset")
+                text:       qsTr("以90度偏移重飞该区域")
                 checked:    missionItem.refly90Degrees
                 onClicked:  missionItem.refly90Degrees = checked
             }
@@ -482,10 +482,10 @@ Rectangle {
             }
         }
 
-        QGCMapPolygonControls
-        {
-
-        }
+//        QGCMapPolygonControls
+//        {
+//            flightMap:          editorMap
+//        }
 
         SectionHeader {
             id:     statsHeader

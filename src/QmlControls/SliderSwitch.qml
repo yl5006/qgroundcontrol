@@ -11,7 +11,7 @@ Rectangle {
     implicitWidth:  label.contentWidth + (_diameter * 2.5) + (_border * 4)
     implicitHeight: label.height * 2.5
     radius:         height /2
-    color:          qgcPal.text
+    color:          qgcPal.button
 
     signal accept   ///< Action confirmed
     signal reject   ///< Action rejected
@@ -29,7 +29,7 @@ Rectangle {
         anchors.horizontalCenter:   parent.horizontalCenter
         anchors.verticalCenter:     parent.verticalCenter
         text:                       qsTr("确认 %1").arg(confirmText)
-        color:                      qgcPal.window
+        color:                      qgcPal.text
     }
 
     Rectangle {
@@ -39,7 +39,7 @@ Rectangle {
         height:     _diameter
         width:      _diameter
         radius:     _diameter / 2
-        color:      qgcPal.windowShade
+        color:      qgcPal.button
         opacity:    0.8
 
         QGCColoredImage {

@@ -33,7 +33,7 @@ Button {
             left:   _horizontalPadding
             right:  _horizontalPadding
         }
-	selectedTextColor  : "Black"
+//        selectedTextColor  : "Black"
         /*! This defines the background of the button. */
         background: Rectangle {
             implicitWidth:  ScreenTools.implicitComboBoxWidth

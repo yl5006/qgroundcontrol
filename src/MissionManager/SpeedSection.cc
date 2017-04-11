@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -105,7 +105,7 @@ void SpeedSection::appendSectionItems(QList<MissionItem*>& items, QObject* missi
                                             _flightSpeedFact.rawValue().toDouble(),
                                             -1,                                                                 // No throttle change
                                             0,                                                                  // Absolute speed change
-                                            0, 0, 0,                                                            // param 5-7 not used
+                                            0, 0, 0, 0, 0, 0,                                                            // param 5-7 not used
                                             true,                                                               // autoContinue
                                             false,                                                              // isCurrentItem
                                             missionItemParent);

@@ -53,8 +53,8 @@ MissionController::MissionController(QObject *parent)
     , _settingsItem(NULL)
     , _firstItemsFromVehicle(false)
     , _missionItemsRequested(false)
-    , _surveyMissionItemName(tr("Survey"))
-    , _fwLandingMissionItemName(tr("Fixed Wing Landing"))
+    , _surveyMissionItemName(tr("网格航线"))
+    , _fwLandingMissionItemName(tr("固定翼降落"))
     , _appSettings(qgcApp()->toolbox()->settingsManager()->appSettings())
 {
     _resetMissionFlightStatus();

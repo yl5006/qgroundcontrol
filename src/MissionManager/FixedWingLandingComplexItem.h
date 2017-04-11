@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -67,8 +67,8 @@ public:
     bool            isStandaloneCoordinate  (void) const final { return false; }
     bool            specifiesCoordinate     (void) const final;
     bool            specifiesAltitudeOnly   (void) const final { return false; }
-    QString         commandDescription      (void) const final { return "Landing Pattern"; }
-    QString         commandName             (void) const final { return "Landing Pattern"; }
+    QString         commandDescription      (void) const final { return "降落序列"; }
+    QString         commandName             (void) const final { return "降落序列"; }
     QString         abbreviation            (void) const final { return "L"; }
     QGeoCoordinate  coordinate              (void) const final { return _loiterCoordinate; }
     QGeoCoordinate  exitCoordinate          (void) const final { return _landingCoordinate; }

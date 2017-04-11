@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -46,7 +46,7 @@ Rectangle {
             anchors.right:  parent.right
             wrapMode:       Text.WordWrap
             font.pointSize: ScreenTools.smallFontPointSize
-            text:           qsTr("WIP (NOT FOR REAL FLIGHT!)")
+            text:           qsTr("WIP (正在添加中，working!)")
         }
 
         SectionHeader {

@@ -302,9 +302,9 @@ QGCView {
                         }
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    false//_mapProvider.visible
+                            visible:    _mapProvider.visible
                             QGCLabel {
-                                text:       qsTr("Map Provider:")
+                                text:       qsTr("地图提供商:")
                                 width:      _labelWidth
                                 anchors.verticalCenter: parent.verticalCenter
                             }

@@ -419,13 +419,13 @@ void SimpleMissionItem::_rebuildTextFieldFacts(void)
 
         _missionItem._param5Fact._setName(tr("纬度:"));
         _missionItem._param5Fact.setMetaData(_defaultParamMetaData);
-        _textFieldFacts(&_missionItem._param5Fact);
+        _textFieldFacts.append(&_missionItem._param5Fact);
         _missionItem._param6Fact._setName(tr("经度:"));
         _missionItem._param6Fact.setMetaData(_defaultParamMetaData);
-        _textFieldFacts(&_missionItem._param6Fact);
+        _textFieldFacts.append(&_missionItem._param6Fact);
         _missionItem._param7Fact._setName(tr("高度:"));
         _missionItem._param7Fact.setMetaData(_defaultParamMetaData);
-        _textFieldFacts(&_missionItem._param7Fact);
+        _textFieldFacts.append(&_missionItem._param7Fact);
 
 
         Fact*           rgParamFacts[10] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact,&_missionItem._param8Fact, &_missionItem._param9Fact, &_missionItem._param10Fact };
