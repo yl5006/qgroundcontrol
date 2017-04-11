@@ -729,6 +729,7 @@ QGCView {
                     visible:        _editingLayer == _layerMission
                     onClicked:  {
                         _addWaypointOnClick = checked
+                        ruler.checked=false
                     }
                 }
                 Rectangle {
@@ -865,7 +866,20 @@ QGCView {
                     width:      1
                     color:      "grey"
                 }
-
+                RoundButton {
+                    id:             ruler
+                    buttonImage:    "/qmlimages/ruler.svg"
+                    lightBorders:   _lightWidgetBorders
+                    onClicked:  {
+                        addMissionItemsButton.checked = false
+                        _addWaypointOnClick = false
+                    }
+                }
+                Rectangle {
+                    height:     parent.height*0.8
+                    width:      1
+                    color:      "grey"
+                }
                 //-- Zoom Map In
                 RoundButton {
                     id:                 mapZoomPlus
@@ -1002,7 +1016,7 @@ QGCView {
                 map:            editorMap
                 readOnly:       false
                 rootQgcView:    _qgcView
-                visible:        _editingLayer == _layerMission
+                visible:        _currentMissionItem?_editingLayer == _layerMission:false
                 z:              QGroundControl.zOrderTopMost+100
 
                 onRemove: {
@@ -1011,13 +1025,9 @@ QGCView {
                         var visualItem = _visualItems.get(i)
                         if (visualItem.sequenceNumber == _currentMissionItem.sequenceNumber)
                         {
-                            var removeIndex = i//_currentMissionItem.sequenceNumber
-                            console.log(i)
+                            var removeIndex = i
                             itemDragger.clearItem()
                             missionController.removeMissionItem(removeIndex)
-//                            if (removeIndex >= missionController.visualItems.count) {
-//                                removeIndex--
-//                            }
                             setCurrentItem(removeIndex-1)
                         }
                     }
@@ -1164,6 +1174,7 @@ QGCView {
                     onClicked: {
                         addComplexItem(modelData)
                         addShapeButton.hideDropDown()
+                        ruler.checked=false
                     }
                 }
             }
