@@ -280,7 +280,15 @@ public:
     ///     @param[out] mAhBattery Battery milliamp-hours rating (0 for no battery data available)
     ///     @param[out] hoverAmps Current draw in amps during hover
     ///     @param[out] cruiseAmps Current draw in amps during cruise
-    virtual void batteryConsumptionData(Vehicle* vehicle, int& mAhBattery, int& hoverAmps, int& cruiseAmps) const;
+    virtual void batteryConsumptionData(Vehicle* vehicle, int& mAhBattery, double& hoverAmps, double& cruiseAmps) const;
+
+    /// Returns the default mission flight speeds.
+    ///     @param[out] hoverSpeed Flight speed for vehicle flying in multi-rotor mode. 0 for none, or not available.
+    ///     @param[out] cruiseSpeed Flight speed for vehicle flying in fixed wing forward flight mode. 0 for none, or not available.
+    virtual void missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed);
+
+    // Returns the parameter which control auto-dismar. Assume == 0 means no auto disarm
+    virtual QString autoDisarmParameter(Vehicle* vehicle);
 
     // FIXME: Hack workaround for non pluginize FollowMe support
     static const char* px4FollowMeFlightMode;

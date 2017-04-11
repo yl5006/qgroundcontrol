@@ -11,6 +11,8 @@
 #include "QGCApplication.h"
 #include "Generic/GenericAutoPilotPlugin.h"
 #include "CameraMetaData.h"
+#include "SettingsManager.h"
+#include "AppSettings.h"
 #include "PX4AutoPilotPlugin.h"
 #include <QDebug>
 
@@ -347,6 +349,7 @@ const QVariantList &FirmwarePlugin::toolBarIndicators(const Vehicle* vehicle)
         _toolBarIndicatorList.append(QVariant::fromValue(QUrl::fromUserInput("qrc:/toolbar/TelemetryRSSIIndicator.qml")));
         _toolBarIndicatorList.append(QVariant::fromValue(QUrl::fromUserInput("qrc:/toolbar/Telemetrylost.qml")));;
         _toolBarIndicatorList.append(QVariant::fromValue(QUrl::fromUserInput("qrc:/toolbar/ModeIndicator.qml")));
+        _toolBarIndicatorList.append(QVariant::fromValue(QUrl::fromUserInput("qrc:/toolbar/ArmedIndicator.qml")));
     }
     return _toolBarIndicatorList;
 }
@@ -449,7 +452,7 @@ bool FirmwarePlugin::_armVehicle(Vehicle* vehicle)
     return vehicle->armed();
 }
 
-void FirmwarePlugin::batteryConsumptionData(Vehicle* vehicle, int& mAhBattery, int& hoverAmps, int& cruiseAmps) const
+void FirmwarePlugin::batteryConsumptionData(Vehicle* vehicle, int& mAhBattery, double& hoverAmps, double& cruiseAmps) const
 {
     Q_UNUSED(vehicle);
     mAhBattery = 0;
@@ -480,4 +483,21 @@ bool FirmwarePlugin::multiRotorXConfig(Vehicle* vehicle)
     if(autostartId>=11000&&autostartId<13000)
         return true;
     return false;
+}
+
+
+QString FirmwarePlugin::autoDisarmParameter(Vehicle* vehicle)
+{
+    Q_UNUSED(vehicle);
+    return QString();
+}
+
+void FirmwarePlugin::missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed)
+{
+    Q_UNUSED(vehicle);
+
+    // Best we can do is use settings
+    AppSettings* appSettings = qgcApp()->toolbox()->settingsManager()->appSettings();
+    hoverSpeed = appSettings->offlineEditingHoverSpeed()->rawValue().toDouble();
+    cruiseSpeed = appSettings->offlineEditingCruiseSpeed()->rawValue().toDouble();
 }

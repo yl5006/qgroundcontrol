@@ -23,12 +23,12 @@ QGCPalette::Theme QGCPalette::_theme = QGCPalette::Dark;
 //                                      Light                 Dark
 //                                      Disabled   Enabled    Disabled   Enabled
 DECLARE_QGC_COLOR(window,               "#ffffff", "#ffffff", "#f21e2328", "#f21e2328")
-DECLARE_QGC_COLOR(windowShade,          "#d9d9d9", "#d9d9d9", "#f21e2328", "#333333")
+DECLARE_QGC_COLOR(windowShade,          "#d9d9d9", "#d9d9d9", "#f21e2328", "#f21e2328")
 DECLARE_QGC_COLOR(windowShadeDark,      "#bdbdbd", "#bdbdbd", "#1e2328", "#1e2328")
-DECLARE_QGC_COLOR(text,                 "#9d9d9d", "#000000", "#3a3a3a", "#ffffff")
+DECLARE_QGC_COLOR(text,                 "#9d9d9d", "#000000", "#a0a0a0", "#ffffff")
 DECLARE_QGC_COLOR(warningText,          "#cc0808", "#cc0808", "#e4e428", "#e4e428")
 DECLARE_QGC_COLOR(button,               "#ffffff", "#ffffff", "#33444c", "#626270")
-DECLARE_QGC_COLOR(buttonText,           "#9d9d9d", "#000000", "#2c2c2c", "#ffffff")
+DECLARE_QGC_COLOR(buttonText,           "#9d9d9d", "#000000", "#202020", "#ffffff")
 DECLARE_QGC_COLOR(buttonHighlight,      "#e4e4e4", "#946120", "#3a3a3a", "#fff291")
 DECLARE_QGC_COLOR(buttonHighlightText,  "#2c2c2c", "#ffffff", "#2c2c2c", "#000000")
 DECLARE_QGC_COLOR(primaryButton,        "#585858", "#8cb3be", "#10ebbf", "#8cb3be")

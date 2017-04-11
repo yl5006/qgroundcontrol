@@ -57,6 +57,14 @@ Item {
         }
     }
 
+    function disableToolbar() {
+        toolbarBlocker.enabled = true
+    }
+
+    function enableToolbar() {
+        toolbarBlocker.enabled = false
+    }
+
     function hideAllViews() {
         for (var i=0; i<_viewList.length; i++) {
             _viewList[i].visible = false
@@ -65,6 +73,7 @@ Item {
     }
 
     function showSettingsView() {
+        rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
         }
@@ -83,6 +92,7 @@ Item {
     }
 
     function showSetupView() {
+        rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
         }
@@ -99,6 +109,7 @@ Item {
     }
 
     function showPlanView() {
+        rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
         }
@@ -112,6 +123,7 @@ Item {
     }
 
     function showFlyView() {
+        rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
         }
@@ -122,6 +134,7 @@ Item {
     }
 
     function showAnalyzeView() {
+        rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
         }
@@ -225,34 +238,46 @@ Item {
     //    }
 
     function showMessageArea() {
+        rootLoader.sourceComponent = null
+        var currentlyVisible = messageArea.visible
         if(currentPopUp) {
             currentPopUp.close()
         }
-        criticalMmessageArea.visible = true
-        if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
+	criticalMmessageArea.visible = true
+	        if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
             activeVehicle.resetMessages()
         }
-        //                if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
-        //                    messageText.text = formatMessage(activeVehicle.formatedMessages)
-        //                    //-- Hack to scroll to last message
-        //                    for (var i = 0; i < activeVehicle.messageCount; i++)
-        //                        messageFlick.flick(0,-5000)
-        //                    activeVehicle.resetMessages()
-        //                } else {
-        //                    messageText.text = qsTr("无消息")//qsTr("No Messages")
-        //                }
-        //                currentPopUp = messageArea
-        //                messageArea.visible = true
+/*
+        if(!currentlyVisible) {
+            if(QGroundControl.multiVehicleManager.activeVehicleAvailable) {
+                messageText.text = formatMessage(activeVehicle.formatedMessages)
+                //-- Hack to scroll to last message
+                for (var i = 0; i < activeVehicle.messageCount; i++)
+                    messageFlick.flick(0,-5000)
+                activeVehicle.resetMessages()
+            } else {
+                messageText.text = qsTr("No Messages")
+            }
+            currentPopUp = messageArea
+            messageArea.visible = true
+        }
+*/
     }
 
     function showPopUp(dropItem, centerX) {
+        rootLoader.sourceComponent = null
+        var oldIndicator = indicatorDropdown.sourceComponent
         if(currentPopUp) {
             currentPopUp.close()
         }
-        indicatorDropdown.centerX = centerX
-        indicatorDropdown.sourceComponent = dropItem
-        indicatorDropdown.visible = true
-        currentPopUp = indicatorDropdown
+        if(oldIndicator !== dropItem) {
+            console.log(oldIndicator)
+            console.log(dropItem)
+            indicatorDropdown.centerX = centerX
+            indicatorDropdown.sourceComponent = dropItem
+            indicatorDropdown.visible = true
+            currentPopUp = indicatorDropdown
+        }
     }
 
     //logo
@@ -311,6 +336,7 @@ Item {
         onShowFlyView:          mainWindow.showFlyView()
         onShowAnalyzeView:      mainWindow.showAnalyzeView()
         z:                      QGroundControl.zOrderTopMost
+	z:                      QGroundControl.zOrderTopMost
         state:                  "Init"
         property real   _barMargin:     0
         states: [
@@ -337,19 +363,20 @@ Item {
         }
 
     }
-//    PlanToolBar {
-//        id:                 planToolBar
-//        height:             ScreenTools.toolbarHeight
-//        anchors.left:       parent.left
-//        anchors.right:      parent.right
-//        anchors.top:        parent.top
-//        z:                  rightBar.z + 1
+/*
+    PlanToolBar {
+        id:                 planToolBar
+        height:             ScreenTools.toolbarHeight
+        anchors.left:       parent.left
+        anchors.right:      parent.right
+        anchors.top:        parent.top
+        z:                  toolBar.z + 1
 
-//        onShowFlyView: {
-//            planToolBar.visible = false
-//            mainWindow.showFlyView()
-//        }
-//    }
+        onShowFlyView: {
+            planToolBar.visible = false
+            mainWindow.showFlyView()
+        }
+*/
     FlightMap {
         id:             initMap
         anchors.fill:   parent

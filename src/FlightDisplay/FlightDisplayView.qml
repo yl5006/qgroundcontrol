@@ -34,6 +34,8 @@ QGCView {
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
 
+    property alias guidedController: guidedActionsController
+
     property bool activeVehicleJoystickEnabled: _activeVehicle ? _activeVehicle.joystickEnabled : false
 
     property var _activeVehicle:        QGroundControl.multiVehicleManager.activeVehicle
@@ -114,6 +116,9 @@ QGCView {
     Component.onCompleted: {
         setStates()
         px4JoystickCheck()
+        if(QGroundControl.corePlugin.options.flyViewOverlay.toString().length) {
+            flyViewOverlay.source = QGroundControl.corePlugin.options.flyViewOverlay
+        }
     }
 
     QGCMapPalette { id: mapPal; lightColors: _mainIsMap ? _flightMap.isSatelliteMap : true }
@@ -157,6 +162,7 @@ QGCView {
                 flightWidgets:          flightDisplayViewWidgets
                 rightPanelWidth:        ScreenTools.defaultFontPixelHeight * 9
                 qgcView:                root
+                scaleState:             (_mainIsMap && flyViewOverlay.item) ? (flyViewOverlay.item.scaleState ? flyViewOverlay.item.scaleState : "bottomMode") : "bottomMode"
             }
         }
 
@@ -296,6 +302,17 @@ QGCView {
             visible:            singleVehicleView.checked
         }
 
+        //-------------------------------------------------------------------------
+        //-- Loader helper for plugins to overlay elements over the fly view
+        Loader {
+            id:                 flyViewOverlay
+            z:                  flightDisplayViewWidgets.z + 1
+            height:             ScreenTools.availableHeight
+            anchors.left:       parent.left
+            anchors.right:      altitudeSlider.visible ? altitudeSlider.left : parent.right
+            anchors.bottom:     parent.bottom
+        }
+
         // Button to start/stop video recording
         Item {
             z:                  _flightVideoPipControl.z + 1
@@ -400,6 +417,7 @@ QGCView {
         }
 
         ToolStrip {
+            visible:            _activeVehicle ? _activeVehicle.guidedModeSupported : false
             id:                 toolStrip
             anchors.leftMargin: ScreenTools.defaultFontPixelWidth
             anchors.left:       _panel.left
@@ -408,7 +426,7 @@ QGCView {
             z:                  _panel.z + 4
             title:              qsTr("Fly")
             maxHeight:          (_flightVideo.visible ? _flightVideo.y : parent.height) - toolStrip.y
-            buttonVisible:      [ guidedController.showTakeoff || !guidedController.showLand, guidedController.showLand, true, true, true, guidedController.smartShotsAvailable ]
+            buttonVisible:      [ guidedController.showTakeoff || !guidedController.showLand, guidedController.showLand && !guidedController.showTakeoff, true, true, true, guidedController.smartShotsAvailable ]
             buttonEnabled:      [ guidedController.showTakeoff, guidedController.showLand, guidedController.showRTL, guidedController.showPause, _anyActionAvailable, _anySmartShotAvailable ]
 
             property bool _anyActionAvailable: guidedController.showEmergenyStop || guidedController.showStartMission || guidedController.showResumeMission || guidedController.showChangeAlt || guidedController.showLandAbort
@@ -451,27 +469,27 @@ QGCView {
             model: [
                 {
                     name:       guidedController.takeoffTitle,
-                    iconSource: "/qmlimages/MapCenter.svg",
+                    iconSource: "/res/takeoff.svg",
                     action:     guidedController.actionTakeoff
                 },
                 {
                     name:       guidedController.landTitle,
-                    iconSource: "/qmlimages/MapCenter.svg",
+                    iconSource: "/res/land.svg",
                     action:     guidedController.actionLand
                 },
                 {
                     name:       guidedController.rtlTitle,
-                    iconSource: "/qmlimages/MapCenter.svg",
+                    iconSource: "/res/rtl.svg",
                     action:     guidedController.actionRTL
                 },
                 {
                     name:       guidedController.pauseTitle,
-                    iconSource: "/qmlimages/MapCenter.svg",
+                    iconSource: "/res/pause-mission.svg",
                     action:     guidedController.actionPause
                 },
                 {
                     name:       qsTr("Action"),
-                    iconSource: "/qmlimages/MapCenter.svg",
+                    iconSource: "/res/action.svg",
                     action:     -1
                 },
                 /*
@@ -504,7 +522,7 @@ QGCView {
         }
 
         GuidedActionsController {
-            id:                 guidedController
+            id:                 guidedActionsController
             missionController:  flyMissionController
             z:                  _flightVideoPipControl.z + 1
 
@@ -521,11 +539,14 @@ QGCView {
             id:                         guidedActionConfirm
             anchors.margins:            _margins
             anchors.bottom:             parent.bottom
+            anchors.bottomMargin:       ScreenTools.defaultFontPixelHeight * 4
             anchors.horizontalCenter:   parent.horizontalCenter
-            width:                      confirmColumn.width + (_margins * 2)
-            height:                     confirmColumn.height + (_margins * 2)
+            border.color:               qgcPal.alertBorder
+            border.width:               1
+            width:                      confirmColumn.width  + (_margins * 4)
+            height:                     confirmColumn.height + (_margins * 4)
             radius:                     ScreenTools.defaultFontPixelHeight / 2
-            color:                      qgcPal.window
+            color:                      qgcPal.alertBackground
             opacity:                    0.9
             z:                          guidedController.z
             visible:                    false
@@ -540,12 +561,12 @@ QGCView {
             Column {
                 id:                 confirmColumn
                 anchors.margins:    _margins
-                anchors.top:        parent.top
-                anchors.left:       parent.left
+                anchors.centerIn:   parent
                 spacing:            _margins
 
                 QGCLabel {
                     id:                     titleText
+                    color:                  qgcPal.alertText
                     anchors.left:           slider.left
                     anchors.right:          slider.right
                     horizontalAlignment:    Text.AlignHCenter
@@ -553,6 +574,7 @@ QGCView {
 
                 QGCLabel {
                     id:                     messageText
+                    color:                  qgcPal.alertText
                     anchors.left:           slider.left
                     anchors.right:          slider.right
                     horizontalAlignment:    Text.AlignHCenter
@@ -590,8 +612,7 @@ QGCView {
                 sourceSize.height:  width
                 source:             "/res/XDelete.svg"
                 fillMode:           Image.PreserveAspectFit
-                color:              qgcPal.text
-
+                color:              qgcPal.alertText
                 QGCMouseArea {
                     fillItem:   parent
                     onClicked: {
@@ -606,9 +627,10 @@ QGCView {
             id:                         guidedActionList
             anchors.margins:            _margins
             anchors.bottom:             parent.bottom
+            anchors.bottomMargin:       ScreenTools.defaultFontPixelHeight * 4
             anchors.horizontalCenter:   parent.horizontalCenter
-            width:                      actionColumn.width + (_margins * 2)
-            height:                     actionColumn.height + (_margins * 2)
+            width:                      actionColumn.width  + (_margins * 4)
+            height:                     actionColumn.height + (_margins * 4)
             radius:                     _margins / 2
             color:                      qgcPal.window
             opacity:                    0.9
@@ -622,8 +644,7 @@ QGCView {
             ColumnLayout {
                 id:                 actionColumn
                 anchors.margins:    guidedActionList._margins
-                anchors.top:        parent.top
-                anchors.left:       parent.left
+                anchors.centerIn:   parent
                 spacing:            _margins
 
                 QGCLabel {

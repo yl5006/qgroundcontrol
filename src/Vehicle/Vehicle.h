@@ -240,6 +240,7 @@ public:
     Q_PROPERTY(QGeoCoordinate       coordinate              READ coordinate                                             NOTIFY coordinateChanged)
     Q_PROPERTY(QGeoCoordinate       homePosition            READ homePosition                                           NOTIFY homePositionChanged)
     Q_PROPERTY(bool                 armed                   READ armed                  WRITE setArmed                  NOTIFY armedChanged)
+    Q_PROPERTY(bool                 autoDisarm              READ autoDisarm                                             NOTIFY autoDisarmChanged)
     Q_PROPERTY(bool                 flightModeSetAvailable  READ flightModeSetAvailable                                 CONSTANT)
     Q_PROPERTY(QStringList          flightModes             READ flightModes                                            CONSTANT)
     Q_PROPERTY(QString              flightMode              READ flightMode             WRITE setFlightMode             NOTIFY flightModeChanged)
@@ -593,7 +594,8 @@ public:
     unsigned int    telemetryLNoise         () { return _telemetryLNoise; }
     unsigned int    telemetryRNoise         () { return _telemetryRNoise; }
     float           telemetryLost           () { return _telemetryLost; }
-
+	bool            autoDisarm              ();
+	
     Fact* roll              (void) { return &_rollFact; }
     Fact* heading           (void) { return &_headingFact; }
     Fact* pitch             (void) { return &_pitchFact; }
@@ -724,6 +726,7 @@ signals:
     void telemetryLNoiseChanged     (unsigned int value);
     void telemetryRNoiseChanged     (unsigned int value);
     void telemetryLostChanged       (float value);
+	void autoDisarmChanged          (void);
 
     void firmwareMajorVersionChanged(int major);
     void firmwareMinorVersionChanged(int minor);
@@ -833,6 +836,7 @@ private:
     void _updatePriorityLink(void);
     void _commonInit(void);
     void _startMissionRequest(void);
+    void _setupAutoDisarmSignalling(void);
 
     int     _id;                    ///< Mavlink system id
     int     _defaultComponentId;

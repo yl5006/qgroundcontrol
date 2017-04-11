@@ -31,19 +31,18 @@ APMCopterMode::APMCopterMode(uint32_t mode, bool settable) :
     enumToString.insert(LOITER,    "悬停");
     enumToString.insert(RTL,       "返航");
     enumToString.insert(CIRCLE,    "绕圈");
-    enumToString.insert(POSITION,  "位置");
+    enumToString.insert(POSITION,  "Position");
     enumToString.insert(LAND,      "降落");
-    enumToString.insert(OF_LOITER, "OF Loiter");
     enumToString.insert(DRIFT,     "Drift");
     enumToString.insert(SPORT,     "Sport");
     enumToString.insert(FLIP,      "Flip");
-    enumToString.insert(AUTOTUNE,  "自动调整");
-    enumToString.insert(POS_HOLD,  "定点");
-    enumToString.insert(BRAKE,     "刹车");
-    enumToString.insert(THROW,     "抛飞");
-    enumToString.insert(AVOID_ADSB,"避障");
-    enumToString.insert(GUIDED_NOGPS,"无GPS引导");
-    enumToString.insert(WAYPOINT_RTL,     "返航航线");
+    enumToString.insert(AUTOTUNE,  "Autotune");
+    enumToString.insert(POS_HOLD,  "Position Hold");
+    enumToString.insert(BRAKE,     "Brake");
+    enumToString.insert(THROW,     "Throw");
+    enumToString.insert(AVOID_ADSB,"Avoid ADSB");
+    enumToString.insert(GUIDED_NOGPS,"Guided No GPS");
+
     setEnumToStringMapping(enumToString);
 }
 
@@ -58,19 +57,18 @@ ArduCopterFirmwarePlugin::ArduCopterFirmwarePlugin(void)
     supportedFlightModes << APMCopterMode(APMCopterMode::LOITER    ,true);
     supportedFlightModes << APMCopterMode(APMCopterMode::RTL       ,true);
     supportedFlightModes << APMCopterMode(APMCopterMode::CIRCLE    ,true);
-    supportedFlightModes << APMCopterMode(APMCopterMode::POSITION  ,false);
     supportedFlightModes << APMCopterMode(APMCopterMode::LAND      ,true);
-    supportedFlightModes << APMCopterMode(APMCopterMode::OF_LOITER ,false);
-    supportedFlightModes << APMCopterMode(APMCopterMode::DRIFT     ,false);
-    supportedFlightModes << APMCopterMode(APMCopterMode::SPORT     ,false);
-    supportedFlightModes << APMCopterMode(APMCopterMode::FLIP      ,false);
-    supportedFlightModes << APMCopterMode(APMCopterMode::AUTOTUNE  ,false);
+    supportedFlightModes << APMCopterMode(APMCopterMode::DRIFT     ,true);
+    supportedFlightModes << APMCopterMode(APMCopterMode::SPORT     ,true);
+    supportedFlightModes << APMCopterMode(APMCopterMode::FLIP      ,true);
+    supportedFlightModes << APMCopterMode(APMCopterMode::AUTOTUNE  ,true);
     supportedFlightModes << APMCopterMode(APMCopterMode::POS_HOLD  ,true);
-    supportedFlightModes << APMCopterMode(APMCopterMode::BRAKE     ,false);
-    supportedFlightModes << APMCopterMode(APMCopterMode::THROW  ,false);
-    supportedFlightModes << APMCopterMode(APMCopterMode::AVOID_ADSB     ,false);
-    supportedFlightModes << APMCopterMode(APMCopterMode::GUIDED_NOGPS  ,false);
-    supportedFlightModes << APMCopterMode(APMCopterMode::WAYPOINT_RTL     ,true);
+    supportedFlightModes << APMCopterMode(APMCopterMode::BRAKE     ,true);
+    supportedFlightModes << APMCopterMode(APMCopterMode::THROW     ,true);
+    supportedFlightModes << APMCopterMode(APMCopterMode::AVOID_ADSB,true);
+    supportedFlightModes << APMCopterMode(APMCopterMode::GUIDED_NOGPS,true);
+
+
     setSupportedModes(supportedFlightModes);
 
     if (!_remapParamNameIntialized) {
@@ -140,8 +138,6 @@ void ArduCopterFirmwarePlugin::guidedModeLand(Vehicle* vehicle)
     vehicle->setFlightMode("Land");
 }
 
-#if 0
-// WIP
 void ArduCopterFirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle)
 {
     if (!_armVehicle(vehicle)) {
@@ -155,7 +151,6 @@ void ArduCopterFirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle)
                             0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                             2.5);
 }
-#endif
 
 void ArduCopterFirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoordinate& gotoCoord)
 {
@@ -246,4 +241,18 @@ bool ArduCopterFirmwarePlugin::vehicleYawsToNextWaypointInMission(const Vehicle*
         return yawMode && yawMode->rawValue().toInt() != 0;
     }
     return false;
+}
+
+void ArduCopterFirmwarePlugin::missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed)
+{
+    QString hoverSpeedParam("WPNAV_SPEED");
+
+    // First pull settings defaults
+    FirmwarePlugin::missionFlightSpeedInfo(vehicle, hoverSpeed, cruiseSpeed);
+
+    cruiseSpeed = 0;
+    if (vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, hoverSpeedParam)) {
+        Fact* speed = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, hoverSpeedParam);
+        hoverSpeed = speed->rawValue().toDouble();
+    }
 }

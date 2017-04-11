@@ -1661,10 +1661,8 @@ void Vehicle::_startMissionRequest(void)
 void Vehicle::_parametersReady(bool parametersReady)
 {
     if (parametersReady) {
+        _setupAutoDisarmSignalling();
         _startMissionRequest();
-    }
-
-    if (parametersReady) {
         setJoystickEnabled(_joystickEnabled);
     }
 }
@@ -2498,6 +2496,29 @@ const QVariantList& Vehicle::cameraList(void) const
 bool Vehicle::vehicleYawsToNextWaypointInMission(void) const
 {
     return _firmwarePlugin->vehicleYawsToNextWaypointInMission(this);
+}
+
+void Vehicle::_setupAutoDisarmSignalling(void)
+{
+    QString param = _firmwarePlugin->autoDisarmParameter(this);
+
+    if (!param.isEmpty() && _parameterManager->parameterExists(FactSystem::defaultComponentId, param)) {
+        Fact* fact = _parameterManager->getParameter(FactSystem::defaultComponentId,param);
+        connect(fact, &Fact::rawValueChanged, this, &Vehicle::autoDisarmChanged);
+        emit autoDisarmChanged();
+    }
+}
+
+bool Vehicle::autoDisarm(void)
+{
+    QString param = _firmwarePlugin->autoDisarmParameter(this);
+
+    if (!param.isEmpty() && _parameterManager->parameterExists(FactSystem::defaultComponentId, param)) {
+        Fact* fact = _parameterManager->getParameter(FactSystem::defaultComponentId,param);
+        return fact->rawValue().toDouble() > 0;
+    }
+
+    return false;
 }
 
 //-----------------------------------------------------------------------------

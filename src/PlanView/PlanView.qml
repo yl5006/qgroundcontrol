@@ -71,7 +71,11 @@ QGCView {
         coordinate.latitude = coordinate.latitude.toFixed(_decimalPlaces)
         coordinate.longitude = coordinate.longitude.toFixed(_decimalPlaces)
         coordinate.altitude = coordinate.altitude.toFixed(_decimalPlaces)
-        var sequenceNumber = missionController.insertComplexMissionItem(complexItemName, coordinate, missionController.visualItems.count)
+        insertComplexMissionItem(complexItemName, coordinate, missionController.visualItems.count)
+    }
+
+    function insertComplexMissionItem(complexItemName, coordinate, index) {
+        var sequenceNumber = missionController.insertComplexMissionItem(complexItemName, coordinate, index)
         setCurrentItem(sequenceNumber)
     }
 
@@ -615,30 +619,6 @@ QGCView {
                     }
                 }
             }
-
-            MapScale {
-                id:                 mapScale
-                anchors.margins:    ScreenTools.defaultFontPixelHeight * (0.66)
-                anchors.bottom:     waypointValuesDisplay.visible ? waypointValuesDisplay.top : parent.bottom
-                anchors.left:       parent.left
-                mapControl:         editorMap
-                visible:            !ScreenTools.isTinyScreen
-            }
-
-            MissionItemStatus {
-                id:                     waypointValuesDisplay
-                anchors.margins:        ScreenTools.defaultFontPixelWidth
-                anchors.left:           parent.left
-                anchors.bottom:         parent.bottom
-                z:                      QGroundControl.zOrderTopMost
-                currentMissionItem:     _currentMissionItem
-                missionItems:           missionController.visualItems
-                expandedWidth:          missionItemEditor.x - (ScreenTools.defaultFontPixelWidth * 2)
-                missionDistance:        missionController.missionDistance
-                missionTime:            missionController.missionTime
-                missionMaxTelemetry:    missionController.missionMaxTelemetry
-                visible:                _editingLayer == _layerMission && !ScreenTools.isShortScreen
-            }
 */
             // Mission Item Editor
             Item {
@@ -1070,37 +1050,27 @@ QGCView {
                 rallyPoint:         rallyPointController.currentRallyPoint
                 controller:         rallyPointController
             }
-
-/*
-                MissionItemIndexIndicator {
-                    id:              indexIndicator
-                    anchors.right:   parent.right
-                    anchors.top:     parent.top
-                    anchors.topMargin:     ScreenTools.toolbarHeight*1.8 + ScreenTools.defaultFontPixelWidth
-                    anchors.rightMargin:   _margin*2
-                    width:               _rightPanelWidth
-                    currentMissionItem:  _currentMissionItem
-                    missionItems:        missionController.visualItems
-                    missionDistance:     missionController.missionDistance
-                    missionTime:         missionController.missionTime
-                    missionMaxTelemetry: missionController.missionMaxTelemetry
-                    qgcView:        qgcView
-                    visible:        false//_editingLayer == _layerMission
-                    z:              QGroundControl.zOrderTopMost+100
-
-                    onRemove: {
-                        var removeIndex = _currentMissionIndex
-                        itemDragger.clearItem()
-                        missionController.removeMissionItem(removeIndex)
-                        if (removeIndex >= missionController.visualItems.count) {
-                            removeIndex--
-                        }
-                        setCurrentItem(removeIndex)
-                    }
-
-                    onInsert: insertSimpleMissionItem(editorMap.center, _currentMissionIndex)
-                }*/
         } // Right panel
+/*
+        MapScale {
+            id:                 mapScale
+            anchors.margins:    ScreenTools.defaultFontPixelHeight * (0.66)
+            anchors.bottom:     waypointValuesDisplay.visible ? waypointValuesDisplay.top : parent.bottom
+            anchors.left:       parent.left
+            mapControl:         editorMap
+            visible:            !ScreenTools.isTinyScreen
+        }
+
+        MissionItemStatus {
+            id:                 waypointValuesDisplay
+            anchors.margins:    ScreenTools.defaultFontPixelWidth
+            anchors.left:       parent.left
+            anchors.right:      rightPanel.left
+            anchors.bottom:     parent.bottom
+            missionItems:       missionController.visualItems
+            //visible:            _editingLayer === _layerMission && !ScreenTools.isShortScreen
+        }
+*/
     } // QGCViewPanel
 
     Component {
