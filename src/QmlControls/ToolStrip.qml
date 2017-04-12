@@ -15,9 +15,9 @@ import QGroundControl.Palette       1.0
 
 Rectangle {
     id:         _root
-    color:      "transparent"//qgcPal.window
-    width:      buttonStripRow.width + (buttonStripRow.anchors.margins * 2)
-    height:     ScreenTools.isMobile ? ScreenTools.minTouchPixels : ScreenTools.defaultFontPixelWidth * 8//buttonStripColumn.height + (buttonStripColumn.anchors.margins * 2)
+    color:      qgcPal.window
+    width:      ScreenTools.isMobile ? ScreenTools.minTouchPixels : ScreenTools.defaultFontPixelWidth * 6
+    height:     buttonStripColumn.height + (buttonStripColumn.anchors.margins * 2)
     radius:     _radius
 
     property string title:              "Title"
@@ -41,11 +41,8 @@ Rectangle {
     property bool _showOptionalElements:    true
     property bool _needRecalc:              false
 
-//    Component.onCompleted: recalcShowOptionalElements()
-
-//    onMaxHeightChanged:     recalcShowOptionalElements()
-    onModelChanged:         recalcShowOptionalElements()
-    onButtonVisibleChanged: recalcShowOptionalElements()
+    Component.onCompleted:  recalcShowOptionalElements()
+    onMaxHeightChanged:     recalcShowOptionalElements()
 
     Connections {
         target: ScreenTools
@@ -84,15 +81,15 @@ Rectangle {
         }
     }
 
-    Row {  //Column
-        id:                 buttonStripRow //Column
+    Column {
+        id:                 buttonStripColumn
         anchors.margins:    ScreenTools.defaultFontPixelWidth  / 2
         anchors.top:        parent.top
-        anchors.bottom:     parent.bottom
         anchors.left:       parent.left
-        spacing:            ScreenTools.defaultFontPixelWidth  / 2
+        anchors.right:      parent.right
+
         QGCLabel {
-            anchors.verticalCenter:     parent.verticalCenter
+            anchors.horizontalCenter:   parent.horizontalCenter
             text:                       title
             visible:                    _showOptionalElements
         }
@@ -100,9 +97,9 @@ Rectangle {
         Item { width: 1; height: _buttonSpacing; visible: _showOptionalElements }
 
         Rectangle {
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            width:              1
+            anchors.left:       parent.left
+            anchors.right:      parent.right
+            height:             1
             color:              qgcPal.text
             visible:            _showOptionalElements
         }
@@ -112,7 +109,7 @@ Rectangle {
 
             delegate: Column {
                 id:         buttonColumn
-                width:      buttonStripRow.height
+                width:      buttonStripColumn.width
                 visible:    _root.buttonVisible ? _root.buttonVisible[index] : true
 
                 property bool checked: false
@@ -154,13 +151,14 @@ Rectangle {
                 Item {
                     width:      1
                     height:     _buttonSpacing
-                    visible:    false
+                    visible:    index == 0 ? _showOptionalElements : true
                 }
 
                 FocusScope {
                     id:             scope
-                    height:         parent.width
-                    width:          height
+                    anchors.left:   parent.left
+                    anchors.right:  parent.right
+                    height:         width
 
                     Rectangle {
                         anchors.fill:   parent
@@ -197,11 +195,12 @@ Rectangle {
 
                         QGCMouseArea {
                             // Size of mouse area is expanded to make touch easier
-                            anchors.topMargin:      -buttonStripRow.anchors.margins
-                            anchors.bottomMargin:   -buttonStripRow.anchors.margins
+                            anchors.leftMargin:     -buttonStripColumn.anchors.margins
+                            anchors.rightMargin:    -buttonStripColumn.anchors.margins
+                            anchors.left:           parent.left
+                            anchors.right:          parent.right
                             anchors.top:            parent.top
-                            anchors.bottom:         parent.bottom
-                            width:                  parent.width + (_showOptionalElements? buttonLabel.width + buttonColumn.spacing : 0)
+                            height:                 parent.height + (_showOptionalElements? buttonLabel.height + buttonColumn.spacing : 0)
                             visible:                _buttonEnabled
                             preventStealing:        true
 

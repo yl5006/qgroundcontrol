@@ -90,8 +90,9 @@ QGCView {
     }
 
     MissionController {
-        id: flyMissionController
-        Component.onCompleted: start(false /* editMode */)
+        id:                     flyMissionController
+        Component.onCompleted:  start(false /* editMode */)
+        onResumeMissionReady:   guidedActionsController.confirmAction(guidedActionsController.actionResumeMissionReady)
     }
 
     MessageDialog {
@@ -417,7 +418,7 @@ QGCView {
         }
 
         ToolStripRow {
-            visible:            _activeVehicle ? _activeVehicle.guidedModeSupported : false
+            visible:            _activeVehicle ? _activeVehicle.guidedModeSupported : true
             id:                 toolStrip
             anchors.horizontalCenter:   parent.horizontalCenter
             anchors.bottomMargin:  ScreenTools.toolbarHeight + _margins

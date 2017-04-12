@@ -88,11 +88,6 @@ Item {
 //        onValueChanged: _setInstrumentWidget()
     }
 
-    Connections {
-        target:                 missionController
-        onResumeMissionReady:   _guidedModeBar.confirmAction(_guidedModeBar.confirmResumeMissionReady)
-    }
-
     Component.onCompleted: {
      //   _setInstrumentWidget()
     }
