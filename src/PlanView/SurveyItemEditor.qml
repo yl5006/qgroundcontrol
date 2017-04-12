@@ -26,7 +26,7 @@ Rectangle {
     property real   _margin:            ScreenTools.defaultFontPixelWidth / 2
     property int    _cameraIndex:       1
     property real   _fieldWidth:        ScreenTools.defaultFontPixelWidth * 10.5
-    property var    _cameraList:        [ qsTr("Manual Grid (no camera specs)"), qsTr("Custom Camera Grid") ]
+    property var    _cameraList:        [ qsTr("手动网格参数"), qsTr("自定义相机参数") ]
     property var    _vehicle:           QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle : QGroundControl.multiVehicleManager.offlineEditingVehicle
     property var    _vehicleCameraList: _vehicle.cameraList
 
@@ -234,9 +234,27 @@ Rectangle {
                     text:               qsTr("触发距离")
                     fact:               missionItem.cameraTrigger
                 }
-
                 FactTextField {
                     id:                 cameraTriggerDistanceField
+                    Layout.fillWidth:   true
+                    fact:               missionItem.cameraTriggerDistance
+                    enabled:            missionItem.cameraTrigger.value
+                }
+            }
+
+            RowLayout {
+                anchors.left:   parent.left
+                anchors.right:  parent.right
+                spacing:        _margin
+                visible:        missionItem.manualGrid.value == true
+
+                FactCheckBox {
+                    anchors.baseline:   cameraTriggerTime.baseline
+                    text:               qsTr("触发时间")
+                    fact:               missionItem.cameraTrigger
+                }
+                FactTextField {
+                    id:                 cameraTriggerTime
                     Layout.fillWidth:   true
                     fact:               missionItem.cameraTriggerDistance
                     enabled:            missionItem.cameraTrigger.value
@@ -264,7 +282,7 @@ Rectangle {
 
                 QGCRadioButton {
                     width:          _editFieldWidth
-                    text:           "Landscape"
+                    text:           qsTr("景观")//"Landscape"
                     checked:        !!missionItem.cameraOrientationLandscape.value
                     exclusiveGroup: cameraOrientationGroup
                     onClicked:      missionItem.cameraOrientationLandscape.value = 1
@@ -272,7 +290,7 @@ Rectangle {
 
                 QGCRadioButton {
                     id:             cameraOrientationPortrait
-                    text:           "Portrait"
+                    text:           qsTr("影像")//"Portrait"
                     checked:        !missionItem.cameraOrientationLandscape.value
                     exclusiveGroup: cameraOrientationGroup
                     onClicked:      missionItem.cameraOrientationLandscape.value = 0
@@ -293,11 +311,11 @@ Rectangle {
                     Item { Layout.fillWidth: true }
                     QGCLabel {
                         Layout.preferredWidth:  _root._fieldWidth
-                        text:                   qsTr("Width")
+                        text:                   qsTr("宽")
                     }
                     QGCLabel {
                         Layout.preferredWidth:  _root._fieldWidth
-                        text:                   qsTr("Height")
+                        text:                   qsTr("高")
                     }
                 }
 
@@ -305,7 +323,7 @@ Rectangle {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     spacing:        _margin
-                    QGCLabel { text: qsTr("Sensor"); Layout.fillWidth: true }
+                    QGCLabel { text: qsTr("镜头"); Layout.fillWidth: true }
                     FactTextField {
                         Layout.preferredWidth:  _root._fieldWidth
                         fact:                   missionItem.cameraSensorWidth
@@ -320,7 +338,7 @@ Rectangle {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     spacing:        _margin
-                    QGCLabel { text: qsTr("Image"); Layout.fillWidth: true }
+                    QGCLabel { text: qsTr("图像"); Layout.fillWidth: true }
                     FactTextField {
                         Layout.preferredWidth:  _root._fieldWidth
                         fact:                   missionItem.cameraResolutionWidth
@@ -336,7 +354,7 @@ Rectangle {
                     anchors.right:  parent.right
                     spacing:        _margin
                     QGCLabel {
-                        text:                   qsTr("Focal length")
+                        text:                   qsTr("焦距")
                         Layout.fillWidth:       true
                     }
                     FactTextField {
@@ -354,11 +372,11 @@ Rectangle {
                 Item { Layout.fillWidth: true }
                 QGCLabel {
                     Layout.preferredWidth:  _root._fieldWidth
-                    text:                   qsTr("Frontal")
+                    text:                   qsTr("正面")
                 }
                 QGCLabel {
                     Layout.preferredWidth:  _root._fieldWidth
-                    text:                   qsTr("Side")
+                    text:                   qsTr("边")
                 }
             }
 
@@ -366,7 +384,7 @@ Rectangle {
                 anchors.left:   parent.left
                 anchors.right:  parent.right
                 spacing:        _margin
-                QGCLabel { text: qsTr("Overlap"); Layout.fillWidth: true }
+                QGCLabel { text: qsTr("重叠"); Layout.fillWidth: true }
                 FactTextField {
                     Layout.preferredWidth:  _root._fieldWidth
                     fact:                   missionItem.frontalOverlap
@@ -412,7 +430,7 @@ Rectangle {
                 QGCLabel {
                     wrapMode:       Text.WordWrap
                     font.pointSize: ScreenTools.smallFontPointSize
-                    text:           qsTr("Which value would you like to keep constant as you adjust other settings")
+                    text:           qsTr("保持该参数不变")
                     Layout.preferredWidth:  parent.width
                     Layout.columnSpan: 2
                 }
@@ -433,7 +451,7 @@ Rectangle {
 
                 QGCRadioButton {
                     id:                     fixedGroundResolutionRadio
-                    text:                   qsTr("Ground res")
+                    text:                   qsTr("地面参考")
                     checked:                !missionItem.fixedValueIsAltitude.value
                     exclusiveGroup:         fixedValueGroup
                     onClicked:              missionItem.fixedValueIsAltitude.value = 0

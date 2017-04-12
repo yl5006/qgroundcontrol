@@ -136,7 +136,7 @@ Item {
 
             sourceItem: MissionItemIndexLabel {
                 index:      _missionItem.sequenceNumber
-                label:      "Entry"
+                label:      "入"
                 checked:    _missionItem.isCurrentItem
                 onClicked:  _root.clicked(_missionItem.sequenceNumber)
                 simpleindex: 1
@@ -157,7 +157,7 @@ Item {
 
             sourceItem: MissionItemIndexLabel {
                 index:      _missionItem.lastSequenceNumber
-                label:      "Exit"
+                label:      "出"
                 checked:    _missionItem.isCurrentItem
                 onClicked:  _root.clicked(_missionItem.sequenceNumber)
                 simpleindex: 1

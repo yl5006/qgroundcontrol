@@ -259,6 +259,7 @@ private:
     static const char* _jsonTurnaroundDistKey;
     static const char* _jsonCameraTriggerKey;
     static const char* _jsonCameraTriggerDistanceKey;
+    static const char* _jsonCameraTriggerTimeKey;
     static const char* _jsonCameraTriggerInTurnaroundKey;
     static const char* _jsonHoverAndCaptureKey;
     static const char* _jsonGroundResolutionKey;

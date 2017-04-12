@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -23,9 +23,9 @@ QGCLabel {
     anchors.top:        parent.top
     anchors.bottom:     parent.bottom
     verticalAlignment:  Text.AlignVCenter
-    text:               _armed ? qsTr("Armed") : qsTr("Disarmed")
+    text:               _armed ? qsTr("解锁中") : qsTr("加锁中")
     font.pointSize:     ScreenTools.mediumFontPointSize
-    color:              qgcPal.buttonText
+    color:              _armed ? qgcPal.warningText:qgcPal.buttonText
     visible:            !_autoDisarm || _fixedWing
 
     property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle

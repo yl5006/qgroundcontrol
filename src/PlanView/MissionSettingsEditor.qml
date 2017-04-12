@@ -113,7 +113,7 @@ Rectangle {
                         id:         flightSpeedCheckBox
                         text:       qsTr("飞行速度:")
                         visible:    !_missionVehicle.vtol
-                        checked:    missionItem.speedSection.specifyFlightSpeed
+                        checked:     missionItem.speedSection.specifyFlightSpeed
                         onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
                     }
                     FactTextField {
@@ -138,7 +138,7 @@ Rectangle {
 
             SectionHeader {
                 id:         vehicleInfoSectionHeader
-                text:       qsTr("Vehicle Info")
+                text:       qsTr("机体信息")
                 visible:    _offlineEditing && !_waypointsOnlyMode
                 checked:    false
             }
@@ -219,7 +219,7 @@ Rectangle {
                     columns:        2
 
                     QGCLabel {
-                        text: qsTr("Altitude")
+                        text: qsTr("高度")
                     }
                     FactTextField {
                         fact:               missionItem.plannedHomePositionAltitude

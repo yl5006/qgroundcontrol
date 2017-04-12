@@ -66,6 +66,29 @@ void MissionManager::_writeMissionItemsWorker(void)
     emit lastCurrentItemChanged(-1);
 }
 
+void MissionManager::writeMissionItemsoffboard(const QList<MissionItem*>& missionItems)
+{
+    bool skipFirstItem = !_vehicle->firmwarePlugin()->sendHomePositionToVehicle();
+
+    _clearAndDeleteMissionItems();
+
+    int firstIndex = skipFirstItem ? 1 : 0;
+
+    for (int i=firstIndex; i<missionItems.count(); i++) {
+        MissionItem* item = new MissionItem(*missionItems[i]);
+        _missionItems.append(item);
+
+        item->setIsCurrentItem(i == firstIndex);
+
+        if (skipFirstItem) {
+            // Home is in sequence 0, remainder of items start at sequence 1
+            item->setSequenceNumber(item->sequenceNumber() - 1);
+            if (item->command() == MAV_CMD_DO_JUMP) {
+                item->setParam8((int)item->param8() - 1);
+            }
+        }
+    }
+}
 
 void MissionManager::writeMissionItems(const QList<MissionItem*>& missionItems)
 {

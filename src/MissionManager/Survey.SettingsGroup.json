@@ -1,4 +1,4 @@
-[
+﻿[
 {
     "name":             "ManualGrid",
     "shortDescription": "Specify all parameters for grid generation.",
@@ -129,6 +129,15 @@
     "min":              0.1,
     "units":            "m",
     "defaultValue":     25
+},
+{
+    "name":             "CameraTriggerTime",
+    "shortDescription": "Time between each triggering of the camera.",
+    "type":             "double",
+    "decimalPlaces":    2,
+    "min":              0.1,
+    "units":            "s",
+    "defaultValue":     2
 },
 {
     "name":             "CameraTriggerInTurnaround",

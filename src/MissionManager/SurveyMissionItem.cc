@@ -29,6 +29,7 @@ const char* SurveyMissionItem::_jsonGridSpacingKey =                "spacing";
 const char* SurveyMissionItem::_jsonTurnaroundDistKey =             "turnAroundDistance";
 const char* SurveyMissionItem::_jsonCameraTriggerKey =              "cameraTrigger";
 const char* SurveyMissionItem::_jsonCameraTriggerDistanceKey =      "cameraTriggerDistance";
+const char* SurveyMissionItem::_jsonCameraTriggerTimeKey =          "cameraTriggerTime";
 const char* SurveyMissionItem::_jsonCameraTriggerInTurnaroundKey =  "cameraTriggerInTurnaround";
 const char* SurveyMissionItem::_jsonHoverAndCaptureKey =            "hoverAndCapture";
 const char* SurveyMissionItem::_jsonGroundResolutionKey =           "groundResolution";
@@ -185,7 +186,7 @@ void SurveyMissionItem::_clearInternal(void)
 
 int SurveyMissionItem::lastSequenceNumber(void) const
 {
-    return _sequenceNumber + _missionCommandCount;
+    return _sequenceNumber + _missionCommandCount -1;
 }
 
 void SurveyMissionItem::setCoordinate(const QGeoCoordinate& coordinate)
@@ -546,7 +547,7 @@ void SurveyMissionItem::_generateGrid(void)
             // Internal camera trigger points are entry point, plus all points before exit point
             _missionCommandCount += transectSegment.count() - (_hasTurnaround() ? 2 : 0) - 1;
         } else if (_triggerCamera()) {
-            _missionCommandCount += 2;                          // Camera on/off at entry/exit
+            _missionCommandCount += 0;   //2 command as waypoint                            // Camera on/off at entry/exit
         }
     }
     emit lastSequenceNumberChanged(lastSequenceNumber());

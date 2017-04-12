@@ -100,7 +100,7 @@ Rectangle {
                 width:          parent.width
                 spacing:        ScreenTools.defaultFontPixelWidth
                 Repeater {
-                    id:         reperter
+                    id:          reperter
                     model:       missionItems
                     QGCButton {
                         width:         ScreenTools.defaultFontPixelHeight*2

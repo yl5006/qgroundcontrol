@@ -194,6 +194,29 @@ void MissionController::sendToVehicle(void)
     _visualItems->setDirty(false);
 }
 
+void MissionController::applyoffboardmission(void)
+{
+    QList<MissionItem*> rgMissionItems;
+
+    QmlObjectListModel* newControllerMissionItems = new QmlObjectListModel(this);
+
+    _addMissionSettings(_activeVehicle, newControllerMissionItems, true /* addToCenter */);
+
+    _convertToMissionItems(_visualItems, rgMissionItems, _activeVehicle);
+
+    for (int i=1; i<rgMissionItems.count(); i++) {
+       SimpleMissionItem * newItem =new SimpleMissionItem(_activeVehicle, *rgMissionItems[i],this);
+       newControllerMissionItems->append(newItem);
+    }
+
+    _visualItems = newControllerMissionItems;
+
+    _initAllVisualItems();
+
+    for (int i=0; i<rgMissionItems.count(); i++) {
+        rgMissionItems[i]->deleteLater();
+    }
+}
 /// Converts from visual items to MissionItems
 ///     @param missionItemParent QObject parent for newly allocated MissionItems
 /// @return true: Mission end action was added to end of list
@@ -208,7 +231,7 @@ bool MissionController::_convertToMissionItems(QmlObjectListModel* visualMission
         lastSeqNum = visualItem->lastSequenceNumber();
         visualItem->appendMissionItems(rgMissionItems, missionItemParent);
 
-        qCDebug(MissionControllerLog) << "_convertToMissionItems seqNum:lastSeqNum:command"
+       qCDebug(MissionControllerLog)<< "_convertToMissionItems seqNum:lastSeqNum:command"
                                       << visualItem->sequenceNumber()
                                       << lastSeqNum
                                       << visualItem->commandName();

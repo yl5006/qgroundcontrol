@@ -72,7 +72,8 @@
         <file alias="QGroundControl/Controls/MissionItemEditor.qml">src/PlanView/MissionItemEditor.qml</file>
         <file alias="QGroundControl/Controls/MissionItemIndex.qml">src/QmlControls/MissionItemIndex.qml</file>
         <file alias="QGroundControl/Controls/MissionItemIndexLabel.qml">src/QmlControls/MissionItemIndexLabel.qml</file>
-        <file alias="QGroundControl/Controls/MissionItemIndexIndicator.qml">src/QmlControls/MissionItemIndexIndicator.qml</file>
+	<file alias="QGroundControl/Controls/MissionIndexIndicator.qml">src/QmlControls/MissionIndexIndicator.qml</file>
+	<file alias="QGroundControl/Controls/MissionAllItemIndicator.qml">src/QmlControls/MissionAllItemIndicator.qml</file>
         <file alias="QGroundControl/Controls/MissionItemMapVisual.qml">src/PlanView/MissionItemMapVisual.qml</file>
         <file alias="QGroundControl/Controls/SetMutipMissionItem.qml">src/QmlControls/SetMutipMissionItem.qml</file>
         <file alias="QGroundControl/Controls/SetmissionItemDialog.qml">src/QmlControls/SetmissionItemDialog.qml</file>

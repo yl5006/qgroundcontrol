@@ -46,7 +46,7 @@
             "comment":      "MAV_CMD_NAV_TAKEOFF",
             "paramRemove":  "4"
         },
-	{
+        {
             "id":           183,
             "comment":      "MAV_CMD_DO_SET_SERVO",
             "paramRemove":  "4"
@@ -65,5 +65,6 @@
             "id":           189,
             "comment":      "MAV_CMD_DO_LAND_START",
             "paramRemove":  "4"
-        },    ]
+        }
+    ]
 }

@@ -20,7 +20,8 @@ MainTool                1.0 MainTool.qml
 MainToolBarIndicators   1.0 MainToolBarIndicators.qml
 MissionCommandDialog    1.0 MissionCommandDialog.qml
 MissionItemIndex        1.0 MissionItemIndex.qml
-MissionItemIndexIndicator        1.0 MissionItemIndexIndicator.qml
+MissionAllItemIndicator 1.0 MissionAllItemIndicator.qml
+MissionIndexIndicator   1.0 MissionIndexIndicator.qml
 MissionItemEditor       1.0 MissionItemEditor.qml
 SetMutipMissionItem     1.0 SetMutipMissionItem.qml
 SetmissionItemDialog    1.0 SetmissionItemDialog.qml

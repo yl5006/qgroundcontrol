@@ -48,7 +48,8 @@ public:
     /// Writes the specified set of mission items to the vehicle
     ///     @param missionItems Items to send to vehicle
     void writeMissionItems(const QList<MissionItem*>& missionItems);
-    
+    void writeMissionItemsoffboard(const QList<MissionItem*>& missionItems);
+
     /// Writes the specified set mission items to the vehicle as an ArduPilot guided mode mission item.
     ///     @param gotoCoord Coordinate to move to
     ///     @param altChangeOnly true: only altitude change, false: lat/lon/alt change

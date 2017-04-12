@@ -1,4 +1,4 @@
-
+﻿
 /****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
@@ -169,7 +169,7 @@ void MissionCommandTree::_buildAvailableCommands(Vehicle* vehicle)
             _availableCategories[baseFirmwareType][baseVehicleType].append(newCategory);
         }
     }
-    _availableCategories[baseFirmwareType][baseVehicleType].append(_allCommandsCategory);
+//  _availableCategories[baseFirmwareType][baseVehicleType].append(_allCommandsCategory);
 }
 
 QStringList MissionCommandTree::_availableCategoriesForVehicle(Vehicle* vehicle)

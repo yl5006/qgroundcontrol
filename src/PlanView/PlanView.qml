@@ -60,10 +60,12 @@ QGCView {
     readonly property int       _layerGeoFence:             2
     readonly property int       _layerRallyPoints:          3
     readonly property string    _armedVehicleUploadPrompt:  qsTr("Vehicle is currently armed. Do you want to upload the mission to the vehicle?")
-
+    property var coordinateruler1   :               editorMap.center
+    property var coordinateruler2   :               editorMap.center
+    property bool firstpoint        :               true
     Component.onCompleted: {
-        toolbar.missionController =     Qt.binding(function () { return missionController })
-        toolbar.currentMissionItem =    Qt.binding(function () { return _currentMissionItem })
+      //  rightBar.missionController =     Qt.binding(function () { return missionController })
+      //  rightBar.currentMissionItem =    Qt.binding(function () { return _currentMissionItem })
     }
 
     function addComplexItem(complexItemName) {
@@ -105,7 +107,7 @@ QGCView {
 
         onRawValueChanged: {
             if (_visualItems.count > 1) {
-                _qgcView.showDialog(applyNewAltitude, qsTr("Apply new alititude"), showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
+                _qgcView.showDialog(applyNewAltitude, qsTr("修改高度"), showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
             }
         }
     }
@@ -114,7 +116,7 @@ QGCView {
         id: applyNewAltitude
 
         QGCViewMessage {
-            message:    qsTr("You have changed the default altitude for mission items. Would you like to apply that altitude to all the items in the current mission?")
+            message:    qsTr("你以改变任务默认高度. 你希望改变当前任务所有高度吗?")
 
             function accept() {
                 hideDialog()
@@ -382,8 +384,8 @@ QGCView {
             // This is the center rectangle of the map which is not obscured by tools
             property rect centerViewport: Qt.rect(_leftToolWidth, _toolbarHeight, editorMap.width - _leftToolWidth - _rightPanelWidth, editorMap.height - _statusHeight - _toolbarHeight)
 
-            property real _leftToolWidth:   toolStrip.x + toolStrip.width
-            property real _statusHeight:    waypointValuesDisplay.visible ? editorMap.height - waypointValuesDisplay.y : 0
+            property real _leftToolWidth:   0//toolStrip.x + toolStrip.width
+            property real _statusHeight:    0//waypointValuesDisplay.visible ? editorMap.height - waypointValuesDisplay.y : 0
 
             readonly property real animationDuration: 500
 
@@ -419,6 +421,18 @@ QGCView {
                     case _layerMission:
                         if (_addWaypointOnClick) {
                             insertSimpleMissionItem(coordinate, missionController.visualItems.count)
+                        }
+                        else if(ruler.checked)
+                        {   if(firstpoint)
+                            {
+                                coordinateruler1 = coordinate
+                                firstpoint=false
+                            }
+                            else
+                            {
+                                coordinateruler2 = coordinate
+                                firstpoint=true
+                            }
                         }
                         break
                     case _layerRallyPoints:
@@ -495,10 +509,20 @@ QGCView {
                 model:      _editingLayer == _layerMission ? missionController.waypointLines : undefined
             }
            // Add lines between jumpwaypoints
-                MissionLineView {
+            MissionLineView {
                     model:      _editingLayer == _layerMission ? missionController.jumpwaypointLines : undefined
-                }
+           }
 
+           MapPolyline {
+                        line.width: 3
+                        line.color: qgcPal.warningText
+                        visible:    ruler.checked&&firstpoint
+                        z:          QGroundControl.zOrderTrajectoryLines
+                        path: [
+                            coordinateruler1,
+                            coordinateruler2,
+                        ]
+           }
             // Add the vehicles to the map
             MapItemView {
                 model: QGroundControl.multiVehicleManager.vehicles
@@ -873,6 +897,7 @@ QGCView {
                     onClicked:  {
                         addMissionItemsButton.checked = false
                         _addWaypointOnClick = false
+                        firstpoint=!addMissionItemsButton.checked
                     }
                 }
                 Rectangle {
@@ -922,6 +947,13 @@ QGCView {
                 mapControl:         editorMap
                 visible:            !ScreenTools.isTinyScreen
 
+            }
+            QGCLabel {
+                anchors.topMargin:    ScreenTools.defaultFontPixelHeight
+                anchors.top:          toolColumn.bottom
+                anchors.horizontalCenter:   toolColumn.horizontalCenter
+                visible:            ruler.checked&&firstpoint
+                text:               "距离:"+coordinateruler1.distanceTo(coordinateruler2).toFixed(1)+"m 角度:"+Math.round(coordinateruler1.azimuthTo(coordinateruler2))
             }
         } // FlightMap
 
@@ -1003,40 +1035,56 @@ QGCView {
                     textStyleColor: mapPal.textOutline
                 }
             } // Row - Plan Element Selector
-            MissionItemIndexIndicator {
-                id:              indexIndicator
+
+            MissionAllItemIndicator {
+                id:              allIndicator
                 anchors.right:   parent.right
                 anchors.top:     parent.top
-              //  anchors.topMargin:     ScreenTools.toolbarHeight*1.8 + ScreenTools.defaultFontPixelWidth
-                anchors.rightMargin:   _margin*2
+                anchors.rightMargin: _margin*2
                 width:               _rightPanelWidth
-                currentMissionItem:  _currentMissionItem
                 missionController:   missionController
-                missionItem:         _currentMissionItem
-                map:            editorMap
-                readOnly:       false
-                rootQgcView:    _qgcView
-                visible:        _currentMissionItem?_editingLayer == _layerMission:false
-                z:              QGroundControl.zOrderTopMost+100
+                visible:       _editingLayer == _layerMission
+                z:              QGroundControl.zOrderTopMost+1
+            }
+            Item {
+                anchors.right:       parent.right
+                anchors.top:         allIndicator.bottom
+                anchors.topMargin:   _margin
+                anchors.bottom:      parent.bottom
+                anchors.bottomMargin:_PointFieldWidth+ScreenTools.defaultFontPixelWidth*2
+                anchors.rightMargin: _margin
+                width:               _rightPanelWidth-_margin
+                z:                   QGroundControl.zOrderTopMost+1
+                visible:             _editingLayer == _layerMission
 
-                onRemove: {
-                    for(var i=0;i<missionController.visualItems.count;i++)
-                    {
-                        var visualItem = _visualItems.get(i)
-                        if (visualItem.sequenceNumber == _currentMissionItem.sequenceNumber)
-                        {
-                            var removeIndex = i
+                QGCListView {
+                    id:             indexIndicatorListView
+                    anchors.fill:    parent
+                    orientation:    ListView.Vertical
+                    model:          missionController.visualItems
+                    cacheBuffer:    Math.max(height * 2, 0)
+                    clip:           true
+                    currentIndex:   _currentMissionIndex
+                    highlightMoveDuration: 250
+
+                    delegate: MissionIndexIndicator {
+                        missionItem:    object
+                        //width:          _rightPanelWidth
+                        readOnly:       false
+                        visible:        object.isCurrentItem
+                        onRemove: {
+                            var removeIndex = index
                             itemDragger.clearItem()
                             missionController.removeMissionItem(removeIndex)
                             setCurrentItem(removeIndex-1)
                         }
-                    }
-                }
 
-                onInsert: {
-                    var coordinate =_currentMissionItem.coordinate
-                    var sequenceNumber = missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(4*Math.pow(2,21-editorMap.zoomLevel),270)/*editorMap.center*/, _currentMissionItem.sequenceNumber)
-                    setCurrentItem(_currentMissionItem.sequenceNumber)
+                        onInsert: {
+                            var coordinate =object.coordinate
+                            var sequenceNumber = missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(4*Math.pow(2,21-editorMap.zoomLevel),270), index)
+                            setCurrentItem(object.sequenceNumber)
+                        }
+                    }
                 }
             }
             // GeoFence Editor
@@ -1093,7 +1141,6 @@ QGCView {
         }
 */
     } // QGCViewPanel
-
     Component {
         id: syncLoadFromVehicleOverwrite
         QGCViewMessage {
@@ -1189,6 +1236,16 @@ QGCView {
             property string _overwriteText: (_editingLayer == _layerMission) ? qsTr("覆盖任务")/*qsTr("Mission overwrite")*/ : qsTr("GeoFence overwrite")
             anchors.margins:    _margin
 
+            SubMenuButton {
+                imageResource:      "/qmlimages/sendvehicle.svg"
+                visible:            !_activeVehicle && !_syncDropDownController.syncInProgress
+                Layout.fillWidth:   true
+                text:               qsTr("生成任务")//"Send to vehicle"
+                onClicked:  {
+                    syncButton.hideDropDown()
+                    _syncDropDownController.applyoffboardmission()
+                }
+            }
             SubMenuButton {
                 imageResource:      "/qmlimages/sendvehicle.svg"
                 enabled:             _activeVehicle && !_syncDropDownController.syncInProgress
