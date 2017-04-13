@@ -1,4 +1,4 @@
-import QtQuick          2.3
+﻿import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Layouts  1.2
 
@@ -24,7 +24,7 @@ Column {
 
     SectionHeader {
         id:             cameraSectionHeader
-        text:           qsTr("Camera")
+        text:           qsTr("相机")
         checked:        false
     }
 
@@ -49,7 +49,7 @@ Column {
             visible:        cameraActionCombo.currentIndex == 1
 
             QGCLabel {
-                text:               qsTr("Time")
+                text:               qsTr("时间")
                 Layout.fillWidth:   true
             }
             FactTextField {
@@ -65,7 +65,7 @@ Column {
             visible:        cameraActionCombo.currentIndex == 2
 
             QGCLabel {
-                text:               qsTr("Distance")
+                text:               qsTr("距离")
                 Layout.fillWidth:   true
             }
             FactTextField {
@@ -82,12 +82,12 @@ Column {
             columns:        3
 
             Item { width: 1; height: 1 }
-            QGCLabel { text: qsTr("Pitch") }
-            QGCLabel { text: qsTr("Yaw") }
+            QGCLabel { text: qsTr("仰俯") }
+            QGCLabel { text: qsTr("航向") }
 
             QGCCheckBox {
                 id:                 gimbalCheckBox
-                text:               qsTr("Gimbal")
+                text:               qsTr("云台")
                 checked:            _camera.specifyGimbal
                 onClicked:          _camera.specifyGimbal = checked
                 Layout.fillWidth:   true

@@ -53,6 +53,7 @@ QGCView {
     property int    _editingLayer:          _layerMission
     property bool   _autoSync:               QGroundControl.settingsManager.appSettings.automaticMissionUpload.rawValue != 0
 
+    property string   _file:                ""
     /// The controller which should be called for load/save, send to/from vehicle calls
     property var _syncDropDownController: missionController
 
@@ -121,7 +122,7 @@ QGCView {
     MissionController {
         id: missionController
 
-        property var nameFilters: [ qsTr("Mission Files (*.%1)").arg(missionController.fileExtension) , qsTr("All Files (*.*)") ]
+        property var nameFilters: [ qsTr("Mission Files (*.%1)").arg(missionController.fileExtension) , qsTr("text Files (*.txt)"), qsTr("All Files (*.*)") ]
 
         Component.onCompleted: {
             start(true /* editMode */)
@@ -295,10 +296,178 @@ QGCView {
         }
 
         onAcceptedForLoad: {
+            if(file.match(".mission"))
+            {
             _syncDropDownController.loadFromFile(file)
             _syncDropDownController.fitViewportToItems()
             _currentMissionItem = _visualItems.get(0)
             close()
+            }
+            if(file.match(".txt"))
+            {
+            _file=file
+            qgcView.showDialog(loadandgenerateDialog, qsTr(""), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+            }
+        }
+    }
+    Component {
+        id: loadandgenerateDialog
+
+        QGCViewDialog {
+            width:          ScreenTools.defaultFontPixelHeight*10
+            height:         ScreenTools.defaultFontPixelHeight*12
+            function accept() {
+                console.log(_file)
+                //   var toIndex = toCombo.currentIndex
+                missionController.loadFromTxtFile(_file,Number(wayangle.text),Number(wayspace.text),Number(addalt.text),Number(waynum.text),camer.checked,relalt.checked)
+                hideDialog()
+            }
+            Rectangle {
+                id:                         title
+                anchors.top:                parent.top
+                anchors.topMargin:          -ScreenTools.defaultFontPixelHeight*2
+                anchors.horizontalCenter:   parent.horizontalCenter
+                width:                      parent.width
+                height:                     ScreenTools.defaultFontPixelHeight*4
+                color:                      "transparent"
+                QGCCircleProgress{
+                    id:                     circle
+                    anchors.left:           parent.left
+                    anchors.top:            parent.top
+                    anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*3
+                    width:                  ScreenTools.defaultFontPixelHeight*3
+                    value:                  0
+                }
+                QGCColoredImage {
+                    id:                     img
+                    height:                 ScreenTools.defaultFontPixelHeight*1.5
+                    width:                  height
+                    sourceSize.width: width
+                    source:     "/qmlimages/loadfromfile.svg"
+                    fillMode:   Image.PreserveAspectFit
+                    color:      qgcPal.text
+                    anchors.horizontalCenter:circle.horizontalCenter
+                    anchors.verticalCenter: circle.verticalCenter
+                }
+                QGCLabel {
+                    id:             idset
+                    anchors.left:   img.left
+                    anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
+                    text:           qsTr("生成航线参数")//"safe"
+                    font.pointSize: ScreenTools.mediumFontPointSize
+                    font.bold:              true
+                    color:          qgcPal.text
+                    anchors.verticalCenter: img.verticalCenter
+                }
+                Image {
+                    source:    "/qmlimages/title.svg"
+                    width:      idset.width+ScreenTools.defaultFontPixelHeight*3
+                    height:     ScreenTools.defaultFontPixelHeight*1.5
+                    anchors.verticalCenter: circle.verticalCenter
+                    anchors.left:          circle.right
+                    //                fillMode: Image.PreserveAspectFit
+                }
+            }
+            Column {
+                anchors.top:                title.bottom
+                anchors.horizontalCenter:   parent.horizontalCenter
+                width:          parent.width*0.8
+                spacing:        ScreenTools.defaultFontPixelHeight
+                Row {
+                    spacing:    ScreenTools.defaultFontPixelHeight*2
+                    Row {
+                        spacing:    ScreenTools.defaultFontPixelHeight
+                        QGCLabel {
+                            anchors.baseline:   wayangle.baseline
+                            text:               qsTr("偏移角度:")
+                            width:              ScreenTools.defaultFontPixelHeight*5
+                        }
+                        QGCTextField {
+                            id:                 wayangle
+                            width:              ScreenTools.defaultFontPixelHeight*5
+                            validator:          DoubleValidator {bottom: 0; top: 360;}
+                            inputMethodHints:   Qt.ImhDigitsOnly
+                            text:               "90"
+                        }
+                        QGCLabel {
+                            text:               qsTr("度")
+                        }
+                    }
+                    Row {
+                        spacing:    ScreenTools.defaultFontPixelHeight
+                        QGCLabel {
+                            anchors.baseline:   wayspace.baseline
+                            text:               qsTr("偏移距离:")
+                            width:              ScreenTools.defaultFontPixelHeight*5
+                        }
+                        QGCTextField {
+                            id:                 wayspace
+                            width:              ScreenTools.defaultFontPixelHeight*5
+                            validator:          DoubleValidator {bottom: 0; top: 5000;}
+                            inputMethodHints:   Qt.ImhDigitsOnly
+                            text:               "0.0"
+                        }
+                        QGCLabel {
+                            text:               qsTr("米")
+                        }
+                    }
+                }
+                Row {
+                    spacing: ScreenTools.defaultFontPixelHeight*2
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    ExclusiveGroup { id: modeGroup }
+
+                    QGCRadioButton {
+                        id:             relalt
+                        exclusiveGroup: modeGroup
+                        text:           qsTr("相对高度")//"Mode 1"
+                        checked:        true
+                    }
+
+                    QGCRadioButton {
+                        exclusiveGroup: modeGroup
+                        text:           qsTr("海拔高度")//"Mode 2"
+                    }
+                }
+                Row {
+                    spacing:    ScreenTools.defaultFontPixelHeight
+                    QGCLabel {
+                        anchors.baseline:   addalt.baseline
+                        text:               qsTr("增加高度:")
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                    }
+                    QGCTextField {
+                        id:                 addalt
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                        validator:          DoubleValidator {bottom: 0; top: 5000;}
+                        inputMethodHints:   Qt.ImhDigitsOnly
+                        text:               "0.0"
+                    }
+                    QGCLabel {
+                        text:               qsTr("米")
+                    }
+                }
+                QGCCheckBox {
+                    id:         camer
+                    text:       qsTr("是否拍照:")//qsTr("Enable Flow Control")
+                }
+
+                Row {
+                    spacing:    ScreenTools.defaultFontPixelHeight
+                    QGCLabel {
+                        anchors.baseline:   waynum.baseline
+                        text:               qsTr("路径条数:")
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                    }
+                    QGCTextField {
+                        id:                 waynum
+                        width:              ScreenTools.defaultFontPixelHeight*5
+                        validator:          IntValidator {bottom: 1; top: 5;}
+                        inputMethodHints:   Qt.ImhDigitsOnly
+                        text:               "1"
+                    }
+                }
+            }
         }
     }
 
@@ -1036,14 +1205,18 @@ QGCView {
 
                     delegate: MissionIndexIndicator {
                         missionItem:    object
-                        //width:          _rightPanelWidth
                         readOnly:       false
                         visible:        object.isCurrentItem
+                        rootQgcView:    _qgcView
                         onRemove: {
                             var removeIndex = index
                             itemDragger.clearItem()
                             missionController.removeMissionItem(removeIndex)
-                            setCurrentItem(removeIndex-1)
+                            if (removeIndex >= missionController.visualItems.count) {
+                                 removeIndex--
+                                }
+                            _currentMissionIndex = -1
+                            rootQgcView.setCurrentItem(removeIndex)
                         }
 
                         onInsert: {

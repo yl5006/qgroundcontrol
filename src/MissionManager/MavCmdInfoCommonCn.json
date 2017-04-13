@@ -55,7 +55,7 @@
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "悬停(盘旋)",
-            "param3": {
+            "param8": {
                 "label":            "半径:",
                 "units":            "m",
                 "default":          50.0,
@@ -103,18 +103,18 @@
                 "default":          30,
                 "decimalPlaces":    0
             },
-            "param3": {
-                "label":            "半径:",
-                "units":            "m",
-                "default":          50.0,
-                "decimalPlaces":    2
-            },
             "param4": {
                 "label":            "下一条路径起点:",
                 "enumStrings":      "Center,On Loiter",
                 "enumValues":       "0,1",
                 "default":          1,
                 "decimalPlaces":    0
+            },
+            "param8": {
+                "label":            "半径:",
+                "units":            "m",
+                "default":          50.0,
+                "decimalPlaces":    2
             }
         },
         {
@@ -219,19 +219,19 @@
                 "enumValues":       "0,1",
                 "default":          0,
                 "decimalPlaces":    0
-            },
-            "param2": {
-                "label":            "半径:",
-                "units":            "m",
-                "default":          50.0,
-                "decimalPlaces":    2
-            },
+            },   
             "param4": {
                 "label":            "下一条路径起点:",
                 "enumStrings":      "中心点,盘旋点",
                 "enumValues":       "0,1",
                 "default":          1,
                 "decimalPlaces":    0
+            },
+            "param8": {
+                "label":            "半径:",
+                "units":            "m",
+                "default":          50.0,
+                "decimalPlaces":    2
             }
         },
         { "id": 32, "rawName": "MAV_CMD_DO_FOLLOW", "friendlyName": "Follow Me" },
@@ -803,12 +803,12 @@
             "rawName":      "MAV_CMD_DO_MOUNT_CONFIGURE",
             "friendlyName": "Configure Mount",
             "description":  "Configure the vehicle mount (e.g. gimbal).",
-            "category":     "Advanced",
+            "category":     "相机",
             "param1": {
                 "label":            "Mode:",
                 "default":          0,
                 "decimalPlaces":    0,
-                "enumStrings":      "Retract,Neutral,Mavlink Targeting,RC Targeting,GPS Point",
+                "enumStrings":      "撤回,回中,数据链控制,遥控控制,GPS 点",
                 "enumValues":       "0,1,2,3,4"
             },
             "param2": {
@@ -836,9 +836,9 @@
         {
             "id":           205,
             "rawName":      "MAV_CMD_DO_MOUNT_CONTROL",
-            "friendlyName": "Control Mount",
-            "description":  "Control the vehicle mount (e.g. gimbal).",
-            "category":     "Advanced",
+            "friendlyName": "控制挂载",
+            "description":  "控制飞机挂载 (e.g. 云台).",
+            "category":     "相机",
             "param1": {
                 "label":            "Lat/Pitch:",
                 "default":          0,
@@ -856,11 +856,11 @@
                 "default":          0,
                 "decimalPlaces":    7
             },
-            "param7": {
+            "param4": {
                 "label":            "Mode:",
                 "default":          0,
                 "decimalPlaces":    0,
-                "enumStrings":      "Retract,Neutral,Mavlink Targeting,RC Targeting,GPS Point",
+                "enumStrings":      "撤回,回中,数据链控制,遥控控制,GPS 点",
                 "enumValues":       "0,1,2,3,4"
             }
         },

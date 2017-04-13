@@ -122,14 +122,17 @@ Rectangle {
                         visible:            flightSpeedCheckBox.visible
                         enabled:            flightSpeedCheckBox.checked
                     }
+                    QGCLabel {
+                        text:       qsTr("任务结束操作:")
+                    }
+                    FactComboBox {
+                        Layout.fillWidth:   true
+                        fact:           missionItem.missionEndAction
+                        indexModel:     false
+                    }
                 } // GridLayout
 
-                FactComboBox {
-                    anchors.left:   parent.left
-                    anchors.right:  parent.right
-                    fact:           missionItem.missionEndAction
-                    indexModel:     false
-                }
+
             }
 
             CameraSection {

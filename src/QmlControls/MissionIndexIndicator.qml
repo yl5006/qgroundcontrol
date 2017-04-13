@@ -21,7 +21,7 @@ Rectangle {
     property var    map             ///< Map control
     property var    missionItem     ///< MissionItem associated with this editor
     property bool   readOnly        ///< true: read only view, false: full editing view
-    property var    rootQgcVie
+    property var    rootQgcView
 
     property bool   _statusValid:               missionItem != undefined
     property bool   _currentItem:               missionItem.isCurrentItem

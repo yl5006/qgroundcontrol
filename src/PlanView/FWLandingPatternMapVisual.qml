@@ -202,7 +202,7 @@ Item {
 
         MapQuickItem {
             anchorPoint.x:  sourceItem.anchorPointX
-            anchorPoint.y:  sourceItem.anchorPointY
+            anchorPoint.y:  sourceItem.anchorPointY*2
             z:              QGroundControl.zOrderMapItems
             coordinate:     _missionItem.loiterCoordinate
 
@@ -237,7 +237,7 @@ Item {
 
         MapQuickItem {
             anchorPoint.x:  sourceItem.anchorPointX
-            anchorPoint.y:  sourceItem.anchorPointY
+            anchorPoint.y:  sourceItem.anchorPointY*2
             z:              QGroundControl.zOrderMapItems
             coordinate:     _missionItem.landingCoordinate
 

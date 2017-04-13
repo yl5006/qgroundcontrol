@@ -114,8 +114,8 @@ public:
     bool            isStandaloneCoordinate  (void) const final { return false; }
     bool            specifiesCoordinate     (void) const final;
     bool            specifiesAltitudeOnly   (void) const final { return false; }
-    QString         commandDescription      (void) const final { return tr("网格航线"); }
-    QString         commandName             (void) const final { return tr("网格航线"); }
+    QString         commandDescription      (void) const final { return tr("扫描航线"); }
+    QString         commandName             (void) const final { return tr("扫描航线"); }
     QString         abbreviation            (void) const final { return "S"; }
     QGeoCoordinate  coordinate              (void) const final { return _coordinate; }
     QGeoCoordinate  exitCoordinate          (void) const final { return _exitCoordinate; }

@@ -206,8 +206,12 @@ bool MissionSettingsItem::addMissionEndAction(QList<MissionItem*>& items, int se
         qCDebug(MissionSettingsComplexItemLog) << "Appending end action RTL seqNum" << seqNum;
         item = new MissionItem(seqNum,
                                MAV_CMD_NAV_RETURN_TO_LAUNCH,
-                               MAV_FRAME_MISSION,
-                               0, 0, 0, 0, 0, 0, 0,0, 0, 0,// param 1-7 not used
+                               lastWaypointFrame,
+                               0, 0, 0, 0,
+                               lastWaypointCoord.latitude(),
+                               lastWaypointCoord.longitude(),
+                               lastWaypointCoord.altitude(),
+                               0, 0, 0,// param 1-7 not used
                                true,                       // autoContinue
                                false,                      // isCurrentItem
                                missionItemParent);

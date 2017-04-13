@@ -53,7 +53,7 @@ MissionController::MissionController(QObject *parent)
     , _settingsItem(NULL)
     , _firstItemsFromVehicle(false)
     , _missionItemsRequested(false)
-    , _surveyMissionItemName(tr("网格航线"))
+    , _surveyMissionItemName(tr("扫描航线"))
     , _fwLandingMissionItemName(tr("固定翼降落"))
     , _appSettings(qgcApp()->toolbox()->settingsManager()->appSettings())
 {

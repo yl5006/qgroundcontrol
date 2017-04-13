@@ -166,10 +166,10 @@ Rectangle {
                         }
                     }
 
-//                    CameraSection {
-//                        checked:    missionItem.cameraSection.settingsSpecified
-//                        visible:    missionItem.cameraSection.available
-//                    }
+                    CameraSection {
+                        checked:    missionItem.cameraSection.settingsSpecified
+                        visible:    missionItem.cameraSection.available
+                    }
                 } // Column
             } // Item
         } // Component
