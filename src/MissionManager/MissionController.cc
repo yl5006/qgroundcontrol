@@ -293,7 +293,7 @@ int MissionController::insertSimpleMissionItem(QGeoCoordinate coordinate, int i)
     newItem->setCommand(MavlinkQmlSingleton::MAV_CMD_NAV_WAYPOINT);
     _initVisualItem(newItem);
     if (_visualItems->count() == 1) {
-        newItem->setCommand(MavlinkQmlSingleton::MAV_CMD_NAV_TAKEOFF);
+        newItem->setCommand(_activeVehicle->vtol() ? MavlinkQmlSingleton::MAV_CMD_NAV_VTOL_TAKEOFF : MavlinkQmlSingleton::MAV_CMD_NAV_TAKEOFF);
     }
     newItem->setDefaultsForCommand();
     if ((MAV_CMD)newItem->command() == MAV_CMD_NAV_WAYPOINT) {
@@ -1388,7 +1388,7 @@ void MissionController::_initAllVisualItems(void)
 
     _recalcAll();
 
-    connect(_visualItems, &QmlObjectListModel::dirtyChanged, this, &MissionController::_visualItemsDirtyChanged);
+    connect(_visualItems, &QmlObjectListModel::dirtyChanged, this, &MissionController::dirtyChanged);
     connect(_visualItems, &QmlObjectListModel::countChanged, this, &MissionController::_updateContainsItems);
 
     emit visualItemsChanged();
@@ -1407,7 +1407,7 @@ void MissionController::_deinitAllVisualItems(void)
         _deinitVisualItem(qobject_cast<VisualMissionItem*>(_visualItems->get(i)));
     }
 
-    disconnect(_visualItems, &QmlObjectListModel::dirtyChanged, this, &MissionController::_visualItemsDirtyChanged);
+    disconnect(_visualItems, &QmlObjectListModel::dirtyChanged, this, &MissionController::dirtyChanged);
     disconnect(_visualItems, &QmlObjectListModel::countChanged, this, &MissionController::_updateContainsItems);
 }
 
@@ -1616,7 +1616,7 @@ int MissionController::resumeMissionIndex(void) const
 
     if (!_editMode) {
         resumeIndex = _activeVehicle->missionManager()->lastCurrentIndex() + (_activeVehicle->firmwarePlugin()->sendHomePositionToVehicle() ? 0 : 1);
-        if (resumeIndex > 1) {
+        if (resumeIndex > 1 && resumeIndex != _visualItems->value<VisualMissionItem*>(_visualItems->count() - 1)->sequenceNumber()) {
             // Resume at the item previous to the item we were heading towards
             resumeIndex--;
         } else {
@@ -1718,20 +1718,6 @@ QStringList MissionController::complexMissionItemNames(void) const
     }
 
     return complexItems;
-}
-
-void MissionController::_visualItemsDirtyChanged(bool dirty)
-{
-    if (dirty) {
-        if (_visualItems->count() > 1) {
-            emit dirtyChanged(true);
-        } else {
-            // This was a change to mission settings with no other mission items added
-            _visualItems->setDirty(false);
-        }
-    } else {
-        emit dirtyChanged(false);
-    }
 }
 
 void MissionController::resumeMission(int resumeIndex)
