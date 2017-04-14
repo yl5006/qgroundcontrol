@@ -296,13 +296,25 @@ int MissionController::insertSimpleMissionItem(QGeoCoordinate coordinate, int i)
         newItem->setCommand(_activeVehicle->vtol() ? MavlinkQmlSingleton::MAV_CMD_NAV_VTOL_TAKEOFF : MavlinkQmlSingleton::MAV_CMD_NAV_TAKEOFF);
     }
     newItem->setDefaultsForCommand();
-    if ((MAV_CMD)newItem->command() == MAV_CMD_NAV_WAYPOINT) {
+    if ((MAV_CMD)newItem->command() == MAV_CMD_NAV_WAYPOINT||MAV_CMD_NAV_TAKEOFF) {
         double      prevAltitude;
+        double      prevSpeed;
         MAV_FRAME   prevFrame;
-
-        if (_findPreviousAltitude(i, &prevAltitude, &prevFrame)) {
+        if (_findPreviousAltitude(i, &prevAltitude, &prevSpeed, &prevFrame)) {
             newItem->missionItem().setFrame(prevFrame);
+            newItem->missionItem().setParam3(prevSpeed);
             newItem->missionItem().setParam7(prevAltitude);
+        }else
+        {   double hoverSpeed, cruiseSpeed;
+            if(_activeVehicle->active()){
+                _activeVehicle->firmwarePlugin()->missionFlightSpeedInfo(_activeVehicle, hoverSpeed, cruiseSpeed);
+                if (_activeVehicle->multiRotor()) {
+                    prevSpeed = hoverSpeed;
+                } else if (_activeVehicle->fixedWing()) {
+                    prevSpeed = cruiseSpeed;
+                }
+                newItem->missionItem().setParam3(prevSpeed);
+            }
         }
     }
     _visualItems->insert(i, newItem);
@@ -1518,10 +1530,11 @@ void MissionController::_inProgressChanged(bool inProgress)
     emit syncInProgressChanged(inProgress);
 }
 
-bool MissionController::_findPreviousAltitude(int newIndex, double* prevAltitude, MAV_FRAME* prevFrame)
+bool MissionController::_findPreviousAltitude(int newIndex, double* prevAltitude, double* prevSpeed, MAV_FRAME* prevFrame)
 {
     bool        found = false;
     double      foundAltitude;
+    double      foundSpeed;
     MAV_FRAME   foundFrame;
 
     if (newIndex > _visualItems->count()) {
@@ -1537,6 +1550,7 @@ bool MissionController::_findPreviousAltitude(int newIndex, double* prevAltitude
                 SimpleMissionItem* simpleItem = qobject_cast<SimpleMissionItem*>(visualItem);
                 if ((MAV_CMD)simpleItem->command() == MAV_CMD_NAV_WAYPOINT) {
                     foundAltitude = simpleItem->exitCoordinate().altitude();
+                    foundSpeed = simpleItem->missionItem().param3();
                     foundFrame = simpleItem->missionItem().frame();
                     found = true;
                     break;
@@ -1547,6 +1561,7 @@ bool MissionController::_findPreviousAltitude(int newIndex, double* prevAltitude
 
     if (found) {
         *prevAltitude = foundAltitude;
+        *prevSpeed = foundSpeed;
         *prevFrame = foundFrame;
     }
 

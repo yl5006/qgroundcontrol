@@ -22,12 +22,7 @@
         {
             "id":           214,
             "comment":      "MAV_CMD_DO_CAM",
-            "paramRemove":  "1,4"
-        },
-        {
-            "id":           215,
-            "comment":      "MAV_CMD_DO_CAM",
-            "paramRemove":  "1,4"
+            "paramRemove":  "4"
         },
         {
             "id":           189,

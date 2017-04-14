@@ -928,6 +928,7 @@ int SurveyMissionItem::_appendWaypointToMission(QList<MissionItem*>& items, int 
                                0.5,                // Delay in seconds, give some time for image to be taken
                                -1, -1, -1,         // No time
                                0, 0, 0,            // Param 5-7 unused
+                               0, 0, 0,
                                true,               // autoContinue
                                false,              // isCurrentItem
                                missionItemParent);

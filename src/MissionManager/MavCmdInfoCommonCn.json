@@ -34,12 +34,6 @@
                 "default":          3,
                 "decimalPlaces":    2
             },
-            "param3": {
-                "label":            "盘旋半径:",
-                "units":            "m",
-                "default":          0,
-                "decimalPlaces":    2
-            },
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
@@ -978,7 +972,7 @@
             "id":                   214,
             "rawName":              "MAV_CMD_DO_CAM",
             "friendlyName":         "航点拍照",
-            "description":          "航点拍照.",
+            "description":          "在此航点拍照.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":     "相机",
@@ -993,12 +987,6 @@
                 "units":            "radians",
                 "default":          0.0,
                 "decimalPlaces":    2
-            },
-            "param8": {
-                "label":            "拍照:",
-                "default":          1,
-                "units":            "",
-                "decimalPlaces":    1
             }
         },
         {

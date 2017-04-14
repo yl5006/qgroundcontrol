@@ -191,7 +191,7 @@ private:
     void _setupActiveVehicle(Vehicle* activeVehicle, bool forceLoadFromVehicle);
     static void _calcPrevWaypointValues(double homeAlt, VisualMissionItem* currentItem, VisualMissionItem* prevItem, double* azimuth, double* distance, double* altDifference);
     static double _calcDistanceToHome(VisualMissionItem* currentItem, VisualMissionItem* homeItem);
-    bool _findPreviousAltitude(int newIndex, double* prevAltitude, MAV_FRAME* prevFrame);
+    bool _findPreviousAltitude(int newIndex, double* prevAltitude, double* prevSpeed, MAV_FRAME* prevFrame);
     static double _normalizeLat(double lat);
     static double _normalizeLon(double lon);
     static void _addMissionSettings(Vehicle* vehicle, QmlObjectListModel* visualItems, bool addToCenter);

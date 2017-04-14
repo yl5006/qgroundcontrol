@@ -287,6 +287,7 @@ public:
     ///     @param[out] cruiseSpeed Flight speed for vehicle flying in fixed wing forward flight mode. 0 for none, or not available.
     virtual void missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed);
 
+    virtual void setmissionFlightSpeedInfo(Vehicle* vehicle, double hoverSpeed, double cruiseSpeed);
     // Returns the parameter which control auto-dismar. Assume == 0 means no auto disarm
     virtual QString autoDisarmParameter(Vehicle* vehicle);
 

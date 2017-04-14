@@ -501,3 +501,8 @@ void FirmwarePlugin::missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSpeed
     hoverSpeed = appSettings->offlineEditingHoverSpeed()->rawValue().toDouble();
     cruiseSpeed = appSettings->offlineEditingCruiseSpeed()->rawValue().toDouble();
 }
+
+void FirmwarePlugin::setmissionFlightSpeedInfo(Vehicle* vehicle, double hoverSpeed, double cruiseSpeed)
+{
+    Q_UNUSED(vehicle);
+}

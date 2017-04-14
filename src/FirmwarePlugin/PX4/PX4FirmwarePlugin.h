@@ -70,7 +70,7 @@ public:
     bool                vehicleYawsToNextWaypointInMission(const Vehicle* vehicle) const override;
     QString             autoDisarmParameter             (Vehicle* vehicle) override { Q_UNUSED(vehicle); return QStringLiteral("COM_DISARM_LAND"); }
     void                missionFlightSpeedInfo          (Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed) override;
-
+    void                setmissionFlightSpeedInfo       (Vehicle* vehicle, double hoverSpeed, double cruiseSpeed);
 protected:
     typedef struct {
         uint8_t         main_mode;

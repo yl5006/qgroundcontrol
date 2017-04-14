@@ -22,7 +22,7 @@ import QGroundControl.Vehicle       1.0
 MapQuickItem {
     property var    vehicle                ///< Vehicle object
     property bool   isSatellite:    false  ///< true: satellite map is showing
-    property real   size:           ScreenTools.defaultFontPixelHeight * 5
+    property real   size:           ScreenTools.defaultFontPixelHeight * 3
 
     anchorPoint.x:  vehicleIcon.width  / 2
     anchorPoint.y:  vehicleIcon.height / 2
@@ -32,7 +32,7 @@ MapQuickItem {
         id:                 vehicleIcon
         source:             vehicle.multiRotor?"/qmlimages/airplaneCoper.svg":"/qmlimages/airplanePlane.svg"  /*isSatellite ? vehicle.vehicleImageOpaque : vehicle.vehicleImageOutline*/
         mipmap:             true
-        width:      size / 2
+        width:              size
         sourceSize.width:   size
         fillMode:           Image.PreserveAspectFit
         transform: Rotation {

@@ -63,6 +63,7 @@ void SpeedSection::setAvailable(bool available)
 
 void SpeedSection::_setDirty(void)
 {
+    _vehicle->firmwarePlugin()->setmissionFlightSpeedInfo(_vehicle, _flightSpeedFact.rawValue().toDouble(), _flightSpeedFact.rawValue().toDouble());
     setDirty(true);
 }
 

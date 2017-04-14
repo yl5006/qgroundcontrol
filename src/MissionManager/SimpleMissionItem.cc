@@ -21,6 +21,7 @@
 #include "SettingsManager.h"
 
 FactMetaData* SimpleMissionItem::_altitudeMetaData =        NULL;
+FactMetaData* SimpleMissionItem::_speedMetaData =           NULL;
 FactMetaData* SimpleMissionItem::_commandMetaData =         NULL;
 FactMetaData* SimpleMissionItem::_defaultParamMetaData =    NULL;
 FactMetaData* SimpleMissionItem::_frameMetaData =           NULL;
@@ -56,6 +57,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
     , _cameraSection(NULL)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
     , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    , _takepictureFact              (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeBool)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -73,6 +75,8 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
     _editorQml = QStringLiteral("qrc:/qml/SimpleItemEditor.qml");
 
     _altitudeRelativeToHomeFact.setRawValue(true);
+    _takepictureFact.setRawValue(false);
+    _param3MetaData.setDecimalPlaces(1);
 
     _setupMetaData();
     _connectSignals();
@@ -98,6 +102,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, const MissionItem& missio
     , _cameraSection(NULL)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
     , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    , _takepictureFact              (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeBool)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -115,6 +120,8 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, const MissionItem& missio
     _editorQml = QStringLiteral("qrc:/qml/SimpleItemEditor.qml");
 
     _altitudeRelativeToHomeFact.setRawValue(true);
+    _takepictureFact.setRawValue(false);
+    _param3MetaData.setDecimalPlaces(1);
     _isCurrentItem = missionItem.isCurrentItem();
 
     _setupMetaData();
@@ -134,6 +141,7 @@ SimpleMissionItem::SimpleMissionItem(const SimpleMissionItem& other, QObject* pa
     , _cameraSection(NULL)
     , _commandTree(qgcApp()->toolbox()->missionCommandTree())
     , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    , _takepictureFact              (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeBool)
     , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
     , _param1MetaData(FactMetaData::valueTypeDouble)
     , _param2MetaData(FactMetaData::valueTypeDouble)
@@ -143,7 +151,7 @@ SimpleMissionItem::SimpleMissionItem(const SimpleMissionItem& other, QObject* pa
     , _syncingHeadingDegreesAndParam4           (false)
 {
     _editorQml = QStringLiteral("qrc:/qml/SimpleItemEditor.qml");
-
+    _param3MetaData.setDecimalPlaces(1);
     _setupMetaData();
     _connectSignals();
     _updateOptionalSections();
@@ -187,6 +195,7 @@ void SimpleMissionItem::_connectSignals(void)
 
     // Values from these facts must propagate back and forth between the real object storage
     connect(&_altitudeRelativeToHomeFact,   &Fact::valueChanged,    this, &SimpleMissionItem::_syncAltitudeRelativeToHomeToFrame);
+    connect(&_takepictureFact,              &Fact::valueChanged,    this, &SimpleMissionItem::_changeCommand);
     connect(&_missionItem._frameFact,       &Fact::valueChanged,    this, &SimpleMissionItem::_syncFrameToAltitudeRelativeToHome);
 
     // These are coordinate parameters, they must emit coordinateChanged signal
@@ -200,7 +209,7 @@ void SimpleMissionItem::_connectSignals(void)
     connect(&_missionItem._frameFact,           &Fact::valueChanged, this, &SimpleMissionItem::_sendFriendlyEditAllowedChanged);
 
     // A command change triggers a number of other changes as well.
-    connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::setDefaultsForCommand);
+    connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::setDefaultsForCMD);
     connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::commandNameChanged);
     connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::commandDescriptionChanged);
     connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::abbreviationChanged);
@@ -261,6 +270,10 @@ void SimpleMissionItem::_setupMetaData(void)
         _longitudeMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
         _longitudeMetaData->setRawUnits("deg");
         _longitudeMetaData->setDecimalPlaces(7);
+
+        _speedMetaData = new FactMetaData(FactMetaData::valueTypeDouble);
+        _speedMetaData->setRawUnits("m/s");
+        _speedMetaData->setDecimalPlaces(1);
 
     }
 
@@ -419,13 +432,13 @@ void SimpleMissionItem::_rebuildTextFieldFacts(void)
         }
 
         _missionItem._param5Fact._setName(tr("纬度:"));
-        _missionItem._param5Fact.setMetaData(_defaultParamMetaData);
+        _missionItem._param5Fact.setMetaData(_latitudeMetaData);
         _textFieldFacts.append(&_missionItem._param5Fact);
         _missionItem._param6Fact._setName(tr("经度:"));
-        _missionItem._param6Fact.setMetaData(_defaultParamMetaData);
+        _missionItem._param6Fact.setMetaData(_longitudeMetaData);
         _textFieldFacts.append(&_missionItem._param6Fact);
         _missionItem._param7Fact._setName(tr("高度:"));
-        _missionItem._param7Fact.setMetaData(_defaultParamMetaData);
+        _missionItem._param7Fact.setMetaData(_altitudeMetaData);
         _textFieldFacts.append(&_missionItem._param7Fact);
 
 
@@ -448,7 +461,11 @@ void SimpleMissionItem::_rebuildTextFieldFacts(void)
                 _textFieldFacts.append(paramFact);
             }
         }
-
+        if (uiInfo->specifiesCoordinate()) {
+            _missionItem._param3Fact._setName("速度");
+            _missionItem._param3Fact.setMetaData(_speedMetaData);
+            _textFieldFacts.append(&_missionItem._param3Fact);
+        }
 //        if (uiInfo->specifiesCoordinate() || uiInfo->specifiesAltitudeOnly()) {
 //            _missionItem._param7Fact._setName("Altitude");
 //            _missionItem._param7Fact.setMetaData(_altitudeMetaData);
@@ -473,12 +490,12 @@ void SimpleMissionItem::_rebuildNaNFacts(void)
             command = _missionItem.command();
         }
 
-        Fact*           rgParamFacts[7] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact };
-        FactMetaData*   rgParamMetaData[7] =    { &_param1MetaData, &_param2MetaData, &_param3MetaData, &_param4MetaData, &_param5MetaData, &_param6MetaData, &_param7MetaData };
+        Fact*           rgParamFacts[10] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact , &_missionItem._param8Fact, &_missionItem._param9Fact, &_missionItem._param10Fact};
+        FactMetaData*   rgParamMetaData[10] =    { &_param1MetaData, &_param2MetaData, &_param3MetaData, &_param4MetaData, &_param5MetaData, &_param6MetaData, &_param7MetaData, &_param8MetaData, &_param9MetaData, &_param10MetaData };
 
         const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
 
-        for (int i=1; i<=7; i++) {
+        for (int i=1; i<=10; i++) {
             const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i);
 
             if (paramInfo && paramInfo->nanUnchanged()) {
@@ -505,6 +522,10 @@ void SimpleMissionItem::_rebuildCheckboxFacts(void)
         _checkboxFacts.append(&_missionItem._autoContinueFact);
     } else if ((specifiesCoordinate() || specifiesAltitudeOnly()) && !_homePositionSpecialCase) {
         _checkboxFacts.append(&_altitudeRelativeToHomeFact);
+        if(_missionItem.command()==MAV_CMD_NAV_WAYPOINT||_missionItem.command()==MAV_CMD_DO_CAM)
+        {
+            _checkboxFacts.append(&_takepictureFact);
+        }
     }
 }
 
@@ -637,6 +658,17 @@ void SimpleMissionItem::_syncAltitudeRelativeToHomeToFrame(const QVariant& value
     }
 }
 
+void SimpleMissionItem::_changeCommand()
+{
+    if (_takepictureFact.rawValue().toBool()) {
+      _missionItem.setCommand(MAV_CMD_DO_CAM);
+    }
+    else
+    {
+      _missionItem.setCommand(MAV_CMD_NAV_WAYPOINT);
+    }
+}
+
 void SimpleMissionItem::_syncFrameToAltitudeRelativeToHome(void)
 {
     if (!_syncingAltitudeRelativeToHomeAndFrame) {
@@ -650,7 +682,47 @@ void SimpleMissionItem::setDefaultsForCommand(void)
 {
     // We set these global defaults first, then if there are param defaults they will get reset
     _missionItem.setParam7(qgcApp()->toolbox()->settingsManager()->appSettings()->defaultMissionItemAltitude()->rawValue().toDouble());
+    if(_vehicle->multiRotor())
+    {
+        _missionItem.setParam3(_vehicle->defaultHoverSpeed());
+    }
+    else{
+        _missionItem.setParam3(_vehicle->defaultCruiseSpeed());
+    }
+    MAV_CMD command = (MAV_CMD)this->command();
+    const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
+    if (uiInfo) {
+        for (int i=1; i<=10; i++) {  //10 params
+            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i);
+            if (paramInfo) {
+                Fact* rgParamFacts[10] = { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact, &_missionItem._param8Fact, &_missionItem._param9Fact, &_missionItem._param10Fact };
+                rgParamFacts[paramInfo->param()-1]->setRawValue(paramInfo->defaultValue());
+            }
+        }
+    }
 
+    switch (command) {
+    case MAV_CMD_NAV_WAYPOINT:
+        // We default all acceptance radius to 0. This allows flight controller to be in control of
+        // accept radius.
+        _missionItem.setParam2(0);
+        break;
+
+    case MAV_CMD_NAV_LAND:
+        _missionItem.setParam7(0);
+        break;
+    default:
+        break;
+    }
+
+    _missionItem.setAutoContinue(true);
+    _missionItem.setFrame((specifiesCoordinate() || specifiesAltitudeOnly()) ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_MISSION);
+    setRawEdit(false);
+}
+
+void SimpleMissionItem::setDefaultsForCMD(void)
+{
+    // We set these global defaults first, then if there are param defaults they will get reset
     MAV_CMD command = (MAV_CMD)this->command();
     const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
     if (uiInfo) {
@@ -774,8 +846,8 @@ void SimpleMissionItem::_updateOptionalSections(void)
     _cameraSection = new CameraSection(_vehicle, this);
     _speedSection = new SpeedSection(_vehicle, this);
     if ((MAV_CMD)command() == MAV_CMD_NAV_WAYPOINT) {
-        _cameraSection->setAvailable(true);
-        _speedSection->setAvailable(true);
+//        _cameraSection->setAvailable(true);
+//        _speedSection->setAvailable(true);
     }
 
     connect(_cameraSection, &CameraSection::dirtyChanged,               this, &SimpleMissionItem::_sectionDirtyChanged);

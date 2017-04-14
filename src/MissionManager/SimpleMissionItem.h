@@ -122,6 +122,8 @@ public:
     void setparam1          (double param1);
 public slots:
     void setDefaultsForCommand(void);
+    void setDefaultsForCMD(void);
+
 
 signals:
     void commandChanged             (int command);
@@ -137,6 +139,7 @@ private slots:
 	void _params8Signal(void);
     void _sectionDirtyChanged               (bool dirty);
     void _sendCommandChanged                (void);
+    void _changeCommand                     (void);
     void _sendCoordinateChanged             (void);
     void _sendFrameChanged                  (void);
     void _sendFriendlyEditAllowedChanged    (void);
@@ -165,6 +168,7 @@ private:
     MissionCommandTree* _commandTree;
 
     Fact    _altitudeRelativeToHomeFact;
+    Fact    _takepictureFact;
     Fact    _supportedCommandFact;
 
     QmlObjectListModel  _textFieldFacts;
@@ -173,6 +177,7 @@ private:
     QmlObjectListModel  _comboboxFacts;
     
     static FactMetaData*    _altitudeMetaData;
+    static FactMetaData*    _speedMetaData;
     static FactMetaData*    _commandMetaData;
     static FactMetaData*    _defaultParamMetaData;
     static FactMetaData*    _frameMetaData;

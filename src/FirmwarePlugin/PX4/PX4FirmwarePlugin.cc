@@ -542,3 +542,18 @@ void PX4FirmwarePlugin::missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSp
         cruiseSpeed = speed->rawValue().toDouble();
     }
 }
+
+void PX4FirmwarePlugin::setmissionFlightSpeedInfo(Vehicle* vehicle, double hoverSpeed, double cruiseSpeed)
+{
+    QString hoverSpeedParam("MPC_XY_CRUISE");
+    QString cruiseSpeedParam("FW_AIRSPD_TRIM");
+
+    if (vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, hoverSpeedParam)) {
+        Fact* speed = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, hoverSpeedParam);
+        speed->setRawValue(hoverSpeed);
+    }
+    if (vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, cruiseSpeedParam)) {
+        Fact* speed = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, cruiseSpeedParam);
+        speed->setRawValue(cruiseSpeed);
+    }
+}

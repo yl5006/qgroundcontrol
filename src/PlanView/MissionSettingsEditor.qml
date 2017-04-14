@@ -6,6 +6,7 @@ import QGroundControl                   1.0
 import QGroundControl.ScreenTools       1.0
 import QGroundControl.Vehicle           1.0
 import QGroundControl.Controls          1.0
+import QGroundControl.FactSystem        1.0
 import QGroundControl.FactControls      1.0
 import QGroundControl.Palette           1.0
 import QGroundControl.SettingsManager   1.0
@@ -21,6 +22,7 @@ Rectangle {
     radius:             _margin/2
 
     property var    _missionVehicle:            missionController.vehicle
+    property var    _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
     property bool   _vehicleHasHomePosition:    _missionVehicle.homePosition.isValid
     property bool   _offlineEditing:            _missionVehicle.isOfflineEditingVehicle
     property bool   _showOfflineVehicleCombos:  _offlineEditing && _multipleFirmware && _noMissionItemsAdded
@@ -32,8 +34,9 @@ Rectangle {
     property var    _savePath:                  QGroundControl.settingsManager.appSettings.missionSavePath
     property var    _fileExtension:             QGroundControl.settingsManager.appSettings.missionFileExtension
     property var    _appSettings:               QGroundControl.settingsManager.appSettings    
-    property bool   _waypointsOnlyMode:          QGroundControl.corePlugin.options.missionWaypointsOnly
+    property bool   _waypointsOnlyMode:         QGroundControl.corePlugin.options.missionWaypointsOnly
 
+    property Fact   _offlinespeed:              _showCruiseSpeed ? QGroundControl.settingsManager.appSettings.offlineEditingCruiseSpeed : QGroundControl.settingsManager.appSettings.offlineEditingHoverSpeed
     readonly property string _firmwareLabel:    qsTr("Firmware")
     readonly property string _vehicleLabel:     qsTr("Vehicle")
 
@@ -102,26 +105,33 @@ Rectangle {
                     columns:        2
 
                     QGCLabel {
-                        text:       qsTr("航点高度:")
+                        text:               qsTr("航点高度:")
                     }
                     FactTextField {
                         fact:               QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude
                         Layout.fillWidth:   true
                     }
-
-                    QGCCheckBox {
-                        id:         flightSpeedCheckBox
-                        text:       qsTr("飞行速度:")
-                        visible:    !_missionVehicle.vtol
-                        checked:     missionItem.speedSection.specifyFlightSpeed
-                        onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
+                    QGCLabel {
+                        text:               qsTr("飞行速度")
+                        Layout.fillWidth:   true
                     }
                     FactTextField {
+                        fact:               _activeVehicle ? missionItem.speedSection.flightSpeed : _offlinespeed
                         Layout.fillWidth:   true
-                        fact:               missionItem.speedSection.flightSpeed
-                        visible:            flightSpeedCheckBox.visible
-                        enabled:            flightSpeedCheckBox.checked
                     }
+//                    QGCCheckBox {
+//                        id:         flightSpeedCheckBox
+//                        text:       qsTr("飞行速度:")
+//                        visible:    !_missionVehicle.vtol
+//                        checked:     missionItem.speedSection.specifyFlightSpeed
+//                        onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
+//                    }
+//                    FactTextField {
+//                        Layout.fillWidth:   true
+//                        fact:               missionItem.speedSection.flightSpeed
+//                        visible:            flightSpeedCheckBox.visible
+//                        enabled:            flightSpeedCheckBox.checked
+//                    }
                     QGCLabel {
                         text:       qsTr("任务结束操作:")
                     }
@@ -142,7 +152,7 @@ Rectangle {
             SectionHeader {
                 id:         vehicleInfoSectionHeader
                 text:       qsTr("机体信息")
-                visible:    _offlineEditing && !_waypointsOnlyMode
+                visible:    false//_offlineEditing && !_waypointsOnlyMode
                 checked:    false
             }
 

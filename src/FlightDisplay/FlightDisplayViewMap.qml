@@ -337,7 +337,7 @@ FlightMap {
             vehicle:        object
             coordinate:     object.coordinate
             isSatellite:    flightMap.isSatelliteMap
-            size:           _mainIsMap ? ScreenTools.defaultFontPixelHeight * 3 : ScreenTools.defaultFontPixelHeight
+            size:           _mainIsMap ? ScreenTools.defaultFontPixelHeight * 2 : ScreenTools.defaultFontPixelHeight
             z:              QGroundControl.zOrderVehicles
         }
     }
