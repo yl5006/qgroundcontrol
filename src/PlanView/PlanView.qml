@@ -119,6 +119,40 @@ QGCView {
         }
     }
 
+    Component {
+        id: activeMissionUploadDialogComponent
+
+        QGCViewDialog {
+
+            Column {
+                anchors.fill:   parent
+                spacing:        ScreenTools.defaultFontPixelHeight
+
+                QGCLabel {
+                    width:      parent.width
+                    wrapMode:   Text.WordWrap
+                    text:       qsTr("Your vehicle is currently flying a mission. In order to upload a new or modified mission the current mission will be paused.")
+                }
+
+                QGCLabel {
+                    width:      parent.width
+                    wrapMode:   Text.WordWrap
+                    text:       qsTr("After the mission is uploaded you can adjust the current waypoint and start the mission.")
+                }
+
+                QGCButton {
+                    text:       qsTr("Pause and Upload")
+                    onClicked: {
+                        _activeVehicle.flightMode = _activeVehicle.pauseFlightMode
+                        missionController.sendToVehicle()
+                        toolbar.showFlyView()
+                        hideDialog()
+                    }
+                }
+            }
+        }
+    }
+
     MissionController {
         id: missionController
 
@@ -131,7 +165,7 @@ QGCView {
 
         function _denyUpload() {
             if (_activeVehicle && _activeVehicle.armed && _activeVehicle.flightMode === _activeVehicle.missionFlightMode) {
-                _qgcView.showMessage(qsTr("Mission Upload"), qsTr("Your vehicle is currently flying a mission. Upload is not allowed."), StandardButton.Ok)
+                _qgcView.showDialog(activeMissionUploadDialogComponent, qsTr("Mission Upload"), _qgcView.showDialogDefaultWidth, StandardButton.Cancel)
                 return true
             } else {
                 return false
@@ -141,7 +175,9 @@ QGCView {
         // Users is switching away from Plan View
         function uploadOnSwitch() {
             if (missionController.dirty && _autoSync) {
-                if (!_denyUpload()) {
+                if (_denyUpload()) {
+                    return false
+                } else {
                     sendToVehicle()
                 }
             }
@@ -149,9 +185,9 @@ QGCView {
         }
 
         function upload() {
-                if (!_denyUpload()) {
-                    sendToVehicle()
-                }
+            if (!_denyUpload()) {
+                sendToVehicle()
+            }
         }
 
         function loadFromSelectedFile() {
@@ -1277,7 +1313,7 @@ QGCView {
             anchors.right:      rightPanel.left
             anchors.bottom:     parent.bottom
             missionItems:       missionController.visualItems
-            //visible:            _editingLayer === _layerMission && !ScreenTools.isShortScreen
+            visible:            _editingLayer === _layerMission && !ScreenTools.isShortScreen
         }
 */
     } // QGCViewPanel
