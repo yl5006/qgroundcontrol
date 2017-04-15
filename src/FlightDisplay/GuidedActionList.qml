@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -44,6 +44,7 @@ Rectangle {
         QGCLabel {
             text:               qsTr("Select Action")
             Layout.alignment:   Qt.AlignHCenter
+            visible:            false
         }
 
         QGCFlickable {
@@ -59,7 +60,6 @@ Rectangle {
             RowLayout {
                 id:         actionRow
                 spacing:    ScreenTools.defaultFontPixelHeight * 2
-
                 Repeater {
                     id: actionRepeater
 

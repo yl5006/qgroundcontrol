@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -65,7 +65,7 @@ Rectangle {
         // Action confirmation control
         SliderSwitch {
             id:             slider
-            confirmText:    qsTr("Slide to confirm")
+            confirmText:    qsTr("->>>")
             width:          Math.max(implicitWidth, ScreenTools.defaultFontPixelWidth * 30)
 
             onAccept: {

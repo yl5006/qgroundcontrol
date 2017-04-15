@@ -150,7 +150,7 @@ QGCView {
             }
         } else {
             if (promptForMissionRemove && (flyMissionController.containsItems || flyGeoFenceController.containsItems || flyRallyPointController.containsItems)) {
-                root.showDialog(removeMissionDialogComponent, qsTr("Flight complete"), showDialogDefaultWidth, StandardButton.No | StandardButton.Yes)
+          //      root.showDialog(removeMissionDialogComponent, qsTr("Flight complete"), showDialogDefaultWidth, StandardButton.No | StandardButton.Yes)
             }
             promptForMissionRemove = false
         }
@@ -621,7 +621,7 @@ QGCView {
             guidedController:           _guidedController
                     visible:            false
             altitudeSlider:             _altitudeSlider
-                width:              ScreenTools.defaultFontPixelHeight
+                width:                  ScreenTools.defaultFontPixelWidth * 30//ScreenTools.defaultFontPixelHeight
         }
 
         //-- Altitude slider
