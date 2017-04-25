@@ -15,7 +15,8 @@
 
 #include "QGCToolbox.h"
 #include "SimulatedPosition.h"
-
+#include "GPSPositionMessage.h"
+class GPSManager;
 class QGCPositionManager : public QGCTool {
     Q_OBJECT
 
@@ -38,13 +39,14 @@ public:
 
 private slots:
     void positionUpdated(const QGeoPositionInfo &update);
-
+    void GPSPositionUpdate(GPSPositionMessage msg);
 signals:
     void lastPositionUpdated(bool valid, QVariant lastPosition);
     void positionInfoUpdated(QGeoPositionInfo update);
 
 private:
     int _updateInterval;
+    GPSManager*              _gpsManager;
     QGeoPositionInfoSource * _currentSource;
     QGeoPositionInfoSource * _defaultSource;
     QGeoPositionInfoSource * _simulatedSource;

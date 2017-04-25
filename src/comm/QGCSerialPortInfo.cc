@@ -30,8 +30,8 @@ const char*  QGCSerialPortInfo::_jsonRegExpKey =        "regExp";
 const char*  QGCSerialPortInfo::_jsonAndroidOnlyKey =   "androidOnly";
 
 const QGCSerialPortInfo::BoardClassString2BoardType_t QGCSerialPortInfo::_rgBoardClass2BoardType[] = {
-    { "Pixhawk",    QGCSerialPortInfo::BoardTypePixhawk },
-    { "PX4 Flow",   QGCSerialPortInfo::BoardTypePX4Flow },
+    { "EWT",    QGCSerialPortInfo::BoardTypePixhawk },
+    { "Flow",   QGCSerialPortInfo::BoardTypePX4Flow },
     { "RTK GPS",    QGCSerialPortInfo::BoardTypeRTKGPS },
     { "SiK Radio",  QGCSerialPortInfo::BoardTypeSiKRadio },
     { "OpenPilot",  QGCSerialPortInfo::BoardTypeOpenPilot },

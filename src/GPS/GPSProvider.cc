@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -15,7 +15,8 @@
 
 #include <QDebug>
 
-#include "Drivers/src/ubx.h"
+//#include "Drivers/src/ubx.h"
+#include "Drivers/src/nova.h"
 #include "Drivers/src/gps_helper.h"
 #include "definitions.h"
 
@@ -46,7 +47,8 @@ void GPSProvider::run()
         qWarning() << "GPS: Failed to open Serial Device" << _device;
         return;
     }
-    _serial->setBaudRate(QSerialPort::Baud9600);
+    qWarning() << "open Serial Device" << _device;
+    _serial->setBaudRate(QSerialPort::Baud115200);//9600
     _serial->setDataBits(QSerialPort::Data8);
     _serial->setParity(QSerialPort::NoParity);
     _serial->setStopBits(QSerialPort::OneStop);
@@ -61,21 +63,18 @@ void GPSProvider::run()
             delete gpsHelper;
             gpsHelper = nullptr;
         }
-
-        gpsHelper = new GPSDriverUBX(&callbackEntry, this, &_reportGpsPos, _pReportSatInfo);
-
+//      gpsHelper = new GPSDriverUBX(&callbackEntry, this, &_reportGpsPos, _pReportSatInfo);
+        gpsHelper = new GPSDriverNova(&callbackEntry, this, &_reportGpsPos);
         if (gpsHelper->configure(baudrate, GPSHelper::OutputMode::RTCM) == 0) {
 
             /* reset report */
             memset(&_reportGpsPos, 0, sizeof(_reportGpsPos));
-
             //In rare cases it can happen that we get an error from the driver (eg. checksum failure) due to
             //bus errors or buggy firmware. In this case we want to try multiple times before giving up.
             int numTries = 0;
 
             while (!_requestStop && numTries < 3) {
                 int helperRet = gpsHelper->receive(GPS_RECEIVE_TIMEOUT);
-
                 if (helperRet > 0) {
                     numTries = 0;
 

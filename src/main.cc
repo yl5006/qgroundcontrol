@@ -290,7 +290,7 @@ int main(int argc, char *argv[])
     m_updater->destroyed();
 // qDebug()<<"getUpdateAvailable"<<m_updater->getUpdateAvailable(DEFS_URL);
 #endif
-
+    qDebug()<<"lanchok";
 #ifdef Q_OS_LINUX
     QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));
 #endif /* Q_OS_LINUX */

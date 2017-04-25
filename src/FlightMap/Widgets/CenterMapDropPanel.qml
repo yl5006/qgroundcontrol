@@ -68,7 +68,7 @@ ColumnLayout {
         RoundImageButton {
             width:          ScreenTools.defaultFontPixelHeight*3
             height:         width
-            imageResource:  "/qmlimages/Plan.svg" //"Current Location"
+            imageResource:  "/qmlimages/people.svg" //"Current Location"
             visible:        map.gcsPosition.isValid
             bordercolor:    qgcPal.text
             onClicked: {

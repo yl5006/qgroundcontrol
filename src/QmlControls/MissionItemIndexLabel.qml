@@ -72,6 +72,17 @@ Canvas {
                return   checked  ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
         }
     }
+    function getsouceimgsimple(simpleindex)
+    {
+        switch(simpleindex){
+            case 1:    //
+               return     "/qmlimages/Waypoint0.svg"
+            case 2:    //MAV_CMD_DO_DIGICAM_CONTROL
+               return     "/qmlimages/people.svg"
+            default:
+               return   "/qmlimages/Waypoint0.svg"
+        }
+    }
 
     function paintGimbalYaw(context) {
         if (showGimbalYaw) {
@@ -120,7 +131,7 @@ Canvas {
 
     Image {
         id:         waypoint
-        source:     simpleindex==0?getsouceimg(missionItem.command):"/qmlimages/Waypoint0.svg"
+        source:     simpleindex==0?getsouceimg(missionItem.command):getsouceimgsimple(simpleindex)
         mipmap:     true
         fillMode:   Image.PreserveAspectFit
         anchors.fill: indicator

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -10,11 +10,12 @@
 #include "PositionManager.h"
 #include "QGCApplication.h"
 #include "QGCCorePlugin.h"
-
+#include "GPSManager.h"
 QGCPositionManager::QGCPositionManager(QGCApplication* app, QGCToolbox* toolbox)
     : QGCTool(app, toolbox)
     , _updateInterval(0)
     , _currentSource(nullptr)
+    , _gpsManager(nullptr)
 {
 
 }
@@ -39,7 +40,7 @@ void QGCPositionManager::setToolbox(QGCToolbox *toolbox)
    // if (_defaultSource == nullptr) {
    //     _defaultSource = _simulatedSource;
    // }
-
+   _gpsManager  =    _toolbox->gpsManager();
    setPositionSource(QGCPositionSource::GPS);
 }
 
@@ -47,6 +48,15 @@ void QGCPositionManager::positionUpdated(const QGeoPositionInfo &update)
 {
     emit lastPositionUpdated(update.isValid(), QVariant::fromValue(update.coordinate()));
     emit positionInfoUpdated(update);
+}
+
+void QGCPositionManager::GPSPositionUpdate(GPSPositionMessage msg)
+{
+    QGeoCoordinate msggps;
+    msggps.setLatitude(msg.position_data.lat*1e-7);
+    msggps.setLongitude(msg.position_data.lon*1e-7);
+    qDebug() << QString("GPS: got position update: alt=%1, long=%2, lat=%3").arg(msg.position_data.alt).arg(msg.position_data.lon).arg(msg.position_data.lat);
+    emit lastPositionUpdated(true, QVariant::fromValue(msggps));
 }
 
 int QGCPositionManager::updateInterval() const
@@ -68,6 +78,7 @@ void QGCPositionManager::setPositionSource(QGCPositionManager::QGCPositionSource
         _currentSource = _simulatedSource;
         break;
     case QGCPositionManager::GPS:
+        connect(_gpsManager, &GPSManager::positionUpdated, this, &QGCPositionManager::GPSPositionUpdate);
     default:        
         _currentSource = _defaultSource;
         break;

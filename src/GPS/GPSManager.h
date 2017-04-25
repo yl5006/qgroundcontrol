@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -13,7 +13,6 @@
 #include "GPSProvider.h"
 #include "RTCM/RTCMMavlink.h"
 #include <QGCToolbox.h>
-
 #include <QString>
 #include <QObject>
 
@@ -30,6 +29,8 @@ public:
 
     void connectGPS(const QString& device);
     bool connected(void) const { return _gpsProvider != nullptr; }
+signals:
+    void positionUpdated(GPSPositionMessage msg);
 
 private slots:
     void GPSPositionUpdate(GPSPositionMessage msg);

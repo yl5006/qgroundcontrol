@@ -462,8 +462,7 @@ QGCFlickable {
                                 imageResource:  "/qmlimages/paramsreset.svg"
                                 imgcolor:   qgcPal.buttonHighlight
                                 onClicked: {
-                                    resettodefault("MPC_MAN_P_MAX")
-                                    resettodefault("MPC_MAN_R_MAX")
+                                    resettodefault("MPC_MAN_TILT_MAX")
                                     resettodefault("MPC_MAN_Y_MAX")
                                 }
                             }
@@ -479,11 +478,11 @@ QGCFlickable {
                 Column{
                     spacing: ScreenTools.defaultFontPixelHeight*0.3
                     Repeater {
-                        model:  [ "MPC_MAN_P_MAX", "MPC_MAN_R_MAX", "MPC_MAN_Y_MAX"]
+                        model:  [ "MPC_MAN_TILT_MAX", "MPC_MAN_Y_MAX"]
                         Column{
                             Row {
                                 spacing: ScreenTools.defaultFontPixelHeight
-                                property var description: [ qsTr("Pitch") , qsTr("Roll") , qsTr("Yaw速率")]
+                                property var description: [ qsTr("空中倾斜角度") , qsTr("Yaw速率")]
                                 property Fact fact: controller.getParameterFact(-1, modelData)
                                 QGCLabel {
                                     width:              _editFieldWidth

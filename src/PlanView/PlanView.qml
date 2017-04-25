@@ -733,7 +733,7 @@ QGCView {
                         checked:    _editingLayer == _layerRallyPoints ? object == rallyPointController.currentRallyPoint : false
 
                         onClicked: rallyPointController.currentRallyPoint = object
-
+                        simpleindex:        1
                         onCheckedChanged: {
                             if (checked) {
                                 // Setup our drag item
@@ -1240,6 +1240,7 @@ QGCView {
                     highlightMoveDuration: 250
 
                     delegate: MissionIndexIndicator {
+                        map:            editorMap
                         missionItem:    object
                         readOnly:       false
                         visible:        object.isCurrentItem

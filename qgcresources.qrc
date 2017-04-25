@@ -235,6 +235,7 @@
         <file alias="climbRate.svg">src/FlightMap/Images/climbRate.svg</file>
         <file alias="Waypoint0.svg">src/FlightMap/Images/Waypoint0.svg</file>
         <file alias="Waypoint.svg">src/FlightMap/Images/Waypoint.svg</file>
+	<file alias="people.svg">src/FlightMap/Images/people.svg</file>
 	<file alias="WayCamera.svg">src/FlightMap/Images/WayCamera.svg</file>
         <file alias="WayCamera0.svg">src/FlightMap/Images/WayCamera0.svg</file>
 	<file alias="WaySet.svg">src/FlightMap/Images/WaySet.svg</file>

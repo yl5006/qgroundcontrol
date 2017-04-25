@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -45,6 +45,7 @@ void GPSManager::connectGPS(const QString& device)
 
 void GPSManager::GPSPositionUpdate(GPSPositionMessage msg)
 {
+    emit positionUpdated(msg);
     qCDebug(RTKGPSLog) << QString("GPS: got position update: alt=%1, long=%2, lat=%3").arg(msg.position_data.alt).arg(msg.position_data.lon).arg(msg.position_data.lat);
 }
 void GPSManager::GPSSatelliteUpdate(GPSSatelliteMessage msg)
