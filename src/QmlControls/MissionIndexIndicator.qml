@@ -19,11 +19,14 @@ Rectangle {
     color:              Qt.rgba(0.102,0.122,0.133,0.9)//qgcPal.windowShade    
     radius:             _margin
     property var    map             ///< Map control
+    property var    masterController
     property var    missionItem     ///< MissionItem associated with this editor
     property bool   readOnly        ///< true: read only view, false: full editing view
     property var    rootQgcView
 
     property bool   _statusValid:               missionItem != undefined
+    property var    _masterController:          masterController
+    property var    _missionController:         _masterController.missionController
     property bool   _currentItem:               missionItem.isCurrentItem
 
     readonly property real  _editFieldWidth:    Math.min(width - _margin * 2, ScreenTools.defaultFontPixelWidth * 12)
@@ -228,6 +231,7 @@ Rectangle {
             item.visible = Qt.binding(function() { return _currentItem; })
         }
 
+        property var    masterController:   _masterController
         property real   availableWidth: _root.width - (_margin * 2) ///< How wide the editor should be
         property var    editorRoot:     _root
     }

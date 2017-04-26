@@ -21,6 +21,7 @@ Rectangle {
     visible:            missionItem.isCurrentItem
     radius:             _margin/2
 
+    property var    _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
     property var    _masterControler:           masterController
     property var    _missionController:         _masterControler.missionController
     property var    _missionVehicle:            _masterControler.controllerVehicle

@@ -1080,7 +1080,7 @@ QGCView {
 
                     delegate: MissionIndexIndicator {
                         map:                editorMap
-//                        masterController:  _planMasterController
+                        masterController:   _planMasterController
                         missionItem:        object
                         readOnly:           false
                         visible:            object.isCurrentItem
