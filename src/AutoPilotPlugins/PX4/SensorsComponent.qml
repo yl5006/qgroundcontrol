@@ -182,7 +182,7 @@ SetupPage {
 
                     Column {
                         anchors.fill:   parent
-                        spacing:        ScreenTools.defaultFontPixelHeight
+                        spacing:        ScreenTools.defaultFontPixelWidth / 2
 
                         QGCLabel {
                             width:      parent.width
@@ -191,7 +191,6 @@ SetupPage {
                         }
 
                         Column {
-                            anchors.fill:   parent
                             spacing:        5
                             visible:        !_sensorsHaveFixedOrientation
 

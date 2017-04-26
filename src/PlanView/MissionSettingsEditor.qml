@@ -21,8 +21,9 @@ Rectangle {
     visible:            missionItem.isCurrentItem
     radius:             _margin/2
 
-    property var    _missionVehicle:            missionController.vehicle
-    property var    _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
+    property var    _masterControler:           masterController
+    property var    _missionController:         _masterControler.missionController
+    property var    _missionVehicle:            _masterControler.controllerVehicle
     property bool   _vehicleHasHomePosition:    _missionVehicle.homePosition.isValid
     property bool   _offlineEditing:            _missionVehicle.isOfflineEditingVehicle
     property bool   _showOfflineVehicleCombos:  _offlineEditing && _multipleFirmware && _noMissionItemsAdded
@@ -111,38 +112,38 @@ Rectangle {
                         fact:               QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude
                         Layout.fillWidth:   true
                     }
-                    QGCLabel {
+		    QGCLabel {
                         text:               qsTr("飞行速度")
                         Layout.fillWidth:   true
                     }
                     FactTextField {
                         fact:               _activeVehicle ? missionItem.speedSection.flightSpeed : _offlinespeed
                         Layout.fillWidth:   true
+                    }	
+                    QGCCheckBox {
+                        id:         flightSpeedCheckBox
+                        text:       qsTr("Flight speed")
+                        visible:    false//!_missionVehicle.vtol
+                        checked:    missionItem.speedSection.specifyFlightSpeed
+                        onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
                     }
-//                    QGCCheckBox {
-//                        id:         flightSpeedCheckBox
-//                        text:       qsTr("飞行速度:")
-//                        visible:    !_missionVehicle.vtol
-//                        checked:     missionItem.speedSection.specifyFlightSpeed
-//                        onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
-//                    }
-//                    FactTextField {
-//                        Layout.fillWidth:   true
-//                        fact:               missionItem.speedSection.flightSpeed
-//                        visible:            flightSpeedCheckBox.visible
-//                        enabled:            flightSpeedCheckBox.checked
-//                    }
-                    QGCLabel {
-                        text:       qsTr("任务结束操作:")
-                    }
-                    FactComboBox {
+		    FactTextField {
+                        fact:               _activeVehicle ? missionItem.speedSection.flightSpeed : _offlinespeed
                         Layout.fillWidth:   true
-                        fact:           missionItem.missionEndAction
-                        indexModel:     false
+                    }
+                    FactTextField {
+                        Layout.fillWidth:   true
+                        fact:               missionItem.speedSection.flightSpeed
+                        visible:            flightSpeedCheckBox.visible
+                        enabled:            flightSpeedCheckBox.checked
                     }
                 } // GridLayout
 
-
+                QGCCheckBox {
+                    text:       qsTr("任务结束返航")
+                    checked:    missionItem.missionEndRTL
+                    onClicked:  missionItem.missionEndRTL = checked
+                }
             }
 
             CameraSection {

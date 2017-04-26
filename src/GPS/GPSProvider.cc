@@ -55,17 +55,19 @@ void GPSProvider::run()
     _serial->setFlowControl(QSerialPort::NoFlowControl);
 
     unsigned int baudrate;
-    GPSHelper* gpsHelper = nullptr;
+    GPSDriverNova* gpsDriver = nullptr;
 
     while (!_requestStop) {
 
-        if (gpsHelper) {
-            delete gpsHelper;
-            gpsHelper = nullptr;
+        if (gpsDriver) {
+            delete gpsDriver;
+            gpsDriver = nullptr;
         }
-//      gpsHelper = new GPSDriverUBX(&callbackEntry, this, &_reportGpsPos, _pReportSatInfo);
-        gpsHelper = new GPSDriverNova(&callbackEntry, this, &_reportGpsPos);
-        if (gpsHelper->configure(baudrate, GPSHelper::OutputMode::RTCM) == 0) {
+
+        gpsDriver = new GPSDriverNova(GPSDriverUBX::Interface::UART, &callbackEntry, this, &_reportGpsPos, _pReportSatInfo);
+        gpsDriver->setSurveyInSpecs(_surveyInAccMeters * 10000, _surveryInDurationSecs);
+
+        if (gpsDriver->configure(baudrate, GPSDriverUBX::OutputMode::RTCM) == 0) {
 
             /* reset report */
             memset(&_reportGpsPos, 0, sizeof(_reportGpsPos));
@@ -74,7 +76,8 @@ void GPSProvider::run()
             int numTries = 0;
 
             while (!_requestStop && numTries < 3) {
-                int helperRet = gpsHelper->receive(GPS_RECEIVE_TIMEOUT);
+                int helperRet = gpsDriver->receive(GPS_RECEIVE_TIMEOUT);
+
                 if (helperRet > 0) {
                     numTries = 0;
 
@@ -99,9 +102,13 @@ void GPSProvider::run()
     qCDebug(RTKGPSLog) << "Exiting GPS thread";
 }
 
-GPSProvider::GPSProvider(const QString& device, bool enableSatInfo, const std::atomic_bool& requestStop)
-    : _device(device), _requestStop(requestStop)
+GPSProvider::GPSProvider(const QString& device, bool enableSatInfo, double surveyInAccMeters, int surveryInDurationSecs, const std::atomic_bool& requestStop)
+    : _device(device)
+    , _requestStop(requestStop)
+    , _surveyInAccMeters(surveyInAccMeters)
+    , _surveryInDurationSecs(surveryInDurationSecs)
 {
+    qCDebug(RTKGPSLog) << "Survey in accuracy:duration" << surveyInAccMeters << surveryInDurationSecs;
     if (enableSatInfo) _pReportSatInfo = new satellite_info_s();
 }
 

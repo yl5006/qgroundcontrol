@@ -41,7 +41,6 @@ SpeedSection::SpeedSection(Vehicle* vehicle, QObject* parent)
     _flightSpeedFact.setMetaData(_metaDataMap[_flightSpeedName]);
     _flightSpeedFact.setRawValue(flightSpeed);
 
-    connect(this,               &SpeedSection::specifyFlightSpeedChanged,  this, &SpeedSection::_setDirtyAndUpdateItemCount);
     connect(this,               &SpeedSection::specifyFlightSpeedChanged,  this, &SpeedSection::settingsSpecifiedChanged);
     connect(&_flightSpeedFact,  &Fact::valueChanged,                       this, &SpeedSection::_setDirty);
 }
@@ -67,12 +66,6 @@ void SpeedSection::_setDirty(void)
     setDirty(true);
 }
 
-void SpeedSection::_setDirtyAndUpdateItemCount(void)
-{
-    setDirty(true);
-    emit itemCountChanged(itemCount());
-}
-
 void SpeedSection::setDirty(bool dirty)
 {
     if (_dirty != dirty) {
@@ -86,6 +79,8 @@ void SpeedSection::setSpecifyFlightSpeed(bool specifyFlightSpeed)
     if (specifyFlightSpeed != _specifyFlightSpeed) {
         _specifyFlightSpeed = specifyFlightSpeed;
         emit specifyFlightSpeedChanged(specifyFlightSpeed);
+        setDirty(true);
+        emit itemCountChanged(itemCount());
     }
 }
 
@@ -114,7 +109,7 @@ void SpeedSection::appendSectionItems(QList<MissionItem*>& items, QObject* missi
     }
 }
 
-bool SpeedSection::scanForSection(QmlObjectListModel* visualItems, int& scanIndex)
+bool SpeedSection::scanForSection(QmlObjectListModel* visualItems, int scanIndex)
 {
     if (!_available || scanIndex >= visualItems->count()) {
         return false;
@@ -138,7 +133,6 @@ bool SpeedSection::scanForSection(QmlObjectListModel* visualItems, int& scanInde
         visualItems->removeAt(scanIndex)->deleteLater();
         _flightSpeedFact.setRawValue(missionItem.param2());
         setSpecifyFlightSpeed(true);
-        scanIndex++;
         return true;
     }
 

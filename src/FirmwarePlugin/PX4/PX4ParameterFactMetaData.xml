@@ -648,10 +648,10 @@ velocity</short_desc>
       <increment>1</increment>
       <scope>modules/commander</scope>
       <values>
-        <value code="1">返航</value>
-        <value code="0">警告</value>
-        <value code="3">在警告电压时返航，危险电压时降落</value>
-        <value code="2">在当前位置降落</value>
+        <value code="1">Return to land</value>
+        <value code="0">Warning</value>
+        <value code="3">RTL, land immediately if battery too low</value>
+        <value code="2">Land at current position</value>
       </values>
     </parameter>
     <parameter default="0.0" name="COM_OF_LOSS_T" type="FLOAT">

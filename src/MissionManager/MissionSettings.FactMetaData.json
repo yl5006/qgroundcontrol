@@ -6,13 +6,5 @@
     "units":            "m",
     "decimalPlaces":    1,
     "defaultValue":     0
-},
-{
-    "name":             "MissionEndAction",
-    "shortDescription": "The action to take when the mission completed.",
-    "type":             "uint32",
-    "enumStrings":      "None,悬停或盘旋,返航",
-    "enumValues":       "0,1,2",
-    "defaultValue":     0
 }
 ]
