@@ -112,7 +112,7 @@ Rectangle {
                         fact:               QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude
                         Layout.fillWidth:   true
                     }
-		    QGCLabel {
+                    QGCLabel {
                         text:               qsTr("飞行速度")
                         Layout.fillWidth:   true
                     }
@@ -120,14 +120,15 @@ Rectangle {
                         fact:               _activeVehicle ? missionItem.speedSection.flightSpeed : _offlinespeed
                         Layout.fillWidth:   true
                     }	
+    /*
                     QGCCheckBox {
                         id:         flightSpeedCheckBox
                         text:       qsTr("Flight speed")
-                        visible:    false//!_missionVehicle.vtol
+                        visible:    !_missionVehicle.vtol
                         checked:    missionItem.speedSection.specifyFlightSpeed
-                        onClicked:   missionItem.speedSection.specifyFlightSpeed = checked
+                        onClicked:  missionItem.speedSection.specifyFlightSpeed = checked
                     }
-		    FactTextField {
+                    FactTextField {
                         fact:               _activeVehicle ? missionItem.speedSection.flightSpeed : _offlinespeed
                         Layout.fillWidth:   true
                     }
@@ -137,6 +138,7 @@ Rectangle {
                         visible:            flightSpeedCheckBox.visible
                         enabled:            flightSpeedCheckBox.checked
                     }
+*/
                 } // GridLayout
 
                 QGCCheckBox {

@@ -247,7 +247,7 @@ QGCView {
         }
 
         onAcceptedForLoad: {
-            if(file.match(".mission"))
+            if(file.match(".mission")||file.match(".plan"))
             {
             masterController.loadFromFile(file)
             masterController.fitViewportToItems()
@@ -269,8 +269,7 @@ QGCView {
             height:         ScreenTools.defaultFontPixelHeight*12
             function accept() {
                 console.log(_file)
-                //   var toIndex = toCombo.currentIndex
-                missionController.loadFromTxtFile(_file,Number(wayangle.text),Number(wayspace.text),Number(addalt.text),Number(waynum.text),camer.checked,relalt.checked)
+                _missionController.loadFromTxtFile(_file,Number(wayangle.text),Number(wayspace.text),Number(addalt.text),Number(waynum.text),camer.checked,relalt.checked)
                 hideDialog()
             }
             Rectangle {
@@ -674,7 +673,7 @@ QGCView {
                     anchors.fill:    parent
                     spacing:        _margin / 2
                     orientation:    ListView.Horizontal
-                    model:          missionController.visualItems
+                    model:          _missionController.visualItems
                     cacheBuffer:    width * 2
                     clip:           true
                     currentIndex:   _currentMissionIndex
@@ -844,11 +843,11 @@ QGCView {
                     dropDirection:      dropDown
                     exclusiveGroup:    _dropButtonsExclusiveGroup
                     buttonImage:      "/qmlimages/MapSync.svg"//_syncDropDownController.dirty ? "/qmlimages/MapSyncChanged.svg" : "/qmlimages/MapSync.svg"
-                    imgcolor:           _syncDropDownController.dirty ? "red":"White"
+                    imgcolor:           masterController.dirty ? "red":"White"
                     viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
                     dropDownComponent:  syncDropPanel//syncDropDownComponent
-                    enabled:            !_syncDropDownController.syncInProgress
-                    rotateImage:        _syncDropDownController.syncInProgress
+                    enabled:            !masterController.syncInProgress
+                    rotateImage:        masterController.syncInProgress
                     lightBorders:       _lightWidgetBorders
                 }
                 Rectangle {
@@ -1054,7 +1053,7 @@ QGCView {
                 anchors.top:     parent.top
                 anchors.rightMargin: _margin*2
                 width:               _rightPanelWidth
-                missionController:   missionController
+                missionController:   _missionController
                 visible:       _editingLayer == _layerMission
                 z:              QGroundControl.zOrderTopMost+1
             }
@@ -1073,7 +1072,7 @@ QGCView {
                     id:             indexIndicatorListView
                     anchors.fill:    parent
                     orientation:    ListView.Vertical
-                    model:          missionController.visualItems
+                    model:          _missionController.visualItems
                     cacheBuffer:    Math.max(height * 2, 0)
                     clip:           true
                     currentIndex:   _currentMissionIndex
@@ -1081,18 +1080,17 @@ QGCView {
 
                     delegate: MissionIndexIndicator {
                         map:                editorMap
-                        masterController:  _planMasterController
+//                        masterController:  _planMasterController
                         missionItem:        object
                         readOnly:           false
-                        visible:        object.isCurrentItem
+                        visible:            object.isCurrentItem
                         rootQgcView:        _qgcView
-                        onClicked:  setCurrentItem(object.sequenceNumber)
                         onRemove: {
                             var removeIndex = index
                             _missionController.removeMissionItem(removeIndex)
                             if (removeIndex >= _missionController.visualItems.count) {
-                                 removeIndex--
-                                }
+                                removeIndex--
+                            }
                             _currentMissionIndex = -1
                             rootQgcView.setCurrentItem(removeIndex, true)
                         }
@@ -1253,7 +1251,7 @@ QGCView {
                 text:               qsTr("生成任务")//"Send to vehicle"
                 onClicked:  {
                     syncButton.hideDropDown()
-                    masterController.applyoffboardmission()
+                    _missionController.applyoffboardmission()
                 }
             }
             SubMenuButton {

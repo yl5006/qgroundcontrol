@@ -222,12 +222,12 @@ void MissionController::applyoffboardmission(void)
 
     QmlObjectListModel* newControllerMissionItems = new QmlObjectListModel(this);
 
-    _addMissionSettings(_activeVehicle, newControllerMissionItems, true /* addToCenter */);
+    _addMissionSettings( newControllerMissionItems, true /* addToCenter */);
 
-    _convertToMissionItems(_visualItems, rgMissionItems, _activeVehicle);
+    _convertToMissionItems(_visualItems, rgMissionItems, this);
 
     for (int i=1; i<rgMissionItems.count(); i++) {
-       SimpleMissionItem * newItem =new SimpleMissionItem(_activeVehicle, *rgMissionItems[i],this);
+       SimpleMissionItem * newItem =new SimpleMissionItem(_controllerVehicle, *rgMissionItems[i],this);
        newControllerMissionItems->append(newItem);
     }
 
@@ -320,11 +320,11 @@ int MissionController::insertSimpleMissionItem(QGeoCoordinate coordinate, int i)
             newItem->missionItem().setParam7(prevAltitude);
         }else
         {   double hoverSpeed, cruiseSpeed;
-            if(_activeVehicle->active()){
-                _activeVehicle->firmwarePlugin()->missionFlightSpeedInfo(_activeVehicle, hoverSpeed, cruiseSpeed);
-                if (_activeVehicle->multiRotor()) {
+            if(_controllerVehicle->active()){
+                _controllerVehicle->firmwarePlugin()->missionFlightSpeedInfo(_controllerVehicle, hoverSpeed, cruiseSpeed);
+                if (_controllerVehicle->multiRotor()) {
                     prevSpeed = hoverSpeed;
-                } else if (_activeVehicle->fixedWing()) {
+                } else if (_controllerVehicle->fixedWing()) {
                     prevSpeed = cruiseSpeed;
                 }
                 newItem->missionItem().setParam3(prevSpeed);
@@ -820,7 +820,6 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
         return;
     }
     QmlObjectListModel* newVisualItems = new QmlObjectListModel(this);
-    QmlObjectListModel* newComplexItems = new QmlObjectListModel(this);
 
     QFile file(filename);
     bool addPlannedHomePosition = false;
@@ -830,20 +829,20 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
         QByteArray  bytes = file.readAll();
         QTextStream stream(&bytes);
         QStringList wpline;
+        int init=false;
         while (!stream.atEnd()) {
-            static int init=false;
             if(!init){
                 if(stream.readLine().at(0)=='0')
                 {
                     addPlannedHomePosition=true;
-                }
-                init=true;
+                    init=true;
+                }  
             }
             wpline.append(stream.readLine());
         }
         for(int i=0;i<wpline.count();i++)
         {
-            SimpleMissionItem* item = new SimpleMissionItem(_activeVehicle, this);
+            SimpleMissionItem* item = new SimpleMissionItem(_controllerVehicle, this);
             if (item->load(wpline.at(i),angle,space,addalt,1,cammer,relalt)) {
                 newVisualItems->append(item);
             } else {
@@ -854,7 +853,7 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
         if(waynum==2)
         for(int i=wpline.count();i>0;i--)
         {
-            SimpleMissionItem* item = new SimpleMissionItem(_activeVehicle, this);
+            SimpleMissionItem* item = new SimpleMissionItem(_controllerVehicle, this);
             if (item->load(wpline.at(i-1),angle,space,addalt,2,cammer,relalt)) {
                 newVisualItems->append(item);
             } else {
@@ -865,17 +864,13 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
     }
     if(addPlannedHomePosition)
     {
-//        _addMissionSettings(vehicle, visualItems, true /* addToCenter */);
+        _addMissionSettings(newVisualItems, true /* addToCenter */);
     }
     if (!errorString.isEmpty()) {
         for (int i=0; i<newVisualItems->count(); i++) {
             newVisualItems->get(i)->deleteLater();
         }
-        for (int i=0; i<newComplexItems->count(); i++) {
-            newComplexItems->get(i)->deleteLater();
-        }
         delete newVisualItems;
-        delete newComplexItems;
 
         qgcApp()->showMessage(errorString);
         return;
@@ -887,10 +882,6 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
     }
 
     _visualItems = newVisualItems;
-
-    if (_visualItems->count() == 0) {
-//        _addMissionSettings(vehicle, visualItems, true /* addToCenter */);
-     }
     _initAllVisualItems();
 }
 #if 0

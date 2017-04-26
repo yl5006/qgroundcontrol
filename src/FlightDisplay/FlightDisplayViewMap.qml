@@ -362,7 +362,7 @@ FlightMap {
     }
     // Add lines between waypoints
     MissionLineView {
-        model: _mainIsMap ? missionController.jumpwaypointLines : 0
+        model: _mainIsMap ? _missionController.jumpwaypointLines : 0
     }
 
 

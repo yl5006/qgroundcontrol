@@ -257,10 +257,18 @@ Rectangle {
                 spacing:        _margin
                 visible:        missionItem.manualGrid.value == true
 
-                FactCheckBox {
-                    anchors.baseline:   cameraTriggerTime.baseline
+                QGCCheckBox {
+                    id:                 cameraTriggerTimeCheckBox
+                    anchors.baseline:   cameraTriggerDistanceField.baseline
                     text:               qsTr("触发时间")
-                    fact:               missionItem.cameraTrigger
+                    checked:            missionItem.cameraTriggerDistance.rawValue > 0
+                    onClicked: {
+                        if (checked) {
+                            missionItem.cameraTriggerDistance.value = missionItem.cameraTriggerDistance.defaultValue
+                        } else {
+                            missionItem.cameraTriggerDistance.value = 0
+                        }
+                    }
                 }
                 FactTextField {
                     id:                 cameraTriggerTime

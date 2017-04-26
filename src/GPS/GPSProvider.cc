@@ -55,7 +55,7 @@ void GPSProvider::run()
     _serial->setFlowControl(QSerialPort::NoFlowControl);
 
     unsigned int baudrate;
-    GPSDriverNova* gpsDriver = nullptr;
+    GPSHelper* gpsDriver = nullptr;
 
     while (!_requestStop) {
 
@@ -64,10 +64,10 @@ void GPSProvider::run()
             gpsDriver = nullptr;
         }
 
-        gpsDriver = new GPSDriverNova(GPSDriverUBX::Interface::UART, &callbackEntry, this, &_reportGpsPos, _pReportSatInfo);
-        gpsDriver->setSurveyInSpecs(_surveyInAccMeters * 10000, _surveryInDurationSecs);
+        gpsDriver = new GPSDriverNova(&callbackEntry, this, &_reportGpsPos);
+//        gpsDriver->setSurveyInSpecs(_surveyInAccMeters * 10000, _surveryInDurationSecs);
 
-        if (gpsDriver->configure(baudrate, GPSDriverUBX::OutputMode::RTCM) == 0) {
+        if (gpsDriver->configure(baudrate, GPSHelper::OutputMode::RTCM) == 0) {
 
             /* reset report */
             memset(&_reportGpsPos, 0, sizeof(_reportGpsPos));
