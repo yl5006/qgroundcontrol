@@ -14,6 +14,14 @@
     "defaultValue":     50
 },
 {
+    "name":             "GridSpeed",
+    "shortDescription": "Speed for all waypoints within the grid.",
+    "type":             "double",
+    "units":            "m/s",
+    "decimalPlaces":    1,
+    "defaultValue":     4
+},
+{
     "name":             "GridAltitudeRelative",
     "shortDescription": "Altitude for all waypoints within the grid is relative to home.",
     "type":             "bool",

@@ -97,8 +97,10 @@ void GPSProvider::run()
             if (_serial->error() != QSerialPort::NoError && _serial->error() != QSerialPort::TimeoutError) {
                 break;
             }
+             break;
         }
     }
+    qDebug() << "Exiting GPS thread";
     qCDebug(RTKGPSLog) << "Exiting GPS thread";
 }
 

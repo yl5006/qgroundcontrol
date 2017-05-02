@@ -307,7 +307,7 @@ int MissionController::insertSimpleMissionItem(QGeoCoordinate coordinate, int i)
     newItem->setCommand(MavlinkQmlSingleton::MAV_CMD_NAV_WAYPOINT);
     _initVisualItem(newItem);
     if (_visualItems->count() == 1) {
-        newItem->setCommand(_controllerVehicle->vtol() ? MavlinkQmlSingleton::MAV_CMD_NAV_VTOL_TAKEOFF : MavlinkQmlSingleton::MAV_CMD_NAV_TAKEOFF);
+        newItem->setCommand(_managerVehicle->vtol() ? MavlinkQmlSingleton::MAV_CMD_NAV_VTOL_TAKEOFF : MavlinkQmlSingleton::MAV_CMD_NAV_TAKEOFF);
     }
     newItem->setDefaultsForCommand();
     if ((MAV_CMD)newItem->command() == MAV_CMD_NAV_WAYPOINT||MAV_CMD_NAV_TAKEOFF) {
@@ -320,11 +320,11 @@ int MissionController::insertSimpleMissionItem(QGeoCoordinate coordinate, int i)
             newItem->missionItem().setParam7(prevAltitude);
         }else
         {   double hoverSpeed, cruiseSpeed;
-            if(_controllerVehicle->active()){
-                _controllerVehicle->firmwarePlugin()->missionFlightSpeedInfo(_controllerVehicle, hoverSpeed, cruiseSpeed);
-                if (_controllerVehicle->multiRotor()) {
+            if(_managerVehicle->active()){
+                _managerVehicle->firmwarePlugin()->missionFlightSpeedInfo(_managerVehicle, hoverSpeed, cruiseSpeed);
+                if (_managerVehicle->multiRotor()) {
                     prevSpeed = hoverSpeed;
-                } else if (_controllerVehicle->fixedWing()) {
+                } else if (_managerVehicle->fixedWing()) {
                     prevSpeed = cruiseSpeed;
                 }
                 newItem->missionItem().setParam3(prevSpeed);
@@ -1608,7 +1608,7 @@ double MissionController::_normalizeLon(double lon)
 /// Add the Mission Settings complex item to the front of the items
 void MissionController::_addMissionSettings(QmlObjectListModel* visualItems, bool addToCenter)
 {
-    MissionSettingsItem* settingsItem = new MissionSettingsItem(_controllerVehicle, visualItems);
+    MissionSettingsItem* settingsItem = new MissionSettingsItem(_managerVehicle, visualItems);
 
     visualItems->insert(0, settingsItem);
 

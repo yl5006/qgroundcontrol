@@ -118,7 +118,7 @@ Rectangle {
                         Layout.fillWidth:   true
                     }
                     FactTextField {
-                        fact:               _activeVehicle ? missionItem.speedSection.flightSpeed : _offlinespeed
+                        fact:               _activeVehicle&&QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable ? missionItem.speedSection.flightSpeed : _offlinespeed
                         Layout.fillWidth:   true
                     }	
     /*

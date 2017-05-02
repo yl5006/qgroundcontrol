@@ -23,6 +23,7 @@ const char* SurveyMissionItem::jsonComplexItemTypeValue =           "survey";
 
 const char* SurveyMissionItem::_jsonGridObjectKey =                 "grid";
 const char* SurveyMissionItem::_jsonGridAltitudeKey =               "altitude";
+const char* SurveyMissionItem::_jsonGridSpeedKey =                  "speed";
 const char* SurveyMissionItem::_jsonGridAltitudeRelativeKey =       "relativeAltitude";
 const char* SurveyMissionItem::_jsonGridAngleKey =                  "angle";
 const char* SurveyMissionItem::_jsonGridSpacingKey =                "spacing";
@@ -49,6 +50,7 @@ const char* SurveyMissionItem::_jsonRefly90DegreesKey =             "refly90Degr
 const char* SurveyMissionItem::settingsGroup =                  "Survey";
 const char* SurveyMissionItem::manualGridName =                 "ManualGrid";
 const char* SurveyMissionItem::gridAltitudeName =               "GridAltitude";
+const char* SurveyMissionItem::gridSpeedName =                  "GridSpeed";
 const char* SurveyMissionItem::gridAltitudeRelativeName =       "GridAltitudeRelative";
 const char* SurveyMissionItem::gridAngleName =                  "GridAngle";
 const char* SurveyMissionItem::gridSpacingName =                "GridSpacing";
@@ -87,6 +89,7 @@ SurveyMissionItem::SurveyMissionItem(Vehicle* vehicle, QObject* parent)
     , _metaDataMap(FactMetaData::createMapFromJsonFile(QStringLiteral(":/json/Survey.SettingsGroup.json"), this))
     , _manualGridFact                   (settingsGroup, _metaDataMap[manualGridName])
     , _gridAltitudeFact                 (settingsGroup, _metaDataMap[gridAltitudeName])
+    , _gridSpeedFact                    (settingsGroup, _metaDataMap[gridSpeedName])
     , _gridAltitudeRelativeFact         (settingsGroup, _metaDataMap[gridAltitudeRelativeName])
     , _gridAngleFact                    (settingsGroup, _metaDataMap[gridAngleName])
     , _gridSpacingFact                  (settingsGroup, _metaDataMap[gridSpacingName])
@@ -220,6 +223,7 @@ void SurveyMissionItem::save(QJsonArray&  missionItems)
 
     QJsonObject gridObject;
     gridObject[_jsonGridAltitudeKey] =          _gridAltitudeFact.rawValue().toDouble();
+    gridObject[_jsonGridSpeedKey] =             _gridSpeedFact.rawValue().toDouble();
     gridObject[_jsonGridAltitudeRelativeKey] =  _gridAltitudeRelativeFact.rawValue().toBool();
     gridObject[_jsonGridAngleKey] =             _gridAngleFact.rawValue().toDouble();
     gridObject[_jsonGridSpacingKey] =           _gridSpacingFact.rawValue().toDouble();
@@ -332,6 +336,7 @@ bool SurveyMissionItem::load(const QJsonObject& complexObject, int sequenceNumbe
         return false;
     }
     _gridAltitudeFact.setRawValue           (gridObject[_jsonGridAltitudeKey].toDouble());
+    _gridSpeedFact.setRawValue              (gridObject[_jsonGridSpeedKey].toDouble());
     _gridAngleFact.setRawValue              (gridObject[_jsonGridAngleKey].toDouble());
     _gridSpacingFact.setRawValue            (gridObject[_jsonGridSpacingKey].toDouble());
     _turnaroundDistFact.setRawValue         (gridObject[_jsonTurnaroundDistKey].toDouble());
@@ -916,6 +921,7 @@ int SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLis
 int SurveyMissionItem::_appendWaypointToMission(QList<MissionItem*>& items, int seqNum, QGeoCoordinate& coord, CameraTriggerCode cameraTrigger, QObject* missionItemParent)
 {
     double  altitude =          _gridAltitudeFact.rawValue().toDouble();
+    double  speed =             _gridSpeedFact.rawValue().toDouble();
     bool    altitudeRelative =  _gridAltitudeRelativeFact.rawValue().toBool();
     MissionItem* item;
     qCDebug(SurveyMissionItemLog) << "_appendWaypointToMission seq:trigger" << seqNum << (cameraTrigger != CameraTriggerNone);
@@ -926,7 +932,8 @@ int SurveyMissionItem::_appendWaypointToMission(QList<MissionItem*>& items, int 
                                MAV_CMD_DO_SET_CAM_TRIGG_DIST,
                                altitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,//MAV_FRAME_MISSION,
                                cameraTrigger == CameraTriggerHoverAndCapture ? 1 : 0,
-                               0.0, 0.0,
+                               0.0,
+                               speed,      //speed
                                std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                coord.latitude(),
                                coord.longitude(),
@@ -969,7 +976,7 @@ int SurveyMissionItem::_appendWaypointToMission(QList<MissionItem*>& items, int 
                                MAV_CMD_NAV_WAYPOINT,
                                altitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,
                                0,  // Hold time (1 second for hover and capture to settle vehicle before image is taken)
-                               0.0, 0.0, 0.0,                                          // param 2-4 unused
+                               0.0, speed, 0.0,                                          // param 2-4 unused
                                coord.latitude(),
                                coord.longitude(),
                                altitude,

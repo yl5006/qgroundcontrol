@@ -39,7 +39,6 @@ void RTCMMavlink::RTCMDataUpdate(QByteArray message)
     if (message.size() < maxMessageLength) {
         mavlinkRtcmData.len = message.size();
         memcpy(&mavlinkRtcmData.data, message.data(), message.size());
-        qDebug()<<mavlinkRtcmData.data[0]<<mavlinkRtcmData.data[1]<<mavlinkRtcmData.data[2]<<mavlinkRtcmData.data[3]<<mavlinkRtcmData.data[4]<<message.size();
         sendMessageToVehicle(mavlinkRtcmData);
     } else {
         // We need to fragment

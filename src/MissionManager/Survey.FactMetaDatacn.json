@@ -2,23 +2,31 @@
 {
     "name":             "Altitude",
     "shortDescription": "高度",
-    "longDescription":  "网格内所有路点的高度。",
+    "longDescription":  "扫描内所有路点的高度。",
     "type":             "double",
     "units":            "m",
     "decimalPlaces":    1
 },
 {
+    "name":             "speed",
+    "shortDescription": "速度",
+    "longDescription":  "扫描内所有路点的速度。",
+    "type":             "double",
+    "units":            "m/s",
+    "decimalPlaces":    1
+},
+{
     "name":             "Grid angle",
-    "shortDescription": "网格角度",
-    "longDescription":  "网格线的角度。",
+    "shortDescription": "扫描角度",
+    "longDescription":  "扫描线的角度。",
     "type":             "double",
     "units":            "deg",
     "decimalPlaces":    1
 },
 {
     "name":             "Grid spacing",
-    "shortDescription": "网格间距",
-    "longDescription":  "网格线之间的间距量。",
+    "shortDescription": "扫描间距",
+    "longDescription":  "扫描线之间的间距量。",
     "type":             "double",
     "decimalPlaces":    2,
     "min":              0.1,

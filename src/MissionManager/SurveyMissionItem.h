@@ -27,6 +27,7 @@ public:
     SurveyMissionItem(Vehicle* vehicle, QObject* parent = NULL);
 
     Q_PROPERTY(Fact*                gridAltitude                READ gridAltitude                   CONSTANT)
+    Q_PROPERTY(Fact*                gridSpeed                   READ gridSpeed                      CONSTANT)
     Q_PROPERTY(Fact*                gridAltitudeRelative        READ gridAltitudeRelative           CONSTANT)
     Q_PROPERTY(Fact*                gridAngle                   READ gridAngle                      CONSTANT)
     Q_PROPERTY(Fact*                gridSpacing                 READ gridSpacing                    CONSTANT)
@@ -62,6 +63,7 @@ public:
 
     Fact* manualGrid                (void) { return &_manualGridFact; }
     Fact* gridAltitude              (void) { return &_gridAltitudeFact; }
+    Fact* gridSpeed                 (void) { return &_gridSpeedFact; }
     Fact* gridAltitudeRelative      (void) { return &_gridAltitudeRelativeFact; }
     Fact* gridAngle                 (void) { return &_gridAngleFact; }
     Fact* gridSpacing               (void) { return &_gridSpacingFact; }
@@ -132,6 +134,7 @@ public:
     static const char* settingsGroup;
     static const char* manualGridName;
     static const char* gridAltitudeName;
+    static const char* gridSpeedName;
     static const char* gridAltitudeRelativeName;
     static const char* gridAngleName;
     static const char* gridSpacingName;
@@ -223,6 +226,7 @@ private:
 
     SettingsFact    _manualGridFact;
     SettingsFact    _gridAltitudeFact;
+    SettingsFact    _gridSpeedFact;
     SettingsFact    _gridAltitudeRelativeFact;
     SettingsFact    _gridAngleFact;
     SettingsFact    _gridSpacingFact;
@@ -244,6 +248,7 @@ private:
 
     static const char* _jsonGridObjectKey;
     static const char* _jsonGridAltitudeKey;
+    static const char* _jsonGridSpeedKey;
     static const char* _jsonGridAltitudeRelativeKey;
     static const char* _jsonGridAngleKey;
     static const char* _jsonGridSpacingKey;

@@ -482,10 +482,12 @@ double MissionItem::specifiedFlightSpeed(void) const
 {
     double flightSpeed = std::numeric_limits<double>::quiet_NaN();
 
+    if (_param3Fact.rawValue().toDouble() > 0) {
+        flightSpeed = _param3Fact.rawValue().toDouble();
+    }
     if (_commandFact.rawValue().toInt() == MAV_CMD_DO_CHANGE_SPEED && _param2Fact.rawValue().toDouble() > 0) {
         flightSpeed = _param2Fact.rawValue().toDouble();
     }
-
     return flightSpeed;
 }
 

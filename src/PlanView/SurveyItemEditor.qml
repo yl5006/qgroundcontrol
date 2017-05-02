@@ -26,7 +26,7 @@ Rectangle {
     property real   _margin:            ScreenTools.defaultFontPixelWidth / 2
     property int    _cameraIndex:       1
     property real   _fieldWidth:        ScreenTools.defaultFontPixelWidth * 10.5
-    property var    _cameraList:        [ qsTr("手动网格参数"), qsTr("自定义相机参数") ]
+    property var    _cameraList:        [ qsTr("手动扫描参数"), qsTr("自定义相机参数") ]
     property var    _vehicle:           QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle : QGroundControl.multiVehicleManager.offlineEditingVehicle
     property var    _vehicleCameraList: _vehicle.cameraList
 
@@ -414,7 +414,7 @@ Rectangle {
 
             SectionHeader {
                 id:     gridHeader
-                text:   qsTr("网格参数")
+                text:   qsTr("扫描参数")
             }
 
             GridLayout {
@@ -485,7 +485,7 @@ Rectangle {
         // Manual grid ui
         SectionHeader {
             id:         manualGridHeader
-            text:       qsTr("网格参数")
+            text:       qsTr("扫描参数")
             visible:    gridTypeCombo.currentIndex == _gridTypeManual
         }
 
@@ -500,8 +500,8 @@ Rectangle {
                 anchors.right:  parent.right
                 columnSpacing:  ScreenTools.defaultFontPixelWidth
                 rowSpacing:     _margin
-                factList:       [ missionItem.gridAngle, missionItem.gridSpacing, missionItem.gridAltitude, missionItem.turnaroundDist ]
-                factLabels:     [ qsTr("角度"), qsTr("间隔"), qsTr("高度"), qsTr("转弯距离")]
+                factList:       [ missionItem.gridAngle, missionItem.gridSpacing, missionItem.gridAltitude,missionItem.gridSpeed, missionItem.turnaroundDist ]
+                factLabels:     [ qsTr("角度"), qsTr("间隔"), qsTr("高度"),qsTr("速度"), qsTr("转弯距离")]
             }
 
             QGCCheckBox {
