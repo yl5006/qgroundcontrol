@@ -26,11 +26,8 @@ QGCLabel {
     text:               _armed ? qsTr("解锁中") : qsTr("加锁中")
     font.pointSize:     ScreenTools.mediumFontPointSize
     color:              _armed ? qgcPal.warningText:qgcPal.buttonText
-    visible:            !_autoDisarm || _fixedWing
 
     property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
-    property bool   _autoDisarm:    _activeVehicle ? _activeVehicle.autoDisarm : false
-    property bool   _fixedWing:     _activeVehicle ? _activeVehicle.fixedWing : false
     property bool   _armed:         _activeVehicle ? _activeVehicle.armed : false
 
     QGCPalette { id: qgcPal }
