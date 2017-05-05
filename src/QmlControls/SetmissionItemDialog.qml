@@ -134,7 +134,7 @@ Rectangle {
 //            Layout.fillWidth:   true
             onClicked: {
                 var coordinate =_currentMissionItem.coordinate
-                var sequenceNumber = missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(distance.text),Number(angle.text)), _currentMissionItem.sequenceNumber+1,false)
+                var sequenceNumber = _missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(distance.text),Number(angle.text)), _currentMissionItem.sequenceNumber+1,false)
                 setCurrentItem(sequenceNumber)
             }
         }

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -176,7 +176,7 @@ void MockLinkMissionItemHandler::_handleMissionRequest(const mavlink_message_t& 
                                                item.current,
                                                item.autocontinue,
                                                item.param1, item.param2, item.param3, item.param4,
-                                               item.x, item.y, item.z,
+                                               item.x, item.y, item.z,item.param8, item.param9, item.param10,
                                                MAV_MISSION_TYPE_MISSION);
             _mockLink->respondWithMavlinkMessage(responseMsg);
         }

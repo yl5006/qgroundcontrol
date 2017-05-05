@@ -117,6 +117,7 @@ QGeoTiledMappingManagerEngineQGC::QGeoTiledMappingManagerEngineQGC(const QVarian
     // Gaode
     mapTypes << QGeoMapType(QGeoMapType::StreetMap,         "Gaode Street Map",          "Gaode street map",              false,  false,  UrlFactory::GaodeMap);
     mapTypes << QGeoMapType(QGeoMapType::SatelliteMapDay,   "Gaode Satellite Map",       "Gaode satellite map",           false,  false,  UrlFactory::GaodeSatellite);
+    mapTypes << QGeoMapType(QGeoMapType::TerrainMap,        "Gaode Terrain Map",         "Gaode terrain map",             false,  false,  UrlFactory::GaodeTerrain);
     // Statkart
     mapTypes << QGeoMapType(QGeoMapType::TerrainMap,             "Statkart Topo2",           "Statkart Topo2",               false,  false,  UrlFactory::StatkartTopo);
     /* See: https://wiki.openstreetmap.org/wiki/Tile_usage_policy

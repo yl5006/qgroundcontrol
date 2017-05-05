@@ -170,7 +170,6 @@ Item {
         width:                      guidedModeColumn.width  + (_margins * 2)
         height:                     guidedModeColumn.height + (_margins * 2)
         radius:                     ScreenTools.defaultFontPixelHeight * 0.25
-//        color:                      _isSatellite ? Qt.rgba(qgcPal.mapWidgetBorderLight.r, qgcPal.mapWidgetBorderLight.g, qgcPal.mapWidgetBorderLight.b, 0.8) : Qt.rgba(qgcPal.mapWidgetBorderDark.r, qgcPal.mapWidgetBorderDark.g, qgcPal.mapWidgetBorderDark.b, 0.75)
         color:                      "transparent"
         visible:                    _activeVehicle
         z:                          QGroundControl.zOrderWidgets
@@ -221,17 +220,22 @@ Item {
             }
         }
 
-        readonly property int confirmHome:          1
-        readonly property int confirmLand:          2
-        readonly property int confirmTakeoff:       3
-        readonly property int confirmArm:           4
-        readonly property int confirmDisarm:        5
-        readonly property int confirmEmergencyStop: 6
-        readonly property int confirmChangeAlt:     7
-        readonly property int confirmGoTo:          8
-        readonly property int confirmRetask:        9
-        readonly property int confirmOrbit:         10
-        readonly property int confirmAbort:         11
+        readonly property int confirmHome:                  1
+        readonly property int confirmLand:                  2
+        readonly property int confirmTakeoff:               3
+        readonly property int confirmArm:                   4
+        readonly property int confirmDisarm:                5
+        readonly property int confirmEmergencyStop:         6
+        readonly property int confirmChangeAlt:             7
+        readonly property int confirmGoTo:                  8
+        readonly property int confirmRetask:                9
+        readonly property int confirmOrbit:                 10
+        readonly property int confirmAbort:                 11
+        readonly property int confirmStartMission:          12
+        readonly property int confirmContinueMission:       13
+        readonly property int confirmResumeMission:         14
+        readonly property int confirmResumeMissionReady:    15
+        readonly property int confirmPause:                 16
 
         property int    confirmActionCode
         property real   _showMargin:    _margins
@@ -282,6 +286,19 @@ Item {
             case confirmAbort:
                 _activeVehicle.abortLanding(50)     // hardcoded value for climbOutAltitude that is currently ignored
                 break;
+            case confirmResumeMission:
+                missionController.resumeMission(missionController.resumeMissionIndex)
+                break
+            case confirmResumeMissionReady:
+                _activeVehicle.startMission()
+                break
+            case confirmStartMission:
+            case confirmContinueMission:
+                _activeVehicle.startMission()
+                break
+            case confirmPause:
+                _activeVehicle.pauseVehicle()
+                break
             default:
                 console.warn(qsTr("Internal error: unknown confirmActionCode"), confirmActionCode)
             }
@@ -325,7 +342,7 @@ Item {
                 guidedModeConfirm.confirmText = qsTr("改变高度")
                 break;
             case confirmGoTo:
-                guidedModeConfirm.confirmText = qsTr("移动机体")
+                guidedModeConfirm.confirmText = qsTr("移动至引导点")
                 break;
             case confirmRetask:
                 guidedModeConfirm.confirmText = qsTr("改变飞行航点")
@@ -336,6 +353,21 @@ Item {
             case confirmAbort:
                 guidedModeConfirm.confirmText = qsTr("abort landing")
                 break;
+            case confirmResumeMission:
+                 guidedModeConfirm.confirmText = qsTr("恢复任务")
+                break
+            case confirmResumeMissionReady:
+                 guidedModeConfirm.confirmText = qsTr("恢复任务")
+                break
+            case confirmStartMission:
+                 guidedModeConfirm.confirmText = qsTr("开始任务")
+                break
+            case confirmContinueMission:
+                 guidedModeConfirm.confirmText = qsTr("继续任务")
+                break
+            case confirmPause:
+                 guidedModeConfirm.confirmText = qsTr("暂停(悬停或盘旋)")
+               break
             }
             _guidedModeBar.visible = false
             guidedModeConfirm.visible = true
@@ -367,7 +399,7 @@ Item {
                     visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.pauseVehicleSupported && _activeVehicle.flying
                     onClicked:  {
                         guidedModeHideTimer.restart()
-                        _activeVehicle.pauseVehicle()
+                        _guidedModeBar.confirmAction(_guidedModeBar.confirmPause)
                     }
                 }
 
@@ -375,11 +407,11 @@ Item {
                     width:       ScreenTools.defaultFontPixelHeight*6
                     height:      width
                     showborder:  true
-                    text:       (_activeVehicle && _activeVehicle.armed) ? (_activeVehicle.flying ? qsTr("Emergency Stop") : qsTr("Disarm")) :  qsTr("Arm")
-                    imageResource: (_activeVehicle && _activeVehicle.armed) ? (_activeVehicle.flying ? "/qmlimages/lock.svg" : "/qmlimages/lock.svg") :  "/qmlimages/unlock.svg"
+                    text:        (_activeVehicle && _activeVehicle.flying) ? qsTr("继续任务"):  qsTr("开始任务")
+                    imageResource:  "/res/action.svg"
                     bordercolor:    qgcPal.buttonHighlight
                     visible:    _activeVehicle
-                    onClicked:  _guidedModeBar.confirmAction(_activeVehicle.armed ? (_activeVehicle.flying ? _guidedModeBar.confirmEmergencyStop : _guidedModeBar.confirmDisarm) : _guidedModeBar.confirmArm)
+                    onClicked:  _guidedModeBar.confirmAction(_activeVehicle.flying ? _guidedModeBar.confirmContinueMission : _guidedModeBar.confirmStartMission)
                 }
 
                 RoundImageButton {
@@ -494,7 +526,7 @@ Item {
 
             QGCLabel {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Alt (rel)")
+                text: qsTr("高度参考")
             }
 
             QGCLabel {

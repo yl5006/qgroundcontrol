@@ -55,7 +55,7 @@ public:
 
         GaodeMap                 = 801,
         GaodeSatellite           = 802,
-        GaodeHybrid              = 803,
+        GaodeTerrain             = 803,
 
         MapBoxStreets           = 6000,
         MapBoxLight             = 6001,

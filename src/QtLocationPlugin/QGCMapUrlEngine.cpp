@@ -88,7 +88,7 @@ UrlFactory::getImageFormat(MapType type, const QByteArray& image)
                 case StatkartTopo:
                 case GaodeMap:
                 case GaodeSatellite:
-                case GaodeHybrid:
+                case GaodeTerrain:
                     format = "png";
                     break;
                 case MapQuestMap:
@@ -151,7 +151,7 @@ UrlFactory::getTileURL(MapType type, int x, int y, int zoom, QNetworkAccessManag
         case StatkartTopo:
             request.setRawHeader("Referrer", "https://www.norgeskart.no/");
             break;
-        case GaodeHybrid:
+        case GaodeTerrain:
         case GaodeMap:
         case GaodeSatellite:
             request.setRawHeader("Referrer", "http://map.baidu.com/");
@@ -191,7 +191,6 @@ UrlFactory::_getSecGoogleWords(int x, int y, QString &sec1, QString &sec2)
 QString
 UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager* networkManager)
 {
- //    qDebug()<<x<<" "<<y<<" "<<zoom;
     switch (type) {
 #ifdef QGC_NO_GOOGLE_MAPS
     Q_UNUSED(networkManager);
@@ -306,26 +305,19 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
     }
     case GaodeMap:
     {
-        qDebug()<<"gaode";
-        return QString("http://api.aeromap.cn/map/normal/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
-   //      return QString("http://webst03.is.autonavi.com/appmaptile?x=%1&y=%2&z=%3&lang=zh_cn&size=1&scale=1&style=7").arg(x).arg(y).arg(zoom);
-        //return _tilexyTobaidu(x, y, zoom);
+   //     qDebug()<<"gaode"<<QString("http://api.aeromap.cn/map/normal/%1/%2/%3?X-API-KEY=Bearer%207e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
+        return QString("http://api.aeromap.cn/map/normal/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
     }
     break;
     case GaodeSatellite:
     {
-         qDebug()<<"gaodeSatellite";
-  //       qDebug()<<QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
-         return QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
-  //      return QString("http://webst0%1.is.autonavi.com/appmaptile?style=6&x=%2&y=%3&z=%4").arg(_getServerNum(x, y, 4)+1).arg(x).arg(y).arg(zoom);
-  //      return _tilexyTobaidu(x, y, zoom);
+      //   qDebug()<<"gaodeSatellite"<<QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=Bearer%207e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);;
+        return QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
     }
     break;
-    case GaodeHybrid:
+    case GaodeTerrain:
     {
-        return QString("http://api.aeromap.cn/map/terrain/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(x).arg(y).arg(zoom);
-
-  //      return _tilexyTobaidu(x, y, zoom);
+        return QString("http://api.aeromap.cn/map/terrain/%1/%2/%3?X-API-KEY=Bearer%207e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
     }
     break;
 

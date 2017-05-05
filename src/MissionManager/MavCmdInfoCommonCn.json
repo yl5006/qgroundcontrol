@@ -37,7 +37,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             }
         },
@@ -49,12 +49,19 @@
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":             "悬停(盘旋)",
+	    "param4": {
+                "label":            "Heading",
+                "units":            "radians",
+                "nanUnchanged":     true,
+                "decimalPlaces":    2
+            },
             "param8": {
                 "label":            "半径:",
                 "units":            "m",
                 "default":          50.0,
                 "decimalPlaces":    2
             }
+
         },
         {
             "id":                   18,
@@ -76,11 +83,10 @@
                 "decimalPlaces":    2
             },
             "param4": {
-                "label":            "Next waypoint start:",
-                "enumStrings":      "Center,On Loiter",
-                "enumValues":       "0,1",
-                "default":          1,
-                "decimalPlaces":    0
+                "label":            "Heading",
+                "units":            "radians",
+                "nanUnchanged":     true,
+                "decimalPlaces":    2
             }
         },
         {
@@ -98,12 +104,12 @@
                 "decimalPlaces":    0
             },
             "param4": {
-                "label":            "下一条路径起点:",
-                "enumStrings":      "Center,On Loiter",
-                "enumValues":       "0,1",
-                "default":          1,
-                "decimalPlaces":    0
+                "label":            "Heading",
+                "units":            "radians",
+                "nanUnchanged":     true,
+                "decimalPlaces":    2
             },
+
             "param8": {
                 "label":            "半径:",
                 "units":            "m",
@@ -128,7 +134,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             }
         },
@@ -149,7 +155,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             }
         },
@@ -170,7 +176,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             }
         },
@@ -183,6 +189,7 @@
             "friendlyName":         "Change Altitude",
             "description":          "Continue on the current course and climb/descend to specified altitude. When the altitude is reached continue to the next command.",
             "specifiesCoordinate":  false,
+            "specifiesAltitudeOnly":    true,
             "friendlyEdit":         true,
             "category":             "Flight control",
             "param1": {
@@ -213,7 +220,7 @@
                 "enumValues":       "0,1",
                 "default":          0,
                 "decimalPlaces":    0
-            },   
+            },
             "param4": {
                 "label":            "下一条路径起点:",
                 "enumStrings":      "中心点,盘旋点",
@@ -247,12 +254,12 @@
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Mission Index:",
+                "label":            "Mission Index",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "ROI Index:",
+                "label":            "ROI Index",
                 "default":          0,
                 "decimalPlaces":    0
             }
@@ -266,21 +273,21 @@
             "friendlyEdit":         true,
             "category":             "Advanced",
             "param1": {
-                "label":            "Local planning:",
+                "label":            "Local planning",
                 "enumStrings":      "Disable,Enable,Enable+reset",
                 "enumValues":       "0,1,2",
                 "default":          1,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Full planning:",
+                "label":            "Full planning",
                 "enumStrings":      "Disable,Enable,Enable+reset,Enable+reset route only",
                 "enumValues":       "0,1,2,3",
                 "default":          1,
                 "decimalPlaces":    0
             },
             "param4": {
-                "label":            "Heading goal:",
+                "label":            "Heading goal",
                 "default":          0,
                 "units":            "deg",
                 "decimalPlaces":    2
@@ -313,7 +320,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "deg",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             }
         },
@@ -328,7 +335,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "deg",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             }
         },
@@ -346,28 +353,29 @@
             }
         },
         {
-            "id":           94,
+            "id":           93,
             "rawName":      "MAV_CMD_NAV_DELAY",
             "friendlyName": "Delay until",
             "description":  "Delay unti the specified time is reached.",
+            "category":      "飞行控制",
             "param1": {
-                "label":            "Hold:",
+                "label":            "Hold",
                 "units":            "secs",
                 "default":          30,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Hour (utc):",
+                "label":            "Hour (utc)",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "Min (utc):",
+                "label":            "Min (utc)",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param4": {
-                "label":            "Sec (utc):",
+                "label":            "Sec (utc)",
                 "default":          0,
                 "decimalPlaces":    0
             }
@@ -380,20 +388,22 @@
             "friendlyEdit": true,
             "category":     "Basic",
             "param1": {
-                "label":            "Hold:",
+                "label":            "Hold",
                 "units":            "secs",
                 "default":          30,
                 "decimalPlaces":    0
             }
         },
         {
-            "id":           113,
-            "rawName":      "MAV_CMD_CONDITION_CHANGE_ALT",
-            "description":  "Delay the mission until the specified altitide is reached.",
-            "friendlyName": "Wait for altitude",
-            "category":     "Conditionals",
+            "id":                           113,
+            "rawName":                  "MAV_CMD_CONDITION_CHANGE_ALT",
+            "description":              "Delay the mission until the specified altitide is reached.",
+            "friendlyName":             "Wait for altitude",
+            "category":                 "Conditionals",
+            "specifiesCoordinate":      false,
+            "specifiesAltitudeOnly":    true,
             "param1": {
-                "label":            "Rate:",
+                "label":            "Rate",
                 "units":            "m/s",
                 "default":          5,
                 "decimalPlaces":    2
@@ -412,7 +422,7 @@
             "friendlyName": "Wait for distance",
             "category":     "Conditionals",
             "param1": {
-                "label":            "Distance:",
+                "label":            "Distance",
                 "units":            "m",
                 "default":          10,
                 "decimalPlaces":    2
@@ -425,25 +435,25 @@
             "description":  "Delay the mission until the specified heading is reached.",
             "category":     "Conditionals",
             "param1": {
-                "label":            "Heading:",
+                "label":            "Heading",
                 "units":            "deg",
                 "default":          0,
                 "decimalPlaces":    1
             },
             "param2": {
-                "label":            "Rate:",
+                "label":            "Rate",
                 "units":            "degrees/s",
                 "default":          5,
                 "decimalPlaces":    1
             },
             "param3": {
-                "label":            "Direction:",
+                "label":            "Direction",
                 "enumStrings":      "Clockwise,Counter-Clockwise",
                 "enumValues":       "1,-1",
                 "default":          1
             },
             "param4": {
-                "label":            "Offset:",
+                "label":            "Offset",
                 "enumStrings":      "Relative,Absolute",
                 "enumValues":       "1,0",
                 "default":          1
@@ -457,17 +467,17 @@
             "description":  "Set flight mode.",
             "category":     "Advanced",
             "param1": {
-                "label":            "Mode:",
+                "label":            "Mode",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Custom Mode:",
+                "label":            "Custom Mode",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "Sub Mode:",
+                "label":            "Sub Mode",
                 "default":          0,
                 "decimalPlaces":    0
             }
@@ -489,11 +499,11 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             },
             "param8": {
-                "label":            "项 #:",
+                "label":            "跳转至项 #:",
                 "default":          1,
                 "decimalPlaces":    0
             },
@@ -520,7 +530,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             },
             "param8": {
@@ -550,7 +560,7 @@
             "friendlyEdit":         true,
             "category":             "Advanced",
             "param1": {
-                "label":            "Mode:",
+                "label":            "Mode",
                 "enumStrings":      "Vehicle position,Specified position",
                 "enumValues":       "1,0",
                 "default":          0
@@ -563,12 +573,12 @@
             "friendlyName": "Set relay",
             "description":  "Set relay to a condition.",
             "param1": {
-                "label":            "Relay #:",
+                "label":            "Relay #",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Value:",
+                "label":            "Value",
                 "default":          0
             }
         },
@@ -578,18 +588,18 @@
             "friendlyName": "Cycle relay",
             "description":  "Cycle relay on/off for desired cycles/time.",
             "param1": {
-                "label":            "Relay #:",
+                "label":            "Relay #",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Cycles:",
+                "label":            "Cycles",
                 "default":          1,
                 "units":            "count",
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "Time:",
+                "label":            "Time",
                 "default":          10,
                 "units":            "secs",
                 "decimalPlaces":    0
@@ -612,7 +622,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             },
             "param8": {
@@ -632,23 +642,23 @@
             "friendlyName": "Cycle servo",
             "description":  "Set servo to specified PWM value.",
             "param1": {
-                "label":            "Servo:",
+                "label":            "Servo",
                 "default":          1,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "PWM:",
+                "label":            "PWM",
                 "default":          1000,
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "Cycles:",
+                "label":            "Cycles",
                 "default":          1,
                 "units":            "count",
                 "decimalPlaces":    0
             },
             "param4": {
-                "label":            "Time:",
+                "label":            "Time",
                 "default":          10,
                 "units":            "secs",
                 "decimalPlaces":    0
@@ -692,19 +702,19 @@
             "friendlyEdit":         true,
             "category":             "Camera",
             "param1": {
-                "label":            "Mode:",
+                "label":            "Mode",
                 "enumStrings":      "None,Next waypoint,Mission item,Location,ROI item",
                 "enumValues":       "0,1,2,3,4",
                 "default":          3,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Mission Index:",
+                "label":            "Mission Index",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "ROI Index:",
+                "label":            "ROI Index",
                 "default":          0,
                 "decimalPlaces":    0
             }
@@ -716,39 +726,39 @@
             "description":  "Configure onboard camera controller.",
             "category":     "Camera",
             "param1": {
-                "label":            "Mode:",
+                "label":            "Mode",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Shutter spd:",
+                "label":            "Shutter spd",
                 "default":          60,
                 "units":            "1/secs",
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "Aperture:",
+                "label":            "Aperture",
                 "default":          4,
                 "units":            "F stop",
                 "decimalPlaces":    1
             },
             "param4": {
-                "label":            "ISO:",
+                "label":            "ISO",
                 "default":          200,
                 "decimalPlaces":    0
             },
             "param5": {
-                "label":            "Exposure:",
+                "label":            "Exposure",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param6": {
-                "label":            "Command:",
+                "label":            "Command",
                 "default":          0,
                 "decimalPlaces":    0
             },
             "param7": {
-                "label":            "Cut off:",
+                "label":            "Cut off",
                 "default":          0,
                 "decimalPlaces":    2
             }
@@ -875,7 +885,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             },
             "param8": {
@@ -894,7 +904,7 @@
             "friendlyEdit":         true,
             "category":             "Safety",
             "param1": {
-                "label":            "Enable:",
+                "label":            "Enable",
                 "enumStrings":      "Disable,Disable floor only,Enable",
                 "enumValues":       "0,2,1",
                 "default":          1,
@@ -910,7 +920,7 @@
             "friendlyEdit":         true,
             "category":             "Safety",
             "param1": {
-                "label":            "Trigger:",
+                "label":            "Trigger",
                 "enumStrings":      "Disable,Enable,Release",
                 "enumValues":       "0,1,2",
                 "default":          1,
@@ -927,7 +937,7 @@
             "friendlyEdit":         true,
             "category":             "Flight control",
             "param1": {
-                "label":            "Inverted:",
+                "label":            "Inverted",
                 "enumStrings":      "Normal,Inverted",
                 "enumValues":       "0,1",
                 "default":          0
@@ -942,12 +952,12 @@
             "friendlyEdit":         true,
             "category":             "Advanced",
             "param1": {
-                "label":            "Gripper id:",
+                "label":            "Gripper id",
                 "default":          1,
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Action:",
+                "label":            "Action",
                 "enumStrings":      "Release,Grab",
                 "enumValues":       "0,1",
                 "default":          0
@@ -962,7 +972,7 @@
             "friendlyEdit":         true,
             "category":             "Advanced",
             "param2": {
-                "label":            "Enable:",
+                "label":            "Enable",
                 "enumStrings":      "Enable,Disable",
                 "enumValues":       "1,0",
                 "default":          1
@@ -1006,7 +1016,7 @@
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
-                "default":          0.0,
+                "nanUnchanged":     true,
                 "decimalPlaces":    2
             },
             "param8": {
@@ -1033,25 +1043,25 @@
             "friendlyName": "Guided limits",
             "description":  "Set limits for external control",
             "param1": {
-                "label":            "Timeout:",
+                "label":            "Timeout",
                 "default":          0,
                 "units":            "secs",
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Min Alt:",
+                "label":            "Min Alt",
                 "default":          25,
                 "units":            "m",
                 "decimalPlaces":    2
             },
             "param3": {
-                "label":            "Max Alt:",
+                "label":            "Max Alt",
                 "units":            "m",
                 "default":          100,
                 "decimalPlaces":    2
             },
             "param4": {
-                "label":            "H Limit:",
+                "label":            "H Limit",
                 "default":          25,
                 "units":            "m",
                 "decimalPlaces":    2
@@ -1070,11 +1080,81 @@
         { "id": 510, "rawName": "MAV_CMD_GET_MESSAGE_INTERVAL", "friendlyName": "Get message interval" },
         { "id": 511, "rawName": "MAV_CMD_SET_MESSAGE_INTERVAL", "friendlyName": "Set message interval" },
         { "id": 520, "rawName": "MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES", "friendlyName": "Get capabilities" },
-        { "id": 2000, "rawName": "MAV_CMD_IMAGE_START_CAPTURE", "friendlyName": "开始图像拍照" },
-        { "id": 2001, "rawName": "MAV_CMD_IMAGE_STOP_CAPTURE", "friendlyName": "停止图像拍照" },
+        {
+            "id":           2000,
+            "rawName":      "MAV_CMD_IMAGE_START_CAPTURE",
+            "friendlyName": "Start image capture" ,
+            "description":  "Start taking one or more photos.",
+            "category":     "相机",
+            "param1": {
+                "label":            "Interval",
+                "default":          0,
+                "units":            "secs",
+                "decimalPlaces":    0
+            },
+            "param2": {
+                "label":            "Photo count",
+                "default":          1,
+                "decimalPlaces":    0
+            },
+            "param3": {
+                "label":            "Resolution",
+                "default":          -1,
+                "decimalPlaces":    0
+            },
+            "param6": {
+                "label":            "Camera id",
+                "default":          0,
+                "decimalPlaces":    0
+            }
+        },
+        {
+            "id": 2001,
+            "rawName": "MAV_CMD_IMAGE_STOP_CAPTURE",
+            "friendlyName": "Stop image capture",
+            "description":  "Stop taking photos.",
+            "category":     "相机",
+            "param1": {
+                "label":            "Camera id",
+                "default":          0,
+                "decimalPlaces":    0
+            }
+        },
         { "id": 2003, "rawName": "MAV_CMD_DO_TRIGGER_CONTROL", "friendlyName": "Trigger control" },
-        { "id": 2500, "rawName": "MAV_CMD_VIDEO_START_CAPTURE", "friendlyName": "开始视频录像" },
-        { "id": 2501, "rawName": "MAV_CMD_VIDEO_STOP_CAPTURE", "friendlyName": "停止视频录像" },
+        {
+            "id":           2500,
+            "rawName":      "MAV_CMD_VIDEO_START_CAPTURE",
+            "friendlyName": "Start video capture",
+            "description":  "Start video capture.",
+            "category":     "相机",
+            "param1": {
+                "label":            "Camera id",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param2": {
+                "label":            "FPS",
+                "default":          -1,
+                "decimalPlaces":    0
+            },
+            "param3": {
+                "label":            "Resolution",
+                "default":          -1,
+                "decimalPlaces":    0
+            }
+        },
+        {
+            "id":           2501,
+            "rawName":      "MAV_CMD_VIDEO_STOP_CAPTURE",
+            "friendlyName": "Stop video capture",
+            "description":  "Stop video capture.",
+            "category":     "相机",
+            "param1": {
+                "label":            "Camera id",
+                "default":          0,
+                "decimalPlaces":    0
+            }
+        },
         { "id": 2800, "rawName": "MAV_CMD_PANORAMA_CREATE", "friendlyName": "Create panorama" },
         {
             "id": 3000,

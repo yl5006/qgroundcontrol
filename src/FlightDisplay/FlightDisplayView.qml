@@ -34,7 +34,7 @@ QGCView {
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
 
-    property alias  guidedController:   guidedActionsController
+//    property alias  guidedController:   guidedActionsController
 
     property bool activeVehicleJoystickEnabled: _activeVehicle ? _activeVehicle.joystickEnabled : false
 
@@ -48,8 +48,8 @@ QGCView {
     property real   _savedZoomLevel:        0
     property real   _margins:               ScreenTools.defaultFontPixelWidth / 2
     property real   _pipSize:               mainWindow.width * 0.2
-    property alias  _guidedController:      guidedActionsController
-    property alias  _altitudeSlider:        altitudeSlider
+//    property alias  _guidedController:      guidedActionsController
+//    property alias  _altitudeSlider:        altitudeSlider
 
 
     readonly property bool      isBackgroundDark:       _mainIsMap ? (_flightMap ? _flightMap.isSatelliteMap : true) : true
@@ -103,7 +103,7 @@ QGCView {
 
     Connections {
         target:                 _missionController
-        onResumeMissionReady:   guidedActionsController.confirmAction(guidedActionsController.actionResumeMissionReady)
+     //   onResumeMissionReady:   guidedActionsController.confirmAction(guidedActionsController.actionResumeMissionReady)
     }
 
     MessageDialog {
@@ -210,7 +210,7 @@ QGCView {
                 id:                         _flightMap
                 anchors.fill:               parent
                 planMasterController:       masterController
-                guidedActionsController:    _guidedController
+//                guidedModeBar:              _guidedModeBar
                 flightWidgets:              flightDisplayViewWidgets
                 rightPanelWidth:            ScreenTools.defaultFontPixelHeight * 9
                 qgcView:                    root
@@ -346,7 +346,7 @@ QGCView {
             z:                  _panel.z + 4
             height:             ScreenTools.availableHeight
             anchors.left:       parent.left
-            anchors.right:      altitudeSlider.visible ? altitudeSlider.left : parent.right
+            anchors.right:      /*altitudeSlider.visible ? altitudeSlider.left : */parent.right
             anchors.bottom:     parent.bottom
             qgcView:            root
             useLightColors:     isBackgroundDark
@@ -361,7 +361,7 @@ QGCView {
             z:                  flightDisplayViewWidgets.z + 1
             height:             ScreenTools.availableHeight
             anchors.left:       parent.left
-            anchors.right:      altitudeSlider.visible ? altitudeSlider.left : parent.right
+            anchors.right:      /*altitudeSlider.visible ? altitudeSlider.left :*/ parent.right
             anchors.bottom:     parent.bottom
 
             property var qgcView: root
@@ -470,6 +470,8 @@ QGCView {
             property Fact _virtualJoystick: QGroundControl.settingsManager.appSettings.virtualJoystick
         }
 
+
+/*
         ToolStripRow {
             visible:            _activeVehicle ? _activeVehicle.guidedModeSupported : true
             id:                 toolStrip
@@ -544,14 +546,14 @@ QGCView {
                     iconSource: "/res/action.svg",
                     action:     -1
                 },
-                /*
+
                   No firmware support any smart shots yet
                 {
                     name:       qsTr("Smart"),
                     iconSource: "/qmlimages/MapCenter.svg",
                     action:     -1
                 },
-                */
+
             ]
 
             onClicked: {
@@ -633,6 +635,6 @@ QGCView {
             width:              ScreenTools.defaultFontPixelWidth * 10
             color:              qgcPal.window
             visible:            false
-        }
+        }*/
     }
 }

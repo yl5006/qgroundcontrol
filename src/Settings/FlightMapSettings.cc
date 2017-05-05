@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -92,8 +92,8 @@ void FlightMapSettings::_newMapProvider(QVariant value)
         _removeEnumValue(mapTypeHybrid, enumStrings, enumValues);
         break;
     case mapProviderStarkart:
-        _removeEnumValue(mapTypeStreet, enumStrings, enumValues);
-        _removeEnumValue(mapTypeSatellite, enumStrings, enumValues);
+//        _removeEnumValue(mapTypeStreet, enumStrings, enumValues);
+//        _removeEnumValue(mapTypeSatellite, enumStrings, enumValues);
         _removeEnumValue(mapTypeHybrid, enumStrings, enumValues);
         break;
     }

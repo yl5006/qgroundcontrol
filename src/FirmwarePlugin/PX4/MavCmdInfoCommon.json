@@ -45,14 +45,24 @@
             "paramRemove":  "2,4"
         },
         {
+            "id":           20,
+            "comment":      "MAV_CMD_NAV_RETURN_TO_LAUNCH",
+            "paramRemove":  "4"
+        },
+        {
             "id":           21,
             "comment":      "MAV_CMD_NAV_LAND",
-            "paramRemove":  "1"
+            "paramRemove":  "1,4"
         },
-	{
+        {
+            "id":           22,
+            "comment":      "MAV_CMD_NAV_TAKEOFF",
+            "paramRemove":  "4"
+        },
+        {
             "id":           178,
             "comment":      "MAV_CMD_DO_CHANGE_SPEED",
-            "paramRemove":  "8"
+            "paramRemove":  "4,8"
         },
         {
             "id":           95,

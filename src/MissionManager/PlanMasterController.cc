@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -224,6 +224,7 @@ void PlanMasterController::sendToVehicle(void)
     } else {
         qCDebug(PlanMasterControllerLog) << "PlanMasterController::sendToVehicle start mission sendToVehicle";
         _sendGeoFence = true;
+        _syncInProgress = true;
         _missionController.sendToVehicle();
         setDirty(false);
     }

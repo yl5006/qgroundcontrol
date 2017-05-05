@@ -36,7 +36,6 @@ FlightMap {
 
     // The following properties must be set by the consumer
     property var    planMasterController
-    property var    guidedActionsController
     property var    flightWidgets
     property var    rightPanelWidth
     property var    qgcView                             ///< QGCView control which contains this map
@@ -183,7 +182,7 @@ FlightMap {
             mapFitViewport:         Qt.rect(leftToolWidth, _toolButtonTopMargin, flightMap.width - leftToolWidth - rightPanelWidth, flightMap.height - _toolButtonTopMargin)
             usePlannedHomePosition: false
             geoFenceController:     geoFenceController
-            missionController:      missionController
+            missionController:      _missionController
             rallyPointController:   rallyPointController
             showFollowVehicle:      true
             followVehicle:          _keepVehicleCentered
@@ -356,7 +355,7 @@ FlightMap {
 
         delegate: MissionItemMapVisual {
             map:        flightMap
-            onClicked:  guidedActionsController.confirmAction(guidedActionsController.actionSetWaypoint, Math.max(object.sequenceNumber, 1))
+            onClicked:  flightWidgets.guidedModeBar.confirmAction(flightWidgets.guidedModeBar.confirmSetWaypoint, Math.max(object.sequenceNumber, 1))
         }
     }
 
@@ -427,9 +426,9 @@ FlightMap {
         anchors.fill: parent
 
         onClicked: {
-            if (guidedActionsController.showGotoLocation) {
+            if (_guidedModeBar.showGotoLocation) {
                 _gotoHereCoordinate = flightMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
-                guidedActionsController.confirmAction(guidedActionsController.actionGoto, _gotoHereCoordinate)
+                flightWidgets.guidedModeBar.confirmAction(flightWidgets.guidedModeBar.confirmGoTo, _gotoHereCoordinate)
             }
         }
     }

@@ -63,6 +63,7 @@ QGCView {
     property var coordinateruler1   :               editorMap.center
     property var coordinateruler2   :               editorMap.center
     property bool firstpoint        :               true
+    property Fact _mapType:                         QGroundControl.settingsManager.flightMapSettings.mapType
     Component.onCompleted: {
 //        toolbar.planMasterController =  Qt.binding(function () { return _planMasterController })
 //        toolbar.currentMissionItem =    Qt.binding(function () { return _currentMissionItem })
@@ -880,20 +881,22 @@ QGCView {
                         Row {
                             spacing: ScreenTools.defaultFontPixelWidth
                             Repeater {
-                                model: QGroundControl.settingsManager.flightMapSettings.mapType.enumStrings
+                                id:   mapTypes
+                                model: _mapType.enumValues
                                 RoundImageButton {
                                     width:          ScreenTools.defaultFontPixelHeight*3
                                     height:         width
                                     exclusiveGroup: _mapTypeButtonsExclusiveGroup
-                                    checked:        QGroundControl.settingsManager.flightMapSettings.mapType.value == index
+                                    checked:        _mapType.value == _mapType.enumValues[index]
                                     imageResource:  index==0?"/qmlimages/map_street.svg":index==1?"/qmlimages/map_gps.svg" :"/qmlimages/map_terrain.svg"
                                     bordercolor:    qgcPal.buttonHighlight
                                     showcheckcolor: true
                                     onClicked: {
-                                        QGroundControl.settingsManager.flightMapSettings.mapType.value = index
+                                        _mapType.value = _mapType.enumValues[index]
                                         checked = true
                                         mapTypeButton.hideDropDown()
                                     }
+
                                 }
                             }
                         }
@@ -1097,7 +1100,7 @@ QGCView {
 
                         onInsert: {
                             var coordinate =object.coordinate
-                            var sequenceNumber = missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(4*Math.pow(2,21-editorMap.zoomLevel),270), index)
+                            var sequenceNumber = _missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(4*Math.pow(2,21-editorMap.zoomLevel),270), index)
                             setCurrentItem(object.sequenceNumber)
                         }
                     }

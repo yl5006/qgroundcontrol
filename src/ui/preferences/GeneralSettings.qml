@@ -302,7 +302,7 @@ QGCView {
                         }
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    _mapProvider.visible
+                            visible:    false//_mapProvider.visible
                             QGCLabel {
                                 text:       qsTr("地图提供商:")
                                 width:      _labelWidth
@@ -335,6 +335,7 @@ QGCView {
                                     target: QGroundControl.settingsManager.flightMapSettings
                                     onMapTypeChanged: {
                                         mapTypes.model = _mapType.enumStrings
+                                        console.log(_mapType.enumStrings)
                                     }
                                 }
                             }

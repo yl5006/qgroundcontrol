@@ -75,7 +75,7 @@ void GPSProvider::run()
             //bus errors or buggy firmware. In this case we want to try multiple times before giving up.
             int numTries = 0;
 
-            while (!_requestStop && numTries < 3) {
+            while (!_requestStop && numTries < 5) {
                 int helperRet = gpsDriver->receive(GPS_RECEIVE_TIMEOUT);
 
                 if (helperRet > 0) {
@@ -100,8 +100,8 @@ void GPSProvider::run()
              break;
         }
     }
-    qDebug() << "Exiting GPS thread";
     qCDebug(RTKGPSLog) << "Exiting GPS thread";
+    if (_serial) delete _serial;
 }
 
 GPSProvider::GPSProvider(const QString& device, bool enableSatInfo, double surveyInAccMeters, int surveryInDurationSecs, const std::atomic_bool& requestStop)

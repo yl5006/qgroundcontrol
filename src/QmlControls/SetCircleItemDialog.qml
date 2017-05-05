@@ -154,11 +154,11 @@ Rectangle {
                     for (var i=0; i<= Number(number.text); i++) {
                         if(start.checked)
                         {
-                            sequenceNumber=missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
                         }
                         else
                         {
-                            sequenceNumber=missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)-360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)-360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
                         }
                     }
                     setCurrentItem(sequenceNumber)
@@ -173,22 +173,22 @@ Rectangle {
                     for (var i=0; i<= Number(number.text); i++) {
                         if(start.checked)
                         {
-                            sequenceNumber=missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
                         }
                         else
                         {
-                            sequenceNumber=missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)-360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)-360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
                         }
                     }
                     var nextcoordinate = coordinate.atDistanceAndAzimuth(2*Number(radius.text),(Number(startangle.text)))
                     for (var j=1; j<= Number(number.text); j++) {
                         if(start.checked)
                         {
-                            sequenceNumber=missionController.insertSimpleMissionItem(nextcoordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+180-360/Number(number.text)*j)), _currentMissionItem.sequenceNumber+i+j)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(nextcoordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+180-360/Number(number.text)*j)), _currentMissionItem.sequenceNumber+i+j)
                         }
                         else
                         {
-                            sequenceNumber=missionController.insertSimpleMissionItem(nextcoordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+180+360/Number(number.text)*j)), _currentMissionItem.sequenceNumber+i+j)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(nextcoordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+180+360/Number(number.text)*j)), _currentMissionItem.sequenceNumber+i+j)
                         }
                     }
                     setCurrentItem(sequenceNumber)
