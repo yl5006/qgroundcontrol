@@ -210,8 +210,6 @@ QGCView {
                 id:                         _flightMap
                 anchors.fill:               parent
                 planMasterController:       masterController
-//                guidedModeBar:              _guidedModeBar
-                flightWidgets:              flightDisplayViewWidgets
                 rightPanelWidth:            ScreenTools.defaultFontPixelHeight * 9
                 qgcView:                    root
                 scaleState:                 (_mainIsMap && flyViewOverlay.item) ? (flyViewOverlay.item.scaleState ? flyViewOverlay.item.scaleState : "bottomMode") : "bottomMode"
@@ -342,7 +340,7 @@ QGCView {
         }
 
         FlightDisplayViewWidgets {
-            id:                 flightDisplayViewWidgets
+            id:                 flightWidgets
             z:                  _panel.z + 4
             height:             ScreenTools.availableHeight
             anchors.left:       parent.left
@@ -358,7 +356,7 @@ QGCView {
         //-- Loader helper for plugins to overlay elements over the fly view
         Loader {
             id:                 flyViewOverlay
-            z:                  flightDisplayViewWidgets.z + 1
+            z:                  flightWidgets.z + 1
             height:             ScreenTools.availableHeight
             anchors.left:       parent.left
             anchors.right:      /*altitudeSlider.visible ? altitudeSlider.left :*/ parent.right
@@ -461,7 +459,7 @@ QGCView {
             visible:                    _virtualJoystick ? _virtualJoystick.value : false
             anchors.bottom:             _flightVideoPipControl.top
             anchors.bottomMargin:       ScreenTools.defaultFontPixelHeight * 2
-            anchors.horizontalCenter:   flightDisplayViewWidgets.horizontalCenter
+            anchors.horizontalCenter:   flightWidgets.horizontalCenter
             source:                     "qrc:/qml/VirtualJoystick.qml"
             active:                     _virtualJoystick ? _virtualJoystick.value : false
 

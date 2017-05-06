@@ -36,7 +36,6 @@ FlightMap {
 
     // The following properties must be set by the consumer
     property var    planMasterController
-    property var    flightWidgets
     property var    rightPanelWidth
     property var    qgcView                             ///< QGCView control which contains this map
 
@@ -355,7 +354,7 @@ FlightMap {
 
         delegate: MissionItemMapVisual {
             map:        flightMap
-            onClicked:  flightWidgets.guidedModeBar.confirmAction(flightWidgets.guidedModeBar.confirmSetWaypoint, Math.max(object.sequenceNumber, 1))
+            onClicked:  flightWidgets.confirmAction(flightWidgets.confirmSetWaypoint, Math.max(object.sequenceNumber, 1))
         }
     }
 
@@ -426,9 +425,9 @@ FlightMap {
         anchors.fill: parent
 
         onClicked: {
-            if (_guidedModeBar.showGotoLocation) {
+            if (flightWidgets.showGotoLocation) {
                 _gotoHereCoordinate = flightMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
-                flightWidgets.guidedModeBar.confirmAction(flightWidgets.guidedModeBar.confirmGoTo, _gotoHereCoordinate)
+                flightWidgets.confirmAction(flightWidgets.confirmGoTo, _gotoHereCoordinate)
             }
         }
     }
