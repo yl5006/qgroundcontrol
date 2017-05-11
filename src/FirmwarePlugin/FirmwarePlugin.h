@@ -282,6 +282,8 @@ public:
     ///     @param[out] cruiseAmps Current draw in amps during cruise
     virtual void batteryConsumptionData(Vehicle* vehicle, int& mAhBattery, double& hoverAmps, double& cruiseAmps) const;
 
+    virtual void missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed);
+    virtual void setmissionFlightSpeedInfo(Vehicle* vehicle, double hoverSpeed, double cruiseSpeed);
     // Returns the parameter which control auto-disarm. Assume == 0 means no auto disarm
     virtual QString autoDisarmParameter(Vehicle* vehicle);
 

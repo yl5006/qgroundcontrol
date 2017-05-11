@@ -358,9 +358,9 @@ bool MissionItem::load(const QJsonObject& json, int sequenceNumber, QString& err
     setParam2(JsonHelper::possibleNaNJsonValue(rgParams[1]));
     setParam3(JsonHelper::possibleNaNJsonValue(rgParams[2]));
     setParam4(JsonHelper::possibleNaNJsonValue(rgParams[3]));
-    setParam8(JsonHelper::possibleNaNJsonValue(rgParams[4]);
-    setParam9(JsonHelper::possibleNaNJsonValue(rgParams[5]);
-    setParam10(JsonHelper::possibleNaNJsonValue(rgParams[6]);
+    setParam8(JsonHelper::possibleNaNJsonValue(rgParams[4]));
+    setParam9(JsonHelper::possibleNaNJsonValue(rgParams[5]));
+    setParam10(JsonHelper::possibleNaNJsonValue(rgParams[6]));
 
     return true;
 }

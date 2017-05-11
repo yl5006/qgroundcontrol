@@ -266,7 +266,7 @@ QList<MAV_CMD> PX4FirmwarePlugin::supportedMissionCommands(void)
          << MAV_CMD_DO_JUMP
          << MAV_CMD_DO_VTOL_TRANSITION << MAV_CMD_NAV_VTOL_TAKEOFF << MAV_CMD_NAV_VTOL_LAND
          << MAV_CMD_DO_DIGICAM_CONTROL
-         << MAV_CMD_DO_SET_CAM_TRIGG_DIST << MAV_CMD_DO_CAM << MAV_CMD_DO_TIME_CAM << MAV_CMD_NAV_RETURN_TO_WP_LANUCH
+         << MAV_CMD_DO_SET_CAM_TRIGG_DIST << MAV_CMD_DO_CAM << MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL << MAV_CMD_NAV_RETURN_TO_WP_LANUCH
          << MAV_CMD_DO_SET_SERVO
          << MAV_CMD_DO_CHANGE_SPEED
          << MAV_CMD_DO_LAND_START
@@ -552,4 +552,36 @@ bool PX4FirmwarePlugin::vehicleYawsToNextWaypointInMission(const Vehicle* vehicl
         }
     }
     return true;
+}
+void PX4FirmwarePlugin::missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed)
+{
+    QString hoverSpeedParam("MPC_XY_CRUISE");
+    QString cruiseSpeedParam("FW_AIRSPD_TRIM");
+
+    // First pull settings defaults
+    FirmwarePlugin::missionFlightSpeedInfo(vehicle, hoverSpeed, cruiseSpeed);
+
+    if (vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, hoverSpeedParam)) {
+        Fact* speed = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, hoverSpeedParam);
+        hoverSpeed = speed->rawValue().toDouble();
+    }
+    if (vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, cruiseSpeedParam)) {
+        Fact* speed = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, cruiseSpeedParam);
+        cruiseSpeed = speed->rawValue().toDouble();
+    }
+}
+
+void PX4FirmwarePlugin::setmissionFlightSpeedInfo(Vehicle* vehicle, double hoverSpeed, double cruiseSpeed)
+{
+    QString hoverSpeedParam("MPC_XY_CRUISE");
+    QString cruiseSpeedParam("FW_AIRSPD_TRIM");
+
+    if (vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, hoverSpeedParam)) {
+        Fact* speed = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, hoverSpeedParam);
+        speed->setRawValue(hoverSpeed);
+    }
+    if (vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, cruiseSpeedParam)) {
+        Fact* speed = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, cruiseSpeedParam);
+        speed->setRawValue(cruiseSpeed);
+    }
 }

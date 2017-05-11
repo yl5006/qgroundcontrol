@@ -502,7 +502,20 @@ QString FirmwarePlugin::autoDisarmParameter(Vehicle* vehicle)
     Q_UNUSED(vehicle);
     return QString();
 }
+void FirmwarePlugin::missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed)
+{
+    Q_UNUSED(vehicle);
 
+    // Best we can do is use settings
+    AppSettings* appSettings = qgcApp()->toolbox()->settingsManager()->appSettings();
+    hoverSpeed = appSettings->offlineEditingHoverSpeed()->rawValue().toDouble();
+    cruiseSpeed = appSettings->offlineEditingCruiseSpeed()->rawValue().toDouble();
+}
+
+void FirmwarePlugin::setmissionFlightSpeedInfo(Vehicle* vehicle, double hoverSpeed, double cruiseSpeed)
+{
+    Q_UNUSED(vehicle);
+}
 bool FirmwarePlugin::hasGimbal(Vehicle* vehicle, bool& rollSupported, bool& pitchSupported, bool& yawSupported)
 {
     Q_UNUSED(vehicle);
