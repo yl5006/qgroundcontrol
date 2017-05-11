@@ -121,7 +121,7 @@ QGCView {
         id: activeMissionUploadDialogComponent
 
         QGCViewDialog {
-
+            height:   ScreenTools.defaultFontPixelHeight*10
             Column {
                 anchors.fill:   parent
                 spacing:        ScreenTools.defaultFontPixelHeight
@@ -129,17 +129,17 @@ QGCView {
                 QGCLabel {
                     width:      parent.width
                     wrapMode:   Text.WordWrap
-                    text:       qsTr("Your vehicle is currently flying a mission. In order to upload a new or modified mission the current mission will be paused.")
+                    text:       qsTr("你的飞机正在执行任务. 上传或修改任务会暂停飞机.")
                 }
 
                 QGCLabel {
                     width:      parent.width
                     wrapMode:   Text.WordWrap
-                    text:       qsTr("After the mission is uploaded you can adjust the current waypoint and start the mission.")
+                    text:       qsTr("当任务上传成功后， 你可以选择当前航点继续任务.")
                 }
 
                 QGCButton {
-                    text:       qsTr("Pause and Upload")
+                    text:       qsTr("暂停任务后上传")
                     onClicked: {
                         _activeVehicle.flightMode = _activeVehicle.pauseFlightMode
                         _planMasterController.sendToVehicle()
@@ -161,7 +161,7 @@ QGCView {
 
         function upload() {
             if (_activeVehicle && _activeVehicle.armed && _activeVehicle.flightMode === _activeVehicle.missionFlightMode) {
-                _qgcView.showDialog(activeMissionUploadDialogComponent, qsTr("Plan Upload"), _qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+                _qgcView.showDialog(activeMissionUploadDialogComponent, qsTr("任务上传"), _qgcView.showDialogDefaultWidth, StandardButton.Cancel)
             } else {
                 sendToVehicle()
             }

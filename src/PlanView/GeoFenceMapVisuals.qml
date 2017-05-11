@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -100,12 +100,13 @@ Item {
 
         MapQuickItem {
             anchorPoint.x:  sourceItem.anchorPointX
-            anchorPoint.y:  sourceItem.anchorPointY
+            anchorPoint.y:  sourceItem.anchorPointY*2
             z:              QGroundControl.zOrderMapItems
             coordinate:     myGeoFenceController.breachReturnPoint
 
             sourceItem: MissionItemIndexLabel {
                 label: "B"
+                simpleindex:   1
             }
         }
     }

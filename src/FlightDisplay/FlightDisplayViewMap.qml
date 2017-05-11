@@ -383,7 +383,7 @@ FlightMap {
         delegate: MapQuickItem {
             id:             itemIndicator
             anchorPoint.x:  sourceItem.anchorPointX
-            anchorPoint.y:  sourceItem.anchorPointY
+            anchorPoint.y:  sourceItem.anchorPointY * 2
             coordinate:     object.coordinate
             z:              QGroundControl.zOrderMapItems
 
@@ -401,7 +401,7 @@ FlightMap {
         visible:        _activeVehicle && _activeVehicle.guidedMode && _gotoHereCoordinate.isValid
         z:              QGroundControl.zOrderMapItems
         anchorPoint.x:  sourceItem.anchorPointX
-        anchorPoint.y:  sourceItem.anchorPointY
+        anchorPoint.y:  sourceItem.anchorPointY * 2
 
         sourceItem: MissionItemIndexLabel {
             checked: true

@@ -1162,7 +1162,7 @@
             "friendlyName": "VTOL 切换",
             "description":  "飞行模式切换",
             "category":     "飞行控制",
-            "param1": {
+            "param8": {
                 "label":            "模式:",
                 "default":          3,
                 "enumStrings":      "旋翼模式,固定翼模式",
