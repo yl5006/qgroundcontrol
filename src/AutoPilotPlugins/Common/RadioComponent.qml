@@ -29,7 +29,7 @@ SetupPage {
 
         Item {
             width:  availableWidth
-            height: Math.max(leftColumn.height, rightColumn.height)+ScreenTools.defaultFontPixelHeight*6
+            height: Math.max(leftColumn.height, rightColumn.height)+ScreenTools.defaultFontPixelHeight*8
 
             readonly property string    dialogTitle:            qsTr("遥控")//"Radio"
             readonly property real      labelToMonitorMargin:   defaultTextWidth * 3
@@ -684,12 +684,11 @@ SetupPage {
                 }
                 Column{
                     spacing: ScreenTools.defaultFontPixelHeight*0.3
-                    visible:  false
                     Repeater {
                         model: QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ?
                                    (QGroundControl.multiVehicleManager.activeVehicle.multiRotor ?
-                                        [ "RC_MAP_AUX1", "RC_MAP_AUX2", "RC_MAP_PARAM1", "RC_MAP_PARAM2", "RC_MAP_PARAM3"] :
-                                        [ "RC_MAP_FLAPS", "RC_MAP_AUX1", "RC_MAP_AUX2", "RC_MAP_PARAM1", "RC_MAP_PARAM2", "RC_MAP_PARAM3"]) :
+                                        [ "RC_MAP_GEAR_SW","RC_MAP_AUX1", "RC_MAP_AUX2"/*, "RC_MAP_PARAM1", "RC_MAP_PARAM2", "RC_MAP_PARAM3"*/] :
+                                        [ "RC_MAP_FLAPS", "RC_MAP_AUX1", "RC_MAP_AUX2","RC_MAP_AUX3"/*, "RC_MAP_PARAM1", "RC_MAP_PARAM2", "RC_MAP_PARAM3"*/]) :
                                    0
 
                         Row {

@@ -5455,7 +5455,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX1" type="INT32">
-      <short_desc>AUX1 Passthrough RC Channel</short_desc>
+      <short_desc>辅助通道1->RC</short_desc>
       <long_desc>Default function: Camera pitch</long_desc>
       <min>0</min>
       <max>18</max>
@@ -5483,7 +5483,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX2" type="INT32">
-      <short_desc>AUX2 Passthrough RC Channel</short_desc>
+      <short_desc>辅助通道2->RC</short_desc>
       <long_desc>Default function: Camera roll</long_desc>
       <min>0</min>
       <max>18</max>
@@ -5511,7 +5511,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX3" type="INT32">
-      <short_desc>AUX3 Passthrough RC Channel</short_desc>
+      <short_desc>辅助通道3->RC</short_desc>
       <long_desc>Default function: Camera azimuth / yaw</long_desc>
       <min>0</min>
       <max>18</max>
@@ -6053,7 +6053,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_FLAPS" type="INT32">
-      <short_desc>Flaps channel</short_desc>
+      <short_desc>襟翼通道->RC</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
@@ -6107,7 +6107,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_GEAR_SW" type="INT32">
-      <short_desc>Landing gear switch channel</short_desc>
+      <short_desc>起落架开关通道</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>

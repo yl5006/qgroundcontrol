@@ -149,6 +149,7 @@
 	<file alias="takeoff.svg">src/FlightMap/Images/takeoff.svg</file>
 	<file alias="landing.svg">src/FlightMap/Images/landing.svg</file>
 	<file alias="PauseUav.svg">src/FlightMap/Images/PauseUav.svg</file>
+	<file alias="parachute.svg">src/FlightMap/Images/parachute.svg</file>
         <file alias="HelpBlack.svg">src/FlightMap/Images/HelpBlack.svg</file>
  	<file alias="voice.svg">src/FlightMap/Images/voice.svg</file>
 	<file alias="novoice.svg">src/FlightMap/Images/novoice.svg</file>

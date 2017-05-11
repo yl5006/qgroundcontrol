@@ -98,7 +98,7 @@ Item {
             _activeVehicle.guidedModeGotoLocation(_flightMap._gotoHereCoordinate)
             break;
         case confirmSetWaypoint:
-            _activeVehicle.setCurrentMissionSequence(_flightMap._retaskSequence)
+            _activeVehicle.setCurrentMissionSequence(actionData)
             break;
         case confirmOrbit:
             //-- All parameters controlled by RC
@@ -147,7 +147,7 @@ Item {
             guidedModeConfirm.confirmText = qsTr("加锁")
             break;
         case confirmEmergencyStop:
-            guidedModeConfirm.confirmText = qsTr("电机停转!")
+            guidedModeConfirm.confirmText = qsTr("!电机加锁，开伞")
             break;
         case confirmTakeoff:
             altitudeSlider.visible = true
@@ -408,6 +408,19 @@ Item {
                     onClicked:  {
                         guidedModeHideTimer.restart()
                         _root.confirmAction(_root.confirmPause)
+                    }
+                }
+
+                RoundImageButton {
+                    width:       ScreenTools.defaultFontPixelHeight*4
+                    height:      width
+                    anchors.verticalCenter: parent.verticalCenter
+                    imageResource: "/qmlimages/parachute.svg"
+                    text:       qsTr("Stop")
+                    visible:    _activeVehicle && _activeVehicle.flying && _activeVehicle.fixedWing
+                    onClicked:  {
+                        guidedModeHideTimer.restart()
+                        _root.confirmAction(_root.confirmEmergencyStop)
                     }
                 }
 
