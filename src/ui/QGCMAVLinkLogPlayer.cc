@@ -9,6 +9,8 @@
 #include "QGC.h"
 #include "ui_QGCMAVLinkLogPlayer.h"
 #include "QGCApplication.h"
+#include "SettingsManager.h"
+#include "AppSettings.h"
 #include "LinkManager.h"
 #include "QGCQFileDialog.h"
 #include "QGCMessageBox.h"
@@ -22,10 +24,10 @@ QGCMAVLinkLogPlayer::QGCMAVLinkLogPlayer(QWidget *parent) :
     _ui->horizontalLayout->setAlignment(Qt::AlignTop);
 
     // Setup buttons
-    connect(_ui->selectFileButton, &QPushButton::clicked, this, &QGCMAVLinkLogPlayer::_selectLogFileForPlayback);
-    connect(_ui->playButton, &QPushButton::clicked, this, &QGCMAVLinkLogPlayer::_playPauseToggle);
-    connect(_ui->positionSlider, &QSlider::valueChanged, this, &QGCMAVLinkLogPlayer::_setPlayheadFromSlider);
-    connect(_ui->positionSlider, &QSlider::sliderPressed, this, &QGCMAVLinkLogPlayer::_pause);
+    connect(_ui->selectFileButton,  &QPushButton::clicked,      this, &QGCMAVLinkLogPlayer::_selectLogFileForPlayback);
+    connect(_ui->playButton,        &QPushButton::clicked,      this, &QGCMAVLinkLogPlayer::_playPauseToggle);
+    connect(_ui->positionSlider,    &QSlider::valueChanged,     this, &QGCMAVLinkLogPlayer::_setPlayheadFromSlider);
+    connect(_ui->positionSlider,    &QSlider::sliderPressed,    this, &QGCMAVLinkLogPlayer::_pause);
 
 #if 0
     // Speed slider is removed from 3.0 release. Too broken to fix.
@@ -72,7 +74,7 @@ void QGCMAVLinkLogPlayer::_selectLogFileForPlayback(void)
     QString logFilename = QGCQFileDialog::getOpenFileName(
         this,
         tr("Load Flight Log File"),
-        QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+        qgcApp()->toolbox()->settingsManager()->appSettings()->telemetrySavePath(),
         tr("Flight Log Files (*.tlog);;All Files (*)"));
 
     if (logFilename.isEmpty()) {
@@ -138,6 +140,7 @@ void QGCMAVLinkLogPlayer::_playbackStarted(void)
     _enablePlaybackControls(true);
     _ui->playButton->setChecked(true);
     _ui->playButton->setIcon(QIcon(":/res/Pause"));
+    _ui->positionSlider->setEnabled(false);
 }
 
 /// Signalled from LogReplayLink when replay is paused
@@ -145,6 +148,7 @@ void QGCMAVLinkLogPlayer::_playbackPaused(void)
 {
     _ui->playButton->setIcon(QIcon(":/res/Play"));
     _ui->playButton->setChecked(false);
+    _ui->positionSlider->setEnabled(true);
 }
 
 void QGCMAVLinkLogPlayer::_playbackPercentCompleteChanged(int percentComplete)

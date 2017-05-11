@@ -29,6 +29,7 @@ Item {
 
     property var missionController
     property var confirmDialog
+    property var altitudeSlider
 
     readonly property string emergencyStopTitle:    qsTr("Emergency Stop")
     readonly property string armTitle:              qsTr("解锁")
@@ -48,17 +49,17 @@ Item {
 
     readonly property string armMessage:                qsTr("Arm the vehicle.")
     readonly property string disarmMessage:             qsTr("Disarm the vehicle")
-    readonly property string emergencyStopMessage:      qsTr("WARNING: This still stop all motors. If vehicle is currently in air it will crash.")
-    readonly property string takeoffMessage:            qsTr("从地面起飞.")
-    readonly property string startMissionMessage:       qsTr("开始当前任务，如果在地面会自动起飞.")
+    readonly property string emergencyStopMessage:      qsTr("WARNING: This will stop all motors. If vehicle is currently in air it will crash.")
+    readonly property string takeoffMessage:            qsTr("Takeoff from ground and hold position.")
+    readonly property string startMissionMessage:       qsTr("Takeoff from ground and start the current mission.")
     readonly property string continueMissionMessage:    qsTr("Continue the mission from the current waypoint.")
-             property string resumeMissionMessage:      qsTr("Resume the mission which is displayed above. This will re-generate the mission from waypoint %1, takeoff and continue the mission.").arg(_resumeMissionItem)
-    readonly property string resumeMissionReadyMessage: qsTr("Review the modified mission above. Confirm if you want to takeoff and begin mission.")
-    readonly property string landMessage:               qsTr("在当前位置降落")
-    readonly property string rtlMessage:                qsTr("返航至Home")
-    readonly property string changeAltMessage:          qsTr("改变机体当前高度(上或下)")
-    readonly property string gotoMessage:               qsTr("将飞机移动到地图上点击的位置.")
-             property string setWaypointMessage:        qsTr("调整当前航点至 to %1.").arg(_actionData)
+             property string resumeMissionMessage:      qsTr("Resume the current mission. This will re-generate the mission from waypoint %1, takeoff and continue the mission.").arg(_resumeMissionIndex)
+    readonly property string resumeMissionReadyMessage: qsTr("Review the modified mission. Confirm if you want to takeoff and begin mission.")
+    readonly property string landMessage:               qsTr("Land the vehicle at the current position.")
+    readonly property string rtlMessage:                qsTr("Return to the home position of the vehicle.")
+    readonly property string changeAltMessage:          qsTr("Change the altitude of the vehicle up or down.")
+    readonly property string gotoMessage:               qsTr("Move the vehicle to the location clicked on the map.")
+             property string setWaypointMessage:        qsTr("Adjust current waypoint to %1.").arg(_actionData)
     readonly property string orbitMessage:              qsTr("Orbit the vehicle around the current location.")
     readonly property string landAbortMessage:          qsTr("Abort the landing sequence.")
     readonly property string pauseMessage:              qsTr("在当前位置暂停飞机(悬停或盘旋).")
@@ -92,7 +93,7 @@ Item {
     property bool showPause:            _activeVehicle && _vehicleArmed && _activeVehicle.pauseVehicleSupported && _vehicleFlying && !_vehiclePaused
     property bool showChangeAlt:        (_activeVehicle && _vehicleFlying) && _activeVehicle.guidedModeSupported && _vehicleArmed && !_missionActive
     property bool showOrbit:            !_hideOrbit && _activeVehicle && _vehicleFlying && _activeVehicle.orbitModeSupported && _vehicleArmed && !_missionActive
-    property bool showLandAbort:        _activeVehicle && _vehicleFlying && _activeVehicle.fixedWing
+    property bool showLandAbort:        _activeVehicle && _vehicleFlying && _activeVehicle.fixedWing && _vehicleLanding
     property bool showGotoLocation:     _activeVehicle && _activeVehicle.guidedMode && _vehicleFlying
 
     property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
@@ -101,6 +102,7 @@ Item {
     property bool   _missionActive:         _activeVehicle ? _vehicleArmed && (_vehicleInLandMode || _vehicleInRTLMode || _vehicleInMissionMode) : false
     property bool   _vehicleArmed:          _activeVehicle ? _activeVehicle.armed  : false
     property bool   _vehicleFlying:         _activeVehicle ? _activeVehicle.flying  : false
+    property bool   _vehicleLanding:        _activeVehicle ? _activeVehicle.landing  : false
     property bool   _vehiclePaused:         false
     property bool   _vehicleInMissionMode:  false
     property bool   _vehicleInRTLMode:      false
@@ -122,6 +124,7 @@ Item {
 
     // Called when an action is about to be executed in order to confirm
     function confirmAction(actionCode, actionData) {
+        closeAll()
         confirmDialog.action = actionCode
         confirmDialog.actionData = actionData
         _actionData = actionData
@@ -186,6 +189,8 @@ Item {
             confirmDialog.title = changeAltTitle
             confirmDialog.message = changeAltMessage
             confirmDialog.hideTrigger = Qt.binding(function() { return !showChangeAlt })
+            altitudeSlider.reset()
+            altitudeSlider.visible = true
             break;
         case actionGoto:
             confirmDialog.title = gotoTitle

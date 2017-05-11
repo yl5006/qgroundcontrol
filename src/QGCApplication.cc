@@ -51,6 +51,7 @@
 #include "ScreenToolsController.h"
 #include "QFileDialogController.h"
 #include "RCChannelMonitorController.h"
+#include "SyslinkComponentController.h"
 #include "AutoPilotPlugin.h"
 #include "VehicleComponent.h"
 #include "FirmwarePluginManager.h"
@@ -180,7 +181,6 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
     , _toolbox(NULL)
     , _bluetoothAvailable(false)
 {
-    Q_ASSERT(_app == NULL);
     _app = this;
 
     // This prevents usage of QQuickWidget to fail since it doesn't support native widget siblings
@@ -197,11 +197,11 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
         if (getuid() == 0) {
             QMessageBox msgBox;
             msgBox.setInformativeText(tr("You are running %1 as root. "
-                                      "You should not do this since it will cause other issues with %1. "
-                                      "%1 will now exit. "
-                                      "If you are having serial port issues on Ubuntu, execute the following commands to fix most issues:\n"
-                                      "sudo usermod -a -G dialout $USER\n"
-                                      "sudo apt-get remove modemmanager").arg(qgcApp()->applicationName()));
+                                         "You should not do this since it will cause other issues with %1. "
+                                         "%1 will now exit. "
+                                         "If you are having serial port issues on Ubuntu, execute the following commands to fix most issues:\n"
+                                         "sudo usermod -a -G dialout $USER\n"
+                                         "sudo apt-get remove modemmanager").arg(qgcApp()->applicationName()));
             msgBox.setStandardButtons(QMessageBox::Ok);
             msgBox.setDefaultButton(QMessageBox::Ok);
             msgBox.exec();
@@ -400,6 +400,7 @@ void QGCApplication::_initCommon(void)
     qmlRegisterType<RCChannelMonitorController>         ("QGroundControl.Controllers", 1, 0, "RCChannelMonitorController");
     qmlRegisterType<JoystickConfigController>           ("QGroundControl.Controllers", 1, 0, "JoystickConfigController");
     qmlRegisterType<LogDownloadController>              ("QGroundControl.Controllers", 1, 0, "LogDownloadController");
+    qmlRegisterType<SyslinkComponentController>         ("QGroundControl.Controllers", 1, 0, "SyslinkComponentController");
 #ifndef __mobile__
     qmlRegisterType<ViewWidgetController>           ("QGroundControl.Controllers", 1, 0, "ViewWidgetController");
     qmlRegisterType<CustomCommandWidgetController>  ("QGroundControl.Controllers", 1, 0, "CustomCommandWidgetController");
@@ -487,7 +488,6 @@ void QGCApplication::clearDeleteAllSettingsNextBoot(void)
 /// @brief Returns the QGCApplication object singleton.
 QGCApplication* qgcApp(void)
 {
-    Q_ASSERT(QGCApplication::_app);
     return QGCApplication::_app;
 }
 
@@ -626,19 +626,19 @@ void QGCApplication::reportMissingParameter(int componentId, const QString& name
 /// Called when the delay timer fires to show the missing parameters warning
 void QGCApplication::_missingParamsDisplay(void)
 {
-    Q_ASSERT(_missingParams.count());
-
-    QString params;
-    foreach (const QString &name, _missingParams) {
-        if (params.isEmpty()) {
-            params += name;
-        } else {
-            params += QString(", %1").arg(name);
+    if (_missingParams.count()) {
+        QString params;
+        foreach (const QString &name, _missingParams) {
+            if (params.isEmpty()) {
+                params += name;
+            } else {
+                params += QString(", %1").arg(name);
+            }
         }
-    }
-    _missingParams.clear();
+        _missingParams.clear();
 
-    showMessage(QString("Parameters are missing from firmware. You may be running a version of firmware QGC does not work correctly with or your firmware has a bug in it. Missing params: %1").arg(params));
+        showMessage(QString("Parameters are missing from firmware. You may be running a version of firmware QGC does not work correctly with or your firmware has a bug in it. Missing params: %1").arg(params));
+    }
 }
 
 QObject* QGCApplication::_rootQmlObject()

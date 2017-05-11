@@ -42,7 +42,7 @@ public:
     ///     Signals sendComplete when done
     virtual void sendToVehicle(const QGeoCoordinate& breachReturn, QmlObjectListModel& polygon);
 
-    /// Remove all fence related items from vehicle (does not affect paramters)
+    /// Remove all fence related items from vehicle (does not affect parameters)
     ///     Signals removeAllComplete when done
     virtual void removeAll(void);
 
@@ -96,8 +96,8 @@ signals:
     void polygonSupportedChanged        (bool polygonSupported);
     void polygonEnabledChanged          (bool polygonEnabled);
     void breachReturnSupportedChanged   (bool breachReturnSupported);
-    void removeAllComplete              (void);
-    void sendComplete                   (void);
+    void removeAllComplete              (bool error);
+    void sendComplete                   (bool error);
 
 protected:
     void _sendError(ErrorCode_t errorCode, const QString& errorMsg);

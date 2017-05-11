@@ -161,7 +161,7 @@ QGCView {
                 }
 
                 //-----------------------------------------------------------------
-                //-- Miscellanous
+                //-- Miscellaneous
                 Item {
                     width:                      _qgcView.width * 0.8
                     height:                     miscLabel.height
@@ -526,7 +526,7 @@ QGCView {
                         }
 
                         QGCLabel {
-                            text:               qsTr("Minumum observation duration:")
+                            text:               qsTr("Minimum observation duration:")
                         }
                         FactTextField {
                             fact:               QGroundControl.settingsManager.rtkSettings.surveyInMinObservationDuration
@@ -596,7 +596,7 @@ QGCView {
                     visible:                    false//QGroundControl.settingsManager.videoSettings.visible
                     QGCLabel {
                         id:             videoLabel
-                        text:           qsTr("Video (Requires Restart)")
+                        text:           qsTr("Video")
                         font.family:    ScreenTools.demiboldFontFamily
                     }
                 }

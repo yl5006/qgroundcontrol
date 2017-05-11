@@ -73,7 +73,10 @@ bool SensorsComponentController::usingUDPLink(void)
 /// Appends the specified text to the status log area in the ui
 void SensorsComponentController::_appendStatusLog(const QString& text)
 {
-    Q_ASSERT(_statusLog);
+    if (!_statusLog) {
+        qWarning() << "Internal error";
+        return;
+    }
     
     QVariant returnedValue;
     QVariant varText = text;
@@ -225,14 +228,17 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
     if (uasId != _vehicle->id()) {
         return;
     }
-    int p;
+    
     if (text.contains("progress <")) {
         QString percent = text.split("<").last().split(">").first();
         bool ok;
-        p = percent.toInt(&ok);
+        int p = percent.toInt(&ok);
         if (ok) {
-            Q_ASSERT(_progressBar);
-            _progressBar->setProperty("value", (float)(p / 100.0));
+            if (_progressBar) {
+                _progressBar->setProperty("value", (float)(p / 100.0));
+            } else {
+                qWarning() << "Internal error";
+            }
         }
         return;
     }
@@ -272,7 +278,6 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
         _startVisualCalibration();
         
         text = parts[1];
-      //  qDebug() << text;
         if (text == "accel" || text == "mag" || text == "gyro"|| text == "level") {
             // Reset all progress indication
             _orientationCalDownSideDone = false;
@@ -333,7 +338,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
                  _gyroCalInProgress = true;
                 _orientationCalDownSideVisible = true;
             }else {
-                Q_ASSERT(false);
+                qWarning() << "Unknown calibration message type" << text;
             }
             emit orientationCalSidesDoneChanged();
             emit orientationCalSidesVisibleChanged();

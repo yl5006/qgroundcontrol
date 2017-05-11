@@ -410,9 +410,9 @@ FlightMap {
         }
     }
 
-    // Camera points
+    // Camera trigger points
     MapItemView {
-        model: _missionController.cameraPoints
+        model: _activeVehicle ? _activeVehicle.cameraTriggerPoints : 0
 
         delegate: CameraTriggerIndicator {
             coordinate:     object.coordinate

@@ -327,6 +327,13 @@ bool MissionItem::load(const QJsonObject& json, int sequenceNumber, QString& err
         return false;
     }
 
+    for (int i=0; i<4; i++) {
+        if (rgParams[i].type() != QJsonValue::Double && rgParams[i].type() != QJsonValue::Null) {
+            errorString = tr("Param %1 incorrect type %2, must be double or null").arg(i+1).arg(rgParams[i].type());
+            return false;
+        }
+    }
+
     // Make sure to set these first since they can signal other changes
     setFrame((MAV_FRAME)v2Json[_jsonFrameKey].toInt());
     setCommand((MAV_CMD)v2Json[_jsonCommandKey].toInt());
@@ -347,13 +354,13 @@ bool MissionItem::load(const QJsonObject& json, int sequenceNumber, QString& err
     setSequenceNumber(sequenceNumber);
     setAutoContinue(v2Json[_jsonAutoContinueKey].toBool());
 
-    setParam1(rgParams[0].toDouble());
-    setParam2(rgParams[1].toDouble());
-    setParam3(rgParams[2].toDouble());
-    setParam4(rgParams[3].toDouble());
-    setParam8(rgParams[4].toDouble());
-    setParam9(rgParams[5].toDouble());
-    setParam10(rgParams[6].toDouble());
+    setParam1(JsonHelper::possibleNaNJsonValue(rgParams[0]));
+    setParam2(JsonHelper::possibleNaNJsonValue(rgParams[1]));
+    setParam3(JsonHelper::possibleNaNJsonValue(rgParams[2]));
+    setParam4(JsonHelper::possibleNaNJsonValue(rgParams[3]));
+    setParam8(JsonHelper::possibleNaNJsonValue(rgParams[4]);
+    setParam9(JsonHelper::possibleNaNJsonValue(rgParams[5]);
+    setParam10(JsonHelper::possibleNaNJsonValue(rgParams[6]);
 
     return true;
 }

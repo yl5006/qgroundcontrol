@@ -203,18 +203,20 @@ void RallyPointController::_managerLoadComplete(const QList<QGeoCoordinate> rgPo
     _itemsRequested = false;
 }
 
-void RallyPointController::_managerSendComplete(void)
+void RallyPointController::_managerSendComplete(bool error)
 {
     // Fly view always reloads after send
-    if (_editMode) {
+    if (!error && _editMode) {
         showPlanFromManagerVehicle();
     }
 }
 
-void RallyPointController::_managerRemoveAllComplete(void)
+void RallyPointController::_managerRemoveAllComplete(bool error)
 {
-    // Remove all from vehicle so we always update
-    showPlanFromManagerVehicle();
+    if (!error) {
+        // Remove all from vehicle so we always update
+        showPlanFromManagerVehicle();
+    }
 }
 
 void RallyPointController::addPoint(QGeoCoordinate point)
@@ -284,7 +286,7 @@ bool RallyPointController::showPlanFromManagerVehicle (void)
     qCDebug(RallyPointControllerLog) << "showPlanFromManagerVehicle _editMode" << _editMode;
     if (_masterController->offline()) {
         qCWarning(RallyPointControllerLog) << "RallyPointController::showPlanFromManagerVehicle called while offline";
-        return true;    // stops further propogation of showPlanFromManagerVehicle due to error
+        return true;    // stops further propagation of showPlanFromManagerVehicle due to error
     } else {
         if (!_managerVehicle->initialPlanRequestComplete()) {
             // The vehicle hasn't completed initial load, we can just wait for loadComplete to be signalled automatically

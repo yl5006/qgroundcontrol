@@ -351,10 +351,16 @@ int MissionController::insertComplexMissionItem(QString itemName, QGeoCoordinate
         bool rollSupported = false;
         bool pitchSupported = false;
         bool yawSupported = false;
+        MissionSettingsItem* settingsItem = _visualItems->value<MissionSettingsItem*>(0);
+        CameraSection* cameraSection = settingsItem->cameraSection();
+        // Set camera to photo mode (leave alone if user already specified)
+        if (!cameraSection->specifyCameraMode()) {
+            cameraSection->setSpecifyCameraMode(true);
+            cameraSection->cameraMode()->setRawValue(0);
+        }
+        // Point gimbal straight down
         if (_controllerVehicle->firmwarePlugin()->hasGimbal(_controllerVehicle, rollSupported, pitchSupported, yawSupported) && pitchSupported) {
-            MissionSettingsItem* settingsItem = _visualItems->value<MissionSettingsItem*>(0);
             // If the user already specified a gimbal angle leave it alone
-            CameraSection* cameraSection = settingsItem->cameraSection();
             if (!cameraSection->specifyGimbal()) {
                 cameraSection->setSpecifyGimbal(true);
                 cameraSection->gimbalPitch()->setRawValue(-90.0);
@@ -399,17 +405,20 @@ void MissionController::removeMissionItem(int index)
             }
         }
 
-        // If there is no longer a survey item in the mission remove the gimbal pitch command
+        // If there is no longer a survey item in the mission remove added commands
         if (!foundSurvey) {
             bool rollSupported = false;
             bool pitchSupported = false;
             bool yawSupported = false;
+            MissionSettingsItem* settingsItem = _visualItems->value<MissionSettingsItem*>(0);
+            CameraSection* cameraSection = settingsItem->cameraSection();
             if (_controllerVehicle->firmwarePlugin()->hasGimbal(_controllerVehicle, rollSupported, pitchSupported, yawSupported) && pitchSupported) {
-                MissionSettingsItem* settingsItem = _visualItems->value<MissionSettingsItem*>(0);
-                CameraSection* cameraSection = settingsItem->cameraSection();
                 if (cameraSection->specifyGimbal() && cameraSection->gimbalPitch()->rawValue().toDouble() == -90.0 && cameraSection->gimbalYaw()->rawValue().toDouble() == 0.0) {
                     cameraSection->setSpecifyGimbal(false);
                 }
+            }
+            if (cameraSection->specifyCameraMode() && cameraSection->cameraMode()->rawValue().toInt() == 0) {
+                cameraSection->setSpecifyCameraMode(false);
             }
         }
     }
@@ -536,7 +545,7 @@ bool MissionController::_loadJsonMissionFileV2(const QJsonObject& json, QmlObjec
         { _jsonPlannedHomePositionKey,      QJsonValue::Array,  true },
         { _jsonItemsKey,                    QJsonValue::Array,  true },
         { _jsonFirmwareTypeKey,             QJsonValue::Double, true },
-        { _jsonVehicleTypeKey,              QJsonValue::Double, true },
+        { _jsonVehicleTypeKey,              QJsonValue::Double, false },
         { _jsonCruiseSpeedKey,              QJsonValue::Double, false },
         { _jsonHoverSpeedKey,               QJsonValue::Double, false },
     };
@@ -551,8 +560,10 @@ bool MissionController::_loadJsonMissionFileV2(const QJsonObject& json, QmlObjec
 
     if (_masterController->offline()) {
         // We only update if offline since if we are online we use the online vehicle settings
-        appSettings->offlineEditingFirmwareType()->setRawValue(AppSettings::offlineEditingFirmwareTypeFromFirmwareType((MAV_AUTOPILOT)json[_jsonVehicleTypeKey].toInt()));
-        appSettings->offlineEditingVehicleType()->setRawValue(AppSettings::offlineEditingVehicleTypeFromVehicleType((MAV_TYPE)json[_jsonVehicleTypeKey].toInt()));
+        appSettings->offlineEditingFirmwareType()->setRawValue(AppSettings::offlineEditingFirmwareTypeFromFirmwareType((MAV_AUTOPILOT)json[_jsonFirmwareTypeKey].toInt()));
+        if (json.contains(_jsonVehicleTypeKey)) {
+            appSettings->offlineEditingVehicleType()->setRawValue(AppSettings::offlineEditingVehicleTypeFromVehicleType((MAV_TYPE)json[_jsonVehicleTypeKey].toInt()));
+        }
     }
     if (json.contains(_jsonCruiseSpeedKey)) {
         appSettings->offlineEditingCruiseSpeed()->setRawValue(json[_jsonCruiseSpeedKey].toDouble());
@@ -1180,7 +1191,7 @@ void MissionController::_recalcMissionFlightStatus()
         }
 
         // Look for gimbal change
-        if (_controllerVehicle->vehicleYawsToNextWaypointInMission()) {
+        if (_managerVehicle->vehicleYawsToNextWaypointInMission()) {
             // We current only support gimbal display in this mode
             double gimbalYaw = item->specifiedGimbalYaw();
             if (!qIsNaN(gimbalYaw)) {
@@ -1508,7 +1519,7 @@ void MissionController::managerVehicleChanged(Vehicle* managerVehicle)
 
     _managerVehicle = managerVehicle;
     if (!_managerVehicle) {
-        qWarning() << "RallyPointController::managerVehicleChanged managerVehicle=NULL";
+        qWarning() << "MissionController::managerVehicleChanged managerVehicle=NULL";
         return;
     }
 
@@ -1521,7 +1532,6 @@ void MissionController::managerVehicleChanged(Vehicle* managerVehicle)
     connect(_missionManager, &MissionManager::currentIndexChanged,      this, &MissionController::_currentMissionIndexChanged);
     connect(_missionManager, &MissionManager::lastCurrentIndexChanged,  this, &MissionController::resumeMissionIndexChanged);
     connect(_missionManager, &MissionManager::resumeMissionReady,       this, &MissionController::resumeMissionReady);
-    connect(_missionManager, &MissionManager::cameraFeedback,           this, &MissionController::_cameraFeedback);
     connect(_managerVehicle, &Vehicle::homePositionChanged,             this, &MissionController::_managerVehicleHomePositionChanged);
     connect(_managerVehicle, &Vehicle::defaultCruiseSpeedChanged,       this, &MissionController::_recalcMissionFlightStatus);
     connect(_managerVehicle, &Vehicle::defaultHoverSpeedChanged,        this, &MissionController::_recalcMissionFlightStatus);
@@ -1804,19 +1814,6 @@ void MissionController::applyDefaultMissionAltitude(void)
     }
 }
 
-void MissionController::_cameraFeedback(QGeoCoordinate imageCoordinate, int index)
-{
-    Q_UNUSED(index);
-    if (!_editMode) {
-        _cameraPoints.append(new QGCQGeoCoordinate(imageCoordinate, this));
-    }
-}
-
-void MissionController::clearCameraPoints(void)
-{
-    _cameraPoints.clearAndDeleteContents();
-}
-
 void MissionController::_progressPctChanged(double progressPct)
 {
     if (!qFuzzyCompare(progressPct, _progressPct)) {
@@ -1836,7 +1833,7 @@ bool MissionController::showPlanFromManagerVehicle (void)
     qCDebug(MissionControllerLog) << "showPlanFromManagerVehicle" << _editMode;
     if (_masterController->offline()) {
         qCWarning(MissionControllerLog) << "MissionController::showPlanFromManagerVehicle called while offline";
-        return true;    // stops further propogation of showPlanFromManagerVehicle due to error
+        return true;    // stops further propagation of showPlanFromManagerVehicle due to error
     } else {
         if (!_managerVehicle->initialPlanRequestComplete()) {
             // The vehicle hasn't completed initial load, we can just wait for newMissionItemsAvailable to be signalled automatically
@@ -1856,16 +1853,18 @@ bool MissionController::showPlanFromManagerVehicle (void)
     }
 }
 
-void MissionController::_managerSendComplete(void)
+void MissionController::_managerSendComplete(bool error)
 {
-    // FLy view always reloads on send complete
-    if (!_editMode) {
+    // Fly view always reloads on send complete
+    if (!error && !_editMode) {
         showPlanFromManagerVehicle();
     }
 }
 
-void MissionController::_managerRemoveAllComplete(void)
+void MissionController::_managerRemoveAllComplete(bool error)
 {
-    // Remove all from vehicle so we always update
-    showPlanFromManagerVehicle();
+    if (!error) {
+        // Remove all from vehicle so we always update
+        showPlanFromManagerVehicle();
+    }
 }

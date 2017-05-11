@@ -240,7 +240,8 @@ QGCView {
         id:             fileDialog
         qgcView:        _qgcView
         folder:         QGroundControl.settingsManager.appSettings.missionSavePath
-        fileExtension:  masterController.fileExtension
+        fileExtension:  QGroundControl.settingsManager.appSettings.planFileExtension
+        fileExtension2: QGroundControl.settingsManager.appSettings.missionFileExtension
 
         onAcceptedForSave: {
             masterController.saveToFile(file)
@@ -534,21 +535,22 @@ QGCView {
 
             // Add the mission item visuals to the map
             Repeater {
-                model: _missionController.visualItems
+                model: _editingLayer == _layerMission ? _missionController.visualItems : undefined
 
                 delegate: MissionItemMapVisual {
                     map:        editorMap
                     onClicked:  setCurrentItem(sequenceNumber, false)
+                    visible:    _editingLayer == _layerMission
                 }
             }
 
             // Add lines between waypoints
             MissionLineView {
-                model:      _editingLayer == _layerMission ? _missionController.waypointLines : undefined
+                model: _editingLayer == _layerMission ? _missionController.waypointLines : undefined
             }
            // Add lines between jumpwaypoints
             MissionLineView {
-                    model:      _editingLayer == _layerMission ? _missionController.jumpwaypointLines : undefined
+                model: _editingLayer == _layerMission ? _missionController.jumpwaypointLines : undefined
            }
 
            MapPolyline {
