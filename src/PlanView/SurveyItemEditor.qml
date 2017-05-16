@@ -1,6 +1,8 @@
 ﻿import QtQuick          2.3
 import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs  1.2
+import QtQuick.Extras   1.4
 import QtQuick.Layouts  1.2
 
 import QGroundControl               1.0
@@ -425,8 +427,35 @@ Rectangle {
                 columns:        2
                 visible:        gridHeader.checked
 
-                QGCLabel { text: qsTr("角度") }
+                GridLayout {
+                    anchors.left:   parent.left
+                    anchors.right:  parent.right
+                    columnSpacing:  _margin
+                    rowSpacing:     _margin
+                    columns:        2
+                    visible:        gridHeader.checked
+
+                    QGCLabel {
+                        id:                 angleText
+                        text:               qsTr("角度")
+                        Layout.fillWidth:   true
+                    }
+
+                    ToolButton {
+                        id:                     windRoseButton
+                        anchors.verticalCenter: angleText.verticalCenter
+                        iconSource:             qgcPal.globalTheme === QGCPalette.Light ? "/res/wind-roseBlack.svg" : "/res/wind-rose.svg"
+                        visible:                _vehicle.fixedWing
+
+                        onClicked: {
+                            var cords = windRoseButton.mapToItem(_root, 0, 0)
+                            windRosePie.popup(cords.x + windRoseButton.width / 2, cords.y + windRoseButton.height / 2);
+                        }
+                    }
+                }
+
                 FactTextField {
+                    id:                 gridAngleText
                     fact:               missionItem.gridAngle
                     Layout.fillWidth:   true
                 }
@@ -439,9 +468,9 @@ Rectangle {
 
                 QGCCheckBox {
                     text:       qsTr("以90度偏移重飞该区域")
-                    checked:    missionItem.refly90Degrees
-                    onClicked:  missionItem.refly90Degrees = checked
-                    Layout.columnSpan: 2
+                    checked:            missionItem.refly90Degrees
+                    onClicked:          missionItem.refly90Degrees = checked
+                    Layout.columnSpan:  2
                 }
 
                 QGCLabel {
@@ -488,31 +517,77 @@ Rectangle {
             visible:    gridTypeCombo.currentIndex == _gridTypeManual
         }
 
-        Column {
+        GridLayout {
             anchors.left:   parent.left
             anchors.right:  parent.right
-            spacing:        _margin
+            columnSpacing:  _margin
+            rowSpacing:     _margin
+            columns:        2
             visible:        manualGridHeader.visible && manualGridHeader.checked
 
-            FactTextFieldGrid {
-                anchors.left:   parent.left
-                anchors.right:  parent.right
-                columnSpacing:  ScreenTools.defaultFontPixelWidth
-                rowSpacing:     _margin
-                factList:       [ missionItem.gridAngle, missionItem.gridSpacing, missionItem.gridAltitude,missionItem.gridSpeed, missionItem.turnaroundDist ]
-                factLabels:     [ qsTr("角度"), qsTr("间隔"), qsTr("高度"),qsTr("速度"), qsTr("转弯距离")]
+            RowLayout {
+                spacing: _margin
+
+                QGCLabel {
+                    id:                 manualAngleText
+                    text:               qsTr("角度")
+                    Layout.fillWidth:  true
+                }
+
+                ToolButton {
+                    id:                     manualWindRoseButton
+                    anchors.verticalCenter: manualAngleText.verticalCenter
+                    Layout.columnSpan:      1
+                    iconSource:             qgcPal.globalTheme === QGCPalette.Light ? "/res/wind-roseBlack.svg" : "/res/wind-rose.svg"
+                    visible:                _vehicle.fixedWing
+
+                    onClicked: {
+                        var cords = manualWindRoseButton.mapToItem(_root, 0, 0)
+                        windRosePie.popup(cords.x + manualWindRoseButton.width / 2, cords.y + manualWindRoseButton.height / 2);
+                    }
+                }
+            }
+
+            FactTextField {
+                id:                 manualGridAngleText
+                fact:               missionItem.gridAngle
+                Layout.fillWidth:   true
+            }
+
+            QGCLabel { text: qsTr("间隔") }
+            FactTextField {
+                fact:                   missionItem.gridSpacing
+                Layout.fillWidth:       true
+            }
+
+            QGCLabel { text: qsTr("高度") }
+            FactTextField {
+                fact:                   missionItem.gridAltitude
+                Layout.fillWidth:       true
+            }
+	    QGCLabel { text: qsTr("速度") }
+            FactTextField {
+                fact:                   missionItem.gridSpeed
+                Layout.fillWidth:       true
+            }
+            QGCLabel { text: qsTr("转弯距离") }
+            FactTextField {
+                fact:                   missionItem.turnaroundDist
+                Layout.fillWidth:       true
             }
 
             QGCCheckBox {
                 text:       qsTr("以90度偏移重飞该区域")
-                checked:    missionItem.refly90Degrees
-                onClicked:  missionItem.refly90Degrees = checked
+                checked:            missionItem.refly90Degrees
+                onClicked:          missionItem.refly90Degrees = checked
+                Layout.columnSpan:  2
             }
 
             FactCheckBox {
-                anchors.left:   parent.left
+                anchors.left:       parent.left
                 text:           qsTr("高度参考Home")
-                fact:           missionItem.gridAltitudeRelative
+                fact:               missionItem.gridAltitudeRelative
+                Layout.columnSpan:  2
             }
         }
 
@@ -545,6 +620,114 @@ Rectangle {
                     }
                     return timeVal.toFixed(1) + " " + qsTr("s")
                 }
+            }
+        }
+    }
+
+    QGCColoredImage {
+        id:      windRoseArrow
+        source:  "/res/wind-rose-arrow.svg"
+        visible: windRosePie.visible
+        width:   windRosePie.width / 5
+        height:  width * 1.454
+        smooth:  true
+        color:   qgcPal.colorGrey
+        transform: Rotation {
+            origin.x: windRoseArrow.width / 2
+            origin.y: windRoseArrow.height / 2
+            axis { x: 0; y: 0; z: 1 } angle: windRosePie.angle
+        }
+        x: windRosePie.x + Math.sin(- windRosePie.angle*Math.PI/180 - Math.PI/2)*(windRosePie.width/2 - windRoseArrow.width/2) + windRosePie.width / 2 - windRoseArrow.width / 2
+        y: windRosePie.y + Math.cos(- windRosePie.angle*Math.PI/180 - Math.PI/2)*(windRosePie.width/2 - windRoseArrow.width/2) + windRosePie.height / 2 - windRoseArrow.height / 2
+        z: windRosePie.z + 1
+    }
+
+    QGCColoredImage {
+        id:      windGuru
+        source:  "/res/wind-guru.svg"
+        visible: windRosePie.visible
+        width:   windRosePie.width / 3
+        height:  width * 4.28e-1
+        smooth:  true
+        color:   qgcPal.colorGrey
+        transform: Rotation {
+            origin.x: windGuru.width / 2
+            origin.y: windGuru.height / 2
+            axis { x: 0; y: 0; z: 1 } angle: windRosePie.angle + 180
+        }
+        x: windRosePie.x + Math.sin(- windRosePie.angle*Math.PI/180 - 3*Math.PI/2)*(windRosePie.width/2) + windRosePie.width / 2 - windGuru.width / 2
+        y: windRosePie.y + Math.cos(- windRosePie.angle*Math.PI/180 - 3*Math.PI/2)*(windRosePie.height/2) + windRosePie.height / 2 - windGuru.height / 2
+        z: windRosePie.z + 1
+    }
+
+    Item {
+        id:          windRosePie
+        height:      2.6*windRoseButton.height
+        width:       2.6*windRoseButton.width
+        visible:     false
+        focus:       true
+
+        property string colorCircle: qgcPal.windowShade
+        property string colorBackground: qgcPal.colorGrey
+        property real lineWidth: windRoseButton.width / 3
+        property real angle: 0
+
+        Canvas {
+            id: windRoseCanvas
+            anchors.fill: parent
+
+            onPaint: {
+                var ctx = getContext("2d")
+                var x = width / 2
+                var y = height / 2
+                var angleWidth = 0.03 * Math.PI
+                var start = windRosePie.angle*Math.PI/180 - angleWidth
+                var end = windRosePie.angle*Math.PI/180 + angleWidth
+                ctx.reset()
+
+                ctx.beginPath();
+                ctx.arc(x, y, (width / 3) - windRosePie.lineWidth / 2, 0, 2*Math.PI, false)
+                ctx.lineWidth = windRosePie.lineWidth
+                ctx.strokeStyle = windRosePie.colorBackground
+                ctx.stroke()
+
+                ctx.beginPath();
+                ctx.arc(x, y, (width / 3) - windRosePie.lineWidth / 2, start, end, false)
+                ctx.lineWidth = windRosePie.lineWidth
+                ctx.strokeStyle = windRosePie.colorCircle
+                ctx.stroke()
+            }
+        }
+
+        onFocusChanged: {
+            visible = focus
+        }
+
+        function popup(x, y) {
+            if (x !== undefined)
+                windRosePie.x = x - windRosePie.width / 2;
+            if (y !== undefined)
+                windRosePie.y = y - windRosePie.height / 2;
+
+            windRosePie.visible = true;
+            windRosePie.focus = true
+        }
+
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+            onClicked: {
+                windRosePie.visible = false;
+            }
+            onPositionChanged: {
+                var point = Qt.point(mouseX - parent.width / 2, mouseY - parent.height / 2)
+                var angle = Math.round(Math.atan2(point.y, point.x) * 180 / Math.PI)
+                windRoseCanvas.requestPaint()
+                windRosePie.angle = angle
+                gridAngleText.text = angle
+                gridAngleText.editingFinished();
             }
         }
     }

@@ -462,6 +462,8 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory  { APMFirmwarePlugin {
 
 HEADERS += \
     src/AnalyzeView/ExifParser.h \
+    src/AnalyzeView/ULogParser.h \
+    src/AnalyzeView/PX4LogParser.h \
     src/CmdLineOptParser.h \
     src/FirmwarePlugin/PX4/px4_custom_mode.h \
     src/FlightDisplay/VideoManager.h \
@@ -527,6 +529,7 @@ HEADERS += \
     src/Settings/AppSettings.h \
     src/Settings/AutoConnectSettings.h \
     src/Settings/FlightMapSettings.h \
+    src/Settings/GuidedSettings.h \
     src/Settings/RTKSettings.h \
     src/Settings/SettingsGroup.h \
     src/Settings/SettingsManager.h \
@@ -649,6 +652,8 @@ AndroidBuild {
 
 SOURCES += \
     src/AnalyzeView/ExifParser.cc \
+    src/AnalyzeView/ULogParser.cc \
+    src/AnalyzeView/PX4LogParser.cc \
     src/CmdLineOptParser.cc \
     src/FlightDisplay/VideoManager.cc \
     src/FlightMap/Widgets/ValuesWidgetController.cc \
@@ -709,6 +714,7 @@ SOURCES += \
     src/Settings/AppSettings.cc \
     src/Settings/AutoConnectSettings.cc \
     src/Settings/FlightMapSettings.cc \
+    src/Settings/GuidedSettings.cc \
     src/Settings/RTKSettings.cc \
     src/Settings/SettingsGroup.cc \
     src/Settings/SettingsManager.cc \

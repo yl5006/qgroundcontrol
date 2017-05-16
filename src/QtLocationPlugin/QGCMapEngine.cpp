@@ -15,6 +15,9 @@
  *   @author Gus Grubba <mavlink@grubba.com>
  *
  */
+#include "QGCApplication.h"
+#include "AppSettings.h"
+#include "SettingsManager.h"
 
 #include <math.h>
 #include <QSettings>
@@ -56,9 +59,9 @@ stQGeoTileCacheQGCMapTypes kMapTypes[] = {
     {"Gaode Terrain Map",       UrlFactory::GaodeTerrain},
 
     {"Statkart Topo2",          UrlFactory::StatkartTopo},   
+    /*
     {"MapQuest Street Map",     UrlFactory::MapQuestMap},
     {"MapQuest Satellite Map",  UrlFactory::MapQuestSat}
-    /*
     {"Open Street Map",         UrlFactory::OpenStreetMap}
      */
 };
@@ -84,7 +87,14 @@ stQGeoTileCacheQGCMapTypes kMapBoxTypes[] = {
 
 #define NUM_MAPBOXMAPS (sizeof(kMapBoxTypes) / sizeof(stQGeoTileCacheQGCMapTypes))
 
-static const char* kMapBoxTokenKey  = "MapBoxToken";
+stQGeoTileCacheQGCMapTypes kEsriTypes[] = {
+    {"Esri Street Map",       UrlFactory::EsriWorldStreet},
+    {"Esri Satellite Map",    UrlFactory::EsriWorldSatellite},
+    {"Esri Terrain Map",      UrlFactory::EsriTerrain}
+};
+
+#define NUM_ESRIMAPS (sizeof(kEsriTypes) / sizeof(stQGeoTileCacheQGCMapTypes))
+
 static const char* kMaxDiskCacheKey = "MaxDiskCache";
 static const char* kMaxMemCacheKey  = "MaxMemoryCache";
 
@@ -326,6 +336,10 @@ QGCMapEngine::getTypeFromName(const QString& name)
         if(name.compare(kMapBoxTypes[i].name, Qt::CaseInsensitive) == 0)
             return kMapBoxTypes[i].type;
     }
+    for(i = 0; i < NUM_ESRIMAPS; i++) {
+        if(name.compare(kEsriTypes[i].name, Qt::CaseInsensitive) == 0)
+            return kEsriTypes[i].type;
+    }
     return UrlFactory::Invalid;
 }
 
@@ -337,32 +351,17 @@ QGCMapEngine::getMapNameList()
     for(size_t i = 0; i < NUM_MAPS; i++) {
         mapList << kMapTypes[i].name;
     }
-    if(!getMapBoxToken().isEmpty()) {
+    if(!qgcApp()->toolbox()->settingsManager()->appSettings()->mapboxToken()->rawValue().toString().isEmpty()) {
         for(size_t i = 0; i < NUM_MAPBOXMAPS; i++) {
             mapList << kMapBoxTypes[i].name;
         }
     }
-    return mapList;
-}
-
-//-----------------------------------------------------------------------------
-void
-QGCMapEngine::setMapBoxToken(const QString& token)
-{
-    QSettings settings;
-    settings.setValue(kMapBoxTokenKey, token);
-    _mapBoxToken = token;
-}
-
-//-----------------------------------------------------------------------------
-QString
-QGCMapEngine::getMapBoxToken()
-{
-    if(_mapBoxToken.isEmpty()) {
-        QSettings settings;
-        _mapBoxToken = settings.value(kMapBoxTokenKey).toString();
+    if(!qgcApp()->toolbox()->settingsManager()->appSettings()->esriToken()->rawValue().toString().isEmpty()) {
+        for(size_t i = 0; i < NUM_ESRIMAPS; i++) {
+            mapList << kEsriTypes[i].name;
+        }
     }
-    return _mapBoxToken;
+    return mapList;
 }
 
 //-----------------------------------------------------------------------------
@@ -471,10 +470,15 @@ QGCMapEngine::concurrentDownloads(UrlFactory::MapType type)
     case UrlFactory::BingSatellite:
     case UrlFactory::BingHybrid:
     case UrlFactory::StatkartTopo:
+    case UrlFactory::EsriWorldStreet:
+    case UrlFactory::EsriWorldSatellite:
+    case UrlFactory::EsriTerrain:
         return 12;
+    /*
     case UrlFactory::MapQuestMap:
     case UrlFactory::MapQuestSat:
         return 8;
+    */
     default:
         break;
     }
