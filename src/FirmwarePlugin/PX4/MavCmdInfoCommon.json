@@ -40,6 +40,11 @@
             "paramRemove":  "2,3,4"
         },
         {
+            "id":           400,
+            "comment":      "MAV_CMD_COMPONENT_ARM_DISARM",
+            "paramRemove":  "2,3,4"
+        },
+        {
             "id":           214,
             "comment":      "MAV_CMD_DO_CAM",
             "paramRemove":  "2,4"

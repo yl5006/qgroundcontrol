@@ -68,6 +68,8 @@ Canvas {
             case 178:  //MAV_CMD_DO_CHANGE_SPEED
             case 183:  //MAV_CMD_DO_SET_SERVO
                return   checked  ? "/qmlimages/WaySet.svg" : "/qmlimages/WaySet0.svg"
+            case 400:  //MAV_CMD_DO_ARM_DISARM
+               return   checked  ?"/qmlimages/parachute1.svg" :"/qmlimages/parachute0.svg"
             default:
                return   checked  ? "/qmlimages/Waypoint.svg" : "/qmlimages/Waypoint0.svg"
         }

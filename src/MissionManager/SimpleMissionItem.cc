@@ -547,7 +547,7 @@ void SimpleMissionItem::_rebuildComboBoxFacts(void)
         _comboboxFacts.append(&_missionItem._commandFact);
         _comboboxFacts.append(&_missionItem._frameFact);
     } else {
-        Fact*           rgParamFacts[10] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact, &_missionItem._param8Fact, &_missionItem._param8Fact, &_missionItem._param10Fact };
+        Fact*           rgParamFacts[10] =       { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact, &_missionItem._param8Fact, &_missionItem._param9Fact, &_missionItem._param10Fact };
         FactMetaData*   rgParamMetaData[10] =    { &_param1MetaData, &_param2MetaData, &_param3MetaData, &_param4MetaData, &_param5MetaData, &_param6MetaData, &_param7MetaData, &_param8MetaData, &_param9MetaData, &_param10MetaData };
 
         MAV_CMD command;

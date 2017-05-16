@@ -266,8 +266,8 @@ QList<MAV_CMD> PX4FirmwarePlugin::supportedMissionCommands(void)
          << MAV_CMD_DO_JUMP
          << MAV_CMD_DO_VTOL_TRANSITION << MAV_CMD_NAV_VTOL_TAKEOFF << MAV_CMD_NAV_VTOL_LAND
          << MAV_CMD_DO_DIGICAM_CONTROL
-         << MAV_CMD_DO_SET_CAM_TRIGG_DIST << MAV_CMD_DO_CAM << MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL << MAV_CMD_NAV_RETURN_TO_WP_LANUCH
-         << MAV_CMD_DO_SET_SERVO
+         << MAV_CMD_DO_SET_CAM_TRIGG_DIST << MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL<< MAV_CMD_DO_CAM  << MAV_CMD_NAV_RETURN_TO_WP_LANUCH
+         << MAV_CMD_DO_SET_SERVO << MAV_CMD_COMPONENT_ARM_DISARM
          << MAV_CMD_DO_CHANGE_SPEED
          << MAV_CMD_DO_LAND_START
          << MAV_CMD_DO_MOUNT_CONFIGURE
@@ -438,13 +438,17 @@ void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitu
     // Don't allow altitude to fall below 3 meters above home
     double currentAltRel = vehicle->altitudeRelative()->rawValue().toDouble();
     double newAltRel = currentAltRel;
+    if(altitudeChange<3)
+    {
+        altitudeChange=3;
+    }
     if (altitudeChange <= 0 && currentAltRel <= 3) {
         return;
     }
     if (currentAltRel + altitudeChange < 3) {
         altitudeChange = 3 - currentAltRel;
     }
-    newAltRel = currentAltRel + altitudeChange;
+    newAltRel = /*currentAltRel + */altitudeChange;
 
     vehicle->sendMavCommand(vehicle->defaultComponentId(),
                             MAV_CMD_DO_REPOSITION,

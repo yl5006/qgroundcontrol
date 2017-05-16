@@ -979,7 +979,7 @@
             }
         },
         {
-            "id":                   214,
+            "id":                   215,
             "rawName":              "MAV_CMD_DO_CAM",
             "friendlyName":         "航点拍照",
             "description":          "在此航点拍照.",
@@ -1000,8 +1000,8 @@
             }
         },
         {
-            "id":                   215,
-            "rawName":              "MAV_CMD_DO_TIME_CAM",
+            "id":                   214,
+            "rawName":              "MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL",
             "friendlyName":         "定时拍照",
             "description":          "定时拍照",
             "specifiesCoordinate":  true,
@@ -1074,9 +1074,43 @@
         { "id": 246, "rawName": "MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN", "friendlyName": "Reboot/Shutdown vehicle" },
         { "id": 252, "rawName": "MAV_CMD_OVERRIDE_GOTO", "friendlyName": "Override goto" },
         { "id": 300, "rawName": "MAV_CMD_MISSION_START", "friendlyName": "Mission start" },
-        { "id": 400, "rawName": "MAV_CMD_COMPONENT_ARM_DISARM", "friendlyName": "Arm/Disarm" },
+        {
+            "id":                   400,
+            "rawName":              "MAV_CMD_COMPONENT_ARM_DISARM",
+            "friendlyName":         "电机停转开伞",
+            "description":          "电机停转加锁开伞,模式切换至增稳，注意坠机",
+            "specifiesCoordinate":  true,
+            "friendlyEdit":         true,
+            "category":             "飞行控制",
+            "param1": {
+                "label":            "停留:",
+                "units":            "secs",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param4": {
+                "label":            "机头:",
+                "units":            "radians",
+                "nanUnchanged":     true,
+                "decimalPlaces":    2
+            },
+            "param8": {
+                "label":            "停转:",
+                "enumStrings":      "是,否",
+                "enumValues":       "0,1",
+                "decimalPlaces":    0,
+                "default":          0
+            },
+            "param9": {
+                "label":            "开伞:",
+                "enumStrings":      "不开,开",
+                "enumValues":       "0,21196",
+                "decimalPlaces":    0,
+                "default":          21196
+            }
+        },
         { "id": 410, "rawName": "MAV_CMD_GET_HOME_POSITION", "friendlyName": "Get home position" },
-        { "id": 500, "rawName": "MAV_CMD_START_RX_PAIR", "friendlyName": "Bind Spektrum receiver" },
+        { "id": 500, "rawName": "MAV_CMD_START_RX_PAIR", "friendlyName": "B ind Spektrum receiver" },
         { "id": 510, "rawName": "MAV_CMD_GET_MESSAGE_INTERVAL", "friendlyName": "Get message interval" },
         { "id": 511, "rawName": "MAV_CMD_SET_MESSAGE_INTERVAL", "friendlyName": "Set message interval" },
         { "id": 520, "rawName": "MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES", "friendlyName": "Get capabilities" },
