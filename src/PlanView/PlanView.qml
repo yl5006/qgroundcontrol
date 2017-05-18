@@ -60,7 +60,7 @@ QGCView {
     readonly property string    _armedVehicleUploadPrompt:  qsTr("Vehicle is currently armed. Do you want to upload the mission to the vehicle?")
     property var coordinateruler1   :               editorMap.center
     property var coordinateruler2   :               editorMap.center
-    property bool firstpoint        :               true
+    property bool firstpoint        :               false
     property Fact _mapType:                         QGroundControl.settingsManager.flightMapSettings.mapType
     Component.onCompleted: {
 //        toolbar.planMasterController =  Qt.binding(function () { return _planMasterController })
@@ -492,6 +492,8 @@ QGCView {
                 //-- It's a whole lot faster to just fill parent and deal with top offset below
                 //   than computing the coordinate offset.
                 anchors.fill: parent
+                acceptedButtons:    Qt.LeftButton | Qt.RightButton
+                hoverEnabled:       true
                 onClicked: {
                     //-- Don't pay attention to items beneath the toolbar.
                     var topLimit = parent.height - ScreenTools.availableHeight
@@ -510,15 +512,14 @@ QGCView {
                             insertSimpleMissionItem(coordinate, _missionController.visualItems.count)
                         }
                         else if(ruler.checked)
-                        {   if(firstpoint)
-                            {
+                        {
+                            if (mouse.button == Qt.LeftButton){
                                 coordinateruler1 = coordinate
-                                firstpoint=false
+                                firstpoint=true
                             }
                             else
                             {
-                                coordinateruler2 = coordinate
-                                firstpoint=true
+                                firstpoint=false
                             }
                         }
                         break
@@ -529,6 +530,14 @@ QGCView {
                         break
                     }
                 }
+                onPositionChanged:{
+                    if(firstpoint&&ruler.checked)
+                    {
+                        var coordinate = editorMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
+                        coordinateruler2 = coordinate
+                    }
+                }
+
             }
 
             // Add the mission item visuals to the map
@@ -554,7 +563,7 @@ QGCView {
            MapPolyline {
                         line.width: 3
                         line.color: qgcPal.warningText
-                        visible:    ruler.checked&&firstpoint
+                        visible:    ruler.checked
                         z:          QGroundControl.zOrderTrajectoryLines
                         path: [
                             coordinateruler1,
@@ -914,7 +923,6 @@ QGCView {
                     onClicked:  {
                         addMissionItemsButton.checked = false
                         _addWaypointOnClick = false
-                        firstpoint=!addMissionItemsButton.checked
                     }
                 }
                 Rectangle {
@@ -969,8 +977,9 @@ QGCView {
                 anchors.topMargin:    ScreenTools.defaultFontPixelHeight
                 anchors.top:          toolColumn.bottom
                 anchors.horizontalCenter:   toolColumn.horizontalCenter
-                visible:            ruler.checked&&firstpoint
+                visible:            ruler.checked
                 text:               "距离:"+coordinateruler1.distanceTo(coordinateruler2).toFixed(1)+"m 角度:"+Math.round(coordinateruler1.azimuthTo(coordinateruler2))
+                color:              qgcPal.warningText
             }
         } // FlightMap
 

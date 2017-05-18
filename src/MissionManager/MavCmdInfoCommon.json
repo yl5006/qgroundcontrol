@@ -974,18 +974,18 @@
             "friendlyName": "Set camera modes" ,
             "description":  "Set camera photo, video, audio modes.",
             "category":     "Camera",
-            "param1": {
+            "param8": {
                 "label":            "Camera id",
                 "default":          0,
                 "decimalPlaces":    0
             },
-            "param2": {
+            "param9": {
                 "label":            "Mode",
                 "enumStrings":      "Take photos,Record video",
                 "enumValues":       "0,1",
                 "default":          0
             },
-            "param3": {
+            "param10": {
                 "label":            "Audio",
                 "enumStrings":      "Recording disabled,Recording enabled",
                 "enumValues":       "0,1",

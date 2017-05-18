@@ -355,6 +355,8 @@ public:
     Q_PROPERTY(int      firmwareMajorVersion        READ firmwareMajorVersion       NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwareMinorVersion        READ firmwareMinorVersion       NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwarePatchVersion        READ firmwarePatchVersion       NOTIFY firmwareVersionChanged)
+    Q_PROPERTY(int      firmwareLastVersion         READ firmwareLastVersion        NOTIFY firmwareVersionChanged)
+    Q_PROPERTY(QString  firmwareidString            READ firmwareidString           NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwareVersionType         READ firmwareVersionType        NOTIFY firmwareVersionChanged)
     Q_PROPERTY(QString  firmwareVersionTypeString   READ firmwareVersionTypeString  NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwareCustomMajorVersion  READ firmwareCustomMajorVersion NOTIFY firmwareCustomVersionChanged)
@@ -639,12 +641,14 @@ public:
     int firmwareMajorVersion(void) const { return _firmwareMajorVersion; }
     int firmwareMinorVersion(void) const { return _firmwareMinorVersion; }
     int firmwarePatchVersion(void) const { return _firmwarePatchVersion; }
+    int firmwareLastVersion(void) const { return _firmwareLastVersion; }
+    QString firmwareidString(void) const;
     int firmwareVersionType(void) const { return _firmwareVersionType; }
     int firmwareCustomMajorVersion(void) const { return _firmwareCustomMajorVersion; }
     int firmwareCustomMinorVersion(void) const { return _firmwareCustomMinorVersion; }
     int firmwareCustomPatchVersion(void) const { return _firmwareCustomPatchVersion; }
     QString firmwareVersionTypeString(void) const;
-    void setFirmwareVersion(int majorVersion, int minorVersion, int patchVersion, FIRMWARE_VERSION_TYPE versionType = FIRMWARE_VERSION_TYPE_OFFICIAL);
+    void setFirmwareVersion(int majorVersion, int minorVersion, int patchVersion,int lastVersion, FIRMWARE_VERSION_TYPE versionType = FIRMWARE_VERSION_TYPE_OFFICIAL);
     void setFirmwareCustomVersion(int majorVersion, int minorVersion, int patchVersion);
     static const int versionNotSetValue = -1;
 
@@ -999,13 +1003,14 @@ private:
     int _firmwareMajorVersion;
     int _firmwareMinorVersion;
     int _firmwarePatchVersion;
+    int _firmwareLastVersion;
     int _firmwareCustomMajorVersion;
     int _firmwareCustomMinorVersion;
     int _firmwareCustomPatchVersion;
     FIRMWARE_VERSION_TYPE _firmwareVersionType;
 
     QString _gitHash;
-
+    QString _firmwareId;
     int _lastAnnouncedLowBatteryPercent;
 
     SharedLinkInterfacePointer _priorityLink;  // We always keep a reference to the priority link to manage shutdown ordering

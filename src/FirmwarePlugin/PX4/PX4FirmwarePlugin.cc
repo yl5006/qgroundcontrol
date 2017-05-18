@@ -500,26 +500,27 @@ void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_messag
     if (!instanceData->versionNotified) {
         bool notifyUser = false;
         int supportedMajorVersion = 1;
-        int supportedMinorVersion = 4;
-        int supportedPatchVersion = 1;
+        int supportedMinorVersion = 6;
+        int supportedPatchVersion = 0;
+        int supportedlastVersion = 1109;
 
         mavlink_autopilot_version_t version;
         mavlink_msg_autopilot_version_decode(message, &version);
-
         if (version.flight_sw_version != 0) {
             int majorVersion, minorVersion, patchVersion;
-
             majorVersion = (version.flight_sw_version >> (8*3)) & 0xFF;
             minorVersion = (version.flight_sw_version >> (8*2)) & 0xFF;
             patchVersion = (version.flight_sw_version >> (8*1)) & 0xFF;
-
             if (majorVersion < supportedMajorVersion) {
                 notifyUser = true;
             } else if (majorVersion == supportedMajorVersion) {
                 if (minorVersion < supportedMinorVersion) {
                     notifyUser = true;
                 } else if (minorVersion == supportedMinorVersion) {
-                    notifyUser = patchVersion < supportedPatchVersion;
+                    if(patchVersion < supportedPatchVersion){
+                        notifyUser = true;
+                    } else if(patchVersion == supportedPatchVersion)
+                        notifyUser =version.middleware_sw_version < supportedlastVersion;
                 }
             }
         } else {
@@ -528,7 +529,7 @@ void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_messag
 
         if (notifyUser) {
             instanceData->versionNotified = true;
-            qgcApp()->showMessage(QString("Groundstation 支持版本 %1.%2.%3 和以上. 请更新固件.").arg(supportedMajorVersion).arg(supportedMinorVersion).arg(supportedPatchVersion));//QGroundControl supports PX4 Pro firmware Version %1.%2.%3 and above. You are using a version prior to that which will lead to unpredictable results. Please upgrade your firmware.
+            qgcApp()->showMessage(QString("地面站需版本 %1.%2.%3.%4和以上飞控固件. 请更新固件.").arg(supportedMajorVersion).arg(supportedMinorVersion).arg(supportedPatchVersion).arg(supportedlastVersion));//QGroundControl supports PX4 Pro firmware Version %1.%2.%3 and above. You are using a version prior to that which will lead to unpredictable results. Please upgrade your firmware.
         }
     }
 }

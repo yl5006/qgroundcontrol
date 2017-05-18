@@ -722,14 +722,16 @@ void Vehicle::_handleAutopilotVersion(LinkInterface *link, mavlink_message_t& me
     mavlink_msg_autopilot_version_decode(&message, &autopilotVersion);
 
     if (autopilotVersion.flight_sw_version != 0) {
-        int majorVersion, minorVersion, patchVersion;
+        int majorVersion, minorVersion, patchVersion,lastVersion;
         FIRMWARE_VERSION_TYPE versionType;
 
         majorVersion = (autopilotVersion.flight_sw_version >> (8*3)) & 0xFF;
         minorVersion = (autopilotVersion.flight_sw_version >> (8*2)) & 0xFF;
         patchVersion = (autopilotVersion.flight_sw_version >> (8*1)) & 0xFF;
+        lastVersion  = autopilotVersion.middleware_sw_version;
         versionType = (FIRMWARE_VERSION_TYPE)((autopilotVersion.flight_sw_version >> (8*0)) & 0xFF);
-        setFirmwareVersion(majorVersion, minorVersion, patchVersion, versionType);
+        setFirmwareVersion(majorVersion, minorVersion, patchVersion,lastVersion,versionType);
+         _firmwareId = QString::fromUtf8((char*)autopilotVersion.flight_custom_version,24);
     }
 
     if (px4Firmware()) {
@@ -2371,11 +2373,12 @@ void Vehicle::_prearmErrorTimeout(void)
     setPrearmError(QString());
 }
 
-void Vehicle::setFirmwareVersion(int majorVersion, int minorVersion, int patchVersion, FIRMWARE_VERSION_TYPE versionType)
+void Vehicle::setFirmwareVersion(int majorVersion, int minorVersion, int patchVersion,int lastVersion, FIRMWARE_VERSION_TYPE versionType)
 {
     _firmwareMajorVersion = majorVersion;
     _firmwareMinorVersion = minorVersion;
     _firmwarePatchVersion = patchVersion;
+    _firmwareLastVersion = lastVersion;
     _firmwareVersionType = versionType;
     emit firmwareVersionChanged();
 }
@@ -2405,6 +2408,10 @@ QString Vehicle::firmwareVersionTypeString(void) const
     }
 }
 
+QString Vehicle::firmwareidString(void) const
+{
+        return _firmwareId;
+}
 void Vehicle::rebootVehicle()
 {
     sendMavCommand(_defaultComponentId, MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN, true, 1.0f);

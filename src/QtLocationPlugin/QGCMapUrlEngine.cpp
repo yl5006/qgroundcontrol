@@ -27,7 +27,6 @@
 #include <QTimer>
 #include <QString>
 #include <QByteArray>
-#include <QtMath>
 
 #if defined(DEBUG_GOOGLE_MAPS)
 #include <QFile>
@@ -54,7 +53,7 @@ UrlFactory::UrlFactory()
 #ifndef QGC_NO_GOOGLE_MAPS
     // Google version strings
     _versionGoogleMap            = "m@354000000";
-    _versionGoogleSatellite      = "692";
+    _versionGoogleSatellite      = "724";
     _versionGoogleLabels         = "h@336";
     _versionGoogleTerrain        = "t@354,r@354000000";
     _secGoogleWord               = "Galileo";
@@ -225,7 +224,6 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString sec2    = ""; // after &zoom=...
         _getSecGoogleWords(x, y, sec1, sec2);
         _tryCorrectGoogleVersions(networkManager);
-//       qDebug()<<QString("http://%1%2.google.com/%3/lyrs=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleMap).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
         return QString("http://%1%2.google.com/%3/lyrs=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleMap).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
     }
     break;
@@ -237,8 +235,8 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString sec1    = ""; // after &x=...
         QString sec2    = ""; // after &zoom=...
         _getSecGoogleWords(x, y, sec1, sec2);
-        _tryCorrectGoogleVersions(networkManager); 
-//        qDebug()<<QString("https://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
+        _tryCorrectGoogleVersions(networkManager);
+        qDebug()<<QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
         return QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
     }
     break;
@@ -324,25 +322,24 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
     {
         char letter = "1234"[_getServerNum(x, y, 4)];
         return QString("http://otile%1.mqcdn.com/tiles/1.0.0/sat/%2/%3/%4.jpg").arg(letter).arg(zoom).arg(x).arg(y);
-    }
+    }*/
     case GaodeMap:
     {
    //     qDebug()<<"gaode"<<QString("http://api.aeromap.cn/map/normal/%1/%2/%3?X-API-KEY=Bearer%207e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
-        return QString("http://api.aeromap.cn/map/normal/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
+        return QString("http://api.aeromap.cn/fullmap/normal/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
     }
     break;
     case GaodeSatellite:
     {
       //   qDebug()<<"gaodeSatellite"<<QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=Bearer%207e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);;
-        return QString("http://api.aeromap.cn/map/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
+        return QString("http://api.aeromap.cn/fullmap/satellite/%1/%2/%3?X-API-KEY=7e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
     }
     break;
     case GaodeTerrain:
     {
-        return QString("http://api.aeromap.cn/map/terrain/%1/%2/%3?X-API-KEY=Bearer%207e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
+        return QString("http://api.aeromap.cn/fullmap/terrain/%1/%2/%3?X-API-KEY=Bearer%207e95eae2-a18d-34ce-beaa-894d6a08c5a5").arg(zoom).arg(y).arg(x);
     }
     break;
-    */
     case EsriWorldStreet:
         return QString("http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/%1/%2/%3").arg(zoom).arg(y).arg(x);
     case EsriWorldSatellite:
@@ -448,27 +445,6 @@ UrlFactory::_tileXYToQuadKey(int tileX, int tileY, int levelOfDetail)
 }
 
 //-----------------------------------------------------------------------------
-QString
-UrlFactory::_tilexyTobaidu(int x, int y, int zoom)
-{
-    zoom = zoom - 1;
-    int offsetX = qPow(2, zoom);
-    int offsetY = offsetX - 1;
-
-    int numX = x - offsetX;
-    int numY = -y + offsetY;
-
-    zoom = zoom + 1;
-//    int num = (x + y)%8 + 1;
-    QString xstr = QString::number(numX).replace("-", "M");
-    QString ystr = QString::number(numY).replace("-", "M");
-    qDebug()<<QString("http://online1.map.bdimg.com/tile/?qt=tile&x=%1&y=%2&z=%3&styles=pl").arg(xstr).arg(ystr).arg(zoom);
-    return QString("http://online1.map.bdimg.com/tile/?qt=tile&x=%1&y=%2&z=%3&styles=pl").arg(xstr).arg(ystr).arg(zoom);
-    //原来：http://q3.baidu.com/it/u=x=721;y=209;z=12;v=014;type=web&fm=44
-    //更新：http://online1.map.bdimg.com/tile/?qt=tile&x=23144&y=6686&z=17&styles=pl
-}
-
-//-----------------------------------------------------------------------------
 int
 UrlFactory::_getServerNum(int x, int y, int max)
 {
@@ -506,6 +482,7 @@ UrlFactory::_googleVersionCompleted()
         qDebug() << "Error collecting Google maps version info";
         return;
     }
+     qDebug() << "collecting Google maps version info";
     QString html = QString(_googleReply->readAll());
 
 #if defined(DEBUG_GOOGLE_MAPS)
@@ -528,6 +505,7 @@ UrlFactory::_googleVersionCompleted()
     if (reg.indexIn(html) != -1) {
         QStringList gc = reg.capturedTexts();
         _versionGoogleSatellite = gc[1];
+         qDebug()<<"map version" << _versionGoogleSatellite;
     }
     reg = QRegExp("\"*https?://mt\\D?\\d..*/vt\\?lyrs=t@(\\d*),r@(\\d*)", Qt::CaseInsensitive);
     if (reg.indexIn(html) != -1) {
@@ -565,6 +543,7 @@ UrlFactory::_tryCorrectGoogleVersions(QNetworkAccessManager* networkManager)
         ua.append(getQGCMapEngine()->userAgent());
         qheader.setRawHeader("User-Agent", ua);
         _googleReply = networkManager->get(qheader);
+        qDebug()<<"version";
         connect(_googleReply, &QNetworkReply::finished, this, &UrlFactory::_googleVersionCompleted);
         connect(_googleReply, &QNetworkReply::destroyed, this, &UrlFactory::_replyDestroyed);
         connect(_googleReply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error),

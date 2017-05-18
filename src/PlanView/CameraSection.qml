@@ -113,7 +113,7 @@ Column {
 
             QGCCheckBox {
                 id:                 modeCheckBox
-                text:               qsTr("Mode")
+                text:               qsTr("模式")
                 checked:            _camera.specifyCameraMode
                 onClicked:          _camera.specifyCameraMode = checked
             }

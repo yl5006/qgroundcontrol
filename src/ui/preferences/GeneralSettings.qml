@@ -128,7 +128,7 @@ QGCView {
                     color:                      qgcPal.windowShade
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.unitsSettings.visible
+                    visible:                    false//QGroundControl.settingsManager.unitsSettings.visible
                     Column {
                         id:         unitsCol
                         spacing:    ScreenTools.defaultFontPixelWidth
@@ -497,7 +497,7 @@ QGCView {
                     height:                     unitLabel.height
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.rtkSettings.visible
+                    visible:                    false//QGroundControl.settingsManager.rtkSettings.visible
                     QGCLabel {
                         id:             rtkLabel
                         text:           qsTr("RTK GPS (Requires Restart)")
@@ -519,14 +519,14 @@ QGCView {
                         columnSpacing:      ScreenTools.defaultFontPixelWidth
 
                         QGCLabel {
-                            text:               qsTr("Survey in accuracy:")
+                            text:               qsTr("RTK精确度:")
                         }
                         FactTextField {
                             fact:               QGroundControl.settingsManager.rtkSettings.surveyInAccuracyLimit
                         }
 
                         QGCLabel {
-                            text:               qsTr("Minimum observation duration:")
+                            text:               qsTr("RTK最小平均观察时间:")
                         }
                         FactTextField {
                             fact:               QGroundControl.settingsManager.rtkSettings.surveyInMinObservationDuration
@@ -662,7 +662,7 @@ QGCView {
                             visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex < 2 && QGroundControl.settingsManager.videoSettings.aspectRatio.visible
                             QGCLabel {
                                 anchors.baseline:   aspectField.baseline
-                                text:               qsTr("Aspect Ratio:")
+                                text:               qsTr("长宽比:")
                                 width:              _labelWidth
                             }
                             FactTextField {
@@ -676,7 +676,7 @@ QGCView {
                             visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex < 2 && QGroundControl.settingsManager.videoSettings.gridLines.visible
                             QGCLabel {
                                 anchors.baseline:   gridField.baseline
-                                text:               qsTr("Grid Lines:")
+                                text:               qsTr("网格线:")
                                 width:              _labelWidth
                             }
                             FactComboBox {

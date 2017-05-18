@@ -14,10 +14,10 @@
         { "vendorID": 9900, "productID": 4097,      "boardClass": "EWT",    "name": "AeroCore" },
         { "vendorID": 9900, "productID": 33,        "boardClass": "EWT",    "name": "AUAV X2.1 FMU V2" },
         { "vendorID": 9900, "productID": 48,        "boardClass": "EWT",    "name": "MindPX FMU V2" },
-        { "vendorID": 9900, "productID": 50,        "boardClass": "Pixhawk",    "name": "PX4 FMU V5" },
+        { "vendorID": 9900, "productID": 50,        "boardClass": "EWT",    "name": "PX4 FMU V5" },
         { "vendorID": 9900, "productID": 64,        "boardClass": "EWT",    "name": "TAP V1" },
         { "vendorID": 9900, "productID": 65,        "boardClass": "EWT",    "name": "ASC V1" },
-        { "vendorID": 9900, "productID": 22,        "boardClass": "Pixhawk",    "name": "Crazyflie 2" },
+        { "vendorID": 9900, "productID": 22,        "boardClass": "EWT",    "name": "Crazyflie 2" },
 
         { "vendorID": 9900, "productID": 21,        "boardClass": "Flow",   "name": "Flow" },
 
@@ -52,7 +52,7 @@
         { "regExp": "^EWT BL TAP v1.x$",    "boardClass": "EWT" },
         { "regExp": "^EWT ASC v1.x$",       "boardClass": "EWT" },
         { "regExp": "^EWT BL ASC v1.x$",    "boardClass": "EWT" },
-        { "regExp": "^FMU",             "boardClass": "EWT" },
+        { "regExp": "^FMU",                 "boardClass": "EWT" },
         { "regExp": "^EWT Crazyflie v2.0",  "boardClass": "EWT" },
         { "regExp": "^Crazyflie BL",        "boardClass": "EWT" },
         { "regExp": "EWT.*Flow",            "boardClass": "Flow" },

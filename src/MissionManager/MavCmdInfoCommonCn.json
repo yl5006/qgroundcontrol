@@ -170,7 +170,7 @@
             "param1": {
                 "label":            "仰俯:",
                 "units":            "deg",
-                "default":          15,
+                "default":          25,
                 "decimalPlaces":    2
             },
             "param4": {
@@ -198,12 +198,6 @@
                 "enumValues":       "1,0,2",
                 "default":          1,
                 "decimalPlaces":    0
-            },
-            "param7": {
-                "label":            "Altitude:",
-                "units":            "m",
-                "default":          55,
-                "decimalPlaces":    2
             }
         },
         {
@@ -355,7 +349,7 @@
         {
             "id":           93,
             "rawName":      "MAV_CMD_NAV_DELAY",
-            "friendlyName": "Delay until",
+            "friendlyName": "延时",
             "description":  "Delay unti the specified time is reached.",
             "category":      "飞行控制",
             "param1": {
@@ -406,12 +400,6 @@
                 "label":            "Rate",
                 "units":            "m/s",
                 "default":          5,
-                "decimalPlaces":    2
-            },
-            "param7": {
-                "label":            "Altitude:",
-                "units":            "m",
-                "default":          55,
                 "decimalPlaces":    2
             }
         },
@@ -805,32 +793,32 @@
         {
             "id":           204,
             "rawName":      "MAV_CMD_DO_MOUNT_CONFIGURE",
-            "friendlyName": "Configure Mount",
-            "description":  "Configure the vehicle mount (e.g. gimbal).",
+            "friendlyName": "设置挂载",
+            "description":  "设置飞机挂载 (e.g. 云台).",
             "category":     "相机",
             "param1": {
-                "label":            "Mode:",
+                "label":            "模式:",
                 "default":          0,
                 "decimalPlaces":    0,
                 "enumStrings":      "撤回,回中,数据链控制,遥控控制,GPS 点",
                 "enumValues":       "0,1,2,3,4"
             },
             "param2": {
-                "label":            "Stabilize Roll:",
+                "label":            "稳定 Roll:",
                 "default":          0,
                 "decimalPlaces":    0,
                 "enumStrings":      "No,Yes",
                 "enumValues":       "0,1"
             },
             "param3": {
-                "label":            "Stabilize Pitch:",
+                "label":            "稳定 Pitch:",
                 "default":          0,
                 "decimalPlaces":    0,
                 "enumStrings":      "No,Yes",
                 "enumValues":       "0,1"
             },
             "param4": {
-                "label":            "Stabilize Yaw:",
+                "label":            "稳定 Yaw:",
                 "default":          0,
                 "decimalPlaces":    0,
                 "enumStrings":      "No,Yes",
@@ -861,7 +849,7 @@
                 "decimalPlaces":    7
             },
             "param4": {
-                "label":            "Mode:",
+                "label":            "模式:",
                 "default":          0,
                 "decimalPlaces":    0,
                 "enumStrings":      "撤回,回中,数据链控制,遥控控制,GPS 点",
@@ -1115,29 +1103,53 @@
         { "id": 511, "rawName": "MAV_CMD_SET_MESSAGE_INTERVAL", "friendlyName": "Set message interval" },
         { "id": 520, "rawName": "MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES", "friendlyName": "Get capabilities" },
         {
+            "id":           530,
+            "rawName":      "MAV_CMD_SET_CAMERA_MODE",
+            "friendlyName": "设置相机模式" ,
+            "description":  "设置相机 图片视频模式.",
+            "category":     "相机",
+            "param8": {
+                "label":            "相机id",
+                "default":          0,
+                "decimalPlaces":    0
+            },
+            "param9": {
+                "label":            "模式",
+                "enumStrings":      "拍照模式,录像模式",
+                "enumValues":       "0,1",
+                "default":          0
+            },
+            "param10": {
+                "label":            "音频",
+                "enumStrings":      "禁用记录,使能记录",
+                "enumValues":       "0,1",
+                "default":          0
+            }
+        },
+	{
             "id":           2000,
             "rawName":      "MAV_CMD_IMAGE_START_CAPTURE",
-            "friendlyName": "Start image capture" ,
-            "description":  "Start taking one or more photos.",
+            "friendlyName": "启动拍照模式" ,
+            "description":  "开始拍照1次或连续多次.",
             "category":     "相机",
             "param1": {
-                "label":            "Interval",
+                "label":            "间隔",
                 "default":          0,
                 "units":            "secs",
                 "decimalPlaces":    0
             },
             "param2": {
-                "label":            "Photo count",
+                "label":            "次数",
                 "default":          1,
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "Resolution",
+                "label":            "分辨率",
                 "default":          -1,
                 "decimalPlaces":    0
             },
             "param6": {
-                "label":            "Camera id",
+                "label":            "相机id",
                 "default":          0,
                 "decimalPlaces":    0
             }
@@ -1145,11 +1157,11 @@
         {
             "id": 2001,
             "rawName": "MAV_CMD_IMAGE_STOP_CAPTURE",
-            "friendlyName": "Stop image capture",
-            "description":  "Stop taking photos.",
+            "friendlyName": "停止照片获取",
+            "description":  "停止照片获取.",
             "category":     "相机",
             "param1": {
-                "label":            "Camera id",
+                "label":            "相机 id",
                 "default":          0,
                 "decimalPlaces":    0
             }
@@ -1158,11 +1170,11 @@
         {
             "id":           2500,
             "rawName":      "MAV_CMD_VIDEO_START_CAPTURE",
-            "friendlyName": "Start video capture",
-            "description":  "Start video capture.",
+            "friendlyName": "开始视频获取",
+            "description":  "开始视频获取.",
             "category":     "相机",
             "param1": {
-                "label":            "Camera id",
+                "label":            "相机 id",
                 "default":          0,
                 "decimalPlaces":    0
             },
@@ -1172,7 +1184,7 @@
                 "decimalPlaces":    0
             },
             "param3": {
-                "label":            "Resolution",
+                "label":            "分辨率",
                 "default":          -1,
                 "decimalPlaces":    0
             }
@@ -1180,11 +1192,11 @@
         {
             "id":           2501,
             "rawName":      "MAV_CMD_VIDEO_STOP_CAPTURE",
-            "friendlyName": "Stop video capture",
-            "description":  "Stop video capture.",
+            "friendlyName": "停止视频获取",
+            "description":  "停止视频获取.",
             "category":     "相机",
             "param1": {
-                "label":            "Camera id",
+                "label":            "相机 id",
                 "default":          0,
                 "decimalPlaces":    0
             }
