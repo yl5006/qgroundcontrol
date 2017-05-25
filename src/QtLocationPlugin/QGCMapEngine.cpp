@@ -469,6 +469,9 @@ QGCMapEngine::concurrentDownloads(UrlFactory::MapType type)
     case UrlFactory::BingMap:
     case UrlFactory::BingSatellite:
     case UrlFactory::BingHybrid:
+    case UrlFactory::GaodeMap:
+    case UrlFactory::GaodeSatellite:
+    case UrlFactory::GaodeTerrain:
     case UrlFactory::StatkartTopo:
     case UrlFactory::EsriWorldStreet:
     case UrlFactory::EsriWorldSatellite:

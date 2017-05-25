@@ -163,7 +163,7 @@ UrlFactory::getTileURL(MapType type, int x, int y, int zoom, QNetworkAccessManag
         case GaodeTerrain:
         case GaodeMap:
         case GaodeSatellite:
-            request.setRawHeader("Referrer", "http://map.baidu.com/");
+            request.setRawHeader("Referrer", "https://www.google.com/maps/preview");
             break;
         /*
         case OpenStreetMapSurfer:
@@ -236,7 +236,7 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString sec2    = ""; // after &zoom=...
         _getSecGoogleWords(x, y, sec1, sec2);
         _tryCorrectGoogleVersions(networkManager);
-        qDebug()<<QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
+
         return QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
     }
     break;
@@ -311,6 +311,7 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString key = _tileXYToQuadKey(x, y, zoom);
         return QString("http://ecn.t%1.tiles.virtualearth.net/tiles/h%2.jpeg?g=%3&mkt=%4").arg(_getServerNum(x, y, 4)).arg(key).arg(_versionBingMaps).arg(_language);
     }
+    break;
     /*
     case MapQuestMap:
     {
@@ -543,7 +544,6 @@ UrlFactory::_tryCorrectGoogleVersions(QNetworkAccessManager* networkManager)
         ua.append(getQGCMapEngine()->userAgent());
         qheader.setRawHeader("User-Agent", ua);
         _googleReply = networkManager->get(qheader);
-        qDebug()<<"version";
         connect(_googleReply, &QNetworkReply::finished, this, &UrlFactory::_googleVersionCompleted);
         connect(_googleReply, &QNetworkReply::destroyed, this, &UrlFactory::_replyDestroyed);
         connect(_googleReply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error),
