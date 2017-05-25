@@ -238,7 +238,7 @@ QGCView {
                             spacing: ScreenTools.defaultFontPixelWidth
                             visible: false//QGroundControl.settingsManager.appSettings.indoorPalette.visible
                             QGCLabel {
-                                text:           qsTr("Color scheme:")
+                                text:           qsTr("Color Scheme:")
                                 width:          _labelWidth
                                 anchors.verticalCenter: parent.verticalCenter
                             }
@@ -449,7 +449,7 @@ QGCView {
                         //-----------------------------------------------------------------
                         //-- Mission AutoLoad
                         FactCheckBox {
-                            text:       qsTr("AutoLoad missions")
+                            text:       qsTr("AutoLoad Missions")
                             fact:       _autoLoad
                             visible:    false//_autoLoad.visible
 
@@ -464,7 +464,7 @@ QGCView {
 
                             QGCLabel {
                                 anchors.baseline:   savePathBrowse.baseline
-                                text:               qsTr("File save path:")
+                                text:               qsTr("File Save Path:")
                             }
                             QGCLabel {
                                 anchors.baseline:   savePathBrowse.baseline

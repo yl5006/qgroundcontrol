@@ -32,9 +32,9 @@ Rectangle {
     readonly property real      _horizontalMargin:  _defaultTextWidth / 2
     readonly property real      _verticalMargin:    _defaultTextHeight / 2
     readonly property real      _buttonWidth:       _defaultTextWidth * 18
-    readonly property string    _armedVehicleText:  qsTr("不能在解锁情况下操作")//"This operation cannot be performed while vehicle is armed."
+    readonly property string    _armedVehicleText:  qsTr("This operation cannot be performed while vehicle is armed.")
 
-    property string _messagePanelText:              qsTr("任务消息")//"missing message panel text"
+    property string _messagePanelText:              "missing message panel text"
     property bool   _fullParameterVehicleAvailable: QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && !QGroundControl.multiVehicleManager.activeVehicle.parameterManager.missingParameters
     property var    _corePlugin:                    QGroundControl.corePlugin
 
@@ -93,7 +93,8 @@ Rectangle {
         } else {
             var autopilotPlugin = QGroundControl.multiVehicleManager.activeVehicle.autopilot
             var prereq = autopilotPlugin.prerequisiteSetup(vehicleComponent)
-            if (prereq != "") {
+            if (prereq !== "") {
+                //-- TODO: This cannot be trasnlated when built this way.
                 _messagePanelText = prereq + " setup must be completed prior to " + vehicleComponent.name + " setup."
                 panelLoader.setSourceComponent(messagePanelComponent)
             } else {
@@ -141,7 +142,7 @@ Rectangle {
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
                 font.pointSize:         ScreenTools.mediumFontPointSize
-                text:                   tr("%1 does not currently support setup of your vehicle type. ").arg(QGroundControl.appName) +
+                text:                   qsTr("%1 does not currently support setup of your vehicle type. ").arg(QGroundControl.appName) +
                                         "If your vehicle is already configured you can still Fly."
 
                 onLinkActivated: Qt.openUrlExternally(link)
@@ -162,7 +163,7 @@ Rectangle {
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
                 font.pointSize:         ScreenTools.largeFontPointSize
-                text:                   qsTr("连接你的飞控系统，地面会自动连接")+//"Connect vehicle to your device and QGroundControl will automatically detect it." +
+                text:                   qsTr("Connect vehicle to your device and %1 will automatically detect it.").arg(QGroundControl.appName) +
                                         (ScreenTools.isMobile ? "" : ""/*" Click Firmware on the left to upgrade your vehicle."*/)
 
                 onLinkActivated: Qt.openUrlExternally(link)
@@ -182,8 +183,8 @@ Rectangle {
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
                 font.pointSize:         ScreenTools.mediumFontPointSize
-                text:                   "You are currently connected to a vehicle, but that vehicle did not return back the full parameter list. " +
-                                        "Because of this the full set of vehicle setup options are not available."
+                text:                   qsTr("You are currently connected to a vehicle but it did not return the full parameter list. ") +
+                                        qsTr("As a result, the full set of vehicle setup options are not available.")
 
                 onLinkActivated: Qt.openUrlExternally(link)
             }
@@ -251,7 +252,7 @@ Rectangle {
                 setupIndicator:     false
                 checked:            true
                 exclusiveGroup:     setupButtonGroup
-                text:           qsTr("概况")//"Summary"
+                text:               qsTr("Summary")
                 Layout.fillWidth:   true
 
                 onClicked: showSummaryPanel()
@@ -263,7 +264,7 @@ Rectangle {
                 setupIndicator:     false
                 exclusiveGroup:     setupButtonGroup
  //               visible:            !ScreenTools.isMobile && _corePlugin.options.showFirmwareUpgrade
-                text:               "Firmware"
+                text:               qsTr("Firmware")
                 Layout.fillWidth:   true
 
                 onClicked: showFirmwarePanel()
@@ -272,9 +273,9 @@ Rectangle {
             SubMenuButton {
                 id:                 px4FlowButton
                 exclusiveGroup:     setupButtonGroup
-                visible:            ScreenTools.isDebug&&QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.genericFirmware : false
+                visible:            QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.genericFirmware : false
                 setupIndicator:     false
-                text:               "PX4Flow"
+                text:               qsTr("PX4Flow")
                 Layout.fillWidth:   true
 
                 onClicked:      showPX4FlowPanel()
@@ -286,7 +287,7 @@ Rectangle {
                 setupComplete:      joystickManager.activeJoystick ? joystickManager.activeJoystick.calibrated : false
                 exclusiveGroup:     setupButtonGroup
                 visible:            _fullParameterVehicleAvailable && joystickManager.joysticks.length != 0
-                text:               "Joystick"
+                text:               qsTr("Joystick")
                 Layout.fillWidth:   true
 
                 onClicked: showJoystickPanel()
@@ -313,7 +314,7 @@ Rectangle {
                 setupIndicator:     false
                 exclusiveGroup:     setupButtonGroup
                 visible:            QGroundControl.multiVehicleManager && QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && _corePlugin.showAdvancedUI
-                text:               "Parameters"
+                text:               qsTr("Parameters")
                 Layout.fillWidth:   true
 
                 onClicked: showParametersPanel()

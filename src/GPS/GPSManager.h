@@ -28,7 +28,7 @@ public:
     ~GPSManager();
 
     void connectGPS(const QString& device);
-    bool connected(void) const { return _gpsProvider != nullptr; }
+    bool connected(void) const { return _gpsProvider && _gpsProvider->isRunning(); }
 signals:
     void positionUpdated(GPSPositionMessage msg);
 
