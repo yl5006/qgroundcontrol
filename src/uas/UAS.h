@@ -68,6 +68,7 @@ public:
 
     /// Vehicle is about to go away
     void shutdownVehicle(void);
+    QMap<short, QString>  createMapFromJsonFile(const QString& jsonFilename);
 
     void setRoll(double val)
     {
@@ -369,6 +370,7 @@ private:
 private:
     Vehicle*                _vehicle;
     FirmwarePluginManager*  _firmwarePluginManager;
+    QMap<short, QString>    _criticalmsg;
 };
 
 

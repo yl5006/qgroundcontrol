@@ -39,6 +39,10 @@
 #include "Joystick.h"
 #include "QGCApplication.h"
 
+#include "JsonHelper.h"
+#include <QJsonParseError>
+#include <QJsonArray>
+
 QGC_LOGGING_CATEGORY(UASLog, "UASLog")
 
 // THIS CLASS IS DEPRECATED. ALL NEW FUNCTIONALITY SHOULD GO INTO Vehicle class
@@ -140,8 +144,8 @@ UAS::UAS(MAVLinkProtocol* protocol, Vehicle* vehicle, FirmwarePluginManager * fi
 #ifndef __mobile__
     connect(_vehicle, &Vehicle::mavlinkMessageReceived, &fileManager, &FileManager::receiveMessage);
 #endif
-
     color = UASInterface::getNextColor();
+    _criticalmsg = createMapFromJsonFile(QStringLiteral(":/json/Vehicle/CriticalMsgIdCn.json"));
 }
 
 /**
@@ -150,6 +154,57 @@ UAS::UAS(MAVLinkProtocol* protocol, Vehicle* vehicle, FirmwarePluginManager * fi
 int UAS::getUASID() const
 {
     return uasId;
+}
+
+QMap<short, QString>  UAS::createMapFromJsonFile(const QString& jsonFilename)
+{
+    QMap<short, QString> MsgMap;
+
+    QFile jsonFile(jsonFilename);
+    if (!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Unable to open file" << jsonFilename << jsonFile.errorString();
+        return MsgMap;
+    }
+
+    QByteArray bytes = jsonFile.readAll();
+    jsonFile.close();
+    QJsonParseError jsonParseError;
+    QJsonDocument doc = QJsonDocument::fromJson(bytes, &jsonParseError);
+    if (jsonParseError.error != QJsonParseError::NoError) {
+        qWarning() <<  "Unable to parse json document" << jsonFilename << jsonParseError.errorString();
+        return MsgMap;
+    }
+
+    if (!doc.isArray()) {
+        qWarning() << "json document is not array";
+        return MsgMap;
+    }
+
+    QJsonArray jsonArray = doc.array();
+    for (int i=0; i<jsonArray.count(); i++) {
+        QJsonValueRef jsonValue = jsonArray[i];
+
+        if (!jsonValue.isObject()) {
+            qWarning() << QStringLiteral("JsonValue at index %1 not an object").arg(i);
+            continue;
+        }
+        QJsonObject jsonObject = jsonValue.toObject();
+        QString     errorString;
+
+        // Validate key types
+        QStringList             keys;
+        QList<QJsonValue::Type> types;
+        keys <<"msgid"<< "rawmsg";
+        types << QJsonValue::Double << QJsonValue::String;
+        if (!JsonHelper::validateKeyTypes(jsonObject, keys, types, errorString)) {
+            qWarning() << errorString;
+            return MsgMap;
+        }
+        short _msgid = (short)  jsonObject.value("msgid").toInt();
+        MsgMap.insert(_msgid,jsonObject.value("rawmsg").toString());
+    }
+
+    return MsgMap;
 }
 
 void UAS::receiveMessage(mavlink_message_t message)
@@ -422,7 +477,7 @@ void UAS::receiveMessage(mavlink_message_t message)
             QByteArray b;
             b.resize(MAVLINK_MSG_STATUSTEXT_FIELD_TEXT_LEN+1);
             mavlink_msg_statustext_get_text(&message, b.data());
-
+            short msgid=mavlink_msg_statustext_get_msgid(&message);
             // Ensure NUL-termination
             b[b.length()-1] = '\0';
             QString text = QString(b);
@@ -433,9 +488,10 @@ void UAS::receiveMessage(mavlink_message_t message)
             if (text.startsWith("#") || severity <= MAV_SEVERITY_NOTICE)
             {
                 text.remove("#");
-                emit textMessageReceived(uasId, message.compid, severity, text);
+                emit textMessageReceived(uasId, message.compid, severity, _criticalmsg[msgid]);
 //              do not say
-                _say(text.toLower(), severity);
+//                _criticalmsg[msgid]
+                _say(_criticalmsg[msgid].toLower(), severity);
             }
             else
             {

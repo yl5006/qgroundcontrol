@@ -222,7 +222,7 @@
     </qresource>
     <qresource prefix="/json">
         <file alias="MavCmdInfoCommon.json">src/MissionManager/MavCmdInfoCommon.json</file>
-        <file alias="MavCmdInfoCommonCn.json">src/MissionManager/MavCmdInfoCommonCn.json</file>
+        <file alias="MavCmdInfoCommonCn.json">src/MissionManager/MavCmdInfoCommonCn.json</file>	
         <file alias="MavCmdInfoFixedWing.json">src/MissionManager/MavCmdInfoFixedWing.json</file>
         <file alias="MavCmdInfoMultiRotor.json">src/MissionManager/MavCmdInfoMultiRotor.json</file>
         <file alias="MavCmdInfoRover.json">src/MissionManager/MavCmdInfoRover.json</file>
@@ -247,6 +247,7 @@
         <file alias="Vehicle/BatteryFact.json">src/Vehicle/BatteryFact.json</file>
         <file alias="Vehicle/GPSFact.json">src/Vehicle/GPSFact.json</file>
         <file alias="Vehicle/WindFact.json">src/Vehicle/WindFact.json</file>
+	<file alias="Vehicle/CriticalMsgIdCn.json">src/Vehicle/CriticalMsgIdCn.json</file>
         <file alias="Vehicle/VibrationFact.json">src/Vehicle/VibrationFact.json</file>
         <file alias="Vehicle/TemperatureFact.json">src/Vehicle/TemperatureFact.json</file>
         <file alias="Survey.FactMetaDatacn.json">src/MissionManager/Survey.FactMetaDatacn.json</file>
