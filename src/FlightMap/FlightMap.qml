@@ -28,7 +28,7 @@ Map {
     zoomLevel:                  QGroundControl.flightMapZoom
     center:                     QGroundControl.flightMapPosition
     gesture.flickDeceleration:  3000
-    plugin:                     Plugin { name: "QGroundControl" }
+    plugin:                     Plugin { name: "GroundStation" }
 
     property string mapName:                        'defaultMap'
     property bool   isSatelliteMap:                 activeMapType.name.indexOf("Satellite") > -1 || activeMapType.name.indexOf("Hybrid") > -1
@@ -44,7 +44,6 @@ Map {
 
     property var    _activeVehicle:                 QGroundControl.multiVehicleManager.activeVehicle
     property var    activeVehicleCoordinate:        _activeVehicle ? _activeVehicle.coordinate : QtPositioning.coordinate()
-    property string polygonstr:         ""
 
     function setVisibleRegion(region) {
         // This works around a bug on Qt where if you set a visibleRegion and then the user moves or zooms the map
@@ -124,7 +123,7 @@ Map {
         coordinate:     gcsPosition
         sourceItem:     MissionItemIndexLabel {
         label:          QGroundControl.appName.charAt(0)
-        simpleindex:     2
+        simpleindex:    2
         }
     }
 } // Map

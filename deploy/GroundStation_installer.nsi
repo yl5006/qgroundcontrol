@@ -41,6 +41,8 @@ Var StartMenuFolder
 
 InstallDir $PROGRAMFILES\GroundStation
 
+SetCompressor /SOLID /FINAL lzma
+
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "installlogo.bmp";
 
@@ -67,7 +69,7 @@ Section
 
 doinstall:
   SetOutPath $INSTDIR
-  File /r /x GroundStation.pdb /x GroundStation_pch.pch /x GroundStation.lib /x GroundStation.exp E:\UAV\build-GroundStation-Desktop_Qt_5_5_1_MSVC2013_32bit-Release\release\*.*
+  File /r /x GroundStation.pdb /x GroundStation_pch.pch /x GroundStation.lib /x GroundStation.exp /x GroundStation_pch.obj E:\UAV\build-GroundStation-Desktop_Qt_5_7_1_MSVC2015_32bit-Release\release\*.*
   WriteUninstaller $INSTDIR\GroundStation_uninstall.exe
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation" "DisplayName" "GroundStation"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation" "UninstallString" "$\"$INSTDIR\GroundStation_uninstall.exe$\""

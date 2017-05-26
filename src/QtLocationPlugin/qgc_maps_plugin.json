@@ -1,6 +1,6 @@
-{
+﻿{
     "Keys": ["qgc-maps"],
-    "Provider": "QGroundControl",
+    "Provider": "GroundStation",
     "Version": 101,
     "Experimental": false,
     "Features": [

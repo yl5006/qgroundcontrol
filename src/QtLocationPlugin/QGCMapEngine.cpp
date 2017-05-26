@@ -32,7 +32,7 @@ Q_DECLARE_METATYPE(QGCMapTask::TaskType)
 Q_DECLARE_METATYPE(QGCTile)
 Q_DECLARE_METATYPE(QList<QGCTile*>)
 
-static const char* kDbFileName = "qgcMapCache.db";
+static const char* kDbFileName = "ewtMapCache.db";
 static QLocale kLocale;
 
 #define CACHE_PATH_VERSION  "300"
@@ -179,15 +179,15 @@ QGCMapEngine::_wipeOldCaches()
 {
     QString oldCacheDir;
 #ifdef __mobile__
-    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)      + QLatin1String("/QGCMapCache55");
+    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)      + QLatin1String("/EWTMapCache55");
 #else
-    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QLatin1String("/QGCMapCache55");
+    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QLatin1String("/EWTMapCache55");
 #endif
     _checkWipeDirectory(oldCacheDir);
 #ifdef __mobile__
-    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)      + QLatin1String("/QGCMapCache100");
+    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)      + QLatin1String("/EWTMapCache100");
 #else
-    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QLatin1String("/QGCMapCache100");
+    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QLatin1String("/EWTMapCache100");
 #endif
     _checkWipeDirectory(oldCacheDir);
 }
@@ -200,9 +200,9 @@ QGCMapEngine::init()
     _wipeOldCaches();
     //-- Figure out cache path
 #ifdef __mobile__
-    QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)      + QLatin1String("/QGCMapCache" CACHE_PATH_VERSION);
+    QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)      + QLatin1String("/EWTMapCache" CACHE_PATH_VERSION);
 #else
-    QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QLatin1String("/QGCMapCache" CACHE_PATH_VERSION);
+    QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QLatin1String("/EWTMapCache" CACHE_PATH_VERSION);
 #endif
     if(!QDir::root().mkpath(cacheDir)) {
         qWarning() << "Could not create mapping disk cache directory: " << cacheDir;

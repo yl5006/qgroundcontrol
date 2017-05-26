@@ -1,4 +1,4 @@
-[
+﻿[
 {
     "name":             "FixedWingMinimumAltitude",
     "type":             "double",
@@ -9,7 +9,7 @@
     "name":             "FixedWingMaximumAltitude",
     "type":             "double",
     "units":            "m",
-    "defaultValue":     121.92
+    "defaultValue":     150
 },
 {
     "name":             "VehicleMinimumAltitude",
@@ -21,6 +21,6 @@
     "name":             "VehicleMaximumAltitude",
     "type":             "double",
     "units":            "m",
-    "defaultValue":     121.92
+    "defaultValue":     150
 }
 ]
