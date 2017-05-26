@@ -502,7 +502,7 @@ void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_messag
         int supportedMajorVersion = 1;
         int supportedMinorVersion = 6;
         int supportedPatchVersion = 0;
-        int supportedlastVersion = 1109;
+        int supportedlastVersion = 1185;
 
         mavlink_autopilot_version_t version;
         mavlink_msg_autopilot_version_decode(message, &version);

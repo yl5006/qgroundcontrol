@@ -535,7 +535,7 @@ void QGCApplication::saveTelemetryLogOnMainThread(QString tempLogfile)
 
         QFile tempFile(tempLogfile);
         if (!tempFile.copy(saveFilePath)) {
-            QGCMessageBox::warning(tr("数据链文件错误"), tr("不能保存数据链文件从'%1': '%2'.").arg(saveFilePath).arg(tempFile.errorString()));
+            QString error = tr("数据链文件错误. 不能保存数据链文件从 '%1': '%2'.").arg(saveFilePath).arg(tempFile.errorString());
 #ifndef __mobile__
             QGCMessageBox::warning(tr("Telemetry Save Error"), error);
 #else

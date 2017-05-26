@@ -591,11 +591,6 @@ Rectangle {
             }
         }
 
-//        QGCMapPolygonControls
-//        {
-//            flightMap:          editorMap
-//        }
-
         SectionHeader {
             id:     statsHeader
             text:   qsTr("统计") }
