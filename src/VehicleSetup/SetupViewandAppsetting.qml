@@ -370,6 +370,7 @@ Rectangle {
             height:         width
             exclusiveGroup: setupButtonGroup
             text:           qsTr("离线地图")//"Offline Maps"
+            visible:        false//!ScreenTools.isMobile
             onClicked:
             {
                  if(!loader.visible)

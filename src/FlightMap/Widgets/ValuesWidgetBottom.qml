@@ -75,17 +75,11 @@ QGCFlickable {
 
 //           Column {
              Row {
-                width:  _largeColumn.width*0.8//_largeColumn.width
-                spacing:    _margins*2
+                width:  _largeColumn.width*0.9//_largeColumn.width
+                spacing:    _margins*5
                 anchors.horizontalCenter:  _largeColumn.horizontalCenter
                 property Fact fact: _activeVehicle.getFact(modelData.replace("Vehicle.", ""))
                 property bool largeValue: _root.listContains(controller.altitudeProperties, fact.name)
-
-//                Image{
-//                    width:    ScreenTools.mediumFontPointSize * 1.5
-//                    height:   ScreenTools.mediumFontPointSize * 1.5
-//                    source:   getIcon(fact.name)
-//                }
 
                 QGCLabel {
                     width:                  parent.width*0.25
@@ -97,16 +91,14 @@ QGCFlickable {
                 }
 
                 QGCLabel {
-                    width:                  parent.width*0.25
+                    width:                  parent.width*0.3
                     font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
                     horizontalAlignment:    Text.AlignHCenter
                     fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
-                    text:                   fact.valueString                    
+                    text:                   fact.valueString
                 }
                 QGCLabel {
-        //          width:                  parent.width
- //                 horizontalAlignment:    Text.AlignHCenter
                     font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
                     fontSizeMode:           Text.HorizontalFit
                     color:                  textColor

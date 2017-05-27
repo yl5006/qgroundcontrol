@@ -13,6 +13,6 @@
     "type":             "uint32",
     "enumStrings":      "Street Map,Satellite Map,Hybrid Map,Terrain Map",
     "enumValues":       "0,1,2,3",
-    "defaultValue":     2
+    "defaultValue":     1
 }
 ]

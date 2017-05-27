@@ -61,5 +61,18 @@
     "type":             "double",
     "decimalPlaces":    0,
     "units":            "%"
+},
+{
+    "name":             "flightDistance",
+    "shortDescription": "飞行距离",
+    "type":             "double",
+    "decimalPlaces":    1,
+    "units":            "m"
+},
+{
+    "name":             "flightTime",
+    "shortDescription": "飞行时间",
+    "type":             "elapsedSeconds",
+    "decimalPlaces":    1
 }
 ]

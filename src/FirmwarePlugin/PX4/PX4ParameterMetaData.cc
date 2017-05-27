@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -310,9 +310,9 @@ void PX4ParameterMetaData::loadParameterFactMetaDataFile(const QString& metaData
                         } else if (elementName == "boolean") {
                             QVariant    enumValue;
                             metaData->convertAndValidateRaw(1, false /* validate */, enumValue, errorString);
-                            metaData->addEnumInfo(tr("Enabled"), enumValue);
+                            metaData->addEnumInfo(tr("使能"), enumValue);
                             metaData->convertAndValidateRaw(0, false /* validate */, enumValue, errorString);
-                            metaData->addEnumInfo(tr("Disabled"), enumValue);
+                            metaData->addEnumInfo(tr("禁用"), enumValue);
 
                         } else if (elementName == "bitmask") {
                             // doing nothing individual bits will follow anyway. May be used for sanity checking.

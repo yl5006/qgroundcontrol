@@ -142,7 +142,7 @@ SetupPage {
                     exclusiveGroup:     paramsGroup
                     checkable:          true
                     width:              _middleRowWidth
-                    text:               qsTr("其他设置")//else
+                    text:               qsTr("输出设置")//else
                     onClicked: {
                         checked  =   true
                         panelLoader.sourceComponent = elsesetComponent;
@@ -163,7 +163,7 @@ SetupPage {
                 }
             }
             Component.onCompleted: {
-                panelLoader.source = "AttitudeControlCopter.qml";
+                panelLoader.source = "OutputSetting.qml";
             }
             Component {
                 id: elsesetComponent

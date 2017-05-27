@@ -199,6 +199,7 @@
         <file alias="L1ControlPlane.qml">src/AutoPilotPlugins/PX4/L1ControlPlane.qml</file>
         <file alias="PosControlCopter.qml">src/AutoPilotPlugins/PX4/PosControlCopter.qml</file>
         <file alias="TECSControlPlane.qml">src/AutoPilotPlugins/PX4/TECSControlPlane.qml</file>
+ 	<file alias="OutputSetting.qml">src/AutoPilotPlugins/PX4/OutputSetting.qml</file>
         <file alias="ElseControlPlane.qml">src/AutoPilotPlugins/PX4/ElseControlPlane.qml</file>
         <file alias="PX4VehicleParamsComponentVTOL.qml">src/AutoPilotPlugins/PX4/PX4VehicleParamsComponentVTOL.qml</file>
         <file alias="SafetyComponent.qml">src/AutoPilotPlugins/PX4/SafetyComponent.qml</file>

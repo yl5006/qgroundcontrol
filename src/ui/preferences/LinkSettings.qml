@@ -420,7 +420,7 @@ Rectangle {
                     }
                     //-- Auto Connect on Start
                     QGCCheckBox {
-                        text:       "Automatically Connect on Start"
+                        text:       qsTr("启动自动连接:")//"Automatically Connect on Start"
                         checked:    false
                         visible:    editConfig ? editConfig.autoConnectAllowed : false
                         onCheckedChanged: {

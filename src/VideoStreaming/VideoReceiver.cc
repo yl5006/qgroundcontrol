@@ -468,7 +468,7 @@ void VideoReceiver::startRecording(void)
 
     QString savePath = qgcApp()->toolbox()->settingsManager()->videoSettings()->videoSavePath()->rawValue().toString();
     if(savePath.isEmpty()) {
-        qgcApp()->showMessage("Unabled to record video. Video save path must be specified in Settings.");
+        qgcApp()->showMessage(tr("不能保存视频. 视频保存路径需要设置."));
         return;
     }
 

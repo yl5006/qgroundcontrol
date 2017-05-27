@@ -371,11 +371,11 @@ void Vehicle::_commonInit(void)
     _addFact(&_flightTimeFact,          _flightTimeFactName);
 	_addFact(&_throttleFact,            _throttleFactName); //add yaoling
 	
-    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
+//    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
 //    _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
 //    _addFactGroup(&_windFactGroup,      _windFactGroupName);
 //    _addFactGroup(&_vibrationFactGroup, _vibrationFactGroupName);
-    _addFactGroup(&_temperatureFactGroup, _temperatureFactGroupName);
+//    _addFactGroup(&_temperatureFactGroup, _temperatureFactGroupName);
 
     _flightDistanceFact.setRawValue(0);
     _flightTimeFact.setRawValue(0);

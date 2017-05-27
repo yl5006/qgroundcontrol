@@ -3505,7 +3505,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <short_desc>TPA I Breakpoint</short_desc>
       <long_desc>Throttle PID Attenuation (TPA) Magnitude of throttle setpoint at which to begin attenuating roll/pitch I gain</long_desc>
       <min>0.0</min>
-      <max>2.0</max>
+      <max>1.0</max>
       <decimal>2</decimal>
       <increment>0.1</increment>
       <scope>modules/mc_att_control</scope>
@@ -3795,7 +3795,7 @@ if required for the gimbal (only in AUX output mode)</short_desc>
     <parameter default="0.8" name="MPC_HOLD_MAX_XY" type="FLOAT">
       <short_desc>定点模式使能下最大水平速度（值为0时不检测）</short_desc>
       <min>0.0</min>
-      <max>8.0</max>
+      <max>3.0</max>
       <unit>m/s</unit>
       <decimal>2</decimal>
       <scope>modules/mc_pos_control</scope>
@@ -5461,25 +5461,25 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="11">Channel 11</value>
-        <value code="10">Channel 10</value>
-        <value code="13">Channel 13</value>
-        <value code="12">Channel 12</value>
-        <value code="15">Channel 15</value>
-        <value code="14">Channel 14</value>
-        <value code="17">Channel 17</value>
-        <value code="16">Channel 16</value>
-        <value code="18">Channel 18</value>
-        <value code="1">Channel 1</value>
-        <value code="0">Unassigned</value>
-        <value code="3">Channel 3</value>
-        <value code="2">Channel 2</value>
-        <value code="5">Channel 5</value>
-        <value code="4">Channel 4</value>
-        <value code="7">Channel 7</value>
-        <value code="6">Channel 6</value>
-        <value code="9">Channel 9</value>
-        <value code="8">Channel 8</value>
+        <value code="11">通道 11</value>
+        <value code="10">通道 10</value>
+        <value code="13">通道 13</value>
+        <value code="12">通道 12</value>
+        <value code="15">通道 15</value>
+        <value code="14">通道 14</value>
+        <value code="17">通道 17</value>
+        <value code="16">通道 16</value>
+        <value code="18">通道 18</value>
+        <value code="1">通道 1</value>
+        <value code="0">未分配</value>
+        <value code="3">通道 3</value>
+        <value code="2">通道 2</value>
+        <value code="5">通道 5</value>
+        <value code="4">通道 4</value>
+        <value code="7">通道 7</value>
+        <value code="6">通道 6</value>
+        <value code="9">通道 9</value>
+        <value code="8">通道 8</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX2" type="INT32">
@@ -5489,25 +5489,25 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="11">Channel 11</value>
-        <value code="10">Channel 10</value>
-        <value code="13">Channel 13</value>
-        <value code="12">Channel 12</value>
-        <value code="15">Channel 15</value>
-        <value code="14">Channel 14</value>
-        <value code="17">Channel 17</value>
-        <value code="16">Channel 16</value>
-        <value code="18">Channel 18</value>
-        <value code="1">Channel 1</value>
-        <value code="0">Unassigned</value>
-        <value code="3">Channel 3</value>
-        <value code="2">Channel 2</value>
-        <value code="5">Channel 5</value>
-        <value code="4">Channel 4</value>
-        <value code="7">Channel 7</value>
-        <value code="6">Channel 6</value>
-        <value code="9">Channel 9</value>
-        <value code="8">Channel 8</value>
+        <value code="11">通道 11</value>
+        <value code="10">通道 10</value>
+        <value code="13">通道 13</value>
+        <value code="12">通道 12</value>
+        <value code="15">通道 15</value>
+        <value code="14">通道 14</value>
+        <value code="17">通道 17</value>
+        <value code="16">通道 16</value>
+        <value code="18">通道 18</value>
+        <value code="1">通道 1</value>
+        <value code="0">未分配</value>
+        <value code="3">通道 3</value>
+        <value code="2">通道 2</value>
+        <value code="5">通道 5</value>
+        <value code="4">通道 4</value>
+        <value code="7">通道 7</value>
+        <value code="6">通道 6</value>
+        <value code="9">通道 9</value>
+        <value code="8">通道 8</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX3" type="INT32">
@@ -5517,25 +5517,25 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="11">Channel 11</value>
-        <value code="10">Channel 10</value>
-        <value code="13">Channel 13</value>
-        <value code="12">Channel 12</value>
-        <value code="15">Channel 15</value>
-        <value code="14">Channel 14</value>
-        <value code="17">Channel 17</value>
-        <value code="16">Channel 16</value>
-        <value code="18">Channel 18</value>
-        <value code="1">Channel 1</value>
-        <value code="0">Unassigned</value>
-        <value code="3">Channel 3</value>
-        <value code="2">Channel 2</value>
-        <value code="5">Channel 5</value>
-        <value code="4">Channel 4</value>
-        <value code="7">Channel 7</value>
-        <value code="6">Channel 6</value>
-        <value code="9">Channel 9</value>
-        <value code="8">Channel 8</value>
+        <value code="11">通道 11</value>
+        <value code="10">通道 10</value>
+        <value code="13">通道 13</value>
+        <value code="12">通道 12</value>
+        <value code="15">通道 15</value>
+        <value code="14">通道 14</value>
+        <value code="17">通道 17</value>
+        <value code="16">通道 16</value>
+        <value code="18">通道 18</value>
+        <value code="1">通道 1</value>
+        <value code="0">未分配</value>
+        <value code="3">通道 3</value>
+        <value code="2">通道 2</value>
+        <value code="5">通道 5</value>
+        <value code="4">通道 4</value>
+        <value code="7">通道 7</value>
+        <value code="6">通道 6</value>
+        <value code="9">通道 9</value>
+        <value code="8">通道 8</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX4" type="INT32">
@@ -6112,25 +6112,25 @@ if required for the gimbal (only in AUX output mode)</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="11">Channel 11</value>
-        <value code="10">Channel 10</value>
-        <value code="13">Channel 13</value>
-        <value code="12">Channel 12</value>
-        <value code="15">Channel 15</value>
-        <value code="14">Channel 14</value>
-        <value code="17">Channel 17</value>
-        <value code="16">Channel 16</value>
-        <value code="18">Channel 18</value>
-        <value code="1">Channel 1</value>
-        <value code="0">Unassigned</value>
-        <value code="3">Channel 3</value>
-        <value code="2">Channel 2</value>
-        <value code="5">Channel 5</value>
-        <value code="4">Channel 4</value>
-        <value code="7">Channel 7</value>
-        <value code="6">Channel 6</value>
-        <value code="9">Channel 9</value>
-        <value code="8">Channel 8</value>
+        <value code="11">通道 11</value>
+        <value code="10">通道 10</value>
+        <value code="13">通道 13</value>
+        <value code="12">通道 12</value>
+        <value code="15">通道 15</value>
+        <value code="14">通道 14</value>
+        <value code="17">通道 17</value>
+        <value code="16">通道 16</value>
+        <value code="18">通道 18</value>
+        <value code="1">通道 1</value>
+        <value code="0">未分配</value>
+        <value code="3">通道 3</value>
+        <value code="2">通道 2</value>
+        <value code="5">通道 5</value>
+        <value code="4">通道 4</value>
+        <value code="7">通道 7</value>
+        <value code="6">通道 6</value>
+        <value code="9">通道 9</value>
+        <value code="8">通道 8</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_STAB_SW" type="INT32">
@@ -7800,7 +7800,6 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <scope>modules/systemlib</scope>
       <values>
         <value code="1">local_position_estimator, attitude_estimator_q</value>
-        <value code="0">position_estimator_inav, attitude_estimator_q</value>
         <value code="2">ekf2</value>
       </values>
     </parameter>
@@ -8611,15 +8610,15 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="11">降落</value>
-        <value code="10">起飞</value>
+<!--    <value code="11">降落</value>
+        <value code="10">起飞</value> -->
         <value code="12">跟随</value>
         <value code="1">定高</value>
         <value code="0">手动</value>
         <value code="3">任务</value>
         <value code="2">定点</value>
         <value code="-1">未分配</value>
-        <value code="4">悬停(盘旋)</value>
+<!--    <value code="4">悬停(盘旋)</value>-->
 <!--    <value code="7">Offboard</value>-->
         <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
@@ -8632,20 +8631,21 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-      <value code="11">降落</value>
-      <value code="10">起飞</value>
-      <value code="12">跟随</value>
-      <value code="1">定高</value>
-      <value code="0">手动</value>
-      <value code="3">任务</value>
-      <value code="2">定点</value>
-      <value code="-1">未分配</value>
-      <value code="4">悬停(盘旋)</value>
+<!--    <value code="11">降落</value>
+        <value code="10">起飞</value> -->
+        <value code="12">跟随</value>
+        <value code="1">定高</value>
+        <value code="0">手动</value>
+        <value code="3">任务</value>
+        <value code="2">定点</value>
+        <value code="-1">未分配</value>
+<!--    <value code="4">悬停(盘旋)</value>-->
 <!--    <value code="7">Offboard</value>-->
-      <value code="6">运动</value>
+        <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
-      <value code="5">返航</value>
-      <value code="8">自稳</value>
+        <value code="5">返航</value>
+        <value code="8">自稳</value>
+
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE3" type="INT32">
@@ -8653,20 +8653,21 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-      <value code="11">降落</value>
-      <value code="10">起飞</value>
-      <value code="12">跟随</value>
-      <value code="1">定高</value>
-      <value code="0">手动</value>
-      <value code="3">任务</value>
-      <value code="2">定点</value>
-      <value code="-1">未分配</value>
-      <value code="4">悬停(盘旋)</value>
+<!--    <value code="11">降落</value>
+        <value code="10">起飞</value> -->
+        <value code="12">跟随</value>
+        <value code="1">定高</value>
+        <value code="0">手动</value>
+        <value code="3">任务</value>
+        <value code="2">定点</value>
+        <value code="-1">未分配</value>
+<!--    <value code="4">悬停(盘旋)</value>-->
 <!--    <value code="7">Offboard</value>-->
-      <value code="6">运动</value>
+        <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
-      <value code="5">返航</value>
+        <value code="5">返航</value>
         <value code="8">自稳</value>
+
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE4" type="INT32">
@@ -8674,20 +8675,21 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-      <value code="11">降落</value>
-      <value code="10">起飞</value>
-      <value code="12">跟随</value>
-      <value code="1">定高</value>
-      <value code="0">手动</value>
-      <value code="3">任务</value>
-      <value code="2">定点</value>
-      <value code="-1">未分配</value>
-      <value code="4">悬停(盘旋)</value>
+<!--    <value code="11">降落</value>
+        <value code="10">起飞</value> -->
+        <value code="12">跟随</value>
+        <value code="1">定高</value>
+        <value code="0">手动</value>
+        <value code="3">任务</value>
+        <value code="2">定点</value>
+        <value code="-1">未分配</value>
+<!--    <value code="4">悬停(盘旋)</value>-->
 <!--    <value code="7">Offboard</value>-->
-      <value code="6">运动</value>
+        <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
-      <value code="5">返航</value>
-      <value code="8">自稳</value>
+        <value code="5">返航</value>
+        <value code="8">自稳</value>
+
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE5" type="INT32">
@@ -8695,20 +8697,21 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-      <value code="11">降落</value>
-      <value code="10">起飞</value>
-      <value code="12">跟随</value>
-      <value code="1">定高</value>
-      <value code="0">手动</value>
-      <value code="3">任务</value>
-      <value code="2">定点</value>
-      <value code="-1">未分配</value>
-      <value code="4">悬停(盘旋)</value>
+<!--    <value code="11">降落</value>
+        <value code="10">起飞</value> -->
+        <value code="12">跟随</value>
+        <value code="1">定高</value>
+        <value code="0">手动</value>
+        <value code="3">任务</value>
+        <value code="2">定点</value>
+        <value code="-1">未分配</value>
+<!--    <value code="4">悬停(盘旋)</value>-->
 <!--    <value code="7">Offboard</value>-->
-      <value code="6">运动</value>
+        <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
-      <value code="5">返航</value>
-      <value code="8">自稳</value>
+        <value code="5">返航</value>
+        <value code="8">自稳</value>
+
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE6" type="INT32">
@@ -8716,20 +8719,21 @@ Maps the change of airspeed error to the acceleration setpoint</short_desc>
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-      <value code="11">降落</value>
-      <value code="10">起飞</value>
-      <value code="12">跟随</value>
-      <value code="1">定高</value>
-      <value code="0">手动</value>
-      <value code="3">任务</value>
-      <value code="2">定点</value>
-      <value code="-1">未分配</value>
-      <value code="4">悬停(盘旋)</value>
+<!--    <value code="11">降落</value>
+        <value code="10">起飞</value> -->
+        <value code="12">跟随</value>
+        <value code="1">定高</value>
+        <value code="0">手动</value>
+        <value code="3">任务</value>
+        <value code="2">定点</value>
+        <value code="-1">未分配</value>
+<!--    <value code="4">悬停(盘旋)</value>-->
 <!--    <value code="7">Offboard</value>-->
-      <value code="6">运动</value>
+        <value code="6">运动</value>
 <!--    <value code="9">Rattitude</value>-->
-      <value code="5">返航</value>
-      <value code="8">自稳</value>
+        <value code="5">返航</value>
+        <value code="8">自稳</value>
+
       </values>
     </parameter>
     <parameter default="0.1" name="RV_YAW_P" type="FLOAT">

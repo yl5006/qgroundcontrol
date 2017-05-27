@@ -625,7 +625,7 @@ QStringList LinkManager::linkTypeStrings(void) const
     if(!list.size())
     {
 #ifndef NO_SERIAL_LINK
-        list += "Serial";
+        list += tr("串口");
 #endif
         list += "UDP";
         list += "TCP";
@@ -636,7 +636,7 @@ QStringList LinkManager::linkTypeStrings(void) const
         list += "Mock Link";
 #endif
 #ifndef __mobile__
-        list += "Log Replay";
+        list += tr("日志回放");
 #endif
         if (list.size() != (int)LinkConfiguration::TypeLast) {
             qWarning() << "Internal error";

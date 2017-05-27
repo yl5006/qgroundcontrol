@@ -13,7 +13,7 @@
     "type":             "uint32",
     "enumStrings":      "Fixed Wing,Multi-Rotor,VTOL,Rover,Sub",
     "enumValues":       "1,2,19,10,12",
-    "defaultValue":     2
+    "defaultValue":     1
 },
 {
     "name":             "OfflineEditingCruiseSpeed",
@@ -74,7 +74,7 @@
     "shortDescription": "Mute audio output",
     "longDescription":  "If this option is enabled all audio output will be muted.",
     "type":             "bool",
-    "defaultValue":     false
+    "defaultValue":     true
 },
 {
     "name":             "VirtualTabletJoystick",

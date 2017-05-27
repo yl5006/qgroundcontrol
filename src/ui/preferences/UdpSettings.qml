@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -41,7 +41,7 @@ Item {
 
         QGCLabel {
             id:     udpLabel
-            text:   qsTr("UDP Link Settings")
+            text:   qsTr("UDP 连接设置")
         }
         Rectangle {
             height: 1
@@ -55,7 +55,7 @@ Item {
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
             QGCLabel {
-                text:   qsTr("Listening Port:")
+                text:   qsTr("监听 Port:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -78,7 +78,7 @@ Item {
             width:  parent.width
         }
         QGCLabel {
-            text:   qsTr("Target Hosts:")
+            text:   qsTr("目标 Hosts:")
         }
         Item {
             width:  hostRow.width
@@ -152,7 +152,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
                             QGCButton {
                                 width:      ScreenTools.defaultFontPixelWidth * 10
-                                text:       qsTr("Add")
+                                text:       qsTr("添加")
                                 onClicked: {
                                     if(hostField.visible && hostField.text !== "") {
                                         subEditConfig.addHost(hostField.text)
@@ -165,7 +165,7 @@ Item {
                             QGCButton {
                                 width:      ScreenTools.defaultFontPixelWidth * 10
                                 enabled:    _udpSetting._currentHost && _udpSetting._currentHost !== ""
-                                text:       qsTr("Remove")
+                                text:       qsTr("删除")
                                 onClicked: {
                                     subEditConfig.removeHost(_udpSetting._currentHost)
                                 }
