@@ -147,11 +147,13 @@ Rectangle {
                     text:       qsTr("任务结束返航")
                     checked:    missionItem.missionEndRTL
                     onClicked:  missionItem.missionEndRTL = checked
+                    visible:    false
                 }
             }
 
             CameraSection {
                 checked: missionItem.cameraSection.settingsSpecified
+                visible:    false
             }
 
             SectionHeader {

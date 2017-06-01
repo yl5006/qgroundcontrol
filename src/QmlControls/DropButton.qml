@@ -14,6 +14,7 @@ Item {
     property alias  buttonImage:        roundButton.buttonImage
     property alias  imgcolor:           roundButton.imgcolor
     property alias  rotateImage:        roundButton.rotateImage
+    property alias  animateImage:       roundButton.animateImage
     property real   radius:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.75 : ScreenTools.defaultFontPixelHeight * 1.25
     property int    dropDirection:      dropDown
     property alias  dropDownComponent:  dropDownLoader.sourceComponent

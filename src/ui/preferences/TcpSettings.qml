@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -35,7 +35,7 @@ Item {
         spacing:    ScreenTools.defaultFontPixelHeight / 2
         QGCLabel {
             id:     tcpLabel
-            text:   qsTr("TCP Link Settings")
+            text:   qsTr("TCP 连接设置")
         }
         Rectangle {
             height: 1
@@ -49,7 +49,7 @@ Item {
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
             QGCLabel {
-                text:   qsTr("Host Address:")
+                text:   qsTr("Host 地址:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -63,7 +63,7 @@ Item {
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
             QGCLabel {
-                text:   qsTr("TCP Port:")
+                text:   qsTr("TCP 端口:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }

@@ -111,6 +111,9 @@ public:
         StartCalibrationCopyTrims,
         StartCalibrationUavcanEsc,
         StartCalibrationCompassMot,
+        StartCalibrationTempGyro,
+        StartCalibrationTempAccel,
+        StartCalibrationTempBaro,
     };
 
     enum StartBusConfigType {

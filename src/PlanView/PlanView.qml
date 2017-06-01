@@ -858,6 +858,7 @@ QGCView {
                     dropDownComponent:  syncDropPanel//syncDropDownComponent
                     enabled:            !masterController.syncInProgress
                     rotateImage:        masterController.syncInProgress
+                    animateImage:       masterController.dirty
                     lightBorders:       _lightWidgetBorders
                 }
                 Rectangle {

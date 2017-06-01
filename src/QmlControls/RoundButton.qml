@@ -12,6 +12,7 @@ Item {
     property alias  buttonImage:    button.source
     property real   radius:         ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.75 : ScreenTools.defaultFontPixelHeight * 1.25
     property bool   rotateImage:    false
+    property bool   animateImage:   false
     property bool   lightBorders:   true
     property color  imgcolor:      "White"
     width:  radius * 2
@@ -36,7 +37,14 @@ Item {
             button.rotation = 0
         }
     }
-
+    onAnimateImageChanged: {
+        if (animateImage) {
+            opacityAnimation.running = true
+        } else {
+            opacityAnimation.running = false
+            button.opacity = 1
+        }
+    }
     Rectangle {
         anchors.fill:   parent
  //       radius:         width / 2
@@ -61,6 +69,14 @@ Item {
                 to:             360
                 duration:       500
                 running:        false
+            }
+            NumberAnimation on opacity {
+                id:         opacityAnimation
+                running:    false
+                from:       0.2
+                to:         1.0
+                loops:      Animation.Infinite
+                duration:   2000
             }
         }
         MouseArea {

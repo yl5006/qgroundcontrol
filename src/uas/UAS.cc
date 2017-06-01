@@ -624,6 +624,17 @@ void UAS::startCalibration(UASInterface::StartCalibrationType calType)
     case StartCalibrationCompassMot:
         airspeedCal = 1; // ArduPilot, bit of a hack
         break;
+    case StartCalibrationTempGyro:
+        gyroCal = 3;
+        break;
+    case StartCalibrationTempAccel:
+        accelCal = 3;
+        break;
+    case StartCalibrationTempBaro:
+        escCal = 3;
+        break;
+
+
     }
 
     // We can't use sendMavCommand here since we have no idea how long it will be before the command returns a result. This in turn

@@ -38,10 +38,9 @@ Rectangle {
     }
     Column {
         spacing:    ScreenTools.defaultFontPixelHeight
-        anchors.left: parent.left
-        anchors.leftMargin: ScreenTools.defaultFontPixelHeight
         anchors.top:  parent.top
         anchors.topMargin: ScreenTools.defaultFontPixelHeight/2
+        anchors.horizontalCenter: parent.horizontalCenter
      QGCLabel {
                 text:               qsTr("RTMP URL:")
                 width:              ScreenTools.defaultFontPixelHeight*5
@@ -56,6 +55,7 @@ Rectangle {
             }
 
         Row{
+            spacing:    ScreenTools.defaultFontPixelHeight/2
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
@@ -72,6 +72,7 @@ Rectangle {
             }
         }
         Row{
+            spacing:    ScreenTools.defaultFontPixelHeight/2
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
@@ -87,9 +88,18 @@ Rectangle {
                 primary:       true
             }
         }
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*5
+            height:        ScreenTools.defaultFontPixelHeight*2
+            anchors.horizontalCenter: parent.horizontalCenter
+            text:          qsTr("拍照")
+            checkable:     false
+            primary:       true
+        }
         JoystickThumbPad {
             id:                     rightStick
-            width:                  ScreenTools.defaultFontPixelHeight*15
+            anchors.horizontalCenter: parent.horizontalCenter
+            width:                  ScreenTools.defaultFontPixelHeight*12
             height:                 width
         }
 
