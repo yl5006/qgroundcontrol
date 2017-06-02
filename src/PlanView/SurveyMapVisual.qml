@@ -97,12 +97,6 @@ Item {
         interiorColor:      "green"
         interiorOpacity:    0.5
     }
-    PolygonEditor
-    {
-        id:                 polygonEditor
-        map:                map
-        callbackObject:     _root
-    }
     // Survey grid lines
     Component {
         id: gridComponent

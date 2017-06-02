@@ -111,17 +111,17 @@ Rectangle {
     }
 
     function polygonCaptureStarted() {
-        missionItem.clearPolygon()
+        missionItem.mapPolygon.clear()
     }
 
     function polygonCaptureFinished(coordinates) {
         for (var i=0; i<coordinates.length; i++) {
-            missionItem.addPolygonCoordinate(coordinates[i])
+            missionItem.mapPolygon.appendVertex(coordinates[i])
         }
     }
 
     function polygonAdjustVertex(vertexIndex, vertexCoordinate) {
-        missionItem.adjustPolygonCoordinate(vertexIndex, vertexCoordinate)
+        missionItem.mapPolygon.adjustVertex(vertexIndex, vertexCoordinate)
     }
 
     function polygonAdjustStarted() { }
@@ -253,32 +253,32 @@ Rectangle {
                 }
             }
 
-            RowLayout {
-                anchors.left:   parent.left
-                anchors.right:  parent.right
-                spacing:        _margin
-                visible:        missionItem.manualGrid.value == true
+//            RowLayout {
+//                anchors.left:   parent.left
+//                anchors.right:  parent.right
+//                spacing:        _margin
+//                visible:        false
 
-                QGCCheckBox {
-                    id:                 cameraTriggerTimeCheckBox
-                    anchors.baseline:   cameraTriggerDistanceField.baseline
-                    text:               qsTr("触发时间")
-                    checked:            missionItem.cameraTriggerDistance.rawValue > 0
-                    onClicked: {
-                        if (checked) {
-                            missionItem.cameraTriggerDistance.value = missionItem.cameraTriggerDistance.defaultValue
-                        } else {
-                            missionItem.cameraTriggerDistance.value = 0
-                        }
-                    }
-                }
-                FactTextField {
-                    id:                 cameraTriggerTime
-                    Layout.fillWidth:   true
-                    fact:               missionItem.cameraTriggerDistance
-                    enabled:            missionItem.cameraTrigger.value
-                }
-            }
+//                QGCCheckBox {
+//                    id:                 cameraTriggerTimeCheckBox
+//                    anchors.baseline:   cameraTriggerDistanceField.baseline
+//                    text:               qsTr("触发时间")
+//                    checked:            missionItem.cameraTriggerDistance.rawValue > 0
+//                    onClicked: {
+//                        if (checked) {
+//                            missionItem.cameraTriggerDistance.value = missionItem.cameraTriggerDistance.defaultValue
+//                        } else {
+//                            missionItem.cameraTriggerDistance.value = 0
+//                        }
+//                    }
+//                }
+//                FactTextField {
+//                    id:                 cameraTriggerTime
+//                    Layout.fillWidth:   true
+//                    fact:               missionItem.cameraTriggerDistance
+//                    enabled:            missionItem.cameraTrigger.value
+//                }
+//            }
 
             FactCheckBox {
                 text:       qsTr("悬停拍照")
@@ -590,7 +590,25 @@ Rectangle {
                 Layout.columnSpan:  2
             }
         }
+        Row {
+                  spacing: ScreenTools.defaultFontPixelWidth
+                  anchors.horizontalCenter: parent.horizontalCenter
 
+                  QGCButton {
+                      width:      _root.width * 0.45
+                      text:       editorMap.drawingPolygon ? qsTr("完成绘制") : qsTr("绘制")//qsTr("Finish Draw") : qsTr("Draw")
+                      visible:    !editorMap.adjustingPolygon
+                      enabled:    ((editorMap.drawingPolygon && editorMap.polygonReady) || !editorMap.drawingPolygon)
+
+                      onClicked: {
+                          if (editorMap.drawingPolygon) {
+                              editorMap.finishCapturePolygon()
+                          } else {
+                              editorMap.startCapturePolygon(_root)
+                          }
+                      }
+                  }
+              }
         SectionHeader {
             id:     statsHeader
             text:   qsTr("统计") }
