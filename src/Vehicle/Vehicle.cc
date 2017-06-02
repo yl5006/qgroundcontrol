@@ -731,7 +731,23 @@ void Vehicle::_handleAutopilotVersion(LinkInterface *link, mavlink_message_t& me
         lastVersion  = autopilotVersion.middleware_sw_version;
         versionType = (FIRMWARE_VERSION_TYPE)((autopilotVersion.flight_sw_version >> (8*0)) & 0xFF);
         setFirmwareVersion(majorVersion, minorVersion, patchVersion,lastVersion,versionType);
-         _firmwareId = QString::fromUtf8((char*)autopilotVersion.flight_custom_version,24);
+        char uid[8];
+        char id[2];
+        QString uidstr;
+        memcpy(uid,&autopilotVersion.board_version,4);
+        for(int i=3;i>=0;i--)
+         {
+           sprintf(id,"%02X",uid[i]);
+           uidstr.append(QString::fromLatin1(id,2));
+         }
+        memcpy(uid,&autopilotVersion.uid,8);
+        for(int i=7;i>=0;i--)
+          {
+            sprintf(id,"%02X",uid[i]);
+            uidstr.append(QString::fromLatin1(id,2));
+         }
+
+          _firmwareId = uidstr;
     }
 
     if (px4Firmware()) {

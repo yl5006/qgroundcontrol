@@ -374,7 +374,7 @@ void MAVLinkProtocol::_startLogging(void)
             }
 
             qDebug() << "Temp log" << _tempLogFile.fileName();
-//            emit checkTelemetrySavePath();
+            emit checkTelemetrySavePath();
 
             _logSuspendError = false;
         }

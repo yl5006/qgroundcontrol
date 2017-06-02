@@ -101,7 +101,7 @@ void AirframeComponentController::changeAutostart(void)
     
     // We use forceSetValue to params are sent even if the previous value is that same as the new value
     sysAutoStartFact->forceSetRawValue(_autostartId);
-    sysAutoConfigFact->forceSetRawValue(1);
+   // sysAutoConfigFact->forceSetRawValue(1);
 }
 
 void AirframeComponentController::_waitParamWriteSignal(QVariant value)
