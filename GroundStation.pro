@@ -29,6 +29,49 @@ DebugBuild {
     DESTDIR  = $${OUT_PWD}/release
 }
 
+#
+# OS Specific settings
+#
+
+MacBuild {
+    QMAKE_INFO_PLIST    = Custom-Info.plist
+    ICON                = $${BASEDIR}/resources/icons/macx.icns
+    OTHER_FILES        += Custom-Info.plist
+    equals(QT_MAJOR_VERSION, 5) | greaterThan(QT_MINOR_VERSION, 5) {
+        LIBS           += -framework ApplicationServices
+    }
+}
+
+iOSBuild {
+    BUNDLE.files        = $$files($$PWD/ios/AppIcon*.png) $$PWD/ios/QGCLaunchScreen.xib
+    QMAKE_BUNDLE_DATA  += BUNDLE
+    LIBS               += -framework AVFoundation
+    #-- Info.plist (need an "official" one for the App Store)
+    ForAppStore {
+        message(App Store Build)
+        #-- Create official, versioned Info.plist
+        APP_STORE = $$system(cd $${BASEDIR} && $${BASEDIR}/tools/update_ios_version.sh $${BASEDIR}/ios/iOSForAppStore-Info-Source.plist $${BASEDIR}/ios/iOSForAppStore-Info.plist)
+        APP_ERROR = $$find(APP_STORE, "Error")
+        count(APP_ERROR, 1) {
+            error("Error building .plist file. 'ForAppStore' builds are only possible through the official build system.")
+        }
+        QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOSForAppStore-Info.plist
+        OTHER_FILES      += $${BASEDIR}/ios/iOSForAppStore-Info.plist
+    } else {
+        QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOS-Info.plist
+        OTHER_FILES      += $${BASEDIR}/ios/iOS-Info.plist
+    }
+    #-- TODO: Add iTunesArtwork
+}
+
+LinuxBuild {
+    CONFIG  += qesp_linux_udev
+}
+
+WindowsBuild {
+    RC_ICONS = resources/icons/qgroundcontrol.ico
+}
+
 # Load additional config flags from user_config.pri
 exists(user_config.pri):infile(user_config.pri, CONFIG) {
     CONFIG += $$fromfile(user_config.pri, CONFIG)
@@ -182,49 +225,11 @@ ReleaseBuild {
     # We don't need the testlib console in release mode
     QT.testlib.CONFIG -= console
 }
+
 #
-# OS Specific settings
+# Branding
 #
 
-MacBuild {
-    QMAKE_INFO_PLIST    = Custom-Info.plist
-    ICON                = $${BASEDIR}/resources/icons/macx.icns
-    OTHER_FILES        += Custom-Info.plist
-equals(QT_MAJOR_VERSION, 5) | greaterThan(QT_MINOR_VERSION, 5) {
-    LIBS               += -framework ApplicationServices
-}
-}
-
-iOSBuild {
-    BUNDLE.files        = $$files($$PWD/ios/AppIcon*.png) $$PWD/ios/QGCLaunchScreen.xib
-    QMAKE_BUNDLE_DATA  += BUNDLE
-    LIBS               += -framework AVFoundation
-    #-- Info.plist (need an "official" one for the App Store)
-    ForAppStore {++
-        message(App Store Build)
-        #-- Create official, versioned Info.plist
-        APP_STORE = $$system(cd $${BASEDIR} && $${BASEDIR}/tools/update_ios_version.sh $${BASEDIR}/ios/iOSForAppStore-Info-Source.plist $${BASEDIR}/ios/iOSForAppStore-Info.plist)
-        APP_ERROR = $$find(APP_STORE, "Error")
-        count(APP_ERROR, 1) {
-            error("Error building .plist file. 'ForAppStore' builds are only possible through the official build system.")
-        }
-        QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOSForAppStore-Info.plist
-        OTHER_FILES      += $${BASEDIR}/ios/iOSForAppStore-Info.plist
-    } else {
-        QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOS-Info.plist
-        OTHER_FILES      += $${BASEDIR}/ios/iOS-Info.plist
-    }
-    #-- TODO: Add iTunesArtwork
-}
-
-LinuxBuild {
-    CONFIG += qesp_linux_udev
-    INCLUDEPATH += $$[QT_SYSROOT]/usr/include
-    LIBS += -L$$[QT_SYSROOT]/usr/lib/arm-linux-gnueabihf
-    LIBS += -L$$[QT_SYSROOT]/lib/arm-linux-gnueabihf
-}
-
-RC_ICONS = resources/icons/qgroundcontrol.ico
 QMAKE_TARGET_COMPANY = "groundstation.org"
 QMAKE_TARGET_DESCRIPTION = "ground station provided by yaoling"
 QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2016 . All rights reserved."
@@ -402,7 +407,9 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory  { APMFirmwarePlugin {
         src/MissionManager/MissionControllerTest.h \
         src/MissionManager/MissionItemTest.h \
         src/MissionManager/MissionManagerTest.h \
+        src/MissionManager/MissionSettingsTest.h \
         src/MissionManager/PlanMasterControllerTest.h \
+        src/MissionManager/QGCMapPolygonTest.h \
         src/MissionManager/SectionTest.h \
         src/MissionManager/SimpleMissionItemTest.h \
         src/MissionManager/SpeedSectionTest.h \
@@ -435,7 +442,9 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory  { APMFirmwarePlugin {
         src/MissionManager/MissionControllerTest.cc \
         src/MissionManager/MissionItemTest.cc \
         src/MissionManager/MissionManagerTest.cc \
+        src/MissionManager/MissionSettingsTest.cc \
         src/MissionManager/PlanMasterControllerTest.cc \
+        src/MissionManager/QGCMapPolygonTest.cc \
         src/MissionManager/SectionTest.cc \
         src/MissionManager/SimpleMissionItemTest.cc \
         src/MissionManager/SpeedSectionTest.cc \
@@ -825,7 +834,6 @@ HEADERS+= \
     src/AutoPilotPlugins/AutoPilotPlugin.h \
     src/AutoPilotPlugins/Common/ESP8266Component.h \
     src/AutoPilotPlugins/Common/ESP8266ComponentController.h \
-    src/AutoPilotPlugins/Common/MixersComponent.h \
     src/AutoPilotPlugins/Common/MotorComponent.h \
     src/AutoPilotPlugins/Common/RadioComponentController.h \
     src/AutoPilotPlugins/Common/SyslinkComponent.h \
@@ -850,7 +858,6 @@ SOURCES += \
     src/AutoPilotPlugins/AutoPilotPlugin.cc \
     src/AutoPilotPlugins/Common/ESP8266Component.cc \
     src/AutoPilotPlugins/Common/ESP8266ComponentController.cc \
-    src/AutoPilotPlugins/Common/MixersComponent.cc \
     src/AutoPilotPlugins/Common/MotorComponent.cc \
     src/AutoPilotPlugins/Common/RadioComponentController.cc \
     src/AutoPilotPlugins/Common/SyslinkComponent.cc \
@@ -1088,7 +1095,11 @@ AndroidBuild {
 # Post link configuration
 #
 
-include(QGCSetup.pri)
+contains (CONFIG, QGC_DISABLE_BUILD_SETUP) {
+    message("Disable standard build setup")
+} else {
+    include(QGCSetup.pri)
+}
 
 #
 # Installer targets

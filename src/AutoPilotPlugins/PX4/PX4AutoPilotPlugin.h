@@ -24,7 +24,6 @@
 #include "MotorComponent.h"
 #include "PX4TuningComponent.h"
 #include "PX4VehicleParamsComponent.h"
-#include "MixersComponent.h"
 #include "SyslinkComponent.h"
 #include "Vehicle.h"
 
@@ -59,7 +58,6 @@ protected:
     PowerComponent*         _powerComponent;
     MotorComponent*         _motorComponent;
     PX4TuningComponent*     _tuningComponent;
-	MixersComponent*        _mixersComponent;
     PX4VehicleParamsComponent*     _paramsComponent;
 	SyslinkComponent*       _syslinkComponent;
 private:
