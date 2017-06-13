@@ -350,7 +350,7 @@
             "id":           93,
             "rawName":      "MAV_CMD_NAV_DELAY",
             "friendlyName": "延时",
-            "description":  "Delay unti the specified time is reached.",
+            "description":  "延迟直到达到指定的时间",
             "category":      "飞行控制",
             "param1": {
                 "label":            "Hold",

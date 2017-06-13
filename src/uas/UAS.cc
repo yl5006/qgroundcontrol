@@ -481,6 +481,7 @@ void UAS::receiveMessage(mavlink_message_t message)
             // Ensure NUL-termination
             b[b.length()-1] = '\0';
             QString text = QString(b);
+            qDebug()<<"info->"<<text;
             int severity = mavlink_msg_statustext_get_severity(&message);
 
         // If the message is NOTIFY or higher severity, or starts with a '#',
@@ -490,7 +491,6 @@ void UAS::receiveMessage(mavlink_message_t message)
                 text.remove("#");
                 emit textMessageReceived(uasId, message.compid, severity, _criticalmsg[msgid]);
 //              do not say
-//                _criticalmsg[msgid]
                 _say(_criticalmsg[msgid].toLower(), severity);
             }
             else

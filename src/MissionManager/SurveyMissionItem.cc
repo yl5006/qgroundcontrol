@@ -618,7 +618,7 @@ void SurveyMissionItem::_generateGrid(void)
     _convertTransectToGeo(transectSegments, tangentOrigin, _transectSegments);
     //_optimizeTransectsForShortestDistance(?, _transectSegments);
     _appendGridPointsFromTransects(_transectSegments);
-    qDebug() << _transectSegments.count();
+//    qDebug() << _transectSegments.count();
     if (_refly90Degrees) {
         QVariantList reflyPointsGeo;
 
