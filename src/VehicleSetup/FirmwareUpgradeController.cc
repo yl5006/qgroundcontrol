@@ -167,11 +167,10 @@ void FirmwareUpgradeController::_foundBootloader(int bootloaderVersion, int boar
     _bootloaderBoardID = boardID;
     _bootloaderBoardFlashSize = flashSize;
     
-  //   _appendStatusLog("Connected to bootloader:");
-  //  _appendStatusLog(QString("  Version: %1").arg(_bootloaderVersion));
-  //  _appendStatusLog(QString("  Board ID: %1").arg(_bootloaderBoardID));
+//    _appendStatusLog("Connected to bootloader:");
+//    _appendStatusLog(QString("  Version: %1").arg(_bootloaderVersion));
+//    _appendStatusLog(QString("  Board ID: %1").arg(_bootloaderBoardID));
     _appendStatusLog(QString("  Flash size: %1").arg(_bootloaderBoardFlashSize));
-    
     if (_startFlashWhenBootloaderFound) {
         flash(_startFlashWhenBootloaderFoundFirmwareIdentity);
     }
@@ -517,9 +516,9 @@ void FirmwareUpgradeController::_downloadFirmware(void)
 {
     Q_ASSERT(!_firmwareFilename.isEmpty());
     
- //   _appendStatusLog("Downloading firmware...");
+//    _appendStatusLog("Downloading firmware...");
     _progressBar->setProperty("test", tr("下载"));//Downloading
- //   _appendStatusLog(QString(" From: %1").arg(_firmwareFilename));
+//    _appendStatusLog(QString(" From: %1").arg(_firmwareFilename));
     
     QGCFileDownload* downloader = new QGCFileDownload(this);
     connect(downloader, &QGCFileDownload::downloadFinished, this, &FirmwareUpgradeController::_firmwareDownloadFinished);

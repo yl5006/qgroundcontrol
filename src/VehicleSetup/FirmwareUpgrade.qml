@@ -105,7 +105,8 @@ QGCView {
                 // We end up here when we detect a board plugged in after we've started upgrade
                 statusTextArea.append(highlightPrefix + qsTr("找到设备") + highlightSuffix + ": " + controller.boardType)
                 if (controller.pixhawkBoard || controller.px4FlowBoard) {
-                    showDialog(pixhawkFirmwareSelectDialogComponent, title, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
+                    controller.flash(FirmwareUpgradeController.AutoPilotStackPX4, FirmwareUpgradeController.StableFirmware, FirmwareUpgradeController.DefaultVehicleFirmware)
+                    //showDialog(pixhawkFirmwareSelectDialogComponent, firwaretitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                 }
             }
         }

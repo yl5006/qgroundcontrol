@@ -67,14 +67,14 @@ bool QGCFileDownload::download(const QString& remoteFile, bool redirect)
     }
     
     QNetworkRequest networkRequest(remoteUrl);
-     qDebug()<<"remoteUrl-----"<<remoteUrl;
+//     qDebug()<<"remoteUrl-----"<<remoteUrl;
     QNetworkProxy tProxy;
     tProxy.setType(QNetworkProxy::DefaultProxy);
     setProxy(tProxy);
     
     // Store local file location in user attribute so we can retrieve when the download finishes
     networkRequest.setAttribute(QNetworkRequest::User, localFile);
-    qDebug()<<"localFile-----"<<localFile;
+//    qDebug()<<"localFile-----"<<localFile;
     QNetworkReply* networkReply = get(networkRequest);
     if (!networkReply) {
         qWarning() << "QNetworkAccessManager::get failed";

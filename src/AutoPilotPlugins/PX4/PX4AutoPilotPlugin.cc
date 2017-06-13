@@ -180,6 +180,10 @@ QString PX4AutoPilotPlugin::prerequisiteSetup(VehicleComponent* component) const
         requiresAirframeCheck = true;
     } else if (qobject_cast<const SensorsComponent*>(component)) {
         requiresAirframeCheck = true;
+    }else if  (qobject_cast<const MotorComponent*>(component)) {
+        requiresAirframeCheck = true;
+    }else if  (qobject_cast<const PX4VehicleParamsComponent*>(component)) {
+            requiresAirframeCheck = true;
     }
 
     if (requiresAirframeCheck) {
