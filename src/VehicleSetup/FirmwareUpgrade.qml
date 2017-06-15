@@ -422,6 +422,14 @@ QGCView {
                 anchors.horizontalCenter:setcircle.horizontalCenter
                 anchors.verticalCenter: setcircle.verticalCenter
             }
+            Image {
+                source:    "/qmlimages/title.svg"
+                width:      idset.width+ScreenTools.defaultFontPixelHeight*4
+                height:     ScreenTools.defaultFontPixelHeight*3
+                anchors.verticalCenter: setcircle.verticalCenter
+                anchors.left:          setcircle.right
+                //                fillMode: Image.PreserveAspectFit
+            }
             QGCLabel {
                 id:             idset
                 anchors.left:   setimg.left
@@ -431,14 +439,6 @@ QGCView {
                 font.bold:              true
                 color:          qgcPal.text
                 anchors.verticalCenter: setimg.verticalCenter
-            }
-            Image {
-                source:    "/qmlimages/title.svg"
-                width:      idset.width+ScreenTools.defaultFontPixelHeight*4
-                height:     ScreenTools.defaultFontPixelHeight*3
-                anchors.verticalCenter: setcircle.verticalCenter
-                anchors.left:          setcircle.right
-                //                fillMode: Image.PreserveAspectFit
             }
         }
 
