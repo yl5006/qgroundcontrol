@@ -639,7 +639,6 @@ SetupPage {
                     border.color:   qgcPal.text
                     border.width:   1
                 }
-                //  QGCLabel { text: qsTr("更多遥控设置 working") }
 
                 //               QGCLabel { text: "Additional Radio setup:" }
                 Row{
@@ -654,7 +653,6 @@ SetupPage {
 
                     QGCButton {
                         text:       qsTr("拷贝中立点")//qsTr("Copy Trims")
-                        visible:    QGroundControl.multiVehicleManager.activeVehicle.px4Firmware
                         onClicked:  showDialog(copyTrimsDialogComponent, dialogTitle, radioPage.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                     }
                 }

@@ -116,8 +116,10 @@ SetupPage {
             property bool showCompass1Rot: cal_mag1_id.value > 0 && cal_mag1_rot.value >= 0
             property bool showCompass2Rot: cal_mag2_id.value > 0 && cal_mag2_rot.value >= 0
 
-            property bool _sensorsHaveFixedOrientation: QGroundControl.corePlugin.options.sensorsHaveFixedOrientation
-            property bool _wifiReliableForCalibration:  QGroundControl.corePlugin.options.wifiReliableForCalibration
+            property bool   _sensorsHaveFixedOrientation:   QGroundControl.corePlugin.options.sensorsHaveFixedOrientation
+            property bool   _wifiReliableForCalibration:    QGroundControl.corePlugin.options.wifiReliableForCalibration
+            property int    _buttonWidth:                   ScreenTools.defaultFontPixelWidth * 15
+
             property bool calmagtime: false
             SensorsComponentController {
                 id:                         controller
@@ -369,7 +371,15 @@ SetupPage {
                     anchors.horizontalCenter:setcircle.horizontalCenter
                     anchors.verticalCenter: setcircle.verticalCenter
                 }
-                QGCLabel {
+                Image {
+                    source:    "/qmlimages/title.svg"
+                    width:      idset.width+ScreenTools.defaultFontPixelHeight*4
+                    height:     ScreenTools.defaultFontPixelHeight*3
+                    anchors.verticalCenter: setcircle.verticalCenter
+                    anchors.left:          setcircle.right
+                    //                fillMode: Image.PreserveAspectFit
+                }
+		                QGCLabel {
                     id:             idset
                     anchors.left:   setimg.left
                     anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
@@ -378,14 +388,6 @@ SetupPage {
                     font.bold:              true
                     color:          qgcPal.text
                     anchors.verticalCenter: setimg.verticalCenter
-                }
-                Image {
-                    source:    "/qmlimages/title.svg"
-                    width:      idset.width+ScreenTools.defaultFontPixelHeight*4
-                    height:     ScreenTools.defaultFontPixelHeight*3
-                    anchors.verticalCenter: setcircle.verticalCenter
-                    anchors.left:          setcircle.right
-                    //                fillMode: Image.PreserveAspectFit
                 }
             }
             Row {

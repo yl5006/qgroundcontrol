@@ -154,6 +154,7 @@ void PlanMasterController::loadFromVehicle(void)
     } else {
         _loadGeoFence = true;
         _syncInProgress = true;
+        emit syncInProgressChanged(true);
         _missionController.loadFromVehicle();
         setDirty(false);
     }
@@ -226,6 +227,7 @@ void PlanMasterController::sendToVehicle(void)
         qCDebug(PlanMasterControllerLog) << "PlanMasterController::sendToVehicle start mission sendToVehicle";
         _sendGeoFence = true;
         _syncInProgress = true;
+        emit syncInProgressChanged(true);
         _missionController.sendToVehicle();
         setDirty(false);
     }

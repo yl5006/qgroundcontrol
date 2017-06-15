@@ -466,6 +466,13 @@ Rectangle {
                     Layout.fillWidth:       true
                 }
 
+                QGCLabel { text: qsTr("Entry") }
+                FactComboBox {
+                    fact:                   missionItem.gridEntryLocation
+                    indexModel:             false
+                    Layout.fillWidth:       true
+                }
+
                 QGCCheckBox {
                     text:       qsTr("以90度偏移重飞该区域")
                     checked:            missionItem.refly90Degrees
@@ -575,6 +582,13 @@ Rectangle {
                 fact:                   missionItem.turnaroundDist
                 Layout.fillWidth:       true
             }
+            QGCLabel { text: qsTr("Entry") }
+            FactComboBox {
+                fact:                   missionItem.gridEntryLocation
+                indexModel:             false
+                Layout.fillWidth:       true
+            }
+
 
             QGCCheckBox {
                 text:       qsTr("以90度偏移重飞该区域")

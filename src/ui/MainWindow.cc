@@ -45,8 +45,6 @@
 #ifndef __mobile__
 #include "Linecharts.h"
 #include "QGCUASFileViewMulti.h"
-#include "UASQuickView.h"
-#include "QGCTabbedInfoView.h"
 #include "CustomCommandWidget.h"
 #include "QGCDockWidget.h"
 #include "HILDockWidget.h"
@@ -69,18 +67,18 @@ enum DockWidgetTypes {
     MAVLINK_INSPECTOR,
     CUSTOM_COMMAND,
     ONBOARD_FILES,
-    INFO_VIEW,
+    DEPRECATED_WIDGET,
     HIL_CONFIG,
     ANALYZE
 };
 
-const char* rgDockWidgetNames[] = {
-    QT_TR_NOOP("数据链分析"),//MAVLink Inspector
-    QT_TR_NOOP("用户命令"),//Custom Command
-    QT_TR_NOOP("机体文件"),//Onboard Files
-    QT_TR_NOOP("信息显示"),//Info View
-    QT_TR_NOOP("仿真设置"),//HIL Config
-    QT_TR_NOOP("波形分析"),//Analyze
+static const char *rgDockWidgetNames[] = {
+	QT_TR_NOOP("数据链分析"),//"MAVLink Inspector",
+    QT_TR_NOOP("用户命令"),//"Custom Command",
+    QT_TR_NOOP("机体文件"),//"Onboard Files",
+    "Deprecated Widget",
+    QT_TR_NOOP("仿真设置"),//"HIL Config",
+    QT_TR_NOOP("波形分析"),//"Analyze"
 };
 
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof(ARRAY[0]))
@@ -371,12 +369,6 @@ bool MainWindow::_createInnerDockWidget(const QString& widgetName)
             case ANALYZE:
                 widget = new Linecharts(widgetName, action, mavlinkDecoder, this);
                 break;
-            case INFO_VIEW:
-                widget= new QGCTabbedInfoView(widgetName, action, this);
-                break;
-        }
-        if(action->data().toInt() == INFO_VIEW) {
-            qobject_cast<QGCTabbedInfoView*>(widget)->addSource(mavlinkDecoder);
         }
         if(widget) {
             _mapName2DockWidget[widgetName] = widget;

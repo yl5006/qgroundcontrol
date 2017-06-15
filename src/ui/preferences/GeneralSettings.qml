@@ -37,7 +37,6 @@ QGCView {
     property Fact _appFontPointSize:            QGroundControl.settingsManager.appSettings.appFontPointSize
     property real _labelWidth:                  ScreenTools.defaultFontPixelWidth * 15
     property real _editFieldWidth:              ScreenTools.defaultFontPixelWidth * 30
-    property Fact _videoPath:                   QGroundControl.settingsManager.videoSettings.videoSavePath
     property Fact _mapProvider:                 QGroundControl.settingsManager.flightMapSettings.mapProvider
     property Fact _mapType:                     QGroundControl.settingsManager.flightMapSettings.mapType
 
@@ -613,110 +612,136 @@ QGCView {
                         spacing:    ScreenTools.defaultFontPixelWidth
                         anchors.centerIn: parent
 
-
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
                             visible:    QGroundControl.settingsManager.videoSettings.videoSource.visible
                             QGCLabel {
-                                anchors.baseline:   videoSource.baseline
                                 text:               qsTr("视频源:")
                                 width:              _labelWidth
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                             FactComboBox {
                                 id:         videoSource
                                 width:      _editFieldWidth
                                 indexModel: false
                                 fact:       QGroundControl.settingsManager.videoSettings.videoSource
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                         }
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
                             visible:    QGroundControl.settingsManager.videoSettings.udpPort.visible && QGroundControl.videoManager.isGStreamer && videoSource.currentIndex === 0
                             QGCLabel {
-                                anchors.baseline:   udpField.baseline
                                 text:               qsTr("UDP 端口:")
                                 width:              _labelWidth
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                             FactTextField {
-                                id:                 udpField
                                 width:              _editFieldWidth
                                 fact:               QGroundControl.settingsManager.videoSettings.udpPort
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                         }
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
                             visible:    QGroundControl.settingsManager.videoSettings.rtspUrl.visible && QGroundControl.videoManager.isGStreamer && videoSource.currentIndex === 1
                             QGCLabel {
-                                anchors.baseline:   rtspField.baseline
+                                anchors.verticalCenter: parent.verticalCenter
                                 text:               qsTr("RTSP URL:")
                                 width:              _labelWidth
                             }
                             FactTextField {
-                                id:                 rtspField
                                 width:              _editFieldWidth
                                 fact:               QGroundControl.settingsManager.videoSettings.rtspUrl
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                         }
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
                             visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex < 2 && QGroundControl.settingsManager.videoSettings.aspectRatio.visible
                             QGCLabel {
-                                anchors.baseline:   aspectField.baseline
                                 text:               qsTr("长宽比:")
                                 width:              _labelWidth
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                             FactTextField {
-                                id:                 aspectField
                                 width:              _editFieldWidth
                                 fact:               QGroundControl.settingsManager.videoSettings.aspectRatio
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                         }
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
                             visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex < 2 && QGroundControl.settingsManager.videoSettings.gridLines.visible
                             QGCLabel {
-                                anchors.baseline:   gridField.baseline
                                 text:               qsTr("网格线:")
                                 width:              _labelWidth
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                             FactComboBox {
-                                id:                 gridField
                                 width:              _editFieldWidth
                                 fact:               QGroundControl.settingsManager.videoSettings.gridLines
-                            }
-                        }
-                        Row {
-                            spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    QGroundControl.settingsManager.videoSettings.videoSavePath.visible && QGroundControl.videoManager.isGStreamer && QGroundControl.videoManager.recordingEnabled
-
-                            QGCLabel {
-                                anchors.baseline:   videoBrowse.baseline
-                                text:               qsTr("保存路径:")
-                                enabled:            promptSaveLog.checked
-                            }
-                            QGCLabel {
-                                anchors.baseline:   videoBrowse.baseline
-                                text:               _videoPath.value == "" ? qsTr("<not set>") : _videoPath.value
-                            }
-                            QGCButton {
-                                id:         videoBrowse
-                                text:       qsTr("选择:")//"Browse"
-                                onClicked:  videoDialog.openForLoad()
-
-                                QGCFileDialog {
-                                    id:             videoDialog
-                                    title:          qsTr("选择一个路径保存视频文件:")//"Choose a location to save video files."
-                                    folder:         "file://" + _videoPath.value
-                                    selectFolder:   true
-
-                                    onAcceptedForLoad: {
-                                        _videoPath.value = file
-                                    }
-                                }
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                         }
                     }
                 } // Video Source - Rectangle
+                //-----------------------------------------------------------------
+                //-- Video Source
+                Item {
+                    width:                      _qgcView.width * 0.8
+                    height:                     videoRecLabel.height
+                    anchors.margins:            ScreenTools.defaultFontPixelWidth
+                    anchors.horizontalCenter:   parent.horizontalCenter
+                    visible:                    QGroundControl.settingsManager.videoSettings.visible
+                    QGCLabel {
+                        id:             videoRecLabel
+                        text:           qsTr("Video Recording")
+                        font.family:    ScreenTools.demiboldFontFamily
+                    }
+                }
+                Rectangle {
+                    height:                     videoRecCol.height + (ScreenTools.defaultFontPixelHeight * 2)
+                    width:                      _qgcView.width * 0.8
+                    color:                      qgcPal.windowShade
+                    anchors.margins:            ScreenTools.defaultFontPixelWidth
+                    anchors.horizontalCenter:   parent.horizontalCenter
+                    visible:                    QGroundControl.settingsManager.videoSettings.visible
+
+                    Column {
+                        id:         videoRecCol
+                        spacing:    ScreenTools.defaultFontPixelWidth
+                        anchors.centerIn: parent
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelWidth
+                            visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex < 2 && QGroundControl.settingsManager.videoSettings.maxVideoSize.visible
+                            QGCLabel {
+                                text:               qsTr("最大空间:")qsTr("Max Storage Usage:")
+                                width:              _labelWidth
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                            FactTextField {
+                                width:              _editFieldWidth
+                                fact:               QGroundControl.settingsManager.videoSettings.maxVideoSize
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                        }
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelWidth
+                            visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex < 2 && QGroundControl.settingsManager.videoSettings.recordingFormat.visible
+                            QGCLabel {
+                                text:               qsTr("视频格式:")//qsTr("Video File Format:")
+                                width:              _labelWidth
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                            FactComboBox {
+                                width:              _editFieldWidth
+                                fact:               QGroundControl.settingsManager.videoSettings.recordingFormat
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                        }
+                    }
+                }
 
                 QGCLabel {
                     anchors.horizontalCenter:   parent.horizontalCenter

@@ -3,8 +3,8 @@
     "name":             "CameraAction",
     "shortDescription": "Specify whether the camera should take photos or video",
     "type":             "uint32",
-    "enumStrings":      "保持当前,定时拍照,定距拍照,停止拍照,视频录制,停止视频录制",
-    "enumValues":       "0,1,2,3,4,5",
+    "enumStrings":      "保持当前,拍照,定时拍照,定距拍照,停止拍照,视频录制,停止视频录制",
+    "enumValues":       "0,6,1,2,3,4,5",
     "defaultValue":     0
 },
 {
