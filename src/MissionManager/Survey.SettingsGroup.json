@@ -177,7 +177,7 @@
     "name":             "GridEntryLocation",
     "shortDescription": "Location for entry point into survey area",
     "type":             "uint32",
-    "enumStrings":      "Position 1, Position 2, Position 3, Position 4",
+    "enumStrings":      "点 1, 点 2, 点 3, 点 4",
     "enumValues":       "0,1,2,3",
     "defaultValue":     0
 }

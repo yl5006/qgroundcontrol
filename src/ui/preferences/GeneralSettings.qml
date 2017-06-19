@@ -716,7 +716,7 @@ QGCView {
                             spacing:    ScreenTools.defaultFontPixelWidth
                             visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex < 2 && QGroundControl.settingsManager.videoSettings.maxVideoSize.visible
                             QGCLabel {
-                                text:               qsTr("最大空间:")qsTr("Max Storage Usage:")
+                                text:               qsTr("最大空间:")//qsTr("Max Storage Usage:")
                                 width:              _labelWidth
                                 anchors.verticalCenter: parent.verticalCenter
                             }
