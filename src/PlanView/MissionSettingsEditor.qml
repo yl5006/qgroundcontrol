@@ -150,32 +150,31 @@ Rectangle {
             QGCLabel {
                 anchors.left:           parent.left
                 anchors.right:          parent.right
-                text:                   qsTr("Above camera commands will take affect immediately upon mission start.")
+                text:                   qsTr("相机控制命令在任务开始时立即执行.")
                 wrapMode:               Text.WordWrap
                 horizontalAlignment:    Text.AlignHCenter
                 font.pointSize:         ScreenTools.smallFontPointSize
                 visible:                cameraSection.checked
             }
 
-            SectionHeader {
-                id:         missionEndHeader
-                text:       qsTr("Mission End")
-                checked:    true
-            }
+//            SectionHeader {
+//                id:         missionEndHeader
+//                text:       qsTr("Mission End")
+//                checked:    true
+//            }
 
-            Column {
-                anchors.left:   parent.left
-                anchors.right:  parent.right
-                spacing:        _margin
-                visible:        missionEndHeader.checked
+//            Column {
+//                anchors.left:   parent.left
+//                anchors.right:  parent.right
+//                spacing:        _margin
+//                visible:        missionEndHeader.checked
 
                 QGCCheckBox {
-                    text:       qsTr("RTL after mission end")
+                    text:       qsTr("任务结束后返航")
                     checked:    missionItem.missionEndRTL
                     onClicked:  missionItem.missionEndRTL = checked
-                    visible:    false
                 }
-            }
+//            }
 
 
             SectionHeader {

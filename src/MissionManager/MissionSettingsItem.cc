@@ -170,7 +170,7 @@ bool MissionSettingsItem::addMissionEndAction(QList<MissionItem*>& items, int se
     // Find last waypoint coordinate information so we have a lat/lon/alt to use
     QGeoCoordinate  lastWaypointCoord;
     MAV_FRAME       lastWaypointFrame;
-
+    double          lastFlightSpeed;
     bool found = false;
     for (int i=items.count()-1; i>0; i--) {
         MissionItem* missionItem = items[i];
@@ -179,6 +179,7 @@ bool MissionSettingsItem::addMissionEndAction(QList<MissionItem*>& items, int se
         if (uiInfo->specifiesCoordinate() && !uiInfo->isStandaloneCoordinate()) {
             lastWaypointCoord = missionItem->coordinate();
             lastWaypointFrame = missionItem->frame();
+            lastFlightSpeed = missionItem->specifiedFlightSpeed();
             found = true;
             break;
         }
@@ -191,8 +192,8 @@ bool MissionSettingsItem::addMissionEndAction(QList<MissionItem*>& items, int se
         qCDebug(MissionSettingsComplexItemLog) << "Appending end action RTL seqNum" << seqNum;
         item = new MissionItem(seqNum,
                                MAV_CMD_NAV_RETURN_TO_LAUNCH,
-                               MAV_FRAME_MISSION,
-                               0, 0, 0, 0,         		   // param 1-7 not used
+                               lastWaypointFrame,
+                               0, 0, lastFlightSpeed, 0,         		   // param 1-7 not used
 							   lastWaypointCoord.latitude(),
                                lastWaypointCoord.longitude(),
                                lastWaypointCoord.altitude(),
@@ -200,6 +201,8 @@ bool MissionSettingsItem::addMissionEndAction(QList<MissionItem*>& items, int se
                                true,                       // autoContinue
                                false,                      // isCurrentItem
                                missionItemParent);
+
+        items.removeLast();
         items.append(item);
         return true;
     } else {

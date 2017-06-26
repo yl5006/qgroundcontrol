@@ -1,7 +1,7 @@
-[
+﻿[
 {
     "name":             "Landing distance",
-    "shortDescription": "Distance between landing and loiter points.",
+    "shortDescription": "降落点与盘旋点距离",
     "type":             "double",
     "units":            "m",
     "min":              10,
@@ -10,7 +10,7 @@
 },
 {
     "name":             "Landing heading",
-    "shortDescription": "Heading from loiter point to land point.",
+    "shortDescription": "盘旋点到降落点机头航向",
     "type":             "double",
     "units":            "deg",
     "min":              0.0,
@@ -20,7 +20,7 @@
 },
 {
     "name":             "Loiter altitude",
-    "shortDescription": "Aircraft will proceed to the loiter point and loiter until it reaches this altitude. Once altitude is reached the aircraft will proceed to land.",
+    "shortDescription": "盘旋至高度",
     "type":             "double",
     "units":            "m",
     "decimalPlaces":    1,
@@ -28,7 +28,7 @@
 },
 {
     "name":             "Loiter radius",
-    "shortDescription": "Loiter radius.",
+    "shortDescription": "盘旋半径",
     "type":             "double",
     "decimalPlaces":    1,
     "min":              1,
@@ -37,7 +37,7 @@
 },
 {
     "name":             "Landing altitude",
-    "shortDescription": "Altitude for landing point.",
+    "shortDescription": "降落点高度",
     "type":             "double",
     "units":            "m",
     "decimalPlaces":    1,

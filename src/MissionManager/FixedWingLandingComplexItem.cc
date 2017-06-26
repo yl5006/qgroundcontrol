@@ -43,7 +43,7 @@ FixedWingLandingComplexItem::FixedWingLandingComplexItem(Vehicle* vehicle, QObje
     , _ignoreRecalcSignals(false)
     , _landingDistanceFact  (0, _loiterToLandDistanceName,  FactMetaData::valueTypeDouble)
     , _loiterAltitudeFact   (0, _loiterAltitudeName,        FactMetaData::valueTypeDouble)
-    , _loiterRadiusFact     (0, _loiterRadiusName,          FactMetaData::valueTypeDouble)
+    , _loiterRadiusFact     (50, _loiterRadiusName,          FactMetaData::valueTypeDouble)
     , _landingHeadingFact   (0, _landingHeadingName,        FactMetaData::valueTypeDouble)
     , _landingAltitudeFact  (0, _landingAltitudeName,       FactMetaData::valueTypeDouble)
     , _loiterClockwise(true)
@@ -216,7 +216,7 @@ void FixedWingLandingComplexItem::appendMissionItems(QList<MissionItem*>& items,
     int seqNum = _sequenceNumber;
 
     // IMPORTANT NOTE: Any changes here must also be taken into account in scanForItem
-
+    double speed =items.last()->specifiedFlightSpeed();
     MissionItem* item = new MissionItem(seqNum++,                           // sequence number
                                         MAV_CMD_DO_LAND_START,              // MAV_CMD
                                         MAV_FRAME_MISSION,                  // MAV_FRAME
@@ -226,19 +226,18 @@ void FixedWingLandingComplexItem::appendMissionItems(QList<MissionItem*>& items,
                                         false,                              // isCurrentItem
                                         missionItemParent);
     items.append(item);
-
     float loiterRadius = _loiterRadiusFact.rawValue().toDouble() * (_loiterClockwise ? 1.0 : -1.0);
     item = new MissionItem(seqNum++,
                            MAV_CMD_NAV_LOITER_TO_ALT,
                            _loiterAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,
                            1.0,                             // Heading required = true
-                           loiterRadius,                    // Loiter radius
-                           0.0,                             // param 3 - unused
+                           0.0,                             // param 8 Loiter radius
+                           speed,                             // param 3 - unused
                            1.0,                             // Exit crosstrack - tangent of loiter to land point
                            _loiterCoordinate.latitude(),
                            _loiterCoordinate.longitude(),
                            _loiterAltitudeFact.rawValue().toDouble(),
-                           0.0, 0.0, 0.0,                   // param 8-10
+                           loiterRadius, 0.0, 0.0,          // param 8-10  //param 8 Loiter radius
                            true,                            // autoContinue
                            false,                           // isCurrentItem
                            missionItemParent);
@@ -247,7 +246,7 @@ void FixedWingLandingComplexItem::appendMissionItems(QList<MissionItem*>& items,
     item = new MissionItem(seqNum++,
                            MAV_CMD_NAV_LAND,
                            _landingAltitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,
-                           0.0, 0.0, 0.0, 0.0,                 // param 1-4
+                           0.0, 0.0, speed, 0.0,                 // param 1-4
                            _landingCoordinate.latitude(),
                            _landingCoordinate.longitude(),
                            _landingAltitudeFact.rawValue().toDouble(),

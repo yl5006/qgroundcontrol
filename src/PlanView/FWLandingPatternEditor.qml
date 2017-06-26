@@ -42,7 +42,7 @@ Rectangle {
         visible:            missionItem.landingCoordSet
 
         SectionHeader {
-            text: qsTr("Loiter point")
+            text: qsTr("盘旋点")
         }
 
         Item { width: 1; height: _spacer }
@@ -58,7 +58,7 @@ Rectangle {
         QGCCheckBox {
             id:             loiterAltRelative
             anchors.right:  parent.right
-            text:           qsTr("Altitude relative to home")
+            text:           qsTr("高度参考Home点")
             checked:        missionItem.loiterAltitudeRelative
             onClicked:      missionItem.loiterAltitudeRelative = checked
         }
@@ -67,12 +67,12 @@ Rectangle {
 
         QGCCheckBox {
             anchors.left:   loiterAltRelative.left
-            text:           qsTr("Loiter clockwise")
+            text:           qsTr("顺时针盘旋")
             checked:        missionItem.loiterClockwise
             onClicked:      missionItem.loiterClockwise = checked
         }
 
-        SectionHeader { text: qsTr("Landing point") }
+        SectionHeader { text: qsTr("降落点") }
 
         Item { width: 1; height: _spacer }
 
@@ -86,7 +86,7 @@ Rectangle {
 
         QGCCheckBox {
             anchors.right:  parent.right
-            text:           qsTr("Altitude relative to home")
+            text:           qsTr("高度参考Home点")
             checked:        missionItem.landingAltitudeRelative
             onClicked:      missionItem.landingAltitudeRelative = checked
         }
@@ -105,14 +105,14 @@ Rectangle {
             anchors.right:  parent.right
             wrapMode:       Text.WordWrap
             font.pointSize: ScreenTools.smallFontPointSize
-            text:           qsTr("WIP (NOT FOR REAL FLIGHT!)")
+            text:           qsTr("测试中")
         }
 
         QGCLabel {
             anchors.left:   parent.left
             anchors.right:  parent.right
             wrapMode:       Text.WordWrap
-            text:           qsTr("Click in map to set landing point.")
+            text:           qsTr("点击地图设置降落点")
         }
     }
 }
