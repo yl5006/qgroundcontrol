@@ -32,6 +32,12 @@ public:
 signals:
     void positionUpdated(GPSPositionMessage msg);
 
+signals:
+    void onConnect();
+    void onDisconnect();
+    void surveyInStatus(float duration, float accuracyMM, bool valid, bool active);
+    void satelliteUpdate(int numSats);
+
 private slots:
     void GPSPositionUpdate(GPSPositionMessage msg);
     void GPSSatelliteUpdate(GPSSatelliteMessage msg);

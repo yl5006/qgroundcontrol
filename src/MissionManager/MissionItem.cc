@@ -181,12 +181,8 @@ void MissionItem::save(QJsonObject& json) const
     json[_jsonAutoContinueKey] = autoContinue();
     json[_jsonDoJumpIdKey] = _sequenceNumber;
 
-    QJsonArray rgParams =  { param1(), param2(), param3(), param4(),param8(),param9(),param10() };
+    QJsonArray rgParams =  { param1(), param2(), param3(), param4(), param5(), param6(), param7(),param8(),param9(),param10() };
     json[_jsonParamsKey] = rgParams;
-
-    QJsonValue coordinateValue;
-    JsonHelper::saveGeoCoordinate(QGeoCoordinate(param5(), param6(), param7()), true /* writeAltitude */, coordinateValue);
-    json[_jsonCoordinateKey] = coordinateValue;
 }
 
 bool MissionItem::load(QTextStream &loadStream)
@@ -296,10 +292,46 @@ bool MissionItem::_convertJsonV1ToV2(const QJsonObject& json, QJsonObject& v2Jso
     return true;
 }
 
+bool MissionItem::_convertJsonV2ToV3(QJsonObject& json, QString& errorString)
+{
+    // V2 format: param 5/6/7 stored in GeoCoordinate
+    // V3 format: param 5/6/7 stored in params array
+
+    if (!json.contains(_jsonCoordinateKey)) {
+        // Already V3 format
+        return true;
+    }
+
+    QList<JsonHelper::KeyValidateInfo> keyInfoList = {
+        { _jsonCoordinateKey, QJsonValue::Array, true },
+    };
+    if (!JsonHelper::validateKeys(json, keyInfoList, errorString)) {
+        return false;
+    }
+
+    QGeoCoordinate coordinate;
+    if (!JsonHelper::loadGeoCoordinate(json[_jsonCoordinateKey], true /* altitudeRequired */, coordinate, errorString)) {
+        return false;
+    }
+
+    QJsonArray rgParam = json[_jsonParamsKey].toArray();
+    rgParam.append(coordinate.latitude());
+    rgParam.append(coordinate.longitude());
+    rgParam.append(coordinate.altitude());
+    json[_jsonParamsKey] = rgParam;
+
+    json.remove(_jsonCoordinateKey);
+
+    return true;
+}
+
 bool MissionItem::load(const QJsonObject& json, int sequenceNumber, QString& errorString)
 {
-    QJsonObject v2Json;
-    if (!_convertJsonV1ToV2(json, v2Json, errorString)) {
+    QJsonObject convertedJson;
+    if (!_convertJsonV1ToV2(json, convertedJson, errorString)) {
+        return false;
+    }
+    if (!_convertJsonV2ToV3(convertedJson, errorString)) {
         return false;
     }
 
@@ -309,21 +341,20 @@ bool MissionItem::load(const QJsonObject& json, int sequenceNumber, QString& err
         { _jsonCommandKey,                  QJsonValue::Double, true },
         { _jsonParamsKey,                   QJsonValue::Array,  true },
         { _jsonAutoContinueKey,             QJsonValue::Bool,   true },
-        { _jsonCoordinateKey,               QJsonValue::Array,  true },
         { _jsonDoJumpIdKey,                 QJsonValue::Double, false },
     };
-    if (!JsonHelper::validateKeys(v2Json, keyInfoList, errorString)) {
+    if (!JsonHelper::validateKeys(convertedJson, keyInfoList, errorString)) {
         return false;
     }
 
-    if (v2Json[VisualMissionItem::jsonTypeKey] != VisualMissionItem::jsonTypeSimpleItemValue) {
-        errorString = tr("Type found: %1 must be: %2").arg(v2Json[VisualMissionItem::jsonTypeKey].toString()).arg(VisualMissionItem::jsonTypeSimpleItemValue);
+    if (convertedJson[VisualMissionItem::jsonTypeKey] != VisualMissionItem::jsonTypeSimpleItemValue) {
+        errorString = tr("Type found: %1 must be: %2").arg(convertedJson[VisualMissionItem::jsonTypeKey].toString()).arg(VisualMissionItem::jsonTypeSimpleItemValue);
         return false;
     }
 
-    QJsonArray rgParams = v2Json[_jsonParamsKey].toArray();
-    if (rgParams.count() != 7) {// 7个参数
-        errorString = tr("%1 key must contains 7 values").arg(_jsonParamsKey);
+    QJsonArray rgParams = convertedJson[_jsonParamsKey].toArray();
+    if (rgParams.count() != 10) {//10个
+        errorString = tr("%1 key must contains 10 values").arg(_jsonParamsKey);
         return false;
     }
 
@@ -335,32 +366,27 @@ bool MissionItem::load(const QJsonObject& json, int sequenceNumber, QString& err
     }
 
     // Make sure to set these first since they can signal other changes
-    setFrame((MAV_FRAME)v2Json[_jsonFrameKey].toInt());
-    setCommand((MAV_CMD)v2Json[_jsonCommandKey].toInt());
-
-    QGeoCoordinate coordinate;
-    if (!JsonHelper::loadGeoCoordinate(v2Json[_jsonCoordinateKey], true /* altitudeRequired */, coordinate, errorString)) {
-        return false;
-    }
-    setParam5(coordinate.latitude());
-    setParam6(coordinate.longitude());
-    setParam7(coordinate.altitude());
+    setFrame((MAV_FRAME)convertedJson[_jsonFrameKey].toInt());
+    setCommand((MAV_CMD)convertedJson[_jsonCommandKey].toInt());
 
     _doJumpId = -1;
-    if (v2Json.contains(_jsonDoJumpIdKey)) {
-        _doJumpId = v2Json[_jsonDoJumpIdKey].toInt();
+    if (convertedJson.contains(_jsonDoJumpIdKey)) {
+        _doJumpId = convertedJson[_jsonDoJumpIdKey].toInt();
     }
     setIsCurrentItem(false);
     setSequenceNumber(sequenceNumber);
-    setAutoContinue(v2Json[_jsonAutoContinueKey].toBool());
+    setAutoContinue(convertedJson[_jsonAutoContinueKey].toBool());
 
     setParam1(JsonHelper::possibleNaNJsonValue(rgParams[0]));
     setParam2(JsonHelper::possibleNaNJsonValue(rgParams[1]));
     setParam3(JsonHelper::possibleNaNJsonValue(rgParams[2]));
     setParam4(JsonHelper::possibleNaNJsonValue(rgParams[3]));
-    setParam8(JsonHelper::possibleNaNJsonValue(rgParams[4]));
-    setParam9(JsonHelper::possibleNaNJsonValue(rgParams[5]));
-    setParam10(JsonHelper::possibleNaNJsonValue(rgParams[6]));
+    setParam5(JsonHelper::possibleNaNJsonValue(rgParams[4]));
+    setParam6(JsonHelper::possibleNaNJsonValue(rgParams[5]));
+    setParam7(JsonHelper::possibleNaNJsonValue(rgParams[6]));
+	setParam8(JsonHelper::possibleNaNJsonValue(rgParams[7]));
+    setParam9(JsonHelper::possibleNaNJsonValue(rgParams[8]));
+    setParam10(JsonHelper::possibleNaNJsonValue(rgParams[9]));
 
     return true;
 }
