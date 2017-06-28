@@ -88,13 +88,12 @@ Rectangle {
                 primary:       true
             }
         }
-        QGCButton {
-            width:         ScreenTools.defaultFontPixelHeight*5
-            height:        ScreenTools.defaultFontPixelHeight*2
+        SubMenuButton {
+            imageResource:      "/qmlimages/camera.svg"
+            text:               qsTr("拍照")//"Send to vehicle"
+            onClicked:          _activeVehicle.triggerCamera()
+            enabled:            _activeVehicle
             anchors.horizontalCenter: parent.horizontalCenter
-            text:          qsTr("拍照")
-            checkable:     false
-            primary:       true
         }
         JoystickThumbPad {
             id:                     rightStick

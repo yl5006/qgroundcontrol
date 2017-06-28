@@ -66,7 +66,7 @@ Rectangle {
         anchors.top:            mask.top
         anchors.topMargin:      _spacing*3
         anchors.left:           mask.left
-        anchors.leftMargin:     _spacing*12
+        anchors.leftMargin:     _spacing*10
         horizontalAlignment:    Text.AlignHCenter
         font.pointSize:         ScreenTools.defaultFontPixelHeight
         font.family:            ScreenTools.demiboldFontFamily
