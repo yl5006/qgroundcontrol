@@ -675,6 +675,7 @@ void SimpleMissionItem::_syncAltitudeRelativeToHomeToFrame(const QVariant& value
     if (!_syncingAltitudeRelativeToHomeAndFrame) {
         _syncingAltitudeRelativeToHomeAndFrame = true;
         _missionItem.setFrame(value.toBool() ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL);
+        emit coordinateHasRelativeAltitudeChanged(value.toBool());
         _syncingAltitudeRelativeToHomeAndFrame = false;
     }
 }
@@ -695,6 +696,7 @@ void SimpleMissionItem::_syncFrameToAltitudeRelativeToHome(void)
     if (!_syncingAltitudeRelativeToHomeAndFrame) {
         _syncingAltitudeRelativeToHomeAndFrame = true;
         _altitudeRelativeToHomeFact.setRawValue(relativeAltitude());
+        emit coordinateHasRelativeAltitudeChanged(_altitudeRelativeToHomeFact.rawValue().toBool());
         _syncingAltitudeRelativeToHomeAndFrame = false;
     }
 }
