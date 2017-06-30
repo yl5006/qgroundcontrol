@@ -693,10 +693,10 @@ QGCView {
                     height:                     videoRecLabel.height
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.videoSettings.visible
+                    visible:                    false//QGroundControl.settingsManager.videoSettings.visible
                     QGCLabel {
                         id:             videoRecLabel
-                        text:           qsTr("Video Recording")
+                        text:           qsTr("视频录制")
                         font.family:    ScreenTools.demiboldFontFamily
                     }
                 }
