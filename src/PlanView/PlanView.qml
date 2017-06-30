@@ -1200,7 +1200,7 @@ QGCView {
         id: removeAllPromptDialog
         QGCViewMessage {
             message: qsTr("确认删除所有航点?") +
-                     (_planMasterController.offline ? "" : qsTr("This will also remove all items from the vehicle."))
+                     (_planMasterController.offline ? "" : qsTr("这同时会删除飞控内所有航点."))
             function accept() {
                 if (_planMasterController.offline) {
                     masterController.removeAll()
@@ -1235,7 +1235,7 @@ QGCView {
                 model: _missionController.complexMissionItemNames
 
                 SubMenuButton {
-                    imageResource:      "/qmlimages/MapDrawShape.svg"
+                    imageResource:      index==0?"/qmlimages/MapDrawShape.svg":"/qmlimages/Fixwingland.svg"
                     text:               modelData
                     Layout.fillWidth:   true
 
