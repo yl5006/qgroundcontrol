@@ -39,6 +39,7 @@ Rectangle {
             {
                 missionItems.get(i).coordinate.altitude=Number(altField.text)
                 missionItems.get(i).param1=Number(timeField.text);
+                missionItems.get(i).param3=Number(speedField.text);
             }
         }
     }
@@ -134,6 +135,7 @@ Rectangle {
             }
             Row{
                 spacing:            ScreenTools.defaultFontPixelWidth
+                visible:            !_activeVehicle.fixedWing
                 QGCLabel {
                     width:          ScreenTools.defaultFontPixelHeight*5
                     text:           qsTr("停留时间s")
@@ -151,7 +153,7 @@ Rectangle {
                     text:           qsTr("飞行速度m/s")
                 }
                 QGCTextField {
-                    id:             flyField
+                    id:             speedField
                     width:          ScreenTools.defaultFontPixelHeight*4
                     text:           "15"
                 }

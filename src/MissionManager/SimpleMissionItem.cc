@@ -638,6 +638,13 @@ void SimpleMissionItem::setparam1(double param1)
     }
 }
 
+void SimpleMissionItem::setparam3(double param3)
+{
+    if (_missionItem.param3()!= param3) {
+        _missionItem.setParam3(param3);
+    }
+}
+
 void SimpleMissionItem::setDirty(bool dirty)
 {
     if (!_homePositionSpecialCase || (_dirty != dirty)) {

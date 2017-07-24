@@ -48,6 +48,7 @@ public:
     Q_PROPERTY(QmlObjectListModel*  nanFacts        READ nanFacts       CONSTANT)
 
     Q_PROPERTY(double   param1  READ param1 WRITE setparam1)
+    Q_PROPERTY(double   param3  READ param1 WRITE setparam3)
     /// Scans the loaded items for additional section settings
     ///     @param visualItems List of all visual items
     ///     @param scanIndex Index to start scanning from
@@ -113,6 +114,7 @@ public:
     bool exitCoordinateSameAsEntry          (void) const final { return true; }
 
     double  param1          (void) const { return _missionItem.param1(); }
+    double  param3          (void) const { return _missionItem.param3(); }
 
     void setDirty           (bool dirty) final;
     void setCoordinate      (const QGeoCoordinate& coordinate) final;
@@ -120,6 +122,7 @@ public:
     int  lastSequenceNumber (void) const final;
     void save               (QJsonArray&  missionItems) final;
     void setparam1          (double param1);
+    void setparam3          (double param3);
 public slots:
     void setDefaultsForCommand(void);
     void setDefaultsForCMD(void);

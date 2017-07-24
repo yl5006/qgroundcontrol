@@ -553,7 +553,7 @@ QGCView {
                     color:                      qgcPal.windowShade
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    false//QGroundControl.settingsManager.autoConnectSettings.visible
+                    visible:                    QGroundControl.settingsManager.autoConnectSettings.visible
 
                     Column {
                         id:         autoConnectCol
@@ -565,15 +565,15 @@ QGCView {
 
                             Repeater {
                                 id:     autoConnectRepeater
-                                model:  [ QGroundControl.settingsManager.autoConnectSettings.autoConnectPixhawk,
+                                model:  [// QGroundControl.settingsManager.autoConnectSettings.autoConnectPixhawk,
                                     QGroundControl.settingsManager.autoConnectSettings.autoConnectSiKRadio,
-                                    QGroundControl.settingsManager.autoConnectSettings.autoConnectPX4Flow,
-                                    QGroundControl.settingsManager.autoConnectSettings.autoConnectLibrePilot,
-                                    QGroundControl.settingsManager.autoConnectSettings.autoConnectUDP,
+                                    //QGroundControl.settingsManager.autoConnectSettings.autoConnectPX4Flow,
+                                    //QGroundControl.settingsManager.autoConnectSettings.autoConnectLibrePilot,
+                                    //QGroundControl.settingsManager.autoConnectSettings.autoConnectUDP,
                                     QGroundControl.settingsManager.autoConnectSettings.autoConnectRTKGPS
                                 ]
 
-                                property var names: [ qsTr("Pixhawk"), qsTr("SiK Radio"), qsTr("PX4 Flow"), qsTr("LibrePilot"), qsTr("UDP"), qsTr("RTK GPS") ]
+                                property var names: [ /*qsTr("Pixhawk"),*/ qsTr("自动连接数传"),/* qsTr("PX4 Flow"), qsTr("LibrePilot"), qsTr("UDP"), */qsTr("自动连接 RTK GPS") ]
 
                                 FactCheckBox {
                                     text:       autoConnectRepeater.names[index]

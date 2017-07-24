@@ -7,12 +7,12 @@
         {
             "id":           16,
             "comment":      "MAV_CMD_NAV_WAYPOINT",
-            "paramRemove":  "4"
+            "paramRemove":  "1,4"
         },
         {
             "id":           17,
             "comment":      "MAV_CMD_NAV_LOITER_UNLIM",
-            "paramRemove":  "4"
+            "paramRemove":  "1,4"
         },
         {
             "id":           18,
@@ -39,37 +39,37 @@
         {
             "id":           20,
             "comment":      "MAV_CMD_NAV_RETURN_TO_LAUNCH",
-            "paramRemove":  "4"
+            "paramRemove":  "1,4"
         },
         {
             "id":           21,
             "comment":      "MAV_CMD_NAV_LAND",
-            "paramRemove":  "4"
+            "paramRemove":  "1,4"
         },
         {
             "id":           22,
             "comment":      "MAV_CMD_NAV_TAKEOFF",
-            "paramRemove":  "4"
+            "paramRemove":  "1,4"
         },
         {
             "id":           183,
             "comment":      "MAV_CMD_DO_SET_SERVO",
-            "paramRemove":  "4"
+            "paramRemove":  "1,4"
         },
         {
             "id":           178,
             "comment":      "MAV_CMD_DO_CHANGE_SPEED",
-            "paramRemove":  "4"
+            "paramRemove":  "1,4"
         },
         {
             "id":           206,
             "comment":      "MAV_CMD_DO_SET_CAM_TRIGG_DIST",
-            "paramRemove":  "4"
+            "paramRemove":  "1,4"
         },
         {
             "id":           189,
             "comment":      "MAV_CMD_DO_LAND_START",
-            "paramRemove":  "4"
+            "paramRemove":  "1,4"
         }
     ]
 }
