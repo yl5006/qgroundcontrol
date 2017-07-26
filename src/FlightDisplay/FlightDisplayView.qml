@@ -43,6 +43,7 @@ QGCView {
     property var    _geoFenceController:    _planMasterController.geoFenceController
     property var    _rallyPointController:  _planMasterController.rallyPointController
     property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
+    property var    _videoReceiver:         QGroundControl.videoManager.videoReceiver
     property bool   _mainIsMap:             QGroundControl.videoManager.hasVideo ? QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true) : true
     property bool   _isPipVisible:          QGroundControl.videoManager.hasVideo ? QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true) : false
     property real   _savedZoomLevel:        0
@@ -366,7 +367,7 @@ QGCView {
 
             QGCRadioButton {
                 exclusiveGroup: multiVehicleSelectorGroup
-                text:           qsTr("Multi-Vehicle (WIP)")
+                text:           qsTr("Multi-Vehicle")
                 color:          mapPal.text
             }
         }
@@ -405,7 +406,7 @@ QGCView {
             anchors.right:      _flightVideo.right
             height:             ScreenTools.defaultFontPixelHeight * 2
             width:              height
-//            visible:            QGroundControl.videoManager.videoReceiver.videoRunning && QGroundControl.settingsManager.videoSettings.showRecControl.rawValue
+            visible:            _videoReceiver && _videoReceiver.videoRunning && QGroundControl.settingsManager.videoSettings.showRecControl.rawValue
             opacity:            0.75
 
 //            Rectangle {
@@ -448,20 +449,20 @@ QGCView {
 
             MouseArea {
                 anchors.fill:   parent
-                onClicked:      QGroundControl.videoManager.videoReceiver && QGroundControl.videoManager.videoReceiver.recording ? QGroundControl.videoManager.videoReceiver.stopRecording() : QGroundControl.videoManager.videoReceiver.startRecording()
+                onClicked:      _videoReceiver && _videoReceiver.recording ? _videoReceiver.stopRecording() : _videoReceiver.startRecording()
             }
         }
 
         MultiVehicleList {
-            anchors.margins:    _margins
-            anchors.top:        singleMultiSelector.bottom
-            anchors.right:      parent.right
-            anchors.bottom:     parent.bottom
-            width:              ScreenTools.defaultFontPixelWidth * 30
-            visible:            !singleVehicleView.checked
-            z:                  _panel.z + 4
+            anchors.margins:            _margins
+            anchors.top:                singleMultiSelector.bottom
+            anchors.right:              parent.right
+            anchors.bottom:             parent.bottom
+            width:                      ScreenTools.defaultFontPixelWidth * 30
+            visible:                    !singleVehicleView.checked
+            z:                          _panel.z + 4
+            guidedActionsController:    _guidedController
         }
-
         SetCamera{
             id:                     setcam
             anchors.topMargin:      ScreenTools.toolbarHeight*1.8 + _margins*2
@@ -613,6 +614,7 @@ QGCView {
             id:                 guidedActionsController
             missionController:  _missionController
             confirmDialog:      guidedActionConfirm
+            actionList:         guidedActionList
             altitudeSlider:     _altitudeSlider
             z:                  _flightVideoPipControl.z + 1
 

@@ -58,7 +58,7 @@ stQGeoTileCacheQGCMapTypes kMapTypes[] = {
     {"Gaode Satellite Map",     UrlFactory::GaodeSatellite},
     {"Gaode Terrain Map",       UrlFactory::GaodeTerrain},
 
-    {"Statkart Topo2",          UrlFactory::StatkartTopo},   
+    {"Statkart Terrain Map",    UrlFactory::StatkartTopo},
     /*
     {"MapQuest Street Map",     UrlFactory::MapQuestMap},
     {"MapQuest Satellite Map",  UrlFactory::MapQuestSat}

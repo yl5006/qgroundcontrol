@@ -365,6 +365,7 @@ const QVariantList& FirmwarePlugin::cameraList(const Vehicle* vehicle)
                                       16,
                                       true,
                                       false,
+                                      0,
                                       this);
         _cameraList.append(QVariant::fromValue(metaData));
 
@@ -376,6 +377,7 @@ const QVariantList& FirmwarePlugin::cameraList(const Vehicle* vehicle)
                                       5.2,
                                       true,
                                       false,
+                                      0,
                                       this);
         _cameraList.append(QVariant::fromValue(metaData));
 
@@ -387,6 +389,7 @@ const QVariantList& FirmwarePlugin::cameraList(const Vehicle* vehicle)
                                       10.2,
                                       true,
                                       false,
+                                      0,
                                       this);
         _cameraList.append(QVariant::fromValue(metaData));
 
@@ -398,6 +401,7 @@ const QVariantList& FirmwarePlugin::cameraList(const Vehicle* vehicle)
                                       4.5,
                                       true,
                                       false,
+                                      0,
                                       this);
 
         metaData = new CameraMetaData(tr("Canon EOS-M 22mm"),
@@ -408,6 +412,7 @@ const QVariantList& FirmwarePlugin::cameraList(const Vehicle* vehicle)
                                       22,
                                       true,
                                       false,
+                                      0,
                                       this);
         _cameraList.append(QVariant::fromValue(metaData));
 
@@ -419,6 +424,19 @@ const QVariantList& FirmwarePlugin::cameraList(const Vehicle* vehicle)
                                       16,
                                       true,
                                       false,
+                                      0,
+                                      this);
+        _cameraList.append(QVariant::fromValue(metaData));
+
+        metaData = new CameraMetaData(tr("Sony RX100 II 28mm"),
+                                      13.2,
+                                      8.8,
+                                      5472,
+                                      3648,
+                                      10.4,
+                                      true,
+                                      false,
+                                      0,
                                       this);
         _cameraList.append(QVariant::fromValue(metaData));
     }
@@ -478,7 +496,7 @@ bool FirmwarePlugin::_setFlightModeAndValidate(Vehicle* vehicle, const QString& 
         vehicle->setFlightMode(flightMode);
 
         // Wait for vehicle to return flight mode
-        for (int i=0; i<30; i++) {
+        for (int i=0; i<13; i++) {
             if (vehicle->flightMode() == flightMode) {
                 flightModeChanged = true;
                 break;

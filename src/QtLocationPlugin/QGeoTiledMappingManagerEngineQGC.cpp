@@ -125,7 +125,7 @@ QGeoTiledMappingManagerEngineQGC::QGeoTiledMappingManagerEngineQGC(const QVarian
     mapTypes << QGCGEOMAPTYPE(QGeoMapType::TerrainMap,        "Gaode Terrain Map",         "Gaode terrain map",             false,  false,  UrlFactory::GaodeTerrain);
 
     // Statkart
-    mapTypes << QGCGEOMAPTYPE(QGeoMapType::TerrainMap,        "Statkart Topo2",           "Statkart Topo2",                   false,  false,  UrlFactory::StatkartTopo);
+    mapTypes << QGCGEOMAPTYPE(QGeoMapType::TerrainMap,        "Statkart Terrain Map",     "Statkart Terrain Map",             false,  false,  UrlFactory::StatkartTopo);
 
     // Esri
     mapTypes << QGCGEOMAPTYPE(QGeoMapType::StreetMap,         "Esri Street Map",          "ArcGIS Online World Street Map",   true,   false,  UrlFactory::EsriWorldStreet);

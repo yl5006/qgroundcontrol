@@ -342,8 +342,24 @@ FlightMap {
         delegate: VehicleMapItem {
             vehicle:        object
             coordinate:     object.coordinate
-            isSatellite:    flightMap.isSatelliteMap
+            map:            flightMap
             size:           _mainIsMap ? ScreenTools.defaultFontPixelHeight * 2 : ScreenTools.defaultFontPixelHeight
+            z:              QGroundControl.zOrderVehicles
+        }
+    }
+
+    // Add ADSB vehicles to the map
+    MapItemView {
+        model: _activeVehicle ? _activeVehicle.adsbVehicles : 0
+
+        property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+
+        delegate: VehicleMapItem {
+            coordinate:     object.coordinate
+            altitude:       object.altitude
+            callsign:       object.callsign
+            heading:        object.heading
+            map:            flightMap
             z:              QGroundControl.zOrderVehicles
         }
     }
@@ -404,11 +420,12 @@ FlightMap {
         anchorPoint.y:  sourceItem.anchorPointY * 2
 
         sourceItem: MissionItemIndexLabel {
-            checked: true
-            label:   qsTr("G", "Goto here waypoint") // second string is translator's hint.
+            checked:    true
+            index:      -1
+            label:      qsTr("到这里", "Goto here waypoint")
             simpleindex:   1
         }
-    }
+    }    
 
     // Camera trigger points
     MapItemView {

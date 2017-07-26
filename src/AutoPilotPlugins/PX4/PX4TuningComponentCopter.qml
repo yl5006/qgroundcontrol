@@ -116,25 +116,6 @@ SetupPage {
                         step:           0.01
                     }
 
-                    ListElement {
-                        title:              qsTr("高度控制感度")//"Altitude control sensitivity"
-                        descriptionleft:    qsTr("向左滑动: 使高度控制更顺畅，减少颠簸")//"Slide to the left to make altitude control smoother and less twitchy. Slide to the right to make altitude control more accurate and more aggressive."
-                        descriptionright:   qsTr("向右滑动: 使高度控制更准确，更灵敏")
-                        param:          "MPC_Z_FF"
-                        min:            0
-                        max:            1.0
-                        step:           0.1
-                    }
-
-                    ListElement {
-                        title:              qsTr("位移控制感度")//"Position control sensitivity"
-                        descriptionleft:    qsTr("向左滑动: 使位置控制更顺畅，减少颠簸")//"Slide to the left to make flight in position control mode smoother and less twitchy. Slide to the right to make position control more accurate and more aggressive."
-                        descriptionright:   qsTr("向右滑动: 使位置控制更准确，更灵敏")
-                        param:          "MPC_XY_FF"
-                        min:            0
-                        max:            1.0
-                        step:           0.1
-                    }
                 }
             }
         }

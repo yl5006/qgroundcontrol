@@ -82,11 +82,14 @@ MacBuild {
 #    LIBS += -lsdl
      LIBS += -lSDL
 } else:WindowsBuild {
-    INCLUDEPATH += \
-        $$BASEDIR/libs/lib/sdl2/msvc/include \
+    INCLUDEPATH += $$BASEDIR/libs/lib/sdl2/msvc/include
 
+    contains(QT_ARCH, i386) {
+        LIBS += -L$$BASEDIR/libs/lib/sdl2/msvc/lib/x86
+    } else {
+        LIBS += -L$$BASEDIR/libs/lib/sdl2/msvc/lib/x64
+    }
     LIBS += \
-        -L$$BASEDIR/libs/lib/sdl2/msvc/lib/x86 \
         -lSDL2main \
         -lSDL2
 }

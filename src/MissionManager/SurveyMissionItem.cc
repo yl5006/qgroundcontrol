@@ -41,6 +41,7 @@ const char* SurveyMissionItem::_jsonCameraSensorHeightKey =         "sensorHeigh
 const char* SurveyMissionItem::_jsonCameraResolutionWidthKey =      "resolutionWidth";
 const char* SurveyMissionItem::_jsonCameraResolutionHeightKey =     "resolutionHeight";
 const char* SurveyMissionItem::_jsonCameraFocalLengthKey =          "focalLength";
+const char* SurveyMissionItem::_jsonCameraMinTriggerIntervalKey =   "minTriggerInterval";
 const char* SurveyMissionItem::_jsonCameraObjectKey =               "camera";
 const char* SurveyMissionItem::_jsonCameraNameKey =                 "name";
 const char* SurveyMissionItem::_jsonManualGridKey =                 "manualGrid";
@@ -84,6 +85,7 @@ SurveyMissionItem::SurveyMissionItem(Vehicle* vehicle, QObject* parent)
     , _missionCommandCount(0)
     , _refly90Degrees(false)
     , _additionalFlightDelaySeconds(0)
+    , _cameraMinTriggerInterval(0)
     , _ignoreRecalc(false)
     , _surveyDistance(0.0)
     , _cameraShots(0)
@@ -247,6 +249,7 @@ void SurveyMissionItem::save(QJsonArray&  missionItems)
         cameraObject[_jsonCameraResolutionWidthKey] =       _cameraResolutionWidthFact.rawValue().toDouble();
         cameraObject[_jsonCameraResolutionHeightKey] =      _cameraResolutionHeightFact.rawValue().toDouble();
         cameraObject[_jsonCameraFocalLengthKey] =           _cameraFocalLengthFact.rawValue().toDouble();
+        cameraObject[_jsonCameraMinTriggerIntervalKey] =    _cameraMinTriggerInterval;
         cameraObject[_jsonGroundResolutionKey] =            _groundResolutionFact.rawValue().toDouble();
         cameraObject[_jsonFrontalOverlapKey] =              _frontalOverlapFact.rawValue().toInt();
         cameraObject[_jsonSideOverlapKey] =                 _sideOverlapFact.rawValue().toInt();
@@ -381,6 +384,7 @@ bool SurveyMissionItem::load(const QJsonObject& complexObject, int sequenceNumbe
             { _jsonCameraFocalLengthKey,            QJsonValue::Double, true },
             { _jsonCameraNameKey,                   QJsonValue::String, true },
             { _jsonCameraOrientationLandscapeKey,   QJsonValue::Bool,   true },
+            { _jsonCameraMinTriggerIntervalKey,     QJsonValue::Double, false },
         };
         if (!JsonHelper::validateKeys(cameraObject, cameraKeyInfoList, errorString)) {
             return false;
@@ -397,6 +401,7 @@ bool SurveyMissionItem::load(const QJsonObject& complexObject, int sequenceNumbe
         _cameraResolutionWidthFact.setRawValue  (cameraObject[_jsonCameraResolutionWidthKey].toDouble());
         _cameraResolutionHeightFact.setRawValue (cameraObject[_jsonCameraResolutionHeightKey].toDouble());
         _cameraFocalLengthFact.setRawValue      (cameraObject[_jsonCameraFocalLengthKey].toDouble());
+        _cameraMinTriggerInterval =             cameraObject[_jsonCameraMinTriggerIntervalKey].toDouble(0);
     }
 
     // Polygon shape
@@ -959,16 +964,70 @@ int SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLis
 
     // Create set of rotated parallel lines within the expanded bounding rect. Make the lines larger than the
     // bounding box to guarantee intersection.
+
     QList<QLineF> lineList;
-    float x = largeBoundRect.topLeft().x() - (gridSpacing / 2);
-    while (x < largeBoundRect.bottomRight().x()) {
-        float yTop =    largeBoundRect.topLeft().y() - 100.0;
-        float yBottom = largeBoundRect.bottomRight().y() + 100.0;
+    bool northSouthTransects = _gridAngleIsNorthSouthTransects();
+    int entryLocation = _gridEntryLocationFact.rawValue().toInt();
+
+    if (northSouthTransects) {
+        qCDebug(SurveyMissionItemLog) << "Clamped grid angle" << gridAngle;
+        if (entryLocation == EntryLocationTopLeft || entryLocation == EntryLocationBottomLeft) {
+            // Generate transects from left to right
+            qCDebug(SurveyMissionItemLog) << "Generate left to right";
+            float x = largeBoundRect.topLeft().x() - (gridSpacing / 2);
+            while (x < largeBoundRect.bottomRight().x()) {
+                float yTop =    largeBoundRect.topLeft().y() - 10000.0;
+                float yBottom = largeBoundRect.bottomRight().y() + 10000.0;
 
                 lineList += QLineF(_rotatePoint(QPointF(x, yTop), boundingCenter, gridAngle), _rotatePoint(QPointF(x, yBottom), boundingCenter, gridAngle));
                 qCDebug(SurveyMissionItemLog) << "line(" << lineList.last().x1() << ", " << lineList.last().y1() << ")-(" << lineList.last().x2() <<", " << lineList.last().y2() << ")";
 
-        x += gridSpacing;
+                x += gridSpacing;
+            }
+        } else {
+            // Generate transects from right to left
+            qCDebug(SurveyMissionItemLog) << "Generate right to left";
+            float x = largeBoundRect.topRight().x() + (gridSpacing / 2);
+            while (x > largeBoundRect.bottomLeft().x()) {
+                float yTop =    largeBoundRect.topRight().y() - 10000.0;
+                float yBottom = largeBoundRect.bottomLeft().y() + 10000.0;
+
+                lineList += QLineF(_rotatePoint(QPointF(x, yTop), boundingCenter, gridAngle), _rotatePoint(QPointF(x, yBottom), boundingCenter, gridAngle));
+                qCDebug(SurveyMissionItemLog) << "line(" << lineList.last().x1() << ", " << lineList.last().y1() << ")-(" << lineList.last().x2() <<", " << lineList.last().y2() << ")";
+
+                x -= gridSpacing;
+            }
+        }
+    } else {
+        gridAngle = _clampGridAngle90(gridAngle - 90.0);
+        qCDebug(SurveyMissionItemLog) << "Clamped grid angle" << gridAngle;
+        if (entryLocation == EntryLocationTopLeft || entryLocation == EntryLocationTopRight) {
+            // Generate transects from top to bottom
+            qCDebug(SurveyMissionItemLog) << "Generate top to bottom";
+            float y = largeBoundRect.bottomLeft().y() + (gridSpacing / 2);
+            while (y > largeBoundRect.topRight().y()) {
+                float xLeft =   largeBoundRect.bottomLeft().x() - 10000.0;
+                float xRight =  largeBoundRect.topRight().x() + 10000.0;
+
+                lineList += QLineF(_rotatePoint(QPointF(xLeft, y), boundingCenter, gridAngle), _rotatePoint(QPointF(xRight, y), boundingCenter, gridAngle));
+                qCDebug(SurveyMissionItemLog) << "y:xLeft:xRight" << y << xLeft << xRight << "line(" << lineList.last().x1() << ", " << lineList.last().y1() << ")-(" << lineList.last().x2() <<", " << lineList.last().y2() << ")";
+
+                y -= gridSpacing;
+            }
+        } else {
+            // Generate transects from bottom to top
+            qCDebug(SurveyMissionItemLog) << "Generate bottom to top";
+            float y = largeBoundRect.topLeft().y() - (gridSpacing / 2);
+            while (y < largeBoundRect.bottomRight().y()) {
+                float xLeft =   largeBoundRect.topLeft().x() - 10000.0;
+                float xRight =  largeBoundRect.bottomRight().x() + 10000.0;
+
+                lineList += QLineF(_rotatePoint(QPointF(xLeft, y), boundingCenter, gridAngle), _rotatePoint(QPointF(xRight, y), boundingCenter, gridAngle));
+                qCDebug(SurveyMissionItemLog) << "y:xLeft:xRight" << y << xLeft << xRight << "line(" << lineList.last().x1() << ", " << lineList.last().y1() << ")-(" << lineList.last().x2() <<", " << lineList.last().y2() << ")";
+
+                y += gridSpacing;
+            }
+        }
     }
 
     // Now intersect the lines with the polygon
@@ -1223,21 +1282,14 @@ bool SurveyMissionItem::_nextTransectCoord(const QList<QGeoCoordinate>& transect
 /// @return false: Generation failed
 bool SurveyMissionItem::_appendMissionItemsWorker(QList<MissionItem*>& items, QObject* missionItemParent, int& seqNum, bool hasRefly, bool buildRefly)
 {
+    bool firstWaypointTrigger = false;
+
     qCDebug(SurveyMissionItemLog) << "hasTurnaround:triggerCamera:hoverAndCapture:imagesEverywhere:hasRefly:buildRefly" << _hasTurnaround() << _triggerCamera() << _hoverAndCaptureEnabled() << _imagesEverywhere() << hasRefly << buildRefly;
 
     QList<QList<QGeoCoordinate>>& transectSegments = buildRefly ? _reflyTransectSegments : _transectSegments;
 
     if (!buildRefly && _imagesEverywhere()) {
-        // We are taking images in turnaround, so we start command once at beginning
-        MissionItem* item = new MissionItem(seqNum++,
-                                            MAV_CMD_DO_SET_CAM_TRIGG_DIST,
-                                            MAV_FRAME_MISSION,
-                                            _triggerDistance(),
-                                            0, 0, 0, 0, 0, 0, 0, 0, 0,       // param 2-7 unused
-                                            true,                   // autoContinue
-                                            false,                  // isCurrentItem
-                                            missionItemParent);
-        items.append(item);
+        firstWaypointTrigger = true;
     }
 
     for (int segmentIndex=0; segmentIndex<transectSegments.count(); segmentIndex++) {
@@ -1253,15 +1305,21 @@ bool SurveyMissionItem::_appendMissionItemsWorker(QList<MissionItem*>& items, QO
             if (!_nextTransectCoord(segment, pointIndex++, coord)) {
                 return false;
             }
-            seqNum = _appendWaypointToMission(items, seqNum, coord, CameraTriggerNone, missionItemParent);
+            seqNum = _appendWaypointToMission(items, seqNum, coord, firstWaypointTrigger ? CameraTriggerOn : CameraTriggerNone, missionItemParent);
+            firstWaypointTrigger = false;
         }
 
         // Add polygon entry point
         if (!_nextTransectCoord(segment, pointIndex++, coord)) {
             return false;
         }
-        cameraTrigger = _imagesEverywhere() || !_triggerCamera() ? CameraTriggerNone : (_hoverAndCaptureEnabled() ? CameraTriggerHoverAndCapture : CameraTriggerOn);
+        if (firstWaypointTrigger) {
+            cameraTrigger = CameraTriggerOn;
+        } else {
+            cameraTrigger = _imagesEverywhere() || !_triggerCamera() ? CameraTriggerNone : (_hoverAndCaptureEnabled() ? CameraTriggerHoverAndCapture : CameraTriggerOn);
+        }
         seqNum = _appendWaypointToMission(items, seqNum, coord, cameraTrigger, missionItemParent);
+        firstWaypointTrigger = false;
 
         // Add internal hover and capture points
         if (_hoverAndCaptureEnabled()) {

@@ -55,6 +55,8 @@ iOSBuild {
         count(APP_ERROR, 1) {
             error("Error building .plist file. 'ForAppStore' builds are only possible through the official build system.")
         }
+        QT               += qml-private
+        CONFIG           += qtquickcompiler
         QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOSForAppStore-Info.plist
         OTHER_FILES      += $${BASEDIR}/ios/iOSForAppStore-Info.plist
     } else {
@@ -70,6 +72,21 @@ LinuxBuild {
 
 WindowsBuild {
     RC_ICONS = resources/icons/qgroundcontrol.ico
+}
+
+#
+# Branding
+#
+
+QGC_APP_NAME        = "GroundStation"
+QGC_ORG_NAME        = "GroundStation.org"
+QGC_ORG_DOMAIN      = "org.groundStation"
+QGC_APP_DESCRIPTION = "ground station provided by yaoling"
+QGC_APP_COPYRIGHT   = "Copyright (C) 2017 GroundStation Development Team. All rights reserved."
+
+WindowsBuild {
+    QGC_INSTALLER_ICON          = "WindowsQGC.ico"
+    QGC_INSTALLER_HEADER_BITMAP = "installheader.bmp"
 }
 
 # Load additional config flags from user_config.pri
@@ -105,6 +122,14 @@ contains (CONFIG, QGC_DISABLE_CUSTOM_BUILD) {
         # CUSTOMHEADER = \"\\\"YourIQGCCorePluginDerivation.h\\\"\"
         include($$PWD/custom/custom.pri)
     }
+}
+
+WindowsBuild {
+    # Sets up application properties
+    QMAKE_TARGET_COMPANY        = "$${QGC_ORG_NAME}"
+    QMAKE_TARGET_DESCRIPTION    = "$${QGC_APP_DESCRIPTION}"
+    QMAKE_TARGET_COPYRIGHT      = "$${QGC_APP_COPYRIGHT}"
+    QMAKE_TARGET_PRODUCT        = "$${QGC_APP_NAME}"
 }
 
 #
@@ -225,15 +250,6 @@ ReleaseBuild {
     # We don't need the testlib console in release mode
     QT.testlib.CONFIG -= console
 }
-
-#
-# Branding
-#
-
-QMAKE_TARGET_COMPANY = "groundstation.org"
-QMAKE_TARGET_DESCRIPTION = "ground station provided by yaoling"
-QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2016 . All rights reserved."
-QMAKE_TARGET_PRODUCT = "GroundStation"
 
 #
 # Build-specific settings
@@ -833,6 +849,7 @@ HEADERS+= \
     src/FirmwarePlugin/CameraMetaData.h \
     src/FirmwarePlugin/FirmwarePlugin.h \
     src/FirmwarePlugin/FirmwarePluginManager.h \
+    src/Vehicle/ADSBVehicle.h \
     src/Vehicle/MultiVehicleManager.h \
     src/Vehicle/GPSRTKFactGroup.h \
     src/Vehicle/Vehicle.h \
@@ -858,6 +875,7 @@ SOURCES += \
     src/FirmwarePlugin/CameraMetaData.cc \
     src/FirmwarePlugin/FirmwarePlugin.cc \
     src/FirmwarePlugin/FirmwarePluginManager.cc \
+    src/Vehicle/ADSBVehicle.cc \
     src/Vehicle/MultiVehicleManager.cc \
     src/Vehicle/GPSRTKFactGroup.cc \
     src/Vehicle/Vehicle.cc \

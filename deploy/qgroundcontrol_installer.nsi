@@ -36,17 +36,17 @@
     ${EndIf}
 !macroend
 
-Name "GroundStation"
+Name "${APPNAME}"
 Var StartMenuFolder
 
-InstallDir $PROGRAMFILES\GroundStation
+InstallDir "$PROGRAMFILES\${APPNAME}"
 
 SetCompressor /SOLID /FINAL lzma
 
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "installlogo.bmp";
-!define MUI_ICON "WindowsQGC.ico";
-!define MUI_UNICON "WindowsQGC.ico";
+!define MUI_HEADERIMAGE_BITMAP "${HEADER_BITMAP}";
+!define MUI_ICON "${INSTALLER_ICON}";
+!define MUI_UNICON "${INSTALLER_ICON}";
 
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 !insertmacro MUI_PAGE_DIRECTORY
@@ -58,43 +58,35 @@ SetCompressor /SOLID /FINAL lzma
 !insertmacro MUI_LANGUAGE "English"
 
 Section
-  ReadRegStr $R0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation" "UninstallString"
+  ReadRegStr $R0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString"
   StrCmp $R0 "" doinstall
 
   ExecWait "$R0 /S _?=$INSTDIR"
   IntCmp $0 0 doinstall
 
   MessageBox MB_OK|MB_ICONEXCLAMATION \
-        "Could not remove a previously installed GroundStation version.$\n$\nPlease remove it before continuing."
+        "Could not remove a previously installed ${APPNAME} version.$\n$\nPlease remove it before continuing."
   Abort
 
 doinstall:
   SetOutPath $INSTDIR
-  File /r /x GroundStation.pdb /x GroundStation.lib /x GroundStation.exp E:\UAV\build-qgroundcontrol-Desktop_Qt_5_5_1_MSVC2013_32bit-Release\release\*.*
-#  File deploy\px4driver.msi
-  WriteUninstaller $INSTDIR\GroundStation_uninstall.exe
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation" "DisplayName" "GroundStation"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation" "UninstallString" "$\"$INSTDIR\GroundStation_uninstall.exe$\""
+  File /r /x ${EXENAME}.pdb /x ${EXENAME}.lib /x ${EXENAME}.exp ${DESTDIR}\*.*
+  File deploy\px4driver.msi
+  WriteUninstaller $INSTDIR\${EXENAME}-Uninstall.exe
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$\"$INSTDIR\${EXENAME}-Uninstall.exe$\""
 
   ; Only attempt to install the PX4 driver if the version isn't present
-  !define ROOTKEY "SYSTEM\CurrentControlSet\Control\Class\{4D36E978-E325-11CE-BFC1-08002BE10318}"
-  StrCpy $0 0
-loop:
-  EnumRegKey $1 HKLM ${ROOTKEY} $0
-  StrCmp $1 "" notfound cont1
+  !define ROOTKEY "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\434608CF2B6E31F0DDBA5C511053F957B55F098E"
 
-cont1:
-  StrCpy     $2 "${ROOTKEY}\$1"
-  ReadRegStr $3 HKLM $2 "ProviderName"
-  StrCmp     $3 "3D Robotics" found_provider
-mismatch:
-  IntOp      $0 $0 + 1
-  goto  loop
+  SetRegView 64
+  ReadRegStr $0 HKLM "${ROOTKEY}" "Publisher"
+  StrCmp     $0 "3D Robotics" found_provider notfound
 
 found_provider:
-  ReadRegStr $3 HKLM $2 "DriverVersion"
-  StrCmp     $3 "2.0.0.4" skip_driver
-  goto  mismatch
+  ReadRegStr $0 HKLM "${ROOTKEY}" "DisplayVersion"
+  DetailPrint "Checking USB driver version... $0"
+  StrCmp     $0 "04/11/2013 2.0.0.4" skip_driver notfound
 
 notfound:
   DetailPrint "USB Driver not found... installing"
@@ -104,6 +96,7 @@ notfound:
 skip_driver:
   DetailPrint "USB Driver found... skipping install"
 done:
+  SetRegView lastused
 SectionEnd 
 
 Section "Uninstall"
@@ -112,17 +105,17 @@ Section "Uninstall"
   RMDir /r /REBOOTOK $INSTDIR
   RMDir /r /REBOOTOK "$SMPROGRAMS\$StartMenuFolder\"
   SetShellVarContext current
-  RMDir /r /REBOOTOK "$APPDATA\GROUNDSTATION.ORG\"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GroundStation"
+  RMDir /r /REBOOTOK "$APPDATA\${ORGNAME}\"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
 SectionEnd
 
 Section "create Start Menu Shortcuts"
   SetShellVarContext all
   CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation.lnk" "$INSTDIR\GroundStation.exe" "" "$INSTDIR\GroundStation.exe" 0
-  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation (GPU Compatibility Mode).lnk" "$INSTDIR\GroundStation.exe" "-angle" "$INSTDIR\GroundStation.exe" 0
-  !insertmacro DemoteShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation (GPU Compatibility Mode).lnk"
-  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation (GPU Safe Mode).lnk" "$INSTDIR\GroundStation.exe" "-swrast" "$INSTDIR\GroundStation.exe" 0
-  !insertmacro DemoteShortCut "$SMPROGRAMS\$StartMenuFolder\GroundStation (GPU Safe Mode).lnk"
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${APPNAME}.lnk" "$INSTDIR\${EXENAME}.exe" "" "$INSTDIR\${EXENAME}.exe" 0
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${APPNAME} (GPU Compatibility Mode).lnk" "$INSTDIR\${EXENAME}.exe" "-angle" "$INSTDIR\${EXENAME}.exe" 0
+  !insertmacro DemoteShortCut "$SMPROGRAMS\$StartMenuFolder\${APPNAME} (GPU Compatibility Mode).lnk"
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${APPNAME} (GPU Safe Mode).lnk" "$INSTDIR\${EXENAME}.exe" "-swrast" "$INSTDIR\${EXENAME}.exe" 0
+  !insertmacro DemoteShortCut "$SMPROGRAMS\$StartMenuFolder\${APPNAME} (GPU Safe Mode).lnk"
 SectionEnd
 
