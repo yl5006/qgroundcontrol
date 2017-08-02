@@ -51,6 +51,7 @@ SetupPage {
             property Fact _dlLossAction:    controller.getParameterFact(-1, "NAV_DLL_ACT")
             property Fact _disarmLandDelay: controller.getParameterFact(-1, "COM_DISARM_LAND")
             property Fact _landSpeedMC:     controller.getParameterFact(-1, "MPC_LAND_SPEED", false)
+            property Fact _hitlEnabled:     controller.getParameterFact(-1, "SYS_HITL", false)
 
             property Fact _disAction:       controller.getParameterFact(-1, "MPC_SAFE_EN", false)
             property bool _showIcons: !ScreenTools.isTinyScreen

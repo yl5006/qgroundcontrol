@@ -44,6 +44,7 @@ QGCView {
     property var    _rallyPointController:  _planMasterController.rallyPointController
     property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     property var    _videoReceiver:         QGroundControl.videoManager.videoReceiver
+    property bool   _recordingVideo:        _videoReceiver && _videoReceiver.recording
     property bool   _mainIsMap:             QGroundControl.videoManager.hasVideo ? QGroundControl.loadBoolGlobalSetting(_mainIsMapKey,  true) : true
     property bool   _isPipVisible:          QGroundControl.videoManager.hasVideo ? QGroundControl.loadBoolGlobalSetting(_PIPVisibleKey, true) : false
     property real   _savedZoomLevel:        0
@@ -433,8 +434,8 @@ QGCView {
                 width:                      height
                 sourceSize.width:           width
                 source:                     "/qmlimages/stopCamRecording.svg"
+                visible:                    recordBtnBackground.visible
                 fillMode:                   Image.PreserveAspectFit
-                visible:                    !QGroundControl.videoManager.videoReceiver.recording
             }
 //            QGCColoredImage {
 //                anchors.top:                parent.top
@@ -449,7 +450,17 @@ QGCView {
 
             MouseArea {
                 anchors.fill:   parent
-                onClicked:      _videoReceiver && _videoReceiver.recording ? _videoReceiver.stopRecording() : _videoReceiver.startRecording()
+                onClicked: {
+                    if (_videoReceiver) {
+                        if (_recordingVideo) {
+                            _videoReceiver.stopRecording()
+                            // reset blinking animation
+                            recordBtnBackground.visible = true
+                        } else {
+                            _videoReceiver.startRecording()
+                        }
+                    }
+                }
             }
         }
 

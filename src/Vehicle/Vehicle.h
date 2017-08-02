@@ -113,18 +113,24 @@ class VehicleGPSFactGroup : public FactGroup
 public:
     VehicleGPSFactGroup(QObject* parent = NULL);
 
+    Q_PROPERTY(Fact* lat                READ lat                CONSTANT)
+    Q_PROPERTY(Fact* lon                READ lon                CONSTANT)
     Q_PROPERTY(Fact* hdop               READ hdop               CONSTANT)
     Q_PROPERTY(Fact* vdop               READ vdop               CONSTANT)
     Q_PROPERTY(Fact* courseOverGround   READ courseOverGround   CONSTANT)
     Q_PROPERTY(Fact* count              READ count              CONSTANT)
     Q_PROPERTY(Fact* lock               READ lock               CONSTANT)
 
+    Fact* lat               (void) { return &_latFact; }
+    Fact* lon               (void) { return &_lonFact; }
     Fact* hdop              (void) { return &_hdopFact; }
     Fact* vdop              (void) { return &_vdopFact; }
     Fact* courseOverGround  (void) { return &_courseOverGroundFact; }
     Fact* count             (void) { return &_countFact; }
     Fact* lock              (void) { return &_lockFact; }
 
+    static const char* _latFactName;
+    static const char* _lonFactName;
     static const char* _hdopFactName;
     static const char* _vdopFactName;
     static const char* _courseOverGroundFactName;
@@ -132,6 +138,8 @@ public:
     static const char* _lockFactName;
 
 private:
+    Fact        _latFact;
+    Fact        _lonFact;
     Fact        _hdopFact;
     Fact        _vdopFact;
     Fact        _courseOverGroundFact;
@@ -603,8 +611,11 @@ public:
     int             telemetryLNoise         () { return _telemetryLNoise; }
     int             telemetryRNoise         () { return _telemetryRNoise; }
     float           telemetryLost           () { return _telemetryLost; }
-	bool            autoDisarm              ();
-	
+    bool            autoDisarm              ();
+    /// Get the maximum MAVLink protocol version supported
+    /// @return the maximum version
+    unsigned        maxProtoVersion         () const { return _maxProtoVersion; }
+
     Fact* roll              (void) { return &_rollFact; }
     Fact* heading           (void) { return &_headingFact; }
     Fact* pitch             (void) { return &_pitchFact; }
@@ -701,6 +712,7 @@ public:
     void _setFlying(bool flying);
     void _setLanding(bool landing);
     void _setHomePosition(QGeoCoordinate& homeCoord);
+    void _setMaxProtoVersion (unsigned version);
 
 signals:
     void allLinksInactive(Vehicle* vehicle);
@@ -785,8 +797,11 @@ signals:
     ///     @param noResponseFromVehicle true: vehicle did not respond to command, false: vehicle responsed, MAV_RESULT in result
     void mavCommandResult(int vehicleId, int component, int command, int result, bool noReponseFromVehicle);
 
-    // Mavlink Serial Data
+    // MAVlink Serial Data
     void mavlinkSerialControl(uint8_t device, uint8_t flags, uint16_t timeout, uint32_t baudrate, QByteArray data);
+
+    // MAVLink protocol version
+    void requestProtocolVersion(unsigned version);
 
 private slots:
     void _mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message);
@@ -840,7 +855,9 @@ private:
     void _handleVibration(mavlink_message_t& message);
     void _handleExtendedSysState(mavlink_message_t& message);
     void _handleCommandAck(mavlink_message_t& message);
+    void _handleCommandLong(mavlink_message_t& message);
     void _handleAutopilotVersion(LinkInterface* link, mavlink_message_t& message);
+    void _handleProtocolVersion(LinkInterface* link, mavlink_message_t& message);
     void _handleHilActuatorControls(mavlink_message_t& message);
     void _handleGpsRawInt(mavlink_message_t& message);
     void _handleGlobalPositionInt(mavlink_message_t& message);
@@ -926,6 +943,7 @@ private:
     int             _telemetryLNoise;
     int             _telemetryRNoise;
 	float           _telemetryLost;
+    unsigned        _maxProtoVersion;
     bool            _vehicleCapabilitiesKnown;
     bool            _supportsMissionItemInt;
 

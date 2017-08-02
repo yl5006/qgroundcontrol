@@ -658,6 +658,20 @@ QGCView {
                         }
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
+                            visible:    QGroundControl.settingsManager.videoSettings.tcpUrl.visible && QGroundControl.videoManager.isGStreamer && videoSource.currentIndex === 3
+                            QGCLabel {
+                                text:               qsTr("TCP URL:")
+                                width:              _labelWidth
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                            FactTextField {
+                                width:              _editFieldWidth
+                                fact:               QGroundControl.settingsManager.videoSettings.tcpUrl
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                        }
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelWidth
                             visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex && videoSource.currentIndex < 3 && QGroundControl.settingsManager.videoSettings.aspectRatio.visible
                             QGCLabel {
                                 text:               qsTr("长宽比:")
@@ -714,7 +728,7 @@ QGCView {
                         anchors.centerIn: parent
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex && videoSource.currentIndex < 3 && QGroundControl.settingsManager.videoSettings.maxVideoSize.visible
+                            visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex && videoSource.currentIndex < 4 && QGroundControl.settingsManager.videoSettings.maxVideoSize.visible
                             QGCLabel {
                                 text:               qsTr("最大空间:")//qsTr("Max Storage Usage:")
                                 width:              _labelWidth
@@ -728,7 +742,7 @@ QGCView {
                         }
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex && videoSource.currentIndex < 3 && QGroundControl.settingsManager.videoSettings.recordingFormat.visible
+                            visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex && videoSource.currentIndex < 4 && QGroundControl.settingsManager.videoSettings.recordingFormat.visible
                             QGCLabel {
                                 text:               qsTr("视频格式:")//qsTr("Video File Format:")
                                 width:              _labelWidth
