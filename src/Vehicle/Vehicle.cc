@@ -55,6 +55,8 @@ const char* Vehicle::_altitudeRelativeFactName =    "altitudeRelative";
 const char* Vehicle::_altitudeAMSLFactName =        "altitudeAMSL";
 const char* Vehicle::_flightDistanceFactName =      "flightDistance";
 const char* Vehicle::_throttleFactName =            "thrust";
+const char* Vehicle::_homeangleFactName =           "homeangle";
+const char* Vehicle::_homedisFactName =             "homedis";
 const char* Vehicle::_flightTimeFactName =          "flightTime";
 
 const char* Vehicle::_gpsFactGroupName =        "gps";
@@ -160,7 +162,9 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _altitudeRelativeFact (0, _altitudeRelativeFactName,  FactMetaData::valueTypeDouble)
     , _altitudeAMSLFact     (0, _altitudeAMSLFactName,      FactMetaData::valueTypeDouble)
     , _flightDistanceFact   (0, _flightDistanceFactName,    FactMetaData::valueTypeDouble)
-	, _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeUint16)   //add  yaoling
+    , _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeDouble)   //add  yaoling
+    , _homeangleFact        (0, _homeangleFactName,         FactMetaData::valueTypeDouble)   //add  yaoling
+    , _homedisFact          (0, _homedisFactName,           FactMetaData::valueTypeDouble)   //add  yaoling
 	, _flightTimeFact       (0, _flightTimeFactName,        FactMetaData::valueTypeElapsedTimeInSeconds)
     , _gpsFactGroup(this)
     , _batteryFactGroup(this)
@@ -327,6 +331,8 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _altitudeRelativeFact (0, _altitudeRelativeFactName,  FactMetaData::valueTypeDouble)
     , _altitudeAMSLFact     (0, _altitudeAMSLFactName,      FactMetaData::valueTypeDouble)
     , _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeDouble)         //add here
+    , _homeangleFact        (0, _homeangleFactName,         FactMetaData::valueTypeDouble)         //add here
+    , _homedisFact          (0, _homedisFactName,           FactMetaData::valueTypeDouble)         //add here
     , _flightTimeFact       (0, _flightTimeFactName,        FactMetaData::valueTypeElapsedTimeInSeconds)
     , _gpsFactGroup(this)
     , _batteryFactGroup(this)
@@ -381,6 +387,8 @@ void Vehicle::_commonInit(void)
     _addFact(&_flightDistanceFact,      _flightDistanceFactName);
     _addFact(&_flightTimeFact,          _flightTimeFactName);
 	_addFact(&_throttleFact,            _throttleFactName); //add yaoling
+    _addFact(&_homeangleFact,           _homeangleFactName); //add yaoling
+    _addFact(&_homedisFact,             _homedisFactName); //add yaoling
 	
 //    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
 //    _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
@@ -740,6 +748,19 @@ void Vehicle::_handleGlobalPositionInt(mavlink_message_t& message)
     emit coordinateChanged(_coordinate);
     _altitudeRelativeFact.setRawValue(globalPositionInt.relative_alt / 1000.0);
     _altitudeAMSLFact.setRawValue(globalPositionInt.alt / 1000.0);
+    if(_flying)
+    {
+        float angle=_coordinate.azimuthTo(_homePosition) - _headingFact.rawValue().toFloat();
+        if(angle>180)
+        {
+            angle=360-angle;
+        }else if(angle<-180)
+        {
+            angle=angle+360;
+        }
+        _homeangleFact.setRawValue(angle);
+        _homedisFact.setRawValue(_coordinate.distanceTo(_homePosition));
+    }
 }
 
 void Vehicle::_handleAltitude(mavlink_message_t& message)

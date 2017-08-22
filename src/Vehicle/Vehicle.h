@@ -354,6 +354,8 @@ public:
     Q_PROPERTY(Fact* altitudeAMSL       READ altitudeAMSL       CONSTANT)
     Q_PROPERTY(Fact* flightDistance     READ flightDistance     CONSTANT)
 	Q_PROPERTY(Fact* throttle           READ throttle           CONSTANT)   //add yaoling
+    Q_PROPERTY(Fact* homeangle          READ homeangle          CONSTANT)   //add yaoling
+    Q_PROPERTY(Fact* homedis            READ homedis            CONSTANT)   //add yaoling
 	
     Q_PROPERTY(FactGroup* gps         READ gpsFactGroup         CONSTANT)
     Q_PROPERTY(FactGroup* battery     READ batteryFactGroup     CONSTANT)
@@ -626,7 +628,8 @@ public:
     Fact* altitudeAMSL      (void) { return &_altitudeAMSLFact; }
     Fact* flightDistance    (void) { return &_flightDistanceFact; }
 	Fact* throttle          (void) { return &_throttleFact; }   //add yaoling
-
+    Fact* homeangle         (void) { return &_homeangleFact; }   //add yaoling
+    Fact* homedis           (void) { return &_homedisFact; }   //add yaoling
     FactGroup* gpsFactGroup         (void) { return &_gpsFactGroup; }
     FactGroup* batteryFactGroup     (void) { return &_batteryFactGroup; }
     FactGroup* windFactGroup        (void) { return &_windFactGroup; }
@@ -946,6 +949,7 @@ private:
     unsigned        _maxProtoVersion;
     bool            _vehicleCapabilitiesKnown;
     bool            _supportsMissionItemInt;
+    float           _heading;
 
     typedef struct {
         int     component;
@@ -1054,6 +1058,8 @@ private:
     Fact _altitudeRelativeFact;
     Fact _altitudeAMSLFact;
 	Fact _throttleFact;         //add yaoling
+    Fact _homeangleFact;        //add yaoling
+    Fact _homedisFact;        //add yaoling
     Fact _flightDistanceFact;
     Fact _flightTimeFact;
 
@@ -1072,6 +1078,8 @@ private:
     static const char* _altitudeRelativeFactName;
     static const char* _altitudeAMSLFactName;
 	static const char* _throttleFactName;   //yaoling
+    static const char* _homeangleFactName;   //yaoling
+    static const char* _homedisFactName;   //yaoling
     static const char* _flightDistanceFactName;
     static const char* _flightTimeFactName;
 

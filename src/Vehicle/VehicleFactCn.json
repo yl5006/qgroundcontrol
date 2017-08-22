@@ -63,6 +63,20 @@
     "units":            "%"
 },
 {
+    "name":             "homeangle",
+    "shortDescription": "离家角度",
+    "type":             "double",
+    "decimalPlaces":    1,
+    "units":            "deg"
+},
+{
+    "name":             "homedis",
+    "shortDescription": "离家距离",
+    "type":             "double",
+    "decimalPlaces":    1,
+    "units":            "m"
+},
+{
     "name":             "flightDistance",
     "shortDescription": "飞行距离",
     "type":             "double",
