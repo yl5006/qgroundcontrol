@@ -80,7 +80,7 @@ QGCFlickable {
                 anchors.horizontalCenter:  _largeColumn.horizontalCenter
                 property Fact fact: _activeVehicle.getFact(modelData.replace("Vehicle.", ""))
                 property bool largeValue: _root.listContains(controller.altitudeProperties, fact.name)
-
+                property Fact factangle : _activeVehicle.getFact("homeangle")
                 QGCLabel {
                     width:                  parent.width*0.25
                     horizontalAlignment:    Text.AlignHCenter
@@ -91,12 +91,21 @@ QGCFlickable {
                 }
 
                 QGCLabel {
-                    width:                  parent.width*0.3
+                    width:                  fact.name == "homedis" ? parent.width*0.2:parent.width*0.3
                     font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
                     horizontalAlignment:    Text.AlignHCenter
                     fontSizeMode:           Text.HorizontalFit
                     color:                  textColor
                     text:                   fact.valueString
+                }
+                QGCLabel {
+                    visible:                fact.name == "homedis"
+                    width:                  parent.width*0.15
+                    font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
+                    horizontalAlignment:    Text.AlignHCenter
+                    fontSizeMode:           Text.HorizontalFit
+                    color:                  textColor
+                    text:                   factangle.valueString
                 }
                 QGCLabel {
                     font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
