@@ -117,7 +117,7 @@ QGCView {
 
     Connections {
         target:                 QGroundControl.multiVehicleManager
-        onActiveVehicleChanged: px4JoystickCheck()
+        onActiveVehicleChanged: root.showDialog(flightcheck, qsTr("请谨慎检查飞机,确保安全飞行"), showDialogDefaultWidth)//px4JoystickCheck()
     }
 
     Connections {
@@ -133,6 +133,7 @@ QGCView {
         if(QGroundControl.corePlugin.options.flyViewOverlay.toString().length) {
             flyViewOverlay.source = QGroundControl.corePlugin.options.flyViewOverlay
         }
+ //       root.showDialog(flightcheck, qsTr("请谨慎检查飞机,确保安全飞行"), showDialogDefaultWidth)
     }
 
     // The following code is used to track vehicle states such that we prompt to remove mission from vehicle when mission completes
@@ -199,6 +200,227 @@ QGCView {
                     QGCButton {
                         Layout.fillWidth:   true
                         text:               qsTr("Leave plan on vehicle")
+                        anchors.horizontalCenter:   parent.horizontalCenter
+                        onClicked:                  hideDialog()
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: flightcheck
+
+        QGCViewDialog {
+            width:          ScreenTools.defaultFontPixelHeight*30
+            height:         ScreenTools.defaultFontPixelHeight*25
+            QGCFlickable {
+                anchors.fill:   parent
+                contentHeight:  column.height
+
+                ColumnLayout {
+                    id:                 column
+                    spacing:            ScreenTools.defaultFontPixelHeight
+                    Row{
+                        spacing:    ScreenTools.defaultFontPixelWidth*0.5
+                        QGCColoredImage{
+                            id:                 box
+                            height:                 ScreenTools.defaultFontPixelHeight*1.5
+                            width:                  height
+                            sourceSize.width: width
+                            source:     "/qmlimages/box.svg";
+                            fillMode:   Image.PreserveAspectFit
+                            color:      qgcPal.buttonHighlight
+                        }
+                        QGCLabel {
+                            anchors.verticalCenter: box.verticalCenter
+                            text:           qsTr("姿态检查")//"safe"
+                            color:          qgcPal.warningText
+                        }
+                    }
+                    QGCLabel {
+                        text:           qsTr("按图移动飞机，查看姿态仪显示是否正常")//"safe"
+                        color:          qgcPal.text
+                    }
+                    Row{
+                        spacing:    ScreenTools.defaultFontPixelWidth/2
+                        Rectangle {
+                            width:           ScreenTools.defaultFontPixelHeight*12.5
+                            height:          ScreenTools.defaultFontPixelHeight*12.5
+                            color:                          "transparent"
+                            Image {
+                                anchors.fill:               parent
+                                mipmap:                     true
+                                source:                     "/qmlimages/safebackground.svg"
+                            }
+                            QGCLabel {
+                                anchors.top:                    parent.top
+                                anchors.left:                   parent.left
+                                anchors.margins:                ScreenTools.defaultFontPixelHeight
+                                text:                           qsTr("横滚确认")// qsTr("RC Loss Failsafe Trigger")
+                            }
+                            Image {
+                                anchors.fill:               parent
+                                mipmap:                     true
+                                source:                     "/qmlimages/rollcheck.svg"
+                            }
+                        }
+                        Rectangle {
+                            width:           ScreenTools.defaultFontPixelHeight*12.5
+                            height:          ScreenTools.defaultFontPixelHeight*12.5
+                            color:                          "transparent"
+                            Image {
+                                anchors.fill:               parent
+                                mipmap:                     true
+                                source:                     "/qmlimages/safebackground.svg"
+                            }
+                            QGCLabel {
+                                anchors.top:                    parent.top
+                                anchors.left:                   parent.left
+                                anchors.margins:                ScreenTools.defaultFontPixelHeight
+                                text:                           qsTr("仰俯确认")// qsTr("RC Loss Failsafe Trigger")
+                            }
+                            Image {
+                                anchors.fill:               parent
+                                mipmap:                     true
+                                source:                     "/qmlimages/pitchcheck.svg"
+                            }
+                        }
+                        Rectangle {
+                            width:           ScreenTools.defaultFontPixelHeight*12.5
+                            height:          ScreenTools.defaultFontPixelHeight*12.5
+                            color:                          "transparent"
+                            Image {
+                                anchors.fill:               parent
+                                mipmap:                     true
+                                source:                     "/qmlimages/safebackground.svg"
+                            }
+                            QGCLabel {
+                                anchors.top:                    parent.top
+                                anchors.left:                   parent.left
+                                anchors.margins:                ScreenTools.defaultFontPixelHeight
+                                text:                           qsTr("航向确认")// qsTr("RC Loss Failsafe Trigger")
+                            }
+                            Image {
+                                anchors.fill:               parent
+                                mipmap:                     true
+                                source:                     "/qmlimages/yawcheck.svg"
+                            }
+                        }
+                    }
+                    Row{
+                        spacing:    ScreenTools.defaultFontPixelWidth*0.5
+                        QGCColoredImage{
+                            height:                 ScreenTools.defaultFontPixelHeight*1.5
+                            width:                  height
+                            sourceSize.width: width
+                            source:     "/qmlimages/box.svg";
+                            fillMode:   Image.PreserveAspectFit
+                            color:      qgcPal.buttonHighlight
+                        }
+                        QGCLabel {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text:           qsTr("姿态增稳输出反馈检查")//"safe"
+                            color:          qgcPal.warningText
+                        }
+                    }
+                    QGCLabel {
+                        text:           qsTr("切换模式至增稳状态，按图移动飞机，分别确认副翼升降航向舵面反馈，")//"safe"
+                        color:          qgcPal.text
+                    }
+                    Image {
+                        width:           ScreenTools.defaultFontPixelHeight*20
+                        height:          ScreenTools.defaultFontPixelHeight*10
+                        sourceSize.height:  height
+                        fillMode:        Image.PreserveAspectFit
+                        mipmap:          true
+                        source:          "/qmlimages/stabrollcheck.svg"
+                    }
+
+                    Row{
+                        spacing:    ScreenTools.defaultFontPixelWidth*0.5
+                        QGCColoredImage{
+                            height:                 ScreenTools.defaultFontPixelHeight*1.5
+                            width:                  height
+                            sourceSize.width: width
+                            source:     "/qmlimages/box.svg";
+                            fillMode:   Image.PreserveAspectFit
+                            color:      qgcPal.buttonHighlight
+                        }
+                        QGCLabel {
+                          anchors.verticalCenter: parent.verticalCenter
+                            text:           qsTr("遥控输出反馈检查")//"safe"
+                            color:          qgcPal.warningText
+                        }
+                    }
+                    QGCLabel {
+                      //  anchors.verticalCenter: box.verticalCenter
+                        text:           qsTr("切换模式至手动或增稳状态，移动遥控摇杆，分别确认副翼升降航向舵面反馈，")//"safe"
+                        color:          qgcPal.text
+                    }
+                    Row{
+                        spacing:    ScreenTools.defaultFontPixelWidth*0.5
+                        QGCColoredImage{
+                            height:                 ScreenTools.defaultFontPixelHeight*1.5
+                            width:                  height
+                            sourceSize.width: width
+                            source:     "/qmlimages/box.svg";
+                            fillMode:   Image.PreserveAspectFit
+                            color:      qgcPal.buttonHighlight
+                        }
+                        QGCLabel {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text:           qsTr("安全设置检查")//"safe"
+                            color:          qgcPal.warningText
+                        }
+                    }
+                    QGCLabel {
+                        text:           qsTr("在保护栏检查失控保护，低电压保护，返航保护设置等")//"safe"
+                        color:          qgcPal.text
+                    }
+                    Row{
+                        spacing:    ScreenTools.defaultFontPixelWidth*0.5
+                        QGCColoredImage{
+                            height:                 ScreenTools.defaultFontPixelHeight*1.5
+                            width:                  height
+                            sourceSize.width: width
+                            source:     "/qmlimages/box.svg";
+                            fillMode:   Image.PreserveAspectFit
+                            color:      qgcPal.buttonHighlight
+                        }
+                        QGCLabel {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text:           qsTr("空速计检查")//"safe"
+                            color:          qgcPal.warningText
+                        }
+                    }
+                    QGCLabel {
+                        text:           qsTr("检查空速计读数是否正常，吹气是否读数是否升高")//"safe"
+                        color:          qgcPal.text
+                    }
+
+                    Row{
+                        spacing:    ScreenTools.defaultFontPixelWidth*0.5
+                        QGCColoredImage{
+                            height:                 ScreenTools.defaultFontPixelHeight*1.5
+                            width:                  height
+                            sourceSize.width: width
+                            source:     "/qmlimages/box.svg";
+                            fillMode:   Image.PreserveAspectFit
+                            color:      qgcPal.buttonHighlight
+                        }
+                        QGCLabel {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text:           qsTr("拍照开伞开关检查")//"safe"
+                            color:          qgcPal.warningText
+                        }
+                    }
+                    QGCLabel {
+                        text:           qsTr("检查拍照和开伞通道接线是否正常")//"safe"
+                        color:          qgcPal.text
+                    }
+                    QGCButton {
+                        text:               qsTr("确认检查")
                         anchors.horizontalCenter:   parent.horizontalCenter
                         onClicked:                  hideDialog()
                     }
