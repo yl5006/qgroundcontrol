@@ -148,7 +148,7 @@ QGCView {
         }
     }
 
-    PlanElemementMasterController {
+    PlanMasterController {
         id: masterController
 
         property var nameFilters: [ qsTr("Mission Files (*.%1)").arg(missionController.fileExtension) , qsTr("text Files (*.txt)"), qsTr("All Files (*.*)") ]
@@ -524,7 +524,7 @@ QGCView {
                         }
                         break
                     case _layerRallyPoints:
-                        if (_rallyPointController.rallyPointsSupported) {
+                        if (_rallyPointController.supported) {
                             _rallyPointController.addPoint(coordinate)
                         }
                         break

@@ -1614,10 +1614,12 @@ void MissionController::managerVehicleChanged(Vehicle* managerVehicle)
     connect(_missionManager, &MissionManager::currentIndexChanged,      this, &MissionController::_currentMissionIndexChanged);
     connect(_missionManager, &MissionManager::lastCurrentIndexChanged,  this, &MissionController::resumeMissionIndexChanged);
     connect(_missionManager, &MissionManager::resumeMissionReady,       this, &MissionController::resumeMissionReady);
+    connect(_missionManager, &MissionManager::resumeMissionUploadFail,  this, &MissionController::resumeMissionUploadFail);
     connect(_managerVehicle, &Vehicle::homePositionChanged,             this, &MissionController::_managerVehicleHomePositionChanged);
     connect(_managerVehicle, &Vehicle::defaultCruiseSpeedChanged,       this, &MissionController::_recalcMissionFlightStatus);
     connect(_managerVehicle, &Vehicle::defaultHoverSpeedChanged,        this, &MissionController::_recalcMissionFlightStatus);
     connect(_managerVehicle, &Vehicle::vehicleTypeChanged,              this, &MissionController::complexMissionItemNamesChanged);
+    connect(_managerVehicle, &Vehicle::curIndexChanged,                 this, &MissionController::_currentMissionIndexChanged);
 
     if (!_masterController->offline()) {
         _managerVehicleHomePositionChanged(_managerVehicle->homePosition());
@@ -1781,7 +1783,6 @@ void MissionController::_currentMissionIndexChanged(int sequenceNumber)
         if (!_controllerVehicle->firmwarePlugin()->sendHomePositionToVehicle()) {
             sequenceNumber++;
         }
-
         for (int i=0; i<_visualItems->count(); i++) {
             VisualMissionItem* item = qobject_cast<VisualMissionItem*>(_visualItems->get(i));
             item->setIsCurrentItem(item->sequenceNumber() == sequenceNumber);

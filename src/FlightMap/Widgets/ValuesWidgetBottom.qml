@@ -91,7 +91,7 @@ QGCFlickable {
                 }
 
                 QGCLabel {
-                    width:                  fact.name == "homedis" ? parent.width*0.2:parent.width*0.3
+                    width:                  fact.name == "distanceToHome" ? parent.width*0.2:parent.width*0.3
                     font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
                     horizontalAlignment:    Text.AlignHCenter
                     fontSizeMode:           Text.HorizontalFit
@@ -99,7 +99,7 @@ QGCFlickable {
                     text:                   fact.valueString
                 }
                 QGCLabel {
-                    visible:                fact.name == "homedis"
+                    visible:                fact.name == "distanceToHome"
                     width:                  parent.width*0.15
                     font.pointSize:         ScreenTools.isTinyScreen ? ScreenTools.smallFontPointSize  : ScreenTools.mediumFontPointSize
                     horizontalAlignment:    Text.AlignHCenter

@@ -98,14 +98,15 @@ QGCView {
         }
     }
 
-    PlanElemementMasterController {
+    PlanMasterController {
         id:                     masterController
         Component.onCompleted:  start(false /* editMode */)
     }
 
     Connections {
-        target:                 _missionController
-     //   onResumeMissionReady:   guidedActionsController.confirmAction(guidedActionsController.actionResumeMissionReady)
+        target:                     _missionController
+//        onResumeMissionReady:       guidedActionsController.confirmAction(guidedActionsController.actionResumeMissionReady)
+//        onResumeMissionUploadFail:  guidedActionsController.confirmAction(guidedActionsController.actionResumeMissionUploadFail)
     }
 
     MessageDialog {
@@ -468,6 +469,7 @@ QGCView {
                 planMasterController:       masterController
                 rightPanelWidth:            ScreenTools.defaultFontPixelHeight * 9
                 qgcView:                    root
+                multiVehicleView:           !singleVehicleView.checked
                 scaleState:                 (_mainIsMap && flyViewOverlay.item) ? (flyViewOverlay.item.scaleState ? flyViewOverlay.item.scaleState : "bottomMode") : "bottomMode"
             }
         }

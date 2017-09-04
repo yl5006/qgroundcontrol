@@ -70,7 +70,7 @@
     "units":            "deg"
 },
 {
-    "name":             "homedis",
+    "name":             "distanceToHome",
     "shortDescription": "离家距离",
     "type":             "double",
     "decimalPlaces":    1,

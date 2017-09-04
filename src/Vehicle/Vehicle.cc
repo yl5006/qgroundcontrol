@@ -56,8 +56,8 @@ const char* Vehicle::_altitudeAMSLFactName =        "altitudeAMSL";
 const char* Vehicle::_flightDistanceFactName =      "flightDistance";
 const char* Vehicle::_throttleFactName =            "thrust";
 const char* Vehicle::_homeangleFactName =           "homeangle";
-const char* Vehicle::_homedisFactName =             "homedis";
 const char* Vehicle::_flightTimeFactName =          "flightTime";
+const char* Vehicle::_distanceToHomeFactName =      "distanceToHome";
 
 const char* Vehicle::_gpsFactGroupName =        "gps";
 const char* Vehicle::_batteryFactGroupName =    "battery";
@@ -119,7 +119,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _telemetryRNoise(0)
     , _maxProtoVersion(0)
     , _vehicleCapabilitiesKnown(false)
-    , _supportsMissionItemInt(false)
+    , _capabilityBits(0)
     , _connectionLost(false)
     , _connectionLostEnabled(true)
     , _initialPlanRequestComplete(false)
@@ -164,8 +164,8 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _flightDistanceFact   (0, _flightDistanceFactName,    FactMetaData::valueTypeDouble)
     , _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeDouble)   //add  yaoling
     , _homeangleFact        (0, _homeangleFactName,         FactMetaData::valueTypeDouble)   //add  yaoling
-    , _homedisFact          (0, _homedisFactName,           FactMetaData::valueTypeDouble)   //add  yaoling
 	, _flightTimeFact       (0, _flightTimeFactName,        FactMetaData::valueTypeElapsedTimeInSeconds)
+    , _distanceToHomeFact   (0, _distanceToHomeFactName,    FactMetaData::valueTypeDouble)
     , _gpsFactGroup(this)
     , _batteryFactGroup(this)
     , _windFactGroup(this)
@@ -288,7 +288,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _defaultCruiseSpeed(_settingsManager->appSettings()->offlineEditingCruiseSpeed()->rawValue().toDouble())
     , _defaultHoverSpeed(_settingsManager->appSettings()->offlineEditingHoverSpeed()->rawValue().toDouble())
     , _vehicleCapabilitiesKnown(true)
-    , _supportsMissionItemInt(false)
+    , _capabilityBits(_firmwareType == MAV_AUTOPILOT_ARDUPILOTMEGA ? 0 : MAV_PROTOCOL_CAPABILITY_MISSION_FENCE | MAV_PROTOCOL_CAPABILITY_MISSION_RALLY)
     , _connectionLost(false)
     , _connectionLostEnabled(true)
     , _initialPlanRequestComplete(false)
@@ -332,8 +332,9 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _altitudeAMSLFact     (0, _altitudeAMSLFactName,      FactMetaData::valueTypeDouble)
     , _throttleFact         (0, _throttleFactName,          FactMetaData::valueTypeDouble)         //add here
     , _homeangleFact        (0, _homeangleFactName,         FactMetaData::valueTypeDouble)         //add here
-    , _homedisFact          (0, _homedisFactName,           FactMetaData::valueTypeDouble)         //add here
+    , _flightDistanceFact   (0, _flightDistanceFactName,    FactMetaData::valueTypeDouble)
     , _flightTimeFact       (0, _flightTimeFactName,        FactMetaData::valueTypeElapsedTimeInSeconds)
+    , _distanceToHomeFact   (0, _distanceToHomeFactName,    FactMetaData::valueTypeDouble)
     , _gpsFactGroup(this)
     , _batteryFactGroup(this)
     , _windFactGroup(this)
@@ -347,6 +348,9 @@ void Vehicle::_commonInit(void)
 {
     _firmwarePlugin = _firmwarePluginManager->firmwarePluginForAutopilot(_firmwareType, _vehicleType);
 
+    connect(this, &Vehicle::coordinateChanged,      this, &Vehicle::_updateDistanceToHome);
+    connect(this, &Vehicle::homePositionChanged,    this, &Vehicle::_updateDistanceToHome);
+
     _missionManager = new MissionManager(this);
     connect(_missionManager, &MissionManager::error,                    this, &Vehicle::_missionManagerError);
     connect(_missionManager, &MissionManager::newMissionItemsAvailable, this, &Vehicle::_missionLoadComplete);
@@ -359,11 +363,11 @@ void Vehicle::_commonInit(void)
     connect(_parameterManager, &ParameterManager::parametersReadyChanged, this, &Vehicle::_parametersReady);
 
     // GeoFenceManager needs to access ParameterManager so make sure to create after
-    _geoFenceManager = _firmwarePlugin->newGeoFenceManager(this);
+    _geoFenceManager = new GeoFenceManager(this);
     connect(_geoFenceManager, &GeoFenceManager::error,          this, &Vehicle::_geoFenceManagerError);
     connect(_geoFenceManager, &GeoFenceManager::loadComplete,   this, &Vehicle::_geoFenceLoadComplete);
 
-    _rallyPointManager = _firmwarePlugin->newRallyPointManager(this);
+    _rallyPointManager = new RallyPointManager(this);
     connect(_rallyPointManager, &RallyPointManager::error,          this, &Vehicle::_rallyPointManagerError);
     connect(_rallyPointManager, &RallyPointManager::loadComplete,   this, &Vehicle::_rallyPointLoadComplete);
 
@@ -386,9 +390,9 @@ void Vehicle::_commonInit(void)
     _addFact(&_altitudeAMSLFact,        _altitudeAMSLFactName);
     _addFact(&_flightDistanceFact,      _flightDistanceFactName);
     _addFact(&_flightTimeFact,          _flightTimeFactName);
+    _addFact(&_distanceToHomeFact,      _distanceToHomeFactName);
 	_addFact(&_throttleFact,            _throttleFactName); //add yaoling
     _addFact(&_homeangleFact,           _homeangleFactName); //add yaoling
-    _addFact(&_homedisFact,             _homedisFactName); //add yaoling
 	
 //    _addFactGroup(&_gpsFactGroup,       _gpsFactGroupName);
 //    _addFactGroup(&_batteryFactGroup,   _batteryFactGroupName);
@@ -429,6 +433,12 @@ void Vehicle::_offlineFirmwareTypeSettingChanged(QVariant value)
 {
     _firmwareType = static_cast<MAV_AUTOPILOT>(value.toInt());
     emit firmwareTypeChanged();
+    if (_firmwareType == MAV_AUTOPILOT_ARDUPILOTMEGA) {
+        _capabilityBits = 0;
+    } else {
+        _capabilityBits = MAV_PROTOCOL_CAPABILITY_MISSION_FENCE | MAV_PROTOCOL_CAPABILITY_MISSION_RALLY;
+    }
+    emit capabilityBitsChanged(_capabilityBits);
 }
 
 void Vehicle::_offlineVehicleTypeSettingChanged(QVariant value)
@@ -735,7 +745,11 @@ void Vehicle::_handleGlobalPositionInt(mavlink_message_t& message)
     mavlink_global_position_int_t globalPositionInt;
     mavlink_msg_global_position_int_decode(&message, &globalPositionInt);
 
-    // ArduPilot sends bogus GLOBAL_POSITION_INT messages with lat/lat 0/0 even when it has not gps signal
+    _altitudeRelativeFact.setRawValue(globalPositionInt.relative_alt / 1000.0);
+    _altitudeAMSLFact.setRawValue(globalPositionInt.alt / 1000.0);
+
+    // ArduPilot sends bogus GLOBAL_POSITION_INT messages with lat/lat 0/0 even when it has no gps signal
+    // Apparently, this is in order to transport relative altitude information.
     if (globalPositionInt.lat == 0 && globalPositionInt.lon == 0) {
         return;
     }
@@ -746,21 +760,7 @@ void Vehicle::_handleGlobalPositionInt(mavlink_message_t& message)
     _coordinate.setLongitude(globalPositionInt.lon / (double)1E7);
     _coordinate.setAltitude(globalPositionInt.alt  / 1000.0);
     emit coordinateChanged(_coordinate);
-    _altitudeRelativeFact.setRawValue(globalPositionInt.relative_alt / 1000.0);
-    _altitudeAMSLFact.setRawValue(globalPositionInt.alt / 1000.0);
-    if(_flying)
-    {
-        float angle=_coordinate.azimuthTo(_homePosition) - _headingFact.rawValue().toFloat();
-        if(angle>180)
-        {
-            angle=360-angle;
-        }else if(angle<-180)
-        {
-            angle=angle+360;
-        }
-        _homeangleFact.setRawValue(angle);
-        _homedisFact.setRawValue(_coordinate.distanceTo(_homePosition));
-    }
+
 }
 
 void Vehicle::_handleAltitude(mavlink_message_t& message)
@@ -779,11 +779,10 @@ void Vehicle::_handleAltitude(mavlink_message_t& message)
 
 void Vehicle::_setCapabilities(uint64_t capabilityBits)
 {
-    if (capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_INT) {
-        _supportsMissionItemInt = true;
-    }
+    _capabilityBits = capabilityBits;
     _vehicleCapabilitiesKnown = true;
     emit capabilitiesKnownChanged(true);
+    emit capabilityBitsChanged(_capabilityBits);
 
     // This should potentially be turned into a user-facing warning
     // if the general experience after deployment is that users want MAVLink 2
@@ -792,7 +791,13 @@ void Vehicle::_setCapabilities(uint64_t capabilityBits)
         qCDebug(VehicleLog) << QString("Vehicle does support MAVLink 2 but the link does not allow for it.");
     }
 
-    qCDebug(VehicleLog) << QString("Vehicle %1 MISSION_ITEM_INT").arg(_supportsMissionItemInt ? QStringLiteral("supports") : QStringLiteral("does not support"));
+    QString supports("supports");
+    QString doesNotSupport("does not support");
+
+    qCDebug(VehicleLog) << QString("Vehicle %1 Mavlink 2.0").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MAVLINK2 ? supports : doesNotSupport);
+    qCDebug(VehicleLog) << QString("Vehicle %1 MISSION_ITEM_INT").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_INT ? supports : doesNotSupport);
+    qCDebug(VehicleLog) << QString("Vehicle %1 GeoFence").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_FENCE ? supports : doesNotSupport);
+    qCDebug(VehicleLog) << QString("Vehicle %1 RallyPoints").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_RALLY ? supports : doesNotSupport);
 }
 
 void Vehicle::_handleAutopilotVersion(LinkInterface *link, mavlink_message_t& message)
@@ -959,6 +964,10 @@ void Vehicle::_handleCommandAck(mavlink_message_t& message)
 
 void Vehicle::_handleCommandLong(mavlink_message_t& message)
 {
+#ifdef __ios__
+    Q_UNUSED(message)
+    // iOS has no serial links
+#else
     mavlink_command_long_t cmd;
     mavlink_msg_command_long_decode(&message, &cmd);
 
@@ -978,6 +987,7 @@ void Vehicle::_handleCommandLong(mavlink_message_t& message)
             }
         break;
     }
+#endif
 }
 
 void Vehicle::_handleExtendedSysState(mavlink_message_t& message)
@@ -1957,8 +1967,13 @@ void Vehicle::_missionLoadComplete(void)
     // After the initial mission request completes we ask for the geofence
     if (!_geoFenceManagerInitialRequestSent) {
         _geoFenceManagerInitialRequestSent = true;
-        qCDebug(VehicleLog) << "_missionLoadComplete requesting geoFence";
-        _geoFenceManager->loadFromVehicle();
+        if (_geoFenceManager->supported()) {
+            qCDebug(VehicleLog) << "_missionLoadComplete requesting GeoFence";
+            _geoFenceManager->loadFromVehicle();
+        } else {
+            qCDebug(VehicleLog) << "_missionLoadComplete GeoFence not supported skipping";
+            _geoFenceLoadComplete();
+        }
     }
 }
 
@@ -1967,15 +1982,23 @@ void Vehicle::_geoFenceLoadComplete(void)
     // After geofence request completes we ask for the rally points
     if (!_rallyPointManagerInitialRequestSent) {
         _rallyPointManagerInitialRequestSent = true;
-        qCDebug(VehicleLog) << "_missionLoadComplete requesting rally points";
-        _rallyPointManager->loadFromVehicle();
+        if (_rallyPointManager->supported()) {
+            qCDebug(VehicleLog) << "_missionLoadComplete requesting Rally Points";
+            _rallyPointManager->loadFromVehicle();
+        } else {
+            qCDebug(VehicleLog) << "_missionLoadComplete Rally Points not supported skipping";
+            _rallyPointLoadComplete();
+        }
     }
 }
 
 void Vehicle::_rallyPointLoadComplete(void)
 {
     qCDebug(VehicleLog) << "_missionLoadComplete _initialPlanRequestComplete = true";
-    _initialPlanRequestComplete = true;
+    if (!_initialPlanRequestComplete) {
+        _initialPlanRequestComplete = true;
+        emit initialPlanRequestCompleted();
+    }
 }
 
 void Vehicle::_parametersReady(bool parametersReady)
@@ -2893,6 +2916,27 @@ void Vehicle::_handleADSBVehicle(const mavlink_message_t& message)
             _adsbICAOMap[adsbVehicle.ICAO_address] = vehicle;
             _adsbVehicles.append(vehicle);
         }
+    }
+}
+
+void Vehicle::_updateDistanceToHome(void)
+{
+    if (coordinate().isValid() && homePosition().isValid()) {
+        _distanceToHomeFact.setRawValue(coordinate().distanceTo(homePosition()));
+		if(_flying)
+    	{
+        	float angle=coordinate().azimuthTo(homePosition()) - _headingFact.rawValue().toFloat();
+        	if(angle>180)
+        	{
+            	angle=360-angle;
+        	}else if(angle<-180)
+        	{
+            	angle=angle+360;
+        	}
+        	_homeangleFact.setRawValue(angle);
+    	}
+    } else {
+        _distanceToHomeFact.setRawValue(qQNaN());
     }
 }
 

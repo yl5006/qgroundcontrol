@@ -24,6 +24,8 @@ QGCView {
 
     property bool loaded: false
 
+    property var _qgcView: qgcView
+
     QGCPalette { id: qgcPal; colorGroupEnabled: panel.enabled }
 
     Component {
@@ -116,9 +118,10 @@ QGCView {
                 folder:         QGroundControl.settingsManager.appSettings.logSavePath
                 nameFilters:    [qsTr("Log files (*.txt)"), qsTr("All Files (*)")]
                 selectExisting: false
-                title:          qsTr("选择日志文件")//qsTr("Select log save file")
+                title:           qsTr("选择日志文件")//qsTr("Select log save file")
+                qgcView:        _qgcView
                 onAcceptedForSave: {
-                    debugMessageModel.writeMessages(fileUrl);
+                    debugMessageModel.writeMessages(file);
                     visible = false;
                 }
             }
