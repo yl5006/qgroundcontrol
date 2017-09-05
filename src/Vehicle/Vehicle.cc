@@ -90,6 +90,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _joystickEnabled(false)
     , _uas(NULL)
     , _mav(NULL)
+    , _currentMissionIndex(0)
     , _currentMessageCount(0)
     , _messageCount(0)
     , _currentErrorCount(0)
@@ -670,6 +671,9 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_WIND:
         _handleWind(message);
         break;
+    case MAVLINK_MSG_ID_MISSION_CURRENT:
+        handleMissionCurrent(message);
+        break;
     }
 
     emit mavlinkMessageReceived(message);
@@ -677,6 +681,16 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     _uas->receiveMessage(message);
 }
 
+void Vehicle::handleMissionCurrent(const mavlink_message_t& message)
+{
+    mavlink_mission_current_t missionCurrent;
+
+    mavlink_msg_mission_current_decode(&message, &missionCurrent);
+    if (missionCurrent.seq != _currentMissionIndex) {
+        _currentMissionIndex = missionCurrent.seq;
+        emit curIndexChanged(_currentMissionIndex);
+    }
+}
 
 void Vehicle::_handleCameraFeedback(const mavlink_message_t& message)
 {

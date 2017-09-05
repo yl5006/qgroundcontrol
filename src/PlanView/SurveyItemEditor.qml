@@ -407,7 +407,7 @@ Rectangle {
             }
 
             FactCheckBox {
-                text:       qsTr("Take images in turnarounds")
+                text:       qsTr("任何地方都拍照")
                 fact:       missionItem.cameraTriggerInTurnaround
                 enabled:    !missionItem.hoverAndCapture.rawValue
             }
@@ -608,7 +608,7 @@ Rectangle {
             }
 
             FactCheckBox {
-                text:               qsTr("Take images in turnarounds")
+                text:               qsTr("任何地方都拍照")
                 fact:               missionItem.cameraTriggerInTurnaround
                 enabled:            !missionItem.hoverAndCapture.rawValue
                 Layout.columnSpan:  2

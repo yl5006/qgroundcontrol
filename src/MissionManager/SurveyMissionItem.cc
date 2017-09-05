@@ -1364,15 +1364,23 @@ bool SurveyMissionItem::_appendMissionItemsWorker(QList<MissionItem*>& items, QO
 
     if (((hasRefly && buildRefly) || !hasRefly) && _imagesEverywhere()) {
         // Turn off camera at end of survey
-        MissionItem* item = new MissionItem(seqNum++,
-                                            MAV_CMD_DO_SET_CAM_TRIGG_DIST,
-                                            MAV_FRAME_MISSION,
-                                            0.0,                    // trigger distance (off)
-                                            0, 0, 0, 0, 0, 0, 0, 0, 0,      // param 2-7 unused
-                                            true,                   // autoContinue
-                                            false,                  // isCurrentItem
-                                            missionItemParent);
-        items.append(item);
+        QGeoCoordinate coordlast=items.last()->coordinate();
+        items.removeLast();
+        _appendWaypointToMission(items,seqNum--,coordlast,CameraTriggerOff,missionItemParent);
+//        MissionItem* item = new MissionItem(seqNum++,
+//                                            MAV_CMD_DO_SET_CAM_TRIGG_DIST,
+//                                            MAV_FRAME_MISSION,
+//                                            0.0,
+//                                            0, 0, 0,
+//                                            coordlast.latitude(),
+//                                            coordlast.longitude(),
+//                                            coordlast.altitude(),
+//                                            0.0,       // trigger distance (off)
+//                                            0, 0,      // param 2-7 unused
+//                                            true,                   // autoContinue
+//                                            false,                  // isCurrentItem
+//                                            missionItemParent);
+//         items.append(item);
     }
 
     return true;
