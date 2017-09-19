@@ -411,11 +411,11 @@ bool QGCApplication::_initForNormalAppBoot(void)
     // Start the user interface
     MainWindow* mainWindow = MainWindow::_create();
     Q_CHECK_PTR(mainWindow);
+#endif
 
     // Now that main window is up check for lost log files
     connect(this, &QGCApplication::checkForLostLogFiles, toolbox()->mavlinkProtocol(), &MAVLinkProtocol::checkForLostLogFiles);
-//  emit checkForLostLogFiles();   //do not check
-#endif
+    emit checkForLostLogFiles();
 
     // Load known link configurations
     toolbox()->linkManager()->loadLinkConfigurationList();

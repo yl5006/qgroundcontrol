@@ -92,7 +92,7 @@ Item {
     property bool showArm:              _activeVehicle && !_vehicleArmed
     property bool showDisarm:           _activeVehicle && _vehicleArmed && !_vehicleFlying
     property bool showRTL:              _activeVehicle && _vehicleArmed && _activeVehicle.guidedModeSupported && _vehicleFlying && !_vehicleInRTLMode
-    property bool showTakeoff:          _activeVehicle && _activeVehicle.guidedModeSupported && !_vehicleFlying  && !_activeVehicle.fixedWing
+    property bool showTakeoff:          _activeVehicle && _activeVehicle.takeoffVehicleSupported && !_vehicleFlying
     property bool showLand:             _activeVehicle && _activeVehicle.guidedModeSupported && _vehicleArmed && !_activeVehicle.fixedWing && !_vehicleInLandMode
     property bool showStartMission:     _activeVehicle && _missionAvailable && !_missionActive && !_vehicleFlying
     property bool showContinueMission:  _activeVehicle && _missionAvailable && !_missionActive && _vehicleFlying && (_currentMissionIndex < missionController.visualItems.count - 1)
@@ -101,7 +101,7 @@ Item {
     property bool showChangeAlt:        (_activeVehicle && _vehicleFlying) && _activeVehicle.guidedModeSupported && _vehicleArmed && !_missionActive
     property bool showOrbit:            !_hideOrbit && _activeVehicle && _vehicleFlying && _activeVehicle.orbitModeSupported && _vehicleArmed && !_missionActive
     property bool showLandAbort:        _activeVehicle && _vehicleFlying && _activeVehicle.fixedWing && _vehicleLanding
-    property bool showGotoLocation:     _activeVehicle && _activeVehicle.guidedMode && _vehicleFlying
+    property bool showGotoLocation:     _activeVehicle && _vehicleFlying
 
     property bool guidedUIVisible:      guidedActionConfirm.visible || guidedActionList.visible
 

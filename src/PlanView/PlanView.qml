@@ -174,6 +174,7 @@ QGCView {
 
         function saveToSelectedFile() {
             fileDialog.title =          qsTr("Save Plan")
+            fileDialog.plan =           true
             fileDialog.selectExisting = false
             fileDialog.nameFilters =    masterController.saveNameFilters
             fileDialog.openForSave()
@@ -181,6 +182,14 @@ QGCView {
 
         function fitViewportToItems() {
             mapFitFunctions.fitMapViewportToMissionItems()
+        }
+
+        function saveKmlToSelectedFile() {
+            fileDialog.title =          qsTr("Save KML")
+            fileDialog.plan =           false
+            fileDialog.selectExisting = false
+            fileDialog.nameFilters =    masterController.saveKmlFilters
+            fileDialog.openForSave()
         }
     }
 
@@ -237,12 +246,13 @@ QGCView {
     QGCFileDialog {
         id:             fileDialog
         qgcView:        _qgcView
+        property var plan:           true
         folder:         QGroundControl.settingsManager.appSettings.missionSavePath
         fileExtension:  QGroundControl.settingsManager.appSettings.planFileExtension
         fileExtension2: QGroundControl.settingsManager.appSettings.missionFileExtension
 
         onAcceptedForSave: {
-            masterController.saveToFile(file)
+            plan ? masterController.saveToFile(file) : masterController.saveToKml(file)
             close()
         }
 
@@ -1343,6 +1353,16 @@ QGCView {
                 onClicked:  {
                     syncButton.hideDropDown()
                     _qgcView.showDialog(removeAllPromptDialog, qsTr("删除所有航点")/*qsTr("Remove all")*/, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
+                }
+
+                QGCButton {
+                    text:               qsTr("Save KML...")
+                    Layout.fillWidth:   true
+                    enabled:            !masterController.syncInProgress
+                    onClicked: {
+                        dropPanel.hide()
+                        masterController.saveKmlToSelectedFile()
+                    }
                 }
             }
         }

@@ -1783,8 +1783,6 @@ void Vehicle::setFlightMode(const QString& flightMode)
     uint8_t     base_mode;
     uint32_t    custom_mode;
 
-    qDebug() << flightMode;
-
     if (_firmwarePlugin->setFlightMode(flightMode, &base_mode, &custom_mode)) {
         // setFlightMode will only set MAV_MODE_FLAG_CUSTOM_MODE_ENABLED in base_mode, we need to move back in the existing
         // states.
@@ -1888,19 +1886,19 @@ void Vehicle::sendMessageMultiple(mavlink_message_t message)
 void Vehicle::_missionManagerError(int errorCode, const QString& errorMsg)
 {
     Q_UNUSED(errorCode);
-    qgcApp()->showMessage(tr("任务上传下载错误: %1").arg(errorMsg));//"Error during Mission communication with Vehicle: %1"
+    qgcApp()->showMessage(tr("任务上传下载错误: %1").arg(errorMsg));//Mission transfer failed. Retry transfer. Error: %1"
 }
 
 void Vehicle::_geoFenceManagerError(int errorCode, const QString& errorMsg)
 {
     Q_UNUSED(errorCode);
-    qgcApp()->showMessage(QString("Error during GeoFence communication with Vehicle: %1").arg(errorMsg));
+    qgcApp()->showMessage(QString("GeoFence transfer failed. Retry transfer. Error: %1").arg(errorMsg));
 }
 
 void Vehicle::_rallyPointManagerError(int errorCode, const QString& errorMsg)
 {
     Q_UNUSED(errorCode);
-    qgcApp()->showMessage(QString("Error during Rally Point communication with Vehicle: %1").arg(errorMsg));
+    qgcApp()->showMessage(QString("Rally Point transfer failed. Retry transfer. Error: %1").arg(errorMsg));
 }
 
 void Vehicle::_addNewMapTrajectoryPoint(void)
@@ -2011,7 +2009,7 @@ void Vehicle::_rallyPointLoadComplete(void)
     qCDebug(VehicleLog) << "_missionLoadComplete _initialPlanRequestComplete = true";
     if (!_initialPlanRequestComplete) {
         _initialPlanRequestComplete = true;
-        emit initialPlanRequestCompleted();
+        emit initialPlanRequestCompleteChanged(true);
     }
 }
 
@@ -2208,18 +2206,7 @@ bool Vehicle::multiRotor(void) const
 
 bool Vehicle::vtol(void) const
 {
-    switch (vehicleType()) {
-    case MAV_TYPE_VTOL_DUOROTOR:
-    case MAV_TYPE_VTOL_QUADROTOR:
-    case MAV_TYPE_VTOL_TILTROTOR:
-    case MAV_TYPE_VTOL_RESERVED2:
-    case MAV_TYPE_VTOL_RESERVED3:
-    case MAV_TYPE_VTOL_RESERVED4:
-    case MAV_TYPE_VTOL_RESERVED5:
-        return true;
-    default:
-        return false;
-    }
+    return _firmwarePlugin->isVtol(this);
 }
 
 bool Vehicle::supportsManualControl(void) const
@@ -2230,6 +2217,11 @@ bool Vehicle::supportsManualControl(void) const
 bool Vehicle::supportsThrottleModeCenterZero(void) const
 {
     return _firmwarePlugin->supportsThrottleModeCenterZero();
+}
+
+bool Vehicle::supportsNegativeThrust(void) const
+{
+    return _firmwarePlugin->supportsNegativeThrust();
 }
 
 bool Vehicle::supportsRadio(void) const
@@ -2331,6 +2323,11 @@ bool Vehicle::pauseVehicleSupported(void) const
 bool Vehicle::orbitModeSupported() const
 {
     return _firmwarePlugin->isCapable(this, FirmwarePlugin::OrbitModeCapability);
+}
+
+bool Vehicle::takeoffVehicleSupported() const
+{
+    return _firmwarePlugin->isCapable(this, FirmwarePlugin::TakeoffVehicleCapability);
 }
 
 void Vehicle::guidedModeRTL(void)
@@ -2953,6 +2950,18 @@ void Vehicle::_updateDistanceToHome(void)
         _distanceToHomeFact.setRawValue(qQNaN());
     }
 }
+
+void Vehicle::forceInitialPlanRequestComplete(void)
+{
+    _initialPlanRequestComplete = true;
+    emit initialPlanRequestCompleteChanged(true);
+}
+
+void Vehicle::sendPlan(QString planFile)
+{
+    PlanMasterController::sendPlanToVehicle(this, planFile);
+}
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

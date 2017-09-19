@@ -26,6 +26,7 @@ class MissionSettingsItem;
 class AppSettings;
 class MissionManager;
 class SimpleMissionItem;
+class QDomDocument;
 
 Q_DECLARE_LOGGING_CATEGORY(MissionControllerLog)
 
@@ -129,6 +130,9 @@ public:
     bool containsItems              (void) const final;
     void managerVehicleChanged      (Vehicle* managerVehicle) final;
     bool showPlanFromManagerVehicle (void) final;
+
+    // Create KML file
+    void convertToKMLDocument(QDomDocument& document);
 
     // Property accessors
 
