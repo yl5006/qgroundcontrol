@@ -259,7 +259,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
 
     text = text.right(text.length() - calPrefix.length());
 //only display cal message for airspeed
-    QString calAirspeedfix("[airspeed]");
+    QString calAirspeedfix("[air]");
     if (text.startsWith(calAirspeedfix)) {
         text = text.right(text.length() - calAirspeedfix.length());
         int msgid=text.left(2).toInt();

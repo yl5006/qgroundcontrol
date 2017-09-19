@@ -1063,7 +1063,7 @@ QGCView {
             MissionAllItemIndicator {
                 id:              allIndicator
                 anchors.right:   parent.right
-                anchors.top:     parent.top
+                anchors.top:     planElementSelectorRow.bottom
                 anchors.rightMargin: _margin*2
                 width:               _rightPanelWidth
                 missionController:   _missionController

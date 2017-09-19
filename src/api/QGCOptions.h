@@ -53,7 +53,7 @@ public:
 
     /// Enable Plan View Selector (Mission, Fence or Rally)
     /// @return True or false
-    virtual bool        enablePlanViewSelector      () { return false; }
+    virtual bool        enablePlanViewSelector      () { return true; }
 
     /// Provides an alternate instrument widget for the Fly View
     /// @return An alternate widget (see QGCInstrumentWidget.qml, the default widget)

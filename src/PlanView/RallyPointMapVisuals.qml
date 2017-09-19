@@ -68,7 +68,7 @@ Item {
                 id:         itemIndexLabel
                 label:      qsTr("R", "rally point map item label")
                 checked:    _editingLayer == _layerRallyPoints ? rallyPointObject == myRallyPointController.currentRallyPoint : false
-
+                simpleindex:    1
                 onClicked: myRallyPointController.currentRallyPoint = rallyPointObject
             }
         }

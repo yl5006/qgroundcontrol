@@ -460,7 +460,7 @@ void PX4FirmwarePlugin::startMission(Vehicle* vehicle)
             return;
         }
     } else {
-        qgcApp()->showMessage(tr("Unable to start mission: Vehicle not ready."));
+        qgcApp()->showMessage(tr("不能开始任务,飞机未准备完全"));
     }
 }
 

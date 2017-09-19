@@ -94,7 +94,7 @@ void PlanManager::writeMissionItems(const QList<MissionItem*>& missionItems)
             // Home is in sequence 0, remainder of items start at sequence 1
             item->setSequenceNumber(item->sequenceNumber() - 1);
             if (item->command() == MAV_CMD_DO_JUMP) {
-                item->setParam1((int)item->param1() - 1);
+                item->setParam8((int)item->param8() - 1);
             }
         }
     }
@@ -461,7 +461,7 @@ void PlanManager::_handleMissionItem(const mavlink_message_t& message, bool miss
 
         if (item->command() == MAV_CMD_DO_JUMP && !_vehicle->firmwarePlugin()->sendHomePositionToVehicle()) {
             // Home is in position 0
-            item->setParam1((int)item->param1() + 1);
+            item->setParam8((int)item->param8() + 1);
         }
 
         _missionItems.append(item);

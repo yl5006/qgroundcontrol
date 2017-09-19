@@ -40,6 +40,7 @@ Rectangle {
             anchors.left:           parent.left
             label:                  "R"
             checked:                true
+            simpleindex:        1
         }
 
         QGCLabel {
