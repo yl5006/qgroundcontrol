@@ -4239,6 +4239,16 @@ if required for the gimbal (only in AUX output mode)</short_desc>
         <value code="0">高度追踪</value>
       </values>
     </parameter>
+    <parameter default="1" name="MPC_SLOW_EN" type="INT32">
+      <short_desc>到点减速使能</short_desc>
+      <min>0</min>
+      <max>1</max>
+      <values>
+        <value code="0">禁用</value>
+        <value code="1">启用</value>
+      </values>
+      <scope>modules/mc_pos_control</scope>
+    </parameter>
      <parameter default="5" name="MPC_SAFE_DIS" type="FLOAT">
       <short_desc>避障模式下安全距离</short_desc>
       <min>1</min>

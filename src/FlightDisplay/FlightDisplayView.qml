@@ -213,8 +213,8 @@ QGCView {
         id: flightcheck
 
         QGCViewDialog {
-            width:          ScreenTools.defaultFontPixelHeight*30
-            height:         ScreenTools.defaultFontPixelHeight*25
+            width:          ScreenTools.defaultFontPixelHeight*40
+            height:         ScreenTools.defaultFontPixelHeight*30
             QGCFlickable {
                 anchors.fill:   parent
                 contentHeight:  column.height

@@ -16,7 +16,7 @@ import QGroundControl.ScreenTools   1.0
 SetupPage {
     id:             tuningPage
     pageComponent:  pageComponent
-
+    visibleWhileArmed:   true
     Component {
         id: pageComponent
 

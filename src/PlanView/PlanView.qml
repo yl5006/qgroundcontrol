@@ -257,18 +257,17 @@ QGCView {
         }
 
         onAcceptedForLoad: {
-            if(file.match(".mission")||file.match(".plan"))
+            if(file.match(".txt"))
+            {
+            _file=file
+            qgcView.showDialog(loadandgenerateDialog, qsTr(""), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
+            }else
             {
             masterController.loadFromFile(file)
             masterController.fitViewportToItems()
             setCurrentItem(0, true)
             close()
-            }
-            if(file.match(".txt"))
-            {
-            _file=file
-            qgcView.showDialog(loadandgenerateDialog, qsTr(""), qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
-            }
+            }        
         }
     }
     Component {
@@ -1355,14 +1354,20 @@ QGCView {
                     _qgcView.showDialog(removeAllPromptDialog, qsTr("删除所有航点")/*qsTr("Remove all")*/, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
                 }
 
-                QGCButton {
-                    text:               qsTr("Save KML...")
-                    Layout.fillWidth:   true
-                    enabled:            !masterController.syncInProgress
-                    onClicked: {
-                        dropPanel.hide()
-                        masterController.saveKmlToSelectedFile()
-                    }
+
+            }
+            Rectangle {
+                height:     1
+                width:      parent.width
+                color:      "grey"
+            }
+            QGCButton {
+                text:               qsTr("Save KML...")
+                Layout.fillWidth:   true
+                enabled:            !masterController.syncInProgress
+                onClicked: {
+                    syncButton.hideDropDown()
+                    masterController.saveKmlToSelectedFile()
                 }
             }
         }

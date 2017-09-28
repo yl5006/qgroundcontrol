@@ -162,7 +162,7 @@ SetupPage {
                         }
                         Timer {
                             id:             trig
-                            interval:       2000
+                            interval:       1000
                             running:        false
                             repeat:         false
 
