@@ -1174,7 +1174,7 @@ QGCView {
             id:                 waypointValuesDisplay
             anchors.margins:    ScreenTools.defaultFontPixelWidth
             anchors.left:       parent.left
-            anchors.right:      rightPanel.left
+            maxWidth:           parent.width - rightPanel.width - x
             anchors.bottom:     parent.bottom
             missionItems:       _missionController.visualItems
             visible:            _editingLayer === _layerMission && !ScreenTools.isShortScreen

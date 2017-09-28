@@ -201,8 +201,7 @@ Item {
         if(ScreenTools.isMobile) {
             return ScreenTools.isTinyScreen ? mainWindow.width * 0.2 : mainWindow.width * 0.15
         }
-        var w = mainWindow.width * 0.15
-        return Math.min(w, 250)
+        return ScreenTools.defaultFontPixelWidth * 30
     }
 
     function _setInstrumentWidget() {
