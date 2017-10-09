@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -403,7 +403,7 @@ void StructureScanComplexItem::appendMissionItems(QList<MissionItem*>& items, QO
                                         0,                                  // Gimbal pitch
                                         0,                                  // Gimbal roll
                                         90,                                 // Gimbal yaw
-                                        0, 0, 0,                            // param 4-6 not used
+                                        0, 0, 0, 0, 0, 0,                   // param 4-6 not used
                                         MAV_MOUNT_MODE_MAVLINK_TARGETING,
                                         true,                               // autoContinue
                                         false,                              // isCurrentItem
@@ -426,6 +426,7 @@ void StructureScanComplexItem::appendMissionItems(QList<MissionItem*>& items, QO
                                                 vertexCoord.latitude(),
                                                 vertexCoord.longitude(),
                                                 layerAltitude,
+                                                0, 0, 0,
                                                 true,                                       // autoContinue
                                                 false,                                      // isCurrentItem
                                                 missionItemParent);
@@ -444,6 +445,7 @@ void StructureScanComplexItem::appendMissionItems(QList<MissionItem*>& items, QO
                                             vertexCoord.latitude(),
                                             vertexCoord.longitude(),
                                             layerAltitude,
+                                            0, 0, 0,
                                             true,                                       // autoContinue
                                             false,                                      // isCurrentItem
                                             missionItemParent);
