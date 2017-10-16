@@ -91,7 +91,6 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _joystickEnabled(false)
     , _uas(NULL)
     , _mav(NULL)
-    , _currentMissionIndex(0)
     , _currentMessageCount(0)
     , _messageCount(0)
     , _currentErrorCount(0)
@@ -692,25 +691,11 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_WIND:
         _handleWind(message);
         break;
-    case MAVLINK_MSG_ID_MISSION_CURRENT:
-        handleMissionCurrent(message);
-        break;
     }
 
     emit mavlinkMessageReceived(message);
 
     _uas->receiveMessage(message);
-}
-
-void Vehicle::handleMissionCurrent(const mavlink_message_t& message)
-{
-    mavlink_mission_current_t missionCurrent;
-
-    mavlink_msg_mission_current_decode(&message, &missionCurrent);
-    if (missionCurrent.seq != _currentMissionIndex) {
-        _currentMissionIndex = missionCurrent.seq;
-        emit curIndexChanged(_currentMissionIndex);
-    }
 }
 
 void Vehicle::_handleCameraFeedback(const mavlink_message_t& message)
@@ -732,6 +717,8 @@ void Vehicle::_handleCameraImageCaptured(const mavlink_message_t& message)
 
     QGeoCoordinate imageCoordinate((double)feedback.lat / qPow(10.0, 7.0), (double)feedback.lon / qPow(10.0, 7.0), feedback.alt);
     qCDebug(VehicleLog) << "_handleCameraFeedback coord:index" << imageCoordinate << feedback.image_index << feedback.capture_result;
+    _lastcameracoordinate  = imageCoordinate;
+    emit lastcameracoordinateChanged(_lastcameracoordinate);
     if (feedback.capture_result == 1) {
         _cameraTriggerPoints.append(new QGCQGeoCoordinate(imageCoordinate, this));
     }
@@ -2769,10 +2756,32 @@ void Vehicle::triggerCamera(void)
     sendMavCommand(_defaultComponentId,
                    MAV_CMD_DO_DIGICAM_CONTROL,
                    true,                            // show errors
-                   0.0, 0.0, 0.0, 0.0,              // param 1-4 unused
-                   1.0,                             // trigger camera
+                   1.0, 0.0, 0.0, 0.0,              // param 1-4 unused
+                   0.0,                             // trigger camera
                    0.0,                             // param 6 unused
-                   1.0);                            // test shot flag
+                   0.0);                            // param 1 test shot flag
+}
+
+void Vehicle::triggerCameraTime(float mstime)
+{
+    sendMavCommand(_defaultComponentId,
+                   MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL,
+                   true,                            // show errors
+                   mstime*1000, 0.0, 0.0, 0.0,              // param 1-4 unused
+                   0.0,                             // trigger camera
+                   0.0,                             // param 6 unused
+                   0.0);                            // param 1 test shot flag
+}
+
+void Vehicle::triggerCameraDist(float dist)
+{
+    sendMavCommand(_defaultComponentId,
+                   MAV_CMD_DO_SET_CAM_TRIGG_DIST,
+                   true,                            // show errors
+                   dist, 0.0, 0.0, 0.0,              // param 1-4 unused
+                   0.0,                             // trigger camera
+                   0.0,                             // param 6 unused
+                   0.0);                            // param 1 test shot flag
 }
 
 const char* VehicleGPSFactGroup::_latFactName =                 "lat";

@@ -1664,7 +1664,6 @@ void MissionController::managerVehicleChanged(Vehicle* managerVehicle)
     connect(_managerVehicle, &Vehicle::defaultCruiseSpeedChanged,       this, &MissionController::_recalcMissionFlightStatus);
     connect(_managerVehicle, &Vehicle::defaultHoverSpeedChanged,        this, &MissionController::_recalcMissionFlightStatus);
     connect(_managerVehicle, &Vehicle::vehicleTypeChanged,              this, &MissionController::complexMissionItemNamesChanged);
-    connect(_managerVehicle, &Vehicle::curIndexChanged,                 this, &MissionController::_currentMissionIndexChanged);
 
     if (!_masterController->offline()) {
         _managerVehicleHomePositionChanged(_managerVehicle->homePosition());

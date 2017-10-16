@@ -753,41 +753,23 @@
         },
         {
             "id":           203,
-            "friendlyName": "摄像机控制",
+            "friendlyName": "相机拍照",
             "rawName":      "MAV_CMD_DO_DIGICAM_CONTROL",
-            "description":  "控制车载摄像机.",
+            "description":  "在此航点拍照.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
             "category":     "相机",
             "param1": {
-                "label":            "Session:",
+                "label":            "停留:",
+                "units":            "secs",
                 "default":          0,
                 "decimalPlaces":    0
-            },
-            "param2": {
-                "label":            "变焦:",
-                "default":          0,
-                "decimalPlaces":    3
-            },
-            "param3": {
-                "label":            "Step:",
-                "default":          0,
-                "decimalPlaces":    3
             },
             "param4": {
-                "label":            "焦点锁定:",
-                "default":          0,
-                "decimalPlaces":    0
-            },
-            "param5": {
-                "label":            "命令:",
-                "default":          0,
-                "decimalPlaces":    0
-            },
-            "param6": {
-                "label":            "帐号:",
-                "default":          0,
-                "decimalPlaces":    0
+                "label":            "机头:",
+                "units":            "radians",
+                "nanUnchanged":     true,
+                "decimalPlaces":    2
             }
         },
         {

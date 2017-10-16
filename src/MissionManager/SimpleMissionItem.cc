@@ -540,7 +540,7 @@ void SimpleMissionItem::_rebuildCheckboxFacts(void)
         _checkboxFacts.append(&_missionItem._autoContinueFact);
     } else if ((specifiesCoordinate() || specifiesAltitudeOnly()) && !_homePositionSpecialCase) {
         _checkboxFacts.append(&_altitudeRelativeToHomeFact);
-        if(_missionItem.command()==MAV_CMD_NAV_WAYPOINT||_missionItem.command()==MAV_CMD_DO_CAM)
+        if(_missionItem.command()==MAV_CMD_NAV_WAYPOINT||_missionItem.command()==MAV_CMD_DO_DIGICAM_CONTROL)
         {
             _checkboxFacts.append(&_takepictureFact);
         }
@@ -690,7 +690,7 @@ void SimpleMissionItem::_syncAltitudeRelativeToHomeToFrame(const QVariant& value
 void SimpleMissionItem::_changeCommand()
 {
     if (_takepictureFact.rawValue().toBool()) {
-      _missionItem.setCommand(MAV_CMD_DO_CAM);
+      _missionItem.setCommand(MAV_CMD_DO_DIGICAM_CONTROL);
     }
     else
     {

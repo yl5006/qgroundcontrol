@@ -95,6 +95,34 @@ Rectangle {
             enabled:            _activeVehicle
             anchors.horizontalCenter: parent.horizontalCenter
         }
+        Row{
+            spacing:    ScreenTools.defaultFontPixelHeight/2
+            SubMenuButton {
+                imageResource:      "/qmlimages/camera.svg"
+                text:               qsTr("定时拍照")//"Send to vehicle"
+                onClicked:           _activeVehicle.triggerCameraTime(Number(intertime.text))
+                enabled:            _activeVehicle
+            }
+            QGCTextField {
+                id:                 intertime
+                width:              ScreenTools.defaultFontPixelHeight*5
+                text:               "5"//QGroundControl.videoManager.rtspURL
+            }
+        }
+        Row{
+            spacing:    ScreenTools.defaultFontPixelHeight/2
+            SubMenuButton {
+                imageResource:      "/qmlimages/camera.svg"
+                text:               qsTr("定距拍照")//"Send to vehicle"
+                onClicked:           _activeVehicle.triggerCameraDist(Number(distance.text))
+                enabled:            _activeVehicle
+            }
+            QGCTextField {
+                id:                 distance
+                width:              ScreenTools.defaultFontPixelHeight*5
+                text:               "25"//QGroundControl.videoManager.rtspURL
+            }
+        }
         JoystickThumbPad {
             id:                     rightStick
             anchors.horizontalCenter: parent.horizontalCenter

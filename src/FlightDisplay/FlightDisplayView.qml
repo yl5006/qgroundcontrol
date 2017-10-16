@@ -104,13 +104,19 @@ QGCView {
 //        onResumeMissionReady:       guidedActionsController.confirmAction(guidedActionsController.actionResumeMissionReady)
 //        onResumeMissionUploadFail:  guidedActionsController.confirmAction(guidedActionsController.actionResumeMissionUploadFail)
     }
-
+    Connections {
+        target:                 QGroundControl.multiVehicleManager
+        onActiveVehicleChanged: {
+            if (_activeVehicle) {
+                root.showDialog(flightcheck, qsTr("请谨慎检查飞机,确保安全飞行"), showDialogDefaultWidth)
+            }
+        }
+    }
     Component.onCompleted: {
         setStates()
         if(QGroundControl.corePlugin.options.flyViewOverlay.toString().length) {
             flyViewOverlay.source = QGroundControl.corePlugin.options.flyViewOverlay
         }
- 	root.showDialog(flightcheck, qsTr("请谨慎检查飞机,确保安全飞行"), showDialogDefaultWidth)
     }
 
     // The following code is used to track vehicle states such that we prompt to remove mission from vehicle when mission completes
@@ -593,7 +599,7 @@ QGCView {
         //-- Loader helper for plugins to overlay elements over the fly view
         Loader {
             id:                 flyViewOverlay
-            z:                  flightDisplayViewWidgets.z + 1
+            z:                  flightWidgets.z + 1
             visible:            !QGroundControl.videoManager.fullScreen
             height:             ScreenTools.availableHeight
             anchors.left:       parent.left

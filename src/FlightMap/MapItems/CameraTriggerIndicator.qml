@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -24,13 +24,12 @@ MapQuickItem {
         width:      _radius * 2
         height:     _radius * 2
         radius:     _radius
-        color:      "black"
-        opacity:    0.4
+        color:      "transparent"
 
-        readonly property real _radius: ScreenTools.defaultFontPixelHeight * 0.6
+        readonly property real _radius: ScreenTools.defaultFontPixelHeight * 0.8
 
         QGCColoredImage {
-            anchors.margins:    3
+//            anchors.margins:    3
             anchors.fill:       parent
             color:              "white"
             mipmap:             true

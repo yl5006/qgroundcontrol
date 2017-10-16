@@ -62,6 +62,11 @@
             "paramRemove":  "1,4"
         },
         {
+            "id":           203,
+            "comment":      "MAV_CMD_DO_DIGICAM_CONTROL",
+            "paramRemove":  "1,4"
+        },
+        {
             "id":           206,
             "comment":      "MAV_CMD_DO_SET_CAM_TRIGG_DIST",
             "paramRemove":  "1,4"

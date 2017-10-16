@@ -443,6 +443,25 @@ FlightMap {
             z:              QGroundControl.zOrderTopMost
         }
     }
+    Connections {
+        target: QGroundControl.multiVehicleManager.activeVehicle
+        onLastcameracoordinateChanged: {
+            cameratrig.visible =true
+            resetTimer.start()
+        }
+    }
+    CameraTriggerIndicator {
+         id:             cameratrig
+         coordinate:     _activeVehicle.lastcameracoordinate
+         z:              QGroundControl.zOrderTopMost
+         Timer {
+             id:             resetTimer
+             interval:       1000
+             onTriggered: {
+                 cameratrig.visible  = false
+             }
+         }
+    }
 
     // Handle guided mode clicks
     MouseArea {

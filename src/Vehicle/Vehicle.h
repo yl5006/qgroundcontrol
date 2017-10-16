@@ -243,6 +243,7 @@ public:
     Q_PROPERTY(int                  id                      READ id                                                     CONSTANT)
     Q_PROPERTY(AutoPilotPlugin*     autopilot               MEMBER _autopilotPlugin                                     CONSTANT)
     Q_PROPERTY(QGeoCoordinate       coordinate              READ coordinate                                             NOTIFY coordinateChanged)
+    Q_PROPERTY(QGeoCoordinate       lastcameracoordinate    READ lastcameracoordinate                                   NOTIFY lastcameracoordinateChanged)
     Q_PROPERTY(QGeoCoordinate       homePosition            READ homePosition                                           NOTIFY homePositionChanged)
     Q_PROPERTY(bool                 armed                   READ armed                  WRITE setArmed                  NOTIFY armedChanged)
     Q_PROPERTY(bool                 autoDisarm              READ autoDisarm                                             NOTIFY autoDisarmChanged)
@@ -430,6 +431,8 @@ public:
     Q_INVOKABLE void clearMessages();
 
     Q_INVOKABLE void triggerCamera(void);
+    Q_INVOKABLE void triggerCameraTime(float mstime);
+    Q_INVOKABLE void triggerCameraDist(float mstime);
     Q_INVOKABLE void sendPlan(QString planFile);
 
 //#if 0
@@ -451,6 +454,7 @@ public:
     // Property accessors
 
     QGeoCoordinate coordinate(void) { return _coordinate; }
+    QGeoCoordinate lastcameracoordinate(void) { return _lastcameracoordinate; }
 
     typedef enum {
         JoystickModeRC,         ///< Joystick emulates an RC Transmitter
@@ -724,6 +728,7 @@ public:
 signals:
     void allLinksInactive(Vehicle* vehicle);
     void coordinateChanged(QGeoCoordinate coordinate);
+    void lastcameracoordinateChanged(QGeoCoordinate coordinate);
     void joystickModeChanged(int mode);
     void joystickEnabledChanged(bool enabled);
     void activeChanged(bool active);
@@ -814,7 +819,6 @@ signals:
     // MAVLink protocol version
     void requestProtocolVersion(unsigned version);
 
-    void curIndexChanged(int currentIndex);
 private slots:
     void _mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message);
     void _telemetryLostChanged(LinkInterface* link, float percent);
@@ -882,7 +886,6 @@ private:
     void _handleCameraFeedback(const mavlink_message_t& message);
     void _handleCameraImageCaptured(const mavlink_message_t& message);
     void _handleADSBVehicle(const mavlink_message_t& message);
-    void handleMissionCurrent(const mavlink_message_t& message);
     void _missionManagerError(int errorCode, const QString& errorMsg);
     void _geoFenceManagerError(int errorCode, const QString& errorMsg);
     void _rallyPointManagerError(int errorCode, const QString& errorMsg);
@@ -924,12 +927,12 @@ private:
     UAS* _uas;
 
     QGeoCoordinate  _coordinate;
+    QGeoCoordinate  _lastcameracoordinate;
     QGeoCoordinate  _homePosition;
 
     UASInterface*   _mav;
     int             _currentMessageCount;
     int             _messageCount;
-    int             _currentMissionIndex;
     int             _currentErrorCount;
     int             _currentWarningCount;
     int             _currentNormalCount;
