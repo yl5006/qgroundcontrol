@@ -859,6 +859,7 @@ void Vehicle::_handleAutopilotVersion(LinkInterface *link, mavlink_message_t& me
          }
 
           _firmwareId = uidstr;
+          emit vehicleUIDstrChanged();
     }
 
     if (px4Firmware()) {

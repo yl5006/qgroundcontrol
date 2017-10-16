@@ -25,7 +25,7 @@ FactPanel {
         spacing:            ScreenTools.defaultFontPointSize*0.5
         VehicleSummaryRow {
             labelText: qsTr("固件ID")//"System ID:"
-            valueText: activeVehicle.firmwareidString
+            valueText: activeVehicle.firmwareidString//vehicleUIDStr
         }
         VehicleSummaryRow {
             labelText: qsTr("飞机类型")//"Airframe type:"

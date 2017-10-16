@@ -358,7 +358,7 @@ public:
     Q_PROPERTY(int      firmwareMinorVersion        READ firmwareMinorVersion       NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwarePatchVersion        READ firmwarePatchVersion       NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwareLastVersion         READ firmwareLastVersion        NOTIFY firmwareVersionChanged)
-    Q_PROPERTY(QString  firmwareidString            READ firmwareidString           NOTIFY firmwareVersionChanged)
+    Q_PROPERTY(QString  firmwareidString            READ firmwareidString           NOTIFY vehicleUIDstrChanged)
     Q_PROPERTY(int      firmwareVersionType         READ firmwareVersionType        NOTIFY firmwareVersionChanged)
     Q_PROPERTY(QString  firmwareVersionTypeString   READ firmwareVersionTypeString  NOTIFY firmwareVersionChanged)
     Q_PROPERTY(int      firmwareCustomMajorVersion  READ firmwareCustomMajorVersion NOTIFY firmwareCustomVersionChanged)
@@ -788,6 +788,7 @@ signals:
     void firmwareCustomVersionChanged(void);
     void gitHashChanged(QString hash);
     void vehicleUIDChanged();
+    void vehicleUIDstrChanged();
 
     /// New RC channel values
     ///     @param channelCount Number of available channels, cMaxRcChannels max
