@@ -73,6 +73,7 @@ Item {
     }
 
     function showSettingsView() {
+        mainWindow.enableToolbar()
         rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
@@ -92,6 +93,7 @@ Item {
     }
 
     function showSetupView() {
+        mainWindow.enableToolbar()
         rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
@@ -109,6 +111,7 @@ Item {
     }
 
     function showPlanView() {
+        mainWindow.enableToolbar()
         rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
@@ -123,6 +126,7 @@ Item {
     }
 
     function showFlyView() {
+        mainWindow.enableToolbar()
         rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
@@ -134,6 +138,7 @@ Item {
     }
 
     function showAnalyzeView() {
+        mainWindow.enableToolbar()
         rootLoader.sourceComponent = null
         if(currentPopUp) {
             currentPopUp.close()
@@ -157,7 +162,11 @@ Item {
         // The above shutdown causes a flurry of activity as the vehicle components are removed. This in turn
         // causes the Windows Version of Qt to crash if you allow the close event to be accepted. In order to prevent
         // the crash, we ignore the close event and setup a delayed timer to close the window after things settle down.
-        delayedWindowCloseTimer.start()
+        if(ScreenTools.isWindows) {
+            delayedWindowCloseTimer.start()
+        } else {
+            mainWindow.reallyClose()
+        }
     }
 
     MessageDialog {
@@ -211,7 +220,7 @@ Item {
     property var messageQueue: []
 
     function showMessage(message) {
-        if(criticalMmessageArea.visible) {
+        if(criticalMmessageArea.visible || QGroundControl.videoManager.fullScreen) {
             messageQueue.push(message)
         } else {
             criticalMessageText.append(message)
@@ -238,6 +247,7 @@ Item {
     //    }
 
     function showMessageArea() {
+        mainWindow.enableToolbar()
         rootLoader.sourceComponent = null
 //        var currentlyVisible = messageArea.visible
 //        if(currentPopUp) {
@@ -265,14 +275,15 @@ Item {
     }
 
     function showPopUp(dropItem, centerX) {
+        mainWindow.enableToolbar()
         rootLoader.sourceComponent = null
         var oldIndicator = indicatorDropdown.sourceComponent
         if(currentPopUp) {
             currentPopUp.close()
         }
         if(oldIndicator !== dropItem) {
-            console.log(oldIndicator)
-            console.log(dropItem)
+            //console.log(oldIndicator)
+            //console.log(dropItem)
             indicatorDropdown.centerX = centerX
             indicatorDropdown.sourceComponent = dropItem
             indicatorDropdown.visible = true
@@ -319,7 +330,7 @@ Item {
         anchors.right:      parent.right
         anchors.top:        logo.bottom
         z:                  QGroundControl.zOrderTopMost
-        visible:            activeVehicle
+        visible:            activeVehicle && !QGroundControl.videoManager.fullScreen
         Component.onCompleted:  ScreenTools.availableHeight = parent.height - toolBar.height
     }
     RightToolBar {
@@ -682,7 +693,7 @@ Item {
     //-- Loader helper for any child, no matter how deep can display an element
     //   in the middle of the main window.
     Loader {
-        id: rootLoader
+        id:         rootLoader
         anchors.centerIn: parent
     }
 

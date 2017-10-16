@@ -133,10 +133,14 @@ Rectangle {
                                 height:                 width
                                 fillMode:               Image.PreserveAspectFit
                                 color:                  modelData.setupComplete ? Qt.rgba(0.0627, 0.9216, 0.749, 1)   :Qt.rgba(0.8941, 0.2275, 0.2392, 1)
-                      //        visible:                modelData.requiresSetup
+                                visible:                modelData.requiresSetup
                             }
+
                             onClicked : {
-                                setupView.showVehicleComponentPanel(modelData)
+                                console.log(modelData.setupSource)
+                                if (modelData.setupSource != "") {
+                                    setupView.showVehicleComponentPanel(modelData)
+                                }
                             }
                         }
                         // Summary Qml

@@ -225,7 +225,8 @@ QT += \
     sql \
     svg \
     widgets \
-    xml
+    xml \
+    texttospeech
 
 # Multimedia only used if QVC is enabled
 !contains (DEFINES, QGC_DISABLE_UVC) {
@@ -342,6 +343,7 @@ INCLUDEPATH += \
     src \
     src/api \
     src/AnalyzeView \
+    src/Camera \
     src/AutoPilotPlugins \
     src/FlightDisplay \
     src/FlightMap \
@@ -399,11 +401,13 @@ FORMS += \
 HEADERS += \
     src/api/QGCCorePlugin.h \
     src/api/QGCOptions.h \
+    src/api/QGCSettings.h \
     src/api/QmlComponentInfo.h \
 
 SOURCES += \
     src/api/QGCCorePlugin.cc \
     src/api/QGCOptions.cc \
+    src/api/QGCSettings.cc \
     src/api/QmlComponentInfo.cc \
 
 #
@@ -494,6 +498,9 @@ HEADERS += \
     src/AnalyzeView/ExifParser.h \
     src/AnalyzeView/ULogParser.h \
     src/AnalyzeView/PX4LogParser.h \
+    src/Camera/QGCCameraControl.h \
+    src/Camera/QGCCameraIO.h \
+    src/Camera/QGCCameraManager.h \
     src/CmdLineOptParser.h \
     src/FirmwarePlugin/PX4/px4_custom_mode.h \
     src/FlightDisplay/VideoManager.h \
@@ -575,7 +582,6 @@ HEADERS += \
     src/Terrain.h \
     src/Vehicle/MAVLinkLogManager.h \
     src/VehicleSetup/JoystickConfigController.h \
-    src/audio/QGCAudioWorker.h \
     src/comm/LinkConfiguration.h \
     src/comm/LinkInterface.h \
     src/comm/LinkManager.h \
@@ -672,7 +678,6 @@ HEADERS += \
 
 iOSBuild {
     OBJECTIVE_SOURCES += \
-        src/audio/QGCAudioWorker_iOS.mm \
         src/MobileScreenMgr.mm \
 }
 
@@ -685,6 +690,9 @@ SOURCES += \
     src/AnalyzeView/ExifParser.cc \
     src/AnalyzeView/ULogParser.cc \
     src/AnalyzeView/PX4LogParser.cc \
+    src/Camera/QGCCameraControl.cc \
+    src/Camera/QGCCameraIO.cc \
+    src/Camera/QGCCameraManager.cc \
     src/CmdLineOptParser.cc \
     src/FlightDisplay/VideoManager.cc \
     src/FlightMap/Widgets/ValuesWidgetController.cc \
@@ -761,7 +769,6 @@ SOURCES += \
     src/Terrain.cc \
     src/Vehicle/MAVLinkLogManager.cc \
     src/VehicleSetup/JoystickConfigController.cc \
-    src/audio/QGCAudioWorker.cpp \
     src/comm/LinkConfiguration.cc \
     src/comm/LinkInterface.cc \
     src/comm/LinkManager.cc \

@@ -34,6 +34,7 @@ class JoystickManager;
 class UASMessage;
 class SettingsManager;
 class ADSBVehicle;
+class QGCCameraManager;
 
 Q_DECLARE_LOGGING_CATEGORY(VehicleLog)
 
@@ -314,9 +315,10 @@ public:
     Q_PROPERTY(int                  telemetryLNoise         READ telemetryLNoise                                        NOTIFY telemetryLNoiseChanged)
     Q_PROPERTY(int                  telemetryRNoise         READ telemetryRNoise                                        NOTIFY telemetryRNoiseChanged)
     Q_PROPERTY(QVariantList         toolBarIndicators       READ toolBarIndicators                                      CONSTANT)
-    Q_PROPERTY(QVariantList         cameraList              READ cameraList                                             CONSTANT)
     Q_PROPERTY(QmlObjectListModel*  adsbVehicles            READ adsbVehicles                                           CONSTANT)
     Q_PROPERTY(bool              initialPlanRequestComplete READ initialPlanRequestComplete                             NOTIFY initialPlanRequestCompleteChanged)
+    Q_PROPERTY(QVariantList         staticCameraList        READ staticCameraList                                       CONSTANT)
+    Q_PROPERTY(QGCCameraManager*    dynamicCameras          READ dynamicCameras                                         NOTIFY dynamicCamerasChanged)
     Q_PROPERTY(float                telemetryLost           READ telemetryLost                                          NOTIFY telemetryLostChanged)
     // Vehicle state used for guided control
     Q_PROPERTY(bool flying                  READ flying NOTIFY flyingChanged)                               ///< Vehicle is flying
@@ -362,6 +364,8 @@ public:
     Q_PROPERTY(int      firmwareCustomMinorVersion  READ firmwareCustomMinorVersion NOTIFY firmwareCustomVersionChanged)
     Q_PROPERTY(int      firmwareCustomPatchVersion  READ firmwareCustomPatchVersion NOTIFY firmwareCustomVersionChanged)
     Q_PROPERTY(QString  gitHash                     READ gitHash                    NOTIFY gitHashChanged)
+    Q_PROPERTY(quint64  vehicleUID                  READ vehicleUID                 NOTIFY vehicleUIDChanged)
+    Q_PROPERTY(QString  vehicleUIDStr               READ vehicleUIDStr              NOTIFY vehicleUIDChanged)
 
     /// Resets link status counters
     Q_INVOKABLE void resetCounters  ();
@@ -662,6 +666,8 @@ public:
     static const int versionNotSetValue = -1;
 
     QString gitHash(void) const { return _gitHash; }
+    quint64 vehicleUID(void) const { return _uid; }
+    QString vehicleUIDStr();
 
     bool soloFirmware(void) const { return _soloFirmware; }
     void setSoloFirmware(bool soloFirmware);
@@ -691,11 +697,12 @@ public:
     QString vehicleImageOutline () const;
     QString vehicleImageCompass () const;
 
-    const QVariantList& toolBarIndicators   ();
-    const QVariantList& cameraList          (void) const;
+    const QVariantList&         toolBarIndicators   ();
+    const QVariantList&         staticCameraList    (void) const;
 
     bool capabilitiesKnown      (void) const { return _vehicleCapabilitiesKnown; }
     uint64_t capabilityBits     (void) const { return _capabilityBits; }    // Change signalled by capabilityBitsChanged
+    QGCCameraManager*           dynamicCameras      () { return _cameras; }
 
     /// @true: When flying a mission the vehicle is always facing towards the next waypoint
     bool vehicleYawsToNextWaypointInMission(void) const;
@@ -710,6 +717,9 @@ public:
     void _setLanding(bool landing);
     void _setHomePosition(QGeoCoordinate& homeCoord);
     void _setMaxProtoVersion (unsigned version);
+
+    /// Vehicle is about to be deleted
+    void prepareDelete();
 
 signals:
     void allLinksInactive(Vehicle* vehicle);
@@ -737,6 +747,7 @@ signals:
     void defaultHoverSpeedChanged(double hoverSpeed);
     void firmwareTypeChanged(void);
     void vehicleTypeChanged(void);
+    void dynamicCamerasChanged();
     void capabilitiesKnownChanged(bool capabilitiesKnown);
     void initialPlanRequestCompleteChanged(bool initialPlanRequestComplete);
     void capabilityBitsChanged(uint64_t capabilityBits);
@@ -771,6 +782,7 @@ signals:
     void firmwareVersionChanged(void);
     void firmwareCustomVersionChanged(void);
     void gitHashChanged(QString hash);
+    void vehicleUIDChanged();
 
     /// New RC channel values
     ///     @param channelCount Number of available channels, cMaxRcChannels max
@@ -951,6 +963,8 @@ private:
     uint64_t        _capabilityBits;
     float           _heading;
 
+    QGCCameraManager* _cameras;
+
     typedef struct {
         int     component;
         MAV_CMD command;
@@ -1042,6 +1056,7 @@ private:
     FIRMWARE_VERSION_TYPE _firmwareVersionType;
 
     QString _gitHash;
+    quint64 _uid;
     QString _firmwareId;
     int _lastAnnouncedLowBatteryPercent;
 
