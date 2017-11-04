@@ -135,7 +135,7 @@ Rectangle {
             }
             Row{
                 spacing:            ScreenTools.defaultFontPixelWidth
-                visible:            !_activeVehicle.fixedWing
+                visible:            _activeVehicle&&!_activeVehicle.fixedWing
                 QGCLabel {
                     width:          ScreenTools.defaultFontPixelHeight*5
                     text:           qsTr("停留时间s")

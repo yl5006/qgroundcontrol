@@ -2657,6 +2657,7 @@ QString Vehicle::firmwareidString(void) const
 void Vehicle::rebootVehicle()
 {
     sendMavCommand(_defaultComponentId, MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN, true, 1.0f);
+    qDebug()<<"reboot";
 }
 
 void Vehicle::setSoloFirmware(bool soloFirmware)
@@ -2768,7 +2769,7 @@ void Vehicle::triggerCameraTime(float mstime)
     sendMavCommand(_defaultComponentId,
                    MAV_CMD_DO_SET_CAM_TRIGG_INTERVAL,
                    true,                            // show errors
-                   mstime*1000, 0.0, 0.0, 0.0,              // param 1-4 unused
+                   mstime, 0.0, 0.0, 0.0,              // param 1-4 unused
                    0.0,                             // trigger camera
                    0.0,                             // param 6 unused
                    0.0);                            // param 1 test shot flag

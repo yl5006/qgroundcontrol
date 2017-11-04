@@ -152,7 +152,7 @@ LogDownloadController::_setActiveVehicle(Vehicle* vehicle)
 
 //----------------------------------------------------------------------------------------
 void
-LogDownloadController::_logEntry(UASInterface* uas, uint32_t time_utc, uint32_t size, uint16_t id, uint16_t num_logs, uint16_t /*last_log_num*/)
+LogDownloadController::_logEntry(UASInterface* uas, uint32_t time_utc, uint32_t size, uint16_t id, uint8_t type, uint16_t num_logs, uint16_t /*last_log_num*/)
 {
     //-- Do we care?
     if(!_uas || uas != _uas || !_requestingLogEntries) {
@@ -178,6 +178,16 @@ LogDownloadController::_logEntry(UASInterface* uas, uint32_t time_utc, uint32_t 
             if(id < _logEntriesModel.count()) {
                 QGCLogEntry* entry = _logEntriesModel[id];
                 entry->setSize(size);
+                entry->_type=type;
+                switch(type)
+                {
+                case 0: entry->setTypestr(tr("飞行日志"));
+                    break ;
+                case 1: entry->setTypestr(tr("飞行日志"));
+                    break ;
+                case 2: entry->setTypestr(tr("拍照日志"));
+                    break ;
+                }
                 entry->setTime(QDateTime::fromTime_t(time_utc));
                 entry->setReceived(true);
                 entry->setStatus(QString(tr("Available")));
@@ -599,9 +609,20 @@ LogDownloadController::_prepareLogDownload()
         QString loggerParam("SYS_LOGGER");
         if (_vehicle->parameterManager()->parameterExists(FactSystem::defaultComponentId, loggerParam) &&
                 _vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, loggerParam)->rawValue().toInt() == 0) {
-            _downloadData->filename += ".log"; //px4
+            _downloadData->filename += ".px4"; //px4
         } else {
-            _downloadData->filename += ".ulg";
+            switch(entry->_type)
+            {
+                case 0: _downloadData->filename += ".ulg";
+                        break;
+                case 1: _downloadData->filename += ".log";
+                        break;
+                case 2: _downloadData->filename += ".txt";
+                        break;
+                default:_downloadData->filename += ".ulg";
+                        break;
+            }
+
         }
     } else {
         _downloadData->filename += ".GPX";

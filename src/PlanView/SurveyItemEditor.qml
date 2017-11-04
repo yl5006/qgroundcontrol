@@ -252,6 +252,8 @@ Rectangle {
                     checked:            missionItem.cameraTriggerDistance.rawValue > 0
                     onClicked: {
                         if (checked) {
+                            cameraTriggerTimeCheckBox.checked = false
+                            missionItem.cameraTriggerTime.value = 0
                             missionItem.cameraTriggerDistance.value = missionItem.cameraTriggerDistance.defaultValue
                         } else {
                             missionItem.cameraTriggerDistance.value = 0
@@ -266,6 +268,35 @@ Rectangle {
                     enabled:            cameraTriggerDistanceCheckBox.checked
                 }
             }
+            RowLayout {
+                anchors.left:   parent.left
+                anchors.right:  parent.right
+                spacing:        _margin
+                visible:        missionItem.manualGrid.value == true
+
+                QGCCheckBox {
+                    id:                 cameraTriggerTimeCheckBox
+                    anchors.baseline:   cameraTriggerTimeField.baseline
+                    text:               qsTr("触发间隔")
+                    checked:            missionItem.cameraTriggerTime.rawValue > 0
+                    onClicked: {
+                        if (checked) {
+                            cameraTriggerDistanceCheckBox.checked = false
+                            missionItem.cameraTriggerDistance.value = 0
+                            missionItem.cameraTriggerTime.value = missionItem.cameraTriggerTime.defaultValue
+                        } else {
+                            missionItem.cameraTriggerTime.value = 0
+                        }
+                    }
+                }
+
+                FactTextField {
+                    id:                 cameraTriggerTimeField
+                    Layout.fillWidth:   true
+                    fact:               missionItem.cameraTriggerTime
+                    enabled:            cameraTriggerTimeCheckBox.checked
+                }
+             }
         }
 
         // Camera based grid ui

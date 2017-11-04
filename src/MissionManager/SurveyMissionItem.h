@@ -34,6 +34,7 @@ public:
     Q_PROPERTY(Fact*                gridEntryLocation           READ gridEntryLocation              CONSTANT)
     Q_PROPERTY(Fact*                turnaroundDist              READ turnaroundDist                 CONSTANT)
     Q_PROPERTY(Fact*                cameraTriggerDistance       READ cameraTriggerDistance          CONSTANT)
+    Q_PROPERTY(Fact*                cameraTriggerTime           READ cameraTriggerTime              CONSTANT)
     Q_PROPERTY(Fact*                cameraTriggerInTurnaround   READ cameraTriggerInTurnaround      CONSTANT)
     Q_PROPERTY(Fact*                hoverAndCapture             READ hoverAndCapture                CONSTANT)
     Q_PROPERTY(Fact*                groundResolution            READ groundResolution               CONSTANT)
@@ -72,6 +73,7 @@ public:
     Fact* gridEntryLocation         (void) { return &_gridEntryLocationFact; }
     Fact* turnaroundDist            (void) { return &_turnaroundDistFact; }
     Fact* cameraTriggerDistance     (void) { return &_cameraTriggerDistanceFact; }
+    Fact* cameraTriggerTime         (void) { return &_cameraTriggerTimeFact; }
     Fact* cameraTriggerInTurnaround (void) { return &_cameraTriggerInTurnaroundFact; }
     Fact* hoverAndCapture           (void) { return &_hoverAndCaptureFact; }
     Fact* groundResolution          (void) { return &_groundResolutionFact; }
@@ -153,6 +155,7 @@ public:
     static const char* gridEntryLocationName;
     static const char* turnaroundDistName;
     static const char* cameraTriggerDistanceName;
+    static const char* cameraTriggerTimeName;
     static const char* cameraTriggerInTurnaroundName;
     static const char* hoverAndCaptureName;
     static const char* groundResolutionName;
@@ -207,6 +210,7 @@ private:
     int _appendWaypointToMission(QList<MissionItem*>& items, int seqNum, QGeoCoordinate& coord, CameraTriggerCode cameraTrigger, QObject* missionItemParent);
     bool _nextTransectCoord(const QList<QGeoCoordinate>& transectPoints, int pointIndex, QGeoCoordinate& coord);
     double _triggerDistance(void) const;
+    double _triggerTime(void) const;
     bool _triggerCamera(void) const;
     bool _imagesEverywhere(void) const;
     bool _hoverAndCaptureEnabled(void) const;
@@ -258,6 +262,7 @@ private:
     SettingsFact    _gridEntryLocationFact;
     SettingsFact    _turnaroundDistFact;
     SettingsFact    _cameraTriggerDistanceFact;
+    SettingsFact    _cameraTriggerTimeFact;
     SettingsFact    _cameraTriggerInTurnaroundFact;
     SettingsFact    _hoverAndCaptureFact;
     SettingsFact    _groundResolutionFact;

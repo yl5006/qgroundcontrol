@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -68,6 +68,7 @@ class QGCLogEntry : public QObject {
     Q_PROPERTY(uint         id          READ id                             CONSTANT)
     Q_PROPERTY(QDateTime    time        READ time                           NOTIFY timeChanged)
     Q_PROPERTY(uint         size        READ size                           NOTIFY sizeChanged)
+    Q_PROPERTY(QString      typestr     READ typestr                        NOTIFY typeChanged)
     Q_PROPERTY(QString      sizeStr     READ sizeStr                        NOTIFY sizeChanged)
     Q_PROPERTY(bool         received    READ received                       NOTIFY receivedChanged)
     Q_PROPERTY(bool         selected    READ selected   WRITE setSelected   NOTIFY selectedChanged)
@@ -78,14 +79,18 @@ public:
 
     uint        id          () const { return _logID; }
     uint        size        () const { return _logSize; }
+    QString     typestr     () const { return _logType; }
     QString     sizeStr     () const;
     QDateTime   time        () const { return _logTimeUTC; }
     bool        received    () const { return _received; }
     bool        selected    () const { return _selected; }
     QString     status      () const { return _status; }
 
+    uint        _type;
+
     void        setId       (uint id_)          { _logID = id_; }
     void        setSize     (uint size_)        { _logSize = size_;     emit sizeChanged(); }
+    void        setTypestr  (QString type_)     { _logType = type_;     emit typeChanged(); }
     void        setTime     (QDateTime date_)   { _logTimeUTC = date_;  emit timeChanged(); }
     void        setReceived (bool rec_)         { _received = rec_;     emit receivedChanged(); }
     void        setSelected (bool sel_)         { _selected = sel_;     emit selectedChanged(); }
@@ -95,6 +100,7 @@ signals:
     void        idChanged       ();
     void        timeChanged     ();
     void        sizeChanged     ();
+    void        typeChanged     ();
     void        receivedChanged ();
     void        selectedChanged ();
     void        statusChanged   ();
@@ -102,6 +108,7 @@ signals:
 private:
     uint        _logID;
     uint        _logSize;
+    QString     _logType;
     QDateTime   _logTimeUTC;
     bool        _received;
     bool        _selected;
@@ -139,7 +146,7 @@ signals:
 
 private slots:
     void _setActiveVehicle  (Vehicle* vehicle);
-    void _logEntry          (UASInterface *uas, uint32_t time_utc, uint32_t size, uint16_t id, uint16_t num_logs, uint16_t last_log_num);
+    void _logEntry          (UASInterface *uas, uint32_t time_utc, uint32_t size, uint16_t id, uint8_t type, uint16_t num_logs, uint16_t last_log_num);
     void _logData           (UASInterface *uas, uint32_t ofs, uint16_t id, uint8_t count, const uint8_t *data);
     void _processDownload   ();
 

@@ -556,7 +556,7 @@ void UAS::receiveMessage(mavlink_message_t message)
         {
             mavlink_log_entry_t log;
             mavlink_msg_log_entry_decode(&message, &log);
-            emit logEntry(this, log.time_utc, log.size, log.id, log.num_logs, log.last_log_num);
+            emit logEntry(this, log.time_utc, log.size, log.id, log.log_type, log.num_logs, log.last_log_num);
         }
             break;
 

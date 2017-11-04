@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -114,6 +114,18 @@ AnalyzePage {
                         text: {
                             var o = logController.model.get(styleData.row)
                             return o ? o.status : ""
+                        }
+                    }
+                }
+                TableViewColumn {
+                    title: qsTr("type")
+                    width: ScreenTools.defaultFontPixelWidth * 22
+                    horizontalAlignment: Text.AlignHCenter
+                    delegate : Text  {
+                        horizontalAlignment: Text.AlignHCenter
+                        text: {
+                            var o = logController.model.get(styleData.row)
+                            return o ? o.typestr : ""
                         }
                     }
                 }
