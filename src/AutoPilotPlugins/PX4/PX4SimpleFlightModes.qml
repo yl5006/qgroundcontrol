@@ -183,42 +183,42 @@ Item {
                             }
 
 //                            Row {
-//                                spacing: ScreenTools.defaultFontPixelWidth
+//                               spacing: ScreenTools.defaultFontPixelWidth
 
 //                                property Fact fact: controller.getParameterFact(-1, "RC_MAP_KILL_SW")
 
 //                                QGCLabel {
 //                                    anchors.baseline:   killCombo.baseline
-//                                    text:               "Kill switch:"
+//                                   text:               qsTr("Kill switch:")
 //                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
-//                                }
+//                               }
 
-//                                FactComboBox {
+//                               FactComboBox {
 //                                    id:         killCombo
 //                                    width:      _channelComboWidth
 //                                    fact:       parent.fact
 //                                    indexModel: false
-//                                }
+//                               }
 //                            }
 
 //                            Row {
-//                                spacing: ScreenTools.defaultFontPixelWidth
+//                               spacing: ScreenTools.defaultFontPixelWidth
 
-//                                property Fact fact: controller.getParameterFact(-1, "RC_MAP_OFFB_SW")
+//                               property Fact fact: controller.getParameterFact(-1, "RC_MAP_OFFB_SW")
 
-//                                QGCLabel {
-//                                    anchors.baseline:   offboardCombo.baseline
-//                                    text:               "Offboard switch:"
-//                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
-//                                }
+//                               QGCLabel {
+//                                   anchors.baseline:   offboardCombo.baseline
+//                                   text:               qsTr("Offboard switch:")
+//                                   color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
+//                               }
 
-//                                FactComboBox {
-//                                    id:         offboardCombo
-//                                    width:      _channelComboWidth
-//                                    fact:       parent.fact
-//                                    indexModel: false
-//                                }
-//                            }
+//                               FactComboBox {
+//                                   id:         offboardCombo
+//                                   width:      _channelComboWidth
+//                                   fact:       parent.fact
+//                                   indexModel: false
+//                               }
+//                           }
 
                             Row {
                                 spacing: ScreenTools.defaultFontPixelWidth

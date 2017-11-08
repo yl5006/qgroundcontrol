@@ -7,18 +7,10 @@
  *
  ****************************************************************************/
 
-import QtQuick                  2.3
-import QtQuick.Controls         1.2
-import QtQuick.Controls.Styles  1.4
-import QtQuick.Dialogs          1.2
+import QtQuick 2.3
 
-import QGroundControl               1.0
-import QGroundControl.FactSystem    1.0
-import QGroundControl.FactControls  1.0
-import QGroundControl.Palette       1.0
-import QGroundControl.Controls      1.0
-import QGroundControl.ScreenTools   1.0
-import QGroundControl.Controllers   1.0
+import QGroundControl.Controls  1.0
+import QGroundControl.PX4       1.0
 
 SetupPage {
     id:             sensorsPage
@@ -522,7 +514,6 @@ SetupPage {
                 width:              parent.width*0.8
                 anchors.top:        buttonColumn.bottom
                 anchors.topMargin:  ScreenTools.defaultFontPixelWidth / 2
-                anchors.bottom:     parent.bottom
                 anchors.horizontalCenter:  parent.horizontalCenter
 
                 Item { height: ScreenTools.defaultFontPixelHeight; width: 10 } // spacer

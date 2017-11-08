@@ -17,8 +17,6 @@
 
 const char*  LogReplayLinkConfiguration::_logFilenameKey = "logFilename";
 
-const char* LogReplayLink::_errorTitle = "Log Replay Error";
-
 LogReplayLinkConfiguration::LogReplayLinkConfiguration(const QString& name)
 	: LinkConfiguration(name)
 {
@@ -76,6 +74,8 @@ LogReplayLink::LogReplayLink(SharedLinkConfigurationPointer& config)
     if (!_logReplayConfig) {
         qWarning() << "Internal error";
     }
+
+    _errorTitle = tr("Log Replay Error");
     
     _readTickTimer.moveToThread(this);
     
@@ -243,13 +243,13 @@ bool LogReplayLink::_loadLogFile(void)
     uint logDurationSecondsTotal;
     
     if (_logFile.isOpen()) {
-        errorMsg = "Attempt to load new log while log being played";
+        errorMsg = tr("Attempt to load new log while log being played");
         goto Error;
     }
     
     _logFile.setFileName(logFilename);
     if (!_logFile.open(QFile::ReadOnly)) {
-        errorMsg = QString("Unable to open log file: '%1', error: %2").arg(logFilename).arg(_logFile.errorString());
+        errorMsg = tr("Unable to open log file: '%1', error: %2").arg(logFilename).arg(_logFile.errorString());
         goto Error;
     }
     logFileInfo.setFile(logFilename);
@@ -278,7 +278,7 @@ bool LogReplayLink::_loadLogFile(void)
         }
         
         if (endTimeUSecs == startTimeUSecs) {
-            errorMsg = QString("The log file '%1' is corrupt. No valid timestamps were found at the end of the file.").arg(logFilename);
+            errorMsg = tr("The log file '%1' is corrupt. No valid timestamps were found at the end of the file.").arg(logFilename);
             goto Error;
         }
         // Remember the start and end time so we can move around this _logFile with the slider.
@@ -464,7 +464,7 @@ void LogReplayLink::movePlayhead(int percentComplete)
         
         // Now seek to the appropriate position, failing gracefully if we can't.
         if (!_logFile.seek(newFilePos)) {
-            _replayError("Unable to seek to new position");
+            _replayError(tr("Unable to seek to new position"));
             return;
         }
         
@@ -484,7 +484,7 @@ void LogReplayLink::movePlayhead(int percentComplete)
         // And now jump the necessary number of bytes in the proper direction
         qint64 offset = (newRelativeTimeUSecs - desiredTimeUSecs) * baudRate;
         if (!_logFile.seek(_logFile.pos() + offset)) {
-            _replayError("Unable to seek to new position");
+            _replayError(tr("Unable to seek to new position"));
             return;
         }
         
@@ -503,7 +503,7 @@ void LogReplayLink::movePlayhead(int percentComplete)
         
         // Now seek to the appropriate position, failing gracefully if we can't.
         if (!_logFile.seek(newFilePos)) {
-            _replayError("Unable to seek to new position");
+            _replayError(tr("Unable to seek to new position"));
             return;
         }
         

@@ -274,7 +274,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
         QStringList parts = text.split(" ");
         if (parts.count() != 2 && parts[0].toInt() != _supportedFirmwareCalVersion) {
             _unknownFirmwareVersion = true;
-            QString msg = "Unsupported calibration firmware version, using log";
+            QString msg = tr("Unsupported calibration firmware version, using log");
             _appendStatusLog(msg);
             qDebug() << msg;
             return;

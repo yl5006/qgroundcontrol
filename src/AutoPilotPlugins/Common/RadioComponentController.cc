@@ -792,8 +792,8 @@ void RadioComponentController::_writeCalibration(void)
 
     if (_px4Vehicle()) {
         // If the RC_CHAN_COUNT parameter is available write the channel count
-        if (parameterExists(FactSystem::defaultComponentId, "RC_CHAN_CNT")) {
-            getParameterFact(FactSystem::defaultComponentId, "RC_CHAN_CNT")->setRawValue(_chanCount);
+        if (parameterExists(FactSystem::defaultComponentId, QStringLiteral("RC_CHAN_CNT"))) {
+            getParameterFact(FactSystem::defaultComponentId, QStringLiteral("RC_CHAN_CNT"))->setRawValue(_chanCount);
         }
     }
     
@@ -816,7 +816,7 @@ void RadioComponentController::_startCalibration(void)
         _uas->startCalibration(UASInterface::StartCalibrationRadio);
     }
     
-    _nextButton->setProperty("text", "Next");
+    _nextButton->setProperty("text", tr("Next"));
     _cancelButton->setEnabled(true);
     
     _currentStep = 0;
@@ -862,8 +862,8 @@ void RadioComponentController::_rcCalSave(void)
     _rcCalState = rcCalStateSave;
     
     _statusText->setProperty("text",
-                             "The current calibration settings are now displayed for each channel on screen.\n\n"
-                             "Click the Next button to upload calibration to board. Click Cancel if you don't want to save these values.");
+                             tr("The current calibration settings are now displayed for each channel on screen.\n\n"
+                             "Click the Next button to upload calibration to board. Click Cancel if you don't want to save these values."));
 
     _nextButton->setEnabled(true);
     _skipButton->setEnabled(false);

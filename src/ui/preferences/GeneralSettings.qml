@@ -461,7 +461,7 @@ QGCView {
                         //-- Save path
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    false//_savePath.visible
+                            visible:     false//_savePath.visible && !ScreenTools.isMobile
 
                             QGCLabel {
                                 anchors.baseline:   savePathBrowse.baseline
@@ -730,9 +730,23 @@ QGCView {
                         anchors.centerIn: parent
                         Row {
                             spacing:    ScreenTools.defaultFontPixelWidth
-                            visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex && videoSource.currentIndex < 4 && QGroundControl.settingsManager.videoSettings.maxVideoSize.visible
+                            visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex && videoSource.currentIndex < 4 && QGroundControl.settingsManager.videoSettings.enableStorageLimit.visible
                             QGCLabel {
-                                text:               qsTr("最大空间:")//qsTr("Max Storage Usage:")
+                                text:               qsTr("Auto-Delete Files:")
+                                width:              _labelWidth
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                            FactCheckBox {
+                                text:                   ""
+                                fact:                   QGroundControl.settingsManager.videoSettings.enableStorageLimit
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                        }
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelWidth
+                            visible:    QGroundControl.videoManager.isGStreamer && videoSource.currentIndex && videoSource.currentIndex < 4 && QGroundControl.settingsManager.videoSettings.maxVideoSize.visible && QGroundControl.settingsManager.videoSettings.enableStorageLimit.value
+                            QGCLabel {
+                                text:               qsTr("最大空间:")
                                 width:              _labelWidth
                                 anchors.verticalCenter: parent.verticalCenter
                             }

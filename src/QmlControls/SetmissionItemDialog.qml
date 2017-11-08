@@ -133,9 +133,9 @@ Rectangle {
             text:               qsTr("添加")
 //            Layout.fillWidth:   true
             onClicked: {
-                var coordinate =_currentMissionItem.coordinate
-                var sequenceNumber = _missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(distance.text),Number(angle.text)), _currentMissionItem.sequenceNumber+1,false)
-                setCurrentItem(sequenceNumber)
+                var coordinate =_missionController.currentPlanViewItem.coordinate
+                var sequenceNumber = _missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(distance.text),Number(angle.text)), _missionController.currentPlanViewItem.sequenceNumber+1,false)
+                _missionController.setCurrentPlanViewIndex(sequenceNumber, true)
             }
         }
         QGCButton {

@@ -149,7 +149,7 @@ Rectangle {
             QGCButton {
                 text:               qsTr("生成")
                 onClicked: {
-                    var coordinate =_currentMissionItem.coordinate
+                    var coordinate =_missionController.currentPlanViewItem.coordinate
                     var sequenceNumber
                     for (var i=0; i<= Number(number.text); i++) {
                         if(start.checked)
@@ -168,30 +168,30 @@ Rectangle {
             QGCButton {
                 text:               qsTr("一键8字")
                 onClicked: {
-                    var coordinate =_currentMissionItem.coordinate
+                    var coordinate =_missionController.currentPlanViewItem.coordinate
                     var sequenceNumber
                     for (var i=0; i<= Number(number.text); i++) {
                         if(start.checked)
                         {
-                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+360/Number(number.text)*i)), _missionController.currentPlanViewItem.sequenceNumber+1+i)
                         }
                         else
                         {
-                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)-360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)-360/Number(number.text)*i)), _missionController.currentPlanViewItem.sequenceNumber+1+i)
                         }
                     }
                     var nextcoordinate = coordinate.atDistanceAndAzimuth(2*Number(radius.text),(Number(startangle.text)))
                     for (var j=1; j<= Number(number.text); j++) {
                         if(start.checked)
                         {
-                            sequenceNumber=_missionController.insertSimpleMissionItem(nextcoordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+180-360/Number(number.text)*j)), _currentMissionItem.sequenceNumber+i+j)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(nextcoordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+180-360/Number(number.text)*j)), _missionController.currentPlanViewItem.sequenceNumber+i+j)
                         }
                         else
                         {
-                            sequenceNumber=_missionController.insertSimpleMissionItem(nextcoordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+180+360/Number(number.text)*j)), _currentMissionItem.sequenceNumber+i+j)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(nextcoordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+180+360/Number(number.text)*j)), _missionController.currentPlanViewItem.sequenceNumber+i+j)
                         }
                     }
-                    setCurrentItem(sequenceNumber)
+                    _missionController.setCurrentPlanViewIndex(sequenceNumber, true)
                     _root.visible=false
                 }
             }
