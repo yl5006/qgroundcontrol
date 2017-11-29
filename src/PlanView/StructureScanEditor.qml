@@ -1,4 +1,4 @@
-import QtQuick          2.3
+﻿import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs  1.2
@@ -65,7 +65,7 @@ Rectangle {
         QGCLabel {
             anchors.left:   parent.left
             anchors.right:  parent.right
-            text:           qsTr("WORK IN PROGRESS. CAREFUL!")
+            text:           qsTr("正在开发中！！!")
             wrapMode:       Text.WordWrap
             color:          qgcPal.warningText
         }
@@ -90,14 +90,14 @@ Rectangle {
         CameraCalc {
             cameraCalc:             missionItem.cameraCalc
             vehicleFlightIsFrontal: false
-            distanceToSurfaceLabel: qsTr("Scan Distance")
-            frontalDistanceLabel:   qsTr("Layer Height")
-            sideDistanceLabel:      qsTr("Trigger Distance")
+            distanceToSurfaceLabel: qsTr("扫描距离")
+            frontalDistanceLabel:   qsTr("每层高度")
+            sideDistanceLabel:      qsTr("触发距离")
         }
 
         SectionHeader {
             id:         scanHeader
-            text:       qsTr("Scan")
+            text:       qsTr("扫描参数")
         }
 
         Column {
@@ -113,34 +113,34 @@ Rectangle {
                 rowSpacing:     _margin
                 columns:        2
 
-                QGCLabel { text: qsTr("Layers") }
+                QGCLabel { text: qsTr("层数") }
                 FactTextField {
                     fact:               missionItem.layers
                     Layout.fillWidth:   true
                 }
 
-                QGCLabel { text: qsTr("Altitude") }
+                QGCLabel { text: qsTr("高度") }
                 FactTextField {
                     fact:               missionItem.altitude
                     Layout.fillWidth:   true
                 }
 
                 QGCCheckBox {
-                    text:               qsTr("Relative altitude")
+                    text:               qsTr("参考高度")
                     checked:            missionItem.altitudeRelative
                     Layout.columnSpan:  2
                     onClicked:          missionItem.altitudeRelative = checked
                 }
             }
 
-            QGCLabel { text: qsTr("Point camera to structure using:") }
+            QGCLabel { text: qsTr("机头方向:") }
 
             RowLayout {
                 spacing: _margin
 
                 QGCRadioButton {
                     id:             yawVehicleRadio
-                    text:           qsTr("Vehicle yaw")
+                    text:           qsTr("机体 yaw")
                     exclusiveGroup: yawRadiosGroup
                     checked:        !!missionItem.yawVehicleToStructure
                     enabled:        false
@@ -148,7 +148,7 @@ Rectangle {
 
                 QGCRadioButton
                 {
-                    text:           qsTr("Gimbal yaw")
+                    text:           qsTr("云台 yaw")
                     exclusiveGroup: yawRadiosGroup
                     checked:        !missionItem.yawVehicleToStructure
                     enabled:        false
@@ -156,14 +156,14 @@ Rectangle {
             }
 
             QGCButton {
-                text:       qsTr("Rotate entry point")
+                text:       qsTr("旋转进入点")
                 onClicked:  missionItem.rotateEntryPoint()
             }
         } // Column - Scan
 
         SectionHeader {
             id:     statsHeader
-            text:   qsTr("Statistics")
+            text:   qsTr("统计参数")
         }
 
         Grid {
@@ -171,10 +171,10 @@ Rectangle {
             columnSpacing:  ScreenTools.defaultFontPixelWidth
             visible:        statsHeader.checked
 
-            QGCLabel { text: qsTr("Photo count") }
+            QGCLabel { text: qsTr("拍照数") }
             QGCLabel { text: missionItem.cameraShots }
 
-            QGCLabel { text: qsTr("Photo interval") }
+            QGCLabel { text: qsTr("拍照间隔") }
             QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("secs") }
         }
     } // Column

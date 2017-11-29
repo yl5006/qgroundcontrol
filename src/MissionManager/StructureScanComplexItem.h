@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -64,8 +64,8 @@ public:
     bool            isStandaloneCoordinate  (void) const final { return false; }
     bool            specifiesCoordinate     (void) const final;
     bool            specifiesAltitudeOnly   (void) const final { return false; }
-    QString         commandDescription      (void) const final { return tr("Structure Scan"); }
-    QString         commandName             (void) const final { return tr("Structure Scan"); }
+    QString         commandDescription      (void) const final { return tr("垂直扫描"); }
+    QString         commandName             (void) const final { return tr("垂直扫描"); }
     QString         abbreviation            (void) const final { return "S"; }
     QGeoCoordinate  coordinate              (void) const final;
     QGeoCoordinate  exitCoordinate          (void) const final;

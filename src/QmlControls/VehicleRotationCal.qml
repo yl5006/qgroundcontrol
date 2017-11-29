@@ -34,7 +34,7 @@ Rectangle {
     color:  "transparent"
     Image {
         anchors.fill: parent
-        source:     calValid ? "/qmlimages/calValid.svg": "/qmlimages/uncal.svg"
+        source:     calValid ? "qrc:///qmlimages/calValid.svg": "qrc:///qmlimages/uncal.svg"
     //  fillMode:   Image.PreserveAspectFit
         smooth: true
     }

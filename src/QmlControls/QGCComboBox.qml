@@ -7,7 +7,6 @@ import QGroundControl.ScreenTools 1.0
 
 Button {
     id: combo
-
     property real   pointSize:      ScreenTools.defaultFontPointSize    ///< Point size for button text
     property bool   centeredLabel:  false
     property alias  model:          popupItems.model
@@ -40,7 +39,7 @@ Button {
             implicitWidth:  ScreenTools.implicitComboBoxWidth
             implicitHeight: ScreenTools.implicitComboBoxHeight
             color:          _showHighlight ? control._qgcPal.buttonHighlight : "transparent"//control._qgcPal.button
-
+            radius:         2
             QGCColoredImage {
                 id:                     image
                 width:                  ScreenTools.defaultFontPixelHeight / 2

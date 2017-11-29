@@ -217,6 +217,8 @@
 	<file alias="hidebar.svg">src/ui/toolbar/Images/hidebar.svg</file>
         <file alias="Plan.svg">src/ui/toolbar/Images/Plan.svg</file>
         <file alias="logo.svg">src/ui/toolbar/Images/logo.svg</file>
+ 	<file alias="initconnect.svg">src/ui/toolbar/Images/initconnect.svg</file>
+ 	<file alias="connecting.svg">src/ui/toolbar/Images/connecting.svg</file>
         <file alias="Quad.svg">src/ui/toolbar/Images/Quad.svg</file>
         <file alias="RC.svg">src/ui/toolbar/Images/RC.svg</file>
 	<file alias="LeftToolbarbutton.svg">src/ui/toolbar/Images/LeftToolbarbutton.svg</file>
@@ -239,6 +241,7 @@
 	<file alias="checked.svg">src/ui/toolbar/Images/checked.svg</file>
 	<file alias="connecticonbg.svg">src/ui/toolbar/Images/connecticonbg.svg</file>
 	<file alias="connecttitlebg.svg">src/ui/toolbar/Images/connecttitlebg.svg</file>
+	<file alias="unconnect.svg">src/ui/toolbar/Images/unconnect.svg</file>
 	<file alias="connecttitlebgcheck.svg">src/ui/toolbar/Images/connecttitlebgcheck.svg</file>
         <file alias="CogWheel.svg">src/MissionManager/CogWheel.svg</file>
 	<file alias="StationMode.svg">src/AutoPilotPlugins/Common/Images/StationMode.svg</file>

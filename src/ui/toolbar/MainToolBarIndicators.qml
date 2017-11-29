@@ -72,7 +72,7 @@ Item {
         id:             indicatorRow
         anchors.top:    parent.top
         anchors.bottom: parent.bottom
-        spacing:        ScreenTools.defaultFontPixelWidth * 10
+        spacing:        ScreenTools.defaultFontPixelWidth * 8
         visible:        _activeVehicle && !_communicationLost
         anchors.horizontalCenter: parent.horizontalCenter
         Repeater {
@@ -124,12 +124,18 @@ Item {
         spacing:            ScreenTools.defaultFontPixelWidth
         visible:            _communicationLost
 
-        QGCButton {
-            id:                     disconnectButton
-            anchors.verticalCenter: parent.verticalCenter
-            text:                   qsTr("断开连接")
-            primary:                true
-            onClicked:              _activeVehicle.disconnectInactiveVehicle()
+        Image {
+            id:                     connect
+            width:                  ScreenTools.defaultFontPixelHeight * 4
+            height:                 ScreenTools.defaultFontPixelHeight * 4
+            fillMode:               Image.PreserveAspectFit
+            source:                 "/qmlimages/unconnect.svg"
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    _activeVehicle.disconnectInactiveVehicle()
+                }
+            }
         }
 
         QGCLabel {

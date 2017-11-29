@@ -111,7 +111,7 @@ Rectangle {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             Layout.fillWidth:   true
-            visible:            QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable&&_activeVehicle
+            visible:            _activeVehicle
         }
 
         QGCLabel {

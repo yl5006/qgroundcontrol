@@ -7,10 +7,18 @@
  *
  ****************************************************************************/
 
-import QtQuick 2.3
+import QtQuick                  2.3
+import QtQuick.Controls         1.2
+import QtQuick.Controls.Styles  1.4
+import QtQuick.Dialogs          1.2
 
-import QGroundControl.Controls  1.0
-import QGroundControl.PX4       1.0
+import QGroundControl               1.0
+import QGroundControl.FactSystem    1.0
+import QGroundControl.FactControls  1.0
+import QGroundControl.Palette       1.0
+import QGroundControl.Controls      1.0
+import QGroundControl.ScreenTools   1.0
+import QGroundControl.Controllers   1.0
 
 SetupPage {
     id:             sensorsPage
@@ -398,7 +406,7 @@ SetupPage {
                     text:           qsTr("磁罗盘")//qsTr("Compass")
                     primary:        true
                     bordercolor:    cal_mag0_id.value !== 0?qgcPal.primaryButton:"red"
-		    visible:        QGroundControl.corePlugin.options.showSensorCalibrationCompass
+                    visible:        QGroundControl.corePlugin.options.showSensorCalibrationCompass
                     _showBorder:    true
                     onClicked: {
                          calmagtime=true
@@ -576,9 +584,8 @@ SetupPage {
                             anchors.right:      parent.right
                             spacing:            ScreenTools.defaultFontPixelWidth / 2
                             //       anchors.horizontalCenter:  parent.horizontalCenter
-                            property real indicatorWidth:   (width / 3) - (spacing * 2)
-                            property real indicatorHeight:  (height / 2) - spacing
-
+                            property real indicatorWidth:   ScreenTools.defaultFontPixelWidth * 30//(width / 3) - (spacing * 2)
+                            property real indicatorHeight:  ScreenTools.defaultFontPixelWidth * 30//(height / 2) - spacing
                             VehicleRotationCal {
                                 width:              parent.indicatorWidth
                                 height:             parent.indicatorHeight

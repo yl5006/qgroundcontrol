@@ -1249,7 +1249,6 @@ int SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLis
                     tp=QLineF(temp.p2(),nextline.p2());
                     tp1=QLineF(temp.p2(),nextline.p1());
                 }
-                qDebug()<<transectLine.angle()<<"at";
                 if(tp.length()< _turnaroundDistance() || tp1.length() < nextline.length())
                 {
 

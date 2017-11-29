@@ -88,6 +88,22 @@ void LinkManager::createConnectedLink(LinkConfiguration* config)
     }
 }
 
+// This should only be used by Qml code
+void LinkManager::createConnectedSerialLink(const QString& name)
+{
+     SerialConfiguration * pSerialConfig = new SerialConfiguration(name);
+     if(pSerialConfig)
+     {
+         pSerialConfig->setBaud(57600);
+         pSerialConfig->setDynamic(true);
+         pSerialConfig->setPortName(name);
+         _sharedConfigurations.append(SharedLinkConfigurationPointer(pSerialConfig));
+         createConnectedLink(_sharedConfigurations.last());
+         qDebug()<<name;
+     }
+
+}
+
 LinkInterface* LinkManager::createConnectedLink(SharedLinkConfigurationPointer& config)
 {
     if (!config) {
@@ -102,6 +118,7 @@ LinkInterface* LinkManager::createConnectedLink(SharedLinkConfigurationPointer& 
     {
         SerialConfiguration* serialConfig = dynamic_cast<SerialConfiguration*>(config.data());
         if (serialConfig) {
+            qDebug()<<"111";
             pLink = new SerialLink(config);
             if (serialConfig->usbDirect()) {
                 _activeLinkCheckList.append((SerialLink*)pLink);
@@ -670,6 +687,12 @@ void LinkManager::_updateSerialPorts()
 #endif
 }
 
+void LinkManager::updateSerialPorts()
+{
+    _updateSerialPorts();
+    emit commPortStringsChanged();
+    emit commPortsChanged();
+}
 QStringList LinkManager::serialPortStrings(void)
 {
     if(!_commPortDisplayList.size())

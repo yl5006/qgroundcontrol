@@ -20,6 +20,8 @@ import QGroundControl.FlightDisplay         1.0
 import QGroundControl.ScreenTools           1.0
 import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.Controllers           1.0
+import QGroundControl.FactSystem            1.0
+import QGroundControl.FactControls          1.0
 
 import QGroundControl.FlightMap     1.0
 
@@ -296,20 +298,79 @@ Item {
         id:                 logo
         y:                  0
         width:              parent.width
-        height:             tbHeight
+        height:             tbHeight*1.5
         color:              qgcPal.windowShade
         z:                  QGroundControl.zOrderTopMost
         Image {
             source:"/qmlimages/logo.svg"
-            height:     tbHeight*0.8
-            width:      tbHeight*6*0.8
+            height:     tbHeight
+            width:      tbHeight*6
             mipmap:             true
             anchors.centerIn: parent
             fillMode: Image.PreserveAspectFit
         }
+        Row {
+            anchors.verticalCenter: logo.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: ScreenTools.defaultFontPixelWidth*3
+            spacing:    ScreenTools.defaultFontPixelWidth*2
+            Column{
+                spacing:    ScreenTools.defaultFontPixelWidth
+                QGCComboBox {
+                    id:                     commPortCombo
+                    width:                  ScreenTools.defaultFontPixelWidth * 12
+                    model:                  QGroundControl.linkManager.serialPortStrings
+                    onActivated: {
+                        if (index != -1) {
+                            subEditConfig.portName = QGroundControl.linkManager.serialPorts[index]
+                        }
+                    }
+                    onClicked: {
+                        QGroundControl.linkManager.updateSerialPorts()
+                    }
+                    Component.onCompleted: {
+                        if(subEditConfig != null) {
+                            if(subEditConfig.portDisplayName === "" && QGroundControl.linkManager.serialPorts.length > 0)
+                                subEditConfig.portName = QGroundControl.linkManager.serialPorts[0]
+                            var index = commPortCombo.find(subEditConfig.portDisplayName)
+                            if (index === -1) {
+                                console.warn(qsTr("Serial Port not present"), subEditConfig.portName)
+                            } else {
+                                commPortCombo.currentIndex = index
+                            }
+                        } else {
+                            commPortCombo.currentIndex = 0
+                        }
+                    }
+                }
+
+                FactCheckBox {
+                    text:       qsTr("自动连接")
+                    fact:       QGroundControl.settingsManager.autoConnectSettings.autoConnectSiKRadio
+                    visible:    !ScreenTools.isiOS
+                }
+
+            }
+
+
+            Image {
+                id:                     connect
+                width:                  ScreenTools.defaultFontPixelHeight * 4
+                height:                 ScreenTools.defaultFontPixelHeight * 4
+                fillMode:               Image.PreserveAspectFit
+                source:                 activeVehicle ? "/qmlimages/connecting.svg":"/qmlimages/initconnect.svg"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                       QGroundControl.linkManager.createConnectedSerialLink(QGroundControl.linkManager.serialPortStrings[commPortCombo.currentIndex])
+                    }
+                }
+            }
+        }
+
         NumberAnimation on y{
             id: myAn1
-            to:  -tbHeight
+            to:  -tbHeight*1.5
             duration: 1000
             running: vehicleConnectionLost||(QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && !QGroundControl.multiVehicleManager.activeVehicle.missingParameters)
         }
@@ -317,7 +378,7 @@ Item {
             id: myAn2
             to: 0
             duration: 1000
-            running: activeVehicle && !vehicleConnectionLost ? false : true
+            running: !activeVehicle
         }
     }
     //-- Main UI
