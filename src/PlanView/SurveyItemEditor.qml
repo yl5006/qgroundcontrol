@@ -403,11 +403,11 @@ Rectangle {
                 Item { Layout.fillWidth: true }
                 QGCLabel {
                     Layout.preferredWidth:  _root._fieldWidth
-                    text:                   qsTr("正面")
+                    text:                   qsTr("航向重叠度")
                 }
                 QGCLabel {
                     Layout.preferredWidth:  _root._fieldWidth
-                    text:                   qsTr("边")
+                    text:                   qsTr("旁向重叠度")
                 }
             }
 
