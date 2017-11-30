@@ -32,14 +32,15 @@ QGCView {
     viewPanel:  panel
     z:          QGroundControl.zOrderTopMost
 
-    readonly property int       _decimalPlaces:         8
-    readonly property real      _horizontalMargin:      ScreenTools.defaultFontPixelWidth  / 2
-    readonly property real      _margin:                ScreenTools.defaultFontPixelHeight * 0.5
-    readonly property var       _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
+    readonly property int   _decimalPlaces:             8
+    readonly property real  _horizontalMargin:          ScreenTools.defaultFontPixelWidth  / 2
+    readonly property real  _margin:                    ScreenTools.defaultFontPixelHeight * 0.5
+    readonly property var   _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
     readonly property real      _PointFieldWidth:       ScreenTools.defaultFontPixelWidth * 11
     readonly property real      _rightPanelWidth:       Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 35)
-    readonly property real      _toolButtonTopMargin:   parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
-    readonly property var       _defaultVehicleCoordinate:   QtPositioning.coordinate(37.803784, -122.462276)
+    readonly property real  _toolButtonTopMargin:       parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
+    readonly property var   _defaultVehicleCoordinate:  QtPositioning.coordinate(37.803784, -122.462276)
+    readonly property bool  _waypointsOnlyMode:         QGroundControl.corePlugin.options.missionWaypointsOnly
 
     property var    _planMasterController:      masterController
     property var    _missionController:         _planMasterController.missionController
@@ -48,6 +49,7 @@ QGCView {
     property var    _visualItems:               _missionController.visualItems
     property bool   _lightWidgetBorders:        editorMap.isSatelliteMap
     property bool   _addWaypointOnClick:        false
+    property bool   _addROIOnClick:             false
     property bool   _singleComplexItem:         _missionController.complexMissionItemNames.length === 1
     property real   _toolbarHeight:             _qgcView.height - ScreenTools.availableHeight
     property int    _editingLayer:              _layerMission
@@ -226,6 +228,16 @@ QGCView {
     function insertSimpleMissionItem(coordinate, index) {
         var sequenceNumber = _missionController.insertSimpleMissionItem(coordinate, index)
         _missionController.setCurrentPlanViewIndex(sequenceNumber, true)
+    }
+
+    /// Inserts a new ROI mission item
+    ///     @param coordinate Location to insert item
+    ///     @param index Insert item at this index
+    function insertROIMissionItem(coordinate, index) {
+        var sequenceNumber = _missionController.insertROIMissionItem(coordinate, index)
+        _missionController.setCurrentPlanViewIndex(sequenceNumber, true)
+        _addROIOnClick = false
+        toolStrip.uncheckAll()
     }
 
     property int _moveDialogMissionItemIndex
@@ -506,6 +518,9 @@ QGCView {
                     case _layerMission:
                         if (_addWaypointOnClick) {
                             insertSimpleMissionItem(coordinate, _missionController.visualItems.count)
+                        } else if (_addROIOnClick) {
+                            _addROIOnClick = false
+                            insertROIMissionItem(coordinate, _missionController.visualItems.count)
                         }
                         else if(ruler.checked)
                         {
@@ -542,6 +557,7 @@ QGCView {
 
                 delegate: MissionItemMapVisual {
                     map:        editorMap
+                    qgcView:    _qgcView
                     onClicked:  _missionController.setCurrentPlanViewIndex(sequenceNumber, false)
                     visible:    _editingLayer == _layerMission
                 }
@@ -603,11 +619,11 @@ QGCView {
                 color:              qgcPal.window
                 title:              qsTr("Plan")
                 z:                  QGroundControl.zOrderWidgets
-                showAlternateIcon:  [ false, false, masterController.dirty, false, false, false ]
-                rotateImage:        [ false, false, masterController.syncInProgress, false, false, false ]
-                animateImage:       [ false, false, masterController.dirty, false, false, false ]
-                buttonEnabled:      [ true, true, !masterController.syncInProgress, true, true, true ]
-                buttonVisible:      [ true, true, true, true, _showZoom, _showZoom ]
+                showAlternateIcon:  [ false, false, false, masterController.dirty, false, false, false ]
+                rotateImage:        [ false, false, false, masterController.syncInProgress, false, false, false ]
+                animateImage:       [ false, false, false, masterController.dirty, false, false, false ]
+                buttonEnabled:      [ true, true, true, !masterController.syncInProgress, true, true, true ]
+                buttonVisible:      [ true, _waypointsOnlyMode, true, true, true, _showZoom, _showZoom ]
                 maxHeight:          mapScale.y - toolStrip.y
 
                 property bool _showZoom: !ScreenTools.isMobile
@@ -615,6 +631,11 @@ QGCView {
                 model: [
                     {
                         name:       "Waypoint",
+                        iconSource: "/qmlimages/MapAddMission.svg",
+                        toggle:     true
+                    },
+                    {
+                        name:       "ROI",
                         iconSource: "/qmlimages/MapAddMission.svg",
                         toggle:     true
                     },
@@ -648,16 +669,21 @@ QGCView {
                     switch (index) {
                     case 0:
                         _addWaypointOnClick = checked
+                        _addROIOnClick = false
                         break
                     case 1:
+                        _addROIOnClick = checked
+                        _addWaypointOnClick = false
+                        break
+                    case 2:
                         if (_singleComplexItem) {
                             addComplexItem(_missionController.complexMissionItemNames[0])
                         }
                         break
-                    case 4:
+                    case 5:
                         editorMap.zoomLevel += 0.5
                         break
-                    case 5:
+                    case 6:
                         editorMap.zoomLevel -= 0.5
                         break
                     }

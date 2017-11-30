@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include <QtPositioning/qgeopositioninfosource.h>
+#include <QGeoPositionInfoSource>
 
 #include <QVariant>
 
@@ -38,7 +38,8 @@ public:
     void setToolbox(QGCToolbox* toolbox);
 
 private slots:
-    void positionUpdated(const QGeoPositionInfo &update);
+    void _positionUpdated(const QGeoPositionInfo &update);
+    void _error(QGeoPositionInfoSource::Error positioningError);
     void GPSPositionUpdate(GPSPositionMessage msg);
 signals:
     void lastPositionUpdated(bool valid, QVariant lastPosition);

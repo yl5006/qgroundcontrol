@@ -59,6 +59,7 @@ stQGeoTileCacheQGCMapTypes kMapTypes[] = {
     {"Gaode Terrain Map",       UrlFactory::GaodeTerrain},
 
     {"Statkart Terrain Map",    UrlFactory::StatkartTopo},
+    {"ENIRO Terrain Map",       UrlFactory::EniroTopo}
     /*
     {"MapQuest Street Map",     UrlFactory::MapQuestMap},
     {"MapQuest Satellite Map",  UrlFactory::MapQuestSat}
@@ -473,6 +474,7 @@ QGCMapEngine::concurrentDownloads(UrlFactory::MapType type)
     case UrlFactory::GaodeSatellite:
     case UrlFactory::GaodeTerrain:
     case UrlFactory::StatkartTopo:
+    case UrlFactory::EniroTopo:
     case UrlFactory::EsriWorldStreet:
     case UrlFactory::EsriWorldSatellite:
     case UrlFactory::EsriTerrain:

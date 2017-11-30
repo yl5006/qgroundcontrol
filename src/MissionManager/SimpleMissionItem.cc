@@ -378,11 +378,9 @@ QString SimpleMissionItem::commandName(void) const
 QString SimpleMissionItem::abbreviation() const
 {
     if (homePosition())
-        return QStringLiteral("H");
+        return tr("H");
 
     switch(command()) {
-    default:
-        return QString();
     case MavlinkQmlSingleton::MAV_CMD_NAV_TAKEOFF:
         return tr("起飞");
     case MavlinkQmlSingleton::MAV_CMD_NAV_LAND:
@@ -391,6 +389,10 @@ QString SimpleMissionItem::abbreviation() const
         return tr("垂直起飞");
     case MavlinkQmlSingleton::MAV_CMD_NAV_VTOL_LAND:
         return tr("垂直降落");
+    case MavlinkQmlSingleton::MAV_CMD_DO_SET_ROI:
+        return tr("ROI");
+    default:
+        return QString();
     }
 }
 
