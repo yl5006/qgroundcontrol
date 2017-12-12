@@ -33,6 +33,8 @@
 #include "QGCCorePlugin.h"
 #include "ADSBVehicle.h"
 #include "QGCCameraManager.h"
+#include "VideoReceiver.h"
+#include "VideoManager.h"
 
 QGC_LOGGING_CATEGORY(VehicleLog, "VehicleLog")
 
@@ -361,6 +363,8 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
 void Vehicle::_commonInit(void)
 {
     _firmwarePlugin = _firmwarePluginManager->firmwarePluginForAutopilot(_firmwareType, _vehicleType);
+
+    connect(_firmwarePlugin, &FirmwarePlugin::toolbarIndicatorsChanged, this, &Vehicle::toolBarIndicatorsChanged);
 
     connect(this, &Vehicle::coordinateChanged,      this, &Vehicle::_updateDistanceToHome);
     connect(this, &Vehicle::homePositionChanged,    this, &Vehicle::_updateDistanceToHome);
@@ -1158,6 +1162,11 @@ void Vehicle::_handleHeartbeat(mavlink_message_t& message)
             _clearCameraTriggerPoints();
         } else {
             _mapTrajectoryStop();
+            // Also handle Video Streaming
+            if(_settingsManager->videoSettings()->disableWhenDisarmed()->rawValue().toBool()) {
+                _settingsManager->videoSettings()->streamEnabled()->setRawValue(false);
+                qgcApp()->toolbox()->videoManager()->videoReceiver()->stop();
+            }
         }
     }
 

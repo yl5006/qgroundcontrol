@@ -62,10 +62,12 @@ QGCPipable              1.0 QGCPipable.qml
 QGCRadioButton          1.0 QGCRadioButton.qml
 QGCSlider               1.0 QGCSlider.qml
 GSSlider                1.0 GSSlider.qml
+QGCSwitch               1.0 QGCSwitch.qml
 QGCTextField            1.0 QGCTextField.qml
 QGCToolBarButton        1.0 QGCToolBarButton.qml
 QGCView                 1.0 QGCView.qml
 QGCViewDialog           1.0 QGCViewDialog.qml
+QGCViewDialogContainer  1.0 QGCViewDialogContainer.qml
 QGCViewMessage          1.0 QGCViewMessage.qml
 QGCViewPanel            1.0 QGCViewPanel.qml
 RoundButton             1.0 RoundButton.qml
