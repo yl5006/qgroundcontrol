@@ -405,9 +405,10 @@ int MissionController::insertROIMissionItem(QGeoCoordinate coordinate, int i)
     newItem->setDefaultsForCommand();
 
     double      prevAltitude;
+    double      prevSpeed;
     MAV_FRAME   prevFrame;
 
-    if (_findPreviousAltitude(i, &prevAltitude, &prevFrame)) {
+    if (_findPreviousAltitude(i, &prevAltitude, &prevSpeed, &prevFrame)) {
         newItem->missionItem().setFrame(prevFrame);
         newItem->missionItem().setParam7(prevAltitude);
     }
