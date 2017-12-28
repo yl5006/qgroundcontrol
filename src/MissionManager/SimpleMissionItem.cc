@@ -92,7 +92,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
     connect(this, &SimpleMissionItem::cameraSectionChanged,         this, &SimpleMissionItem::_updateLastSequenceNumber);
 }
 
-SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, const MissionItem& missionItem, QObject* parent)
+SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, bool editMode, const MissionItem& missionItem, QObject* parent)
     : VisualMissionItem(vehicle, parent)
     , _missionItem(missionItem)
     , _rawEdit(false)
@@ -124,11 +124,16 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, const MissionItem& missio
     _param3MetaData.setDecimalPlaces(1);
     _isCurrentItem = missionItem.isCurrentItem();
 
-    _setupMetaData();
+    // In !editMode we skip some of the intialization to save memory
+    if (editMode) {
+        _setupMetaData();
+    }
     _connectSignals();
     _updateOptionalSections();
     _syncFrameToAltitudeRelativeToHome();
-    _rebuildFacts();
+    if (editMode) {
+        _rebuildFacts();
+    }
 }
 
 SimpleMissionItem::SimpleMissionItem(const SimpleMissionItem& other, QObject* parent)
@@ -846,6 +851,11 @@ double SimpleMissionItem::specifiedGimbalYaw(void)
     return _cameraSection->available() ? _cameraSection->specifiedGimbalYaw() : missionItem().specifiedGimbalYaw();
 }
 
+double SimpleMissionItem::specifiedGimbalPitch(void)
+{
+    return _cameraSection->available() ? _cameraSection->specifiedGimbalPitch() : missionItem().specifiedGimbalPitch();
+}
+
 bool SimpleMissionItem::scanForSections(QmlObjectListModel* visualItems, int scanIndex, Vehicle* vehicle)
 {
     bool sectionFound = false;
@@ -883,10 +893,12 @@ void SimpleMissionItem::_updateOptionalSections(void)
 //        _speedSection->setAvailable(true);
     }
 
-    connect(_cameraSection, &CameraSection::dirtyChanged,               this, &SimpleMissionItem::_sectionDirtyChanged);
-    connect(_cameraSection, &CameraSection::itemCountChanged,           this, &SimpleMissionItem::_updateLastSequenceNumber);
-    connect(_cameraSection, &CameraSection::availableChanged,           this, &SimpleMissionItem::specifiedGimbalYawChanged);
-    connect(_cameraSection, &CameraSection::specifiedGimbalYawChanged,  this, &SimpleMissionItem::specifiedGimbalYawChanged);
+    connect(_cameraSection, &CameraSection::dirtyChanged,                   this, &SimpleMissionItem::_sectionDirtyChanged);
+    connect(_cameraSection, &CameraSection::itemCountChanged,               this, &SimpleMissionItem::_updateLastSequenceNumber);
+    connect(_cameraSection, &CameraSection::availableChanged,               this, &SimpleMissionItem::specifiedGimbalYawChanged);
+    connect(_cameraSection, &CameraSection::availableChanged,               this, &SimpleMissionItem::specifiedGimbalPitchChanged);
+    connect(_cameraSection, &CameraSection::specifiedGimbalPitchChanged,    this, &SimpleMissionItem::specifiedGimbalPitchChanged);
+    connect(_cameraSection, &CameraSection::specifiedGimbalYawChanged,      this, &SimpleMissionItem::specifiedGimbalYawChanged);
 
     connect(_speedSection,  &SpeedSection::dirtyChanged,                this, &SimpleMissionItem::_sectionDirtyChanged);
     connect(_speedSection,  &SpeedSection::itemCountChanged,            this, &SimpleMissionItem::_updateLastSequenceNumber);
@@ -939,6 +951,23 @@ void SimpleMissionItem::applyNewAltitude(double newAltitude)
         default:
             _missionItem.setParam7(newAltitude);
             break;
+        }
+    }
+}
+
+void SimpleMissionItem::setMissionFlightStatus(MissionController::MissionFlightStatus_t& missionFlightStatus)
+{
+    // If user has not already set speed/gimbal, set defaults from previous items.
+    VisualMissionItem::setMissionFlightStatus(missionFlightStatus);
+    if (_speedSection->available() && !_speedSection->specifyFlightSpeed() && !qFuzzyCompare(_speedSection->flightSpeed()->rawValue().toDouble(), missionFlightStatus.vehicleSpeed)) {
+        _speedSection->flightSpeed()->setRawValue(missionFlightStatus.vehicleSpeed);
+    }
+    if (_cameraSection->available() && !_cameraSection->specifyGimbal()) {
+        if (!qIsNaN(missionFlightStatus.gimbalYaw) && !qFuzzyCompare(_cameraSection->gimbalYaw()->rawValue().toDouble(), missionFlightStatus.gimbalYaw)) {
+            _cameraSection->gimbalYaw()->setRawValue(missionFlightStatus.gimbalYaw);
+        }
+        if (!qIsNaN(missionFlightStatus.gimbalPitch) && !qFuzzyCompare(_cameraSection->gimbalPitch()->rawValue().toDouble(), missionFlightStatus.gimbalPitch)) {
+            _cameraSection->gimbalPitch()->setRawValue(missionFlightStatus.gimbalPitch);
         }
     }
 }

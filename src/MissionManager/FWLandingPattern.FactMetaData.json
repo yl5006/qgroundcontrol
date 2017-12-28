@@ -1,6 +1,6 @@
 ﻿[
 {
-    "name":             "Landing dist",
+    "name":             "LandingDistance",
     "shortDescription": "降落点与盘旋点距离",
     "type":             "double",
     "units":            "m",
@@ -9,7 +9,7 @@
     "defaultValue":     300.0
 },
 {
-    "name":             "Landing heading",
+    "name":             "LandingHeading",
     "shortDescription": "盘旋点到降落点机头航向",
     "type":             "double",
     "units":            "deg",
@@ -19,7 +19,7 @@
     "defaultValue":     270.0
 },
 {
-    "name":             "Loiter altitude",
+    "name":             "LoiterAltitude",
     "shortDescription": "盘旋至高度",
     "type":             "double",
     "units":            "m",
@@ -27,7 +27,7 @@
     "defaultValue":     40.0
 },
 {
-    "name":             "Loiter radius",
+    "name":             "LoiterRadius",
     "shortDescription": "盘旋半径",
     "type":             "double",
     "decimalPlaces":    1,
@@ -36,7 +36,7 @@
     "defaultValue":     75.0
 },
 {
-    "name":             "Landing altitude",
+    "name":             "LandingAltitude",
     "shortDescription": "降落点高度",
     "type":             "double",
     "units":            "m",
@@ -44,7 +44,7 @@
     "defaultValue":     0.0
 },
 {
-    "name":             "Descent rate",
+    "name":             "DescentRate",
     "shortDescription": "Descent rate between landing and loiter altitude.",
     "type":             "double",
     "units":            "%",

@@ -137,9 +137,9 @@ QGCView {
 
                         Repeater {
                             id:     unitsRepeater
-                            model:  [ QGroundControl.settingsManager.unitsSettings.distanceUnits, QGroundControl.settingsManager.unitsSettings.areaUnits, QGroundControl.settingsManager.unitsSettings.speedUnits ]
+                            model:  [ QGroundControl.settingsManager.unitsSettings.distanceUnits, QGroundControl.settingsManager.unitsSettings.areaUnits, QGroundControl.settingsManager.unitsSettings.speedUnits, QGroundControl.settingsManager.unitsSettings.temperatureUnits ]
 
-                            property var names: [ qsTr("距离:"), qsTr("面积:"), qsTr("速度:") ]
+                            property var names: [ qsTr("距离:"), qsTr("面积:"), qsTr("速度:"), qsTr("温度:") ]
 
                             Row {
                                 spacing:    ScreenTools.defaultFontPixelWidth
