@@ -2071,7 +2071,7 @@ void Vehicle::virtualTabletJoystickValue(double roll, double pitch, double yaw, 
     }
 }
 
-void Vehicle::virtualTabletRCValue(double roll, double pitch)
+void Vehicle::virtualTabletRCValue(double roll, double pitch,bool pic)
 {
 
     mavlink_message_t               msg;
@@ -2098,7 +2098,7 @@ void Vehicle::virtualTabletRCValue(double roll, double pitch)
         // Ensure that another message will be sent the next time this function is called
         countSinceLastTransmission = 50;
     }
-
+    sendCommand = true;
     // Now if we should trigger an update, let's do that
     if (sendCommand) {
         // Save the new manual control inputs
@@ -2112,7 +2112,8 @@ void Vehicle::virtualTabletRCValue(double roll, double pitch)
         cammer_rc.chan4_raw = 1500;  // start
         cammer_rc.chan5_raw = 1500;  // start
         cammer_rc.chan6_raw = 1500;  // start
-        cammer_rc.chan7_raw = 1500;  // start
+        cammer_rc.chan7_raw = 1100+400 * (pic ? 1 :0) ;  // start
+        qDebug()<< "chan7" << cammer_rc.chan7_raw;
         cammer_rc.chan8_raw = 1500;  // start
         cammer_rc.chan9_raw = 1500;  // start
         cammer_rc.chan10_raw = 1500;  // start

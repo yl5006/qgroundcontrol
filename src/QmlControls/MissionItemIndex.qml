@@ -90,7 +90,7 @@ Rectangle {
                font.bold:              true
                color:                  "white"
 //             fontSizeMode:           Text.HorizontalFit
-               text:                   missionItem.coordinate.altitude+"m"
+               text:                   missionItem.coordinate.altitude.toFixed(1)+"m"
            }
         }
            Row {

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -19,10 +19,17 @@ Switch {
     QGCPalette { id:qgcPal; colorGroupEnabled: true }
     style: SwitchStyle {
         groove:     Rectangle {
-            implicitWidth:  ScreenTools.defaultFontPixelWidth * 6
+            implicitWidth:  ScreenTools.defaultFontPixelWidth * 4.5
             implicitHeight: ScreenTools.defaultFontPixelHeight
-            color:          (control.checked && control.enabled) ? qgcPal.colorGreen : qgcPal.colorGrey
-            radius:         3
+            color:          (control.checked && control.enabled) ? qgcPal.buttonHighlight : qgcPal.colorGrey
+            radius:         ScreenTools.defaultFontPixelHeight/2
+            border.color:   qgcPal.button
+            border.width:   1
+        }
+        handle : Rectangle{
+            implicitWidth:  ScreenTools.defaultFontPixelWidth * 2
+            implicitHeight: ScreenTools.defaultFontPixelHeight
+            radius:         ScreenTools.defaultFontPixelHeight/2
             border.color:   qgcPal.button
             border.width:   1
         }

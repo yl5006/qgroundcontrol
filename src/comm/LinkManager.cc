@@ -118,7 +118,6 @@ LinkInterface* LinkManager::createConnectedLink(SharedLinkConfigurationPointer& 
     {
         SerialConfiguration* serialConfig = dynamic_cast<SerialConfiguration*>(config.data());
         if (serialConfig) {
-            qDebug()<<"111";
             pLink = new SerialLink(config);
             if (serialConfig->usbDirect()) {
                 _activeLinkCheckList.append((SerialLink*)pLink);

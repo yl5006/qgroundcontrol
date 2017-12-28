@@ -343,12 +343,23 @@ Item {
                         }
                     }
                 }
-
-                FactCheckBox {
-                    text:       qsTr("自动连接")
-                    fact:       QGroundControl.settingsManager.autoConnectSettings.autoConnectSiKRadio
-                    visible:    !ScreenTools.isiOS
+                Row{
+                    QGCSwitch {
+                        checked:    QGroundControl.settingsManager.autoConnectSettings.autoConnectSiKRadio.value==1
+                        onClicked: {
+                            if(checked) {
+                                QGroundControl.settingsManager.autoConnectSettings.autoConnectSiKRadio.value = 1
+                            } else {
+                                QGroundControl.settingsManager.autoConnectSettings.autoConnectSiKRadio.value = 0
+                            }
+                        }
+                    }
+                    QGCLabel {
+                        text:           qsTr("自动连接")
+                        }
                 }
+
+
 
             }
 

@@ -44,6 +44,16 @@
       <output name="MAIN4">left swashplate servo</output>
       <output name="MAIN5">tail-rotor servo</output>
     </airframe>
+    <airframe id="16002" maintainer="Bart Slinger &lt;bartslinger@gmail.com&gt;" name="HEG3GX">
+      <class>Copter</class>
+      <maintainer>Bart Slinger &lt;bartslinger@gmail.com&gt;</maintainer>
+      <type>Helicopter</type>
+      <output name="MAIN1">main motor</output>
+      <output name="MAIN2">right swashplate servo</output>
+      <output name="MAIN3">back swashplate servo</output>
+      <output name="MAIN4">left swashplate servo</output>
+      <output name="MAIN5">tail-rotor servo</output>
+    </airframe>
   </airframe_group>
   <airframe_group image="HexaRotorPlus" name="十字型六旋翼" type="13">
     <airframe id="7001" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="通用六旋翼 +">
@@ -514,6 +524,18 @@
       <output name="AUX1">feed-through of RC AUX1 channel</output>
       <output name="AUX2">feed-through of RC AUX2 channel</output>
       <output name="AUX3">feed-through of RC AUX3 channel</output>
+    </airframe>
+    <airframe id="2101" maintainer="Andreas Antener &lt;andreas@uaventure.com&gt;" name="胖子">
+      <class>Plane</class>
+      <maintainer>Andreas Antener &lt;andreas@uaventure.com&gt;</maintainer>
+      <type>Plane A-Tail</type>
+      <output name="MAIN1">aileron right</output>
+      <output name="MAIN2">v-tail right</output>
+      <output name="MAIN3">v-tail left</output>
+      <output name="MAIN4">throttle</output>
+      <output name="MAIN5">flaps</output>
+      <output name="MAIN6">gear</output>
+      <output name="MAIN7">feed-through of RC AUX1 channel</output>
     </airframe>
   </airframe_group>
   <airframe_group image="AirframeUnknown" name="Simulation (Plane)" type="21">

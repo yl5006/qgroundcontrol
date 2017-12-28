@@ -385,7 +385,7 @@ public:
     Q_INVOKABLE void        resetMessages();
 
     Q_INVOKABLE void virtualTabletJoystickValue(double roll, double pitch, double yaw, double thrust);
-    Q_INVOKABLE void virtualTabletRCValue(double roll, double pitch);
+    Q_INVOKABLE void virtualTabletRCValue(double roll, double pitch, bool pic);
     Q_INVOKABLE void disconnectInactiveVehicle(void);
 
     /// Command vehicle to return to launch

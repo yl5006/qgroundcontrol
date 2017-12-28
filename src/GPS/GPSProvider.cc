@@ -15,8 +15,8 @@
 
 #include <QDebug>
 
-//#include "Drivers/src/ubx.h"
-#include "Drivers/src/nova.h"
+#include "Drivers/src/ubx.h"
+//#include "Drivers/src/nova.h"
 #include "Drivers/src/gps_helper.h"
 #include "definitions.h"
 
@@ -48,14 +48,14 @@ void GPSProvider::run()
         return;
     }
     qWarning() << "open Serial Device" << _device;
-    _serial->setBaudRate(QSerialPort::Baud115200);//9600
+    _serial->setBaudRate(QSerialPort::Baud9600);//9600
     _serial->setDataBits(QSerialPort::Data8);
     _serial->setParity(QSerialPort::NoParity);
     _serial->setStopBits(QSerialPort::OneStop);
     _serial->setFlowControl(QSerialPort::NoFlowControl);
 
     unsigned int baudrate;
-    GPSHelper* gpsDriver = nullptr;
+    GPSDriverUBX* gpsDriver = nullptr;
 
     while (!_requestStop) {
 
@@ -64,18 +64,19 @@ void GPSProvider::run()
             gpsDriver = nullptr;
         }
 
-        gpsDriver = new GPSDriverNova(&callbackEntry, this, &_reportGpsPos);
-//        gpsDriver->setSurveyInSpecs(_surveyInAccMeters * 10000, _surveryInDurationSecs);
+        gpsDriver = new GPSDriverUBX(GPSDriverUBX::Interface::UART, &callbackEntry, this, &_reportGpsPos, _pReportSatInfo);
+        gpsDriver->setSurveyInSpecs(_surveyInAccMeters * 10000, _surveryInDurationSecs);
 
-        if (gpsDriver->configure(baudrate, GPSHelper::OutputMode::RTCM) == 0) {
-
+        if (gpsDriver->configure(baudrate, GPSDriverUBX::OutputMode::RTCM) == 0) {
+            qDebug()<<"config";
             /* reset report */
             memset(&_reportGpsPos, 0, sizeof(_reportGpsPos));
+
             //In rare cases it can happen that we get an error from the driver (eg. checksum failure) due to
             //bus errors or buggy firmware. In this case we want to try multiple times before giving up.
             int numTries = 0;
 
-            while (!_requestStop && numTries < 5) {
+            while (!_requestStop && numTries < 3) {
                 int helperRet = gpsDriver->receive(GPS_RECEIVE_TIMEOUT);
 
                 if (helperRet > 0) {
@@ -97,11 +98,9 @@ void GPSProvider::run()
             if (_serial->error() != QSerialPort::NoError && _serial->error() != QSerialPort::TimeoutError) {
                 break;
             }
-             break;
         }
     }
     qCDebug(RTKGPSLog) << "Exiting GPS thread";
-    if (_serial) delete _serial;
 }
 
 GPSProvider::GPSProvider(const QString& device, bool enableSatInfo, double surveyInAccMeters, int surveryInDurationSecs, const std::atomic_bool& requestStop)

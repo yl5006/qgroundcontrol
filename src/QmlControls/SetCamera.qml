@@ -32,7 +32,7 @@ Rectangle {
         repeat:     true
         onTriggered: {
             if (_activeVehicle && _root.visible) {
-                _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis)
+                _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,takepic.checked)
             }
         }
     }
@@ -60,14 +60,14 @@ Rectangle {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
                 text:          qsTr("变焦  -")
-                checkable:     false
+                checkable:     true
                 primary:       true
             }
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
                 text:          qsTr("变焦  +")
-                checkable:     false
+                checkable:     true
                 primary:       true
             }
         }
@@ -77,20 +77,22 @@ Rectangle {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
                 text:          qsTr("对焦  -")
-                checkable:     false
+                checkable:     true
                 primary:       true
             }
             QGCButton {
+                id:            takepic
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("对焦  +")
-                checkable:     false
+                text:          qsTr("拍照")
+                checkable:     true
                 primary:       true
             }
         }
         SubMenuButton {
             imageResource:      "/qmlimages/camera.svg"
             text:               qsTr("拍照")//"Send to vehicle"
+            checkable:          true
             onClicked:          _activeVehicle.triggerCamera()
             enabled:            _activeVehicle
             anchors.horizontalCenter: parent.horizontalCenter
