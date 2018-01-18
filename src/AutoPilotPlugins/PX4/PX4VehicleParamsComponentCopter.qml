@@ -20,7 +20,7 @@ import QGroundControl.ScreenTools   1.0
 SetupPage {
     id:             paramsPage
     pageComponent:  pageComponent
-
+    visibleWhileArmed:   true
     Component {
         id: pageComponent
 

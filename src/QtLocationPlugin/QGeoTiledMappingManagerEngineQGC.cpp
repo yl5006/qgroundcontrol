@@ -74,9 +74,9 @@ QGeoTiledMapQGC::QGeoTiledMapQGC(QGeoTiledMappingManagerEngine *engine, QObject 
 #endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-#define QGCGEOMAPTYPE(a,b,c,d,e,f)  QGeoMapType(a,b,c,d,e,f,QByteArray("QGroundControl"), QGeoCameraCapabilities())
+#define QGCGEOMAPTYPE(a,b,c,d,e,f)  QGeoMapType(a,b,c,d,e,f,QByteArray("GroundStation"), QGeoCameraCapabilities())
 #elif QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
-#define QGCGEOMAPTYPE(a,b,c,d,e,f)  QGeoMapType(a,b,c,d,e,f,QByteArray("QGroundControl"))
+#define QGCGEOMAPTYPE(a,b,c,d,e,f)  QGeoMapType(a,b,c,d,e,f,QByteArray("GroundStation"))
 #else
 #define QGCGEOMAPTYPE(a,b,c,d,e,f)  QGeoMapType(a,b,c,d,e,f)
 #endif

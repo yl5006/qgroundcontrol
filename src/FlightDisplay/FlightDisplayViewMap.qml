@@ -364,8 +364,6 @@ FlightMap {
             z:              QGroundControl.zOrderVehicles
         }
     }
-
-    
     // Add the items associated with each vehicles flight plan to the map
     Repeater {
         model: QGroundControl.multiVehicleManager.vehicles
@@ -452,6 +450,7 @@ FlightMap {
     }
     CameraTriggerIndicator {
          id:             cameratrig
+         visible:       _activeVehicle
          coordinate:     _activeVehicle.lastcameracoordinate
          z:              QGroundControl.zOrderTopMost
          Timer {

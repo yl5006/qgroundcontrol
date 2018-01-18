@@ -262,11 +262,11 @@ QGCView {
                             }
                             ExclusiveGroup { id: mapActionGroup }
                             ImageButton{
-                                imageResource:        "/qmlimages/bingmap.png"
+                                imageResource:       "/qmlimages/bingmap.png"
                                 exclusiveGroup:      mapActionGroup
                                 width:               ScreenTools.defaultFontPixelHeight * 5
                                 height:              ScreenTools.defaultFontPixelHeight * 4
-                                imageResource2:             "/qmlimages/checked.svg"
+                                imageResource2:      "/qmlimages/checked.svg"
                                 img2visible:        true
                                 checkable:          true
                                 checked:            _mapProvider.value==0
@@ -275,11 +275,11 @@ QGCView {
                                 }
                             }
                             ImageButton{
-                                imageResource:             "/qmlimages/googlemap.png"
+                                imageResource:      "/qmlimages/googlemap.png"
                                 exclusiveGroup:     mapActionGroup
                                 width:              ScreenTools.defaultFontPixelHeight * 5
                                 height:             ScreenTools.defaultFontPixelHeight * 4
-                                imageResource2:             "/qmlimages/checked.svg"
+                                imageResource2:     "/qmlimages/checked.svg"
                                 img2visible:        true
                                 checkable:          true
                                 checked:            _mapProvider.value==1
@@ -288,11 +288,11 @@ QGCView {
                                 }
                             }
                             ImageButton{
-                                imageResource:             "/qmlimages/gaodemap.png"
+                                imageResource:      "/qmlimages/gaodemap.png"
                                 exclusiveGroup:     mapActionGroup
                                 width:              ScreenTools.defaultFontPixelHeight * 5
                                 height:             ScreenTools.defaultFontPixelHeight * 4
-                                imageResource2:             "/qmlimages/checked.svg"
+                                imageResource2:     "/qmlimages/checked.svg"
                                 img2visible:        true
                                 checkable:          true
                                 checked:            _mapProvider.value==2
@@ -780,7 +780,7 @@ QGCView {
                     height:                     userBrandImageLabel.height
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.brandImageSettings.visible && !ScreenTools.isMobile
+                    visible:                    false//QGroundControl.settingsManager.brandImageSettings.visible && !ScreenTools.isMobile
                     QGCLabel {
                         id:             userBrandImageLabel
                         text:           qsTr("Brand Image")
@@ -793,7 +793,7 @@ QGCView {
                     color:                      qgcPal.windowShade
                     anchors.margins:            ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    visible:                    QGroundControl.settingsManager.brandImageSettings.visible && !ScreenTools.isMobile
+                    visible:                    false//QGroundControl.settingsManager.brandImageSettings.visible && !ScreenTools.isMobile
 
                     Column {
                         id:         userBrandImageCol

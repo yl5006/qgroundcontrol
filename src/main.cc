@@ -270,9 +270,6 @@ int main(int argc, char *argv[])
 
     WaitForSignalHelper helper(m_updater, SIGNAL(checkingFinished (QString)) );
     helper.wait( 3000 );
-//        qDebug()<<"getUpdateAvailable111";
-//    else
-//        qDebug()<<"getUpdateAvailable";
 //  /* Check for updates */
  if(m_updater->getUpdateAvailable(DEFS_URL))
  {

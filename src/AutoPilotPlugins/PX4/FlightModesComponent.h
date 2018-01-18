@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -35,7 +35,7 @@ public:
     virtual bool setupComplete(void) const;
     virtual QUrl setupSource(void) const;
     virtual QUrl summaryQmlSource(void) const;
-    
+    bool allowSetupWhileArmed(void) const override { return true; }
 private:
     const QString   _name;
     QVariantList    _summaryItems;

@@ -689,9 +689,6 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_SCALED_PRESSURE3:
         _handleScaledPressure3(message);
         break;        
-    case MAVLINK_MSG_ID_CAMERA_FEEDBACK:
-        _handleCameraFeedback(message);
-        break;
     case MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED:
         _handleCameraImageCaptured(message);
         break;

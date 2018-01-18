@@ -73,7 +73,7 @@ QGCView {
             wrapMode:               Text.WordWrap
             font.pointSize:         ScreenTools.largeFontPointSize
             color:                  "red"
-            text:                   "Setup disabled while the vehicle is armed"
+            text:                   "解锁情况下禁止设置"
         }
     }
 

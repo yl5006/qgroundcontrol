@@ -539,11 +539,12 @@ SetupPage {
                         readOnly:       true
                         frameVisible:   false
                         text:           statusTextAreaDefaultText
+                        wrapMode:           Text.WordWrap
                         horizontalAlignment:    Text.AlignHCenter
-                        style: TextAreaStyle {
-                            textColor: qgcPal.text
-                            backgroundColor: qgcPal.windowShade
-                        }
+//                        style: TextAreaStyle {
+//                            textColor: qgcPal.text
+//                            backgroundColor: qgcPal.windowShade
+//                        }
                     }
 
                     Rectangle {
@@ -584,8 +585,8 @@ SetupPage {
                             anchors.right:      parent.right
                             spacing:            ScreenTools.defaultFontPixelWidth / 2
                             //       anchors.horizontalCenter:  parent.horizontalCenter
-                            property real indicatorWidth:   ScreenTools.defaultFontPixelWidth * 30//(width / 3) - (spacing * 2)
-                            property real indicatorHeight:  ScreenTools.defaultFontPixelWidth * 30//(height / 2) - spacing
+                            property real indicatorWidth:   (width / 3) - (spacing * 2)
+                            property real indicatorHeight:  (height / 2) - spacing
                             VehicleRotationCal {
                                 width:              parent.indicatorWidth
                                 height:             parent.indicatorHeight

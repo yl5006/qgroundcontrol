@@ -53,7 +53,7 @@ UrlFactory::UrlFactory()
 #ifndef QGC_NO_GOOGLE_MAPS
     // Google version strings
     _versionGoogleMap            = "m@354000000";
-    _versionGoogleSatellite      = "724";
+    _versionGoogleSatellite      = "744";
     _versionGoogleLabels         = "h@336";
     _versionGoogleTerrain        = "t@354,r@354000000";
     _secGoogleWord               = "Galileo";
@@ -242,7 +242,6 @@ UrlFactory::_getURL(MapType type, int x, int y, int zoom, QNetworkAccessManager*
         QString sec2    = ""; // after &zoom=...
         _getSecGoogleWords(x, y, sec1, sec2);
         _tryCorrectGoogleVersions(networkManager);
-
         return QString("http://%1%2.google.com/%3/v=%4&hl=%5&x=%6%7&y=%8&z=%9&s=%10").arg(server).arg(_getServerNum(x, y, 4)).arg(request).arg(_versionGoogleSatellite).arg(_language).arg(x).arg(sec1).arg(y).arg(zoom).arg(sec2);
     }
     break;
@@ -494,7 +493,6 @@ UrlFactory::_googleVersionCompleted()
         qDebug() << "Error collecting Google maps version info";
         return;
     }
-     qDebug() << "collecting Google maps version info";
     QString html = QString(_googleReply->readAll());
 
 #if defined(DEBUG_GOOGLE_MAPS)
@@ -517,7 +515,6 @@ UrlFactory::_googleVersionCompleted()
     if (reg.indexIn(html) != -1) {
         QStringList gc = reg.capturedTexts();
         _versionGoogleSatellite = gc[1];
-         qDebug()<<"map version" << _versionGoogleSatellite;
     }
     reg = QRegExp("\"*https?://mt\\D?\\d..*/vt\\?lyrs=t@(\\d*),r@(\\d*)", Qt::CaseInsensitive);
     if (reg.indexIn(html) != -1) {

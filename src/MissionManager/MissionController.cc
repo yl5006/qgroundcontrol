@@ -242,7 +242,7 @@ void MissionController::applyoffboardmission(void)
     _convertToMissionItems(_visualItems, rgMissionItems, this);
 
     for (int i=1; i<rgMissionItems.count(); i++) {
-       SimpleMissionItem * newItem =new SimpleMissionItem(_controllerVehicle, *rgMissionItems[i],this);
+       SimpleMissionItem * newItem =new SimpleMissionItem(_controllerVehicle, _editMode , *rgMissionItems[i],this);
        newControllerMissionItems->append(newItem);
     }
 

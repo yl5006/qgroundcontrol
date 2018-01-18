@@ -1028,7 +1028,7 @@ QGCView {
                 anchors.left:       parent.left
                 anchors.right:      parent.right
                 spacing:            _horizontalMargin
-                visible:            QGroundControl.corePlugin.options.enablePlanViewSelector
+                visible:            false//QGroundControl.corePlugin.options.enablePlanViewSelector
 
                 readonly property real _buttonRadius: ScreenTools.defaultFontPixelHeight * 0.75
 

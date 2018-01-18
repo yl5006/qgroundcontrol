@@ -5,8 +5,8 @@
   <parameter_version_minor>15</parameter_version_minor>
   <group name="UAVCAN Motor Parameters" no_code_generation="true">
     <parameter default="75" name="ctl_bw" type="INT32">
-      <short_desc>Speed controller bandwidth</short_desc>
-      <long_desc>Speed controller bandwidth, in Hz. Higher values result in faster speed and current rise times, but may result in overshoot and higher current consumption. For fixed-wing aircraft, this value should be less than 50 Hz; for multirotors, values up to 100 Hz may provide improvements in responsiveness.</long_desc>
+      <short_desc>速度控制器带宽</short_desc>
+      <long_desc>速度控制器带宽，以Hz为单位。 较高的值会导致较快的速度和电流上升时间，但可能会导致过冲和较高的电流消耗。 对于固定翼飞机，这个值应该小于50赫兹; 对于多转子，高达100Hz的值可以提高响应性。</long_desc>
       <unit>Hertz</unit>
       <min>10</min>
       <max>250</max>
@@ -714,20 +714,20 @@ Note: ekf2 will limit the delta velocity bias estimate magnitude to be less than
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="-1">Unassigned</value>
-        <value code="0">Manual</value>
-        <value code="1">Altitude</value>
-        <value code="2">Position</value>
-        <value code="3">Mission</value>
-        <value code="4">Hold</value>
-        <value code="5">Return</value>
-        <value code="6">Acro</value>
-        <value code="7">Offboard</value>
-        <value code="8">Stabilized</value>
-        <value code="9">Rattitude</value>
+        <value code="-1">未分配</value>
+        <value code="0">手动</value>
+        <value code="1">定高</value>
+        <value code="2">定点</value>
+        <value code="3">任务</value>
+<!--    <value code="4">Hold</value>-->
+        <value code="5">返航</value>
+        <value code="6">运动</value>
+<!--    <value code="7">Offboard</value>-->
+        <value code="8">增稳</value>
+<!--    <value code="9">Rattitude</value>
         <value code="10">Takeoff</value>
         <value code="11">Land</value>
-        <value code="12">Follow Me</value>
+        <value code="12">Follow Me</value>-->
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE2" type="INT32">
@@ -735,20 +735,21 @@ Note: ekf2 will limit the delta velocity bias estimate magnitude to be less than
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="-1">Unassigned</value>
-        <value code="0">Manual</value>
-        <value code="1">Altitude</value>
-        <value code="2">Position</value>
-        <value code="3">Mission</value>
-        <value code="4">Hold</value>
-        <value code="5">Return</value>
-        <value code="6">Acro</value>
-        <value code="7">Offboard</value>
-        <value code="8">Stabilized</value>
-        <value code="9">Rattitude</value>
+        <value code="-1">未分配</value>
+        <value code="0">手动</value>
+        <value code="1">定高</value>
+        <value code="2">定点</value>
+        <value code="3">任务</value>
+<!--    <value code="4">Hold</value>-->
+        <value code="5">返航</value>
+        <value code="6">运动</value>
+<!--    <value code="7">Offboard</value>-->
+        <value code="8">增稳</value>
+<!--    <value code="9">Rattitude</value>
         <value code="10">Takeoff</value>
         <value code="11">Land</value>
-        <value code="12">Follow Me</value>
+        <value code="12">Follow Me</value>-->
+
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE3" type="INT32">
@@ -756,20 +757,21 @@ Note: ekf2 will limit the delta velocity bias estimate magnitude to be less than
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="-1">Unassigned</value>
-        <value code="0">Manual</value>
-        <value code="1">Altitude</value>
-        <value code="2">Position</value>
-        <value code="3">Mission</value>
-        <value code="4">Hold</value>
-        <value code="5">Return</value>
-        <value code="6">Acro</value>
-        <value code="7">Offboard</value>
-        <value code="8">Stabilized</value>
-        <value code="9">Rattitude</value>
+        <value code="-1">未分配</value>
+        <value code="0">手动</value>
+        <value code="1">定高</value>
+        <value code="2">定点</value>
+        <value code="3">任务</value>
+<!--    <value code="4">Hold</value>-->
+        <value code="5">返航</value>
+        <value code="6">运动</value>
+<!--    <value code="7">Offboard</value>-->
+        <value code="8">增稳</value>
+<!--    <value code="9">Rattitude</value>
         <value code="10">Takeoff</value>
         <value code="11">Land</value>
-        <value code="12">Follow Me</value>
+        <value code="12">Follow Me</value>-->
+
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE4" type="INT32">
@@ -777,20 +779,21 @@ Note: ekf2 will limit the delta velocity bias estimate magnitude to be less than
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="-1">Unassigned</value>
-        <value code="0">Manual</value>
-        <value code="1">Altitude</value>
-        <value code="2">Position</value>
-        <value code="3">Mission</value>
-        <value code="4">Hold</value>
-        <value code="5">Return</value>
-        <value code="6">Acro</value>
-        <value code="7">Offboard</value>
-        <value code="8">Stabilized</value>
-        <value code="9">Rattitude</value>
+        <value code="-1">未分配</value>
+        <value code="0">手动</value>
+        <value code="1">定高</value>
+        <value code="2">定点</value>
+        <value code="3">任务</value>
+<!--    <value code="4">Hold</value>-->
+        <value code="5">返航</value>
+        <value code="6">运动</value>
+<!--    <value code="7">Offboard</value>-->
+        <value code="8">增稳</value>
+<!--    <value code="9">Rattitude</value>
         <value code="10">Takeoff</value>
         <value code="11">Land</value>
-        <value code="12">Follow Me</value>
+        <value code="12">Follow Me</value>-->
+
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE5" type="INT32">
@@ -798,20 +801,21 @@ Note: ekf2 will limit the delta velocity bias estimate magnitude to be less than
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="-1">Unassigned</value>
-        <value code="0">Manual</value>
-        <value code="1">Altitude</value>
-        <value code="2">Position</value>
-        <value code="3">Mission</value>
-        <value code="4">Hold</value>
-        <value code="5">Return</value>
-        <value code="6">Acro</value>
-        <value code="7">Offboard</value>
-        <value code="8">Stabilized</value>
-        <value code="9">Rattitude</value>
+        <value code="-1">未分配</value>
+        <value code="0">手动</value>
+        <value code="1">定高</value>
+        <value code="2">定点</value>
+        <value code="3">任务</value>
+<!--    <value code="4">Hold</value>-->
+        <value code="5">返航</value>
+        <value code="6">运动</value>
+<!--    <value code="7">Offboard</value>-->
+        <value code="8">增稳</value>
+<!--    <value code="9">Rattitude</value>
         <value code="10">Takeoff</value>
         <value code="11">Land</value>
-        <value code="12">Follow Me</value>
+        <value code="12">Follow Me</value>-->
+
       </values>
     </parameter>
     <parameter default="-1" name="COM_FLTMODE6" type="INT32">
@@ -819,20 +823,21 @@ Note: ekf2 will limit the delta velocity bias estimate magnitude to be less than
       <long_desc>If the main switch channel is in this range the selected flight mode will be applied.</long_desc>
       <scope>modules/commander</scope>
       <values>
-        <value code="-1">Unassigned</value>
-        <value code="0">Manual</value>
-        <value code="1">Altitude</value>
-        <value code="2">Position</value>
-        <value code="3">Mission</value>
-        <value code="4">Hold</value>
-        <value code="5">Return</value>
-        <value code="6">Acro</value>
-        <value code="7">Offboard</value>
-        <value code="8">Stabilized</value>
-        <value code="9">Rattitude</value>
+        <value code="-1">未分配</value>
+        <value code="0">手动</value>
+        <value code="1">定高</value>
+        <value code="2">定点</value>
+        <value code="3">任务</value>
+<!--    <value code="4">Hold</value>-->
+        <value code="5">返航</value>
+        <value code="6">运动</value>
+<!--    <value code="7">Offboard</value>-->
+        <value code="8">增稳</value>
+<!--    <value code="9">Rattitude</value>
         <value code="10">Takeoff</value>
         <value code="11">Land</value>
-        <value code="12">Follow Me</value>
+        <value code="12">Follow Me</value>-->
+
       </values>
     </parameter>
     <parameter default="5.0" name="COM_HOME_H_T" type="FLOAT">
@@ -862,10 +867,10 @@ Note: ekf2 will limit the delta velocity bias estimate magnitude to be less than
       <increment>1</increment>
       <scope>modules/commander</scope>
       <values>
-        <value code="0">Warning</value>
-        <value code="1">Return to land</value>
-        <value code="2">Land at current position</value>
-        <value code="3">Return to land at critically low level, land at current position if reaching dangerously low levels</value>
+        <value code="0">警告</value>
+        <value code="1">返航</value>
+        <value code="2">降落</value>
+<!--        <value code="3">Return to land at critically low level, land at current position if reaching dangerously low levels</value>-->
       </values>
     </parameter>
     <parameter default="0.0" name="COM_OF_LOSS_T" type="FLOAT">
@@ -2270,8 +2275,8 @@ This is the ratio of static pressure error to dynamic pressure generated by a wi
   </group>
   <group name="FW L1 Control">
     <parameter default="10.0" name="FW_CLMBOUT_DIFF" type="FLOAT">
-      <short_desc>Climbout Altitude difference</short_desc>
-      <long_desc>If the altitude error exceeds this parameter, the system will climb out with maximum throttle and minimum airspeed until it is closer than this distance to the desired altitude. Mostly used for takeoff waypoints / modes. Set to 0 to disable climbout mode (not recommended).</long_desc>
+      <short_desc>爬升高度差</short_desc>
+      <long_desc>如果高度误差超过此参数，则系统将以最大节气门和最小空速爬升，直至比距离达到所需高度更近。 主要用于起飞航点/模式。 设置为0禁用爬升模式（不推荐）。</long_desc>
       <min>0.0</min>
       <max>150.0</max>
       <unit>m</unit>
@@ -2280,8 +2285,8 @@ This is the ratio of static pressure error to dynamic pressure generated by a wi
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.75" name="FW_L1_DAMPING" type="FLOAT">
-      <short_desc>L1 damping</short_desc>
-      <long_desc>Damping factor for L1 control.</long_desc>
+      <short_desc>L1算法阻尼</short_desc>
+      <long_desc>L1控制的阻尼系数。</long_desc>
       <min>0.6</min>
       <max>0.9</max>
       <decimal>2</decimal>
@@ -2289,8 +2294,8 @@ This is the ratio of static pressure error to dynamic pressure generated by a wi
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="20.0" name="FW_L1_PERIOD" type="FLOAT">
-      <short_desc>L1 period</short_desc>
-      <long_desc>This is the L1 distance and defines the tracking point ahead of the aircraft its following. A value of 18-25 meters works for most aircraft. Shorten slowly during tuning until response is sharp without oscillation.</long_desc>
+      <short_desc>L1算法周期</short_desc>
+      <long_desc>这是L1算法距离，并定义飞机前面的跟踪点。 18-25米的价值适用于大多数飞机。 在调谐期间缓慢缩短，直到响应清晰，没有振荡.</long_desc>
       <min>12.0</min>
       <max>50.0</max>
       <unit>m</unit>
@@ -2299,8 +2304,8 @@ This is the ratio of static pressure error to dynamic pressure generated by a wi
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="1.3" name="FW_LND_AIRSPD_SC" type="FLOAT">
-      <short_desc>Min. airspeed scaling factor for landing</short_desc>
-      <long_desc>Multiplying this factor with the minimum airspeed of the plane gives the target airspeed the landing approach. FW_AIRSPD_MIN * FW_LND_AIRSPD_SC</long_desc>
+      <short_desc>降落时最小空速比例系数</short_desc>
+      <long_desc>将该系数乘以飞机的最小空速给出目标空速的降落。 FW_AIRSPD_MIN * FW_LND_AIRSPD_SC</long_desc>
       <min>1.0</min>
       <max>1.5</max>
       <unit>norm</unit>
@@ -2309,7 +2314,7 @@ This is the ratio of static pressure error to dynamic pressure generated by a wi
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="5.0" name="FW_LND_ANG" type="FLOAT">
-      <short_desc>Landing slope angle</short_desc>
+      <short_desc>降落角度</short_desc>
       <min>1.0</min>
       <max>15.0</max>
       <unit>deg</unit>
@@ -2318,7 +2323,7 @@ This is the ratio of static pressure error to dynamic pressure generated by a wi
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="8.0" name="FW_LND_FLALT" type="FLOAT">
-      <short_desc>Landing flare altitude (relative to landing altitude)</short_desc>
+      <short_desc>降落平飘高度(相对降落高度)</short_desc>
       <min>0.0</min>
       <max>25.0</max>
       <unit>m</unit>
@@ -2381,8 +2386,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="45.0" name="FW_P_LIM_MAX" type="FLOAT">
-      <short_desc>Positive pitch limit</short_desc>
-      <long_desc>The maximum positive pitch the controller will output.</long_desc>
+      <short_desc>正仰俯限制</short_desc>
+      <long_desc>控制输出的最大正仰俯.</long_desc>
       <min>0.0</min>
       <max>60.0</max>
       <unit>deg</unit>
@@ -2391,8 +2396,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="-45.0" name="FW_P_LIM_MIN" type="FLOAT">
-      <short_desc>Negative pitch limit</short_desc>
-      <long_desc>The minimum negative pitch the controller will output.</long_desc>
+      <short_desc>负仰俯限制</short_desc>
+      <long_desc>控制输出的最小负仰俯</long_desc>
       <min>-60.0</min>
       <max>0.0</max>
       <unit>deg</unit>
@@ -2401,8 +2406,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="50.0" name="FW_R_LIM" type="FLOAT">
-      <short_desc>Controller roll limit</short_desc>
-      <long_desc>The maximum roll the controller will output.</long_desc>
+      <short_desc>横滚限制</short_desc>
+      <long_desc>控制器将输出的最大滚动量。</long_desc>
       <min>35.0</min>
       <max>65.0</max>
       <unit>deg</unit>
@@ -2411,8 +2416,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.0" name="FW_THR_ALT_SCL" type="FLOAT">
-      <short_desc>Scale throttle by pressure change</short_desc>
-      <long_desc>Automatically adjust throttle to account for decreased air density at higher altitudes. Start with a scale factor of 1.0 and adjust for different propulsion systems. When flying without airspeed sensor this will help to keep a constant performance over large altitude ranges. The default value of 0 will disable scaling.</long_desc>
+      <short_desc>气压变化油门系数</short_desc>
+      <long_desc>自动调节油门以考虑较高海拔处的空气密度降低。 从比例因子1.0开始，针对不同的推进系统进行调整。 当不使用空速传感器时，这将有助于在大范围内保持恒定的性能。 默认值0将禁用缩放。</long_desc>
       <min>0.0</min>
       <max>2.0</max>
       <decimal>1</decimal>
@@ -2420,8 +2425,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.6" name="FW_THR_CRUISE" type="FLOAT">
-      <short_desc>Cruise throttle</short_desc>
-      <long_desc>This is the throttle setting required to achieve the desired cruise speed. Most airframes have a value of 0.5-0.7.</long_desc>
+      <short_desc>巡航油门</short_desc>
+      <long_desc>这是达到所需巡航速度所需的油门设置。 大多数机身的值为0.5-0.7。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -2430,8 +2435,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.15" name="FW_THR_IDLE" type="FLOAT">
-      <short_desc>Idle throttle</short_desc>
-      <long_desc>This is the minimum throttle while on the ground For aircraft with internal combustion engine this parameter should be set above desired idle rpm.</long_desc>
+      <short_desc>空闲油门</short_desc>
+      <long_desc>这是在地面上的最小节气门对于内燃机的飞机，这个参数应设置在所需的怠速转速以上。</long_desc>
       <min>0.0</min>
       <max>0.4</max>
       <unit>norm</unit>
@@ -2440,8 +2445,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="1.0" name="FW_THR_LND_MAX" type="FLOAT">
-      <short_desc>Throttle limit value before flare</short_desc>
-      <long_desc>This throttle value will be set as throttle limit at FW_LND_TLALT, before aircraft will flare.</long_desc>
+      <short_desc>平飘前油门限制</short_desc>
+      <long_desc>在飞行器平飘之前，该油门值将被设置为FW_LND_TLALT的油门限制。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -2450,8 +2455,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="1.0" name="FW_THR_MAX" type="FLOAT">
-      <short_desc>Throttle limit max</short_desc>
-      <long_desc>This is the maximum throttle % that can be used by the controller. For overpowered aircraft, this should be reduced to a value that provides sufficient thrust to climb at the maximum pitch angle PTCH_MAX.</long_desc>
+      <short_desc>油门最大限制</short_desc>
+      <long_desc>这是控制器可以使用的最大节流百分比。 对于动力不足的飞机，应该将其降低到能够提供足够的推力以爬升到最大俯仰角PTCH_MAX的值。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -2460,8 +2465,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="0.0" name="FW_THR_MIN" type="FLOAT">
-      <short_desc>Throttle limit min</short_desc>
-      <long_desc>This is the minimum throttle % that can be used by the controller. For electric aircraft this will normally be set to zero, but can be set to a small non-zero value if a folding prop is fitted to prevent the prop from folding and unfolding repeatedly in-flight or to provide some aerodynamic drag from a turning prop to improve the descent rate. For aircraft with internal combustion engine this parameter should be set for desired idle rpm.</long_desc>
+      <short_desc>油门最小限制</short_desc>
+      <long_desc>这是控制器可以使用的最小节气门百分比。 对于电动飞机，这通常会被设置为零，但是如果安装了折叠支柱，则可以将其设置为小的非零值，以防止支架在飞行中反复折叠和展开，或者从转弯支柱提供一些空气阻力 以提高下降率。 对于内燃机的飞机，这个参数应该设置为所需的怠速转速。</long_desc>
       <min>0.0</min>
       <max>1.0</max>
       <unit>norm</unit>
@@ -2525,8 +2530,8 @@ Set to 0 to disable heading hold</short_desc>
   </group>
   <group name="FW TECS">
     <parameter default="20.0" name="FW_AIRSPD_MAX" type="FLOAT">
-      <short_desc>Maximum Airspeed</short_desc>
-      <long_desc>If the airspeed is above this value, the TECS controller will try to decrease airspeed more aggressively.</long_desc>
+      <short_desc>最大空速</short_desc>
+      <long_desc>如果空速高于该值，则控制器将尝试更积极地降低空速。</long_desc>
       <min>0.0</min>
       <max>40</max>
       <unit>m/s</unit>
@@ -2535,8 +2540,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="10.0" name="FW_AIRSPD_MIN" type="FLOAT">
-      <short_desc>Minimum Airspeed</short_desc>
-      <long_desc>If the airspeed falls below this value, the TECS controller will try to increase airspeed more aggressively.</long_desc>
+      <short_desc>最小空速</short_desc>
+      <long_desc>如果空速低于该值，控制器将尝试更积极地增加空速。</long_desc>
       <min>0.0</min>
       <max>40</max>
       <unit>m/s</unit>
@@ -2545,8 +2550,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="15.0" name="FW_AIRSPD_TRIM" type="FLOAT">
-      <short_desc>Cruise Airspeed</short_desc>
-      <long_desc>The fixed wing controller tries to fly at this airspeed.</long_desc>
+      <short_desc>巡航空速</short_desc>
+      <long_desc>固定翼控制器试图在这个空速飞行。</long_desc>
       <min>0.0</min>
       <max>40</max>
       <unit>m/s</unit>
@@ -2618,8 +2623,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="5.0" name="FW_T_SINK_MAX" type="FLOAT">
-      <short_desc>Maximum descent rate</short_desc>
-      <long_desc>This sets the maximum descent rate that the controller will use. If this value is too large, the aircraft can over-speed on descent. This should be set to a value that can be achieved without exceeding the lower pitch angle limit and without over-speeding the aircraft.</long_desc>
+      <short_desc>最大下降速度</short_desc>
+      <long_desc>这将设置控制器将使用的最大下降速率。 如果该值太大，飞机可以在下降时超速。 这应该被设置为可以实现的值，而不超过下俯仰角极限并且不使飞机超速。</long_desc>
       <min>2.0</min>
       <max>15.0</max>
       <unit>m/s</unit>
@@ -2628,8 +2633,8 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="2.0" name="FW_T_SINK_MIN" type="FLOAT">
-      <short_desc>Minimum descent rate</short_desc>
-      <long_desc>This is the sink rate of the aircraft with the throttle set to THR_MIN and flown at the same airspeed as used to measure FW_T_CLMB_MAX.</long_desc>
+      <short_desc>最小下降速度</short_desc>
+      <long_desc>这是飞机的下降率，其中油门设置为油门最小值参数，并以与用于测量最大爬升率参数的相同的空速飞行。</long_desc>
       <min>1.0</min>
       <max>5.0</max>
       <unit>m/s</unit>
@@ -2704,7 +2709,7 @@ Set to 0 to disable heading hold</short_desc>
       <scope>modules/fw_pos_control_l1</scope>
     </parameter>
     <parameter default="10.0" name="GND_SPEED_MAX" type="FLOAT">
-      <short_desc>Maximum ground speed</short_desc>
+      <short_desc>最大地速</short_desc>
       <min>0.0</min>
       <max>40</max>
       <unit>m/s</unit>
@@ -3050,11 +3055,11 @@ but also ignore less noise</short_desc>
       <max>4</max>
       <scope>modules/navigator</scope>
       <values>
-        <value code="0">None</value>
-        <value code="1">Warning</value>
-        <value code="2">Loiter</value>
-        <value code="3">Return to Land</value>
-        <value code="4">Flight terminate</value>
+        <value code="0">无</value>
+        <value code="1">警告</value>
+        <value code="2">悬停(盘旋)</value>
+        <value code="3">返航</value>
+        <value code="4">飞行终止</value>
       </values>
     </parameter>
     <parameter default="0" name="GF_ALTMODE" type="INT32">
@@ -3751,13 +3756,13 @@ Used to calculate increased terrain random walk nosie due to movement</short_des
       <long_desc>The data link loss failsafe will only be entered after a timeout, set by COM_DL_LOSS_T in seconds. Once the timeout occurs the selected action will be executed. Setting this parameter to 4 will enable CASA Outback Challenge rules, which are only recommended to participants of that competition.</long_desc>
       <scope>modules/navigator</scope>
       <values>
-        <value code="0">Disabled</value>
-        <value code="1">Loiter</value>
-        <value code="2">Return to Land</value>
-        <value code="3">Land at current position</value>
-        <value code="4">Data Link Auto Recovery (CASA Outback Challenge rules)</value>
+        <value code="0">禁用</value>
+        <value code="1">悬停(盘旋)</value>
+        <value code="2">返航</value>
+        <value code="3">降落</value>
+<!--        <value code="4">Data Link Auto Recovery (CASA Outback Challenge rules)</value>
         <value code="5">Terminate</value>
-        <value code="6">Lockdown</value>
+        <value code="6">Lockdown</value>-->
       </values>
     </parameter>
     <parameter default="1" name="NAV_FORCE_VT" type="INT32">
@@ -3800,13 +3805,13 @@ Used to calculate increased terrain random walk nosie due to movement</short_des
       <long_desc>The RC loss failsafe will only be entered after a timeout, set by COM_RC_LOSS_T in seconds. If RC input checks have been disabled by setting the COM_RC_IN_MODE param it will not be triggered. Setting this parameter to 4 will enable CASA Outback Challenge rules, which are only recommended to participants of that competition.</long_desc>
       <scope>modules/navigator</scope>
       <values>
-        <value code="0">Disabled</value>
-        <value code="1">Loiter</value>
-        <value code="2">Return to Land</value>
-        <value code="3">Land at current position</value>
-        <value code="4">RC Auto Recovery (CASA Outback Challenge rules)</value>
+        <value code="0">禁用</value>
+        <value code="1">悬停(盘旋)</value>
+        <value code="2">返航</value>
+        <value code="3">降落</value>
+<!--    <value code="4">RC Auto Recovery (CASA Outback Challenge rules)</value>
         <value code="5">Terminate</value>
-        <value code="6">Lockdown</value>
+        <value code="6">Lockdown</value>-->
       </values>
     </parameter>
     <parameter default="1" name="NAV_TRAFF_AVOID" type="INT32">
@@ -3814,10 +3819,10 @@ Used to calculate increased terrain random walk nosie due to movement</short_des
       <long_desc>Enabling this will allow the system to respond to transponder data from e.g. ADSB transponders</long_desc>
       <scope>modules/navigator</scope>
       <values>
-        <value code="0">Disabled</value>
-        <value code="1">Warn only</value>
-        <value code="2">Return to Land</value>
-        <value code="3">Land immediately</value>
+        <value code="0">禁用</value>
+        <value code="1">警告</value>
+        <value code="2">返航</value>
+        <value code="3">降落</value>
       </values>
     </parameter>
     <parameter default="0" name="VT_WV_LND_EN" type="INT32">
@@ -6073,141 +6078,141 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <scope>modules/sensors</scope>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX1" type="INT32">
-      <short_desc>AUX1 Passthrough RC channel</short_desc>
+      <short_desc>辅助通道1->RC</short_desc>
       <long_desc>Default function: Camera pitch</long_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX2" type="INT32">
-      <short_desc>AUX2 Passthrough RC channel</short_desc>
+      <short_desc>辅助通道2->RC</short_desc>
       <long_desc>Default function: Camera roll</long_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX3" type="INT32">
-      <short_desc>AUX3 Passthrough RC channel</short_desc>
+      <short_desc>辅助通道3->RC</short_desc>
       <long_desc>Default function: Camera azimuth / yaw</long_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX4" type="INT32">
-      <short_desc>AUX4 Passthrough RC channel</short_desc>
+      <short_desc>辅助通道4->RC</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_AUX5" type="INT32">
-      <short_desc>AUX5 Passthrough RC channel</short_desc>
+      <short_desc>辅助通道5->RC</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_FAILSAFE" type="INT32">
@@ -6217,25 +6222,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_PARAM1" type="INT32">
@@ -6245,25 +6250,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_PARAM2" type="INT32">
@@ -6273,25 +6278,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_PARAM3" type="INT32">
@@ -6301,25 +6306,26 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
+
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_PITCH" type="INT32">
@@ -6329,25 +6335,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_ROLL" type="INT32">
@@ -6357,25 +6363,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+   <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_THROTTLE" type="INT32">
@@ -6385,25 +6391,26 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+   	<value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
+
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_YAW" type="INT32">
@@ -6413,25 +6420,26 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+         <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
+
       </values>
     </parameter>
     <parameter default="0" name="RC_RSSI_PWM_CHAN" type="INT32">
@@ -6441,25 +6449,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>drivers/px4io</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+        <value code="0">未分配</value>
+        <value code="1">通道 1</value>
+        <value code="2">通道 2</value>
+        <value code="3">通道 3</value>
+        <value code="4">通道 4</value>
+        <value code="5">通道 5</value>
+        <value code="6">通道 6</value>
+        <value code="7">通道 7</value>
+        <value code="8">通道 8</value>
+        <value code="9">通道 9</value>
+        <value code="10">通道 10</value>
+        <value code="11">通道 11</value>
+        <value code="12">通道 12</value>
+        <value code="13">通道 13</value>
+        <value code="14">通道 14</value>
+        <value code="15">通道 15</value>
+        <value code="16">通道 16</value>
+        <value code="17">通道 17</value>
+        <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="1000" name="RC_RSSI_PWM_MAX" type="INT32">
@@ -6477,8 +6485,8 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <scope>drivers/px4io</scope>
     </parameter>
     <parameter default="0.0" name="TRIM_PITCH" type="FLOAT">
-      <short_desc>Pitch trim</short_desc>
-      <long_desc>The trim value is the actuator control value the system needs for straight and level flight. It can be calibrated by flying manually straight and level using the RC trims and copying them using the GCS.</long_desc>
+      <short_desc>仰俯中立值</short_desc>
+      <long_desc>微调需要用于直线和水平飞行的电机控制值。 它可以通过使用遥控微调手动直线和水平飞行进行校准，并使用地面站进行复制。</long_desc>
       <min>-0.25</min>
       <max>0.25</max>
       <decimal>2</decimal>
@@ -6486,8 +6494,8 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <scope>modules/commander</scope>
     </parameter>
     <parameter default="0.0" name="TRIM_ROLL" type="FLOAT">
-      <short_desc>Roll trim</short_desc>
-      <long_desc>The trim value is the actuator control value the system needs for straight and level flight. It can be calibrated by flying manually straight and level using the RC trims and copying them using the GCS.</long_desc>
+      <short_desc>横滚中立值</short_desc>
+      <long_desc>微调需要用于直线和水平飞行的电机控制值。 它可以通过使用遥控微调手动直线和水平飞行进行校准，并使用地面站进行复制。</long_desc>
       <min>-0.25</min>
       <max>0.25</max>
       <decimal>2</decimal>
@@ -6495,8 +6503,8 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <scope>modules/commander</scope>
     </parameter>
     <parameter default="0.0" name="TRIM_YAW" type="FLOAT">
-      <short_desc>Yaw trim</short_desc>
-      <long_desc>The trim value is the actuator control value the system needs for straight and level flight. It can be calibrated by flying manually straight and level using the RC trims and copying them using the GCS.</long_desc>
+      <short_desc>航向中立值</short_desc>
+      <long_desc>微调需要用于直线和水平飞行的电机控制值。 它可以通过使用遥控微调手动直线和水平飞行进行校准，并使用地面站进行复制。</long_desc>
       <min>-0.25</min>
       <max>0.25</max>
       <decimal>2</decimal>
@@ -6578,25 +6586,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_ARM_SW" type="INT32">
@@ -6605,25 +6613,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_FLAPS" type="INT32">
@@ -6632,25 +6640,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_FLTMODE" type="INT32">
@@ -6660,52 +6668,52 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_GEAR_SW" type="INT32">
-      <short_desc>Landing gear switch channel</short_desc>
+      <short_desc>起落架通道</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_KILL_SW" type="INT32">
@@ -6714,25 +6722,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_LOITER_SW" type="INT32">
@@ -6741,25 +6749,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_MAN_SW" type="INT32">
@@ -6768,25 +6776,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_MODE_SW" type="INT32">
@@ -6796,25 +6804,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_OFFB_SW" type="INT32">
@@ -6823,25 +6831,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_POSCTL_SW" type="INT32">
@@ -6850,25 +6858,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_RATT_SW" type="INT32">
@@ -6877,25 +6885,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_RETURN_SW" type="INT32">
@@ -6904,25 +6912,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_STAB_SW" type="INT32">
@@ -6958,25 +6966,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0.5" name="RC_OFFB_TH" type="FLOAT">
