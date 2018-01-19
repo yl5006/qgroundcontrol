@@ -733,8 +733,9 @@ void SimpleMissionItem::setDefaultsForCommand(void)
     const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
     if (uiInfo) {
         for (int i=1; i<=10; i++) {  //10 params
-            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i);
-            if (paramInfo) {
+            bool showUI;
+            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i,showUI);
+            if (showUI && paramInfo) {
                 Fact* rgParamFacts[10] = { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact, &_missionItem._param8Fact, &_missionItem._param9Fact, &_missionItem._param10Fact };
                 rgParamFacts[paramInfo->param()-1]->setRawValue(paramInfo->defaultValue());
             }

@@ -47,46 +47,13 @@ Rectangle {
     QGCPalette { id: qgcPal }
     QGCFileDialogController { id: fileController }
 
-    Loader {
-        id:              deferedload
-        active:          valuesRect.visible
-        asynchronous:    true
-        anchors.margins: _margin
-        anchors.left:    valuesRect.left
-        anchors.right:   valuesRect.right
-        anchors.top:     valuesRect.top
-
-        sourceComponent: Component {
-            Item {
-                id:                 valuesItem
-                height:             valuesColumn.height + (_margin * 2)
-
-                Column {
-                    id:             valuesColumn
-                    anchors.left:   parent.left
-                    anchors.right:  parent.right
-                    anchors.top:    parent.top
-                    spacing:        _margin
-
-                    Loader {
-                        anchors.left:       parent.left
-                        anchors.right:      parent.right
-                        sourceComponent:    missionSettings
-                    }
-                } // Column
-            } // Item
-        } // Component
-    } // Loader
-
-    Component {
-        id: missionSettings
-
-        Column {
-            id:             valuesColumn
-            anchors.left:   parent ? parent.left  : undefined
-            anchors.right:  parent ? parent.right : undefined
-            anchors.top:    parent ? parent.top   : undefined
-            spacing:        _margin
+    Column {
+        id:                 valuesColumn
+        anchors.margins:    _margin
+        anchors.left:       parent.left
+        anchors.right:      parent.right
+        anchors.top:        parent.top
+        spacing:            _margin
 
             Column {
                 anchors.left:   parent.left
@@ -280,5 +247,4 @@ Rectangle {
                 }
             }
         } // Column
-    } // Deferred loader
 } // Rectangle
