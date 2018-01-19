@@ -50,16 +50,18 @@ public:
     void                guidedModeOrbit                 (Vehicle* vehicle, const QGeoCoordinate& centerCoord = QGeoCoordinate(), double radius = NAN, double velocity = NAN, double altitude = NAN) override;
     void                guidedModeGotoLocation          (Vehicle* vehicle, const QGeoCoordinate& gotoCoord) override;
     void                guidedModeChangeAltitude        (Vehicle* vehicle, double altitudeRel) override;
+    double              minimumTakeoffAltitude          (Vehicle* vehicle) override;
     void                startMission                    (Vehicle* vehicle) override;
     bool                isGuidedMode                    (const Vehicle* vehicle) const override;
     int                 manualControlReservedButtonCount(void) override;
     void                initializeVehicle               (Vehicle* vehicle) override;
     bool                sendHomePositionToVehicle       (void) override;
     void                addMetaDataToFact               (QObject* parameterMetaData, Fact* fact, MAV_TYPE vehicleType) override;
+    FactMetaData*       getMetaDataForFact              (QObject* parameterMetaData, const QString& name, MAV_TYPE vehicleType) override;
     QString             missionCommandOverrides         (MAV_TYPE vehicleType) const override;
     QString             getVersionParam                 (void) override { return QString("SYS_PARAM_VER"); }
-    QString             internalParameterMetaDataFile   (Vehicle* vehicle) final { Q_UNUSED(vehicle); return (language==0? QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaDatacn.xml"):QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaData.xml")); }
-    void                getParameterMetaDataVersionInfo (const QString& metaDataFile, int& majorVersion, int& minorVersion) override { PX4ParameterMetaData::getParameterMetaDataVersionInfo(metaDataFile, majorVersion, minorVersion); }
+    QString             internalParameterMetaDataFile   (Vehicle* vehicle) override { Q_UNUSED(vehicle); return (language==0? QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaDatacn.xml"):QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaData.xml")); }
+    void                getParameterMetaDataVersionInfo (const QString& metaDataFile, int& majorVersion, int& minorVersion) override;
     QObject*            loadParameterMetaData           (const QString& metaDataFile) final;
     bool                adjustIncomingMavlinkMessage    (Vehicle* vehicle, mavlink_message_t* message) override;
     QString             offlineEditingParamFile(Vehicle* vehicle) override { Q_UNUSED(vehicle); return QStringLiteral(":/FirmwarePlugin/PX4/PX4.OfflineEditing.params"); }

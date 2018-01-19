@@ -164,6 +164,9 @@ Canvas {
 
     QGCMouseArea {
         fillItem:   parent
-        onClicked:  parent.clicked()
+        onClicked: {
+            focus = true
+            parent.clicked()
+        }
     }
 }

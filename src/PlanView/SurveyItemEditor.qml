@@ -440,7 +440,7 @@ Rectangle {
             FactCheckBox {
                 text:       qsTr("任何地方都拍照")
                 fact:       missionItem.cameraTriggerInTurnaround
-                enabled:    !missionItem.hoverAndCapture.rawValue
+                enabled:    missionItem.hoverAndCaptureAllowed ? !missionItem.hoverAndCapture.rawValue : true
             }
 
             SectionHeader {
@@ -641,7 +641,7 @@ Rectangle {
             FactCheckBox {
                 text:               qsTr("任何地方都拍照")
                 fact:               missionItem.cameraTriggerInTurnaround
-                enabled:            !missionItem.hoverAndCapture.rawValue
+                enabled:            missionItem.hoverAndCaptureAllowed ? !missionItem.hoverAndCapture.rawValue : true
                 Layout.columnSpan:  2
             }
 

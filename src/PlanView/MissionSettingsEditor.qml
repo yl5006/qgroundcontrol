@@ -16,7 +16,7 @@ import QGroundControl.Controllers       1.0
 Rectangle {
     id:                 valuesRect
     width:              availableWidth
-    height:             deferedload.status == Loader.Ready ? (visible ? deferedload.item.height : 0) : 0
+    height:             valuesColumn.height + (_margin * 2)
     color:              qgcPal.windowShadeDark
     visible:            missionItem.isCurrentItem
     radius:             _margin/2
@@ -42,6 +42,7 @@ Rectangle {
     property Fact   _offlinespeed:              _showCruiseSpeed ? QGroundControl.settingsManager.appSettings.offlineEditingCruiseSpeed : QGroundControl.settingsManager.appSettings.offlineEditingHoverSpeed
     readonly property string _firmwareLabel:    qsTr("Firmware")
     readonly property string _vehicleLabel:     qsTr("Vehicle")
+    readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
 
     QGCPalette { id: qgcPal }
     QGCFileDialogController { id: fileController }

@@ -54,12 +54,6 @@ Column {
         _loadComplete = true
     }
 
-//    QGCLabel {
-//        id:             panelLabel
-//        text:           panelTitle
-//        font.family:    ScreenTools.demiboldFontFamily
-//    }
-
     Flow {
         id:                 sliderOuterColumn
         anchors.left:       parent.left
@@ -125,6 +119,7 @@ Column {
                         maximumValue:       max
                         stepSize:           isNaN(fact.increment) ? step : fact.increment
                         tickmarksEnabled:   true
+                        activeFocusOnPress: true
 
                         property Fact fact: controller.getParameterFact(-1, param)
 
@@ -132,16 +127,6 @@ Column {
                             if (_loadComplete) {
                                 fact.value = value
                             }
-                        }
-
-                        activeFocusOnPress:         true
-
-                        MultiPointTouchArea {
-                            anchors.fill: parent
-
-                            minimumTouchPoints: 1
-                            maximumTouchPoints: 1
-                            mouseEnabled:       false
                         }
 
                         // Block wheel events

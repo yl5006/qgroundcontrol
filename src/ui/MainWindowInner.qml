@@ -451,6 +451,8 @@ Item {
             easing.type:    Easing.InOutQuad
             to:             -mainWindow.tbHeight*1.6
         }
+//        onVtolTransitionToFwdFlight:    flightView.guidedController.confirmAction(flightView.guidedController.actionVtolTransitionToFwdFlight)
+//        onVtolTransitionToMRFlight:     flightView.guidedController.confirmAction(flightView.guidedController.actionVtolTransitionToMRFlight)
 
     }
 /*

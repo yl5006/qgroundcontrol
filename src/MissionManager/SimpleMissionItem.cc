@@ -462,9 +462,10 @@ void SimpleMissionItem::_rebuildTextFieldFacts(void)
             _textFieldFacts.append(&_missionItem._param7Fact);
         }
         for (int i=1; i<=10; i++) {  //10 params
-            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i);
+            bool showUI;
+            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i, showUI);
 
-            if (paramInfo && paramInfo->enumStrings().count() == 0 && !paramInfo->nanUnchanged()) {
+            if (showUI && paramInfo && paramInfo->enumStrings().count() == 0 && !paramInfo->nanUnchanged()) {
                 Fact*               paramFact =     rgParamFacts[i-1];
                 FactMetaData*       paramMetaData = rgParamMetaData[i-1];
 
@@ -510,9 +511,10 @@ void SimpleMissionItem::_rebuildNaNFacts(void)
         const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
 
         for (int i=1; i<=10; i++) {
-            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i);
+            bool showUI;
+            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i, showUI);
 
-            if (paramInfo && paramInfo->nanUnchanged()) {
+            if (showUI && paramInfo && paramInfo->nanUnchanged()) {
                 // Show hide Heading field on waypoint based on vehicle yaw to next waypoint setting. This needs to come from the actual vehicle if it exists
                 // and not _vehicle which is always offline.
                 Vehicle* firmwareVehicle = qgcApp()->toolbox()->multiVehicleManager()->activeVehicle();
@@ -573,9 +575,10 @@ void SimpleMissionItem::_rebuildComboBoxFacts(void)
         }
 
         for (int i=1; i<=10; i++) {  //10 params
-            const MissionCmdParamInfo* paramInfo = _commandTree->getUIInfo(_vehicle, command)->getParamInfo(i);
+            bool showUI;
+            const MissionCmdParamInfo* paramInfo = _commandTree->getUIInfo(_vehicle, command)->getParamInfo(i, showUI);
 
-            if (paramInfo && paramInfo->enumStrings().count() != 0) {
+            if (showUI && paramInfo && paramInfo->enumStrings().count() != 0) {
                 Fact*               paramFact =     rgParamFacts[i-1];
                 FactMetaData*       paramMetaData = rgParamMetaData[i-1];
 
@@ -764,7 +767,8 @@ void SimpleMissionItem::setDefaultsForCMD(void)
     const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
     if (uiInfo) {
         for (int i=1; i<=10; i++) {  //10 params
-            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i);
+            bool showUI;
+            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i, showUI);
             if (paramInfo) {
                 Fact* rgParamFacts[10] = { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact, &_missionItem._param8Fact, &_missionItem._param9Fact, &_missionItem._param10Fact };
                 rgParamFacts[paramInfo->param()-1]->setRawValue(paramInfo->defaultValue());

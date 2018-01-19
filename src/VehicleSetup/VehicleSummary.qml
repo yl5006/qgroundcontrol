@@ -85,7 +85,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 text:           setupComplete ?qsTr("设置预览"):qsTr("警告:你的机体未设置完全，请设置标红的那些栏")
 //                    qsTr("Below you will find a summary of the settings for your vehicle. To the left are the setup menus for each component.") :
-//                    qsTr("WARNING: Your vehicle requires setup prior to flight. Please resolve the items marked in red using the menu on the left.")               
+//                   qsTr("WARNING: Your vehicle requires setup prior to flight. Please resolve the items marked in red using the menu on the left.")
                 property bool setupComplete: QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.autopilot.setupComplete : false
             }
 

@@ -45,6 +45,7 @@ public:
     const QVariantList& vehicleComponents(void) override;
     void parametersReadyPreChecks(void) override;
     QString prerequisiteSetup(VehicleComponent* component) const override;
+
 protected:
     bool                    _incorrectParameterVersion; ///< true: parameter version incorrect, setup not allowed
     PX4AirframeLoader*      _airframeFacts;
@@ -58,8 +59,9 @@ protected:
     PowerComponent*         _powerComponent;
     MotorComponent*         _motorComponent;
     PX4TuningComponent*     _tuningComponent;
-    PX4VehicleParamsComponent*     _paramsComponent;
-	SyslinkComponent*       _syslinkComponent;
+	PX4VehicleParamsComponent*     _paramsComponent;
+    SyslinkComponent*       _syslinkComponent;
+
 private:
     QVariantList            _components;
 };
