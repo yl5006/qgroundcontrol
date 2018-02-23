@@ -35,7 +35,6 @@
         <file alias="LinkSettings.qml">src/ui/preferences/LinkSettings.qml</file>
         <file alias="LogDownloadPage.qml">src/AnalyzeView/LogDownloadPage.qml</file>
         <file alias="LogReplaySettings.qml">src/ui/preferences/LogReplaySettings.qml</file>
-        <file alias="MainTool.qml">src/ui/toolbar/MainTool.qml</file>
         <file alias="MainWindowHybrid.qml">src/ui/MainWindowHybrid.qml</file>
         <file alias="MainWindowInner.qml">src/ui/MainWindowInner.qml</file>
         <file alias="MainWindowNative.qml">src/ui/MainWindowNative.qml</file>

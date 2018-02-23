@@ -424,7 +424,7 @@ SetupPage {
                     checkable:          true
                     text:           qsTr("加速度")//qsTr("Accelerometer")
                     primary:        true
-                    bordercolor:    cal_acc0_id.value !== 0 ? qgcPal.primaryButton:"red"
+                    bordercolor:    cal_acc0_id.value != 0 ? qgcPal.primaryButton:"red"
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationGyro
                     _showBorder:    true
                     onClicked: {
@@ -444,7 +444,7 @@ SetupPage {
                     checkable:          true
                     text:           qsTr("角速度")//qsTr("Gyroscope")
                     primary:        true
-                    bordercolor:    (cal_gyro0_id.value !== 0) ? qgcPal.primaryButton:"red"
+                    bordercolor:    (cal_gyro0_id.value != 0) ? qgcPal.primaryButton:"red"
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationAccel
                     _showBorder:    true
                     onClicked: {                           
@@ -465,7 +465,7 @@ SetupPage {
                     primary:        true
                     bordercolor:    (sens_board_x_off.value != 0 || sens_board_y_off != 0 | sens_board_z_off != 0)?qgcPal.primaryButton:"red"
                     _showBorder:    true
-                    enabled:        cal_acc0_id.value !== 0 && cal_gyro0_id.value != 0
+                    enabled:        cal_acc0_id.value != 0 && cal_gyro0_id.value != 0
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationLevel
 
                     onClicked: {
@@ -523,7 +523,8 @@ SetupPage {
                 anchors.top:        buttonColumn.bottom
                 anchors.topMargin:  ScreenTools.defaultFontPixelWidth / 2
                 anchors.horizontalCenter:  parent.horizontalCenter
-
+                anchors.bottom:     parent.bottom
+                anchors.bottomMargin:  ScreenTools.defaultFontPixelWidth
                 Item { height: ScreenTools.defaultFontPixelHeight; width: 10 } // spacer
 
                 Item {
@@ -541,10 +542,10 @@ SetupPage {
                         text:           statusTextAreaDefaultText
                         wrapMode:           Text.WordWrap
                         horizontalAlignment:    Text.AlignHCenter
-//                        style: TextAreaStyle {
-//                            textColor: qgcPal.text
-//                            backgroundColor: qgcPal.windowShade
-//                        }
+                        style: TextAreaStyle {
+                            textColor: qgcPal.text
+                            backgroundColor: qgcPal.windowShade
+                        }
                     }
 
                     Rectangle {
@@ -580,13 +581,12 @@ SetupPage {
                             anchors.topMargin:  ScreenTools.defaultFontPixelWidth
                             anchors.top:        orientationCalAreaHelpText.bottom
                             anchors.bottom:     parent.bottom
-                            anchors.leftMargin: ScreenTools.defaultFontPixelWidth * 20
                             anchors.left:       parent.left
                             anchors.right:      parent.right
                             spacing:            ScreenTools.defaultFontPixelWidth / 2
                             //       anchors.horizontalCenter:  parent.horizontalCenter
-                            property real indicatorWidth:   (width / 3) - (spacing * 2)
-                            property real indicatorHeight:  (height / 2) - spacing
+                            property real indicatorWidth:   (orientationCalArea.width / 3) - (spacing * 12)
+                            property real indicatorHeight:  (orientationCalArea.height / 2) - spacing * 4
                             VehicleRotationCal {
                                 width:              parent.indicatorWidth
                                 height:             parent.indicatorHeight

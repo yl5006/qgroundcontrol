@@ -2136,8 +2136,7 @@ void Vehicle::virtualTabletRCValue(double roll, double pitch,bool pic)
         cammer_rc.chan4_raw = 1500;  // start
         cammer_rc.chan5_raw = 1500;  // start
         cammer_rc.chan6_raw = 1500;  // start
-        cammer_rc.chan7_raw = 1100+400 * (pic ? 1 :0) ;  // start
-        qDebug()<< "chan7" << cammer_rc.chan7_raw;
+        cammer_rc.chan7_raw = 1000+800 * (pic ? 1 :0) ;  // start
         cammer_rc.chan8_raw = 1500;  // start
         cammer_rc.chan9_raw = 1500;  // start
         cammer_rc.chan10_raw = 1500;  // start

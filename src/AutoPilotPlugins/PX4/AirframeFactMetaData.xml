@@ -385,7 +385,7 @@
       <type>Quadrotor x</type>
     </airframe>
   </airframe_group>
-  <airframe_group image="AirframeUnknown" name="Simulation (Copter)" type="21">
+  <airframe_group image="AirframeUnknown" name="Simulation (Copter)" type="22">
     <airframe id="1001" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="HIL Quadcopter X">
       <class>Copter</class>
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
@@ -538,7 +538,7 @@
       <output name="MAIN7">feed-through of RC AUX1 channel</output>
     </airframe>
   </airframe_group>
-  <airframe_group image="AirframeUnknown" name="Simulation (Plane)" type="21">
+  <airframe_group image="AirframeUnknown" name="Simulation (Plane)" type="22">
     <airframe id="1000" maintainer="Lorenz Meier &lt;lorenz@px4.io&gt;" name="HILStar (XPlane)">
       <class>Plane</class>
       <maintainer>Lorenz Meier &lt;lorenz@px4.io&gt;</maintainer>
@@ -712,7 +712,7 @@
       <output name="MAIN8">rudder</output>
     </airframe>
   </airframe_group>
-  <airframe_group image="VTOLTiltRotor" name="倾桨式飞机" type="19">
+  <airframe_group image="VTOLTiltRotor" name="倾桨式飞机" type="21">
     <airframe id="13002" maintainer="Roman Bapst &lt;roman@uaventure.com&gt;" name="BirdsEyeView Aerobotics FireFly6">
       <class>VTOL</class>
       <maintainer>Roman Bapst &lt;roman@uaventure.com&gt;</maintainer>

@@ -534,7 +534,7 @@ void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_messag
     if (!instanceData->versionNotified) {
         bool notifyUser = false;
         int supportedMajorVersion = 1;
-        int supportedMinorVersion = 6;
+        int supportedMinorVersion = 7;
         int supportedPatchVersion = 0;
         int supportedlastVersion = 1185;
 

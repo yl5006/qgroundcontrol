@@ -34,7 +34,7 @@ Rectangle {
     property var  activeVehicle:        QGroundControl.multiVehicleManager.activeVehicle
     property var  mainWindow:           null
 
-    property bool isMessageImportant:   activeVehicle ? !activeVehicle.messageTypeNormal && !activeVehicle.messageTypeNone : false
+    property bool isMessageImportant:   activeVehicle ? !activeVehicle.messageTypeNormal && !activeVehicle.messageTypeWarning && !activeVehicle.messageTypeNone : false
     readonly property var   colorGreen:     "#05f068"
     readonly property var   colorOrange:    "#f0ab06"
     readonly property var   colorRed:       "#fc4638"

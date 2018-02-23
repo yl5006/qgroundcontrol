@@ -82,23 +82,20 @@ SetupPage {
                 case 2:
                     switch(type)
                     {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 13:
-                    case 14:
-                    case 15:
-                    case 15:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 19:
+                    case 20:
                     case 21:
-                        return false;
-                    default:
                         return true;
+                    default:
+                        return false;
                     }
                 case 3:
                     switch(type)
                     {
-                    case 21:
+                    case 22:
                         return false;
                     default:
                         return true;

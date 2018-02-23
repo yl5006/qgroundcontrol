@@ -82,7 +82,7 @@ QGC_APP_NAME        = "GroundStation"
 QGC_ORG_NAME        = "GroundStation.org"
 QGC_ORG_DOMAIN      = "org.groundStation"
 QGC_APP_DESCRIPTION = "ground station provided by yaoling"
-QGC_APP_COPYRIGHT   = "Copyright (C) 2017 GroundStation Development Team. All rights reserved."
+QGC_APP_COPYRIGHT   = "Copyright (C) 2018 GroundStation Development Team. All rights reserved."
 
 WindowsBuild {
     QGC_INSTALLER_ICON          = "WindowsQGC.ico"
@@ -635,7 +635,6 @@ HEADERS += \
     src/AnalyzeView/MavlinkConsoleController.h \
     src/GPS/Drivers/src/gps_helper.h \
     src/GPS/Drivers/src/ubx.h \
-#    src/GPS/Drivers/src/nova.h \
     src/GPS/GPSManager.h \
     src/GPS/GPSPositionMessage.h \
     src/GPS/GPSProvider.h \
@@ -739,7 +738,7 @@ SOURCES += \
     src/MissionManager/VisualMissionItem.cc \
     src/PositionManager/PositionManager.cpp \
     src/PositionManager/SimulatedPosition.cc \
-    src/QGC.cc \ 
+    src/QGC.cc \
     src/QGCApplication.cc \
     src/QGCComboBox.cc \
     src/QGCDockWidget.cc \
@@ -813,7 +812,6 @@ SOURCES += \
     src/AnalyzeView/MavlinkConsoleController.cc \
     src/GPS/Drivers/src/gps_helper.cpp \
     src/GPS/Drivers/src/ubx.cpp \
-#    src/GPS/Drivers/src/nova.cpp \
     src/GPS/GPSManager.cc \
     src/GPS/GPSProvider.cc \
     src/GPS/RTCM/RTCMMavlink.cc \
