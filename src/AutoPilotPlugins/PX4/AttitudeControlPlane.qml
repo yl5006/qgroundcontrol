@@ -243,7 +243,7 @@ QGCFlickable {
             }
             }
 
-            Rectangle {
+  /*          Rectangle {
                 anchors.topMargin:  ScreenTools.defaultFontPixelHeight
                 width:              _editFieldWidth+_buttonWidth+ScreenTools.defaultFontPixelHeight
                 height:             ScreenTools.defaultFontPixelHeight*6
@@ -346,7 +346,7 @@ QGCFlickable {
                         // Repeater
                     }
                 }
-            }
+            }*/
             Rectangle {
                 anchors.topMargin:  ScreenTools.defaultFontPixelHeight
                 width:              _editFieldWidth+_buttonWidth+ScreenTools.defaultFontPixelHeight
