@@ -49,7 +49,7 @@ FactPanel {
         VehicleSummaryRow {
             labelText:  qsTr("空速计:")//qsTr("Airspeed:")
             visible:    _airspeedVisible
-            valueText: _airspeedCalRequired ? qsTr("Setup required") : qsTr("Ready")
+            valueText: _airspeedCalRequired ? qsTr("未校准") : qsTr("已校准")
         }
     }
 }
