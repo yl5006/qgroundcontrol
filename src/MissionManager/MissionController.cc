@@ -63,7 +63,7 @@ MissionController::MissionController(PlanMasterController* masterController, QOb
     , _surveyMissionItemName(tr("扫描航线"))
     , _fwLandingMissionItemName(tr("固定翼降落"))
     , _structureScanMissionItemName(tr("垂直扫描航线"))
-    , _corridorScanMissionItemName(tr("Corridor Scan"))
+    , _corridorScanMissionItemName(tr("带状航线"))
     , _appSettings(qgcApp()->toolbox()->settingsManager()->appSettings())
     , _progressPct(0)
     , _currentPlanViewIndex(-1)

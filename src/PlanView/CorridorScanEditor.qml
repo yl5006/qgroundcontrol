@@ -1,4 +1,4 @@
-import QtQuick          2.3
+﻿import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs  1.2
@@ -59,7 +59,7 @@ Rectangle {
         QGCLabel {
             anchors.left:   parent.left
             anchors.right:  parent.right
-            text:           qsTr("WARNING: Photo interval is below minimum interval (%1 secs) supported by camera.").arg(missionItem.cameraMinTriggerInterval.toFixed(1))
+            text:           qsTr("注意: 相机最小拍照间隔 (%1 secs) .").arg(missionItem.cameraMinTriggerInterval.toFixed(1))
             wrapMode:       Text.WordWrap
             color:          qgcPal.warningText
             visible:        missionItem.cameraShots > 0 && missionItem.cameraMinTriggerInterval !== 0 && missionItem.cameraMinTriggerInterval > missionItem.timeBetweenShots
@@ -68,14 +68,14 @@ Rectangle {
         CameraCalc {
             cameraCalc:             missionItem.cameraCalc
             vehicleFlightIsFrontal: true
-            distanceToSurfaceLabel: qsTr("Altitude")
-            frontalDistanceLabel:   qsTr("Trigger Distance")
-            sideDistanceLabel:      qsTr("Spacing")
+            distanceToSurfaceLabel: qsTr("高度")
+            frontalDistanceLabel:   qsTr("触发距离")
+            sideDistanceLabel:      qsTr("间距")
         }
 
         SectionHeader {
             id:     corridorHeader
-            text:   qsTr("Corridor")
+            text:   qsTr("带状航线")
         }
 
         GridLayout {
@@ -86,20 +86,20 @@ Rectangle {
             columns:        2
             visible:        corridorHeader.checked
 
-            QGCLabel { text: qsTr("Width") }
+            QGCLabel { text: qsTr("宽") }
             FactTextField {
                 fact:                   missionItem.corridorWidth
                 Layout.fillWidth:       true
             }
 
-            QGCLabel { text: qsTr("Turnaround dist") }
+            QGCLabel { text: qsTr("转弯距离") }
             FactTextField {
                 fact:                   missionItem.turnAroundDistance
                 Layout.fillWidth:       true
             }
 
             FactCheckBox {
-                text:               qsTr("Take images in turnarounds")
+                text:               qsTr("转弯时也拍照")
                 fact:               missionItem.cameraTriggerInTurnAround
                 enabled:            missionItem.hoverAndCaptureAllowed ? !missionItem.hoverAndCapture.rawValue : true
                 Layout.columnSpan:  2
@@ -108,7 +108,7 @@ Rectangle {
             QGCCheckBox {
                 id:                 relAlt
                 anchors.left:       parent.left
-                text:               qsTr("Relative altitude")
+                text:               qsTr("参考高度")
                 checked:            missionItem.cameraCalc.distanceToSurfaceRelative
                 enabled:            missionItem.cameraCalc.isManualCamera
                 Layout.columnSpan:  2
@@ -122,13 +122,13 @@ Rectangle {
         }
 
         QGCButton {
-            text:       qsTr("Rotate Entry Point")
+            text:       qsTr("改变起始点")
             onClicked:  missionItem.rotateEntryPoint()
         }
 
         SectionHeader {
             id:     statsHeader
-            text:   qsTr("Statistics")
+            text:   qsTr("统计")
         }
 
         Grid {
@@ -136,10 +136,10 @@ Rectangle {
             columnSpacing:  ScreenTools.defaultFontPixelWidth
             visible:        statsHeader.checked
 
-            QGCLabel { text: qsTr("Photo count") }
+            QGCLabel { text: qsTr("拍照数") }
             QGCLabel { text: missionItem.cameraShots }
 
-            QGCLabel { text: qsTr("Photo interval") }
+            QGCLabel { text: qsTr("拍照间隔") }
             QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("secs") }
         }
     } // Column
