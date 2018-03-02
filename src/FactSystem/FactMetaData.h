@@ -36,6 +36,8 @@ public:
         valueTypeInt16,
         valueTypeUint32,
         valueTypeInt32,
+        valueTypeUint64,
+        valueTypeInt64,
         valueTypeFloat,
         valueTypeDouble,
         valueTypeString,
@@ -104,6 +106,7 @@ public:
     bool            rebootRequired          (void) const { return _rebootRequired; }
     bool            hasControl              (void) const { return _hasControl; }
     bool            readOnly                (void) const { return _readOnly; }
+    bool            writeOnly               (void) const { return _writeOnly; }
     bool            volatileValue           (void) const { return _volatile; }
 
     /// Amount to increment value when used in controls such as spin button or slider with detents.
@@ -135,6 +138,7 @@ public:
     void setIncrement       (double increment)                  { _increment = increment; }
     void setHasControl      (bool bValue)                       { _hasControl = bValue; }
     void setReadOnly        (bool bValue)                       { _readOnly = bValue; }
+    void setWriteOnly       (bool bValue)                       { _writeOnly = bValue; }
     void setVolatileValue   (bool bValue);
 
     void setTranslators(Translator rawTranslator, Translator cookedTranslator);
@@ -203,14 +207,20 @@ private:
     static QVariant _celsiusToFarenheit(const QVariant& celsius);
     static QVariant _farenheitToCelsius(const QVariant& farenheit);
 
-    struct AppSettingsTranslation_s {
-        const char* rawUnits;
-        const char* cookedUnits;
-        bool        speed;
-        uint32_t    speedOrDistanceUnits;
-        Translator  rawTranslator;
-        Translator  cookedTranslator;
+    enum UnitTypes {
+        UnitDistance = 0,
+        UnitArea,
+        UnitSpeed,
+        UnitTemperature
+    };
 
+    struct AppSettingsTranslation_s {
+        const char*     rawUnits;
+        const char*     cookedUnits;
+        UnitTypes       unitType;
+        uint32_t        unitOption;
+        Translator      rawTranslator;
+        Translator      cookedTranslator;
     };
 
     static const AppSettingsTranslation_s* _findAppSettingsDistanceUnitsTranslation(const QString& rawUnits);
@@ -241,6 +251,7 @@ private:
     double          _increment;
     bool            _hasControl;
     bool            _readOnly;
+    bool            _writeOnly;
     bool            _volatile;
 
     // Exact conversion constants

@@ -404,13 +404,10 @@ Item {
         z:                  QGroundControl.zOrderTopMost
         visible:            activeVehicle && !QGroundControl.videoManager.fullScreen
         Component.onCompleted:  ScreenTools.availableHeight = parent.height - toolBar.height
-        MouseArea {
-                   id:             toolbarBlocker
-                   anchors.fill:   parent
-                   enabled:        false
-                   onWheel:        { wheel.accepted = true; }
-                   onPressed:      { mouse.accepted = true; }
-                   onReleased:     { mouse.accepted = true; }
+        DeadMouseArea {
+            id:             toolbarBlocker
+            enabled:        false
+            anchors.fill:   parent
        }
     }
     RightToolBar {

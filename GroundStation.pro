@@ -7,14 +7,16 @@
 # License terms set in COPYING.md
 # -------------------------------------------------
 
+QMAKE_PROJECT_DEPTH = 0 # undocumented qmake flag to force absolute paths in make files
+
 exists($${OUT_PWD}/GroundStation.pro) {
-    error("You must use shadow build (e.g. mkdir build; cd build; qmake ../GroundStation.pro).")
+    error("You must use shadow build (e.g. mkdir build; cd build; qmake ../qgroundcontrol.pro).")
 }
 
 message(Qt version $$[QT_VERSION])
 
-!equals(QT_MAJOR_VERSION, 5) | !greaterThan(QT_MINOR_VERSION, 6) {
-    error("Unsupported Qt version, 5.7+ is required")
+!equals(QT_MAJOR_VERSION, 5) | !greaterThan(QT_MINOR_VERSION, 8) {
+    error("Unsupported Qt version, 5.9+ is required")
 }
 
 include(QGCCommon.pri)
@@ -208,8 +210,7 @@ contains(DEFINES, ENABLE_VERBOSE_OUTPUT) {
 } else:exists(user_config.pri):infile(user_config.pri, DEFINES, ENABLE_VERBOSE_OUTPUT) {
     message("Enable verbose compiler output (manual override from user_config.pri)")
 } else {
-CONFIG += \
-    silent
+    CONFIG += silent
 }
 
 QT += \
@@ -423,7 +424,9 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory  { APMFirmwarePlugin {
         src/FactSystem/FactSystemTestGeneric.h \
         src/FactSystem/FactSystemTestPX4.h \
         src/FactSystem/ParameterManagerTest.h \
+        src/MissionManager/CameraCalcTest.h \
         src/MissionManager/CameraSectionTest.h \
+        src/MissionManager/CorridorScanComplexItemTest.h \
         src/MissionManager/MissionCommandTreeTest.h \
         src/MissionManager/MissionControllerManagerTest.h \
         src/MissionManager/MissionControllerTest.h \
@@ -432,11 +435,13 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory  { APMFirmwarePlugin {
         src/MissionManager/MissionSettingsTest.h \
         src/MissionManager/PlanMasterControllerTest.h \
         src/MissionManager/QGCMapPolygonTest.h \
+        src/MissionManager/QGCMapPolylineTest.h \
         src/MissionManager/SectionTest.h \
         src/MissionManager/SimpleMissionItemTest.h \
         src/MissionManager/SpeedSectionTest.h \
         src/MissionManager/StructureScanComplexItemTest.h \
         src/MissionManager/SurveyMissionItemTest.h \
+        src/MissionManager/TransectStyleComplexItemTest.h \
         src/MissionManager/VisualMissionItemTest.h \
         src/qgcunittest/FileDialogTest.h \
         src/qgcunittest/FileManagerTest.h \
@@ -460,7 +465,9 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory  { APMFirmwarePlugin {
         src/FactSystem/FactSystemTestGeneric.cc \
         src/FactSystem/FactSystemTestPX4.cc \
         src/FactSystem/ParameterManagerTest.cc \
+        src/MissionManager/CameraCalcTest.cc \
         src/MissionManager/CameraSectionTest.cc \
+        src/MissionManager/CorridorScanComplexItemTest.cc \
         src/MissionManager/MissionCommandTreeTest.cc \
         src/MissionManager/MissionControllerManagerTest.cc \
         src/MissionManager/MissionControllerTest.cc \
@@ -469,11 +476,13 @@ DebugBuild { PX4FirmwarePlugin { PX4FirmwarePluginFactory  { APMFirmwarePlugin {
         src/MissionManager/MissionSettingsTest.cc \
         src/MissionManager/PlanMasterControllerTest.cc \
         src/MissionManager/QGCMapPolygonTest.cc \
+        src/MissionManager/QGCMapPolylineTest.cc \
         src/MissionManager/SectionTest.cc \
         src/MissionManager/SimpleMissionItemTest.cc \
         src/MissionManager/SpeedSectionTest.cc \
         src/MissionManager/StructureScanComplexItemTest.cc \
         src/MissionManager/SurveyMissionItemTest.cc \
+        src/MissionManager/TransectStyleComplexItemTest.cc \
         src/MissionManager/VisualMissionItemTest.cc \
         src/qgcunittest/FileDialogTest.cc \
         src/qgcunittest/FileManagerTest.cc \
@@ -517,6 +526,7 @@ HEADERS += \
     src/MissionManager/CameraSection.h \
     src/MissionManager/CameraSpec.h \
     src/MissionManager/ComplexMissionItem.h \
+    src/MissionManager/CorridorScanComplexItem.h \
     src/MissionManager/FixedWingLandingComplexItem.h \
     src/MissionManager/GeoFenceController.h \
     src/MissionManager/GeoFenceManager.h \
@@ -535,6 +545,7 @@ HEADERS += \
     src/MissionManager/QGCFencePolygon.h \
     src/MissionManager/QGCMapCircle.h \
     src/MissionManager/QGCMapPolygon.h \
+    src/MissionManager/QGCMapPolyline.h \
     src/MissionManager/RallyPoint.h \
     src/MissionManager/RallyPointController.h \
     src/MissionManager/RallyPointManager.h \
@@ -543,6 +554,7 @@ HEADERS += \
     src/MissionManager/SpeedSection.h \
     src/MissionManager/StructureScanComplexItem.h \
     src/MissionManager/SurveyMissionItem.h \
+    src/MissionManager/TransectStyleComplexItem.h \
     src/MissionManager/VisualMissionItem.h \
     src/PositionManager/PositionManager.h \
     src/PositionManager/SimulatedPosition.h \
@@ -710,6 +722,7 @@ SOURCES += \
     src/MissionManager/CameraSection.cc \
     src/MissionManager/CameraSpec.cc \
     src/MissionManager/ComplexMissionItem.cc \
+    src/MissionManager/CorridorScanComplexItem.cc \
     src/MissionManager/FixedWingLandingComplexItem.cc \
     src/MissionManager/GeoFenceController.cc \
     src/MissionManager/GeoFenceManager.cc \
@@ -728,6 +741,7 @@ SOURCES += \
     src/MissionManager/QGCFencePolygon.cc \
     src/MissionManager/QGCMapCircle.cc \
     src/MissionManager/QGCMapPolygon.cc \
+    src/MissionManager/QGCMapPolyline.cc \
     src/MissionManager/RallyPoint.cc \
     src/MissionManager/RallyPointController.cc \
     src/MissionManager/RallyPointManager.cc \
@@ -735,6 +749,7 @@ SOURCES += \
     src/MissionManager/SpeedSection.cc \
     src/MissionManager/StructureScanComplexItem.cc \
     src/MissionManager/SurveyMissionItem.cc \
+    src/MissionManager/TransectStyleComplexItem.cc \
     src/MissionManager/VisualMissionItem.cc \
     src/PositionManager/PositionManager.cpp \
     src/PositionManager/SimulatedPosition.cc \

@@ -935,6 +935,7 @@ private:
     void _handleScaledPressure(mavlink_message_t& message);
     void _handleScaledPressure2(mavlink_message_t& message);
     void _handleScaledPressure3(mavlink_message_t& message);
+    void _handleHighLatency2(mavlink_message_t& message);
     // ArduPilot dialect messages
 #if !defined(NO_ARDUPILOT_DIALECT)
     void _handleCameraFeedback(const mavlink_message_t& message);
@@ -1038,6 +1039,7 @@ private:
     int                             _mavCommandRetryCount;
     static const int                _mavCommandMaxRetryCount = 3;
     static const int                _mavCommandAckTimeoutMSecs = 3000;
+    static const int                _mavCommandAckTimeoutMSecsHighLatency = 120000;
 
     QString             _prearmError;
     QTimer              _prearmErrorTimer;

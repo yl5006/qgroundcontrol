@@ -54,6 +54,7 @@ QGCView {
     property bool   _singleComplexItem:         _missionController.complexMissionItemNames.length === 1
     property real   _toolbarHeight:             _qgcView.height - ScreenTools.availableHeight
     property int    _editingLayer:              _layerMission
+    property int    _toolStripBottom:           toolStrip.height + toolStrip.y
     property string   _file:                ""
     readonly property int       _layerMission:              1
     readonly property int       _layerGeoFence:             2
@@ -246,7 +247,7 @@ QGCView {
     QGCFileDialog {
         id:             fileDialog
         qgcView:        _qgcView
-        property var plan:           true
+        property bool plan: true
         folder:         QGroundControl.settingsManager.appSettings.missionSavePath
         fileExtension:  QGroundControl.settingsManager.appSettings.planFileExtension
         fileExtension2: QGroundControl.settingsManager.appSettings.missionFileExtension
@@ -437,7 +438,7 @@ QGCView {
             function accept() {
                 var toIndex = toCombo.currentIndex
 
-                if (toIndex == 0) {
+                if (toIndex === 0) {
                     toIndex = 1
                 }
                 _missionController.moveMissionItem(_moveDialogMissionItemIndex, toIndex)
@@ -504,6 +505,9 @@ QGCView {
                 acceptedButtons:    Qt.LeftButton | Qt.RightButton
                 hoverEnabled:       true
                 onClicked: {
+                    // Take focus to close any previous editing
+                    editorMap.focus = true
+
                     //-- Don't pay attention to items beneath the toolbar.
                     var topLimit = parent.height - ScreenTools.availableHeight
                     if(mouse.y < topLimit) {
@@ -1180,7 +1184,7 @@ QGCView {
             anchors.bottom:     waypointValuesDisplay.visible ? waypointValuesDisplay.top : parent.bottom
             anchors.left:       parent.left
             mapControl:         editorMap
-            visible:            !ScreenTools.isTinyScreen
+            visible:            _toolStripBottom < y
         }
 
         MissionItemStatus {
@@ -1191,7 +1195,7 @@ QGCView {
             maxWidth:           parent.width - rightPanel.width - x
             anchors.bottom:     parent.bottom
             missionItems:       _missionController.visualItems
-            visible:            _editingLayer === _layerMission && (ScreenTools.isMobile ? height < Screen.height * 0.25 : true)
+            visible:            _editingLayer === _layerMission && (_toolStripBottom + mapScale.height) < y && QGroundControl.corePlugin.options.showMissionStatus
         }
 */
     } // QGCViewPanel

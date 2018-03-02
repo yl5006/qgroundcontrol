@@ -590,6 +590,7 @@ QGCCameraControl* PX4FirmwarePlugin::createCameraControl(const mavlink_camera_in
 {
     return new QGCCameraControl(info, vehicle, compID, parent);
 }
+
 void PX4FirmwarePlugin::missionFlightSpeedInfo(Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed)
 {
     QString hoverSpeedParam("MPC_XY_CRUISE");
@@ -620,4 +621,13 @@ void PX4FirmwarePlugin::setmissionFlightSpeedInfo(Vehicle* vehicle, double hover
         Fact* speed = vehicle->parameterManager()->getParameter(FactSystem::defaultComponentId, cruiseSpeedParam);
         speed->setRawValue(cruiseSpeed);
     }
+}
+
+uint32_t PX4FirmwarePlugin::highLatencyCustomModeTo32Bits(uint16_t hlCustomMode)
+{
+    union px4_custom_mode px4_cm;
+    px4_cm.data = 0;
+    px4_cm.custom_mode_hl = hlCustomMode;
+
+    return px4_cm.data;
 }

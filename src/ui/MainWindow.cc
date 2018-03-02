@@ -134,7 +134,8 @@ MainWindow::MainWindow()
 
     _ui.setupUi(this);
     // Make sure tool bar elements all fit before changing minimum width
-    setMinimumWidth(800);
+    setMinimumWidth(1008);
+    setMinimumHeight(520);
     configureWindowName();
 
     // Setup central widget with a layout to hold the views

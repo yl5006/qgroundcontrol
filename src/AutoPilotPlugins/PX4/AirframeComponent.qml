@@ -388,7 +388,7 @@ SetupPage {
                                     QGCCheckBox {
                                         // Although this item is invisible we still use it to manage state
                                         id:             airframeCheckBox
-                                        checked:        modelData.name == controller.currentAirframeType
+                                        checked:        modelData.name === controller.currentAirframeType
                                         exclusiveGroup: airframeTypeExclusive
                                         visible:        false
 

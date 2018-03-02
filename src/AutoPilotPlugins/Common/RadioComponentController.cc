@@ -207,9 +207,9 @@ void RadioComponentController::_advanceState(void)
 /// @brief Sets up the state machine according to the current step from _currentStep.
 void RadioComponentController::_setupCurrentState(void)
 {
-    static const char* msgBeginAPMRover = "Center the Throttle stick as shown in diagram.\nReset all transmitter trims to center.\n\n"
+    static const char* msgBeginAPMRover = QT_TR_NOOP("Center the Throttle stick as shown in diagram.\nReset all transmitter trims to center.\n\n"
                                           "Please ensure all motor power is disconnected from the vehicle.\n\n"
-                                          "Click Next to continue";
+                                          "Click Next to continue");
     const stateMachineEntry* state = _getStateMachineEntry(_currentStep);
 
     const char* instructions = state->instructions;

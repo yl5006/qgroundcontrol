@@ -169,7 +169,7 @@ void SurveyMissionItem::_setSurveyDistance(double surveyDistance)
 {
     if (!qFuzzyCompare(_surveyDistance, surveyDistance)) {
         _surveyDistance = surveyDistance;
-        emit complexDistanceChanged(_surveyDistance);
+        emit complexDistanceChanged();
     }
 }
 
@@ -757,7 +757,7 @@ void SurveyMissionItem::_generateGrid(void)
     if (_hoverAndCaptureEnabled()) {
         _additionalFlightDelaySeconds = cameraShots * _hoverAndCaptureDelaySeconds;
     }
-    emit additionalTimeDelayChanged(_additionalFlightDelaySeconds);
+    emit additionalTimeDelayChanged();
 
     emit gridPointsChanged();
 

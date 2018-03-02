@@ -618,7 +618,7 @@ SetupPage {
                 //                        text:       "Calibrate"
 
                 //                        onClicked: {
-                //                            if (text == qsTr("校准")) {//qsTr("Calibrate")
+                //            if (text == qsTr("Calibrate")) {
                 //                                showDialog(zeroTrimsDialogComponent, dialogTitle, radioPage.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
                 //                            } else {
                 //                                controller.nextButtonClicked()

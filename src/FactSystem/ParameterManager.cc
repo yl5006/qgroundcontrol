@@ -81,7 +81,17 @@ ParameterManager::ParameterManager(Vehicle* vehicle)
     // Ensure the cache directory exists
     QFileInfo(QSettings().fileName()).dir().mkdir("ParamCache");
 
-    refreshAllParameters();
+    if (_vehicle->highLatencyLink()) {
+        // High latency links don't load parameters
+        _parametersReady = true;
+        _missingParameters = true;
+        _initialLoadComplete = true;
+        _waitingForDefaultComponent = false;
+        emit parametersReadyChanged(_parametersReady);
+        emit missingParametersChanged(_missingParameters);
+    } else {
+        refreshAllParameters();
+    }
 }
 
 ParameterManager::~ParameterManager()
@@ -133,12 +143,12 @@ void ParameterManager::_parameterUpdate(int vehicleId, int componentId, QString 
     }
 #endif
 
-	if (_vehicle->px4Firmware() && parameterName == "_HASH_CHECK") {
-    	if (!_initialLoadComplete && !_logReplay) {
-        	/* we received a cache hash, potentially load from cache */
-        	_tryCacheHashLoad(vehicleId, componentId, value);
-		}
-		return;
+    if (_vehicle->px4Firmware() && parameterName == "_HASH_CHECK") {
+        if (!_initialLoadComplete && !_logReplay) {
+            /* we received a cache hash, potentially load from cache */
+            _tryCacheHashLoad(vehicleId, componentId, value);
+        }
+        return;
     }
 
     _initialRequestTimeoutTimer.stop();
@@ -278,6 +288,12 @@ void ParameterManager::_parameterUpdate(int vehicleId, int componentId, QString 
             break;
         case MAV_PARAM_TYPE_INT32:
             factType = FactMetaData::valueTypeInt32;
+            break;
+        case MAV_PARAM_TYPE_UINT64:
+            factType = FactMetaData::valueTypeUint64;
+            break;
+        case MAV_PARAM_TYPE_INT64:
+            factType = FactMetaData::valueTypeInt64;
             break;
         case MAV_PARAM_TYPE_REAL32:
             factType = FactMetaData::valueTypeFloat;
@@ -973,8 +989,17 @@ MAV_PARAM_TYPE ParameterManager::_factTypeToMavType(FactMetaData::ValueType_t fa
     case FactMetaData::valueTypeUint32:
         return MAV_PARAM_TYPE_UINT32;
 
+    case FactMetaData::valueTypeUint64:
+        return MAV_PARAM_TYPE_UINT64;
+
+    case FactMetaData::valueTypeInt64:
+        return MAV_PARAM_TYPE_INT64;
+
     case FactMetaData::valueTypeFloat:
         return MAV_PARAM_TYPE_REAL32;
+
+    case FactMetaData::valueTypeDouble:
+        return MAV_PARAM_TYPE_REAL64;
 
     default:
         qWarning() << "Unsupported fact type" << factType;
@@ -1003,8 +1028,17 @@ FactMetaData::ValueType_t ParameterManager::_mavTypeToFactType(MAV_PARAM_TYPE ma
     case MAV_PARAM_TYPE_UINT32:
         return FactMetaData::valueTypeUint32;
 
+    case MAV_PARAM_TYPE_UINT64:
+        return FactMetaData::valueTypeUint64;
+
+    case MAV_PARAM_TYPE_INT64:
+        return FactMetaData::valueTypeInt64;
+
     case MAV_PARAM_TYPE_REAL32:
         return FactMetaData::valueTypeFloat;
+
+    case MAV_PARAM_TYPE_REAL64:
+        return FactMetaData::valueTypeDouble;
 
     default:
         qWarning() << "Unsupported mav param type" << mavType;

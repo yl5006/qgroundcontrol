@@ -43,7 +43,6 @@ SetupPage {
             readonly property string highlightPrefix:   "<font color=\"" + qgcPal.warningText + "\">"
             readonly property string highlightSuffix:   "</font>"
 
-
             function getBatteryImage()
             {
                 switch(battNumCells.value) {
@@ -456,7 +455,7 @@ SetupPage {
                             id:         showUAVCAN
                             text:        qsTr("UAVCAN设置")//qsTr("Show UAVCAN Settings")
                             enabled:    false
-                            checked:    uavcanEnable.rawValue != 0
+                    	    checked:    uavcanEnable ? uavcanEnable.rawValue !== 0 : false
                         }
 
                         QGCLabel {

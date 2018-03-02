@@ -171,7 +171,7 @@ Item {
                                 QGCLabel {
                                     anchors.baseline:   returnCombo.baseline
                                     text:               qsTr("返航开关")//"Return switch:"
-                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
+                                    color:              parent.fact.value === 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
                                 }
 
                                 FactComboBox {
@@ -190,7 +190,7 @@ Item {
 //                                QGCLabel {
 //                                    anchors.baseline:   killCombo.baseline
 //                                   text:               qsTr("Kill switch:")
-//                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
+                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
 //                               }
 
 //                               FactComboBox {
@@ -209,7 +209,7 @@ Item {
 //                               QGCLabel {
 //                                   anchors.baseline:   offboardCombo.baseline
 //                                   text:               qsTr("Offboard switch:")
-//                                   color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
+//                                    color:              parent.fact.value === 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
 //                               }
 
 //                               FactComboBox {
@@ -229,7 +229,7 @@ Item {
                                 QGCLabel {
                                     anchors.baseline:   vtolCombo.baseline
                                     text:               qsTr("垂直起降模式开关")//"VTOL mode switch:"
-                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
+                                    color:              parent.fact.value === 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
                                 }
 
                                 FactComboBox {

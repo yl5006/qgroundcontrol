@@ -48,11 +48,6 @@ Rectangle {
 
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
-    ExclusiveGroup {
-        id: yawRadiosGroup
-        onCurrentChanged: missionItem.yawVehicleToStructure = yawVehicleRadio.checked
-    }
-
     Column {
         id:                 editorColumn
         anchors.margins:    _margin
@@ -92,7 +87,7 @@ Rectangle {
             columnSpacing:  ScreenTools.defaultFontPixelWidth / 2
             rowSpacing:     0
             columns:        3
-            enabled:        missionItem.cameraCalc.cameraName === missionItem.cameraCalc.manualCameraName
+            visible:        missionItem.cameraCalc.isManualCamera
 
             Item { width: 1; height: 1 }
             QGCLabel { text: qsTr("Pitch") }
@@ -131,13 +126,27 @@ Rectangle {
                 rowSpacing:     _margin
                 columns:        2
 
-                QGCLabel { text: qsTr("层数") }
+                QGCLabel {
+                    text:       qsTr("层高")
+                    visible:    !missionItem.cameraCalc.isManualCamera
+                }
+                FactTextField {
+                    fact:               missionItem.structureHeight
+                    Layout.fillWidth:   true
+                    visible:            !missionItem.cameraCalc.isManualCamera
+                }
+
+                QGCLabel {
+                    text:       qsTr("# 层数")
+                    visible:    missionItem.cameraCalc.isManualCamera
+                }
                 FactTextField {
                     fact:               missionItem.layers
                     Layout.fillWidth:   true
+                    visible:            missionItem.cameraCalc.isManualCamera
                 }
 
-                QGCLabel { text: qsTr("高度") }
+                QGCLabel { text: qsTr("低层高度") }
                 FactTextField {
                     fact:               missionItem.altitude
                     Layout.fillWidth:   true
@@ -148,28 +157,6 @@ Rectangle {
                     checked:            missionItem.altitudeRelative
                     Layout.columnSpan:  2
                     onClicked:          missionItem.altitudeRelative = checked
-                }
-            }
-
-            QGCLabel { text: qsTr("机头方向:") }
-
-            RowLayout {
-                spacing: _margin
-
-                QGCRadioButton {
-                    id:             yawVehicleRadio
-                    text:           qsTr("机体 yaw")
-                    exclusiveGroup: yawRadiosGroup
-                    checked:        !!missionItem.yawVehicleToStructure
-                    enabled:        false
-                }
-
-                QGCRadioButton
-                {
-                    text:           qsTr("云台 yaw")
-                    exclusiveGroup: yawRadiosGroup
-                    checked:        !missionItem.yawVehicleToStructure
-                    enabled:        false
                 }
             }
 

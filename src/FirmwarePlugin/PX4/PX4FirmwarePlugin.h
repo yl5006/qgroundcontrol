@@ -71,6 +71,7 @@ public:
     QString             autoDisarmParameter             (Vehicle* vehicle) override { Q_UNUSED(vehicle); return QStringLiteral("COM_DISARM_LAND"); }
     QGCCameraManager*   createCameraManager             (Vehicle* vehicle) override;
     QGCCameraControl*   createCameraControl             (const mavlink_camera_information_t* info, Vehicle* vehicle, int compID, QObject* parent = NULL) override;
+    uint32_t            highLatencyCustomModeTo32Bits   (uint16_t hlCustomMode) override;
     void                missionFlightSpeedInfo          (Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed) override;
     void                setmissionFlightSpeedInfo       (Vehicle* vehicle, double hoverSpeed, double cruiseSpeed) override;
 protected:

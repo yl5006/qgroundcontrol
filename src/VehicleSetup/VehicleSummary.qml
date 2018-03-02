@@ -131,14 +131,14 @@ Rectangle {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width:                  ScreenTools.defaultFontPixelWidth * 1.75
                                 height:                 width
-                                fillMode:               Image.PreserveAspectFit
+                                radius:                 width / 2
                                 color:                  modelData.setupComplete ? Qt.rgba(0.0627, 0.9216, 0.749, 1)   :Qt.rgba(0.8941, 0.2275, 0.2392, 1)
-                                visible:                modelData.requiresSetup
+                                visible:                modelData.requiresSetup && modelData.setupSource !== ""
                             }
 
                             onClicked : {
                                 console.log(modelData.setupSource)
-                                if (modelData.setupSource != "") {
+                                if (modelData.setupSource !== "") {
                                     setupView.showVehicleComponentPanel(modelData)
                                 }
                             }

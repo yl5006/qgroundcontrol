@@ -51,8 +51,8 @@ Item {
         anchors.right: parent.right
         height: ScreenTools.minTouchPixels
         width: height
-        property var initialX: 0
-        property var initialWidth: 0
+        property real initialX: 0
+        property real initialWidth: 0
 
         onClicked: {
             // TODO propagate
@@ -98,7 +98,7 @@ Item {
     }
 
     // Resize pip window if necessary when main window is resized
-    property var pipLock: 2
+    property int pipLock: 2
 
     Connections {
         target: pip.parent
@@ -128,7 +128,7 @@ Item {
         fillMode:       Image.PreserveAspectFit
         anchors.left:   parent.left
         anchors.top:    parent.top
-        visible:        !isHidden && !inPopup && !ScreenTools.isMobile && enablePopup
+        visible:        !isHidden && !inPopup && !ScreenTools.isMobile && enablePopup && pipMouseArea.containsMouse
         height:         ScreenTools.defaultFontPixelHeight * 2.5
         width:          ScreenTools.defaultFontPixelHeight * 2.5
         sourceSize.height:  height

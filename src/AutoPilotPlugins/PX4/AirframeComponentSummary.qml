@@ -37,7 +37,7 @@ FactPanel {
         }
         VehicleSummaryRow {
             labelText: qsTr("固件版本")
-            valueText: activeVehicle.firmwareMajorVersion == -1 ? qsTr("Unknown") : activeVehicle.firmwareMajorVersion + "." + activeVehicle.firmwareMinorVersion + "." + activeVehicle.firmwarePatchVersion + "." + activeVehicle.firmwareLastVersion + activeVehicle.firmwareVersionTypeString
+            valueText: activeVehicle.firmwareMajorVersion === -1 ? qsTr("Unknown") : activeVehicle.firmwareMajorVersion + "." + activeVehicle.firmwareMinorVersion + "." + activeVehicle.firmwarePatchVersion + "." + activeVehicle.firmwareLastVersion + activeVehicle.firmwareVersionTypeString
         }
     }
 }

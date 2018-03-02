@@ -7,9 +7,7 @@
  *
  ****************************************************************************/
 
-
-#ifndef VisualMissionItem_H
-#define VisualMissionItem_H
+#pragma once
 
 #include <QObject>
 #include <QString>
@@ -217,5 +215,3 @@ private:
     double _lastLatTerrainQuery;
     double _lastLonTerrainQuery;
 };
-
-#endif
