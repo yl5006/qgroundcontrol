@@ -149,8 +149,6 @@ FactPanel {
                     id:                 revCheckBox
                  //   width:              ScreenTools.defaultFontPixelWidth * 20
                     fact:               controller.getParameterFact(-1, "RC"+(index+1).toString()+"_REV")
-                    checkedValue:       -1
-                    uncheckedValue:     1
                     text:               qsTr("反向")
                 }
 
