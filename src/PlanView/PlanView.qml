@@ -54,7 +54,7 @@ QGCView {
     property bool   _singleComplexItem:         _missionController.complexMissionItemNames.length === 1
     property real   _toolbarHeight:             _qgcView.height - ScreenTools.availableHeight
     property int    _editingLayer:              _layerMission
-    property int    _toolStripBottom:           toolStrip.height + toolStrip.y
+   // property int    _toolStripBottom:           toolStrip.height + toolStrip.y
     property string   _file:                ""
     readonly property int       _layerMission:              1
     readonly property int       _layerGeoFence:             2

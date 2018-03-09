@@ -210,7 +210,7 @@ Item {
             sourceItem:
                 MissionItemIndexLabel {
                 index:      _missionItem.sequenceNumber
-                label:      "盘旋"
+                label:      qsTr("盘旋")
                 checked:    _missionItem.isCurrentItem
                 onClicked: _root.clicked(_missionItem.sequenceNumber)
                 simpleindex:   1
@@ -227,7 +227,7 @@ Item {
             center:         _missionItem.loiterCoordinate
             radius:         _missionItem.loiterRadius.rawValue
             border.width:   2
-            border.color:   "green"
+            border.color:   "#10ebbf"
             color:          "transparent"
         }
     }
@@ -245,7 +245,7 @@ Item {
             sourceItem:
                 MissionItemIndexLabel {
                 index:      _missionItem.lastSequenceNumber
-                label:      "降落"
+                label:      qsTr("降落")
                 checked:    _missionItem.isCurrentItem
                 onClicked: _root.clicked(_missionItem.sequenceNumber)
                 simpleindex:   1

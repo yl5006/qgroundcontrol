@@ -26,7 +26,6 @@ import QGroundControl.ScreenTools   1.0
 SetupPage {
     id:             flightModesPage
     pageComponent:  pageComponent
-    visibleWhileArmed:   true
     Component {
         id: pageComponent
         Item {

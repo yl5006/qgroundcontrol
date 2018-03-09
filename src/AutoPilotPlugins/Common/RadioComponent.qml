@@ -641,7 +641,7 @@ SetupPage {
                 }
 
                 //               QGCLabel { text: "Additional Radio setup:" }
- /*               Row{
+                Row{
                     spacing: ScreenTools.defaultFontPixelHeight*2
                     visible:  true
                     QGCButton {
@@ -679,7 +679,7 @@ SetupPage {
                             }
                         }
                     } // Repeater
-                }*/
+                }
                 Column{
                     spacing: ScreenTools.defaultFontPixelHeight*0.3
                     Repeater {

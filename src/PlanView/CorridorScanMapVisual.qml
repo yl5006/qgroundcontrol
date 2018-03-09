@@ -58,7 +58,7 @@ Item {
         mapControl:         map
         mapPolygon:         object.surveyAreaPolygon
         interactive:        false
-        interiorColor:      "green"
+        interiorColor:      "#10ebbf"
         interiorOpacity:    0.25
     }
 
@@ -88,6 +88,7 @@ Item {
                 label:      qsTr("起始点")
                 checked:    _missionItem.isCurrentItem
                 onClicked:  _root.clicked(_missionItem.sequenceNumber)
+                simpleindex: 1
             }
         }
     }
@@ -108,6 +109,7 @@ Item {
                 label:      qsTr("结束点")
                 checked:    _missionItem.isCurrentItem
                 onClicked:  _root.clicked(_missionItem.sequenceNumber)
+                simpleindex: 1
             }
         }
     }

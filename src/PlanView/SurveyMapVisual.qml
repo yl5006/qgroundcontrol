@@ -96,7 +96,7 @@ Item {
         interactive:        _missionItem.isCurrentItem
         borderWidth:        1
         borderColor:        "black"
-        interiorColor:      "green"
+        interiorColor:      "#10ebbf"
         interiorOpacity:    0.5
     }
     // Survey grid lines
@@ -123,7 +123,7 @@ Item {
 
             sourceItem: MissionItemIndexLabel {
                 index:      _missionItem.sequenceNumber
-                label:      "入"
+                label:      qsTr("起始点")
                 checked:    _missionItem.isCurrentItem
                 onClicked:  _root.clicked(_missionItem.sequenceNumber)
                 simpleindex: 1
@@ -144,7 +144,7 @@ Item {
 
             sourceItem: MissionItemIndexLabel {
                 index:      _missionItem.lastSequenceNumber
-                label:      "出"
+                label:      qsTr("结束点")
                 checked:    _missionItem.isCurrentItem
                 onClicked:  _root.clicked(_missionItem.sequenceNumber)
                 simpleindex: 1

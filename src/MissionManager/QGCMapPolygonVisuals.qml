@@ -177,8 +177,7 @@ Item {
         title:          qsTr("Select KML File")
         selectExisting: true
         nameFilters:    [ qsTr("KML files (*.kml)") ]
-
-
+        fileExtension:  "kml"
         onAcceptedForLoad: {
             mapPolygon.loadKMLFile(file)
             close()
@@ -189,7 +188,7 @@ Item {
         id: polygonComponent
 
         MapPolygon {
-            color:      "#10ebbf"
+            color:          interiorColor
             opacity:        interiorOpacity
             border.color:   borderColor
             border.width:   borderWidth
@@ -213,7 +212,7 @@ Item {
                 width:      ScreenTools.defaultFontPixelHeight * 1.5
                 height:     width
                 radius:     width / 2
-                border.color:      "#8cb3be"
+                border.color:      "white"
                 color:      "transparent"
                 opacity:    .50
                 z:          _zorderSplitHandle
