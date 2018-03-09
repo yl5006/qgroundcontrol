@@ -93,6 +93,20 @@ QGCView {
         QGroundControl.saveBoolGlobalSetting(_PIPVisibleKey, state)
     }
 
+    function isInstrumentRight() {
+        if(QGroundControl.corePlugin.options.instrumentWidget) {
+            if(QGroundControl.corePlugin.options.instrumentWidget.source.toString().length) {
+                switch(QGroundControl.corePlugin.options.instrumentWidget.widgetPosition) {
+                case CustomInstrumentWidget.POS_TOP_LEFT:
+                case CustomInstrumentWidget.POS_BOTTOM_LEFT:
+                case CustomInstrumentWidget.POS_CENTER_LEFT:
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     PlanMasterController {
         id:                     masterController
         Component.onCompleted:  start(false /* editMode */)
@@ -728,9 +742,12 @@ QGCView {
         ToolStripRow {
             visible:            (_activeVehicle ? _activeVehicle.guidedModeSupported : true) && !QGroundControl.videoManager.fullScreen
             id:                 toolStrip
-            anchors.horizontalCenter:   parent.horizontalCenter
-            anchors.bottomMargin:  ScreenTools.toolbarHeight + _margins
-            anchors.bottom:        _panel.bottom
+            anchors.leftMargin: isInstrumentRight() ? ScreenTools.defaultFontPixelWidth : undefined
+            anchors.left:       isInstrumentRight() ? _panel.left : undefined
+            anchors.rightMargin:isInstrumentRight() ? undefined : ScreenTools.defaultFontPixelWidth
+            anchors.right:      isInstrumentRight() ? undefined : _panel.right
+            anchors.topMargin:  ScreenTools.toolbarHeight + (_margins * 2)
+            anchors.top:        _panel.top
             z:                  _panel.z + 4
             title:              qsTr("Fly")
             maxHeight:          ScreenTools.defaultFontPixelWidth//(_flightVideo.visible ? _flightVideo.y : parent.height) - toolStrip.y
