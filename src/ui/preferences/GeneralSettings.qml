@@ -576,11 +576,11 @@ QGCView {
                                     QGroundControl.settingsManager.autoConnectSettings.autoConnectSiKRadio,
                                     //QGroundControl.settingsManager.autoConnectSettings.autoConnectPX4Flow,
                                     //QGroundControl.settingsManager.autoConnectSettings.autoConnectLibrePilot,
-                                    //QGroundControl.settingsManager.autoConnectSettings.autoConnectUDP,
+                                    QGroundControl.settingsManager.autoConnectSettings.autoConnectUDP,
                                     QGroundControl.settingsManager.autoConnectSettings.autoConnectRTKGPS
                                 ]
 
-                                property var names: [ /*qsTr("Pixhawk"),*/ qsTr("自动连接数传"),/* qsTr("PX4 Flow"), qsTr("LibrePilot"), qsTr("UDP"), */qsTr("自动连接 RTK GPS") ]
+                                property var names: [ /*qsTr("Pixhawk"),*/ qsTr("自动连接数传"), qsTr("UDP"), /* qsTr("PX4 Flow"), qsTr("LibrePilot"), qsTr("UDP"), */qsTr("自动连接 RTK GPS") ]
 
                                 FactCheckBox {
                                     text:       autoConnectRepeater.names[index]

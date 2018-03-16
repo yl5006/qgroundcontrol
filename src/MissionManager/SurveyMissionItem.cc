@@ -710,7 +710,7 @@ void SurveyMissionItem::_generateGrid(void)
         qCDebug(SurveyMissionItemLog) << "vertex:x:y" << vertex << polygonPoints.last().x() << polygonPoints.last().y();
     }
 
-    polygonPoints = _convexPolygon(polygonPoints);
+   // polygonPoints = _convexPolygon(polygonPoints);
 
     double coveredArea = 0.0;
     for (int i=0; i<polygonPoints.count(); i++) {
@@ -726,7 +726,7 @@ void SurveyMissionItem::_generateGrid(void)
     int cameraShots = 0;
     cameraShots += _gridGenerator(polygonPoints, transectSegments, false /* refly */);
     _convertTransectToGeo(transectSegments, tangentOrigin, _transectSegments);
-//    _adjustTransectsToEntryPointLocation(_transectSegments);
+    _adjustTransectsToEntryPointLocation(_transectSegments);
     _appendGridPointsFromTransects(_transectSegments);
     if (_refly90Degrees) {
         QVariantList reflyPointsGeo;
@@ -926,7 +926,6 @@ int SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLis
     double gridAngle = _gridAngleFact.rawValue().toDouble();
     double gridSpacing = _gridSpacingFact.rawValue().toDouble();
 
-    double rawgridAngle=gridAngle;
     gridAngle = _clampGridAngle90(gridAngle);
     gridAngle += refly ? 90 : 0;
     qCDebug(SurveyMissionItemLog) << "Clamped grid angle" << gridAngle;
@@ -1009,32 +1008,18 @@ int SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLis
     // Turn into a path   //add two line
     QLineF line=QLineF();
     QLineF temp=QLineF();
+    bool back=true;
     if(resultLines.count()>0)
     {
+    double lenth=QLineF(resultLines[0].p1(),resultLines[resultLines.count()-1].p1()).length();
     line.setP1(resultLines[0].p1());
     line.setLength(gridSpacing);
-    if((rawgridAngle<135&&rawgridAngle>=90)||rawgridAngle>=270)
+    line.setAngle(resultLines[0].angle()+90);
+    if(QLineF(line.p2(),resultLines[resultLines.count()-1].p1()).length()<lenth)
     {
-        if(resultLines[0].angle()<180)
-        {
-            line.setAngle(resultLines[0].angle()-90);
-        }
-        else
-        {
-            line.setAngle(resultLines[0].angle()+90);
-        }
-    }else
-    {
-        if(resultLines[0].angle()<180)
-        {
-            line.setAngle(resultLines[0].angle()+90);
-        }
-        else
-        {
-            line.setAngle(resultLines[0].angle()-90);
-        }
+       back=false;
+       line.setAngle(resultLines[0].angle()-90);
     }
-  //  line.setAngle(-gridAngle+180);
     temp.setP1(line.p2());
     temp.setLength(resultLines[0].length());
     temp.setAngle(resultLines[0].angle());
@@ -1043,34 +1028,20 @@ int SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLis
 
     line.setP1(resultLines[resultLines.count()-1].p1());
     line.setLength(gridSpacing);
-    //line.setAngle(-gridAngle);
-   if((rawgridAngle<135&&rawgridAngle>=90)||rawgridAngle>=270)
+    if(back)
     {
-       if(resultLines[resultLines.count()-1].angle()<180)
-       {
-           line.setAngle(resultLines[resultLines.count()-1].angle()+90);
-       }
-       else
-       {
-           line.setAngle(resultLines[resultLines.count()-1].angle()-90);
-       }
+        line.setAngle(resultLines[resultLines.count()-1].angle()-90);
     }else
     {
-       if(resultLines[resultLines.count()-1].angle()<180)
-       {
-           line.setAngle(resultLines[resultLines.count()-1].angle()-90);
-       }
-       else
-       {
-           line.setAngle(resultLines[resultLines.count()-1].angle()+90);
-       }
+        line.setAngle(resultLines[resultLines.count()-1].angle()+90);
     }
+
     temp.setP1(line.p2());
     temp.setLength(resultLines[resultLines.count()-1].length());
     temp.setAngle(resultLines[resultLines.count()-1].angle());
     //last line
     resultLines.append(temp);
-    resultLines.append(temp); //多加一条
+    resultLines.append(temp);
     }
     bool uselast=true;
     QPointF lastpoint;
@@ -1095,7 +1066,7 @@ int SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLis
             }
             else
             {
-              transectPoints.append(lastpoint);
+                transectPoints.append(lastpoint);
             }
         }
 
@@ -1128,28 +1099,14 @@ int SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLis
                 transectPoints.append(transectLine.pointAt(1 + turnaroundPosition));
                 temp.setP1(transectPoints.last());
                 temp.setLength(gridSpacing);
-                if((rawgridAngle<135&&rawgridAngle>=90)||rawgridAngle>=270)
+                if(back)
                 {
-                    if(transectLine.angle()<180)
-                    {
-                        temp.setAngle(transectLine.angle()+90);
-                    }
-                    else
-                    {
-                        temp.setAngle(transectLine.angle()-90);
-                    }
-                }else
-                {
-                    if(transectLine.angle()<180)
-                    {
-                        temp.setAngle(transectLine.angle()-90);
-                    }
-                    else
-                    {
-                        temp.setAngle(transectLine.angle()+90);
-                    }
+                   temp.setAngle(resultLines[i].angle()-90);
                 }
-               // temp.setAngle(-gridAngle);
+                else
+                {
+                   temp.setAngle(resultLines[i].angle()+90);
+                }
                 lastpoint=temp.p2();
                 QLineF tp =QLineF();
                 QLineF tp1 =QLineF();
@@ -1175,26 +1132,12 @@ int SurveyMissionItem::_gridGenerator(const QList<QPointF>& polygonPoints,  QLis
                         temp.setP1(nextline.pointAt(1+nextturnaroundPosition));
                     }
                     temp.setLength(gridSpacing);
-                    if((rawgridAngle<135&&rawgridAngle>=90)||rawgridAngle>=270)
+                    if(back)
                     {
-                        if(transectLine.angle()<180)
-                        {
-                            temp.setAngle(transectLine.angle()-90);
-                        }
-                        else
-                        {
-                            temp.setAngle(90+transectLine.angle());
-                        }
+                        temp.setAngle(resultLines[i].angle()+90);
                     }else
-                    {
-                        if(transectLine.angle()<180)
-                        {
-                            temp.setAngle(transectLine.angle()+90);
-                        }
-                        else
-                        {
-                            temp.setAngle(transectLine.angle()-90);
-                        }
+                    {                       
+                        temp.setAngle(resultLines[i].angle()-90);
                     }
                     //temp.setAngle(-gridAngle+180);
                     transectPoints.append(temp.p2());

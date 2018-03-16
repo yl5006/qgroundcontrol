@@ -154,11 +154,11 @@ Rectangle {
                     for (var i=0; i<= Number(number.text); i++) {
                         if(start.checked)
                         {
-                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)+360/Number(number.text)*i)), _missionController.currentPlanViewItem.sequenceNumber+1+i)
                         }
                         else
                         {
-                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)-360/Number(number.text)*i)), _currentMissionItem.sequenceNumber+1+i)
+                            sequenceNumber=_missionController.insertSimpleMissionItem(coordinate.atDistanceAndAzimuth(Number(radius.text),(Number(startangle.text)-360/Number(number.text)*i)), _missionController.currentPlanViewItem.sequenceNumber+1+i)
                         }
                     }
                     setCurrentItem(sequenceNumber)

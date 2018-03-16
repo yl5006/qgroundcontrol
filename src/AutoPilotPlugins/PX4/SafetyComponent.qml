@@ -24,7 +24,6 @@ import QGroundControl.ScreenTools   1.0
 SetupPage {
     id:             safetyPage
     pageComponent:  pageComponent
-    visibleWhileArmed:  true
     Component {
         id: pageComponent
 
