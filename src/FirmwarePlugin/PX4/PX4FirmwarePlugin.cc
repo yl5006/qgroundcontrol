@@ -50,6 +50,7 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
     , _landingFlightMode(tr("降落"))
     , _rtgsFlightMode(tr("Return to Groundstation"))
     , _followMeFlightMode(tr("跟随"))
+    , _preclandFlightMode(tr("精准降落"))
     , _simpleFlightMode(tr("简单"))
 {
     qmlRegisterType<PX4AdvancedFlightModesController>   ("QGroundControl.Controllers", 1, 0, "PX4AdvancedFlightModesController");
@@ -81,6 +82,7 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,       true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,           true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET, true,   false,  true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND,      true,   false,  true },
         { PX4_CUSTOM_MAIN_MODE_OFFBOARD,    0,                                      false,  false,  true },
         // modes that can't be directly set by the user
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,          false,  true,   true },
@@ -102,6 +104,7 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
         &_missionFlightMode,
         &_rtlFlightMode,
         &_followMeFlightMode,
+        &_preclandFlightMode,
         &_offboardFlightMode,
         &_landingFlightMode,
         &_readyFlightMode,
@@ -181,7 +184,7 @@ QString PX4FirmwarePlugin::flightMode(uint8_t base_mode, uint32_t custom_mode) c
         }
 
         if (!found) {
-            qWarning() << "Unknown flight mode" << custom_mode;
+            qWarning() << "Unknown flight mode" << custom_mode<<base_mode;
             return tr("Unknown %1:%2").arg(base_mode).arg(custom_mode);
         }
     } else {

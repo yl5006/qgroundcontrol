@@ -182,24 +182,24 @@ Item {
                                 }
                             }
 
-//                            Row {
-//                               spacing: ScreenTools.defaultFontPixelWidth
+                            Row {
+                               spacing: ScreenTools.defaultFontPixelWidth
 
-//                                property Fact fact: controller.getParameterFact(-1, "RC_MAP_KILL_SW")
+                                property Fact fact: controller.getParameterFact(-1, "RC_MAP_KILL_SW")
 
-//                                QGCLabel {
-//                                    anchors.baseline:   killCombo.baseline
-//                                   text:               qsTr("Kill switch:")
-//                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
-//                               }
+                                QGCLabel {
+                                    anchors.baseline:   killCombo.baseline
+                                   text:               qsTr("加锁开关:")
+                                    color:              parent.fact.value == 0 ? qgcPal.text : (controller.rcChannelValues[parent.fact.value - 1] >= 1500 ? "yellow" : qgcPal.text)
+                               }
 
-//                               FactComboBox {
-//                                    id:         killCombo
-//                                    width:      _channelComboWidth
-//                                    fact:       parent.fact
-//                                    indexModel: false
-//                               }
-//                            }
+                               FactComboBox {
+                                    id:         killCombo
+                                    width:      _channelComboWidth
+                                    fact:       parent.fact
+                                    indexModel: false
+                               }
+                            }
 
 //                            Row {
 //                               spacing: ScreenTools.defaultFontPixelWidth

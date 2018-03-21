@@ -105,6 +105,7 @@ protected:
     QString _landingFlightMode;
     QString _rtgsFlightMode;
     QString _followMeFlightMode;
+    QString _preclandFlightMode;
     QString _simpleFlightMode;
 
 private slots:

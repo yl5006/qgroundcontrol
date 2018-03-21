@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -22,8 +22,8 @@ QGCViewDialog {
     property alias coordinate: controller.coordinate
 
     property real   _margin:        ScreenTools.defaultFontPixelWidth / 2
-    property real   _fieldWidth:    ScreenTools.defaultFontPixelWidth * 10.5
-
+    property real   _fieldWidth:    ScreenTools.defaultFontPixelWidth * 5
+    height:             column.height+ScreenTools.defaultFontPixelWidth * 10.5
     EditPositionDialogController {
         id: controller
 

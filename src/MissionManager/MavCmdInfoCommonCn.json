@@ -34,6 +34,7 @@
                 "default":          3,
                 "decimalPlaces":    2
             },
+
             "param4": {
                 "label":            "机头:",
                 "units":            "radians",
@@ -231,33 +232,6 @@
         },
         { "id": 32, "rawName": "MAV_CMD_DO_FOLLOW", "friendlyName": "Follow Me" },
         { "id": 33, "rawName": "MAV_CMD_DO_FOLLOW_REPOSITION", "friendlyName": "Vehicle reposition" },
-        {
-            "id":                   80,
-            "rawName":              "MAV_CMD_NAV_ROI",
-            "friendlyName":         "Region of interest (nav)",
-            "description":          "Sets the region of interest for cameras.",
-            "specifiesCoordinate":  true,
-            "standaloneCoordinate": true,
-            "friendlyEdit":         true,
-            "category":             "Camera",
-            "param1": {
-                "label":            "Mode:",
-                "enumStrings":      "None,Next waypoint,Mission item,Location,ROI item",
-                "enumValues":       "0,1,2,3,4",
-                "default":          3,
-                "decimalPlaces":    0
-            },
-            "param2": {
-                "label":            "Mission Index",
-                "default":          0,
-                "decimalPlaces":    0
-            },
-            "param3": {
-                "label":            "ROI Index",
-                "default":          0,
-                "decimalPlaces":    0
-            }
-        },
         {
             "id":                   81,
             "rawName":              "MAV_CMD_NAV_PATHPLANNING",
@@ -673,7 +647,7 @@
             "friendlyEdit":         true,
             "category":             "Advanced",
             "param1": {
-                "label":            "Direction:",
+                "label":            "Direction",
                 "enumStrings":      "Forward,Reverse",
                 "enumValues":       "0,1",
                 "default":          0
@@ -876,7 +850,7 @@
                 "default":          0,
                 "decimalPlaces":    7
             },
-            "param4": {
+            "param7": {
                 "label":            "模式:",
                 "default":          0,
                 "decimalPlaces":    0,
@@ -1126,7 +1100,7 @@
             }
         },
         { "id": 410, "rawName": "MAV_CMD_GET_HOME_POSITION", "friendlyName": "Get home position" },
-        { "id": 500, "rawName": "MAV_CMD_START_RX_PAIR", "friendlyName": "B ind Spektrum receiver" },
+        { "id": 500, "rawName": "MAV_CMD_START_RX_PAIR", "friendlyName": "Bind Spektrum receiver" },
         { "id": 510, "rawName": "MAV_CMD_GET_MESSAGE_INTERVAL", "friendlyName": "Get message interval" },
         { "id": 511, "rawName": "MAV_CMD_SET_MESSAGE_INTERVAL", "friendlyName": "Set message interval" },
         { "id": 520, "rawName": "MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES", "friendlyName": "Get capabilities" },
