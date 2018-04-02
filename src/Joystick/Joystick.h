@@ -76,8 +76,9 @@ public:
     Q_PROPERTY(bool negativeThrust READ negativeThrust WRITE setNegativeThrust NOTIFY negativeThrustChanged)
     Q_PROPERTY(float exponential READ exponential WRITE setExponential NOTIFY exponentialChanged)
     Q_PROPERTY(bool accumulator READ accumulator WRITE setAccumulator NOTIFY accumulatorChanged)
-	Q_PROPERTY(bool requiresCalibration READ requiresCalibration CONSTANT)
-    
+    Q_PROPERTY(bool requiresCalibration READ requiresCalibration CONSTANT)
+    Q_PROPERTY(bool circleCorrection READ circleCorrection WRITE setCircleCorrection NOTIFY circleCorrectionChanged)
+
     // Property accessors
 
     int axisCount(void) { return _axisCount; }
@@ -120,6 +121,9 @@ public:
     bool deadband(void);
     void setDeadband(bool accu);
 
+    bool circleCorrection(void);
+    void setCircleCorrection(bool circleCorrection);
+
     void setTXMode(int mode);
     int getTXMode(void) { return _transmitterMode; }
 
@@ -146,6 +150,8 @@ signals:
     void accumulatorChanged(bool accumulator);
 
     void enabledChanged(bool enabled);
+
+    void circleCorrectionChanged(bool circleCorrection);
 
     /// Signal containing new joystick information
     ///     @param roll     Range is -1:1, negative meaning roll left, positive meaning roll right
@@ -213,6 +219,7 @@ protected:
     float                _exponential;
     bool                _accumulator;
     bool                _deadband;
+    bool                _circleCorrection;
 
     Vehicle*            _activeVehicle;
     bool                _pollingStartedForCalibration;
@@ -229,12 +236,18 @@ private:
     static const char* _exponentialSettingsKey;
     static const char* _accumulatorSettingsKey;
     static const char* _deadbandSettingsKey;
+    static const char* _circleCorrectionSettingsKey;
     static const char* _txModeSettingsKey;
     static const char* _fixedWingTXModeSettingsKey;
     static const char* _multiRotorTXModeSettingsKey;
     static const char* _roverTXModeSettingsKey;
     static const char* _vtolTXModeSettingsKey;
     static const char* _submarineTXModeSettingsKey;
+
+    static const char* _buttonActionArm;
+    static const char* _buttonActionDisarm;
+    static const char* _buttonActionVTOLFixedWing;
+    static const char* _buttonActionVTOLMultiRotor;
 
 private slots:
     void _activeVehicleChanged(Vehicle* activeVehicle);

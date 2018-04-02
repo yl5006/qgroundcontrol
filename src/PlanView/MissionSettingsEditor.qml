@@ -38,6 +38,7 @@ Rectangle {
     property var    _fileExtension:                 QGroundControl.settingsManager.appSettings.missionFileExtension
     property var    _appSettings:                   QGroundControl.settingsManager.appSettings
     property bool   _waypointsOnlyMode:             QGroundControl.corePlugin.options.missionWaypointsOnly
+    property bool   _showCameraSection:             !_waypointsOnlyMode || QGroundControl.corePlugin.showAdvancedUI
 
     property Fact   _offlinespeed:              _showCruiseSpeed ? QGroundControl.settingsManager.appSettings.offlineEditingCruiseSpeed : QGroundControl.settingsManager.appSettings.offlineEditingHoverSpeed
     readonly property string _firmwareLabel:    qsTr("Firmware")
@@ -107,6 +108,7 @@ Rectangle {
             CameraSection {
                 id:         cameraSection
                 checked:    missionItem.cameraSection.settingsSpecified
+            	visible:    _showCameraSection
             }
 
             QGCLabel {
@@ -116,7 +118,7 @@ Rectangle {
                 wrapMode:               Text.WordWrap
                 horizontalAlignment:    Text.AlignHCenter
                 font.pointSize:         ScreenTools.smallFontPointSize
-                visible:                cameraSection.checked
+            	visible:                _showCameraSection && cameraSection.checked
             }
 
 //            SectionHeader {

@@ -4189,7 +4189,7 @@ default 1.5 turns per second</short_desc>
       <boolean />
       <scope>modules/mc_att_control</scope>
     </parameter>
-    <parameter default="0." name="MC_DTERM_CUTOFF" type="FLOAT">
+    <parameter default="30." name="MC_DTERM_CUTOFF" type="FLOAT">
       <short_desc>Cutoff frequency for the low pass filter on the D-term in the rate controller</short_desc>
       <long_desc>The D-term uses the derivative of the rate and thus is the most susceptible to noise. Therefore, using a D-term filter allows to decrease the driver-level filtering, which leads to reduced control latency and permits to increase the P gains. A value of 0 disables the filter.</long_desc>
       <min>0</min>
@@ -8113,7 +8113,7 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
       <reboot_required>true</reboot_required>
       <scope>modules/sensors</scope>
     </parameter>
-    <parameter default="30.0" name="IMU_GYRO_CUTOFF" type="FLOAT">
+    <parameter default="80.0" name="IMU_GYRO_CUTOFF" type="FLOAT">
       <short_desc>Driver level cutoff frequency for gyro</short_desc>
       <long_desc>The cutoff frequency for the 2nd order butterworth filter on the gyro driver. This features is currently supported by the mpu6000 and mpu9250. This only affects the signal sent to the controllers, not the estimators. 0 disables the filter.</long_desc>
       <min>0</min>
@@ -9240,15 +9240,16 @@ This is used for gathering replay logs for the ekf2 module</short_desc>
     </parameter>
     <parameter default="0" name="UAVCAN_ENABLE" type="INT32">
       <short_desc>UAVCAN mode</short_desc>
-      <long_desc>0 - UAVCAN disabled. 1 - Basic support for UAVCAN actuators and sensors. 2 - Full support for dynamic node ID allocation and firmware update. 3 - Sets the motor control outputs to UAVCAN and enables support for dynamic node ID allocation and firmware update.</long_desc>
+      <long_desc>0 - UAVCAN disabled. 1 - Enables support for UAVCAN sensors without dynamic node ID allocation and firmware update. 2 - Enables support for UAVCAN sensors with dynamic node ID allocation and firmware update. 3 - Enables support for UAVCAN sensors and actuators with dynamic node ID allocation and firmware update. Also sets the motor control outputs to UAVCAN.</long_desc>
       <min>0</min>
       <max>3</max>
       <reboot_required>true</reboot_required>
       <scope>modules/uavcan</scope>
       <values>
         <value code="0">Disabled</value>
-        <value code="2">Only Sensors</value>
-        <value code="3">Sensors and Motors</value>
+        <value code="1">Sensors Manual Config</value>
+        <value code="2">Sensors Automatic Config</value>
+        <value code="3">Sensors and Actuators (ESCs) Automatic Config</value>
       </values>
     </parameter>
     <parameter default="1" name="UAVCAN_ESC_IDLT" type="INT32">
@@ -9336,9 +9337,10 @@ Airbrakes need to be enables for your selected model/mixer</short_desc>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="0.0" name="VT_B_TRANS_THR" type="FLOAT">
-      <short_desc>Thottle output during back transition
-For ESCs and mixers that support reverse thrust on low PWM values set this to a negative value to apply active breaking
-For ESCs that support thrust reversal with a control channel please set VT_B_REV_OUT and set this to a positive value to apply active breaking</short_desc>
+      <short_desc>Target throttle value for the transition to hover flight.
+standard vtol: pusher
+tailsitter, tiltrotor: main throttle</short_desc>
+      <long_desc>Note for standard vtol: For ESCs and mixers that support reverse thrust on low PWM values set this to a negative value to apply active breaking For ESCs that support thrust reversal with a control channel please set VT_B_REV_OUT and set this to a positive value to apply active breaking</long_desc>
       <min>-1</min>
       <max>1</max>
       <decimal>2</decimal>
@@ -9411,15 +9413,6 @@ to accelerate forward if necessary</short_desc>
       <boolean />
       <scope>modules/vtol_att_control</scope>
     </parameter>
-    <parameter default="0.0" name="VT_FW_PITCH_TRIM" type="FLOAT">
-      <short_desc>Fixed wing pitch trim</short_desc>
-      <long_desc>This parameter allows to adjust the neutral elevon position in fixed wing mode.</long_desc>
-      <min>-1.0</min>
-      <max>1.0</max>
-      <decimal>2</decimal>
-      <increment>0.01</increment>
-      <scope>modules/vtol_att_control</scope>
-    </parameter>
     <parameter default="0" name="VT_FW_QC_P" type="INT32">
       <short_desc>QuadChute Max Pitch</short_desc>
       <long_desc>Maximum pitch angle before QuadChute engages Above this the vehicle will transition back to MC mode and enter failsafe RTL</long_desc>
@@ -9442,6 +9435,16 @@ to accelerate forward if necessary</short_desc>
       <unit>s</unit>
       <decimal>2</decimal>
       <increment>1</increment>
+      <scope>modules/vtol_att_control</scope>
+    </parameter>
+    <parameter default="1.0" name="VT_F_TRANS_THR" type="FLOAT">
+      <short_desc>Target throttle value for the transition to fixed wing flight.
+standard vtol: pusher
+tailsitter, tiltrotor: main throttle</short_desc>
+      <min>0.0</min>
+      <max>1.0</max>
+      <decimal>3</decimal>
+      <increment>0.01</increment>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="6.0" name="VT_F_TR_OL_TM" type="FLOAT">
@@ -9472,6 +9475,14 @@ to accelerate forward if necessary</short_desc>
     <parameter default="0" name="VT_OPT_RECOV_EN" type="INT32">
       <short_desc>Optimal recovery strategy for pitch-weak tailsitters</short_desc>
       <boolean />
+      <scope>modules/vtol_att_control</scope>
+    </parameter>
+    <parameter default="3.0" name="VT_PSHER_RMP_DT" type="FLOAT">
+      <short_desc>Defines the time window during which the pusher throttle will be ramped up linearly to VT_F_TRANS_THR during a transition
+to fixed wing mode. Zero or negative values will produce an instant throttle rise to VT_F_TRANS_THR</short_desc>
+      <max>20</max>
+      <decimal>2</decimal>
+      <increment>0.01</increment>
       <scope>modules/vtol_att_control</scope>
     </parameter>
     <parameter default="1.0" name="VT_TILT_FW" type="FLOAT">
@@ -9512,14 +9523,6 @@ to accelerate forward if necessary</short_desc>
       <min>0.1</min>
       <max>5.0</max>
       <unit>s</unit>
-      <decimal>3</decimal>
-      <increment>0.01</increment>
-      <scope>modules/vtol_att_control</scope>
-    </parameter>
-    <parameter default="0.6" name="VT_TRANS_THR" type="FLOAT">
-      <short_desc>Target throttle value for pusher/puller motor during the transition to fw mode</short_desc>
-      <min>0.0</min>
-      <max>1.0</max>
       <decimal>3</decimal>
       <increment>0.01</increment>
       <scope>modules/vtol_att_control</scope>

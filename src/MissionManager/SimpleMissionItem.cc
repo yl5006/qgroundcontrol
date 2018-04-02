@@ -28,6 +28,10 @@ FactMetaData* SimpleMissionItem::_frameMetaData =           NULL;
 FactMetaData* SimpleMissionItem::_latitudeMetaData =        NULL;
 FactMetaData* SimpleMissionItem::_longitudeMetaData =       NULL;
 
+const char* SimpleMissionItem::_jsonAltitudeModeKey =           "AltitudeMode";
+const char* SimpleMissionItem::_jsonAltitudeKey =               "Altitude";
+const char* SimpleMissionItem::_jsonAMSLAltAboveTerrainKey =    "AMSLAltAboveTerrain";
+
 struct EnumInfo_s {
     const char *    label;
     MAV_FRAME       frame;
@@ -49,35 +53,34 @@ static const struct EnumInfo_s _rgMavFrameInfo[] = {
 };
 
 SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
-    : VisualMissionItem(vehicle, parent)
-    , _rawEdit(false)
-    , _dirty(false)
-    , _ignoreDirtyChangeSignals(false)
-    , _speedSection(NULL)
-    , _cameraSection(NULL)
-    , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    : VisualMissionItem                 (vehicle, parent)
+    , _rawEdit                          (false)
+    , _dirty                            (false)
+    , _ignoreDirtyChangeSignals         (false)
+    , _speedSection                     (NULL)
+    , _cameraSection                    (NULL)
+    , _commandTree                      (qgcApp()->toolbox()->missionCommandTree())
     , _takepictureFact              (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
-    , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
-    , _param1MetaData(FactMetaData::valueTypeDouble)
-    , _param2MetaData(FactMetaData::valueTypeDouble)
-    , _param3MetaData(FactMetaData::valueTypeDouble)
-    , _param4MetaData(FactMetaData::valueTypeDouble)
-    , _param5MetaData(FactMetaData::valueTypeDouble)
-    , _param6MetaData(FactMetaData::valueTypeDouble)
-    , _param7MetaData(FactMetaData::valueTypeDouble)
+    , _supportedCommandFact             (0, "Command:",             FactMetaData::valueTypeUint32)
+    , _altitudeMode                     (AltitudeRelative)
+    , _altitudeFact                     (0, tr("高度"),             FactMetaData::valueTypeDouble)
+    , _amslAltAboveTerrainFact          (0, "Alt above terrain",    FactMetaData::valueTypeDouble)
+    , _param1MetaData                   (FactMetaData::valueTypeDouble)
+    , _param2MetaData                   (FactMetaData::valueTypeDouble)
+    , _param3MetaData                   (FactMetaData::valueTypeDouble)
+    , _param4MetaData                   (FactMetaData::valueTypeDouble)
+    , _param5MetaData                   (FactMetaData::valueTypeDouble)
+    , _param6MetaData                   (FactMetaData::valueTypeDouble)
+    , _param7MetaData                   (FactMetaData::valueTypeDouble)
     , _param8MetaData(FactMetaData::valueTypeDouble)
     , _param9MetaData(FactMetaData::valueTypeDouble)
     , _param10MetaData(FactMetaData::valueTypeDouble)
-    , _syncingAltitudeRelativeToHomeAndFrame    (false)
-    , _syncingHeadingDegreesAndParam4           (false)
+    , _syncingHeadingDegreesAndParam4   (false)
 {
     _editorQml = QStringLiteral("qrc:/qml/SimpleItemEditor.qml");
 
-    _altitudeRelativeToHomeFact.setRawValue(true);
     _takepictureFact.setRawValue(false);
     _param3MetaData.setDecimalPlaces(1);
-
     _setupMetaData();
     _connectSignals();
     _updateOptionalSections();
@@ -88,41 +91,43 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
     connect(&_missionItem, &MissionItem::specifiedFlightSpeedChanged, this, &SimpleMissionItem::specifiedFlightSpeedChanged);
 
     connect(this, &SimpleMissionItem::sequenceNumberChanged,        this, &SimpleMissionItem::lastSequenceNumberChanged);
-    connect(this, &SimpleMissionItem::cameraSectionChanged,         this, &SimpleMissionItem::_setDirtyFromSignal);
+    connect(this, &SimpleMissionItem::cameraSectionChanged,         this, &SimpleMissionItem::_setDirty);
     connect(this, &SimpleMissionItem::cameraSectionChanged,         this, &SimpleMissionItem::_updateLastSequenceNumber);
 }
 
 SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, bool editMode, const MissionItem& missionItem, QObject* parent)
-    : VisualMissionItem(vehicle, parent)
-    , _missionItem(missionItem)
-    , _rawEdit(false)
-    , _dirty(false)
-    , _ignoreDirtyChangeSignals(false)
-    , _speedSection(NULL)
-    , _cameraSection(NULL)
-    , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    : VisualMissionItem         (vehicle, parent)
+    , _missionItem              (missionItem)
+    , _rawEdit                  (false)
+    , _dirty                    (false)
+    , _ignoreDirtyChangeSignals (false)
+    , _speedSection             (NULL)
+    , _cameraSection            (NULL)
+    , _commandTree              (qgcApp()->toolbox()->missionCommandTree())
     , _takepictureFact              (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
-    , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
-    , _param1MetaData(FactMetaData::valueTypeDouble)
-    , _param2MetaData(FactMetaData::valueTypeDouble)
-    , _param3MetaData(FactMetaData::valueTypeDouble)
-    , _param4MetaData(FactMetaData::valueTypeDouble)
-    , _param5MetaData(FactMetaData::valueTypeDouble)
-    , _param6MetaData(FactMetaData::valueTypeDouble)
-    , _param7MetaData(FactMetaData::valueTypeDouble)
+    , _supportedCommandFact     (0,         "Command:",             FactMetaData::valueTypeUint32)
+    , _altitudeMode             (missionItem.relativeAltitude() ? AltitudeRelative : AltitudeAMSL)
+    , _altitudeFact             (0,         tr("高度"),             FactMetaData::valueTypeDouble)
+    , _amslAltAboveTerrainFact  (0,         "Alt above terrain",    FactMetaData::valueTypeDouble)
+    , _param1MetaData           (FactMetaData::valueTypeDouble)
+    , _param2MetaData           (FactMetaData::valueTypeDouble)
+    , _param3MetaData           (FactMetaData::valueTypeDouble)
+    , _param4MetaData           (FactMetaData::valueTypeDouble)
+    , _param5MetaData           (FactMetaData::valueTypeDouble)
+    , _param6MetaData           (FactMetaData::valueTypeDouble)
+    , _param7MetaData           (FactMetaData::valueTypeDouble)
     , _param8MetaData(FactMetaData::valueTypeDouble)
     , _param9MetaData(FactMetaData::valueTypeDouble)
     , _param10MetaData(FactMetaData::valueTypeDouble)
-    , _syncingAltitudeRelativeToHomeAndFrame    (false)
     , _syncingHeadingDegreesAndParam4           (false)
 {
     _editorQml = QStringLiteral("qrc:/qml/SimpleItemEditor.qml");
 
-    _altitudeRelativeToHomeFact.setRawValue(true);
     _takepictureFact.setRawValue(false);
     _param3MetaData.setDecimalPlaces(1);
     _isCurrentItem = missionItem.isCurrentItem();
+    _altitudeFact.setRawValue(specifiesCoordinate() ? _missionItem._param7Fact.rawValue() : qQNaN());
+    _amslAltAboveTerrainFact.setRawValue(qQNaN());
 
     // In !editMode we skip some of the intialization to save memory
     if (editMode) {
@@ -130,83 +135,77 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, bool editMode, const Miss
     }
     _connectSignals();
     _updateOptionalSections();
-    _syncFrameToAltitudeRelativeToHome();
     if (editMode) {
         _rebuildFacts();
     }
+
+    // Signal coordinate changed to kick off terrain query
+    emit coordinateChanged(coordinate());
 }
 
 SimpleMissionItem::SimpleMissionItem(const SimpleMissionItem& other, QObject* parent)
-    : VisualMissionItem(other, parent)
-    , _missionItem(other._vehicle)
-    , _rawEdit(false)
-    , _dirty(false)
-    , _ignoreDirtyChangeSignals(false)
-    , _speedSection(NULL)
-    , _cameraSection(NULL)
-    , _commandTree(qgcApp()->toolbox()->missionCommandTree())
-    , _altitudeRelativeToHomeFact   (0, tr("高度参考home点")/*"Altitude is relative to home"*/, FactMetaData::valueTypeUint32)
+    : VisualMissionItem         (other, parent)
+    , _missionItem              (other._vehicle)
+    , _rawEdit                  (false)
+    , _dirty                    (false)
+    , _ignoreDirtyChangeSignals (false)
+    , _speedSection             (NULL)
+    , _cameraSection            (NULL)
+    , _commandTree              (qgcApp()->toolbox()->missionCommandTree())
     , _takepictureFact              (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
-    , _supportedCommandFact         (0, "Command:",                     FactMetaData::valueTypeUint32)
-    , _param1MetaData(FactMetaData::valueTypeDouble)
-    , _param2MetaData(FactMetaData::valueTypeDouble)
-    , _param3MetaData(FactMetaData::valueTypeDouble)
-    , _param4MetaData(FactMetaData::valueTypeDouble)
-    , _syncingAltitudeRelativeToHomeAndFrame    (false)
+    , _supportedCommandFact     (0,         "Command:",             FactMetaData::valueTypeUint32)
+    , _altitudeMode             (other._altitudeMode)
+    , _altitudeFact             (0,         tr("高度"),             FactMetaData::valueTypeDouble)
+    , _amslAltAboveTerrainFact  (qQNaN(),   "Alt above terrain",    FactMetaData::valueTypeDouble)
+    , _param1MetaData           (FactMetaData::valueTypeDouble)
+    , _param2MetaData           (FactMetaData::valueTypeDouble)
+    , _param3MetaData           (FactMetaData::valueTypeDouble)
+    , _param4MetaData           (FactMetaData::valueTypeDouble)
     , _syncingHeadingDegreesAndParam4           (false)
 {
     _editorQml = QStringLiteral("qrc:/qml/SimpleItemEditor.qml");
     _param3MetaData.setDecimalPlaces(1);
+    _altitudeFact.setRawValue(other._altitudeFact.rawValue());
+    _amslAltAboveTerrainFact.setRawValue(other._amslAltAboveTerrainFact.rawValue());
+
     _setupMetaData();
     _connectSignals();
     _updateOptionalSections();
 
-    *this = other;
-
     _rebuildFacts();
-}
-
-const SimpleMissionItem& SimpleMissionItem::operator=(const SimpleMissionItem& other)
-{
-    VisualMissionItem::operator=(other);
-
-    setRawEdit(other._rawEdit);
-    setDirty(other._dirty);
-    setHomePositionSpecialCase(other._homePositionSpecialCase);
-    _syncFrameToAltitudeRelativeToHome();
-    _rebuildFacts();
-
-    return *this;
 }
 
 void SimpleMissionItem::_connectSignals(void)
 {
     // Connect to change signals to track dirty state
-    connect(&_missionItem._param1Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._param2Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._param3Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._param4Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._param5Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._param6Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._param7Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._param8Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._param9Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._param10Fact, &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._frameFact,   &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem._commandFact, &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirtyFromSignal);
-    connect(&_missionItem,              &MissionItem::sequenceNumberChanged,    this, &SimpleMissionItem::_setDirtyFromSignal);
-
+    connect(&_missionItem._param1Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._param2Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._param3Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._param4Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._param5Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._param6Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._param7Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._param8Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._param9Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._param10Fact, &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._frameFact,   &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem._commandFact, &Fact::valueChanged,                    this, &SimpleMissionItem::_setDirty);
+    connect(&_missionItem,              &MissionItem::sequenceNumberChanged,    this, &SimpleMissionItem::_setDirty);
+    connect(this,                       &SimpleMissionItem::altitudeModeChanged,this, &SimpleMissionItem::_setDirty);
     connect(&_missionItem._param8Fact,  &Fact::valueChanged,                    this, &SimpleMissionItem::_params8Signal);
 
-    // Values from these facts must propagate back and forth between the real object storage
-    connect(&_altitudeRelativeToHomeFact,   &Fact::valueChanged,    this, &SimpleMissionItem::_syncAltitudeRelativeToHomeToFrame);
+
+    // These changes may need to trigger terrain queries
+    connect(&_altitudeFact,             &Fact::valueChanged,                    this, &SimpleMissionItem::_altitudeChanged);
     connect(&_takepictureFact,              &Fact::valueChanged,    this, &SimpleMissionItem::_changeCommand);
-    connect(&_missionItem._frameFact,       &Fact::valueChanged,    this, &SimpleMissionItem::_syncFrameToAltitudeRelativeToHome);
+    connect(this,                       &SimpleMissionItem::altitudeModeChanged,this, &SimpleMissionItem::_altitudeModeChanged);
+
+    connect(this,                       &SimpleMissionItem::terrainAltitudeChanged,this, &SimpleMissionItem::_terrainAltChanged);
 
     // These are coordinate parameters, they must emit coordinateChanged signal
-    connect(&_missionItem._param5Fact, &Fact::valueChanged, this, &SimpleMissionItem::_sendCoordinateChanged);
-    connect(&_missionItem._param6Fact, &Fact::valueChanged, this, &SimpleMissionItem::_sendCoordinateChanged);
-    connect(&_missionItem._param7Fact, &Fact::valueChanged, this, &SimpleMissionItem::_sendCoordinateChanged);
+    connect(&_missionItem._param5Fact,  &Fact::valueChanged, this, &SimpleMissionItem::_sendCoordinateChanged);
+    connect(&_missionItem._param6Fact,  &Fact::valueChanged, this, &SimpleMissionItem::_sendCoordinateChanged);
+    connect(&_missionItem._param7Fact,  &Fact::valueChanged, this, &SimpleMissionItem::_sendCoordinateChanged);
 
     // The following changes may also change friendlyEditAllowed
     connect(&_missionItem._autoContinueFact,    &Fact::valueChanged, this, &SimpleMissionItem::_sendFriendlyEditAllowedChanged);
@@ -223,12 +222,11 @@ void SimpleMissionItem::_connectSignals(void)
     connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::isStandaloneCoordinateChanged);
 
     // Whenever these properties change the ui model changes as well
-    connect(this, &SimpleMissionItem::commandChanged, this, &SimpleMissionItem::_rebuildFacts);
-    connect(this, &SimpleMissionItem::rawEditChanged, this, &SimpleMissionItem::_rebuildFacts);
+    connect(this, &SimpleMissionItem::commandChanged,       this, &SimpleMissionItem::_rebuildFacts);
+    connect(this, &SimpleMissionItem::rawEditChanged,       this, &SimpleMissionItem::_rebuildFacts);
 
     // These fact signals must alway signal out through SimpleMissionItem signals
     connect(&_missionItem._commandFact,     &Fact::valueChanged, this, &SimpleMissionItem::_sendCommandChanged);
-    connect(&_missionItem._frameFact,       &Fact::valueChanged, this, &SimpleMissionItem::_sendFrameChanged);
 
     // Sequence number is kept in mission iteem, so we need to propagate signal up as well
     connect(&_missionItem, &MissionItem::sequenceNumberChanged, this, &SimpleMissionItem::sequenceNumberChanged);
@@ -284,6 +282,7 @@ void SimpleMissionItem::_setupMetaData(void)
 
     _missionItem._commandFact.setMetaData(_commandMetaData);
     _missionItem._frameFact.setMetaData(_frameMetaData);
+    _altitudeFact.setMetaData(_altitudeMetaData);
 }
 
 SimpleMissionItem::~SimpleMissionItem()
@@ -300,6 +299,14 @@ void SimpleMissionItem::save(QJsonArray&  missionItems)
         MissionItem* item = items[i];
         QJsonObject saveObject;
         item->save(saveObject);
+        if (i == 0) {
+            // This is the main simple item, save the alt/terrain data
+            if (specifiesCoordinate()) {
+                saveObject[_jsonAltitudeModeKey] =          _altitudeMode;
+                saveObject[_jsonAltitudeKey] =              _altitudeFact.rawValue().toDouble();
+                saveObject[_jsonAMSLAltAboveTerrainKey] =   _amslAltAboveTerrainFact.rawValue().toDouble();
+            }
+        }
         missionItems.append(saveObject);
         item->deleteLater();
     }
@@ -309,6 +316,11 @@ bool SimpleMissionItem::load(QTextStream &loadStream)
 {
     bool success;
     if ((success = _missionItem.load(loadStream))) {
+        if (specifiesCoordinate()) {
+            _altitudeMode = _missionItem.relativeAltitude() ? AltitudeRelative : AltitudeAMSL;
+            _altitudeFact.setRawValue(_missionItem._param7Fact.rawValue());
+            _amslAltAboveTerrainFact.setRawValue(qQNaN());
+        }
         _updateOptionalSections();
     }
     return success;
@@ -321,11 +333,34 @@ bool SimpleMissionItem::load(const QString &wayline,double angle,double space,do
 
 bool SimpleMissionItem::load(const QJsonObject& json, int sequenceNumber, QString& errorString)
 {
-    bool success;
-    if ((success = _missionItem.load(json, sequenceNumber, errorString))) {
-        _updateOptionalSections();
+    if (!_missionItem.load(json, sequenceNumber, errorString)) {
+        return false;
     }
-    return success;
+
+    if (specifiesCoordinate()) {
+        if (json.contains(_jsonAltitudeModeKey) || json.contains(_jsonAltitudeKey) || json.contains(_jsonAMSLAltAboveTerrainKey)) {
+            QList<JsonHelper::KeyValidateInfo> keyInfoList = {
+                { _jsonAltitudeModeKey,         QJsonValue::Double, true },
+                { _jsonAltitudeKey,             QJsonValue::Double, true },
+                { _jsonAMSLAltAboveTerrainKey,  QJsonValue::Double, true },
+            };
+            if (!JsonHelper::validateKeys(json, keyInfoList, errorString)) {
+                return false;
+            }
+
+            _altitudeMode = (AltitudeMode)(int)json[_jsonAltitudeModeKey].toDouble();
+            _altitudeFact.setRawValue(JsonHelper::possibleNaNJsonValue(json[_jsonAltitudeKey]));
+            _amslAltAboveTerrainFact.setRawValue(JsonHelper::possibleNaNJsonValue(json[_jsonAltitudeKey]));
+        } else {
+            _altitudeMode = _missionItem.relativeAltitude() ? AltitudeRelative : AltitudeAMSL;
+            _altitudeFact.setRawValue(_missionItem._param7Fact.rawValue());
+            _amslAltAboveTerrainFact.setRawValue(qQNaN());
+        }
+    }
+
+    _updateOptionalSections();
+
+    return true;
 }
 
 bool SimpleMissionItem::isStandaloneCoordinate(void) const
@@ -481,12 +516,6 @@ void SimpleMissionItem::_rebuildTextFieldFacts(void)
             _missionItem._param3Fact.setMetaData(_speedMetaData);
             _textFieldFacts.append(&_missionItem._param3Fact);
         }
-        if (!uiInfo->specifiesCoordinate() && uiInfo->specifiesAltitudeOnly()) {
-            _missionItem._param7Fact._setName("高度");
-            _missionItem._param7Fact.setMetaData(_altitudeMetaData);
-            _textFieldFacts.append(&_missionItem._param7Fact);
-        }
-
         _ignoreDirtyChangeSignals = false;
     }
 }
@@ -548,12 +577,16 @@ void SimpleMissionItem::_rebuildCheckboxFacts(void)
     if (rawEdit()) {
         _checkboxFacts.append(&_missionItem._autoContinueFact);
     } else if ((specifiesCoordinate() || specifiesAltitudeOnly()) && !_homePositionSpecialCase) {
-        _checkboxFacts.append(&_altitudeRelativeToHomeFact);
         if(_missionItem.command()==MAV_CMD_NAV_WAYPOINT||_missionItem.command()==MAV_CMD_DO_DIGICAM_CONTROL)
         {
             _checkboxFacts.append(&_takepictureFact);
         }
     }
+}
+
+bool SimpleMissionItem::specifiesAltitude(void) const
+{
+    return specifiesCoordinate() || specifiesAltitudeOnly();
 }
 
 void SimpleMissionItem::_rebuildComboBoxFacts(void)
@@ -675,7 +708,7 @@ void SimpleMissionItem::_params8Signal()
    }
 }
 
-void SimpleMissionItem::_setDirtyFromSignal(void)
+void SimpleMissionItem::_setDirty(void)
 {
     if (!_ignoreDirtyChangeSignals) {
         setDirty(true);
@@ -687,13 +720,37 @@ void SimpleMissionItem::_sendCoordinateChanged(void)
     emit coordinateChanged(coordinate());
 }
 
-void SimpleMissionItem::_syncAltitudeRelativeToHomeToFrame(const QVariant& value)
+void SimpleMissionItem::_altitudeModeChanged(void)
 {
-    if (!_syncingAltitudeRelativeToHomeAndFrame) {
-        _syncingAltitudeRelativeToHomeAndFrame = true;
-        _missionItem.setFrame(value.toBool() ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL);
-        emit coordinateHasRelativeAltitudeChanged(value.toBool());
-        _syncingAltitudeRelativeToHomeAndFrame = false;
+    switch (_altitudeMode) {
+    case AltitudeAboveTerrain:
+        // Terrain altitudes are AMSL
+        _missionItem.setFrame(MAV_FRAME_GLOBAL);
+        // Clear any old values
+        _missionItem._param7Fact.setRawValue(qQNaN());
+        _amslAltAboveTerrainFact.setRawValue(qQNaN());
+        _altitudeChanged();
+        break;
+    case AltitudeAMSL:
+        _missionItem.setFrame(MAV_FRAME_GLOBAL);
+        break;
+    case AltitudeRelative:
+        _missionItem.setFrame(MAV_FRAME_GLOBAL_RELATIVE_ALT);
+        break;
+    }
+    emit coordinateHasRelativeAltitudeChanged(_altitudeMode == AltitudeRelative);
+}
+
+void SimpleMissionItem::_altitudeChanged(void)
+{
+    if (!specifiesAltitude()) {
+        return;
+    }
+
+    if (_altitudeMode == AltitudeAboveTerrain) {
+        _terrainAltChanged();
+    } else {
+        _missionItem._param7Fact.setRawValue(_altitudeFact.rawValue());
     }
 }
 
@@ -708,62 +765,50 @@ void SimpleMissionItem::_changeCommand()
     }
 }
 
-void SimpleMissionItem::_syncFrameToAltitudeRelativeToHome(void)
+void SimpleMissionItem::_terrainAltChanged(void)
 {
-    if (!_syncingAltitudeRelativeToHomeAndFrame) {
-        _syncingAltitudeRelativeToHomeAndFrame = true;
-        _altitudeRelativeToHomeFact.setRawValue(relativeAltitude());
-        emit coordinateHasRelativeAltitudeChanged(_altitudeRelativeToHomeFact.rawValue().toBool());
-        _syncingAltitudeRelativeToHomeAndFrame = false;
+    if (!specifiesAltitude() || _altitudeMode != AltitudeAboveTerrain) {
+        // We don't need terrain data
+        return;
     }
+
+    if (!qIsNaN(_amslAltAboveTerrainFact.rawValue().toDouble())) {
+        // We already have terrain values set. Don't do it again to prevent dirty bit changing.
+        return;
+    }
+
+    if (qIsNaN(terrainAltitude())) {
+        // Set NaNs to signal we are waiting on terrain data
+        _missionItem._param7Fact.setRawValue(qQNaN());
+        _amslAltAboveTerrainFact.setRawValue(qQNaN());
+    } else {
+        double aboveTerrain = terrainAltitude() + _altitudeFact.rawValue().toDouble();
+        _missionItem._param7Fact.setRawValue(aboveTerrain);
+        _amslAltAboveTerrainFact.setRawValue(aboveTerrain);
+    }
+}
+
+bool SimpleMissionItem::readyForSave(void) const
+{
+    return !specifiesAltitude() || !qIsNaN(_missionItem._param7Fact.rawValue().toDouble());
 }
 
 void SimpleMissionItem::setDefaultsForCommand(void)
 {
     // We set these global defaults first, then if there are param defaults they will get reset
-    _missionItem.setParam7(qgcApp()->toolbox()->settingsManager()->appSettings()->defaultMissionItemAltitude()->rawValue().toDouble());
-    if(_vehicle->multiRotor())
+    _altitudeMode = AltitudeRelative;
+    double defaultAlt = qgcApp()->toolbox()->settingsManager()->appSettings()->defaultMissionItemAltitude()->rawValue().toDouble();
+    _altitudeFact.setRawValue(defaultAlt);
+    _missionItem._param7Fact.setRawValue(defaultAlt);
+	if(_vehicle->multiRotor())
     {
         _missionItem.setParam3(_vehicle->defaultHoverSpeed());
     }
     else{
         _missionItem.setParam3(_vehicle->defaultCruiseSpeed());
     }
-    MAV_CMD command = (MAV_CMD)this->command();
-    const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
-    if (uiInfo) {
-        for (int i=1; i<=10; i++) {  //10 params
-            bool showUI;
-            const MissionCmdParamInfo* paramInfo = uiInfo->getParamInfo(i,showUI);
-            if (showUI && paramInfo) {
-                Fact* rgParamFacts[10] = { &_missionItem._param1Fact, &_missionItem._param2Fact, &_missionItem._param3Fact, &_missionItem._param4Fact, &_missionItem._param5Fact, &_missionItem._param6Fact, &_missionItem._param7Fact, &_missionItem._param8Fact, &_missionItem._param9Fact, &_missionItem._param10Fact };
-                rgParamFacts[paramInfo->param()-1]->setRawValue(paramInfo->defaultValue());
-            }
-        }
-    }
+    _amslAltAboveTerrainFact.setRawValue(qQNaN());
 
-    switch (command) {
-    case MAV_CMD_NAV_WAYPOINT:
-        // We default all acceptance radius to 0. This allows flight controller to be in control of
-        // accept radius.
-        _missionItem.setParam2(0);
-        break;
-
-    case MAV_CMD_NAV_LAND:
-        _missionItem.setParam7(0);
-        break;
-    default:
-        break;
-    }
-
-    _missionItem.setAutoContinue(true);
-    _missionItem.setFrame((specifiesCoordinate() || specifiesAltitudeOnly()) ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_MISSION);
-    setRawEdit(false);
-}
-
-void SimpleMissionItem::setDefaultsForCMD(void)
-{
-    // We set these global defaults first, then if there are param defaults they will get reset
     MAV_CMD command = (MAV_CMD)this->command();
     const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
     if (uiInfo) {
@@ -795,11 +840,6 @@ void SimpleMissionItem::setDefaultsForCMD(void)
     _missionItem.setAutoContinue(true);
     _missionItem.setFrame((specifiesCoordinate() || specifiesAltitudeOnly()) ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_MISSION);
     setRawEdit(false);
-}
-
-void SimpleMissionItem::_sendFrameChanged(void)
-{
-    emit frameChanged(_missionItem.frame());
 }
 
 void SimpleMissionItem::_sendCommandChanged(void)
@@ -974,5 +1014,13 @@ void SimpleMissionItem::setMissionFlightStatus(MissionController::MissionFlightS
         if (!qIsNaN(missionFlightStatus.gimbalPitch) && !qFuzzyCompare(_cameraSection->gimbalPitch()->rawValue().toDouble(), missionFlightStatus.gimbalPitch)) {
             _cameraSection->gimbalPitch()->setRawValue(missionFlightStatus.gimbalPitch);
         }
+    }
+}
+
+void SimpleMissionItem::setAltitudeMode(AltitudeMode altitudeMode)
+{
+    if (altitudeMode != _altitudeMode) {
+        _altitudeMode = altitudeMode;
+        emit altitudeModeChanged();
     }
 }
