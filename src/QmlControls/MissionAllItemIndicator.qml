@@ -108,7 +108,7 @@ Rectangle {
                 QGCLabel {
                     width:              parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
-                    font.pointSize:     ScreenTools.defaultFontPixelHeight
+                    font.pointSize:     ScreenTools.defaultFontPixelHeight*0.8
                     font.bold:          true
                     color:              Qt.rgba(0.102,0.887,0.609,1)
                     text:               _missionDistanceText
@@ -117,7 +117,7 @@ Rectangle {
                 QGCLabel {
                     width:              parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
-                    font.pointSize:     ScreenTools.defaultFontPixelHeight
+                    font.pointSize:     ScreenTools.defaultFontPixelHeight*0.8
                     font.bold:          true
                     color:              Qt.rgba(0.102,0.887,0.609,1)
                     text:               getMissionTime()
@@ -125,7 +125,7 @@ Rectangle {
                 QGCLabel {
                     width:              parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
-                    font.pointSize:     ScreenTools.defaultFontPixelHeight
+                    font.pointSize:     ScreenTools.defaultFontPixelHeight*0.8
                     font.bold:          true
                     color:              Qt.rgba(0.102,0.887,0.609,1)
                     text:               _missionMaxTelemetryText

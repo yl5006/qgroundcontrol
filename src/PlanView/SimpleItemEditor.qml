@@ -80,7 +80,7 @@ Rectangle {
 
             QGCComboBox {
                 id:                 altCombo
-                model:              [ qsTr("Alt (Rel)"), qsTr("AMSL"), qsTr("Above Terrain") ]
+                model:              [ qsTr("相对高度"), qsTr("海拔高度"), qsTr("地形高度") ]
                 currentIndex:       missionItem.altitudeMode
                 Layout.fillWidth:   true
                 onActivated:        missionItem.altitudeMode = index
@@ -88,7 +88,7 @@ Rectangle {
             }
 
             QGCLabel {
-                text:       qsTr("Actual AMSL Alt")
+                text:       qsTr("海拔高度")
                 visible:    _altModeIsTerrain
             }
 
@@ -157,6 +157,14 @@ Rectangle {
 //                            enabled:            flightSpeedCheckbox.checked
 //                            visible:            missionItem.speedSection.available
 //                        }
+        }
+        Repeater {
+            model: missionItem.checkboxFacts
+            FactCheckBox {
+                text:               object.name
+                fact:               object
+                Layout.fillWidth:   true
+            }
         }
 
         CameraSection {

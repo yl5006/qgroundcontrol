@@ -786,6 +786,7 @@ QGCView {
                 id:                     setimg
                 anchors.centerIn:       parent
                 missionItems:           _visualItems
+                missionController:      _missionController
                 z:                      QGroundControl.zOrderTopMost
                 visible:                false
             }

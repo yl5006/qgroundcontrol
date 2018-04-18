@@ -113,7 +113,7 @@ MacBuild {
 } else:LinuxBuild {
     PKGCONFIG = sdl2
 #    LIBS += -lsdl
-     LIBS += -lSDL
+#    LIBS += -lSDL
 } else:WindowsBuild {
     INCLUDEPATH += $$BASEDIR/libs/lib/sdl2/msvc/include
 

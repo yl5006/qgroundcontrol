@@ -52,6 +52,7 @@ public:
 
     // These properties are used to display the editing ui
     Q_PROPERTY(QmlObjectListModel*  comboboxFacts   READ comboboxFacts  CONSTANT)
+    Q_PROPERTY(QmlObjectListModel*  checkboxFacts   READ checkboxFacts  CONSTANT)
     Q_PROPERTY(QmlObjectListModel*  textFieldFacts  READ textFieldFacts CONSTANT)
     Q_PROPERTY(QmlObjectListModel*  nanFacts        READ nanFacts       CONSTANT)
 
@@ -81,7 +82,7 @@ public:
     QmlObjectListModel* textFieldFacts  (void) { return &_textFieldFacts; }
     QmlObjectListModel* nanFacts        (void) { return &_nanFacts; }
     QmlObjectListModel* comboboxFacts   (void) { return &_comboboxFacts; }
-
+    QmlObjectListModel* checkboxFacts   (void) { return &_checkboxFacts; }
     void setRawEdit(bool rawEdit);
     void setAltitudeMode(AltitudeMode altitudeMode);
     
@@ -139,7 +140,6 @@ public:
     void setparam3          (double param3);
 public slots:
     void setDefaultsForCommand(void);
-    void setDefaultsForCMD(void);
 
 
 signals:
@@ -156,7 +156,7 @@ private slots:
 	void _params8Signal(void);
     void _sectionDirtyChanged           (bool dirty);
     void _sendCommandChanged            (void);
-    void _changeCommand                     (void);
+    void _changeCommand                 (void);
     void _sendCoordinateChanged         (void);
     void _sendFriendlyEditAllowedChanged(void);
     void _altitudeChanged               (void);
@@ -194,6 +194,7 @@ private:
     QmlObjectListModel  _textFieldFacts;
     QmlObjectListModel  _nanFacts;
     QmlObjectListModel  _comboboxFacts;
+    QmlObjectListModel  _checkboxFacts;
     
     static FactMetaData*    _altitudeMetaData;
     static FactMetaData*    _speedMetaData;

@@ -176,81 +176,110 @@ void CorridorScanComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& i
         //qDebug() << "start transect";
         foreach (const CoordInfo_t& transectCoordInfo, transect) {
             //qDebug() << transectCoordInfo.coordType;
-
-            item = new MissionItem(seqNum++,
-                                   MAV_CMD_NAV_WAYPOINT,
-                                   mavFrame,
-                                   0,                                          // No hold time
-                                   0.0,                                        // No acceptance radius specified
-                                   0.0,                                        // Pass through waypoint
-                                   std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
-                                   transectCoordInfo.coord.latitude(),
-                                   transectCoordInfo.coord.longitude(),
-                                   transectCoordInfo.coord.altitude(),
-                                   true,                                       // autoContinue
-                                   false,                                      // isCurrentItem
-                                   missionItemParent);
-            items.append(item);
-
             if (firstOverallPoint && addTriggerAtBeginning) {
                 // Start triggering
                 addTriggerAtBeginning = false;
                 item = new MissionItem(seqNum++,
                                        MAV_CMD_DO_SET_CAM_TRIGG_DIST,
-                                       MAV_FRAME_MISSION,
+                                       mavFrame,
+                                       0,                                          // No hold time
+                                       0.0,                                        // No acceptance radius specified
+                                       0.0,                                        // Pass through waypoint
+                                       std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
+                                       transectCoordInfo.coord.latitude(),
+                                       transectCoordInfo.coord.longitude(),
+                                       transectCoordInfo.coord.altitude(),
                                        _cameraCalc.adjustedFootprintFrontal()->rawValue().toDouble(),   // trigger distance
                                        0,                                                               // shutter integration (ignore)
-                                       1,                                                               // trigger immediately when starting
-                                       0, 0, 0, 0, 0, 0, 0,                                                      // param 4-7 unused
+                                       1,                                                               // trigger immediately when starting                                                     // param 4-7 unused
                                        true,                                                            // autoContinue
                                        false,                                                           // isCurrentItem
                                        missionItemParent);
                 items.append(item);
-            }
-            firstOverallPoint = false;
-
-            if (transectCoordInfo.coordType == TransectStyleComplexItem::CoordTypeSurveyEdge && !imagesEverywhere) {
-                if (entryPoint) {
-                    // Start of transect, start triggering
+            }else
+            {
+                if (transectCoordInfo.coordType == TransectStyleComplexItem::CoordTypeSurveyEdge && !imagesEverywhere) {
+                    if (entryPoint) {
+                        // Start of transect, start triggering
+                        item = new MissionItem(seqNum++,
+                                               MAV_CMD_DO_SET_CAM_TRIGG_DIST,
+                                               mavFrame,
+                                               0,                                          // No hold time
+                                               0.0,                                        // No acceptance radius specified
+                                               0.0,                                        // Pass through waypoint
+                                               std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
+                                               transectCoordInfo.coord.latitude(),
+                                               transectCoordInfo.coord.longitude(),
+                                               transectCoordInfo.coord.altitude(),
+                                               _cameraCalc.adjustedFootprintFrontal()->rawValue().toDouble(),   // trigger distance
+                                               0,                                                               // shutter integration (ignore)
+                                               1,                                                               // trigger immediately when starting                                                   // param 4-7 unused
+                                               true,                                                            // autoContinue
+                                               false,                                                           // isCurrentItem
+                                               missionItemParent);
+                        items.append(item);
+                    } else {
+                        // End of transect, stop triggering
+                        item = new MissionItem(seqNum++,
+                                               MAV_CMD_DO_SET_CAM_TRIGG_DIST,
+                                               mavFrame,
+                                               0,                                          // No hold time
+                                               0.0,                                        // No acceptance radius specified
+                                               0.0,                                        // Pass through waypoint
+                                               std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
+                                               transectCoordInfo.coord.latitude(),
+                                               transectCoordInfo.coord.longitude(),
+                                               transectCoordInfo.coord.altitude(),
+                                               0,           // stop triggering
+                                               0,           // shutter integration (ignore)
+                                               0,           // trigger immediately when starting
+                                               true,        // autoContinue
+                                               false,       // isCurrentItem
+                                               missionItemParent);
+                        items.append(item);
+                    }
+                    entryPoint = !entryPoint;
+                }else
+                    {
                     item = new MissionItem(seqNum++,
-                                           MAV_CMD_DO_SET_CAM_TRIGG_DIST,
-                                           MAV_FRAME_MISSION,
-                                           _cameraCalc.adjustedFootprintFrontal()->rawValue().toDouble(),   // trigger distance
-                                           0,                                                               // shutter integration (ignore)
-                                           1,                                                               // trigger immediately when starting
-                                           0, 0, 0, 0,                                                      // param 4-7 unused
-                                           true,                                                            // autoContinue
-                                           false,                                                           // isCurrentItem
-                                           missionItemParent);
-                    items.append(item);
-                } else {
-                    // End of transect, stop triggering
-                    item = new MissionItem(seqNum++,
-                                           MAV_CMD_DO_SET_CAM_TRIGG_DIST,
-                                           MAV_FRAME_MISSION,
-                                           0,           // stop triggering
-                                           0,           // shutter integration (ignore)
-                                           0,           // trigger immediately when starting
-                                           0, 0, 0, 0,  // param 4-7 unused
-                                           true,        // autoContinue
-                                           false,       // isCurrentItem
+                                           MAV_CMD_NAV_WAYPOINT,
+                                           mavFrame,
+                                           0,                                          // No hold time
+                                           0.0,                                        // No acceptance radius specified
+                                           0.0,                                        // Pass through waypoint
+                                           std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
+                                           transectCoordInfo.coord.latitude(),
+                                           transectCoordInfo.coord.longitude(),
+                                           transectCoordInfo.coord.altitude(),
+                                           0, 0, 0,  // param 4-7 unused
+                                           true,                                       // autoContinue
+                                           false,                                      // isCurrentItem
                                            missionItemParent);
                     items.append(item);
                 }
-                entryPoint = !entryPoint;
             }
+            firstOverallPoint = false;
+
+
         }
     }
-
+     MissionItem* lastitem = items.last();
     if (imagesEverywhere) {
+        items.removeLast();
         // Stop triggering
         MissionItem* item = new MissionItem(seqNum++,
                                             MAV_CMD_DO_SET_CAM_TRIGG_DIST,
-                                            MAV_FRAME_MISSION,
+                                            mavFrame,
+                                            0,                                          // No hold time
+                                            0.0,                                        // No acceptance radius specified
+                                            0.0,                                        // Pass through waypoint
+                                            std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
+                                            lastitem->param5(),
+                                            lastitem->param6(),
+                                            lastitem->param7(),
                                             0,           // stop triggering
                                             0,           // shutter integration (ignore)
                                             0,           // trigger immediately when starting
-                                            0, 0, 0, 0,  // param 4-7 unused
                                             true,        // autoContinue
                                             false,       // isCurrentItem
                                             missionItemParent);

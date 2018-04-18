@@ -99,7 +99,6 @@ WindowsBuild {
 
 LinuxBuild {
     QMAKE_POST_LINK += && mkdir -p $$DESTDIR/Qt/libs && mkdir -p $$DESTDIR/Qt/plugins
-
     # QT_INSTALL_LIBS
     QT_LIB_LIST = \
         libQt5Core.so.5 \
@@ -107,7 +106,7 @@ LinuxBuild {
         libQt5Gui.so.5 \
         libQt5Location.so.5 \
         libQt5Multimedia.so.5 \
-        libQt5MultimediaQuick_p.so.5 \
+        libQt5MultimediaQuick.so.5 \
         libQt5Network.so.5 \
         libQt5OpenGL.so.5 \
         libQt5Positioning.so.5 \

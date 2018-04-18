@@ -31,6 +31,12 @@ linux {
         DEFINES += __STDC_LIMIT_MACROS __rasp_pi2__
         target.path = /opt
         INSTALLS += target
+    } else : arm-linux-gnueabihf-g++ {
+        message("Linux arm build")
+        CONFIG += LinuxBuild
+        DEFINES += __STDC_LIMIT_MACROS __rasp_pi2__
+        target.path = /opt
+        INSTALLS += target
     } else : android-g++ {
         CONFIG += AndroidBuild MobileBuild
         DEFINES += __android__

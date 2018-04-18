@@ -60,7 +60,7 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, QObject* parent)
     , _speedSection                     (NULL)
     , _cameraSection                    (NULL)
     , _commandTree                      (qgcApp()->toolbox()->missionCommandTree())
-    , _takepictureFact              (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
+    , _takepictureFact                  (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
     , _supportedCommandFact             (0, "Command:",             FactMetaData::valueTypeUint32)
     , _altitudeMode                     (AltitudeRelative)
     , _altitudeFact                     (0, tr("高度"),             FactMetaData::valueTypeDouble)
@@ -152,7 +152,7 @@ SimpleMissionItem::SimpleMissionItem(const SimpleMissionItem& other, QObject* pa
     , _speedSection             (NULL)
     , _cameraSection            (NULL)
     , _commandTree              (qgcApp()->toolbox()->missionCommandTree())
-    , _takepictureFact              (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
+    , _takepictureFact          (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
     , _supportedCommandFact     (0,         "Command:",             FactMetaData::valueTypeUint32)
     , _altitudeMode             (other._altitudeMode)
     , _altitudeFact             (0,         tr("高度"),             FactMetaData::valueTypeDouble)
@@ -197,7 +197,7 @@ void SimpleMissionItem::_connectSignals(void)
 
     // These changes may need to trigger terrain queries
     connect(&_altitudeFact,             &Fact::valueChanged,                    this, &SimpleMissionItem::_altitudeChanged);
-    connect(&_takepictureFact,              &Fact::valueChanged,    this, &SimpleMissionItem::_changeCommand);
+    connect(&_takepictureFact,          &Fact::valueChanged,                    this, &SimpleMissionItem::_changeCommand);
     connect(this,                       &SimpleMissionItem::altitudeModeChanged,this, &SimpleMissionItem::_altitudeModeChanged);
 
     connect(this,                       &SimpleMissionItem::terrainAltitudeChanged,this, &SimpleMissionItem::_terrainAltChanged);
@@ -213,7 +213,7 @@ void SimpleMissionItem::_connectSignals(void)
     connect(&_missionItem._frameFact,           &Fact::valueChanged, this, &SimpleMissionItem::_sendFriendlyEditAllowedChanged);
 
     // A command change triggers a number of other changes as well.
-    connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::setDefaultsForCMD);
+    connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::setDefaultsForCommand);
     connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::commandNameChanged);
     connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::commandDescriptionChanged);
     connect(&_missionItem._commandFact, &Fact::valueChanged, this, &SimpleMissionItem::abbreviationChanged);
@@ -565,7 +565,6 @@ void SimpleMissionItem::_rebuildNaNFacts(void)
                 _nanFacts.append(paramFact);
             }
         }
-
         _ignoreDirtyChangeSignals = false;
     }
 }
@@ -574,10 +573,8 @@ void SimpleMissionItem::_rebuildCheckboxFacts(void)
 {
     _checkboxFacts.clear();
 
-    if (rawEdit()) {
-        _checkboxFacts.append(&_missionItem._autoContinueFact);
-    } else if ((specifiesCoordinate() || specifiesAltitudeOnly()) && !_homePositionSpecialCase) {
-        if(_missionItem.command()==MAV_CMD_NAV_WAYPOINT||_missionItem.command()==MAV_CMD_DO_DIGICAM_CONTROL)
+    if (!rawEdit()) {
+      if(_missionItem.command()==MAV_CMD_NAV_WAYPOINT||_missionItem.command()==MAV_CMD_DO_DIGICAM_CONTROL)
         {
             _checkboxFacts.append(&_takepictureFact);
         }
@@ -756,7 +753,7 @@ void SimpleMissionItem::_altitudeChanged(void)
 
 void SimpleMissionItem::_changeCommand()
 {
-    if (_takepictureFact.rawValue().toBool()) {
+    if (_takepictureFact.rawValue() != 0) {
       _missionItem.setCommand(MAV_CMD_DO_DIGICAM_CONTROL);
     }
     else
