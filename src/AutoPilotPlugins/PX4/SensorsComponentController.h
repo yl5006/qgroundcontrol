@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -20,6 +20,7 @@
 #include "UASInterface.h"
 #include "FactPanelController.h"
 #include "QGCLoggingCategory.h"
+#include "FileManager.h"
 
 Q_DECLARE_LOGGING_CATEGORY(SensorsComponentControllerLog)
 
@@ -104,7 +105,8 @@ private:
     void _refreshParams(void);
     void _hideAllCalAreas(void);
     void _resetInternalState(void);
-    
+    QMap<short, QString>  createMapFromJsonFile(const QString& jsonFilename);
+
     enum StopCalibrationCode {
         StopCalibrationSuccess,
         StopCalibrationFailed,
@@ -164,6 +166,7 @@ private:
     bool _waitingForCancel;
     
     static const int _supportedFirmwareCalVersion = 2;
+    QMap<short, QString>    _aircalmsg;
 };
 
 #endif

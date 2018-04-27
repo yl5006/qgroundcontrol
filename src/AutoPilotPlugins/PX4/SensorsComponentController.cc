@@ -20,6 +20,10 @@
 #include <QVariant>
 #include <QQmlProperty>
 
+#include "JsonHelper.h"
+#include <QJsonParseError>
+#include <QJsonArray>
+
 QGC_LOGGING_CATEGORY(SensorsComponentControllerLog, "SensorsComponentControllerLog")
 
 SensorsComponentController::SensorsComponentController(void) :
@@ -63,8 +67,58 @@ SensorsComponentController::SensorsComponentController(void) :
     _unknownFirmwareVersion(false),
     _waitingForCancel(false)
 {
+    _aircalmsg= createMapFromJsonFile(QStringLiteral(":/json/Vehicle/calMsgIdCn.json"));
 }
+QMap<short, QString>  SensorsComponentController::createMapFromJsonFile(const QString& jsonFilename)
+{
+    QMap<short, QString> MsgMap;
 
+    QFile jsonFile(jsonFilename);
+    if (!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Unable to open file" << jsonFilename << jsonFile.errorString();
+        return MsgMap;
+    }
+
+    QByteArray bytes = jsonFile.readAll();
+    jsonFile.close();
+    QJsonParseError jsonParseError;
+    QJsonDocument doc = QJsonDocument::fromJson(bytes, &jsonParseError);
+    if (jsonParseError.error != QJsonParseError::NoError) {
+        qWarning() <<  "Unable to parse json document" << jsonFilename << jsonParseError.errorString();
+        return MsgMap;
+    }
+
+    if (!doc.isArray()) {
+        qWarning() << "json document is not array";
+        return MsgMap;
+    }
+
+    QJsonArray jsonArray = doc.array();
+    for (int i=0; i<jsonArray.count(); i++) {
+        QJsonValueRef jsonValue = jsonArray[i];
+
+        if (!jsonValue.isObject()) {
+            qWarning() << QStringLiteral("JsonValue at index %1 not an object").arg(i);
+            continue;
+        }
+        QJsonObject jsonObject = jsonValue.toObject();
+        QString     errorString;
+
+        // Validate key types
+        QStringList             keys;
+        QList<QJsonValue::Type> types;
+        keys <<"msgid"<< "rawmsg";
+        types << QJsonValue::Double << QJsonValue::String;
+        if (!JsonHelper::validateKeyTypes(jsonObject, keys, types, errorString)) {
+            qWarning() << errorString;
+            return MsgMap;
+        }
+        short _msgid = (short)  jsonObject.value("msgid").toInt();
+        MsgMap.insert(_msgid,jsonObject.value("rawmsg").toString());
+    }
+
+    return MsgMap;
+}
 bool SensorsComponentController::usingUDPLink(void)
 {
     return _vehicle->priorityLink()->getLinkConfiguration()->type() == LinkConfiguration::TypeUdp;
@@ -93,7 +147,7 @@ void SensorsComponentController::_startLogCalibration(void)
     
     connect(_uas, &UASInterface::textMessageReceived, this, &SensorsComponentController::_handleUASTextMessage);
     
-//    _cancelButton->setEnabled(false);
+//  _cancelButton->setEnabled(false);
     _cancelButton->setVisible(false);
 }
 
@@ -105,7 +159,7 @@ void SensorsComponentController::_startVisualCalibration(void)
     _airspeedButton->setEnabled(false);
     _levelButton->setEnabled(false);
     _setOrientationsButton->setEnabled(false);
- //   _cancelButton->setEnabled(true);
+ // _cancelButton->setEnabled(true);
     _cancelButton->setVisible(true);
     _resetInternalState();
     
@@ -148,7 +202,7 @@ void SensorsComponentController::_stopCalibration(SensorsComponentController::St
     _airspeedButton->setEnabled(true);
     _levelButton->setEnabled(true);
     _setOrientationsButton->setEnabled(true);
- //   _cancelButton->setEnabled(false);
+ // _cancelButton->setEnabled(false);
     _cancelButton->setVisible(false);
     if (code == StopCalibrationSuccess) {
         _resetInternalState();
@@ -258,11 +312,14 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
     }
 
     text = text.right(text.length() - calPrefix.length());
-//only display cal message for airspeed
+    //only display cal message for airspeed
     QString calAirspeedfix("[air]");
     if (text.startsWith(calAirspeedfix)) {
         text = text.right(text.length() - calAirspeedfix.length());
         int msgid=text.left(2).toInt();
+        qDebug()<<msgid<<_aircalmsg[msgid];
+        _orientationCalAreaHelpText->setProperty("text", _aircalmsg[msgid]);
+        text=text.right(text.length()-2);
         _appendStatusLog(text);
     }
 
@@ -345,6 +402,13 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
             }else {
                 qWarning() << "Unknown calibration message type" << text;
             }
+            emit orientationCalSidesDoneChanged();
+            emit orientationCalSidesVisibleChanged();
+            emit orientationCalSidesInProgressChanged();
+            _updateAndEmitShowOrientationCalArea(true);
+        }else if (text == "airspeed"){
+            _gyroCalInProgress = true;
+            _orientationCalDownSideVisible = true;
             emit orientationCalSidesDoneChanged();
             emit orientationCalSidesVisibleChanged();
             emit orientationCalSidesInProgressChanged();

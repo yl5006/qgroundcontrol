@@ -260,6 +260,7 @@
         <file alias="Vehicle/GPSFact.json">src/Vehicle/GPSFact.json</file>
         <file alias="Vehicle/GPSRTKFact.json">src/Vehicle/GPSRTKFact.json</file>
 	<file alias="Vehicle/CriticalMsgIdCn.json">src/Vehicle/CriticalMsgIdCn.json</file>
+	<file alias="Vehicle/calMsgIdCn.json">src/Vehicle/calMsgIdCn.json</file>
         <file alias="Vehicle/SubmarineFact.json">src/Vehicle/SubmarineFact.json</file>
         <file alias="Vehicle/TemperatureFact.json">src/Vehicle/TemperatureFact.json</file>
         <file alias="Vehicle/VehicleFact.json">src/Vehicle/VehicleFact.json</file>
