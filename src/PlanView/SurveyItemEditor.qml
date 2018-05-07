@@ -728,6 +728,9 @@ Rectangle {
                     return timeVal.toFixed(1) + " " + qsTr("s")
                 }
             }
+
+            QGCLabel { text: qsTr("Trigger Distance") }
+            QGCLabel { text: missionItem.cameraTriggerDistance.valueString  + " " + QGroundControl.appSettingsDistanceUnitsString }
         }
     }
 

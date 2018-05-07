@@ -143,6 +143,7 @@
         <file alias="QGroundControl/Controls/QGCCircleProgress.qml">src/QmlControls/QGCCircleProgress.qml</file>
         <file alias="QGroundControl/Controls/SubMenuButtonModify.qml">src/QmlControls/SubMenuButtonModify.qml</file>
         <file alias="QGroundControl/Controls/SurveyMapVisual.qml">src/PlanView/SurveyMapVisual.qml</file>
+		<file alias="QGroundControl/Controls/TransectStyleComplexItemStats.qml">src/PlanView/TransectStyleComplexItemStats.qml</file>
         <file alias="QGroundControl/Controls/ToolStrip.qml">src/QmlControls/ToolStrip.qml</file>
         <file alias="QGroundControl/Controls/VehicleRotationCal.qml">src/QmlControls/VehicleRotationCal.qml</file>
         <file alias="QGroundControl/Controls/VehicleSummaryRow.qml">src/QmlControls/VehicleSummaryRow.qml</file>
@@ -156,6 +157,7 @@
         <file alias="QGroundControl/FactControls/FactTextField.qml">src/FactSystem/FactControls/FactTextField.qml</file>
         <file alias="QGroundControl/FactControls/FactTextFieldGrid.qml">src/FactSystem/FactControls/FactTextFieldGrid.qml</file>
         <file alias="QGroundControl/FactControls/FactTextFieldRow.qml">src/FactSystem/FactControls/FactTextFieldRow.qml</file>
+		<file alias="QGroundControl/FactControls/FactValueSlider.qml">src/FactSystem/FactControls/FactValueSlider.qml</file>
         <file alias="QGroundControl/FactControls/qmldir">src/FactSystem/FactControls/qmldir</file>
         <file alias="QGroundControl/FlightDisplay/FlightDisplayView.qml">src/FlightDisplay/FlightDisplayView.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlightDisplayViewMap.qml">src/FlightDisplay/FlightDisplayViewMap.qml</file>
@@ -257,8 +259,10 @@
         <file alias="Vehicle/VehicleFactCn.json">src/Vehicle/VehicleFactCn.json</file>
         <file alias="Vehicle/BatteryFact.json">src/Vehicle/BatteryFact.json</file>
         <file alias="Vehicle/ClockFact.json">src/Vehicle/ClockFact.json</file>
+	<file alias="Vehicle/DistanceSensorFact.json">src/Vehicle/DistanceSensorFact.json</file>
         <file alias="Vehicle/GPSFact.json">src/Vehicle/GPSFact.json</file>
         <file alias="Vehicle/GPSRTKFact.json">src/Vehicle/GPSRTKFact.json</file>
+	<file alias="Vehicle/SetpointFact.json">src/Vehicle/SetpointFact.json</file>
 	<file alias="Vehicle/CriticalMsgIdCn.json">src/Vehicle/CriticalMsgIdCn.json</file>
 	<file alias="Vehicle/calMsgIdCn.json">src/Vehicle/calMsgIdCn.json</file>
         <file alias="Vehicle/SubmarineFact.json">src/Vehicle/SubmarineFact.json</file>

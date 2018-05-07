@@ -159,6 +159,9 @@ Rectangle {
 
             QGCLabel { text: qsTr("拍照间隔") }
             QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("secs") }
+
+            QGCLabel { text: qsTr("Trigger Distance") }
+            QGCLabel { text: missionItem.cameraCalc.adjustedFootprintSide.valueString + " " + QGroundControl.appSettingsDistanceUnitsString }
         }
     } // Column
 } // Rectangle

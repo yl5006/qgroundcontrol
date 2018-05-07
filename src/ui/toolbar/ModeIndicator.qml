@@ -26,6 +26,9 @@ Item {
     anchors.top:    parent.top
     anchors.bottom: parent.bottom
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+    property var _flightModes:      _activeVehicle ? _activeVehicle.flightModes : [ ]
+
+    on_FlightModesChanged: flightModeSelector.updateFlightModesMenu()
     function getVehicleimg(_activeVehicle)
     {
         if(_activeVehicle.multiRotor)
@@ -86,7 +89,7 @@ Item {
             }
             flightModesMenuItems.length = 0
             // Add new items
-            for (var i = 0; i < activeVehicle.flightModes.length; i++) {
+                for (var i = 0; i < _flightModes.length; i++) {
                 var menuItem = flightModeMenuItemComponent.createObject(null, { "text": _activeVehicle.flightModes[i] })
                 flightModesMenuItems.push(menuItem)
                 flightModesMenu.insertItem(i, menuItem)
@@ -94,10 +97,6 @@ Item {
         }
     }
     Component.onCompleted: flightModeSelector.updateFlightModesMenu()
-    Connections {
-        target:                 QGroundControl.multiVehicleManager
-        onActiveVehicleChanged: flightModeSelector.updateFlightModesMenu()
-    }
     MouseArea {
         visible:        _activeVehicle && _activeVehicle.flightModeSetAvailable
         anchors.fill:   mod//parent

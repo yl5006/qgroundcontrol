@@ -67,7 +67,6 @@ enum DockWidgetTypes {
     MAVLINK_INSPECTOR,
     CUSTOM_COMMAND,
     ONBOARD_FILES,
-    DEPRECATED_WIDGET,
     HIL_CONFIG,
     ANALYZE
 };
@@ -76,7 +75,6 @@ static const char *rgDockWidgetNames[] = {
 	QT_TR_NOOP("数据链分析"),//"MAVLink Inspector",
     QT_TR_NOOP("用户命令"),//"Custom Command",
     QT_TR_NOOP("机体文件"),//"Onboard Files",
-    "Deprecated Widget",
     QT_TR_NOOP("仿真设置"),//"HIL Config",
     QT_TR_NOOP("波形分析"),//"Analyze"
 };

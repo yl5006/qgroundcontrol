@@ -29,7 +29,6 @@ const char* CorridorScanComplexItem::jsonComplexItemTypeValue = "CorridorScan";
 
 CorridorScanComplexItem::CorridorScanComplexItem(Vehicle* vehicle, QObject* parent)
     : TransectStyleComplexItem  (vehicle, settingsGroup, parent)
-    , _ignoreRecalc             (false)
     , _entryPoint               (0)
     , _metaDataMap              (FactMetaData::createMapFromJsonFile(QStringLiteral(":/json/CorridorScan.SettingsGroup.json"), this))
     , _corridorWidthFact        (settingsGroup, _metaDataMap[corridorWidthName])
@@ -335,12 +334,15 @@ void CorridorScanComplexItem::_rebuildCorridorPolygon(void)
     QList<QGeoCoordinate> secondSideVertices = _corridorPolyline.offsetPolyline(-halfWidth);
 
     _surveyAreaPolygon.clear();
+
+    QList<QGeoCoordinate> rgCoord;
     foreach (const QGeoCoordinate& vertex, firstSideVertices) {
-        _surveyAreaPolygon.appendVertex(vertex);
+        rgCoord.append(vertex);
     }
     for (int i=secondSideVertices.count() - 1; i >= 0; i--) {
-        _surveyAreaPolygon.appendVertex(secondSideVertices[i]);
+        rgCoord.append(secondSideVertices[i]);
     }
+    _surveyAreaPolygon.appendVertices(rgCoord);
 }
 
 void CorridorScanComplexItem::_rebuildTransectsPhase1(void)

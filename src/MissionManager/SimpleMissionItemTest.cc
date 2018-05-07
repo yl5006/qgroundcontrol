@@ -41,9 +41,6 @@ const SimpleMissionItemTest::FactValue_t SimpleMissionItemTest::_rgFactValuesLoi
     { "Hold",       10.1234567 },
 };
 
-const SimpleMissionItemTest::FactValue_t SimpleMissionItemTest::_rgFactValuesLand[] = {
-};
-
 const SimpleMissionItemTest::FactValue_t SimpleMissionItemTest::_rgFactValuesTakeoff[] = {
     { "Pitch",      10.1234567 },
 };
@@ -59,7 +56,7 @@ const SimpleMissionItemTest::ItemExpected_t SimpleMissionItemTest::_rgItemExpect
     { sizeof(SimpleMissionItemTest::_rgFactValuesLoiterUnlim)/sizeof(SimpleMissionItemTest::_rgFactValuesLoiterUnlim[0]),       SimpleMissionItemTest::_rgFactValuesLoiterUnlim,    70.1234567, SimpleMissionItem::AltitudeAMSL },
     { sizeof(SimpleMissionItemTest::_rgFactValuesLoiterTurns)/sizeof(SimpleMissionItemTest::_rgFactValuesLoiterTurns[0]),       SimpleMissionItemTest::_rgFactValuesLoiterTurns,    70.1234567, SimpleMissionItem::AltitudeRelative },
     { sizeof(SimpleMissionItemTest::_rgFactValuesLoiterTime)/sizeof(SimpleMissionItemTest::_rgFactValuesLoiterTime[0]),         SimpleMissionItemTest::_rgFactValuesLoiterTime,     70.1234567, SimpleMissionItem::AltitudeAMSL },
-    { sizeof(SimpleMissionItemTest::_rgFactValuesLand)/sizeof(SimpleMissionItemTest::_rgFactValuesLand[0]),                     SimpleMissionItemTest::_rgFactValuesLand,           70.1234567, SimpleMissionItem::AltitudeRelative },
+    { 0,                                                                                                                        NULL,                                               70.1234567, SimpleMissionItem::AltitudeRelative },
     { sizeof(SimpleMissionItemTest::_rgFactValuesTakeoff)/sizeof(SimpleMissionItemTest::_rgFactValuesTakeoff[0]),               SimpleMissionItemTest::_rgFactValuesTakeoff,        70.1234567, SimpleMissionItem::AltitudeAMSL },
     { sizeof(SimpleMissionItemTest::_rgFactValuesDoJump)/sizeof(SimpleMissionItemTest::_rgFactValuesDoJump[0]),                 SimpleMissionItemTest::_rgFactValuesDoJump,         qQNaN(),    SimpleMissionItem::AltitudeRelative },
 };
@@ -236,11 +233,11 @@ void SimpleMissionItemTest::_testSignals(void)
     //      dirtyChanged
     //      coordinateChanged - since altitude will be set back to default
 
-    _simpleItem->setCommand(MavlinkQmlSingleton::MAV_CMD_NAV_WAYPOINT);
+    _simpleItem->setCommand(MAV_CMD_NAV_WAYPOINT);
     QVERIFY(_spyVisualItem->checkNoSignals());
     QVERIFY(_spySimpleItem->checkNoSignals());
 
-    _simpleItem->setCommand(MavlinkQmlSingleton::MAV_CMD_NAV_LOITER_TIME);
+    _simpleItem->setCommand(MAV_CMD_NAV_LOITER_TIME);
     QVERIFY(_spySimpleItem->checkSignalsByMask(commandChangedMask));
     QVERIFY(_spyVisualItem->checkSignalsByMask(commandNameChangedMask | dirtyChangedMask | coordinateChangedMask));
 }

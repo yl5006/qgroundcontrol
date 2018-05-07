@@ -421,15 +421,15 @@ QString SimpleMissionItem::abbreviation() const
         return tr("H");
 
     switch(command()) {
-    case MavlinkQmlSingleton::MAV_CMD_NAV_TAKEOFF:
+    case MAV_CMD_NAV_TAKEOFF:
         return tr("起飞");
-    case MavlinkQmlSingleton::MAV_CMD_NAV_LAND:
+    case MAV_CMD_NAV_LAND:
         return tr("降落");
-    case MavlinkQmlSingleton::MAV_CMD_NAV_VTOL_TAKEOFF:
+    case MAV_CMD_NAV_VTOL_TAKEOFF:
         return tr("垂直起飞");
-    case MavlinkQmlSingleton::MAV_CMD_NAV_VTOL_LAND:
+    case MAV_CMD_NAV_VTOL_LAND:
         return tr("垂直降落");
-    case MavlinkQmlSingleton::MAV_CMD_DO_SET_ROI:
+    case MAV_CMD_DO_SET_ROI:
         return tr("ROI");
     default:
         return QString();
@@ -854,7 +854,7 @@ QString SimpleMissionItem::category(void) const
     return _commandTree->getUIInfo(_vehicle, (MAV_CMD)command())->category();
 }
 
-void SimpleMissionItem::setCommand(MavlinkQmlSingleton::Qml_MAV_CMD command)
+void SimpleMissionItem::setCommand(int command)
 {
     if ((MAV_CMD)command != _missionItem.command()) {
         _missionItem.setCommand((MAV_CMD)command);

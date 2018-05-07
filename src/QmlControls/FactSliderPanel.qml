@@ -42,18 +42,6 @@ Column {
 
     QGCPalette { id: palette; colorGroupEnabled: enabled }
 
-    Component.onCompleted: {
-        // Qml Sliders have a strange behavior in which they first set Slider::value to some internal
-        // setting and then set Slider::value to the bound properties value. If you have an onValueChanged
-        // handler which updates your property with the new value, this first value change will trash
-        // your bound values. In order to work around this we don't set the values into the Sliders until
-        // after Qml load is done. We also don't track value changes until Qml load completes.
-        for (var i=0; i<sliderModel.count; i++) {
-            sliderRepeater.itemAt(i).sliderValue = controller.getParameterFact(-1, sliderModel.get(i).param).value
-        }
-        _loadComplete = true
-    }
-
     Flow {
         id:                 sliderOuterColumn
         anchors.left:       parent.left
@@ -99,6 +87,11 @@ Column {
                         font.bold:       true
                     }
 
+                    FactValueSlider {
+                        digitCount:     fact.maxString.length
+                        incrementSlots: 3
+                        fact:           controller.getParameterFact(-1, param)
+                    }
                     QGCLabel {
                         text:           descriptionleft
                         anchors.left:   parent.left

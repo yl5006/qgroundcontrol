@@ -48,9 +48,9 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
     , _missionFlightMode(tr("任务"))
     , _rtlFlightMode(tr("返航"))
     , _landingFlightMode(tr("降落"))
+    , _preclandFlightMode(tr("精准降落"))
     , _rtgsFlightMode(tr("Return to Groundstation"))
     , _followMeFlightMode(tr("跟随"))
-    , _preclandFlightMode(tr("精准降落"))
     , _simpleFlightMode(tr("简单"))
 {
     qmlRegisterType<PX4AdvancedFlightModesController>   ("QGroundControl.Controllers", 1, 0, "PX4AdvancedFlightModesController");
@@ -86,6 +86,7 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
         { PX4_CUSTOM_MAIN_MODE_OFFBOARD,    0,                                      false,  false,  true },
         // modes that can't be directly set by the user
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,          false,  true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND,      false,  false,  true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_READY,         false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,          false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,       false,  true,   true },
@@ -107,6 +108,7 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
         &_preclandFlightMode,
         &_offboardFlightMode,
         &_landingFlightMode,
+        &_preclandFlightMode,
         &_readyFlightMode,
         &_rtgsFlightMode,
         &_takeoffFlightMode,

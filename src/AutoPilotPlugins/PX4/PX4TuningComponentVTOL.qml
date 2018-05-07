@@ -81,30 +81,6 @@ SetupPage {
                 sliderModel: ListModel {
 
                     ListElement {
-                        title:         qsTr("旋翼横滚控制感度")//  qsTr("Hover Roll sensitivity")
- //                     description:    qsTr("Slide to the left to make roll control during hover faster and more accurate. Slide to the right if roll oscillates or is too twitchy.")
-                        descriptionleft:    qsTr("向左滑动: 控制更快，更准确")
-                        descriptionright:   qsTr("向右滑动: 如果振荡或太颠簸")
-                        param:          "MC_ROLL_TC"
-                        min:            0.15
-                        max:            0.25
-                        step:           0.01
-                    }
-
-                    ListElement {
-                        title:          qsTr("旋翼仰俯控制感度")//qsTr("Hover Pitch sensitivity")
-//                        description:    qsTr("Slide to the left to make pitch control during hover faster and more accurate. Slide to the right if pitch oscillates or is too twitchy.")
-                        descriptionleft:    qsTr("向左滑动: 控制更快，更准确")
-                        descriptionright:   qsTr("向右滑动: 如果振荡或太颠簸")
-                        param:          "MC_PITCH_TC"
-                        min:            0.15
-                        max:            0.25
-                        step:           0.01
-                    }
-
-
-
-                    ListElement {
                         title:          qsTr("固定翼仰俯控制感度")//qsTr("Plane Pitch sensitivity")
 //                        description:    qsTr("Slide to the left to make pitch control faster and more accurate. Slide to the right if pitch oscillates or is too twitchy.")
                         descriptionleft:    qsTr("向左滑动: 控制更快，更准确")

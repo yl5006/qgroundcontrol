@@ -46,6 +46,7 @@ public:
     Q_PROPERTY(bool                     showOfflineMapImport            READ showOfflineMapImport           NOTIFY showOfflineMapImportChanged)
     Q_PROPERTY(bool                     useMobileFileDialog             READ useMobileFileDialog            CONSTANT)
     Q_PROPERTY(bool                     showMissionStatus               READ showMissionStatus              CONSTANT)
+    Q_PROPERTY(bool                     guidedActionsRequireRCRSSI      READ guidedActionsRequireRCRSSI     CONSTANT)
 
     /// Should QGC hide its settings menu and colapse it into one single menu (Settings and Vehicle Setup)?
     /// @return true if QGC should consolidate both menus into one.
@@ -82,14 +83,13 @@ public:
     virtual bool    guidedBarShowOrbit              () const { return true; }
     virtual bool    missionWaypointsOnly            () const { return false; }  ///< true: Only allow waypoints and complex items in Plan
     virtual bool    multiVehicleEnabled             () const { return true; }   ///< false: multi vehicle support is disabled
-
-#if defined(__mobile__)
-    virtual bool    showOfflineMapExport            () const { return false; }
-    virtual bool    showOfflineMapImport            () const { return false; }
-    virtual bool    useMobileFileDialog             () const { return true;}
-#else
+    virtual bool    guidedActionsRequireRCRSSI      () const { return false; }  ///< true: Guided actions will be disabled is there is no RC RSSI
     virtual bool    showOfflineMapExport            () const { return true; }
     virtual bool    showOfflineMapImport            () const { return true; }
+
+#if defined(__mobile__)
+    virtual bool    useMobileFileDialog             () const { return true;}
+#else
     virtual bool    useMobileFileDialog             () const { return false;}
 #endif
 

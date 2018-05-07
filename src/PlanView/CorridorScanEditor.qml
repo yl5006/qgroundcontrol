@@ -134,7 +134,7 @@ Rectangle {
         SectionHeader {
             id:         terrainHeader
             text:       qsTr("Terrain")
-            checked:    false
+            checked:    missionItem.followTerrain
         }
 
         ColumnLayout {
@@ -189,16 +189,6 @@ Rectangle {
             text:   qsTr("统计")
         }
 
-        Grid {
-            columns:        2
-            columnSpacing:  ScreenTools.defaultFontPixelWidth
-            visible:        statsHeader.checked
-
-            QGCLabel { text: qsTr("拍照数") }
-            QGCLabel { text: missionItem.cameraShots }
-
-            QGCLabel { text: qsTr("拍照间隔") }
-            QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("secs") }
-        }
+        TransectStyleComplexItemStats { }
     } // Column
 } // Rectangle

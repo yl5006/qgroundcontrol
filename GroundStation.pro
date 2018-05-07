@@ -241,6 +241,7 @@ AndroidBuild || iOSBuild {
     QT += \
         printsupport \
         serialport \
+        charts \
 }
 
 contains(DEFINES, QGC_ENABLE_BLUETOOTH) {
@@ -577,7 +578,6 @@ HEADERS += \
     src/QmlControls/AppMessages.h \
     src/QmlControls/CoordinateVector.h \
     src/QmlControls/EditPositionDialogController.h \
-    src/QmlControls/MavlinkQmlSingleton.h \
     src/QmlControls/ParameterEditorController.h \
     src/QmlControls/QGCFileDialogController.h \
     src/QmlControls/QGCImageProvider.h \
@@ -597,6 +597,7 @@ HEADERS += \
     src/Settings/UnitsSettings.h \
     src/Settings/VideoSettings.h \
     src/Terrain/TerrainQuery.h \
+    src/TerrainTile.h \
     src/Vehicle/MAVLinkLogManager.h \
     src/VehicleSetup/JoystickConfigController.h \
     src/comm/LinkConfiguration.h \
@@ -790,6 +791,7 @@ SOURCES += \
     src/Settings/UnitsSettings.cc \
     src/Settings/VideoSettings.cc \
     src/Terrain/TerrainQuery.cc \
+    src/TerrainTile.cc\
     src/Vehicle/MAVLinkLogManager.cc \
     src/VehicleSetup/JoystickConfigController.cc \
     src/comm/LinkConfiguration.cc \
