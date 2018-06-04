@@ -29,6 +29,7 @@ public:
 
     Q_PROPERTY(CameraCalc*      cameraCalc                  READ cameraCalc                                                 CONSTANT)
     Q_PROPERTY(Fact*            altitude                    READ altitude                                                   CONSTANT)
+    Q_PROPERTY(Fact*            speed                       READ speed                                                      CONSTANT)
     Q_PROPERTY(Fact*            structureHeight             READ structureHeight                                            CONSTANT)
     Q_PROPERTY(Fact*            layers                      READ layers                                                     CONSTANT)
     Q_PROPERTY(bool             altitudeRelative            READ altitudeRelative           WRITE setAltitudeRelative       NOTIFY altitudeRelativeChanged)
@@ -40,6 +41,7 @@ public:
 
     CameraCalc* cameraCalc  (void) { return &_cameraCalc; }
     Fact* altitude          (void) { return &_altitudeFact; }
+    Fact* speed             (void) { return &_speedFact; }
     Fact* structureHeight   (void) { return &_structureHeightFact; }
     Fact* layers            (void) { return &_layersFact; }
 
@@ -133,10 +135,12 @@ private:
     static QMap<QString, FactMetaData*> _metaDataMap;
 
     Fact    _altitudeFact;
+    Fact    _speedFact;
     Fact    _structureHeightFact;
     Fact    _layersFact;
 
     static const char* _altitudeFactName;
+    static const char* _speedFactName;
     static const char* _structureHeightFactName;
     static const char* _layersFactName;
 

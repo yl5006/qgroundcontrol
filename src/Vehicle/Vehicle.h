@@ -589,6 +589,7 @@ public:
     ///     @param percent 0-no power, 100-full power
     ///     @param timeoutSecs Number of seconds for motor to run
     Q_INVOKABLE void motorTest(int motor, int percent, int timeoutSecs);
+    Q_INVOKABLE void mountCONTROL(float pitch_offset, float roll_offset, float yaw_offset);
 //#endif
 
     Q_INVOKABLE void reposition(double lat, double lon,float alt,float yaw);

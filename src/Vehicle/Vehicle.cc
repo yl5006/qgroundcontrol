@@ -436,9 +436,9 @@ void Vehicle::_commonInit(void)
     _addFact(&_rollFact,                _rollFactName);
     _addFact(&_pitchFact,               _pitchFactName);
     _addFact(&_headingFact,             _headingFactName);
-    _addFact(&_rollRateFact,            _rollRateFactName);
-    _addFact(&_pitchRateFact,           _pitchRateFactName);
-    _addFact(&_yawRateFact,             _yawRateFactName);
+//    _addFact(&_rollRateFact,            _rollRateFactName);
+//    _addFact(&_pitchRateFact,           _pitchRateFactName);
+ //   _addFact(&_yawRateFact,             _yawRateFactName);
     _addFact(&_groundSpeedFact,         _groundSpeedFactName);
     _addFact(&_airSpeedFact,            _airSpeedFactName);
     _addFact(&_climbRateFact,           _climbRateFactName);
@@ -449,7 +449,7 @@ void Vehicle::_commonInit(void)
     _addFact(&_distanceToHomeFact,      _distanceToHomeFactName);
 
     _hobbsFact.setRawValue(QVariant(QString("0000:00:00")));
-    _addFact(&_hobbsFact,               _hobbsFactName);
+//    _addFact(&_hobbsFact,               _hobbsFactName);
 	_addFact(&_throttleFact,            _throttleFactName); //add yaoling
     _addFact(&_homeangleFact,           _homeangleFactName); //add yaoling
 	
@@ -458,8 +458,8 @@ void Vehicle::_commonInit(void)
 //    _addFactGroup(&_windFactGroup,      _windFactGroupName);
 //    _addFactGroup(&_vibrationFactGroup, _vibrationFactGroupName);
     _addFactGroup(&_temperatureFactGroup,       _temperatureFactGroupName);
-    _addFactGroup(&_clockFactGroup,             _clockFactGroupName);
-    _addFactGroup(&_distanceSensorFactGroup,    _distanceSensorFactGroupName);
+//    _addFactGroup(&_clockFactGroup,             _clockFactGroupName);
+//    _addFactGroup(&_distanceSensorFactGroup,    _distanceSensorFactGroupName);
 
     // Add firmware-specific fact groups, if provided
     QMap<QString, FactGroup*>* fwFactGroups = _firmwarePlugin->factGroups();
@@ -3022,6 +3022,13 @@ void Vehicle::motorTest(int motor, int percent, int timeoutSecs)
 
 }
 //#endif
+
+void Vehicle::mountCONTROL(float pitch_offset, float roll_offset, float yaw_offset)
+
+{
+    sendMavCommand(defaultComponentId(), MAV_CMD_DO_MOUNT_CONTROL,true ,yaw_offset*120,pitch_offset*120,roll_offset*120,0,0,0,2);
+    qDebug()<<pitch_offset*120<<roll_offset*120<<yaw_offset*120;
+}
 
 
 // RE    POSITION 应急航点

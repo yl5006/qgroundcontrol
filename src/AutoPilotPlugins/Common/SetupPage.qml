@@ -32,7 +32,7 @@ QGCView {
     property real   availableWidth:     width - pageLoader.x
     property real   availableHeight:    height - pageLoader.y
     property bool   showAdvanced:       false
-    property alias  advanced:           advancedCheckBox.checked
+//    property alias  advanced:           advancedCheckBox.checked
 
     property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     property bool   _vehicleArmed:          _activeVehicle ? _activeVehicle.armed : false

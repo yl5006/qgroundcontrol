@@ -108,7 +108,7 @@ int language;
  * @return exit code, 0 for normal exit and !=0 for error cases
  */
 
-static const QString DEFS_URL = "http://101.200.161.194:7070/update/ewatt4/updates.json";
+static const QString DEFS_URL = "http://91aerfa.vip:7070/update/updates.json";
 const char*  _appVersionKey             = "appVersion";
 int main(int argc, char *argv[])
 {

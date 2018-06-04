@@ -22,6 +22,7 @@
 QGC_LOGGING_CATEGORY(StructureScanComplexItemLog, "StructureScanComplexItemLog")
 
 const char* StructureScanComplexItem::_altitudeFactName =               "Altitude";
+const char* StructureScanComplexItem::_speedFactName =               "Speed";
 const char* StructureScanComplexItem::_structureHeightFactName =        "StructureHeight";
 const char* StructureScanComplexItem::_layersFactName =                 "Layers";
 
@@ -43,6 +44,7 @@ StructureScanComplexItem::StructureScanComplexItem(Vehicle* vehicle, QObject* pa
     , _cameraMinTriggerInterval (0)
     , _cameraCalc               (vehicle)
     , _altitudeFact             (0, _altitudeFactName,              FactMetaData::valueTypeDouble)
+    , _speedFact                (0, _speedFactName,                 FactMetaData::valueTypeDouble)
     , _layersFact               (0, _layersFactName,                FactMetaData::valueTypeUint32)
 {
     _editorQml = "qrc:/qml/StructureScanEditor.qml";
@@ -53,14 +55,17 @@ StructureScanComplexItem::StructureScanComplexItem(Vehicle* vehicle, QObject* pa
 
     _altitudeFact.setMetaData   (_metaDataMap[_altitudeFactName]);
     _layersFact.setMetaData     (_metaDataMap[_layersFactName]);
+    _speedFact.setMetaData      (_metaDataMap[_speedFactName]);
 
     _altitudeFact.setRawValue   (_altitudeFact.rawDefaultValue());
+    _speedFact.setRawValue      (_speedFact.rawDefaultValue());
     _layersFact.setRawValue     (_layersFact.rawDefaultValue());
 
     _altitudeFact.setRawValue(qgcApp()->toolbox()->settingsManager()->appSettings()->defaultMissionItemAltitude()->rawValue());
 
     connect(&_altitudeFact,     &Fact::valueChanged, this, &StructureScanComplexItem::_setDirty);
     connect(&_layersFact,       &Fact::valueChanged, this, &StructureScanComplexItem::_setDirty);
+    connect(&_speedFact,        &Fact::valueChanged, this, &StructureScanComplexItem::_setDirty);
 
     connect(&_layersFact,                           &Fact::valueChanged,    this, &StructureScanComplexItem::_recalcLayerInfo);
     connect(&_structureHeightFact,                  &Fact::valueChanged,    this, &StructureScanComplexItem::_recalcLayerInfo);
@@ -121,8 +126,8 @@ int StructureScanComplexItem::lastSequenceNumber(void) const
 {
     return _sequenceNumber +
             (_layersFact.rawValue().toInt() *
-             ((_flightPolygon.count() + 1) +    // 1 waypoint for each polygon vertex + 1 to go back to first polygon vertex for each layer
-              2)) +                             // Camera trigger start/stop for each layer
+             ((_flightPolygon.count() + 1) /*+    // 1 waypoint for each polygon vertex + 1 to go back to first polygon vertex for each layer
+              2*/)) +                             // Camera trigger start/stop for each layer
             2;                                  // ROI_WPNEXT_OFFSET and ROI_NONE commands
 }
 
@@ -144,6 +149,7 @@ void StructureScanComplexItem::save(QJsonArray&  missionItems)
     saveObject[ComplexMissionItem::jsonComplexItemTypeKey] =    jsonComplexItemTypeValue;
 
     saveObject[_altitudeFactName] =             _altitudeFact.rawValue().toDouble();
+    saveObject[_speedFactName] =                _speedFact.rawValue().toDouble();
     saveObject[_structureHeightFactName] =      _structureHeightFact.rawValue().toDouble();
     saveObject[_jsonAltitudeRelativeKey] =      _altitudeRelative;
     saveObject[_layersFactName] =               _layersFact.rawValue().toDouble();
@@ -174,6 +180,7 @@ bool StructureScanComplexItem::load(const QJsonObject& complexObject, int sequen
         { ComplexMissionItem::jsonComplexItemTypeKey,   QJsonValue::String, true },
         { QGCMapPolygon::jsonPolygonKey,                QJsonValue::Array,  true },
         { _altitudeFactName,                            QJsonValue::Double, true },
+        { _speedFactName,                               QJsonValue::Double, true },
         { _structureHeightFactName,                     QJsonValue::Double, true },
         { _jsonAltitudeRelativeKey,                     QJsonValue::Bool,   true },
         { _layersFactName,                              QJsonValue::Double, true },
@@ -206,6 +213,7 @@ bool StructureScanComplexItem::load(const QJsonObject& complexObject, int sequen
     }
 
     _altitudeFact.setRawValue   (complexObject[_altitudeFactName].toDouble());
+    _speedFact.setRawValue      (complexObject[_speedFactName].toDouble());
     _layersFact.setRawValue     (complexObject[_layersFactName].toDouble());
     _altitudeRelative =         complexObject[_jsonAltitudeRelativeKey].toBool(true);
 
@@ -249,6 +257,7 @@ void StructureScanComplexItem::appendMissionItems(QList<MissionItem*>& items, QO
 {
     int seqNum = _sequenceNumber;
     double baseAltitude = _altitudeFact.rawValue().toDouble();
+    double speed = _speedFact.rawValue().toDouble();
 
     MissionItem* item = new MissionItem(seqNum++,
                                         MAV_CMD_DO_SET_ROI_WPNEXT_OFFSET,
@@ -277,7 +286,7 @@ void StructureScanComplexItem::appendMissionItems(QList<MissionItem*>& items, QO
                                        _altitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,
                                        0,                                          // No hold time
                                        0.0,                                        // No acceptance radius specified
-                                       0.0,                                        // Pass through waypoint
+                                       speed,                                        // Pass through waypoint
                                        90, //std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                        vertexCoord.latitude(),
                                        vertexCoord.longitude(),
@@ -296,7 +305,7 @@ void StructureScanComplexItem::appendMissionItems(QList<MissionItem*>& items, QO
                                                     _altitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,
                                                     0,                                          // No hold time
                                                     0.0,                                        // No acceptance radius specified
-                                                    0.0,                                        // Pass through waypoint
+                                                    speed,                                        // Pass through waypoint
                                                     90, //std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                                     vertexCoord.latitude(),
                                                     vertexCoord.longitude(),
@@ -316,7 +325,7 @@ void StructureScanComplexItem::appendMissionItems(QList<MissionItem*>& items, QO
                                _altitudeRelative ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL,
                                0,                                          // No hold time
                                0.0,                                        // No acceptance radius specified
-                               0.0,                                        // Pass through waypoint
+                               speed,                                        // Pass through waypoint
                                std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                vertexCoord.latitude(),
                                vertexCoord.longitude(),

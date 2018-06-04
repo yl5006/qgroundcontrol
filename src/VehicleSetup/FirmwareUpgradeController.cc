@@ -251,7 +251,7 @@ void FirmwareUpgradeController::_initFirmwareHash()
 
     //////////////////////////////////// PX4FMUV2 firmwares //////////////////////////////////////////////////
     FirmwareToUrlElement_t rgPX4FMV2FirmwareArray[] = {
-        { AutoPilotStackPX4, StableFirmware,    DefaultVehicleFirmware, "http://101.200.161.194:7070/update/ewatt4/firmware_nuttx.bin"},//"http://101.200.161.194:7070/update/ewatt4/firmware_nuttx.bin"},
+        { AutoPilotStackPX4, StableFirmware,    DefaultVehicleFirmware, "http://91aerfa.vip:7070/update/firmware_nuttx.bin"},//"http://101.200.161.194:7070/update/ewatt4/firmware_nuttx.bin"},
         { AutoPilotStackPX4, BetaFirmware,      DefaultVehicleFirmware, "http://px4-travis.s3.amazonaws.com/Firmware/beta/px4fmu-v2_default.px4"},
         { AutoPilotStackPX4, DeveloperFirmware, DefaultVehicleFirmware, "http://px4-travis.s3.amazonaws.com/Firmware/master/px4fmu-v2_default.px4"},
         { AutoPilotStackAPM, StableFirmware,    CopterFirmware,         "http://firmware.ardupilot.org/Copter/stable/PX4/ArduCopter-v2.px4"},

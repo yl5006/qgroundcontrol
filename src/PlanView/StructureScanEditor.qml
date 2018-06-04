@@ -118,7 +118,11 @@ Rectangle {
                     Layout.fillWidth:   true
                     visible:            missionItem.cameraCalc.isManualCamera
                 }
-
+                QGCLabel { text: qsTr("速度") }
+                FactTextField {
+                    fact:               missionItem.speed
+                    Layout.fillWidth:   true
+                }
                 QGCLabel { text: qsTr("低层高度") }
                 FactTextField {
                     fact:               missionItem.altitude

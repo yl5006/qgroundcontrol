@@ -241,7 +241,7 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
         setApplicationName(QString("%1_unittest").arg(QGC_APPLICATION_NAME));
     } else {
         //     setApplicationName(QGC_APPLICATION_NAME);
-        setApplicationName(tr("易瓦特"));
+        setApplicationName(tr("EWATT"));
     }
     setOrganizationName(QGC_ORG_NAME);
     setOrganizationDomain(QGC_ORG_DOMAIN);

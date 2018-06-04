@@ -2,8 +2,8 @@
   "updates": {
     "windows": {
       "open-url": "",
-      "latest-version": "1.0.2.679",
-      "download-url": "http://101.200.161.194:7070/update/ewatt4/GroundStation.exe",
+      "latest-version": "1.2.5.1525",
+      "download-url": "http://91aerfa.vip:7070/update/GroundStation.exe",
       "changelog": "带状航线"
     },
     "osx": {

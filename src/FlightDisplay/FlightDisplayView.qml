@@ -606,6 +606,74 @@ QGCView {
                 visible:        !QGroundControl.videoManager.isGStreamer
                 source:         QGroundControl.videoManager.uvcEnabled ? "qrc:/qml/FlightDisplayViewUVC.qml" : "qrc:/qml/FlightDisplayViewDummy.qml"
             }
+
+            MouseArea{
+                  id:                 itemDrag
+                  anchors.fill:       parent
+                  property var        preMousex
+                  property var        preMousey
+                  onPressed: {
+                      preMousex  = mouse.x
+                      preMousey =  mouse.y
+                  }
+                  onReleased:{
+                      var movex = mouse.x-preMousex
+                      var movey = mouse.y-preMousey
+                      _activeVehicle.mountCONTROL(movey/videoWindow.height,0.0,movex/videoWindow.width)
+                      console.log(movex/videoWindow.width)
+                      console.log(movey/videoWindow.height)
+                  }
+            }
+            Item {
+                anchors.bottom:      parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                height:             ScreenTools.defaultFontPixelHeight * 2
+                width:              height
+                Layout.alignment:   Qt.AlignHCenter
+                visible:            QGroundControl.settingsManager.videoSettings.showRecControl.rawValue
+                property var    _videoReceiver:         QGroundControl.videoManager.videoReceiver
+                property bool   _recordingVideo:        _videoReceiver && _videoReceiver.recording
+                property bool   _videoRunning:          _videoReceiver && _videoReceiver.videoRunning
+                property bool   _streamingEnabled:      QGroundControl.settingsManager.videoSettings.streamConfigured
+                Rectangle {
+                    id:                 recordBtnBackground
+                    anchors.top:        parent.top
+                    anchors.bottom:     parent.bottom
+                    width:              height
+                    radius:             _recordingVideo ? 0 : height
+                    color:              (_videoRunning && _streamingEnabled) ? "red" : "gray"
+                    SequentialAnimation on opacity {
+                        running:        _recordingVideo
+                        loops:          Animation.Infinite
+                        PropertyAnimation { to: 0.5; duration: 500 }
+                        PropertyAnimation { to: 1.0; duration: 500 }
+                    }
+                }
+                QGCColoredImage {
+                    anchors.top:                parent.top
+                    anchors.bottom:             parent.bottom
+                    anchors.horizontalCenter:   parent.horizontalCenter
+                    width:                      height * 0.625
+                    sourceSize.width:           width
+                    source:                     "/qmlimages/CameraIcon.svg"
+                    visible:                    recordBtnBackground.visible
+                    fillMode:                   Image.PreserveAspectFit
+                    color:                      "white"
+                }
+                MouseArea {
+                    anchors.fill:   parent
+                    enabled:        _videoRunning && _streamingEnabled
+                    onClicked: {
+                        if (_recordingVideo) {
+                            _videoReceiver.stopRecording()
+                            // reset blinking animation
+                            recordBtnBackground.opacity = 1
+                        } else {
+                            _videoReceiver.startRecording()
+                        }
+                    }
+                }
+            }
         }
 
         QGCPipable {

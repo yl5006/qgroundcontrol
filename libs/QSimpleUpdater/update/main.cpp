@@ -4,7 +4,7 @@
 #include <QSettings>
 #include <QDebug>
 #pragma execution_character_set("utf-8")
-static const QString DEFS_URL = "http://101.200.161.194:7070/update/ewatt4/updates.json";
+static const QString DEFS_URL = "http://91aerfa.vip:7070/update/updates.json";
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

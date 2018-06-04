@@ -1,4 +1,4 @@
-[
+﻿[
 {
     "name":             "GimbalPitch",
     "shortDescription": "Gimbal pitch rotation.",
@@ -26,6 +26,14 @@
     "units":            "m",
     "decimalPlaces":    1,
     "defaultValue":     50
+},
+{
+    "name":             "Speed",
+    "shortDescription": "Speed for the bottom layer of the structure scan.",
+    "type":             "double",
+    "units":            "m",
+    "decimalPlaces":    1,
+    "defaultValue":     3
 },
 {
     "name":             "Layers",
