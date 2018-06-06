@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles  1.4
 import QtQuick.Dialogs          1.2
 import QtQuick.Layouts          1.2
 
+import QGroundControl               1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
 import QGroundControl.Controls      1.0
@@ -15,10 +16,24 @@ Rectangle {
     width:  availableWidth
     height: valuesColumn.height + (_margin * 2)
     color:              Qt.rgba(0.102,0.887,0.609,0)
-    radius:             _margin
+    radius: _radius
 
-    property bool _specifiesAltitude:   missionItem.specifiesAltitude
-    property bool _altModeIsTerrain:    missionItem.altitudeMode === 2
+    property bool _specifiesAltitude:       missionItem.specifiesAltitude
+    property real _margin:                  ScreenTools.defaultFontPixelHeight / 2
+    property bool _supportsTerrainFrame:    missionItem
+
+    readonly property int _altModeRelative:     0
+    readonly property int _altModeAbsolute:     1
+    readonly property int _altModeAboveTerrain: 2
+    readonly property int _altModeTerrainFrame: 3
+
+    ExclusiveGroup {
+        id: altRadios
+        onCurrentChanged: {
+            altModeLabel.text = Qt.binding(function() { return current.helpText })
+            missionItem.altitudeMode = current.altModeValue
+        }
+    }
 
     Column {
         id:                 valuesColumn
@@ -67,30 +82,88 @@ Rectangle {
             }
         }
 
+        Rectangle {
+            anchors.left:   parent.left
+            anchors.right:  parent.right
+            height:         altColumn.y + altColumn.height + _margin
+            color:          qgcPal.windowShade
+            visible:        _specifiesAltitude
+
+            Column {
+                id:                 altColumn
+                anchors.margins:    _margin
+                anchors.top:        parent.top
+                anchors.left:       parent.left
+                anchors.right:      parent.right
+                spacing:            _margin
+
+                QGCLabel {
+                    font.pointSize: ScreenTools.smallFontPointSize
+                    text:           qsTr("高度")
+                }
+
+                RowLayout {
+                    QGCRadioButton {
+                        text:           qsTr("参考Home")
+                        exclusiveGroup: altRadios
+                        checked:        missionItem.altitudeMode === altModeValue
+
+                        readonly property int       altModeValue:   _altModeRelative
+                        readonly property string    helpText:       qsTr("参考home点高度")
+					}
+                    QGCRadioButton {
+                        text:           qsTr("绝对")
+                        exclusiveGroup: altRadios
+                        checked:        missionItem.altitudeMode === altModeValue
+                        visible:        QGroundControl.corePlugin.options.showMissionAbsoluteAltitude || missionItem.altitudeMode === altModeValue
+
+                        readonly property int       altModeValue:   _altModeAbsolute
+                        readonly property string    helpText:       qsTr("绝对 WGS84")
+                    }
+                    QGCRadioButton {
+                        text:           qsTr("地形高度")
+                        exclusiveGroup: altRadios
+                        checked:        missionItem.altitudeMode === altModeValue
+
+                        readonly property int   altModeValue: _altModeAboveTerrain
+                        property string         helpText:     qsTr("Calculated from terrain data\nAbs Alt ") + missionItem.amslAltAboveTerrain.valueString + " " + missionItem.amslAltAboveTerrain.units
+                    }
+                    QGCRadioButton {
+                        text:           qsTr("TerrF")
+                        exclusiveGroup: altRadios
+                        checked:        missionItem.altitudeMode === altModeValue
+                        visible:        missionItem.supportsTerrainFrame || missionItem.altitudeMode === altModeValue
+
+                        readonly property int       altModeValue:   _altModeTerrainFrame
+                        readonly property string    helpText:       qsTr("Using terrain reference frame")
+                    }
+                }
+
+                FactValueSlider {
+                    fact:           missionItem.altitude
+                    digitCount:     3
+                    incrementSlots: 1
+                    visible:        ScreenTools.isMobile//&&ScreenTools.isDebug
+                }
+
+                QGCLabel {
+                    id:             altModeLabel
+                    anchors.left:   parent.left
+                    anchors.right:  parent.right
+                    wrapMode:       Text.WordWrap
+                    font.pointSize: ScreenTools.smallFontPointSize
+                }
+            }
+        }
+
         GridLayout {
             anchors.left:   parent.left
             anchors.right:  parent.right
             flow:           GridLayout.TopToBottom
             rows:           missionItem.textFieldFacts.count +
                             missionItem.nanFacts.count +
-                            (missionItem.speedSection.available ? 1 : 0) +
-                            (_specifiesAltitude ? 1 : 0) +
-                            (_altModeIsTerrain ? 1 : 0)
+                            (missionItem.speedSection.available ? 1 : 0)
             columns:        2
-
-            QGCComboBox {
-                id:                 altCombo
-                model:              [ qsTr("相对高度"), qsTr("海拔高度"), qsTr("地形高度") ]
-                currentIndex:       missionItem.altitudeMode
-                Layout.fillWidth:   true
-                onActivated:        missionItem.altitudeMode = index
-                visible:            _specifiesAltitude
-            }
-
-            QGCLabel {
-                text:       qsTr("海拔高度")
-                visible:    _altModeIsTerrain
-            }
 
             Repeater {
                 model: missionItem.textFieldFacts
@@ -116,18 +189,6 @@ Rectangle {
 //                            visible:    missionItem.speedSection.available
 //                        }
 
-
-            FactTextField {
-                showUnits:          true
-                fact:               missionItem.altitude
-                Layout.fillWidth:   true
-                visible:            _specifiesAltitude
-            }
-
-            FactLabel {
-                fact:       missionItem.amslAltAboveTerrain
-                visible:    _altModeIsTerrain
-            }
 
             Repeater {
                 model: missionItem.textFieldFacts

@@ -7,7 +7,10 @@ import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 
 TextField {
-    id: root
+    id:                 root
+    textColor:          showbg ? qgcPal.textFieldText: " White"
+    implicitHeight:     ScreenTools.implicitTextFieldHeight
+    activeFocusOnPress: true
 
     property bool   showUnits:  false
     property bool   showHelp:   false
@@ -17,22 +20,21 @@ TextField {
     property bool showbg: true
     property real _helpLayoutWidth: 0
 
-    Component.onCompleted: {
-        if (typeof qgcTextFieldforwardKeysTo !== 'undefined') {
-            root.Keys.forwardTo = [qgcTextFieldforwardKeysTo]
-        }
-    }
+    Component.onCompleted: selectAllIfActiveFocus()
+    onActiveFocusChanged: selectAllIfActiveFocus()
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
-
-    textColor:          showbg ? qgcPal.textFieldText: " White"
-
-    implicitHeight: ScreenTools.implicitTextFieldHeight
 
     onEditingFinished: {
         if (ScreenTools.isMobile) {
             // Toss focus on mobile after Done on virtual keyboard. Prevent strange interactions.
             focus = false
+        }
+    }
+
+    function selectAllIfActiveFocus() {
+        if (activeFocus) {
+            selectAll()
         }
     }
 
@@ -59,7 +61,7 @@ TextField {
 
             Rectangle {
                 anchors.fill:           parent
-                border.color:           control.activeFocus ? "#47b" : "transparent"//"#999"
+                border.color:           root.activeFocus ? "#47b" : "transparent"
                 color:                  showbg ?qgcPal.textField : "transparent"
             }
 
@@ -75,7 +77,7 @@ TextField {
                 onWidthChanged:         control._helpLayoutWidth = unitsHelpLayout.width
 
                 Text {
-                    anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment:       Qt.AlignVCenter
                     text:                   control.unitsLabel
                     font.pointSize:         backgroundItem.showHelp ? ScreenTools.smallFontPointSize : ScreenTools.defaultFontPointSize
                     font.family:            ScreenTools.normalFontFamily
@@ -85,10 +87,9 @@ TextField {
                 }
 
                 Rectangle {
-                    anchors.margins:    2
-                    anchors.top:        parent.top
-                    anchors.bottom:     parent.bottom
-                    anchors.right:      parent.right
+                    Layout.margins:     2
+                    Layout.fillHeight:  true
+                    Layout.alignment:   Qt.AlignRight
                     width:              height * 0.75
                     color:              showbg ? control.textColor : "transparent"
                     radius:             2
@@ -113,11 +114,5 @@ TextField {
         }
 
         padding.right: control._helpLayoutWidth //control.showUnits ? unitsLabelWidthGenerator.width : control.__contentHeight * 0.333
-    }
-
-    onActiveFocusChanged: {
-        if (activeFocus) {
-            selectAll()
-        }
     }
 }

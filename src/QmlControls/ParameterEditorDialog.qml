@@ -20,13 +20,16 @@ import QGroundControl.FactControls  1.0
 import QGroundControl.ScreenTools   1.0
 
 QGCViewDialog {
-    id: root
+    id:     root
+    focus:  true
     height:    showonlyhelp ? ScreenTools.defaultFontPixelHeight * 15 :  ScreenTools.defaultFontPixelHeight * 30
     property Fact   fact
     property bool   showRCToParam:  false
     property bool   showonlyhelp:   false
     property bool   validate:       false
     property string validateValue
+
+    signal valueChanged
 
     property real   _editFieldWidth:            ScreenTools.defaultFontPixelWidth * 20
     property bool   _longDescriptionAvailable:  fact.longDescription != ""
@@ -42,9 +45,11 @@ QGCViewDialog {
         if (bitmaskColumn.visible && !manualEntry.checked) {
             fact.value = bitmaskValue();
             fact.valueChanged(fact.value)
+            valueChanged()
             hideDialog();
         } else if (factCombo.visible && !manualEntry.checked) {
             fact.enumIndex = factCombo.currentIndex
+            valueChanged()
             hideDialog()
         } else {
             if(showonlyhelp)
@@ -55,6 +60,7 @@ QGCViewDialog {
                 if (errorString === "") {
                     fact.value = valueField.text
                     fact.valueChanged(fact.value)
+                    valueChanged()
                     hideDialog()
                 } else {
                     validationError.text = errorString
@@ -91,12 +97,8 @@ QGCViewDialog {
         }
     }
 
-	// set focus to the text field when becoming visible (in case of an Enum,
-	// the valueField is not visible, but it's not an issue because the combo
-	// box cannot have a focus)
-	onVisibleChanged: if (visible && !ScreenTools.isMobile) valueField.forceActiveFocus()
-
     QGCFlickable {
+        id:                 flickable
         anchors.fill:       parent
         contentHeight:      _column.y + _column.height
         flickableDirection: Flickable.VerticalFlick
@@ -126,9 +128,10 @@ QGCViewDialog {
                     unitsLabel:         fact.units
                     showUnits:          fact.units != ""
                     Layout.fillWidth:   true
-                    inputMethodHints:   ScreenTools.isiOS ?
-                                            Qt.ImhNone :                // iOS numeric keyboard has not done button, we can't use it
-                                            Qt.ImhFormattedNumbersOnly  // Forces use of virtual numeric keyboard
+                    focus:              true
+                    inputMethodHints:   (fact.typeIsString || ScreenTools.isiOS) ?
+                                          Qt.ImhNone :                // iOS numeric keyboard has no done button, we can't use it
+                                          Qt.ImhFormattedNumbersOnly  // Forces use of virtual numeric keyboard
                 }
 
                 QGCButton {

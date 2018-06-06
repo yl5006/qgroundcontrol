@@ -113,6 +113,7 @@ LinuxBuild {
         libQt5Network.so.5 \
         libQt5OpenGL.so.5 \
         libQt5Positioning.so.5 \
+        libQt5PositioningQuick.so.5 \
         libQt5PrintSupport.so.5 \
         libQt5Qml.so.5 \
         libQt5Quick.so.5 \

@@ -125,6 +125,7 @@ Rectangle {
             anchors.right:  parent.right
             text:           qsTr("高度参考Home点")
             checked:        missionItem.altitudesAreRelative
+            visible:        QGroundControl.corePlugin.options.showMissionAbsoluteAltitude || !missionItem.altitudesAreRelative
             onClicked:      missionItem.altitudesAreRelative = checked
         }
     }

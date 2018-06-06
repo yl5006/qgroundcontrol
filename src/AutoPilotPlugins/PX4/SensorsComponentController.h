@@ -133,7 +133,9 @@ private:
     bool _gyroCalInProgress;
     bool _magCalInProgress;
     bool _accelCalInProgress;
-    
+    bool _airspeedCalInProgress;
+    bool _levelCalInProgress;
+
     bool _orientationCalDownSideDone;
     bool _orientationCalUpsideDownSideDone;
     bool _orientationCalLeftSideDone;

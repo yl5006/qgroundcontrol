@@ -72,6 +72,7 @@ public:
     QGCCameraManager*   createCameraManager             (Vehicle* vehicle) override;
     QGCCameraControl*   createCameraControl             (const mavlink_camera_information_t* info, Vehicle* vehicle, int compID, QObject* parent = NULL) override;
     uint32_t            highLatencyCustomModeTo32Bits   (uint16_t hlCustomMode) override;
+    bool                supportsTerrainFrame            (void) const override { return false; }
     void                missionFlightSpeedInfo          (Vehicle* vehicle, double& hoverSpeed, double& cruiseSpeed) override;
     void                setmissionFlightSpeedInfo       (Vehicle* vehicle, double hoverSpeed, double cruiseSpeed) override;
 protected:

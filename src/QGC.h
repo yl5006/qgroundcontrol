@@ -36,7 +36,7 @@ quint64 groundTimeMilliseconds();
  */
 qreal groundTimeSeconds();
 /** @brief Returns the angle limited to -pi - pi */
-float limitAngleToPMPIf(float angle);
+float limitAngleToPMPIf(double angle);
 /** @brief Returns the angle limited to -pi - pi */
 double limitAngleToPMPId(double angle);
 
