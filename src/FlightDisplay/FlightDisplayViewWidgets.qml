@@ -232,7 +232,7 @@ Item {
                     break;
                 }
             } else {
-                instrumentsLoader.source = "qrc:/qml/QGCInstrumentWidgetBottom.qml"//qrc:/qml/QGCInstrumentWidgetAlternate.qml
+                instrumentsLoader.source = "qrc:/qml/QGCInstrumentWidgetAlternate.qml"
             }
         } else {
             instrumentsLoader.source = ""
@@ -250,7 +250,7 @@ Item {
     }
 
     Component.onCompleted: {
-     //   _setInstrumentWidget()
+        _setInstrumentWidget()
     }
 
     //-- Map warnings

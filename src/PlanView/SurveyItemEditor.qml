@@ -69,14 +69,14 @@ Rectangle {
         CameraCalc {
             cameraCalc:             missionItem.cameraCalc
             vehicleFlightIsFrontal: true
-            distanceToSurfaceLabel: qsTr("Altitude")
-            frontalDistanceLabel:   qsTr("Trigger Distance")
-            sideDistanceLabel:      qsTr("Spacing")
+            distanceToSurfaceLabel: qsTr("高度")
+            frontalDistanceLabel:   qsTr("触发距离")
+            sideDistanceLabel:      qsTr("行间距")
         }
 
         SectionHeader {
             id:     corridorHeader
-            text:   qsTr("Transects")
+            text:   qsTr("飞行区域")
         }
 
         GridLayout {
@@ -87,13 +87,13 @@ Rectangle {
             columns:        2
             visible:        corridorHeader.checked
 
-            QGCLabel { text: qsTr("Angle") }
+            QGCLabel { text: qsTr("角度") }
             FactTextField {
                 fact:                   missionItem.gridAngle
                 Layout.fillWidth:       true
             }
 
-            QGCLabel { text: qsTr("Turnaround dist") }
+            QGCLabel { text: qsTr("转弯距离") }
             FactTextField {
                 fact:                   missionItem.turnAroundDistance
                 Layout.fillWidth:       true
@@ -101,12 +101,12 @@ Rectangle {
 
             QGCButton {
                 Layout.columnSpan:  2
-                text:               qsTr("Rotate Entry Point")
+                text:               qsTr("旋转起始点")
                 onClicked:          missionItem.rotateEntryPoint();
             }
 
             FactCheckBox {
-                text:               qsTr("Hover and capture image")
+                text:               qsTr("悬停 拍照")
                 fact:               missionItem.hoverAndCapture
                 visible:            missionItem.hoverAndCaptureAllowed
                 enabled:            !missionItem.followTerrain
@@ -119,7 +119,7 @@ Rectangle {
             }
 
             FactCheckBox {
-                text:               qsTr("Refly at 90 degree offset")
+                text:               qsTr("转90度复飞")
                 fact:               missionItem.refly90Degrees
                 enabled:            !missionItem.followTerrain
                 Layout.columnSpan:  2
@@ -133,7 +133,7 @@ Rectangle {
             }
 
             FactCheckBox {
-                text:               qsTr("Fly alternate transects")
+                text:               qsTr("交替飞行")
                 fact:               missionItem.flyAlternateTransects
                 visible:            _vehicle.fixedWing || _vehicle.vtol
                 Layout.columnSpan:  2
@@ -142,7 +142,7 @@ Rectangle {
             QGCCheckBox {
                 id:                 relAlt
                 Layout.alignment:   Qt.AlignLeft
-                text:               qsTr("Relative altitude")
+                text:               qsTr("参考高度")
                 checked:            missionItem.cameraCalc.distanceToSurfaceRelative
                 enabled:            missionItem.cameraCalc.isManualCamera && !missionItem.followTerrain
                 visible:            QGroundControl.corePlugin.options.showMissionAbsoluteAltitude || (!missionItem.cameraCalc.distanceToSurfaceRelative && !missionItem.followTerrain)
@@ -158,7 +158,7 @@ Rectangle {
 
         SectionHeader {
             id:         terrainHeader
-            text:       qsTr("Terrain")
+            text:       qsTr("地形")
             checked:    missionItem.followTerrain
         }
 
@@ -170,7 +170,7 @@ Rectangle {
 
             QGCCheckBox {
                 id:         followsTerrainCheckBox
-                text:       qsTr("Vehicle follows terrain")
+                text:       qsTr("无人机跟随地形")
                 checked:    missionItem.followTerrain
                 onClicked:  missionItem.followTerrain = checked
             }
@@ -204,7 +204,7 @@ Rectangle {
 
         SectionHeader {
             id:     statsHeader
-            text:   qsTr("Statistics")
+            text:   qsTr("统计")
         }
 
         TransectStyleComplexItemStats { }

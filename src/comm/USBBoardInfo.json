@@ -56,7 +56,7 @@
         { "regExp": "^FMU",                 "boardClass": "EWT" },
         { "regExp": "^EWT Crazyflie v2.0",  "boardClass": "EWT" },
         { "regExp": "^Crazyflie BL",        "boardClass": "EWT" },
-        { "regExp": "^EWT OmnibusF4SD",     "boardClass": "Pixhawk" },
+        { "regExp": "^EWT OmnibusF4SD",     "boardClass": "EWT" },
         { "regExp": "EWT.*Flow",            "boardClass": "Flow" },
         { "regExp": "^FT231X USB UART$",    "boardClass": "SiK Radio" },
         { "regExp": "USB UART$",            "boardClass": "SiK Radio",  "androidOnly": true, "comment": "Very broad fallback, too dangerous for non-android" }

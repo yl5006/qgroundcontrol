@@ -5,7 +5,7 @@
 
     "mavCmdInfo": [
         {
-            "comment":              "MAV_CMD_NAV_LAST: Used for fake home position waypoint",
+            "comment":              "MAV_CMD_NAV_LAST: Used for mission settings / planned home position waypoint",
             "id":                   95,
             "rawName":              "HomeRaw",
             "friendlyName":         "Home位置",
@@ -1110,21 +1110,10 @@
             "friendlyName": "设置相机模式" ,
             "description":  "设置相机 图片视频模式.",
             "category":     "相机",
-            "param8": {
-                "label":            "相机id",
-                "default":          0,
-                "decimalPlaces":    0
-            },
-            "param9": {
-                "label":            "模式",
-                "enumStrings":      "拍照模式,录像模式",
-                "enumValues":       "0,1",
-                "default":          0
-            },
-            "param10": {
-                "label":            "音频",
-                "enumStrings":      "禁用记录,使能记录",
-                "enumValues":       "0,1",
+            "param2": {
+                "label":            "Mode",
+                "enumStrings":      "Take photos,Record video,Survey photo mode",
+                "enumValues":       "0,1,2",
                 "default":          0
             }
         },
@@ -1134,25 +1123,15 @@
             "friendlyName": "启动拍照模式" ,
             "description":  "开始拍照1次或连续多次.",
             "category":     "相机",
-            "param1": {
-                "label":            "间隔",
+            "param2": {
+                "label":            "Interval",
                 "default":          0,
                 "units":            "secs",
                 "decimalPlaces":    0
             },
-            "param2": {
-                "label":            "次数",
-                "default":          1,
-                "decimalPlaces":    0
-            },
             "param3": {
-                "label":            "分辨率",
-                "default":          -1,
-                "decimalPlaces":    0
-            },
-            "param6": {
-                "label":            "相机id",
-                "default":          0,
+                "label":            "Photo count",
+                "default":          1,
                 "decimalPlaces":    0
             }
         },
@@ -1161,12 +1140,7 @@
             "rawName": "MAV_CMD_IMAGE_STOP_CAPTURE",
             "friendlyName": "停止照片获取",
             "description":  "停止照片获取.",
-            "category":     "相机",
-            "param1": {
-                "label":            "相机 id",
-                "default":          0,
-                "decimalPlaces":    0
-            }
+            "category":     "相机"
         },
         { "id": 2003, "rawName": "MAV_CMD_DO_TRIGGER_CONTROL", "friendlyName": "Trigger control" },
         {
@@ -1175,20 +1149,11 @@
             "friendlyName": "开始视频获取",
             "description":  "开始视频获取.",
             "category":     "相机",
-            "param1": {
-                "label":            "相机 id",
-                "default":          0,
-                "decimalPlaces":    0
-            },
             "param2": {
-                "label":            "FPS",
-                "default":          -1,
-                "decimalPlaces":    0
-            },
-            "param3": {
-                "label":            "分辨率",
-                "default":          -1,
-                "decimalPlaces":    0
+                "label":            "Status Frequency",
+                "default":          0.2,
+                "units":            "Hz",
+                "decimalPlaces":    2
             }
         },
         {
@@ -1196,12 +1161,7 @@
             "rawName":      "MAV_CMD_VIDEO_STOP_CAPTURE",
             "friendlyName": "停止视频获取",
             "description":  "停止视频获取.",
-            "category":     "相机",
-            "param1": {
-                "label":            "相机 id",
-                "default":          0,
-                "decimalPlaces":    0
-            }
+            "category":     "相机"
         },
         { "id": 2800, "rawName": "MAV_CMD_PANORAMA_CREATE", "friendlyName": "Create panorama" },
         {

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -687,10 +687,10 @@ int TransectStyleComplexItem::lastSequenceNumber(void) const
 
         if (_cameraTriggerInTurnAroundFact.rawValue().toBool()) {
             // Only one camera start and on camera stop
-            itemCount += 2;
+           // itemCount += 2; //不加拍照点
         } else {
             // Each transect will have a camera start and stop in it
-            itemCount += _transects.count() * 2;
+          //  itemCount += _transects.count() * 2; //不加拍照点
         }
 
         return _sequenceNumber + itemCount - 1;

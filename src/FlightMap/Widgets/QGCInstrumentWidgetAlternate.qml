@@ -18,14 +18,14 @@ import QGroundControl.FlightMap     1.0
 import QGroundControl.Palette       1.0
 
 /// Instrument panel shown when virtual thumbsticks are visible
-Rectangle {
+Item {
     id:             root
     width:          getPreferredInstrumentWidth()
     height:         _outerRadius * 2
-    radius:         _outerRadius
-    color:          qgcPal.window
-    border.width:   1
-    border.color:   _isSatellite ? qgcPal.mapWidgetBorderLight : qgcPal.mapWidgetBorderDark
+//   radius:         _outerRadius
+//   color:          qgcPal.window
+//   border.width:   1
+//   border.color:   _isSatellite ? qgcPal.mapWidgetBorderLight : qgcPal.mapWidgetBorderDark
 
     property var    _qgcView:           qgcView
     property real   _innerRadius:       (width - (_topBottomMargin * 3)) / 4
@@ -41,7 +41,7 @@ Rectangle {
     property var    _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
 
     QGCPalette { id: qgcPal }
-
+/*
     QGCAttitudeWidget {
         id:                 attitude
         anchors.leftMargin: _topBottomMargin
@@ -58,11 +58,11 @@ Rectangle {
         vehicle:            _activeVehicle
         anchors.verticalCenter: parent.verticalCenter
     }
-
+*/
     Item {
         id:                 _valuesItem
         anchors.topMargin:  ScreenTools.defaultFontPixelHeight / 4
-        anchors.top:        parent.bottom
+        anchors.top:        parent.top
         width:              parent.width
         height:             _valuesWidget.height
 

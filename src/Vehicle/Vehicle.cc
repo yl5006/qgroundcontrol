@@ -2505,14 +2505,14 @@ void Vehicle::virtualTabletJoystickValue(double roll, double pitch, double yaw, 
     }
 }
 
-void Vehicle::virtualTabletRCValue(double roll, double pitch,bool pic)
+void Vehicle::virtualTabletRCValue(double yaw, double pitch,bool pic)
 {
 
     mavlink_message_t               msg;
     mavlink_cammer_rc_t             cammer_rc;
 
     // Store the previous manual commands
-    static float cammerRollAngle = 0.0;
+    static float cammerYawAngle = 0.0;
     static float cammerPitchAngle = 0.0;
 
     static quint8 countSinceLastTransmission = 0; // Track how many calls to this function have occurred since the last MAVLink transmission
@@ -2526,7 +2526,7 @@ void Vehicle::virtualTabletRCValue(double roll, double pitch,bool pic)
     if (countSinceLastTransmission++ >= 25) {
         sendCommand = true;
         countSinceLastTransmission = 0;
-    } else if ((!qIsNaN(roll) && roll != cammerRollAngle) || (!qIsNaN(pitch) && pitch != cammerPitchAngle)) {
+    } else if ((!qIsNaN(yaw) && yaw != cammerYawAngle) || (!qIsNaN(pitch) && pitch != cammerPitchAngle)) {
         sendCommand = true;
 
         // Ensure that another message will be sent the next time this function is called
@@ -2536,26 +2536,26 @@ void Vehicle::virtualTabletRCValue(double roll, double pitch,bool pic)
     // Now if we should trigger an update, let's do that
     if (sendCommand) {
         // Save the new manual control inputs
-        cammerRollAngle = roll;
+        cammerYawAngle = yaw;
         cammerPitchAngle = pitch;
 
 
-        cammer_rc.chan1_raw = 1500+cammerRollAngle*500;
-        cammer_rc.chan2_raw = 1500+cammerPitchAngle*500;
-        cammer_rc.chan3_raw = 1500;  // start
-        cammer_rc.chan4_raw = 1500;  // start
-        cammer_rc.chan5_raw = 1500;  // start
-        cammer_rc.chan6_raw = 1500;  // start
-        cammer_rc.chan7_raw = 1000+800 * (pic ? 1 :0) ;  // start
-        cammer_rc.chan8_raw = 1500;  // start
-        cammer_rc.chan9_raw = 1500;  // start
-        cammer_rc.chan10_raw = 1500;  // start
-        cammer_rc.chan11_raw = 1500;  // start
-        cammer_rc.chan12_raw = 1500;  // start
-        cammer_rc.chan13_raw = 1500;  // start
-        cammer_rc.chan14_raw = 1500;  // start
-        cammer_rc.chan15_raw = 1500;  // start
-        cammer_rc.chan16_raw = 1500;  // start
+        cammer_rc.chan1_raw = 1024 + cammerYawAngle * 500;
+        cammer_rc.chan2_raw = 1024 + cammerPitchAngle * 500;
+        cammer_rc.chan3_raw = 1024 + 672 * (pic ? 1 : -1);  //  回中 跟头 锁头
+        cammer_rc.chan4_raw = 1024;  // start
+        cammer_rc.chan5_raw = 1024 + 672 * (pic ? 1 : -1);  //变大  变小
+        cammer_rc.chan6_raw = 1024;  // start
+        cammer_rc.chan7_raw = 1024 + 672 * (pic ? 1 : 0) ;  // 录像 结束录像 拍照
+        cammer_rc.chan8_raw = 1024;  // start     //自动对焦  暂停对焦 记忆对焦
+        cammer_rc.chan9_raw = 1024;  // start
+        cammer_rc.chan10_raw = 1024;  // start
+        cammer_rc.chan11_raw = 1024;  // start
+        cammer_rc.chan12_raw = 1024;  // start
+        cammer_rc.chan13_raw = 1024;  // start
+        cammer_rc.chan14_raw = 1024;  // start
+        cammer_rc.chan15_raw = 1024;  // start
+        cammer_rc.chan16_raw = 1024;  // start
         cammer_rc.chan17_raw = 0;  // start
         cammer_rc.chan18_raw = 0;  // start
         mavlink_msg_cammer_rc_encode_chan(_mavlink->getSystemId(),
@@ -2589,7 +2589,7 @@ void Vehicle::_linkActiveChanged(LinkInterface *link, bool active, int vehicleID
             // communication to priority link regained
             _connectionLost = false;
             emit connectionLostChanged(false);
-            qgcApp()->showMessage((tr("%1 communication to %2 link %3 regained")).arg(_vehicleIdSpeech()).arg((_links.count() > 1) ? "priority" : "").arg(link->getName()));
+//            qgcApp()->showMessage((tr("%1 communication to %2 link %3 regained")).arg(_vehicleIdSpeech()).arg((_links.count() > 1) ? "priority" : "").arg(link->getName()));
 
             if (_priorityLink->highLatency()) {
                 _setMaxProtoVersion(100);
@@ -2603,7 +2603,7 @@ void Vehicle::_linkActiveChanged(LinkInterface *link, bool active, int vehicleID
 
         } else if (!active && !_connectionLost) {
             // communication to priority link lost
-            qgcApp()->showMessage((tr("%1 communication to %2 link %3 lost")).arg(_vehicleIdSpeech()).arg((_links.count() > 1) ? "priority" : "").arg(link->getName()));
+//            qgcApp()->showMessage((tr("%1 communication to %2 link %3 lost")).arg(_vehicleIdSpeech()).arg((_links.count() > 1) ? "priority" : "").arg(link->getName()));
 
             _updatePriorityLink(false /* updateActive */, true /* sendCommand */);
 
@@ -2629,7 +2629,7 @@ void Vehicle::_linkActiveChanged(LinkInterface *link, bool active, int vehicleID
             }
         }
     } else {
-        qgcApp()->showMessage((tr("%1 communication to auxiliary link %2 %3")).arg(_vehicleIdSpeech()).arg(link->getName()).arg(active ? "regained" : "lost"));
+//        qgcApp()->showMessage((tr("%1 communication to auxiliary link %2 %3")).arg(_vehicleIdSpeech()).arg(link->getName()).arg(active ? "regained" : "lost"));
         _updatePriorityLink(false /* updateActive */, true /* sendCommand */);
     }
 }

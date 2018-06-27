@@ -279,7 +279,7 @@
                 "units":            "secs",
                 "default":          0,
                 "decimalPlaces":    0
-            }
+            }        
         },
         { "id": 83, "rawName": "MAV_CMD_NAV_ALTITUDE_WAIT", "friendlyName": "Altitude wait" },
         {
@@ -289,7 +289,7 @@
             "description":          "Takeoff in VTOL mode, transition to forward flight and fly to the specified location.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "Control",
+            "category":             "VTOL",
             "param4": {
                 "label":            "Heading",
                 "units":            "deg",
@@ -305,7 +305,7 @@
             "description":          "Transition to VTOL mode and land.",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,
-            "category":             "Control",
+            "category":             "VTOL",
             "param4": {
                 "label":            "Heading",
                 "units":            "deg",
@@ -456,7 +456,7 @@
             "friendlyName": "Jump to item",
             "description":  "Mission will continue at the specified item.",
             "friendlyEdit": true,
-            "category":     "Control",
+            "category":     "Advanced",
             "param1": {
                 "label":            "Item #",
                 "default":          1,
@@ -473,7 +473,7 @@
             "rawName":      "MAV_CMD_DO_CHANGE_SPEED",
             "friendlyName": "Change speed",
             "description":  "Change speed and/or throttle set points.",
-            "category":     "Control",
+            "category":     "Flight control",
             "param1": {
                 "label":            "Type",
                 "enumStrings":      "Airspeed,Ground Speed",
@@ -558,7 +558,6 @@
             "friendlyName": "Set servo",
             "description":  "Set servo to specified PWM value.",
             "friendlyEdit": true,
-            "category":     "Control",
             "param1": {
                 "label":            "Servo",
                 "default":          1,
@@ -605,7 +604,7 @@
             "friendlyName":         "Land start",
             "description":          "Marker to indicate start of landing sequence.",
             "friendlyEdit":         true,
-            "category":             "Control"
+            "category":             "Flight control"
         },
         { "id": 190, "rawName": "MAV_CMD_DO_RALLY_LAND", "friendlyName": "Rally land" },
         { "id": 191, "rawName": "MAV_CMD_DO_GO_AROUND", "friendlyName": "Go around" },
@@ -994,7 +993,7 @@
             "friendlyName": "Set camera modes" ,
             "description":  "Set camera photo, video modes.",
             "category":     "Camera",
-            "param9": {
+            "param2": {
                 "label":            "Mode",
                 "enumStrings":      "Take photos,Record video,Survey photo mode",
                 "enumValues":       "0,1,2",
@@ -1053,7 +1052,7 @@
             "rawName":      "MAV_CMD_DO_VTOL_TRANSITION",
             "friendlyName": "VTOL Transition",
             "description":  "Perform flight mode transition.",
-            "category":     "Control",
+            "category":     "VTOL",
             "param1": {
                 "label":            "Mode",
                 "default":          3,

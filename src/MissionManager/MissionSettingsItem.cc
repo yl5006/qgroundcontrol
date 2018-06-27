@@ -330,5 +330,5 @@ void MissionSettingsItem::_setHomeAltFromTerrain(double terrainAltitude)
 
 QString MissionSettingsItem::abbreviation(void) const
 {
-    return _flyView ? tr("H") : tr("Planned Home");
+    return _flyView ? tr("H") : tr("H");
 }

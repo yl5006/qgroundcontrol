@@ -37,7 +37,7 @@ Rectangle {
         }
     }
     Column {
-        spacing:    ScreenTools.defaultFontPixelHeight
+        spacing:    ScreenTools.defaultFontPixelHeight/2
         anchors.top:  parent.top
         anchors.topMargin: ScreenTools.defaultFontPixelHeight/2
         anchors.horizontalCenter: parent.horizontalCenter
@@ -59,14 +59,21 @@ Rectangle {
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("变焦  -")
+                text:          qsTr("回中")
                 checkable:     true
                 primary:       true
             }
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("变焦  +")
+                text:          qsTr("跟头")
+                checkable:     true
+                primary:       true
+            }
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("锁头")
                 checkable:     true
                 primary:       true
             }
@@ -76,7 +83,7 @@ Rectangle {
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("对焦  -")
+                text:          qsTr("变大")
                 checkable:     true
                 primary:       true
             }
@@ -84,19 +91,77 @@ Rectangle {
                 id:            takepic
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("拍照")
+                text:          qsTr("变小")
                 checkable:     true
                 primary:       true
             }
         }
-        SubMenuButton {
-            imageResource:      "/qmlimages/camera.svg"
-            text:               qsTr("拍照")//"Send to vehicle"
-            checkable:          true
-            onClicked:          _activeVehicle.triggerCamera()
-            enabled:            _activeVehicle
-            anchors.horizontalCenter: parent.horizontalCenter
+        Row{
+            spacing:    ScreenTools.defaultFontPixelHeight/2
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("远焦")
+                checkable:     true
+                primary:       true
+            }
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("近焦")
+                checkable:     true
+                primary:       true
+            }
         }
+        Row{
+            spacing:    ScreenTools.defaultFontPixelHeight/2
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("自动对焦")
+                checkable:     true
+                primary:       true
+            }
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("暂停对焦")
+                checkable:     true
+                primary:       true
+            }
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("记忆对焦")
+                checkable:     true
+                primary:       true
+            }
+        }
+        Row{
+            spacing:    ScreenTools.defaultFontPixelHeight/2
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("录像")
+                checkable:     true
+                primary:       true
+            }
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("结束录像")
+                checkable:     true
+                primary:       true
+            }
+            SubMenuButton {
+                imageResource:      "/qmlimages/camera.svg"
+                text:               qsTr("拍照")//"Send to vehicle"
+                checkable:          true
+                onClicked:          _activeVehicle.triggerCamera()
+                enabled:            _activeVehicle
+            }
+        }
+
         Row{
             spacing:    ScreenTools.defaultFontPixelHeight/2
             SubMenuButton {
