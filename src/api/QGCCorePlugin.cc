@@ -151,14 +151,14 @@ QVariantList& QGCCorePlugin::instrumentPages(void)
 {
     if (!_p->valuesPageWidgetInfo) {
         _p->valuesPageWidgetInfo    = new QmlComponentInfo(tr("Values"),    QUrl::fromUserInput("qrc:/qml/ValuePageWidget.qml"));
-        _p->cameraPageWidgetInfo    = new QmlComponentInfo(tr("Camera"),    QUrl::fromUserInput("qrc:/qml/CameraPageWidget.qml"));
+        _p->cameraPageWidgetInfo    = new QmlComponentInfo(tr("云台相机"),    QUrl::fromUserInput("qrc:/qml/CameraPageWidget.qml"),QUrl::fromUserInput("/qmlimages/setCammer.svg"));
 #if defined(QGC_GST_STREAMING)
-        _p->videoPageWidgetInfo     = new QmlComponentInfo(tr("Video Stream"), QUrl::fromUserInput("qrc:/qml/VideoPageWidget.qml"));
+        _p->videoPageWidgetInfo     = new QmlComponentInfo(tr("视频"), QUrl::fromUserInput("qrc:/qml/VideoPageWidget.qml"),QUrl::fromUserInput("/qmlimages/CameraIcon.svg"));
 #endif
-        _p->healthPageWidgetInfo    = new QmlComponentInfo(tr("Health"),    QUrl::fromUserInput("qrc:/qml/HealthPageWidget.qml"));
-        _p->vibrationPageWidgetInfo = new QmlComponentInfo(tr("Vibration"), QUrl::fromUserInput("qrc:/qml/VibrationPageWidget.qml"));
+        _p->healthPageWidgetInfo    = new QmlComponentInfo(tr("系统检测"),    QUrl::fromUserInput("qrc:/qml/HealthPageWidget.qml"));
+        _p->vibrationPageWidgetInfo = new QmlComponentInfo(tr("振动"), QUrl::fromUserInput("qrc:/qml/VibrationPageWidget.qml"));
 
-        _p->instrumentPageWidgetList.append(QVariant::fromValue(_p->valuesPageWidgetInfo));
+//        _p->instrumentPageWidgetList.append(QVariant::fromValue(_p->valuesPageWidgetInfo));
         _p->instrumentPageWidgetList.append(QVariant::fromValue(_p->cameraPageWidgetInfo));
 #if defined(QGC_GST_STREAMING)
         _p->instrumentPageWidgetList.append(QVariant::fromValue(_p->videoPageWidgetInfo));

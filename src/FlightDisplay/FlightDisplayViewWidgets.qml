@@ -199,7 +199,7 @@ Item {
 
     function getPreferredInstrumentWidth() {
         if(ScreenTools.isMobile) {
-            return mainWindow.width * 0.25
+            return mainWindow.width * 0.15
         } else if(ScreenTools.isHugeScreen) {
             return mainWindow.width * 0.11
         }

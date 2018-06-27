@@ -32,7 +32,7 @@ Rectangle {
         repeat:     true
         onTriggered: {
             if (_activeVehicle && _root.visible) {
-                _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,takepic.checked)
+                _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,7,1696)
             }
         }
     }

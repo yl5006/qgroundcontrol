@@ -49,6 +49,7 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
     , _rtlFlightMode(tr("返航"))
     , _landingFlightMode(tr("降落"))
     , _preclandFlightMode(tr("精准降落"))
+    , _circleFlightMode(tr("绕圈"))
     , _rtgsFlightMode(tr("Return to Groundstation"))
     , _followMeFlightMode(tr("跟随"))
     , _simpleFlightMode(tr("简单"))
@@ -82,11 +83,11 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,       true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,           true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET, true,   false,  true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND,      true,   false,  true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_CIRCLE,        true,   false,  true },
         { PX4_CUSTOM_MAIN_MODE_OFFBOARD,    0,                                      false,  false,  true },
         // modes that can't be directly set by the user
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,          false,  true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND,      false,  false,  true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND,      true,   false,  true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_READY,         false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,          false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,       false,  true,   true },
@@ -105,7 +106,7 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
         &_missionFlightMode,
         &_rtlFlightMode,
         &_followMeFlightMode,
-        &_preclandFlightMode,
+        &_circleFlightMode,
         &_offboardFlightMode,
         &_landingFlightMode,
         &_preclandFlightMode,

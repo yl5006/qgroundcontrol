@@ -1,4 +1,4 @@
-import QtQuick                  2.3
+﻿import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Layouts          1.2
 
@@ -19,7 +19,26 @@ Rectangle {
     property var    _instrumentPages:   QGroundControl.corePlugin.instrumentPages
 
     QGCPalette { id:qgcPal; colorGroupEnabled: parent.enabled }
-
+/*
+    Rectangle {
+        id:         selectdis
+        height:     ScreenTools.defaultFontPixelHeight*2
+        color:      qgcPal.window
+        radius:     2
+        Row{
+          anchors.top:  parent.top
+          anchors.left: parent.left
+          anchors.leftMargin: ScreenTools.defaultFontPixelWidth
+          height:     ScreenTools.defaultFontPixelHeight*2
+            Repeater{
+                    model:  _instrumentPages
+                    image{
+                        source: _instrumentPages[pageCombo.currentIndex].icon
+                    }
+            }
+        }
+    }
+*/
     QGCComboBox {
         id:             pageCombo
         anchors.left:   parent.left

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -51,13 +51,239 @@ Column {
         qgcView.showDialog(cameraSettings, _cameraVideoMode ? qsTr("Video Settings") : qsTr("Camera Settings"), 70, StandardButton.Ok)
     }
 
+    Timer {
+        interval:   50  // 25Hz, same as real joystick rate
+        running:    _activeVehicle
+        repeat:     true
+        onTriggered: {
+            if (_activeVehicle && (rightStick.xAxis !== 0.0 || rightStick.yAxis !== 0.0)) {
+                _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,0,1024)
+            }
+        }
+    }
+
     //-- Dumb camera trigger if no actual camera interface exists
-    QGCButton {
-        anchors.horizontalCenter:   parent.horizontalCenter
-        text:                       qsTr("Trigger Camera")
-        visible:                    !_isCamera
-        onClicked:                  _activeVehicle.triggerCamera()
-        enabled:                    _activeVehicle
+    Row{
+        spacing:    ScreenTools.defaultFontPixelHeight/2
+        SubMenuButton {
+            imageResource:      "/qmlimages/camera.svg"
+            text:               qsTr("定时拍照")//"Send to vehicle"
+            onClicked:           _activeVehicle.triggerCameraTime(Number(intertime.text))
+            enabled:            _activeVehicle
+        }
+        QGCTextField {
+            id:                 intertime
+            width:              ScreenTools.defaultFontPixelHeight*4
+            text:               "5"
+        }
+        QGCLabel {
+            text:           qsTr("s")
+        }
+    }
+    Row{
+        spacing:    ScreenTools.defaultFontPixelHeight/2
+        SubMenuButton {
+            imageResource:      "/qmlimages/camera.svg"
+            text:               qsTr("定距拍照")//"Send to vehicle"
+            onClicked:           _activeVehicle.triggerCameraDist(Number(distance.text))
+            enabled:            _activeVehicle
+        }
+        QGCTextField {
+            id:                 distance
+            width:              ScreenTools.defaultFontPixelHeight*4
+            text:               "25"//QGroundControl.videoManager.rtspURL
+        }
+        QGCLabel {
+            text:           qsTr("m")
+        }
+    }
+    Row{
+        spacing:    ScreenTools.defaultFontPixelHeight/2
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("回中")
+            enabled:       _activeVehicle
+            MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,3,1024)
+                }
+                onReleased: {
+                   _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,3,1696)
+                }
+            }
+        }
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("跟头")
+            enabled:            _activeVehicle
+            onClicked:      _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,3,1024)
+        }
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("锁头")
+            enabled:            _activeVehicle
+            MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,3,1024)
+                }
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,3,352)
+                }
+            }
+        }
+    }
+    Row{
+        spacing:    ScreenTools.defaultFontPixelHeight/2
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("变大")
+            enabled:            _activeVehicle
+            MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,5,352)
+                }
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,5,1024)
+                }
+            }
+        }
+        Item { width: ScreenTools.defaultFontPixelHeight*4; height: 1 }
+        QGCButton {
+            id:            takepic
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("变小")
+            enabled:            _activeVehicle
+           MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,5,1696)
+                }
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,5,1024)
+                }
+            }
+        }
+    }
+    Row{
+        spacing:    ScreenTools.defaultFontPixelHeight/2
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("远焦")
+            enabled:            _activeVehicle
+            MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,6,352)
+                }
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,6,1024)
+                }
+            }
+        }
+        Item { width: ScreenTools.defaultFontPixelHeight*4; height: 1 }
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("近焦")
+            enabled:            _activeVehicle
+           MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,6,1696)
+                }
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,6,1024)
+                }
+            }
+        }
+    }
+    Row{
+        spacing:    ScreenTools.defaultFontPixelHeight/2
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("自动对焦")
+            enabled:            _activeVehicle
+            MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,8,1024)
+                }
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,8,1696)
+                }
+            }
+        }
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("暂停对焦")
+            enabled:            _activeVehicle
+            onClicked:      _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,8,1024)
+            MouseArea {
+                anchors.fill: parent
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,8,1696)
+                }
+            }
+        }
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("记忆对焦")
+            enabled:            _activeVehicle
+            MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,8,1024)
+                }
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,8,1696)
+                }
+            }
+        }
+    }
+    Row{
+        spacing:    ScreenTools.defaultFontPixelHeight/2
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("录像")
+            enabled:            _activeVehicle
+           MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,7,352)
+                }
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,7,1024)
+                }
+            }
+        }
+        QGCButton {
+            width:         ScreenTools.defaultFontPixelHeight*4
+            text:          qsTr("结束录像")
+            MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,7,352)
+                }
+                onReleased: {
+                    _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,7,1024)
+                }
+            }
+        }
+        SubMenuButton {
+            imageResource:      "/qmlimages/camera.svg"
+            text:               qsTr("拍照")//"Send to vehicle"
+            checkable:          true
+            onClicked:          _activeVehicle.triggerCamera()
+            enabled:            _activeVehicle
+        }
+    }
+    JoystickThumbPad {
+        id:                     rightStick
+        anchors.horizontalCenter: parent.horizontalCenter
+        width:                  ScreenTools.defaultFontPixelHeight*10
+        height:                 width
     }
     Item { width: 1; height: ScreenTools.defaultFontPixelHeight; visible: _isCamera; }
     //-- Actual controller
@@ -82,7 +308,7 @@ Column {
         height:     _hasModes ? ScreenTools.defaultFontPixelWidth * 4 : 0
         color:      qgcPal.button
         radius:     height * 0.5
-        visible:    _hasModes
+//        visible:    _hasModes
         anchors.horizontalCenter: parent.horizontalCenter
         //-- Video Mode
         Rectangle {

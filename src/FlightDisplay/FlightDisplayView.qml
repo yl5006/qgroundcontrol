@@ -757,6 +757,7 @@ QGCView {
             visible:            !singleVehicleView.checked && !QGroundControl.videoManager.fullScreen
             z:                  _panel.z + 4
         }
+        /*
         SetCamera{
             id:                     setcam
             anchors.topMargin:      ScreenTools.toolbarHeight*1.8 + _margins*2
@@ -776,7 +777,7 @@ QGCView {
             onClicked: {
                 setcam.visible=!setcam.visible
             }
-        }
+        }*/
         //-- Virtual Joystick
         Loader {
             id:                         virtualJoystickMultiTouch

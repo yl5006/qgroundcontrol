@@ -2505,7 +2505,7 @@ void Vehicle::virtualTabletJoystickValue(double roll, double pitch, double yaw, 
     }
 }
 
-void Vehicle::virtualTabletRCValue(double yaw, double pitch,bool pic)
+void Vehicle::virtualTabletRCValue(double yaw, double pitch,int chan ,int pwm)
 {
 
     mavlink_message_t               msg;
@@ -2515,57 +2515,37 @@ void Vehicle::virtualTabletRCValue(double yaw, double pitch,bool pic)
     static float cammerYawAngle = 0.0;
     static float cammerPitchAngle = 0.0;
 
-    static quint8 countSinceLastTransmission = 0; // Track how many calls to this function have occurred since the last MAVLink transmission
-
-    // Transmit the external setpoints only if they've changed OR if it's been a little bit since they were last transmit. To make sure there aren't issues with
-    // response rate, we make sure that a message is transmit when the commands have changed, then one more time, and then switch to the lower transmission rate
-    // if no command inputs have changed.
-
-    // The default transmission rate is 25Hz, but when no inputs have changed it drops down to 1Hz.
-    bool sendCommand = false;
-    if (countSinceLastTransmission++ >= 25) {
-        sendCommand = true;
-        countSinceLastTransmission = 0;
-    } else if ((!qIsNaN(yaw) && yaw != cammerYawAngle) || (!qIsNaN(pitch) && pitch != cammerPitchAngle)) {
-        sendCommand = true;
-
-        // Ensure that another message will be sent the next time this function is called
-        countSinceLastTransmission = 50;
-    }
-    sendCommand = true;
     // Now if we should trigger an update, let's do that
-    if (sendCommand) {
         // Save the new manual control inputs
-        cammerYawAngle = yaw;
-        cammerPitchAngle = pitch;
+    cammerYawAngle = yaw;
+    cammerPitchAngle = pitch;
 
 
-        cammer_rc.chan1_raw = 1024 + cammerYawAngle * 500;
-        cammer_rc.chan2_raw = 1024 + cammerPitchAngle * 500;
-        cammer_rc.chan3_raw = 1024 + 672 * (pic ? 1 : -1);  //  回中 跟头 锁头
-        cammer_rc.chan4_raw = 1024;  // start
-        cammer_rc.chan5_raw = 1024 + 672 * (pic ? 1 : -1);  //变大  变小
-        cammer_rc.chan6_raw = 1024;  // start
-        cammer_rc.chan7_raw = 1024 + 672 * (pic ? 1 : 0) ;  // 录像 结束录像 拍照
-        cammer_rc.chan8_raw = 1024;  // start     //自动对焦  暂停对焦 记忆对焦
-        cammer_rc.chan9_raw = 1024;  // start
-        cammer_rc.chan10_raw = 1024;  // start
-        cammer_rc.chan11_raw = 1024;  // start
-        cammer_rc.chan12_raw = 1024;  // start
-        cammer_rc.chan13_raw = 1024;  // start
-        cammer_rc.chan14_raw = 1024;  // start
-        cammer_rc.chan15_raw = 1024;  // start
-        cammer_rc.chan16_raw = 1024;  // start
-        cammer_rc.chan17_raw = 0;  // start
-        cammer_rc.chan18_raw = 0;  // start
-        mavlink_msg_cammer_rc_encode_chan(_mavlink->getSystemId(),
-                                          _mavlink->getComponentId(),
-                                          priorityLink()->mavlinkChannel(),
-                                          &msg,
-                                          &cammer_rc);
-        sendMessageOnLink(priorityLink(), msg);
+    cammer_rc.chan1_raw = 1024 + cammerYawAngle * 500;
+    cammer_rc.chan2_raw = 1024 + cammerPitchAngle * 500;
+    cammer_rc.chan3_raw = chan == 3 ? pwm : 1024;  //  回中 跟头 锁头
+    cammer_rc.chan4_raw = chan == 4 ? pwm : 1024;  // start
+    cammer_rc.chan5_raw = chan == 5 ? pwm : 1024;  //变大  变小
+    cammer_rc.chan6_raw = chan == 6 ? pwm : 1024;  // start
+    cammer_rc.chan7_raw = chan == 7 ? pwm : 1024;  // 录像 结束录像 拍照
+    cammer_rc.chan8_raw = chan == 8 ? pwm : 1024;  // start     //自动对焦  暂停对焦 记忆对焦
+    cammer_rc.chan9_raw = chan == 9 ? pwm : 1024;  // start
+    cammer_rc.chan10_raw = chan == 10 ? pwm : 1024;  // start
+    cammer_rc.chan11_raw = chan == 11 ? pwm : 1024;  // start
+    cammer_rc.chan12_raw = chan == 12 ? pwm : 1024;  // start
+    cammer_rc.chan13_raw = chan == 13 ? pwm : 1024;  // start
+    cammer_rc.chan14_raw = chan == 14 ? pwm : 1024;  // start
+    cammer_rc.chan15_raw = chan == 15 ? pwm : 1024;  // start
+    cammer_rc.chan16_raw = chan == 16 ? pwm : 1024;  // start
+    cammer_rc.chan17_raw = 0;  // start
+    cammer_rc.chan18_raw = 0;  // start
+    mavlink_msg_cammer_rc_encode_chan(_mavlink->getSystemId(),
+                                      _mavlink->getComponentId(),
+                                      priorityLink()->mavlinkChannel(),
+                                      &msg,
+                                      &cammer_rc);
+    sendMessageOnLink(priorityLink(), msg);
 
-    }
 }
 void Vehicle::setConnectionLostEnabled(bool connectionLostEnabled)
 {

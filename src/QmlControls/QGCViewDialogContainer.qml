@@ -120,11 +120,8 @@ FocusScope {
 //        anchors.right:      parent.right
         color:              _qgcPal.windowShadeDark
         anchors.centerIn:   parent
-
         width:              _dialogCharWidth == showDialogFullWidth ? parent.width : defaultTextWidth * _dialogCharWidth
-        height:             Math.max(_dialogComponentLoader.y+_dialogComponentLoader.height+ScreenTools.defaultFontPixelHeight*2,ScreenTools.defaultFontPixelHeight*5)//ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+        height:             ScreenTools.availableHeight ? (ScreenTools.availableHeight - ScreenTools.defaultFontPixelHeight * 10): (parent.height - ScreenTools.defaultFontPixelHeight * 20) //height:             Math.max(_dialogComponentLoader.y+_dialogComponentLoader.height+ScreenTools.defaultFontPixelHeight*2,ScreenTools.defaultFontPixelHeight*5)//ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
         border.width:      ScreenTools.defaultFontPixelHeight/8
         border.color:      _qgcPal.buttonHighlight
         radius:            ScreenTools.defaultFontPixelHeight/4
@@ -189,7 +186,7 @@ FocusScope {
             anchors.left:       parent.left
             anchors.right:      parent.right
             anchors.top:        _spacer.bottom
-//            anchors.bottom:     parent.bottom
+            anchors.bottom:     parent.bottom
             sourceComponent:    _dialogComponent
             focus:              true
 
