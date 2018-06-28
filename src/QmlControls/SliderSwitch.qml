@@ -29,7 +29,7 @@ Rectangle {
         anchors.horizontalCenter:   parent.horizontalCenter
         anchors.verticalCenter:     parent.verticalCenter
         text:                       qsTr("确认 %1").arg(confirmText)
-        color:                      qgcPal.text
+        color:                      qgcPal.window
     }
 
     Rectangle {
@@ -40,7 +40,6 @@ Rectangle {
         width:      _diameter
         radius:     _diameter / 2
         color:      qgcPal.button
-        opacity:    0.8
 
         QGCColoredImage {
             anchors.centerIn:       parent
@@ -50,7 +49,7 @@ Rectangle {
             fillMode:               Image.PreserveAspectFit
             smooth:                 false
             mipmap:                 false
-            color:                  qgcPal.text
+            color:                  qgcPal.buttonText
             cache:                  false
             source:                 "/res/ArrowRight.svg"
         }

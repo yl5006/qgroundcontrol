@@ -191,13 +191,13 @@ QGCMapEngine::_wipeOldCaches()
 #ifdef __mobile__
     oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)      + QLatin1String("/EWTMapCache55");
 #else
-    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QLatin1String("/EWTMapCache55");
+    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QStringLiteral("/EWTMapCache55");
 #endif
     _checkWipeDirectory(oldCacheDir);
 #ifdef __mobile__
     oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)      + QLatin1String("/EWTMapCache100");
 #else
-    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QLatin1String("/EWTMapCache100");
+    oldCacheDir = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + QStringLiteral("/EWTMapCache100");
 #endif
     _checkWipeDirectory(oldCacheDir);
 }
@@ -216,7 +216,7 @@ QGCMapEngine::init()
 #endif
     if(!QDir::root().mkpath(cacheDir)) {
         qWarning() << "Could not create mapping disk cache directory: " << cacheDir;
-        cacheDir = QDir::homePath() + QLatin1String("/.qgcmapscache/");
+        cacheDir = QDir::homePath() + QStringLiteral("/.qgcmapscache/");
         if(!QDir::root().mkpath(cacheDir)) {
             qWarning() << "Could not create mapping disk cache directory: " << cacheDir;
             cacheDir.clear();

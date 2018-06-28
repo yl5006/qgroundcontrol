@@ -169,7 +169,7 @@ DropButton {
                 checked:    followVehicle
                 visible:    showFollowVehicle
 
-                onClicked:  {
+                onClicked: {
                     dropButton.hideDropDown()
                     dropButton.followVehicle = checked
                 }

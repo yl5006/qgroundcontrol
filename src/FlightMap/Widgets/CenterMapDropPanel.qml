@@ -97,7 +97,7 @@ ColumnLayout {
             }
         }
     }
-/*
+
     QGCButton {
         text:               qsTr("All items")
         Layout.fillWidth:   true
@@ -107,5 +107,47 @@ ColumnLayout {
             dropPanel.hide()
             fitFunctions.fitMapViewportToAllItems()
         }
-    }*/
+    }
+
+    QGCButton {
+        text:               qsTr("Home")
+        Layout.fillWidth:   true
+
+        onClicked: {
+            dropPanel.hide()
+            map.center = fitFunctions.fitHomePosition()
+        }
+    }
+
+    QGCButton {
+        text:               qsTr("Vehicle")
+        Layout.fillWidth:   true
+        enabled:            _activeVehicle && _activeVehicle.coordinate.isValid
+
+        onClicked: {
+            dropPanel.hide()
+            map.center = activeVehicle.coordinate
+        }
+    }
+
+    QGCButton {
+        text:               qsTr("Current Location")
+        Layout.fillWidth:   true
+        enabled:            map.gcsPosition.isValid
+
+        onClicked: {
+            dropPanel.hide()
+            map.center = map.gcsPosition
+        }
+    }
+
+    QGCButton {
+        text:               qsTr("Specified Location")
+        Layout.fillWidth:   true
+
+        onClicked: {
+            dropPanel.hide()
+            map.centerToSpecifiedLocation()
+        }
+    }
 } // Column

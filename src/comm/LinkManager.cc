@@ -79,7 +79,7 @@ void LinkManager::setToolbox(QGCToolbox *toolbox)
     _autoConnectSettings = toolbox->settingsManager()->autoConnectSettings();
     _mavlinkProtocol = _toolbox->mavlinkProtocol();
 
-    connect(_mavlinkProtocol, &MAVLinkProtocol::vehicleHeartbeatInfo, this, &LinkManager::_heartbeatReceived);
+    connect(_mavlinkProtocol, &MAVLinkProtocol::messageReceived, this, &LinkManager::_mavlinkMessageReceived);
 
     connect(&_portListTimer, &QTimer::timeout, this, &LinkManager::_updateAutoConnectLinks);
     _portListTimer.start(_autoconnectUpdateTimerMSecs); // timeout must be long enough to get past bootloader on second pass
@@ -136,6 +136,8 @@ LinkInterface* LinkManager::createConnectedLink(SharedLinkConfigurationPointer& 
         }
     }
         break;
+#else
+    Q_UNUSED(isPX4Flow)
 #endif
     case LinkConfiguration::TypeUdp:
         pLink = new UDPLink(config);
@@ -1027,10 +1029,6 @@ void LinkManager::_freeMavlinkChannel(int channel)
     _mavlinkChannelsUsedBitMask &= ~(1 << channel);
 }
 
-void LinkManager::_heartbeatReceived(LinkInterface* link, int vehicleId, int componentId, int vehicleFirmwareType, int vehicleType) {
-    Q_UNUSED(componentId);
-    Q_UNUSED(vehicleFirmwareType);
-    Q_UNUSED(vehicleType);
-
-    link->startHeartbeatTimer(vehicleId);
+void LinkManager::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message) {
+    link->startMavlinkMessagesTimer(message.sysid);
 }

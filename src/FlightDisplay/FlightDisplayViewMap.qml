@@ -48,7 +48,6 @@ FlightMap {
     property var    _rallyPointController:      _planMasterController.rallyPointController
     property var    _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
     property var    _activeVehicleCoordinate:   _activeVehicle ? _activeVehicle.coordinate : QtPositioning.coordinate()
-    property var    _gotoHereCoordinate:        QtPositioning.coordinate()
     property real   _toolButtonTopMargin:       parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
 
     property bool   _disableVehicleTracking:    false
@@ -99,7 +98,13 @@ FlightMap {
 
     function recenterNeeded() {
         var vehiclePoint = flightMap.fromCoordinate(_activeVehicleCoordinate, false /* clipToViewport */)
-        var centerViewport = Qt.rect(0, 0, width, height)
+        var toolStripRightEdge = mapFromItem(toolStrip, toolStrip.x, 0).x + toolStrip.width
+        var instrumentsWidth = 0
+        if (QGroundControl.corePlugin.options.instrumentWidget.widgetPosition === CustomInstrumentWidget.POS_TOP_RIGHT) {
+            // Assume standard instruments
+            instrumentsWidth = flightDisplayViewWidgets.getPreferredInstrumentWidth()
+        }
+        var centerViewport = Qt.rect(toolStripRightEdge, 0, width - toolStripRightEdge - instrumentsWidth, height)
         return !pointInRect(vehiclePoint, centerViewport)
     }
 
@@ -416,22 +421,6 @@ FlightMap {
         }
     }
 
-    // GoTo here waypoint
-    MapQuickItem {
-        coordinate:     _gotoHereCoordinate
-        visible:        _activeVehicle && _activeVehicle.guidedModeSupported && _gotoHereCoordinate.isValid
-        z:              QGroundControl.zOrderMapItems
-        anchorPoint.x:  sourceItem.anchorPointX
-        anchorPoint.y:  sourceItem.anchorPointY * 2
-
-        sourceItem: MissionItemIndexLabel {
-            checked:    true
-            index:      -1
-            label:      qsTr("G", "Goto here waypoint")
-            simpleindex:   1
-        }
-    }    
-
     // Camera trigger points
     MapItemView {
         model: _activeVehicle ? _activeVehicle.cameraTriggerPoints : 0
@@ -462,14 +451,108 @@ FlightMap {
          }
     }
 
+    MapQuickItem {
+        id:             gotoLocationItem
+        visible:        false
+        z:              QGroundControl.zOrderMapItems
+        anchorPoint.x:  sourceItem.anchorPointX
+        anchorPoint.y:  sourceItem.anchorPointY
+
+        sourceItem: MissionItemIndexLabel {
+            checked:    true
+            index:      -1
+            label:      qsTr("Goto here", "Goto here waypoint")
+	    simpleindex:   1
+        }
+
+        function show(coord) {
+            gotoLocationItem.coordinate = coord
+            gotoLocationItem.visible = true
+        }
+
+        function hide() {
+            gotoLocationItem.visible = false
+        }
+    }
+
+    QGCMapCircleVisuals {
+        id:         orbitMapCircle
+        mapControl: parent
+        mapCircle:  _mapCircle
+        visible:    false
+
+        property alias center:  _mapCircle.center
+        property real radius:   defaultRadius
+
+        readonly property real defaultRadius: 30
+
+        function show(coord) {
+            orbitMapCircle.radius = defaultRadius
+            orbitMapCircle.center = coord
+            orbitMapCircle.visible = true
+        }
+
+        function hide() {
+            orbitMapCircle.visible = false
+        }
+
+        Component.onCompleted: guidedActionsController.orbitMapCircle = orbitMapCircle
+
+        QGCMapCircle {
+            id:                 _mapCircle
+            interactive:        true
+            radius.rawValue:    orbitMapCircle.radius
+        }
+    }
+
     // Handle guided mode clicks
     MouseArea {
         anchors.fill: parent
 
+        Menu {
+            id: clickMenu
+
+            property var coord
+
+            MenuItem {
+                text:           qsTr("Go to location")
+                visible:        guidedActionsController.showGotoLocation
+
+                onTriggered: {
+                    gotoLocationItem.show(clickMenu.coord)
+                    orbitMapCircle.hide()
+                    flightWidgets.confirmAction(flightWidgets.confirmGoTo, clickMenu.coord)
+                }
+            }
+
+            MenuItem {
+                text:           qsTr("Orbit at location")
+                visible:        guidedActionsController.showOrbit
+
+                onTriggered: {
+                    orbitMapCircle.show(clickMenu.coord)
+                    gotoLocationItem.hide()
+                    flightWidgets.confirmAction(flightWidgets.actionOrbit, clickMenu.coord)
+                }
+            }
+        }
+
         onClicked: {
-            if (flightWidgets.showGotoLocation) {
-                _gotoHereCoordinate = flightMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
-                flightWidgets.confirmAction(flightWidgets.confirmGoTo, _gotoHereCoordinate)
+            if (flightWidgets.guidedUIVisible || (!flightWidgets.showGotoLocation && !flightWidgets.showOrbit)) {
+                return
+            }            
+            orbitMapCircle.hide()
+            gotoLocationItem.hide()
+            var clickCoord = flightMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
+            if (flightWidgets.showGotoLocation && flightWidgets.showOrbit) {
+                clickMenu.coord = clickCoord
+                clickMenu.popup()
+            } else if (flightWidgets.showGotoLocation) {
+                gotoLocationItem.show(clickCoord)
+                flightWidgets.confirmAction(flightWidgets.confirmGoTo, clickCoord)
+            } else if (guidedActionsController.showOrbit) {
+                orbitMapCircle.show(clickCoord)
+                flightWidgets.confirmAction(flightWidgets.actionOrbit, clickCoord)
             }
         }
     }
