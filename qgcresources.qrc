@@ -154,7 +154,10 @@
         <file alias="ZoomMinus.svg">src/FlightMap/Images/ZoomMinus.svg</file>
 	<file alias="setCammer.svg">src/FlightMap/Images/setCammer.svg</file>	
         <file alias="Help.svg">src/FlightMap/Images/Help.svg</file>
-	<file alias="Returnhome.svg">src/FlightMap/Images/Returnhome.svg</file>
+	<file alias="Returnhome.svg">src/FlightMap/Images/Returnhome.svg</file>	
+	<file alias="change_coper.svg">src/FlightMap/Images/change_coper.svg</file>
+	<file alias="change_fixwing.svg">src/FlightMap/Images/change_fixwing.svg</file>
+	<file alias="high.svg">src/FlightMap/Images/high.svg</file>
 	<file alias="lock.svg">src/FlightMap/Images/lock.svg</file>
 	<file alias="unlock.svg">src/FlightMap/Images/unlock.svg</file>
 	<file alias="takeoff.svg">src/FlightMap/Images/takeoff.svg</file>
@@ -177,6 +180,8 @@
         <file alias="MapCenterBlack.svg">src/FlightMap/Images/MapCenterBlack.svg</file>
         <file alias="MapDrawShape.svg">src/FlightMap/Images/MapDrawShape.svg</file>
 	<file alias="Fixwingland.svg">src/FlightMap/Images/Fixwingland.svg</file>
+	<file alias="structurescan.svg">src/FlightMap/Images/structurescan.svg</file>
+	<file alias="corridorscan.svg">src/FlightMap/Images/corridorscan.svg</file>
         <file alias="MapHome.svg">src/FlightMap/Images/MapHome.svg</file>
         <file alias="MapHomeBlack.svg">src/FlightMap/Images/MapHomeBlack.svg</file>
         <file alias="MapSync.svg">src/FlightMap/Images/MapSync.svg</file>
