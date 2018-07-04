@@ -2333,6 +2333,12 @@ void Vehicle::_clearTrajectoryPoints(void)
     _mapTrajectoryList.clearAndDeleteContents();
 }
 
+void Vehicle::clearTrajectoryPoints(void)
+{
+   _clearTrajectoryPoints();
+}
+
+
 void Vehicle::_clearCameraTriggerPoints(void)
 {
     _cameraTriggerPoints.clearAndDeleteContents();
@@ -2855,10 +2861,10 @@ void Vehicle::guidedModeOrbit(const QGeoCoordinate& centerCoord, double radius, 
         qgcApp()->showMessage(QStringLiteral("Orbit不支持"));//"Orbit mode not supported by Vehicle."
         return;
     }
-
+    qDebug()<<"radius"<<radius<<centerCoord.latitude()<<centerCoord.longitude()<<amslAltitude;
     if (capabilityBits() && MAV_PROTOCOL_CAPABILITY_COMMAND_INT) {
         sendMavCommandInt(defaultComponentId(),
-                          MAV_CMD_DO_ORBIT,
+                          MAV_CMD_DO_GO_AROUND,
                           MAV_FRAME_GLOBAL,
                           true,            // show error if fails
                           radius,
@@ -2868,7 +2874,7 @@ void Vehicle::guidedModeOrbit(const QGeoCoordinate& centerCoord, double radius, 
                           centerCoord.latitude(), centerCoord.longitude(), amslAltitude);
     } else {
         sendMavCommand(defaultComponentId(),
-                       MAV_CMD_DO_ORBIT,
+                       MAV_CMD_DO_GO_AROUND,
                        true,            // show error if fails
                        radius,
                        qQNaN(),         // Use default velocity

@@ -70,6 +70,7 @@ public:
    	Q_PROPERTY(QmlObjectListModel*  jumpwaypointLines       READ jumpwaypointLines          NOTIFY jumpwaypointLinesChanged)
     Q_PROPERTY(QVariantList         waypointPath            READ waypointPath               NOTIFY waypointPathChanged)         ///< Used by Fly view only for static display
     Q_PROPERTY(QStringList          complexMissionItemNames READ complexMissionItemNames    NOTIFY complexMissionItemNamesChanged)
+    Q_PROPERTY(QStringList          complexMissionItemIcons READ complexMissionItemIcons    NOTIFY complexMissionItemIconsChanged)
     Q_PROPERTY(QGeoCoordinate       plannedHomePosition     READ plannedHomePosition        NOTIFY plannedHomePositionChanged)
 
     Q_PROPERTY(double               progressPct             READ progressPct                NOTIFY progressPctChanged)
@@ -167,6 +168,7 @@ public:
     QmlObjectListModel* jumpwaypointLines       (void) { return &_jumpwaypointLines; }
     QVariantList        waypointPath                (void) { return _waypointPath; }
     QStringList         complexMissionItemNames     (void) const;
+    QStringList         complexMissionItemIcons     (void) const;
     QGeoCoordinate      plannedHomePosition         (void) const;
     VisualMissionItem*  currentPlanViewItem         (void) const;
     double              progressPct                 (void) const { return _progressPct; }
@@ -203,6 +205,7 @@ signals:
     void missionCruiseTimeChanged       (void);
     void missionMaxTelemetryChanged     (double missionMaxTelemetry);
     void complexMissionItemNamesChanged (void);
+    void complexMissionItemIconsChanged (void);
     void resumeMissionIndexChanged      (void);
     void resumeMissionReady             (void);
     void resumeMissionUploadFail        (void);

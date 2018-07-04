@@ -36,6 +36,7 @@ public:
     virtual QUrl setupSource(void) const;
     virtual QUrl summaryQmlSource(void) const;
     bool allowSetupWhileArmed(void) const override { return true; }
+    bool allowSetupWhileFlying(void) const override { return true; }
 private:
     const QString   _name;
     QVariantList    _summaryItems;

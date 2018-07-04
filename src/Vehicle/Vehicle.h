@@ -571,6 +571,9 @@ public:
     /// Command vehicle to return to launch
     Q_INVOKABLE void guidedModeRTL(void);
 
+    /// Command vehicle to return to launch
+    Q_INVOKABLE void clearTrajectoryPoints(void);
+
     /// Command vehicle to land at current location
     Q_INVOKABLE void guidedModeLand(void);
 

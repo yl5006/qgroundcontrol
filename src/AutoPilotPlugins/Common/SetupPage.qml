@@ -24,7 +24,7 @@ import QGroundControl.Controllers   1.0
 QGCView {
     id:             setupView
     viewPanel:      setupPanel
-    enabled:        !_disableDueToArmed && !_disableDueToFlying
+    enabled:        !_disableDueToArmed //&& !_disableDueToFlying
 
     property alias  pageComponent:      pageLoader.sourceComponent
     property string pageName:           vehicleComponent ? vehicleComponent.name : ""

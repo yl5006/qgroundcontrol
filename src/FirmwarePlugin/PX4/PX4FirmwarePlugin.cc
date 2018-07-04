@@ -469,7 +469,7 @@ void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitu
     }
 
     double currentAltRel = vehicle->altitudeRelative()->rawValue().toDouble();
-    double newAltRel = /*currentAltRel + */ + altitudeChange;
+    double newAltRel = currentAltRel + altitudeChange;
 
     vehicle->sendMavCommand(vehicle->defaultComponentId(),
                             MAV_CMD_DO_REPOSITION,

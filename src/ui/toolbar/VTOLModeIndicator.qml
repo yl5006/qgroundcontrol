@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -23,7 +23,7 @@ QGCLabel {
     anchors.top:        parent.top
     anchors.bottom:     parent.bottom
     verticalAlignment:  Text.AlignVCenter
-    text:               _fwdFlight ? qsTr("VTOL: Fixed Wing") : qsTr("VTOL: Multi-Rotor")
+    text:               _fwdFlight ? qsTr("固定翼模式") : qsTr("旋翼模式")
     font.pointSize:     ScreenTools.mediumFontPointSize
     color:              qgcPal.buttonText
     visible:            _activeVehicle ? _activeVehicle.vtol && _activeVehicle.px4Firmware : false

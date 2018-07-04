@@ -1067,7 +1067,7 @@
         {
             "id":                   400,
             "rawName":              "MAV_CMD_COMPONENT_ARM_DISARM",
-            "friendlyName":         "电机停转开伞",
+            "friendlyName":         "加锁解锁",
             "description":          "电机停转加锁开伞,模式切换至增稳，注意坠机",
             "specifiesCoordinate":  true,
             "friendlyEdit":         true,

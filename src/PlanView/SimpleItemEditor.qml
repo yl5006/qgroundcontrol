@@ -143,7 +143,7 @@ Rectangle {
                     fact:           missionItem.altitude
                     digitCount:     3
                     incrementSlots: 1
-                    visible:        ScreenTools.isMobile//&&ScreenTools.isDebug
+                    visible:        ScreenTools.isMobile
                 }
 
                 QGCLabel {

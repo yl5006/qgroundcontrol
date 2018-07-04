@@ -189,7 +189,7 @@ QGCView {
         }
 
         function loadFromSelectedFile() {
-            fileDialog.title =          qsTr("Select Plan File")
+            fileDialog.title =          qsTr("选择飞行计划")
             fileDialog.selectExisting = true
             fileDialog.nameFilters =    masterController.loadNameFilters
             fileDialog.fileExtension =  QGroundControl.settingsManager.appSettings.planFileExtension
@@ -202,7 +202,7 @@ QGCView {
                 waitingOnDataMessage()
                 return
             }
-            fileDialog.title =          qsTr("Save Plan")
+            fileDialog.title =          qsTr("保存 计划")
             fileDialog.planFiles =      true
             fileDialog.selectExisting = false
             fileDialog.nameFilters =    masterController.saveNameFilters
@@ -230,7 +230,7 @@ QGCView {
                 waitingOnDataMessage()
                 return
             }
-            fileDialog.title =          qsTr("Save KML")
+            fileDialog.title =          qsTr("保存 KML")
             fileDialog.planFiles =      false
             fileDialog.selectExisting = false
             fileDialog.nameFilters =    masterController.fileKmlFilters
@@ -1384,7 +1384,7 @@ QGCView {
                 model: _missionController.complexMissionItemNames
 
                 SubMenuButton {
-                    imageResource:      index==0?"/qmlimages/MapDrawShape.svg":"/qmlimages/Fixwingland.svg"
+                    imageResource:      _missionController.complexMissionItemIcons[index]
                     text:               modelData
                     Layout.fillWidth:   true
 
@@ -1441,10 +1441,10 @@ QGCView {
                 text:                qsTr("载入任务..")//"Load from vehicle"
                 onClicked:  {
                     syncButton.hideDropDown()
-                        if (masterController.dirty) {
+                    if (masterController.dirty) {
                         _qgcView.showDialog(syncLoadFromVehicleOverwrite, columnHolder._overwriteText, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
                     } else {
-                            masterController.loadFromVehicle()
+                        masterController.loadFromVehicle()
                     }
                 }
             }
@@ -1504,72 +1504,39 @@ QGCView {
                 color:      "grey"
             }
             QGCButton {
-                    text:               qsTr("加载KML...")
-                    Layout.fillWidth:   true
-                    enabled:            !masterController.syncInProgress
-                    onClicked: {
-                        syncButton.hideDropDown()
-                        masterController.loadKmlFromSelectedFile()
-                    }
+                text:               qsTr("加载KML...")
+                Layout.fillWidth:   true
+                enabled:            !masterController.syncInProgress
+                onClicked: {
+                    syncButton.hideDropDown()
+                    masterController.loadKmlFromSelectedFile()
+                }
             }
             QGCButton {
                 text:               qsTr("保存至KML文件")
                 Layout.fillWidth:   true
-                    enabled:            !masterController.syncInProgress && _visualItems.count > 1
+                enabled:            !masterController.syncInProgress && _visualItems.count > 1
                 onClicked: {
-                        // First point does not count
-                        if (_visualItems.count < 2) {
-                            _qgcView.showDialog(noItemForKML, qsTr("KML"), _qgcView.showDialogDefaultWidth, StandardButton.Cancel)
-                            return
-                        }
+                    // First point does not count
+                    if (_visualItems.count < 2) {
+                        _qgcView.showDialog(noItemForKML, qsTr("KML"), _qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+                        return
+                    }
                     syncButton.hideDropDown()
                     masterController.saveKmlToSelectedFile()
                 }
-
-                Rectangle {
-                    width:              parent.width * 0.8
-                    height:             1
-                    color:              qgcPal.text
-                    opacity:            0.5
-                    visible:            !QGroundControl.corePlugin.options.disableVehicleConnection
-                    Layout.fillWidth:   true
-                    Layout.columnSpan:  2
-                }
-
-
-                    text:               qsTr("Remove All")
-                    enabled:            !masterController.offline && !masterController.syncInProgress && _visualItems.count > 1
-                    visible:            !QGroundControl.corePlugin.options.disableVehicleConnection
-                        masterController.upload()
-                    }
-                }
-
-                QGCButton {
-                    text:               qsTr("Download")
-                    Layout.fillWidth:   true
-                    enabled:            !masterController.offline && !masterController.syncInProgress
-                    visible:            !QGroundControl.corePlugin.options.disableVehicleConnection
-                    onClicked: {
-                        dropPanel.hide()
-                        if (masterController.dirty) {
-                            _qgcView.showDialog(syncLoadFromVehicleOverwrite, columnHolder._overwriteText, _qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.Cancel)
-                        } else {
-                            masterController.loadFromVehicle()
-                        }
-                    }
-                }
-
-                QGCButton {
-                    text:               qsTr("Clear Vehicle Mission")
-                    Layout.fillWidth:   true
-                    Layout.columnSpan:  2
-                    enabled:            !masterController.offline && !masterController.syncInProgress
-                    visible:            !QGroundControl.corePlugin.options.disableVehicleConnection
-                    onClicked: {
-                        dropPanel.hide()
-                        _qgcView.showDialog(removeAllPromptDialog, qsTr("Remove all"), _qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
-
             }
+/*
+            Rectangle {
+                width:              parent.width * 0.8
+                height:             1
+                color:              qgcPal.text
+                opacity:            0.5
+                visible:            !QGroundControl.corePlugin.options.disableVehicleConnection
+                Layout.fillWidth:   true
+                Layout.columnSpan:  2
+            }
+            */
         }
     }
 } // QGCVIew

@@ -393,7 +393,7 @@ int MissionController::insertSimpleMissionItem(QGeoCoordinate coordinate, int i)
                 _managerVehicle->firmwarePlugin()->missionFlightSpeedInfo(_managerVehicle, hoverSpeed, cruiseSpeed);
                 if (_managerVehicle->multiRotor()) {
                     prevSpeed = hoverSpeed;
-                } else if (_managerVehicle->fixedWing()) {
+                } else  {
                     prevSpeed = cruiseSpeed;
                 }
                 newItem->missionItem().setParam3(prevSpeed);
@@ -1800,12 +1800,14 @@ void MissionController::managerVehicleChanged(Vehicle* managerVehicle)
     connect(_managerVehicle, &Vehicle::defaultCruiseSpeedChanged,       this, &MissionController::_recalcMissionFlightStatus);
     connect(_managerVehicle, &Vehicle::defaultHoverSpeedChanged,        this, &MissionController::_recalcMissionFlightStatus);
     connect(_managerVehicle, &Vehicle::vehicleTypeChanged,              this, &MissionController::complexMissionItemNamesChanged);
+    connect(_managerVehicle, &Vehicle::vehicleTypeChanged,              this, &MissionController::complexMissionItemIconsChanged);
 
     if (!_masterController->offline()) {
         _managerVehicleHomePositionChanged(_managerVehicle->homePosition());
     }
 
     emit complexMissionItemNamesChanged();
+    emit complexMissionItemIconsChanged();
     emit resumeMissionIndexChanged();
 }
 
@@ -1848,7 +1850,7 @@ bool MissionController::_findPreviousAltitude(int newIndex, double* prevAltitude
             if (visualItem->isSimpleItem()) {
                 SimpleMissionItem* simpleItem = qobject_cast<SimpleMissionItem*>(visualItem);
                 if (simpleItem->specifiesAltitude()) {
-                    foundAltitude = simpleItem->altitude()->rawValue().toDouble();
+                    foundAltitude = simpleItem->missionItem().param7();//simpleItem->altitude()->rawValue().toDouble();
                     foundSpeed = simpleItem->missionItem().param3();
                     foundAltitudeMode = simpleItem->altitudeMode();
                     found = true;
@@ -2057,6 +2059,21 @@ QStringList MissionController::complexMissionItemNames(void) const
     return complexItems;
 }
 
+QStringList MissionController::complexMissionItemIcons(void) const
+{
+    QStringList complexIcons;
+
+    complexIcons.append("/qmlimages/MapDrawShape.svg");
+    complexIcons.append("/qmlimages/corridorscan.svg");
+    if (_controllerVehicle->fixedWing()) {
+        complexIcons.append("/qmlimages/Fixwingland.svg");
+    }
+    if (_controllerVehicle->multiRotor() || _controllerVehicle->vtol()) {
+        complexIcons.append("/qmlimages/structurescan.svg");
+    }
+
+    return complexIcons;
+}
 void MissionController::resumeMission(int resumeIndex)
 {
     if (!_controllerVehicle->firmwarePlugin()->sendHomePositionToVehicle()) {

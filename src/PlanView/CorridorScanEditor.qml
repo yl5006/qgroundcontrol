@@ -130,7 +130,7 @@ Rectangle {
 
         SectionHeader {
             id:         terrainHeader
-            text:       qsTr("Terrain")
+            text:       qsTr("地形")
             checked:    missionItem.followTerrain
         }
 
@@ -142,7 +142,7 @@ Rectangle {
 
             QGCCheckBox {
                 id:         followsTerrainCheckBox
-                text:       qsTr("Vehicle follows terrain")
+                text:       qsTr("跟随地形")
                 checked:    missionItem.followTerrain
                 onClicked:  missionItem.followTerrain = checked
             }
@@ -160,13 +160,13 @@ Rectangle {
                     Layout.fillWidth:   true
                 }
 
-                QGCLabel { text: qsTr("Max Climb Rate") }
+                QGCLabel { text: qsTr("最大爬升率") }
                 FactTextField {
                     fact:               missionItem.terrainAdjustMaxClimbRate
                     Layout.fillWidth:   true
                 }
 
-                QGCLabel { text: qsTr("Max Descent Rate") }
+                QGCLabel { text: qsTr("最大下降率") }
                 FactTextField {
                     fact:               missionItem.terrainAdjustMaxDescentRate
                     Layout.fillWidth:   true

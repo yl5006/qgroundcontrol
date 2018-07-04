@@ -28,8 +28,8 @@ Item {
     property var    qgcView
     property bool   useLightColors
     property var    missionController
+    property var    orbitMapCircle
 
-    property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     property bool   _isSatellite:           _mainIsMap ? (_flightMap ? _flightMap.isSatelliteMap : true) : true
     property bool   _lightWidgetBorders:    _isSatellite
 
@@ -40,24 +40,75 @@ Item {
     QGCPalette    { id: qgcPal }
 
     property real _fontPointSize: ScreenTools.isMobile ? ScreenTools.largeFontPointSize : ScreenTools.defaultFontPointSize
-    property bool showGotoLocation:     _activeVehicle && _activeVehicle.guidedMode && _activeVehicle.flying
 
-    readonly property int confirmHome:                  1
-    readonly property int confirmLand:                  2
-    readonly property int confirmTakeoff:               3
-    readonly property int confirmArm:                   4
-    readonly property int confirmDisarm:                5
-    readonly property int confirmEmergencyStop:         6
-    readonly property int confirmChangeAlt:             7
-    readonly property int confirmGoTo:                  8
-    readonly property int confirmSetWaypoint:           9
-    readonly property int confirmOrbit:                 10
-    readonly property int confirmAbort:                 11
-    readonly property int confirmStartMission:          12
-    readonly property int confirmContinueMission:       13
-    readonly property int confirmResumeMission:         14
-    readonly property int confirmResumeMissionReady:    15
-    readonly property int confirmPause:                 16
+    property bool showEmergenyStop:     _guidedActionsEnabled && !_hideEmergenyStop && _vehicleArmed && _vehicleFlying
+    property bool showArm:              _guidedActionsEnabled && !_vehicleArmed
+    property bool showDisarm:           _guidedActionsEnabled && _vehicleArmed && !_vehicleFlying
+    property bool showRTL:              _guidedActionsEnabled && _vehicleArmed && _activeVehicle.guidedModeSupported && _vehicleFlying && !_vehicleInRTLMode
+    property bool showTakeoff:          _guidedActionsEnabled && _activeVehicle.takeoffVehicleSupported && !_vehicleFlying
+    property bool showLand:             _guidedActionsEnabled && _activeVehicle.guidedModeSupported && _vehicleArmed && !_activeVehicle.fixedWing && !_vehicleInLandMode
+    property bool showStartMission:     _guidedActionsEnabled && _missionAvailable && !_missionActive && !_vehicleFlying
+    property bool showContinueMission:  _guidedActionsEnabled && _missionAvailable && !_missionActive && _vehicleArmed && _vehicleFlying && (_currentMissionIndex < missionController.visualItems.count - 1)
+    property bool showPause:            _guidedActionsEnabled && _vehicleArmed && _activeVehicle.pauseVehicleSupported && _vehicleFlying && !_vehiclePaused
+    property bool showChangeAlt:        _guidedActionsEnabled && _vehicleFlying && _activeVehicle.guidedModeSupported && _vehicleArmed && !_missionActive
+    property bool showOrbit:            _guidedActionsEnabled && !_hideOrbit && _vehicleFlying && _activeVehicle.orbitModeSupported && !_missionActive
+    property bool showLandAbort:        _guidedActionsEnabled && _vehicleFlying && _activeVehicle.fixedWing && _vehicleLanding
+    property bool showGotoLocation:     _guidedActionsEnabled && _vehicleFlying
+
+    // Note: The 'missionController.visualItems.count - 3' is a hack to not trigger resume mission when a mission ends with an RTL item
+    property bool showResumeMission:    _activeVehicle && !_vehicleArmed && _vehicleWasFlying && _missionAvailable && _resumeMissionIndex > 0 && (_resumeMissionIndex < missionController.visualItems.count - 3)
+
+    property bool guidedUIVisible:      guidedModeConfirm.visible //|| guidedActionList.visible
+
+    property bool   _guidedActionsEnabled:  (!ScreenTools.isDebug && QGroundControl.corePlugin.options.guidedActionsRequireRCRSSI && _activeVehicle) ? _rcRSSIAvailable : _activeVehicle
+    property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
+    property string _flightMode:            _activeVehicle ? _activeVehicle.flightMode : ""
+    property bool   _missionAvailable:      missionController.containsItems
+    property bool   _missionActive:         _activeVehicle ? _vehicleArmed && (_vehicleInLandMode || _vehicleInRTLMode || _vehicleInMissionMode) : false
+    property bool   _vehicleArmed:          _activeVehicle ? _activeVehicle.armed  : false
+    property bool   _vehicleFlying:         _activeVehicle ? _activeVehicle.flying  : false
+    property bool   _vehicleLanding:        _activeVehicle ? _activeVehicle.landing  : false
+    property bool   _vehiclePaused:         false
+    property bool   _vehicleInMissionMode:  false
+    property bool   _vehicleInRTLMode:      false
+    property bool   _vehicleInLandMode:     false
+    property int    _currentMissionIndex:   missionController.currentMissionIndex
+    property int    _resumeMissionIndex:    missionController.resumeMissionIndex
+    property bool   _hideEmergenyStop:      !QGroundControl.corePlugin.options.guidedBarShowEmergencyStop
+    property bool   _hideOrbit:             !QGroundControl.corePlugin.options.guidedBarShowOrbit
+    property bool   _vehicleWasFlying:      false
+    property bool   _rcRSSIAvailable:       _activeVehicle ? _activeVehicle.rcRSSI > 0 && _activeVehicle.rcRSSI < 255 : false
+
+
+    on_VehicleFlyingChanged: {
+        if (!_vehicleFlying) {
+            // We use _vehicleWasFLying to help trigger Resume Mission only if the vehicle actually flew and came back down.
+            // Otherwise it may trigger during the Start Mission sequence due to signal ordering or armed and resume mission index.
+            _vehicleWasFlying = true
+        }
+    }
+
+    readonly property int actionRTL:                        1
+    readonly property int actionLand:                       2
+    readonly property int actionTakeoff:                    3
+    readonly property int actionArm:                        4
+    readonly property int actionDisarm:                     5
+    readonly property int actionEmergencyStop:              6
+    readonly property int actionChangeAlt:                  7
+    readonly property int actionGoto:                       8
+    readonly property int actionSetWaypoint:                9
+    readonly property int actionOrbit:                      10
+    readonly property int actionLandAbort:                  11
+    readonly property int actionStartMission:               12
+    readonly property int actionContinueMission:            13
+    readonly property int actionResumeMission:              14
+    readonly property int actionResumeMissionReady:         15
+    readonly property int actionResumeMissionUploadFail:    16
+    readonly property int actionPause:                      17
+    readonly property int actionMVPause:                    18
+    readonly property int actionMVStartMission:             19
+    readonly property int actionVtolTransitionToFwdFlight:  20
+    readonly property int actionVtolTransitionToMRFlight:   21
 
     property int    confirmActionCode
     property var    _actionData
@@ -65,62 +116,62 @@ Item {
     property real   _hideMargin:    _margins - guidedModeBar.height
     property real   _barMargin:     _showMargin
 
-    function actionConfirmed(actionData) {
+    function actionConfirmed(actionData,actionAltitudeChange) {
         switch (confirmActionCode) {
-        case confirmHome:
+        case actionRTL:
             _activeVehicle.guidedModeRTL()
             break;
-        case confirmLand:
+        case actionLand:
             _activeVehicle.guidedModeLand()
             break;
-        case confirmTakeoff:
-            var altitude1 = altitudeSlider.getValue()
-            if (!isNaN(altitude1)) {
-                _activeVehicle.guidedModeTakeoff(altitude1)
-            }
+        case actionTakeoff:
+            _activeVehicle.guidedModeTakeoff(actionAltitudeChange)
             break;
-        case confirmArm:
+        case actionArm:
             _activeVehicle.armed = true
             break;
-        case confirmDisarm:
+        case actionDisarm:
             _activeVehicle.armed = false
             break;
-        case confirmEmergencyStop:
+        case actionEmergencyStop:
             _activeVehicle.emergencyStop()
             break;
-        case confirmChangeAlt:
-            var altitude2 = altitudeSlider.getValue()
-            if (!isNaN(altitude2)) {
-                _activeVehicle.guidedModeChangeAltitude(altitude2)
-            }
+        case actionChangeAlt:
+             _activeVehicle.guidedModeChangeAltitude(actionAltitudeChange)
             break;
-        case confirmGoTo:
-            _activeVehicle.guidedModeGotoLocation(_flightMap._gotoHereCoordinate)
+        case actionGoto:
+            _activeVehicle.guidedModeGotoLocation(actionData)
             break;
-        case confirmSetWaypoint:
+        case actionSetWaypoint:
             _activeVehicle.setCurrentMissionSequence(actionData)
             break;
-        case confirmOrbit:
+        case actionOrbit:
             //-- All parameters controlled by RC
-            _activeVehicle.guidedModeOrbit()
             //-- Center on current flight map position and orbit with a 50m radius (velocity/direction controlled by the RC)
-            //_activeVehicle.guidedModeOrbit(QGroundControl.flightMapPosition, 50.0)
+            _activeVehicle.guidedModeOrbit(orbitMapCircle.center, orbitMapCircle.radius, _activeVehicle.altitudeAMSL.rawValue + actionAltitudeChange)
             break;
-        case confirmAbort:
+        case actionLandAbort:
             _activeVehicle.abortLanding(50)     // hardcoded value for climbOutAltitude that is currently ignored
             break;
-        case confirmResumeMission:
+        case actionResumeMission:
+        case actionResumeMissionUploadFail:
             missionController.resumeMission(missionController.resumeMissionIndex)
             break
-        case confirmResumeMissionReady:
+        case actionResumeMissionReady:
             _activeVehicle.startMission()
             break
-        case confirmStartMission:
-        case confirmContinueMission:
+        case actionStartMission:
+        case actionContinueMission:
             _activeVehicle.startMission()
             break
-        case confirmPause:
+        case actionPause:
             _activeVehicle.pauseVehicle()
+            break
+        case actionVtolTransitionToFwdFlight:
+            _activeVehicle.vtolInFwdFlight = true
+            break
+        case actionVtolTransitionToMRFlight:
+            _activeVehicle.vtolInFwdFlight = false
             break
         default:
             console.warn(qsTr("Internal error: unknown confirmActionCode"), confirmActionCode)
@@ -131,7 +182,7 @@ Item {
         guidedModeConfirm.visible = false
         guidedModeBar.visible = true
         altitudeSlider.visible = false
-        _flightMap._gotoHereCoordinate = QtPositioning.coordinate()
+   //     _flightMap._gotoHereCoordinate = QtPositioning.coordinate()
         guidedModeHideTimer.restart()
     }
 
@@ -140,58 +191,79 @@ Item {
         confirmActionCode = actionCode
         _actionData = actionData
         switch (confirmActionCode) {
-        case confirmArm:
+        case actionArm:
+            if (_vehicleFlying || !_guidedActionsEnabled) {
+                return
+            }
             guidedModeConfirm.confirmText = qsTr("解锁")
             break;
-        case confirmDisarm:
+        case actionDisarm:
+            if (_vehicleFlying) {
+                return
+            }
             guidedModeConfirm.confirmText = qsTr("加锁")
             break;
-        case confirmEmergencyStop:
+        case actionEmergencyStop:
             guidedModeConfirm.confirmText = qsTr("!电机加锁，开伞")
             break;
-        case confirmTakeoff:
+        case actionTakeoff:
+            altitudeSlider.setToMinimumTakeoff()
             altitudeSlider.visible = true
-            altitudeSlider.setInitialValueMeters(3)
             guidedModeConfirm.confirmText = qsTr("起飞")
             break;
-        case confirmLand:
+        case actionLand:
             guidedModeConfirm.confirmText = qsTr("降落")
             break;
-        case confirmHome:
+        case actionRTL:
             guidedModeConfirm.confirmText = qsTr("返航")
             break;
-        case confirmChangeAlt:
+        case actionChangeAlt:
+            altitudeSlider.reset()
             altitudeSlider.visible = true
-            altitudeSlider.setInitialValueAppSettingsDistanceUnits(_activeVehicle.altitudeRelative.value)
             guidedModeConfirm.confirmText = qsTr("改变高度")
             break;
-        case confirmGoTo:
+        case actionGoto:
             guidedModeConfirm.confirmText = qsTr("移动至引导点")
             break;
-        case confirmSetWaypoint:
+        case actionSetWaypoint:
             guidedModeConfirm.confirmText = qsTr("改变飞行航点")
             break;
-        case confirmOrbit:
-            guidedModeConfirm.confirmText = qsTr("enter orbit mode")
+        case actionOrbit:
+            altitudeSlider.reset()
+            altitudeSlider.visible = true
+            guidedModeConfirm.confirmText = qsTr("进入热点模式")
             break;
-        case confirmAbort:
+        case actionLandAbort:
             guidedModeConfirm.confirmText = qsTr("abort landing")
             break;
-        case confirmResumeMission:
+        case actionResumeMission:
              guidedModeConfirm.confirmText = qsTr("恢复任务")
             break
-        case confirmResumeMissionReady:
+        case actionResumeMissionReady:
              guidedModeConfirm.confirmText = qsTr("恢复任务")
             break
-        case confirmStartMission:
+        case actionResumeMissionUploadFail:
+             guidedModeConfirm.confirmText = qsTr("Resume FAILED")
+            break
+        case actionStartMission:
              guidedModeConfirm.confirmText = qsTr("开始任务")
             break
-        case confirmContinueMission:
+        case actionContinueMission:
              guidedModeConfirm.confirmText = qsTr("继续任务")
             break
-        case confirmPause:
+        case actionPause:
+            altitudeSlider.reset()
              guidedModeConfirm.confirmText = qsTr("暂停(悬停或盘旋)")
-           break
+            break
+        case actionVtolTransitionToFwdFlight:
+             guidedModeConfirm.confirmText = qsTr("切换固定翼")
+            break
+        case actionVtolTransitionToMRFlight:
+             guidedModeConfirm.confirmText = qsTr("切换旋翼")
+            break
+        default:
+            console.warn(qsTr("Internal error: unknown actionCode"), actionCode)
+            break
         }
         guidedModeBar.visible = false
         guidedModeConfirm.visible = true
@@ -294,7 +366,7 @@ Item {
     Loader {
         id:                     instrumentsLoader
         anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
-        anchors.right:          parent.right
+        anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
         z:                      QGroundControl.zOrderWidgets
         property var  qgcView:  _root.qgcView
         property real maxHeight:parent.height - (anchors.margins * 2)
@@ -461,7 +533,7 @@ Item {
                     visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.pauseVehicleSupported && _activeVehicle.flying
                     onClicked:  {
                         guidedModeHideTimer.restart()
-                        _root.confirmAction(_root.confirmPause)
+                        _root.confirmAction(_root.actionPause)
                     }
                 }
 
@@ -471,10 +543,11 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     imageResource: "/qmlimages/parachute.svg"
                     text:       qsTr("Stop")
-                    visible:    _activeVehicle && _activeVehicle.flying && _activeVehicle.fixedWing
+                    visible:    _activeVehicle && _activeVehicle.flying && (_activeVehicle.fixedWing || _activeVehicle.vtol)
                     onClicked:  {
                         guidedModeHideTimer.restart()
-                        _root.confirmAction(_root.confirmEmergencyStop)
+                        orbitMapCircle.hide()
+                        _root.confirmAction(_root.actionEmergencyStop)
                     }
                 }
 
@@ -486,7 +559,10 @@ Item {
                     imageResource:  "/res/action.svg"
                     bordercolor:    qgcPal.buttonHighlight
                     visible:    _activeVehicle
-                    onClicked:  _root.confirmAction(_activeVehicle.flying ? _root.confirmContinueMission : _root.confirmStartMission)
+                    onClicked:  {
+                         orbitMapCircle.hide()
+                        _root.confirmAction(_activeVehicle.flying ? _root.actionContinueMission : _root.actionStartMission)
+                    }
                 }
 
                 RoundImageButton {
@@ -496,7 +572,10 @@ Item {
                     imageResource: (_activeVehicle && _activeVehicle.flying) ?  "/qmlimages/landing.svg":  "/qmlimages/takeoff.svg"
                     text:       (_activeVehicle && _activeVehicle.flying) ?  qsTr("Land"):  qsTr("Takeoff")
                     visible:    _activeVehicle && _activeVehicle.guidedModeSupported
-                    onClicked:  _root.confirmAction(_activeVehicle.flying ? _root.confirmLand : _root.confirmTakeoff)
+                    onClicked:  {
+                         orbitMapCircle.hide()
+                        _root.confirmAction(_activeVehicle.flying ? _root.actionLand : _root.actionTakeoff)
+                    }
                 }
                 RoundImageButton{
                     width:       ScreenTools.defaultFontPixelHeight*4
@@ -505,30 +584,44 @@ Item {
                     imageResource: "/qmlimages/Returnhome.svg"
                     text:       qsTr("RTL")
                     visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.guidedModeSupported && _activeVehicle.flying
-                    onClicked:  _root.confirmAction(_root.confirmHome)
+                    onClicked:  {
+                                _root.confirmAction(_root.actionRTL)
+                                orbitMapCircle.hide()
+                    }
+
                 }
 
 
-                QGCButton {
-                    pointSize:  _root._fontPointSize
-                    text:       qsTr("改变高度")
+                RoundImageButton{
+                    width:       ScreenTools.defaultFontPixelHeight*4
+                    height:      width
                     anchors.verticalCenter: parent.verticalCenter
+                    imageResource: "/qmlimages/high.svg"
                     visible:    (_activeVehicle && _activeVehicle.flying) && _activeVehicle.guidedModeSupported && _activeVehicle.armed
-                    onClicked:  _root.confirmAction(_root.confirmChangeAlt)
+                    onClicked:  _root.confirmAction(_root.actionChangeAlt)
                 }
 
                 QGCButton {
                     pointSize:  _root._fontPointSize
-                    text:       qsTr("Orbit")
-                    visible:    false//(_activeVehicle && _activeVehicle.flying) && _activeVehicle.orbitModeSupported && _activeVehicle.armed
-                    onClicked:  _root.confirmAction(_root.confirmOrbit)
+                    text:       qsTr("热点环绕")
+                    visible:    false
+                    onClicked:  _root.confirmAction(_root.actionOrbit)
                 }
 
                 QGCButton {
                     pointSize:  _root._fontPointSize
-                    text:       qsTr("Abort")
-                    visible:    false//_activeVehicle && _activeVehicle.flying && _activeVehicle.fixedWing
-                    onClicked:  _root.confirmAction(_root.confirmAbort)
+                    text:       qsTr("取消降落")
+                    visible:    showLandAbort
+                    onClicked:  _root.confirmAction(_root.actionAbort)
+                }
+                RoundImageButton{
+                    width:       ScreenTools.defaultFontPixelHeight*4
+                    height:      width
+                    anchors.verticalCenter: parent.verticalCenter
+                    imageResource: _activeVehicle.vtolInFwdFlight ? "/qmlimages/change_coper.svg" : "/qmlimages/change_fixwing.svg"
+                    text:       qsTr("模式切换")       
+                    visible:    _activeVehicle ? _activeVehicle.vtol && _activeVehicle.px4Firmware : false
+                    onClicked:  _root.confirmAction(_activeVehicle.vtolInFwdFlight ? _root.actionVtolTransitionToMRFlight:_root.actionVtolTransitionToFwdFlight)
                 }
 
             } // Row
@@ -537,7 +630,7 @@ Item {
 
     MouseArea {
         anchors.fill:   parent
-        enabled:        guidedModeConfirm.visible
+        enabled:        guidedModeConfirm.visible && ! orbitMapCircle.visible
         onClicked:      _root.rejectGuidedModeConfirm()
     }
 
@@ -554,79 +647,30 @@ Item {
         onAccept: {
             guidedModeConfirm.visible = false
             guidedModeBar.visible = true
-            _root.actionConfirmed(_root._actionData)
-            altitudeSlider.visible = false
+            var altitudeChange = 0
+            if (altitudeSlider.visible) {
+                altitudeChange = altitudeSlider.getAltitudeChangeValue()
+                altitudeSlider.visible = false
+            }
+            console.log(altitudeChange)
+            _root.actionConfirmed(_root._actionData,altitudeChange)
             guidedModeHideTimer.restart()
         }
 
         onReject: _root.rejectGuidedModeConfirm()
     }
 
-    //-- Altitude slider
-    Rectangle {
+    GuidedAltitudeSlider {
         id:                 altitudeSlider
         anchors.margins:    _margins
         anchors.right:      parent.right
+        anchors.topMargin:  ScreenTools.toolbarHeight + _margins
         anchors.top:        parent.top
         anchors.bottom:     parent.bottom
-        color:              qgcPal.window
+        z:                  _root.z
+        radius:             ScreenTools.defaultFontPixelWidth / 2
         width:              ScreenTools.defaultFontPixelWidth * 10
-        opacity:            0.8
+        color:              qgcPal.window
         visible:            false
-
-        function setInitialValueMeters(meters) {
-            altSlider.value = QGroundControl.metersToAppSettingsDistanceUnits(meters)
-        }
-
-        function setInitialValueAppSettingsDistanceUnits(height) {
-            altSlider.value = height
-        }
-
-        /// Returns NaN for bad value
-        function getValue() {
-            var value =  parseFloat(altField.text)
-            if (!isNaN(value)) {
-                return QGroundControl.appSettingsDistanceUnitsToMeters(value);
-            } else {
-                return value;
-            }
-        }
-
-        Column {
-            id:                 headerColumn
-            anchors.margins:    _margins
-            anchors.top:        parent.top
-            anchors.left:       parent.left
-            anchors.right:      parent.right
-
-            QGCLabel {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("高度参考")
-            }
-
-            QGCLabel {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: QGroundControl.appSettingsDistanceUnitsString
-            }
-
-            QGCTextField {
-                id:             altField
-                anchors.left:   parent.left
-                anchors.right:  parent.right
-                text:           altSlider.value.toFixed(1)
-            }
-        }
-
-        Slider {
-            id:                 altSlider
-            anchors.margins:    _margins
-            anchors.top:        headerColumn.bottom
-            anchors.bottom:     parent.bottom
-            anchors.left:       parent.left
-            anchors.right:      parent.right
-            orientation:        Qt.Vertical
-            minimumValue:       QGroundControl.metersToAppSettingsDistanceUnits(0)
-            maximumValue:       QGroundControl.metersToAppSettingsDistanceUnits((_activeVehicle && _activeVehicle.flying) ? Math.round((_activeVehicle.altitudeRelative.value + 100) / 100) * 100 : 10)
-        }
     }
 }

@@ -17,7 +17,6 @@ import QGroundControl.ScreenTools   1.0
 SetupPage {
     id:             tuningPage
     pageComponent:  pageComponent
-    visibleWhileArmed:   true
     Component {
         id: pageComponent
 
@@ -112,7 +111,7 @@ SetupPage {
 //                    }
 
 //                    ListElement {
-                    title:          qsTr("Hoever manual minimum throttle")
+//                    title:          qsTr("Hoever manual minimum throttle")
 //                        description:    qsTr("Slide to the left to start the motors with less idle power. Slide to the right if descending in manual flight becomes unstable.")
 //                        param:          "MPC_MANTHR_MIN"
 //                        min:            0

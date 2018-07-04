@@ -504,14 +504,16 @@ QGCView {
                             Layout.fillWidth:           false
                             anchors.horizontalCenter:   parent.horizontalCenter
                             columns:                    2
-
-                            text:               qsTr("RTK精确度:")
+                            QGCLabel {
+                                text:               qsTr("RTK精确度:")
+                            }
                             FactTextField {
                                 Layout.preferredWidth:  _valueFieldWidth
                                 fact:                   QGroundControl.settingsManager.rtkSettings.surveyInAccuracyLimit
                             }
-
-                            text:               qsTr("RTK最小平均观察时间:")
+                            QGCLabel {
+                                text:               qsTr("RTK最小平均观察时间:")
+                            }
                             FactTextField {
                                 Layout.preferredWidth:  _valueFieldWidth
                                 fact:                   QGroundControl.settingsManager.rtkSettings.surveyInMinObservationDuration

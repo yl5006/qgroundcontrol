@@ -97,14 +97,14 @@ ColumnLayout {
             }
         }
     }
-
+/*
     QGCButton {
         text:               qsTr("All items")
         Layout.fillWidth:   true
         visible:            showAllItems
 
         onClicked: {
-            dropPanel.hide()
+            dropPanel.hideDropDown()
             fitFunctions.fitMapViewportToAllItems()
         }
     }
@@ -114,7 +114,7 @@ ColumnLayout {
         Layout.fillWidth:   true
 
         onClicked: {
-            dropPanel.hide()
+            dropPanel.hideDropDown()
             map.center = fitFunctions.fitHomePosition()
         }
     }
@@ -125,18 +125,18 @@ ColumnLayout {
         enabled:            _activeVehicle && _activeVehicle.coordinate.isValid
 
         onClicked: {
-            dropPanel.hide()
+            dropPanel.hideDropDown()
             map.center = activeVehicle.coordinate
         }
     }
-
+*/
     QGCButton {
         text:               qsTr("Current Location")
         Layout.fillWidth:   true
         enabled:            map.gcsPosition.isValid
 
         onClicked: {
-            dropPanel.hide()
+            dropPanel.hideDropDown()
             map.center = map.gcsPosition
         }
     }
@@ -146,7 +146,7 @@ ColumnLayout {
         Layout.fillWidth:   true
 
         onClicked: {
-            dropPanel.hide()
+            dropPanel.hideDropDown()
             map.centerToSpecifiedLocation()
         }
     }

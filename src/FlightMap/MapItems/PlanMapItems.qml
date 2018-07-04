@@ -41,7 +41,7 @@ Item {
                 if (isActiveVehicle) {
                     // Only active vehicle supports click to change current mission item
                     //guidedActionsController.confirmAction(guidedActionsController.actionSetWaypoint, Math.max(object.sequenceNumber, 1))
-                    onClicked:  flightWidgets.confirmAction(flightWidgets.confirmSetWaypoint, Math.max(object.sequenceNumber, 1))
+                    onClicked:  flightWidgets.confirmAction(flightWidgets.actionSetWaypoint, Math.max(object.sequenceNumber, 1))
                 }
             }
         }

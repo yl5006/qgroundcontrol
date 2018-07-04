@@ -98,11 +98,11 @@ FlightMap {
 
     function recenterNeeded() {
         var vehiclePoint = flightMap.fromCoordinate(_activeVehicleCoordinate, false /* clipToViewport */)
-        var toolStripRightEdge = mapFromItem(toolStrip, toolStrip.x, 0).x + toolStrip.width
+        var toolStripRightEdge = 0;//mapFromItem(toolStrip, toolStrip.x, 0).x + toolStrip.width
         var instrumentsWidth = 0
         if (QGroundControl.corePlugin.options.instrumentWidget.widgetPosition === CustomInstrumentWidget.POS_TOP_RIGHT) {
             // Assume standard instruments
-            instrumentsWidth = flightDisplayViewWidgets.getPreferredInstrumentWidth()
+            instrumentsWidth = flightWidgets.getPreferredInstrumentWidth()
         }
         var centerViewport = Qt.rect(toolStripRightEdge, 0, width - toolStripRightEdge - instrumentsWidth, height)
         return !pointInRect(vehiclePoint, centerViewport)
@@ -186,9 +186,9 @@ FlightMap {
             map:                    _flightMap
             mapFitViewport:         Qt.rect(leftToolWidth, _toolButtonTopMargin, flightMap.width - leftToolWidth - rightPanelWidth, flightMap.height - _toolButtonTopMargin)
             usePlannedHomePosition: false
-            geoFenceController:     geoFenceController
+            geoFenceController:     _geoFenceController
             missionController:      _missionController
-            rallyPointController:   rallyPointController
+            rallyPointController:   _rallyPointController
             showFollowVehicle:      true
             followVehicle:          _keepVehicleCentered
             onFollowVehicleChanged: _keepVehicleCentered = followVehicle
@@ -456,13 +456,13 @@ FlightMap {
         visible:        false
         z:              QGroundControl.zOrderMapItems
         anchorPoint.x:  sourceItem.anchorPointX
-        anchorPoint.y:  sourceItem.anchorPointY
+        anchorPoint.y:  sourceItem.anchorPointY*2
 
         sourceItem: MissionItemIndexLabel {
             checked:    true
             index:      -1
             label:      qsTr("Goto here", "Goto here waypoint")
-	    simpleindex:   1
+            simpleindex:   1
         }
 
         function show(coord) {
@@ -482,7 +482,7 @@ FlightMap {
         visible:    false
 
         property alias center:  _mapCircle.center
-        property real radius:   defaultRadius
+        property real radius:   _mapCircle.radius.rawValue
 
         readonly property real defaultRadius: 30
 
@@ -496,7 +496,7 @@ FlightMap {
             orbitMapCircle.visible = false
         }
 
-        Component.onCompleted: guidedActionsController.orbitMapCircle = orbitMapCircle
+        Component.onCompleted: flightWidgets.orbitMapCircle = orbitMapCircle
 
         QGCMapCircle {
             id:                 _mapCircle
@@ -516,18 +516,18 @@ FlightMap {
 
             MenuItem {
                 text:           qsTr("Go to location")
-                visible:        guidedActionsController.showGotoLocation
+                visible:        flightWidgets.showGotoLocation
 
                 onTriggered: {
                     gotoLocationItem.show(clickMenu.coord)
                     orbitMapCircle.hide()
-                    flightWidgets.confirmAction(flightWidgets.confirmGoTo, clickMenu.coord)
+                    flightWidgets.confirmAction(flightWidgets.actionGoto, clickMenu.coord)
                 }
             }
 
             MenuItem {
                 text:           qsTr("Orbit at location")
-                visible:        guidedActionsController.showOrbit
+                visible:        flightWidgets.showOrbit
 
                 onTriggered: {
                     orbitMapCircle.show(clickMenu.coord)
@@ -549,7 +549,7 @@ FlightMap {
                 clickMenu.popup()
             } else if (flightWidgets.showGotoLocation) {
                 gotoLocationItem.show(clickCoord)
-                flightWidgets.confirmAction(flightWidgets.confirmGoTo, clickCoord)
+                flightWidgets.confirmAction(flightWidgets.actionGoto, clickCoord)
             } else if (guidedActionsController.showOrbit) {
                 orbitMapCircle.show(clickCoord)
                 flightWidgets.confirmAction(flightWidgets.actionOrbit, clickCoord)
