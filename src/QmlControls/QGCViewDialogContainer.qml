@@ -121,7 +121,7 @@ FocusScope {
         color:              _qgcPal.windowShadeDark
         anchors.centerIn:   parent
         width:              _dialogCharWidth == showDialogFullWidth ? parent.width : defaultTextWidth * _dialogCharWidth
-        height:             ScreenTools.availableHeight ? (ScreenTools.availableHeight - ScreenTools.defaultFontPixelHeight * 10): (parent.height - ScreenTools.defaultFontPixelHeight * 20) //height:             Math.max(_dialogComponentLoader.y+_dialogComponentLoader.height+ScreenTools.defaultFontPixelHeight*2,ScreenTools.defaultFontPixelHeight*5)//ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
+        height:             ScreenTools.availableHeight ? (ScreenTools.availableHeight - ScreenTools.defaultFontPixelHeight * 15): (parent.height - ScreenTools.defaultFontPixelHeight * 20) //height:             Math.max(_dialogComponentLoader.y+_dialogComponentLoader.height+ScreenTools.defaultFontPixelHeight*2,ScreenTools.defaultFontPixelHeight*5)//ScreenTools.availableHeight ? ScreenTools.availableHeight : parent.height
         border.width:      ScreenTools.defaultFontPixelHeight/8
         border.color:      _qgcPal.buttonHighlight
         radius:            ScreenTools.defaultFontPixelHeight/4

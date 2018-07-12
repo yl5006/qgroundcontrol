@@ -48,7 +48,7 @@ QGCTextField {
         }
     }
 
-    onHelpClicked:  showHelp ? qgcView.showDialog(helpDialogComponent, qsTr("Value Details"), qgcView.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel):0
+    onHelpClicked:  showHelp ? qgcView.showDialog(helpDialogComponent, qsTr("详细信息"), qgcView.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel):0
 
 
     Component {

@@ -482,7 +482,7 @@ FlightMap {
         visible:    false
 
         property alias center:  _mapCircle.center
-        property real radius:   _mapCircle.radius.rawValue
+        property real  radius:  _mapCircle.radius.rawValue
 
         readonly property real defaultRadius: 30
 
@@ -531,6 +531,7 @@ FlightMap {
 
                 onTriggered: {
                     orbitMapCircle.show(clickMenu.coord)
+                    console.log(_mapCircle.radius.rawValue)
                     gotoLocationItem.hide()
                     flightWidgets.confirmAction(flightWidgets.actionOrbit, clickMenu.coord)
                 }

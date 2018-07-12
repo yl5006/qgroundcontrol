@@ -38,7 +38,7 @@ GeoTagController::~GeoTagController()
 
 void GeoTagController::pickLogFile(void)
 {
-    QString filename = QGCQFileDialog::getOpenFileName(MainWindow::instance(), tr("Select log file load"), QString(), tr("ULog file (*.ulg);;EWT log file (*.log);;All Files (*.*)"));
+    QString filename = QGCQFileDialog::getOpenFileName(MainWindow::instance(), tr("选择日志文件"), QString(), tr("ULog file (*.ulg);;EWT log file (*.log);;All Files (*.*)"));
     if (!filename.isEmpty()) {
         _worker.setLogFile(filename);
         emit logFileChanged(filename);
@@ -47,7 +47,7 @@ void GeoTagController::pickLogFile(void)
 
 void GeoTagController::pickImageDirectory(void)
 {
-    QString dir = QGCQFileDialog::getExistingDirectory(MainWindow::instance(), tr("Select image directory"));
+    QString dir = QGCQFileDialog::getExistingDirectory(MainWindow::instance(), tr("选择图片路径"));
     if (!dir.isEmpty()) {
         _worker.setImageDirectory(dir);
         emit imageDirectoryChanged(dir);
@@ -56,7 +56,7 @@ void GeoTagController::pickImageDirectory(void)
 
 void GeoTagController::pickSaveDirectory(void)
 {
-    QString dir = QGCQFileDialog::getExistingDirectory(MainWindow::instance(), tr("Select save directory"));
+    QString dir = QGCQFileDialog::getExistingDirectory(MainWindow::instance(), tr("选择保存路径"));
     if (!dir.isEmpty()) {
         _worker.setSaveDirectory(dir);
         emit saveDirectoryChanged(dir);

@@ -54,7 +54,7 @@ Rectangle {
             anchors.left:   parent.left
             anchors.right:  parent.right
             factList:       [ missionItem.loiterAltitude, missionItem.loiterRadius ]
-            factLabels:     [ qsTr("Altitude"), qsTr("Radius") ]
+            factLabels:     [ qsTr("高度"), qsTr("半径") ]
         }
 
         Item { width: 1; height: _spacer }
@@ -74,14 +74,14 @@ Rectangle {
             anchors.right:   parent.right
             columns:         2
 
-                QGCLabel { text: qsTr("Heading") }
+                QGCLabel { text: qsTr("方向") }
 
                 FactTextField {
                     Layout.fillWidth:   true
                     fact:               missionItem.landingHeading
                 }
 
-                QGCLabel { text: qsTr("Altitude") }
+                QGCLabel { text: qsTr("高度") }
 
                 FactTextField {
                     Layout.fillWidth:   true
@@ -90,7 +90,7 @@ Rectangle {
 
             QGCRadioButton {
                 id:                 specifyLandingDistance
-                text:               qsTr("Landing Dist")
+                text:               qsTr("降落距离")
                 checked:            missionItem.valueSetIsDistance
                 exclusiveGroup:     distanceGlideGroup
                 onClicked:          missionItem.valueSetIsDistance = checked

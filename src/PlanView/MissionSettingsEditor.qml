@@ -22,6 +22,7 @@ Rectangle {
     radius:             _margin/2
 
     property var    _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
+    property bool   _noMissionItemsAdded:       ListView.view.model.count === 1
     property var    _masterControler:               masterController
     property var    _missionController:             _masterControler.missionController
     property var    _missionVehicle:                _masterControler.controllerVehicle

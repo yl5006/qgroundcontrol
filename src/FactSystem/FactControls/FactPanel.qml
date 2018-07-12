@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -54,7 +54,7 @@ FocusScope {
             QGCLabel {
                 anchors.fill:   parent
                 wrapMode:       Text.WordWrap
-                text:           __errorMsg.length ? __errorMsg : qsTr("Parameters(s) missing: %1").arg(__missingParams)
+                text:           __errorMsg.length ? __errorMsg : qsTr("参数(s) 丢失: %1").arg(__missingParams)
             }
         }
     }

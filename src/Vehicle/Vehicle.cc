@@ -2861,7 +2861,6 @@ void Vehicle::guidedModeOrbit(const QGeoCoordinate& centerCoord, double radius, 
         qgcApp()->showMessage(QStringLiteral("Orbit不支持"));//"Orbit mode not supported by Vehicle."
         return;
     }
-    qDebug()<<"radius"<<radius<<centerCoord.latitude()<<centerCoord.longitude()<<amslAltitude;
     if (capabilityBits() && MAV_PROTOCOL_CAPABILITY_COMMAND_INT) {
         sendMavCommandInt(defaultComponentId(),
                           MAV_CMD_DO_GO_AROUND,

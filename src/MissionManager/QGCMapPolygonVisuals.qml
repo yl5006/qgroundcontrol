@@ -199,7 +199,7 @@ Item {
 
         MenuItem {
             id:             removeVertexItem
-            text:           qsTr("Remove vertex")
+            text:           qsTr("删除顶点")
             onTriggered: {
                 if(menu._removeVertexIndex >= 0) {
                     mapPolygon.removeVertex(menu._removeVertexIndex)
@@ -212,29 +212,29 @@ Item {
         }
 
         MenuItem {
-            text:           qsTr("Circle" )
+            text:           qsTr("圆形" )
             onTriggered:    resetCircle()
         }
 
         MenuItem {
-            text:           qsTr("Polygon")
+            text:           qsTr("多边形")
             onTriggered:    resetPolygon()
         }
 
         MenuItem {
-            text:           qsTr("Set radius..." )
+            text:           qsTr("设置半径..." )
             visible:        _circle
             onTriggered:    radiusDialog.visible = true
         }
 
         MenuItem {
-            text:           qsTr("Edit position..." )
+            text:           qsTr("编辑位置..." )
             enabled:        _circle
             onTriggered:    qgcView.showDialog(editPositionDialog, qsTr("Edit Position"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
         }
 
         MenuItem {
-            text:           qsTr("Load KML...")
+            text:           qsTr("载入 KML...")
             onTriggered:    kmlLoadDialog.openForLoad()
         }
     }
@@ -480,7 +480,7 @@ Item {
                     anchors.top:        parent.top
                     spacing:            _margin
 
-                    QGCLabel { text: qsTr("Radius:") }
+                    QGCLabel { text: qsTr("半径:") }
 
                     QGCTextField {
                         id:                 radiusField

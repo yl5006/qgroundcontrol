@@ -154,7 +154,7 @@ Rectangle {
                 columns:            2
                 visible:            followsTerrainCheckBox.checked
 
-                QGCLabel { text: qsTr("Tolerance") }
+                QGCLabel { text: qsTr("公差") }
                 FactTextField {
                     fact:               missionItem.terrainAdjustTolerance
                     Layout.fillWidth:   true

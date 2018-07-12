@@ -395,7 +395,7 @@
             "rawName":      "MAV_CMD_CONDITION_YAW",
             "friendlyName": "Wait for Heading",
             "description":  "Delay the mission until the specified heading is reached.",
-            "category":     "Conditionals",
+            "category":     "飞行控制",
             "param1": {
                 "label":            "Heading",
                 "units":            "deg",
@@ -661,7 +661,7 @@
             "specifiesCoordinate":  true,
             "standaloneCoordinate": true,
             "friendlyEdit":         true,
-            "category":             "Camera"
+            "category":             "相机"
         },
         {
             "id":                   196,
@@ -670,7 +670,7 @@
             "description":          "Sets the region of interest to point towards the next waypoint with optional offsets.",
             "specifiesCoordinate":  false,
             "friendlyEdit":         true,
-            "category":             "Camera",
+            "category":             "相机",
             "param5": {
                 "label":            "Pitch offset",
                 "default":          0,
@@ -697,7 +697,7 @@
             "description":          "Cancels the region of interest.",
             "specifiesCoordinate":  false,
             "friendlyEdit":         true,
-            "category":             "Camera"
+            "category":             "相机"
         },
         { "id": 200, "rawName": "MAV_CMD_DO_CONTROL_VIDEO", "friendlyName": "Control video" },
         {

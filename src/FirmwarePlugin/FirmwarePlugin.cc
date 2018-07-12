@@ -22,7 +22,7 @@ const QString guided_mode_not_supported_by_vehicle = QObject::tr("Guided mode no
 
 QVariantList FirmwarePlugin::_cameraList;
 
-const QString FirmwarePlugin::px4FollowMeFlightMode(QObject::tr("Follow Me"));
+const QString FirmwarePlugin::px4FollowMeFlightMode(QObject::tr("跟随"));
 
 FirmwarePluginFactory::FirmwarePluginFactory(void)
 {

@@ -190,7 +190,7 @@ QGCView {
 
                     QGCButton {
                         Layout.fillWidth:   true
-                        text:               qsTr("Remove plan from vehicle")
+                        text:               qsTr("删除任务")
                         onClicked: {
                             _planMasterController.removeAllFromVehicle()
                             hideDialog()
@@ -200,7 +200,7 @@ QGCView {
                     QGCButton {
                         Layout.fillWidth:   true
                         Layout.alignment:   Qt.AlignHCenter
-                        text:               qsTr("Leave plan on vehicle")
+                        text:               qsTr("保留任务")
                         onClicked:          hideDialog()
                     }
                 }

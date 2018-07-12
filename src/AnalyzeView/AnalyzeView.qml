@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -100,7 +100,7 @@ Rectangle {
                 model: ListModel {
                     ListElement {
                         buttonImage:        "/qmlimages/LogDownloadIcon"
-                        buttonText:         qsTr("Log Download")
+                        buttonText:         qsTr("日志下载")
                         pageSource:         "LogDownloadPage.qml"
                     }
                     ListElement {
@@ -110,7 +110,7 @@ Rectangle {
                     }
                     ListElement {
                         buttonImage:        "/qmlimages/MavlinkConsoleIcon"
-                        buttonText:         qsTr("Mavlink Console")
+                        buttonText:         qsTr("终端")
                         pageSource:         "MavlinkConsolePage.qml"
                     }
                 }

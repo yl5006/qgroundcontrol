@@ -36,6 +36,6 @@ QGCLabel {
 
     QGCMouseArea {
         fillItem: parent
-        onClicked: _activeVehicle.vtolInFwdFlight ? toolBar.vtolTransitionToMRFlight() : toolBar.vtolTransitionToFwdFlight()
+//       onClicked: _activeVehicle.vtolInFwdFlight ? toolBar.vtolTransitionToMRFlight() : toolBar.vtolTransitionToFwdFlight()
     }
 }

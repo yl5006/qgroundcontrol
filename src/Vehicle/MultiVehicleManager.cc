@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -277,7 +277,7 @@ void MultiVehicleManager::setActiveVehicle(Vehicle* vehicle)
 
         // See explanation in _deleteVehiclePhase1
         _vehicleBeingSetActive = vehicle;
-        QTimer::singleShot(20, this, &MultiVehicleManager::_setActiveVehiclePhase2);
+        QTimer::singleShot(50, this, &MultiVehicleManager::_setActiveVehiclePhase2);
     }
 }
 

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -30,6 +30,7 @@ Item {
     property int    borderWidth:        2
     property color  borderColor:        "orange"
 
+    property real       _radius:    mapCircle.radius.rawValue
     property var _circleComponent
     property var _dragHandlesComponent
 
