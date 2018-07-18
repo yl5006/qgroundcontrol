@@ -190,6 +190,7 @@ QGCView {
 
         function loadFromSelectedFile() {
             fileDialog.title =          qsTr("选择飞行计划")
+            fileDialog.planFiles =      true
             fileDialog.selectExisting = true
             fileDialog.nameFilters =    masterController.loadNameFilters
             fileDialog.fileExtension =  QGroundControl.settingsManager.appSettings.planFileExtension

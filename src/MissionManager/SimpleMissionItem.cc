@@ -969,7 +969,7 @@ void SimpleMissionItem::_updateOptionalSections(void)
     _cameraSection = new CameraSection(_vehicle, this);
     _speedSection = new SpeedSection(_vehicle, this);
     if ((MAV_CMD)command() == MAV_CMD_NAV_WAYPOINT) {
-//        _cameraSection->setAvailable(true);
+           _cameraSection->setAvailable(true);
 //        _speedSection->setAvailable(true);
     }
 

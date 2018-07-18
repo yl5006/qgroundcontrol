@@ -24,7 +24,7 @@ Column {
 
     SectionHeader {
         id:             cameraSectionHeader
-        text:           qsTr("相机")
+        text:           qsTr("云台相机")
         checked:        false
     }
 
@@ -78,7 +78,7 @@ Column {
             anchors.left:   parent.left
             anchors.right:  parent.right
             spacing:        ScreenTools.defaultFontPixelWidth
-            visible:        _camera.cameraModeSupported
+            visible:        false//_camera.cameraModeSupported
 
             QGCCheckBox {
                 id:                 modeCheckBox
