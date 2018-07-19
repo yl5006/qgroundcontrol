@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -60,6 +60,7 @@ public:
     /// @return true: success
     Q_INVOKABLE bool loadKMLFile(const QString& kmlFile);
 
+    Q_INVOKABLE QGeoCoordinate vertex(int vertex);
     /// Returns the path in a list of QGeoCoordinate's format
     QList<QGeoCoordinate> coordinateList(void) const;
 

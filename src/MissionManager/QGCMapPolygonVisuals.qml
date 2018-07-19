@@ -230,8 +230,9 @@ Item {
 
         MenuItem {
             text:           qsTr("编辑位置..." )
-            enabled:        _circle
-            onTriggered:    qgcView.showDialog(editPositionDialog, qsTr("Edit Position"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+            onTriggered:    {
+                  qgcView.showDialog(editPositionDialog, qsTr("编辑位置"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+            }
         }
 
         MenuItem {
@@ -440,8 +441,8 @@ Item {
         id: editPositionDialog
 
         EditPositionDialog {
-            coordinate: mapPolygon.center
-            onCoordinateChanged: mapPolygon.center = coordinate
+            coordinate: _circle ? mapPolygon.center : mapPolygon.vertex(menu._removeVertexIndex)
+            onCoordinateChanged: _circle ? mapPolygon.center = coordinate : mapPolygon.adjustVertex(menu._removeVertexIndex,coordinate)
         }
     }
 
@@ -456,7 +457,7 @@ Item {
             onDragStop:                 mapPolygon.centerDrag = false
 
             onClicked: {
-                menu.popUpWithIndex(-1)      //-- Don't offer a choice to delete vertex (cur index == -1)
+                menu.popUpWithIndex(0)      //-- Don't offer a choice to delete vertex (cur index == -1)
             }
 
             function setRadiusFromDialog() {

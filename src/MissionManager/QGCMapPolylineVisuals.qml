@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -138,8 +138,15 @@ Item {
 
         MenuItem {
             id:             removeVertexItem
-            text:           qsTr("Remove vertex" )
+            text:           qsTr("删除点" )
             onTriggered:    mapPolyline.removeVertex(menu._removeVertexIndex)
+        }
+        MenuItem {
+            id:             editVertexItem
+            text:           qsTr("编辑位置..." )
+            onTriggered:    {
+                  qgcView.showDialog(editPositionDialog, qsTr("编辑位置"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+            }
         }
 
         MenuSeparator {
@@ -147,7 +154,7 @@ Item {
         }
 
         MenuItem {
-            text:           qsTr("Load KML...")
+            text:           qsTr("加载 KML...")
             onTriggered:    kmlLoadDialog.openForLoad()
         }
     }
@@ -311,6 +318,14 @@ Item {
                     _visuals = [ ]
                 }
             }
+        }
+    }
+    Component {
+        id: editPositionDialog
+
+        EditPositionDialog {
+            coordinate:  mapPolyline.vertexCoordinate(menu._removeVertexIndex)
+            onCoordinateChanged:  mapPolyline.adjustVertex(menu._removeVertexIndex,coordinate)
         }
     }
 }

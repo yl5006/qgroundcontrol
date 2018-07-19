@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -95,9 +95,10 @@ void QGCMapPolygon::adjustVertex(int vertexIndex, const QGeoCoordinate coordinat
     if (!_centerDrag) {
         // When dragging center we don't signal path changed until add vertices are updated
         emit pathChanged();
-    }
+    } 
     _polygonModel.value<QGCQGeoCoordinate*>(vertexIndex)->setCoordinate(coordinate);
     setDirty(true);
+    emit pathChanged();
 }
 
 void QGCMapPolygon::setDirty(bool dirty)
@@ -364,6 +365,16 @@ void QGCMapPolygon::setInteractive(bool interactive)
     if (_interactive != interactive) {
         _interactive = interactive;
         emit interactiveChanged(interactive);
+    }
+}
+
+QGeoCoordinate QGCMapPolygon::vertex(int vertex)
+{
+    if (vertex >= 0 && vertex < _polygonPath.count()) {
+        return _polygonPath[vertex].value<QGeoCoordinate>();
+    } else {
+        qWarning() << "QGCMapPolygon::vertexCoordinate bad vertex requested:count" << vertex << _polygonPath.count();
+        return QGeoCoordinate();
     }
 }
 

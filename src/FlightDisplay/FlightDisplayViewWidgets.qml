@@ -148,7 +148,7 @@ Item {
         case actionOrbit:
             //-- All parameters controlled by RC
             //-- Center on current flight map position and orbit with a 50m radius (velocity/direction controlled by the RC)
-            _activeVehicle.guidedModeOrbit(orbitMapCircle.center, orbitMapCircle._radius, _activeVehicle.altitudeAMSL.rawValue + actionAltitudeChange)
+            _activeVehicle.guidedModeOrbit(orbitMapCircle.center, orbitMapCircle.radius(), _activeVehicle.altitudeAMSL.rawValue + actionAltitudeChange)
             break;
         case actionLandAbort:
             _activeVehicle.abortLanding(50)     // hardcoded value for climbOutAltitude that is currently ignored
@@ -652,7 +652,6 @@ Item {
                 altitudeChange = altitudeSlider.getAltitudeChangeValue()
                 altitudeSlider.visible = false
             }
-            console.log(altitudeChange)
             _root.actionConfirmed(_root._actionData,altitudeChange)
             guidedModeHideTimer.restart()
         }

@@ -11,6 +11,7 @@ import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtLocation       5.3
 import QtPositioning    5.3
+import QtQuick.Dialogs  1.2
 
 import QGroundControl               1.0
 import QGroundControl.ScreenTools   1.0
@@ -30,9 +31,11 @@ Item {
     property int    borderWidth:        2
     property color  borderColor:        "orange"
 
-    property real       _radius:    mapCircle.radius.rawValue
-    property var _circleComponent
-    property var _dragHandlesComponent
+    property real       _radius:        mapCircle.radius.rawValue
+    property real   _circleRadius
+    property bool   _editCircleRadius:          false
+    property var    _circleComponent
+    property var    _dragHandlesComponent
 
     function addVisuals() {
         if (!_circleComponent) {
@@ -97,6 +100,36 @@ Item {
         }
     }
 
+    Menu {
+        id: menu
+
+        property int _removeVertexIndex
+
+        function popUpWithIndex(curIndex) {
+            _removeVertexIndex = curIndex
+            menu.popup()
+        }
+
+        MenuItem {
+            text:           qsTr("设置半径..." )
+            onTriggered:    _editCircleRadius = true
+        }
+
+        MenuItem {
+            text:           qsTr("编辑位置..." )
+            onTriggered:    {
+                  qgcView.showDialog(editPositionDialog, qsTr("编辑位置"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+            }
+        }
+    }
+
+    Component {
+        id: editPositionDialog
+        EditPositionDialog {
+            coordinate: mapCircle.center
+            onCoordinateChanged:  mapCircle.center = coordinate
+        }
+    }
     Component {
         id: dragHandleComponent
 
@@ -124,7 +157,55 @@ Item {
             mapControl: _root.mapControl
 
             onItemCoordinateChanged: mapCircle.center = itemCoordinate
+
+            onClicked: {
+                menu.popUpWithIndex(0)
+            }
+
+            function setRadiusFromDialog() {
+                mapCircle.radius.rawValue = Number(radiusField.text)
+                _editCircleRadius = false
+            }
+
+            Rectangle {
+                anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
+                anchors.left:       parent.right
+                width:              radiusColumn.width + ScreenTools.defaultFontPixelHeight
+                height:             radiusColumn.height + ScreenTools.defaultFontPixelHeight
+                color:              qgcPal.window
+                border.color:       qgcPal.buttonHighlight
+                visible:            _editCircleRadius
+
+                Column {
+                    id:                 radiusColumn
+                    anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
+                    anchors.left:       parent.left
+                    anchors.top:        parent.top
+                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+
+                    QGCLabel { text: qsTr("半径:") }
+
+                    QGCTextField {
+                        id:                 radiusField
+                        text:               mapCircle.radius.rawValue.toFixed(2)
+                        onEditingFinished:  setRadiusFromDialog()
+                        inputMethodHints:   Qt.ImhFormattedNumbersOnly
+                    }
+                }
+
+                QGCLabel {
+                    anchors.right:  radiusColumn.right
+                    anchors.top:    radiusColumn.top
+                    text:           "X"
+
+                    QGCMouseArea {
+                        fillItem:   parent
+                        onClicked:  setRadiusFromDialog()
+                    }
+                }
+            }
         }
+
     }
 
     Component {
@@ -134,6 +215,11 @@ Item {
             mapControl: _root.mapControl
 
             onItemCoordinateChanged: mapCircle.radius.rawValue = mapCircle.center.distanceTo(itemCoordinate)
+
+
+            onClicked: {
+                menu.popUpWithIndex(0)
+            }
         }
     }
 
