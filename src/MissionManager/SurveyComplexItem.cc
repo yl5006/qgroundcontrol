@@ -1,4 +1,5 @@
-﻿/****************************************************************************
+﻿
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -814,7 +815,7 @@ void SurveyComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& items, 
     MissionItem* item;
     int seqNum =                    _sequenceNumber;
     bool imagesEverywhere =         _cameraTriggerInTurnAroundFact.rawValue().toBool();
-    bool addTriggerAtBeginning =    imagesEverywhere;
+    bool addTriggerAtBeginning =    !hoverAndCaptureEnabled() && imagesEverywhere;
     bool firstOverallPoint =        true;
 
     MAV_FRAME mavFrame = followTerrain() || !_cameraCalc.distanceToSurfaceRelative() ? MAV_FRAME_GLOBAL : MAV_FRAME_GLOBAL_RELATIVE_ALT;
@@ -829,14 +830,15 @@ void SurveyComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& items, 
                 item = new MissionItem(seqNum++,
                                        MAV_CMD_DO_SET_CAM_TRIGG_DIST,
                                        mavFrame,
-                                       0,                                          // No hold time
+                                   		hoverAndCaptureEnabled() ?
+                                       _hoverAndCaptureDelaySeconds : 0,        // Hold time (delay for hover and capture to settle vehicle before image is taken)
                                        0.0,                                        // No acceptance radius specified
                                        speed,                                      // Pass through waypoint
                                        std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                        transectCoordInfo.coord.latitude(),
                                        transectCoordInfo.coord.longitude(),
                                        transectCoordInfo.coord.altitude(),
-                                       _cameraCalc.adjustedFootprintFrontal()->rawValue().toDouble(),   // trigger distance
+                                       triggerDistance(),   											// trigger distance
                                        0,                                                               // shutter integration (ignore)
                                        1,                                                               // trigger immediately when starting
                                        true,                                                            // autoContinue
@@ -845,7 +847,7 @@ void SurveyComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& items, 
                 items.append(item);
             }else
             {
-                if (transectCoordInfo.coordType == TransectStyleComplexItem::CoordTypeSurveyEdge && !imagesEverywhere) {
+            if (transectCoordInfo.coordType == TransectStyleComplexItem::CoordTypeSurveyEdge && triggerCamera() && !hoverAndCaptureEnabled() && !imagesEverywhere) {
                     if (entryPoint) {
                         // Start of transect, start triggering
                         item = new MissionItem(seqNum++,
@@ -858,7 +860,7 @@ void SurveyComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& items, 
                                                transectCoordInfo.coord.latitude(),
                                                transectCoordInfo.coord.longitude(),
                                                transectCoordInfo.coord.altitude(),
-                                               _cameraCalc.adjustedFootprintFrontal()->rawValue().toDouble(),   // trigger distance
+                                               triggerDistance(),   											// trigger distance
                                                0,                                                               // shutter integration (ignore)
                                                1,                                                               // trigger immediately when starting                                                    // param 4-7 unused
                                                true,                                                            // autoContinue
@@ -909,7 +911,7 @@ void SurveyComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& items, 
         }
     }
 
-    if (imagesEverywhere) {
+    if (triggerCamera() && !hoverAndCaptureEnabled() &&  imagesEverywhere) {
         // Stop triggering
         MissionItem* item = new MissionItem(seqNum++,
                                             MAV_CMD_DO_SET_CAM_TRIGG_DIST,
@@ -1295,6 +1297,20 @@ void SurveyComplexItem::_rebuildTransectsPhase1Worker(bool refly)
         coordInfo = { transect[1], CoordTypeSurveyEdge };
         coordInfoTransect.append(coordInfo);
 
+        // For hover and capture we need points for each camera location within the transect
+        if (triggerCamera() && hoverAndCaptureEnabled()) {
+            double transectLength = transect[0].distanceTo(transect[1]);
+            double transectAzimuth = transect[0].azimuthTo(transect[1]);
+            if (triggerDistance() < transectLength) {
+                int cInnerHoverPoints = floor(transectLength / triggerDistance());
+                qCDebug(SurveyComplexItemLog) << "cInnerHoverPoints" << cInnerHoverPoints;
+                for (int i=0; i<cInnerHoverPoints; i++) {
+                    QGeoCoordinate hoverCoord = transect[0].atDistanceAndAzimuth(triggerDistance() * (i + 1), transectAzimuth);
+                    TransectStyleComplexItem::CoordInfo_t coordInfo = { hoverCoord, CoordTypeInteriorHoverTrigger };
+                    coordInfoTransect.insert(1 + i, coordInfo);
+                }
+            }
+        }
 
         // Extend the transect ends for turnaround
         if (_hasTurnaround()) {
@@ -1326,9 +1342,8 @@ void SurveyComplexItem::_rebuildTransectsPhase2(void)
         _complexDistance += _visualTransectPoints[i].value<QGeoCoordinate>().distanceTo(_visualTransectPoints[i+1].value<QGeoCoordinate>());
     }
 
-    double triggerDistance = _cameraCalc.adjustedFootprintFrontal()->rawValue().toDouble();
     if (_cameraTriggerInTurnAroundFact.rawValue().toBool()) {
-        _cameraShots = qCeil(_complexDistance / triggerDistance);
+        _cameraShots = qCeil(_complexDistance / triggerDistance());
     } else {
         _cameraShots = 0;
         foreach (const QList<TransectStyleComplexItem::CoordInfo_t>& transect, _transects) {
@@ -1340,7 +1355,7 @@ void SurveyComplexItem::_rebuildTransectsPhase2(void)
                 firstCameraCoord = transect.first().coord;
                 lastCameraCoord = transect.last().coord;
             }
-            _cameraShots += qCeil(firstCameraCoord.distanceTo(lastCameraCoord) / triggerDistance);
+            _cameraShots += qCeil(firstCameraCoord.distanceTo(lastCameraCoord) / triggerDistance());
         }
     }
 
@@ -1405,6 +1420,5 @@ void SurveyComplexItem::rotateEntryPoint(void)
 
 double SurveyComplexItem::timeBetweenShots(void)
 {
-    return _cruiseSpeed == 0 ? 0 : _cameraCalc.adjustedFootprintFrontal()->rawValue().toDouble() / _cruiseSpeed;
+    return _cruiseSpeed == 0 ? 0 : triggerDistance() / _cruiseSpeed;
 }
-

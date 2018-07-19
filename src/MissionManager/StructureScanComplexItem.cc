@@ -26,6 +26,7 @@ const char* StructureScanComplexItem::altitudeName =                "Altitude";
 const char* StructureScanComplexItem::speedName =                   "Speed";
 const char* StructureScanComplexItem::structureHeightName =         "StructureHeight";
 const char* StructureScanComplexItem::layersName =                  "Layers";
+const char* StructureScanComplexItem::gimbalPitchName =             "GimbalPitch";
 
 const char* StructureScanComplexItem::jsonComplexItemTypeValue =    "StructureScan";
 const char* StructureScanComplexItem::_jsonCameraCalcKey =          "CameraCalc";
@@ -46,6 +47,7 @@ StructureScanComplexItem::StructureScanComplexItem(Vehicle* vehicle, bool flyVie
 	, _speedFact                (settingsGroup, _metaDataMap[speedName])	
     , _structureHeightFact      (settingsGroup, _metaDataMap[structureHeightName])
     , _layersFact               (settingsGroup, _metaDataMap[layersName])
+    , _gimbalPitchFact          (settingsGroup, _metaDataMap[gimbalPitchName])
 {
     _editorQml = "qrc:/qml/StructureScanEditor.qml";
 
@@ -54,6 +56,7 @@ StructureScanComplexItem::StructureScanComplexItem(Vehicle* vehicle, bool flyVie
     connect(&_altitudeFact,     &Fact::valueChanged, this, &StructureScanComplexItem::_setDirty);
     connect(&_layersFact,       &Fact::valueChanged, this, &StructureScanComplexItem::_setDirty);
     connect(&_speedFact,        &Fact::valueChanged, this, &StructureScanComplexItem::_setDirty);
+	connect(&_gimbalPitchFact,  &Fact::valueChanged, this, &StructureScanComplexItem::_setDirty);
 
     connect(&_layersFact,                           &Fact::valueChanged,    this, &StructureScanComplexItem::_recalcLayerInfo);
     connect(&_structureHeightFact,                  &Fact::valueChanged,    this, &StructureScanComplexItem::_recalcLayerInfo);
@@ -78,6 +81,8 @@ StructureScanComplexItem::StructureScanComplexItem(Vehicle* vehicle, bool flyVie
     connect(&_flightPolygon,                        &QGCMapPolygon::pathChanged,    this, &StructureScanComplexItem::_recalcCameraShots);
     connect(_cameraCalc.adjustedFootprintSide(),    &Fact::valueChanged,            this, &StructureScanComplexItem::_recalcCameraShots);
     connect(&_layersFact,                           &Fact::valueChanged,            this, &StructureScanComplexItem::_recalcCameraShots);
+
+    connect(&_cameraCalc, &CameraCalc::isManualCameraChanged, this, &StructureScanComplexItem::_updateGimbalPitch);
 
     _recalcLayerInfo();
 
@@ -154,6 +159,7 @@ void StructureScanComplexItem::save(QJsonArray&  missionItems)
     saveObject[structureHeightName] =      _structureHeightFact.rawValue().toDouble();
     saveObject[_jsonAltitudeRelativeKey] =   _altitudeRelative;
     saveObject[layersName] =                _layersFact.rawValue().toDouble();
+    saveObject[gimbalPitchName] =           _gimbalPitchFact.rawValue().toDouble();
 
     QJsonObject cameraCalcObject;
     _cameraCalc.save(cameraCalcObject);
@@ -185,6 +191,7 @@ bool StructureScanComplexItem::load(const QJsonObject& complexObject, int sequen
         { structureHeightName,                          QJsonValue::Double, true },
         { _jsonAltitudeRelativeKey,                     QJsonValue::Bool,   true },
         { layersName,                                   QJsonValue::Double, true },
+        { gimbalPitchName,                              QJsonValue::Double, false },    // This value was added after initial implementation so may be missing from older files
         { _jsonCameraCalcKey,                           QJsonValue::Object, true },
     };
     if (!JsonHelper::validateKeys(complexObject, keyInfoList, errorString)) {
@@ -217,6 +224,12 @@ bool StructureScanComplexItem::load(const QJsonObject& complexObject, int sequen
     _speedFact.setRawValue      (complexObject[speedName].toDouble());
     _layersFact.setRawValue     (complexObject[layersName].toDouble());
     _altitudeRelative =         complexObject[_jsonAltitudeRelativeKey].toBool(true);
+
+    double gimbalPitchValue = 0;
+    if (complexObject.contains(gimbalPitchName)) {
+        gimbalPitchValue = complexObject[gimbalPitchName].toDouble();
+    }
+    _gimbalPitchFact.setRawValue(gimbalPitchValue);
 
     if (!_structurePolygon.loadFromJson(complexObject, true /* required */, errorString)) {
         _structurePolygon.clear();
@@ -263,11 +276,12 @@ void StructureScanComplexItem::appendMissionItems(QList<MissionItem*>& items, QO
     MissionItem* item = new MissionItem(seqNum++,
                                         MAV_CMD_DO_SET_ROI_WPNEXT_OFFSET,
                                         MAV_FRAME_MISSION,
-                                        0, 0, 0, 0,                         // param 1-4 not used
-                                        0, 0,                               // Pitch and Roll stay in standard orientation
-                                        90,  0, 0, 0,                       // 90 degreee yaw offset to point to structure
-                                        true,                               // autoContinue
-                                        false,                              // isCurrentItem
+                                        0, 0, 0, 0,                             // param 1-4 not used
+                                        _gimbalPitchFact.rawValue().toDouble(),
+                                        0,                                      // Roll stays in standard orientation
+                                        90, 0, 0, 0,                            // 90 degreee yaw offset to point to structure
+                                        true,                                   // autoContinue
+                                        false,                                  // isCurrentItem
                                         missionItemParent);
     items.append(item);
 
@@ -466,5 +480,12 @@ void StructureScanComplexItem::_recalcLayerInfo(void)
         _layersFact.setRawValue(qCeil(_structureHeightFact.rawValue().toDouble() / _cameraCalc.adjustedFootprintFrontal()->rawValue().toDouble()));
         _layersFact.clearDeferredValueChangeSignal();
         _layersFact.setSendValueChangedSignals(true);
+    }
+}
+
+void StructureScanComplexItem::_updateGimbalPitch(void)
+{
+    if (!_cameraCalc.isManualCamera()) {
+        _gimbalPitchFact.setRawValue(0);
     }
 }

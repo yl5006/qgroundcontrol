@@ -98,9 +98,9 @@ FlightMap {
 
     function recenterNeeded() {
         var vehiclePoint = flightMap.fromCoordinate(_activeVehicleCoordinate, false /* clipToViewport */)
-        var toolStripRightEdge = 0;//mapFromItem(toolStrip, toolStrip.x, 0).x + toolStrip.width
+        var toolStripRightEdge =  0;//mapFromItem(toolStrip, toolStrip.x, 0).x + toolStrip.width
         var instrumentsWidth = 0
-        if (QGroundControl.corePlugin.options.instrumentWidget.widgetPosition === CustomInstrumentWidget.POS_TOP_RIGHT) {
+        if (QGroundControl.corePlugin.options.instrumentWidget && QGroundControl.corePlugin.options.instrumentWidget.widgetPosition === CustomInstrumentWidget.POS_TOP_RIGHT) {
             // Assume standard instruments
             instrumentsWidth = flightWidgets.getPreferredInstrumentWidth()
         }
@@ -482,12 +482,11 @@ FlightMap {
         visible:    false
 
         property alias center:  _mapCircle.center
-        property real  radius:  _mapCircle.radius.rawValue
 
         readonly property real defaultRadius: 30
 
         function show(coord) {
-            orbitMapCircle.radius = defaultRadius
+            _mapCircle.radius.rawValue = defaultRadius
             orbitMapCircle.center = coord
             orbitMapCircle.visible = true
         }
@@ -496,12 +495,16 @@ FlightMap {
             orbitMapCircle.visible = false
         }
 
+        function radius() {
+            return _mapCircle.radius.rawValue
+        }
+
         Component.onCompleted: flightWidgets.orbitMapCircle = orbitMapCircle
 
         QGCMapCircle {
             id:                 _mapCircle
             interactive:        true
-            radius.rawValue:    orbitMapCircle.radius
+            radius.rawValue:    30
         }
     }
 

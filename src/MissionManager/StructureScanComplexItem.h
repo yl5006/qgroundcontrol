@@ -35,6 +35,7 @@ public:
     Q_PROPERTY(Fact*            speed                       READ speed                                                      CONSTANT)
     Q_PROPERTY(Fact*            structureHeight             READ structureHeight                                            CONSTANT)
     Q_PROPERTY(Fact*            layers                      READ layers                                                     CONSTANT)
+    Q_PROPERTY(Fact*            gimbalPitch                 READ gimbalPitch                                                CONSTANT)
     Q_PROPERTY(bool             altitudeRelative            READ altitudeRelative           WRITE setAltitudeRelative       NOTIFY altitudeRelativeChanged)
     Q_PROPERTY(int              cameraShots                 READ cameraShots                                                NOTIFY cameraShotsChanged)
     Q_PROPERTY(double           timeBetweenShots            READ timeBetweenShots                                           NOTIFY timeBetweenShotsChanged)
@@ -46,6 +47,7 @@ public:
     Fact* speed             (void) { return &_speedFact; }
     Fact* structureHeight   (void) { return &_structureHeightFact; }
     Fact* layers            (void) { return &_layersFact; }
+    Fact* gimbalPitch       (void) { return &_gimbalPitchFact; }
 
     bool            altitudeRelative        (void) const { return _altitudeRelative; }
     int             cameraShots             (void) const;
@@ -101,6 +103,7 @@ public:
     static const char* speedName;
     static const char* structureHeightName;
     static const char* layersName;
+    static const char* gimbalPitchName;
 
 signals:
     void cameraShotsChanged             (int cameraShots);
@@ -117,6 +120,7 @@ private slots:
     void _recalcCameraShots         (void);
     void _recalcLayerInfo           (void);
     void _updateLastSequenceNumber  (void);
+    void _updateGimbalPitch         (void);
 
 private:
     void _setExitCoordinate(const QGeoCoordinate& coordinate);
@@ -145,6 +149,7 @@ private:
     SettingsFact    _speedFact;
     SettingsFact    _structureHeightFact;
     SettingsFact    _layersFact;
+    SettingsFact    _gimbalPitchFact;
 
     static const char* _jsonCameraCalcKey;
     static const char* _jsonAltitudeRelativeKey;

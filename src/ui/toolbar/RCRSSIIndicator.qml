@@ -26,6 +26,7 @@ Item {
     anchors.bottom: parent.bottom
     visible:        _activeVehicle ? _activeVehicle.supportsRadio : true
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle	
+    property bool   _rcRSSIAvailable:   _activeVehicle ? _activeVehicle.rcRSSI > 0 && _activeVehicle.rcRSSI <= 100 : false
     function getRSSIColor(value) {
         if(value >= 90)
             return colorGreen;
@@ -60,7 +61,7 @@ Item {
 
                 GridLayout {
                     id:                 rcrssiGrid
-                    visible:            _activeVehicle && _activeVehicle.rcRSSI != 255
+                    visible:            _rcRSSIAvailable
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     columnSpacing:      ScreenTools.defaultFontPixelWidth
                     columns:            2

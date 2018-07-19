@@ -16,6 +16,7 @@
 #include <QDebug>
 
 #include "Drivers/src/ubx.h"
+#include "Drivers/src/ashtech.h"
 //#include "Drivers/src/nova.h"
 #include "Drivers/src/gps_helper.h"
 #include "definitions.h"
@@ -47,15 +48,14 @@ void GPSProvider::run()
         qWarning() << "GPS: Failed to open Serial Device" << _device;
         return;
     }
-    qWarning() << "open Serial Device" << _device;
-    _serial->setBaudRate(QSerialPort::Baud9600);//9600
+    _serial->setBaudRate(QSerialPort::Baud9600);
     _serial->setDataBits(QSerialPort::Data8);
     _serial->setParity(QSerialPort::NoParity);
     _serial->setStopBits(QSerialPort::OneStop);
     _serial->setFlowControl(QSerialPort::NoFlowControl);
 
     unsigned int baudrate;
-    GPSDriverUBX* gpsDriver = nullptr;
+    GPSHelper* gpsDriver = nullptr;
 
     while (!_requestStop) {
 
@@ -64,11 +64,17 @@ void GPSProvider::run()
             gpsDriver = nullptr;
         }
 
-        gpsDriver = new GPSDriverUBX(GPSDriverUBX::Interface::UART, &callbackEntry, this, &_reportGpsPos, _pReportSatInfo);
+        if (_type == GPSType::trimble) {
+            gpsDriver = new GPSDriverAshtech(&callbackEntry, this, &_reportGpsPos, _pReportSatInfo);
+            baudrate = 115200;
+        } else {
+            gpsDriver = new GPSDriverUBX(GPSDriverUBX::Interface::UART, &callbackEntry, this, &_reportGpsPos, _pReportSatInfo);
+            baudrate = 0; // auto-configure
+        }
         gpsDriver->setSurveyInSpecs(_surveyInAccMeters * 10000, _surveryInDurationSecs);
 
         if (gpsDriver->configure(baudrate, GPSDriverUBX::OutputMode::RTCM) == 0) {
-            qDebug()<<"config";
+
             /* reset report */
             memset(&_reportGpsPos, 0, sizeof(_reportGpsPos));
 
@@ -103,8 +109,9 @@ void GPSProvider::run()
     qCDebug(RTKGPSLog) << "Exiting GPS thread";
 }
 
-GPSProvider::GPSProvider(const QString& device, bool enableSatInfo, double surveyInAccMeters, int surveryInDurationSecs, const std::atomic_bool& requestStop)
+GPSProvider::GPSProvider(const QString& device, GPSType type, bool enableSatInfo, double surveyInAccMeters, int surveryInDurationSecs, const std::atomic_bool& requestStop)
     : _device(device)
+    , _type(type)
     , _requestStop(requestStop)
     , _surveyInAccMeters(surveyInAccMeters)
     , _surveryInDurationSecs(surveryInDurationSecs)

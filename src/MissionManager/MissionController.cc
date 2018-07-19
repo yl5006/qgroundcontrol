@@ -1596,10 +1596,16 @@ void MissionController::_recalcMissionFlightStatus()
             if (altRange == 0.0) {
                 item->setAltPercent(0.0);
                 item->setTerrainPercent(qQNaN());
+                item->setTerrainCollision(false);
             } else {
                 item->setAltPercent((absoluteAltitude - minAltSeen) / altRange);
-                if (!qIsNaN(item->terrainAltitude())) {
-                    item->setTerrainPercent((item->terrainAltitude() - minAltSeen) / altRange);
+                double terrainAltitude = item->terrainAltitude();
+                if (qIsNaN(terrainAltitude)) {
+                    item->setTerrainPercent(qQNaN());
+                    item->setTerrainCollision(false);
+                } else {
+                    item->setTerrainPercent((terrainAltitude - minAltSeen) / altRange);
+                    item->setTerrainCollision(absoluteAltitude < terrainAltitude);
                 }
             }
         }
