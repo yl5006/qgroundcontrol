@@ -461,7 +461,7 @@ FlightMap {
         sourceItem: MissionItemIndexLabel {
             checked:    true
             index:      -1
-            label:      qsTr("Goto here", "Goto here waypoint")
+            label:      qsTr("G", "Goto here waypoint")
             simpleindex:   1
         }
 
@@ -518,7 +518,7 @@ FlightMap {
             property var coord
 
             MenuItem {
-                text:           qsTr("Go to location")
+                text:           qsTr("到这里")
                 visible:        flightWidgets.showGotoLocation
 
                 onTriggered: {
@@ -529,7 +529,7 @@ FlightMap {
             }
 
             MenuItem {
-                text:           qsTr("Orbit at location")
+                text:           qsTr("绕圈")
                 visible:        flightWidgets.showOrbit
 
                 onTriggered: {
