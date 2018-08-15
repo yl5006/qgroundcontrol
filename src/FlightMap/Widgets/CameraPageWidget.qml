@@ -27,7 +27,7 @@ import QGroundControl.FactControls      1.0
 Column {
     width:      pageWidth
     spacing:    ScreenTools.defaultFontPixelHeight * 0.25
-
+    anchors.leftMargin: ScreenTools.defaultFontPixelHeight * 0.5
     property bool   showSettingsIcon:       _camera !== null
 
     property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle

@@ -134,6 +134,7 @@ QGCFlickable {
                     }
                 }
             }
+            /*
             Rectangle {
                 anchors.topMargin:  ScreenTools.defaultFontPixelHeight
                 width:              _editFieldWidth+_buttonWidth+ScreenTools.defaultFontPixelHeight
@@ -214,7 +215,7 @@ QGCFlickable {
                         }
                     }
                 }
-            }
+            }*/
         }
         Row{
             spacing: ScreenTools.defaultFontPixelHeight*2

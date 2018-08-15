@@ -7034,7 +7034,7 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <scope>modules/sensors</scope>
     </parameter>
     <parameter default="0" name="RC_MAP_ACRO_SW" type="INT32">
-      <short_desc>Acro switch channel</short_desc>
+      <short_desc>运动模式通道</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
@@ -7061,7 +7061,7 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_ARM_SW" type="INT32">
-      <short_desc>Arm switch channel</short_desc>
+      <short_desc>解锁通道</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
@@ -7170,7 +7170,7 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_KILL_SW" type="INT32">
-      <short_desc>Kill switch channel</short_desc>
+      <short_desc>炸机通道</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
@@ -7197,7 +7197,7 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_LOITER_SW" type="INT32">
-      <short_desc>Loiter switch channel</short_desc>
+      <short_desc>悬停或盘旋通道</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
@@ -7360,7 +7360,7 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_RETURN_SW" type="INT32">
-      <short_desc>Return switch channel</short_desc>
+      <short_desc>返航通道</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
@@ -7387,7 +7387,7 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_STAB_SW" type="INT32">
-      <short_desc>Stabilize switch channel mapping</short_desc>
+      <short_desc>增稳通道</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>
@@ -7414,7 +7414,7 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_TRANS_SW" type="INT32">
-      <short_desc>VTOL transition switch channel mapping</short_desc>
+      <short_desc>垂起切换通道</short_desc>
       <min>0</min>
       <max>18</max>
       <scope>modules/sensors</scope>

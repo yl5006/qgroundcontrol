@@ -164,7 +164,7 @@ Item {
                             columnSpacing:      ScreenTools.defaultFontPixelWidth
 
                             Repeater {
-                                model: [ "RC_MAP_ACRO_SW", "RC_MAP_ARM_SW", "RC_MAP_GEAR_SW", "RC_MAP_KILL_SW", "RC_MAP_LOITER_SW", "RC_MAP_OFFB_SW", "RC_MAP_POSCTL_SW", "RC_MAP_RATT_SW", "RC_MAP_RETURN_SW", "RC_MAP_STAB_SW" ]
+                                model: [ "RC_MAP_ACRO_SW", "RC_MAP_ARM_SW", "RC_MAP_GEAR_SW", "RC_MAP_KILL_SW", "RC_MAP_LOITER_SW", "RC_MAP_RETURN_SW", "RC_MAP_STAB_SW" ]
 
                                 RowLayout {
                                     spacing:            ScreenTools.defaultFontPixelWidth
@@ -231,7 +231,7 @@ Item {
                                 }
                             }
 
-
+                            /*
                             Row {
                                 spacing: ScreenTools.defaultFontPixelWidth
 
@@ -250,7 +250,7 @@ Item {
                                     fact:       parent.fact
                                     indexModel: false
                                 }
-                            }
+                            }*/
                         } // Column
                     } // Rectangle
 

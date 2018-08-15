@@ -120,7 +120,6 @@ SetupPage {
                     exclusiveGroup:     paramsGroup
                     checkable:          true
                     width:              _middleRowWidth
-                    checked:           true
                     text:               qsTr("固定翼姿态控制")//att
                     onClicked: {
                         panelLoader.source = "AttitudeControlPlane.qml";
@@ -144,7 +143,7 @@ SetupPage {
                     text:               qsTr("输出设置")//else
                     onClicked: {
                         checked  =   true
-                        panelLoader.sourceComponent = elsesetComponent;
+                        panelLoader.source = "OutputSetting.qml"
                     }
                 }
             }
@@ -162,7 +161,7 @@ SetupPage {
                 }
             }
             Component.onCompleted: {
-                panelLoader.source = "OutputSetting.qml";
+                panelLoader.source = "AttitudeControlCopter.qml";
             }
             Component {
                 id: elsesetComponent

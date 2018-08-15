@@ -9,7 +9,7 @@ import QGroundControl.ScreenTools   1.0
 Rectangle {
     id:     _root
     height: pageFlickable.y + pageFlickable.height + _margins
-    color:  qgcPal.window
+    color:  "transparent"//qgcPal.window
 
     property var    qgcView         ///< QGCView to use for showing dialogs
     property real   maxHeight       ///< Maximum height that should be taken, smaller than this is ok
@@ -17,30 +17,51 @@ Rectangle {
     property real   _margins:           ScreenTools.defaultFontPixelWidth / 2
     property real   _pageWidth:         _root.width
     property var    _instrumentPages:   QGroundControl.corePlugin.instrumentPages
-
+    property int    checkindex:         0
     QGCPalette { id:qgcPal; colorGroupEnabled: parent.enabled }
-/*
+    Component.onCompleted: {
+         pageWidgetLoader.source = _instrumentPages[0].url
+         checkindex = 0
+    }
+
     Rectangle {
         id:         selectdis
-        height:     ScreenTools.defaultFontPixelHeight*2
+        height:     ScreenTools.defaultFontPixelHeight*3
+        width:      parent.width
         color:      qgcPal.window
-        radius:     2
+        radius:     ScreenTools.defaultFontPixelHeight
         Row{
           anchors.top:  parent.top
           anchors.left: parent.left
-          anchors.leftMargin: ScreenTools.defaultFontPixelWidth
-          height:     ScreenTools.defaultFontPixelHeight*2
-            Repeater{
+          anchors.leftMargin: ScreenTools.defaultFontPixelHeight
+          height:       ScreenTools.defaultFontPixelHeight*3
+          spacing:      ScreenTools.defaultFontPixelHeight
+          Repeater{
                     model:  _instrumentPages
-                    image{
-                        source: _instrumentPages[pageCombo.currentIndex].icon
+                    QGCColoredImage   {
+                        anchors.verticalCenter: parent.verticalCenter
+                        source:     modelData.icon
+                        height:     ScreenTools.defaultFontPixelHeight*2
+                        width:      height
+                        color:      checkindex == index? qgcPal.buttonHighlight : qgcPal.button
+                        QGCMouseArea {
+                            fillItem:   parent
+                            onClicked:  {
+                                checkindex  =  index
+                                pageFlickable.visible = true
+                                pageWidgetLoader.source = modelData.url
+                            }
+
+                        }
                     }
-            }
+           }
         }
     }
-*/
+/*
     QGCComboBox {
         id:             pageCombo
+        anchors.top:    selectdis.bottom
+        anchors.topMargin: ScreenTools.defaultFontPixelHeight
         anchors.left:   parent.left
         anchors.right:  parent.right
         model:          _instrumentPages
@@ -65,11 +86,28 @@ Rectangle {
             }
         }
     }
-
+*/  Rectangle {
+         anchors.fill: pageFlickable
+         color:      qgcPal.window
+         visible:   pageFlickable.visible
+    }
+    ImageButton {
+        height:     ScreenTools.defaultFontPixelHeight
+        width:      height
+        anchors.margins: ScreenTools.defaultFontPixelHeight
+        anchors.bottom: pageFlickable.bottom
+        anchors.right:  pageFlickable.right
+        visible:        pageFlickable.visible
+        z:              pageFlickable.z +1
+        imageResource:          "/qmlimages/hide.svg"
+        onClicked:          {
+            pageFlickable.visible = false
+        }
+    }
     QGCFlickable {
         id:                 pageFlickable
-        anchors.margins:    _margins
-        anchors.top:        pageCombo.bottom
+        anchors.topMargin:     _margins*8
+        anchors.top:        selectdis.bottom
         anchors.left:       parent.left
         anchors.right:      parent.right
         height:             Math.min(_maxHeight, pageWidgetLoader.height)
@@ -81,7 +119,7 @@ Rectangle {
 
         Loader {
             id:     pageWidgetLoader
-            source: _instrumentPages[pageCombo.currentIndex].url
+       //     source: _instrumentPages[pageCombo.currentIndex].url
 
             property var    qgcView:    _root.qgcView
             property real   pageWidth:  parent.width

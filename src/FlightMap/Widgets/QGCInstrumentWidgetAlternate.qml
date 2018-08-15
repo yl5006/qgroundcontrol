@@ -65,12 +65,12 @@ Item {
         anchors.top:        parent.top
         width:              parent.width
         height:             _valuesWidget.height
-
+/*
         Rectangle {
             anchors.fill:   _valuesWidget
             color:          qgcPal.window
         }
-
+*/
         PageView {
             id:                 _valuesWidget
             anchors.margins:    1
