@@ -87,10 +87,15 @@
 #include "FactValueSliderListModel.h"
 #include "KMLFileHelper.h"
 
-//#ifdef   QGC_OPENCV_STREAMING
-//#include "opencvcamera.h"
-//#include "opencvshowframe.h"
-//#endif
+#ifdef   QGC_LIBUSB_STREAMING
+#include "showframe.h"
+#endif
+
+#ifdef   QGC_OPENCV_STREAMING
+#include "opencvcamera.h"
+#include "opencvshowframe.h"
+#endif
+
 #ifndef NO_SERIAL_LINK
 #include "SerialLink.h"
 #endif
@@ -402,6 +407,15 @@ void QGCApplication::_initCommon(void)
     qmlRegisterType<FirmwareUpgradeController>      ("QGroundControl.Controllers", 1, 0, "FirmwareUpgradeController");
     qmlRegisterType<GeoTagController>               ("QGroundControl.Controllers", 1, 0, "GeoTagController");
     qmlRegisterType<MavlinkConsoleController>       ("QGroundControl.Controllers", 1, 0, "MavlinkConsoleController");
+#endif
+
+#ifdef   QGC_LIBUSB_STREAMING
+    qmlRegisterType<ShowFrame>("Libusb", 1, 0, "ShowFrame");
+#endif
+
+#ifdef   QGC_OPENCV_STREAMING
+    qmlRegisterType<OpenCVcamera>("OpenCV", 1, 0, "OpenCVcamera");
+    qmlRegisterType<OpenCVshowFrame>("OpenCV", 1, 0, "OpenCVshowFrame");
 #endif
 
     // Register Qml Singletons

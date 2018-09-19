@@ -124,6 +124,9 @@ bool
 VideoManager::hasVideo()
 {
     QString videoSource = _videoSettings->videoSource()->rawValue().toString();
+#ifdef   QGC_OPENCV_STREAMING
+    return true;
+#endif
     return !videoSource.isEmpty() && videoSource != VideoSettings::videoSourceNoVideo && videoSource != VideoSettings::videoDisabled;
 }
 

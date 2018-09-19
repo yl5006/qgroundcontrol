@@ -27,7 +27,7 @@ import QGroundControl.Palette       1.0
 import QGroundControl.Vehicle       1.0
 import QGroundControl.Controllers   1.0
 import QGroundControl.FactSystem    1.0
-//import OpenCV 1.0
+import OpenCV 1.0
 /// Flight Display View
 QGCView {
     id:             root
@@ -633,6 +633,21 @@ QGCView {
                     }
                 }
             ]
+
+            OpenCVcamera {
+                id:opencvCamera
+                m_cameraId: 0
+                m_run: true
+
+            }
+            OpenCVshowFrame {
+                id:             usbStreaming
+                anchors.fill:   parent
+                m_capture: opencvCamera
+                m_frameRate: 24
+                m_run: true
+            }
+
             //-- Video Streaming
             FlightDisplayViewVideo {
                 id:             videoStreaming
@@ -640,14 +655,14 @@ QGCView {
                 visible:        QGroundControl.videoManager.isGStreamer
             }
             //-- UVC Video (USB Camera or Video Device)
-            Loader {
-                id:             cameraLoader
-                anchors.fill:   parent
-                visible:        !QGroundControl.videoManager.isGStreamer
-                source:         QGroundControl.videoManager.uvcEnabled ? "qrc:/qml/FlightDisplayViewUVC.qml" : "qrc:/qml/FlightDisplayViewDummy.qml"
-            }
+//            Loader {
+//                id:             cameraLoader
+//                anchors.fill:   parent
+//                visible:        !QGroundControl.videoManager.isGStreamer
+//                source:         QGroundControl.videoManager.uvcEnabled ? "qrc:/qml/FlightDisplayViewUVC.qml" : "qrc:/qml/FlightDisplayViewDummy.qml"
+//            }
 
-            MouseArea{
+     /*       MouseArea{
                 id:                 itemDrag
                 anchors.fill:       parent
                 property var        preMousex
@@ -663,7 +678,7 @@ QGCView {
                     console.log(movex/videoWindow.width)
                     console.log(movey/videoWindow.height)
                 }
-            }
+            }*/
         }
 
         QGCPipable {

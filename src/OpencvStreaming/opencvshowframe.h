@@ -70,8 +70,8 @@ private:
     std::list<QObject*> m_actions;
     Mat  doActions(Mat &img);
 //    OpencvFaceRecognizer *fr;
+    Tracker *f;
 //    OpenCVfaceDetectAction *f;
-    OpenCVfaceDetectAction *f;
     QImage::Format format(int depth, int nChannels);
 
 

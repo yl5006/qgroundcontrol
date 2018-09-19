@@ -26,7 +26,7 @@ OpenCVshowFrame::OpenCVshowFrame(QQuickItem *parent) : QQuickItem(parent),
     setAcceptedMouseButtons(Qt::LeftButton);
     setFlag(QQuickItem::ItemHasContents);
    // m_actions.push_back(new OpenCVcommonAction());
-    f = new OpenCVfaceDetectAction();//Tracker();
+    f = new Tracker();
    // f.Rectbox
     m_actions.push_back(f);
 

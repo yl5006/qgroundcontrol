@@ -6,6 +6,7 @@
 #include "opencvcapture.h"
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+#include <lynmax4d/Export.h>
 
 class OpenCVcamera : public OpenCVcapture
 {
@@ -40,7 +41,14 @@ private:
     int m_cameraId;
     int m_openedCameraId;
     Mat m_frame;
-    VideoCapture m_Capture;
+//    VideoCapture m_Capture;
+    int lastFrameNo;
+    int width;
+    int height;
+    int rowPitch;
+    int bufferSize;
+    int frameNo;
+    int id;
 };
 
 #endif // OPENCVCAMERA_H

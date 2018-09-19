@@ -23,37 +23,22 @@
 #
 #-- Depends on opencv, which can be found at: http://gstreamer.freedesktop.org/download/
 #
-
-LinuxBuild {
-    CONFIG += link_pkgconfig
-    packagesExist(gstreamer-1.0) {
-        PKGCONFIG   += gstreamer-1.0  gstreamer-video-1.0
-        CONFIG      += VideoEnabled
-    }
-} else:MacBuild {
-    #- gstreamer framework installed by the gstreamer devel installer
-    GST_ROOT = /Library/Frameworks/GStreamer.framework
-    exists($$GST_ROOT) {
-        CONFIG      += VideoEnabled
-        INCLUDEPATH += $$GST_ROOT/Headers
-        LIBS        += -F/Library/Frameworks -framework GStreamer
-    }
-} else:iOSBuild {
-    #- gstreamer framework installed by the gstreamer iOS SDK installer (default to home directory)
-    GST_ROOT = $$(HOME)/Library/Developer/GStreamer/iPhone.sdk/GStreamer.framework
-    exists($$GST_ROOT) {
-        CONFIG      += VideoEnabled
-        INCLUDEPATH += $$GST_ROOT/Headers
-        LIBS        += -F$$(HOME)/Library/Developer/GStreamer/iPhone.sdk -framework GStreamer -liconv -lresolv
-    }
-} else:WindowsBuild {
-    #- opencv installed by default under  d:/opencv
+WindowsBuild {
+    #- opencv installed by default under   v
     OPENCV_ROOT = D:/opencv/build/x86/vc12
     exists($$OPENCV_ROOT) {
         CONFIG      += OpencvEnabled
+        DEFINES += QGC_DISABLE_UVC
         INCLUDEPATH +=  $$OPENCV_ROOT/../../include/opencv \
                         $$OPENCV_ROOT/../../include/opencv2 \
                         $$OPENCV_ROOT/../../include
+
+        INCLUDEPATH +=  $$PWD/include
+
+        LIBS+=$$PWD/vs2015_x86/lib/libusb.lib
+        LIBS+=$$PWD/vs2015_x86/lib/Mana_Lynmax4D.lib
+        LIBS+=$$PWD/vs2015_x86/lib/Mana_Lynmax4Dd.lib
+
         LIBS+=$$OPENCV_ROOT/lib/opencv_ml249.lib
         LIBS+=$$OPENCV_ROOT/lib/opencv_calib3d249.lib
         LIBS+=$$OPENCV_ROOT/lib/opencv_contrib249.lib
@@ -92,6 +77,17 @@ LinuxBuild {
         $$OPENCV_ROOT\\bin\\opencv_stitching249.dll \
         $$OPENCV_ROOT\\bin\\opencv_superres249.dll \
         $$OPENCV_ROOT\\bin\\opencv_videostab249.dll \
+        $$PWD\\vs2015_x86\\bin\\avcodec-57.dll \
+        $$PWD\\vs2015_x86\\bin\\avdevice-57.dll \
+        $$PWD\\vs2015_x86\\bin\\avfilter-6.dll \
+        $$PWD\\vs2015_x86\\bin\\avformat-57.dll \
+        $$PWD\\vs2015_x86\\bin\\avutil-55.dll \
+        $$PWD\\vs2015_x86\\bin\\libusb0_x86.dll \
+        $$PWD\\vs2015_x86\\bin\\Mana_Lynmax4D.dll \
+        $$PWD\\vs2015_x86\\bin\\Mana_Lynmax4Dd.dll \
+        $$PWD\\vs2015_x86\\bin\\postproc-54.dll \
+        $$PWD\\vs2015_x86\\bin\\swresample-2.dll \
+        $$PWD\\vs2015_x86\\bin\\swscale-4.dll \
 
     DESTDIR_WIN = $$replace(DESTDIR, "/", "\\")
 
@@ -99,42 +95,47 @@ LinuxBuild {
         QMAKE_POST_LINK += $$escape_expand(\\n) $$QMAKE_COPY \"$$COPY_FILE\" \"$$DESTDIR_WIN\"
     }
     QMAKE_POST_LINK += $$escape_expand(\\n)
- }
-
-} else:AndroidBuild {
-    #- gstreamer assumed to be installed in $$PWD/../../android/gstreamer-1.0-android-armv7-1.5.2
-    GST_ROOT = $$PWD/../../opencv
-    exists($$GST_ROOT) {
-        QMAKE_CXXFLAGS  += -pthread
-        CONFIG          += VideoEnabled
-
-        # We want to link these plugins statically
-        LIBS += -L$$GST_ROOT/lib/gstreamer-1.0/static \
-            -lgstvideo-1.0 \
-            -lgstcoreelements \
-            -lgstudp \
-            -lgstrtp \
-            -lgstx264 \
-            -lgstlibav \
-            -lgstvideoparsersbad
-
-        # Rest of GStreamer dependencies
-        LIBS += -L$$GST_ROOT/lib \
-            -lgstfft-1.0 -lm  \
-            -lgstnet-1.0 -lgio-2.0 \
-            -lgstaudio-1.0 -lgstcodecparsers-1.0 -lgstbase-1.0 \
-            -lgstreamer-1.0 -lgsttag-1.0 -lgstrtp-1.0 -lgstpbutils-1.0 \
-            -lgstvideo-1.0 -lavformat -lavcodec -lavresample -lavutil -lx264 \
-            -lbz2 -lgobject-2.0 \
-            -Wl,--export-dynamic -lgmodule-2.0 -pthread -lglib-2.0 -lorc-0.4 -liconv -lffi -lintl
-
-        INCLUDEPATH += \
-            $$GST_ROOT/include/gstreamer-1.0 \
-            $$GST_ROOT/lib/gstreamer-1.0/include \
-            $$GST_ROOT/include/glib-2.0 \
-            $$GST_ROOT/lib/glib-2.0/include
     }
 }
+
+#WindowsBuild {
+#    #- opencv installed by default under   v
+#    OPENCV_ROOT = $$PWD
+#    exists($$OPENCV_ROOT) {
+#        CONFIG      += OpencvEnabled
+#        INCLUDEPATH +=  $$OPENCV_ROOT/include/3rdparty \
+#                        $$OPENCV_ROOT/include
+#        LIBS+=$$OPENCV_ROOT/vs2015_x86/lib/libusb.lib
+#        LIBS+=$$OPENCV_ROOT/vs2015_x86/lib/Mana_Lynmax4D.lib
+#        LIBS+=$$OPENCV_ROOT/vs2015_x86/lib/Mana_Lynmax4Dd.lib
+#        LIBS+=$$OPENCV_ROOT/vs2015_x86/lib/opencv_world330.lib
+#        LIBS+=$$OPENCV_ROOT/vs2015_x86/lib/opencv_world330d.lib
+
+#    COPY_FILE_LIST = \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\avcodec-57.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\avdevice-57.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\avfilter-6.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\avformat-57.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\avutil-55.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\libusb0_x86.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\Mana_Lynmax4D.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\Mana_Lynmax4Dd.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\opencv_world330.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\opencv_world330d.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\postproc-54.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\swresample-2.dll \
+#        $$OPENCV_ROOT\\vs2015_x86\\bin\\swscale-4.dll \
+
+
+#    DESTDIR_WIN = $$replace(DESTDIR, "/", "\\")
+
+#    for(COPY_FILE, COPY_FILE_LIST) {
+#        QMAKE_POST_LINK += $$escape_expand(\\n) $$QMAKE_COPY \"$$COPY_FILE\" \"$$DESTDIR_WIN\"
+#    }
+#    QMAKE_POST_LINK += $$escape_expand(\\n)
+#    }
+#}
+
 
 OpencvEnabled {
     message("Including support for video Opencv streaming")
