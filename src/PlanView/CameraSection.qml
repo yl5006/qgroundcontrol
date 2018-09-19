@@ -78,7 +78,7 @@ Column {
             anchors.left:   parent.left
             anchors.right:  parent.right
             spacing:        ScreenTools.defaultFontPixelWidth
-            visible:        false//_camera.cameraModeSupported
+            visible:        _camera.cameraModeSupported
 
             QGCCheckBox {
                 id:                 modeCheckBox

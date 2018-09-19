@@ -291,9 +291,9 @@ include(QGCExternalLibs.pri)
 # External library configuration
 #
 # Fervor autoupdater
-!MobileBuild {
-include(libs/QSimpleUpdater/QSimpleUpdater.pri)
-}
+#!MobileBuild {
+#include(libs/QSimpleUpdater/QSimpleUpdater.pri)
+#}
 
 CustomBuild {
     exists($$PWD/custom/GroundStation.qrc) {
@@ -407,14 +407,16 @@ HEADERS += \
     src/api/QGCOptions.h \
     src/api/QGCSettings.h \
     src/api/QmlComponentInfo.h \
-    src/comm/MavlinkMessagesTimer.h
+    src/comm/MavlinkMessagesTimer.h \
+    src/updater.h
 
 SOURCES += \
     src/api/QGCCorePlugin.cc \
     src/api/QGCOptions.cc \
     src/api/QGCSettings.cc \
     src/api/QmlComponentInfo.cc \
-    src/comm/MavlinkMessagesTimer.cc
+    src/comm/MavlinkMessagesTimer.cc \
+    src/updater.cc
 
 #
 # Unit Test specific configuration goes here (requires full debug build with all plugins)

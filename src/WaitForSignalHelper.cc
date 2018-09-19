@@ -1,6 +1,6 @@
 ﻿#include <QTimer>
 #include <WaitForSignalHelper.h>
-WaitForSignalHelper::WaitForSignalHelper( QSimpleUpdater * object, const char* signal ) :
+WaitForSignalHelper::WaitForSignalHelper( updater * object, const char* signal ) :
     m_bTimeout( false )
 {
     connect(object, signal, &m_eventLoop, SLOT(quit()));

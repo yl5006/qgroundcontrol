@@ -31,7 +31,7 @@
 #include "AppMessages.h"
 
 #ifndef __mobile__
-#include <QSimpleUpdater.h>
+#include <updater.h>
 #include <WaitForSignalHelper.h>
 #endif
 
@@ -112,6 +112,11 @@ static const QString DEFS_URL = "http://91aerfa.vip:7070/update/updates.json";
 const char*  _appVersionKey             = "appVersion";
 int main(int argc, char *argv[])
 {
+    bool checkupdate = true ;
+    if(argc>1)
+    {
+        checkupdate =(bool)atoi(argv[1]);
+    }
 #ifndef __mobile__
     RunGuard guard("QGroundControlRunGuardKey");
     if (!guard.tryToRun()) {
@@ -247,10 +252,12 @@ int main(int argc, char *argv[])
 //****************
 //check for update
 #ifndef __mobile__
-    QEventLoop m_eventLoop;
+if (checkupdate)
+{
+//    QEventLoop m_eventLoop;
 
     /* QSimpleUpdater is single-instance */
-    QSimpleUpdater *m_updater = QSimpleUpdater::getInstance();
+//    QSimpleUpdater *m_updater = QSimpleUpdater::getInstance();
     /* Apply the settings */
 
     QStringList versionsX = QString(GIT_VERSION).split (".");
@@ -261,17 +268,25 @@ int main(int argc, char *argv[])
     qDebug()<<version;
     app->setApplicationVersion(version);
     settings.setValue(_appVersionKey, version);
-    m_updater->setModuleVersion (DEFS_URL, version);
-    m_updater->setNotifyOnFinish (DEFS_URL, false);
-    m_updater->setNotifyOnUpdate (DEFS_URL, false);
-    m_updater->setDownloaderEnabled (DEFS_URL, true);
 
-    m_updater->checkForUpdates (DEFS_URL);
+    updater* m_updater = new updater;
+    m_updater->setModuleVersion(version);
+    m_updater->checkForUpdates();
 
     WaitForSignalHelper helper(m_updater, SIGNAL(checkingFinished (QString)) );
     helper.wait( 3000 );
+//    m_updater->setModuleVersion (DEFS_URL, version);
+//    m_updater->setNotifyOnFinish (DEFS_URL, false);
+//    m_updater->setNotifyOnUpdate (DEFS_URL, false);
+//    m_updater->setDownloaderEnabled (DEFS_URL, true);
+
+//    m_updater->checkForUpdates (DEFS_URL);
+
+//    WaitForSignalHelper helper(m_updater, SIGNAL(checkingFinished (QString)) );
+//    helper.wait( 3000 );
 //  /* Check for updates */
- if(m_updater->getUpdateAvailable(DEFS_URL))
+
+ if(m_updater->updateAvailable())
  {
     QString Startexe=QCoreApplication::applicationDirPath()+ "/Update.exe";
     QStringList arg;
@@ -283,11 +298,10 @@ int main(int argc, char *argv[])
     delete app;
     return 0;
  }
-    m_eventLoop.destroyed();
     m_updater->destroyed();
-// qDebug()<<"getUpdateAvailable"<<m_updater->getUpdateAvailable(DEFS_URL);
+}
 #endif
-    qDebug()<<"lanchok";
+
 #ifdef Q_OS_LINUX
     QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));
 #endif /* Q_OS_LINUX */

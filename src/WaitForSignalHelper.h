@@ -1,10 +1,10 @@
 ﻿#include <QEventLoop>
-#include <QSimpleUpdater.h>
+#include "updater.h"
 class WaitForSignalHelper : public QObject
 {
     Q_OBJECT
 public:
-    WaitForSignalHelper( QSimpleUpdater * object, const char* signal );
+    WaitForSignalHelper( updater * object, const char* signal );
 
     // return false if signal wait timed-out
     bool wait(int timeoutMs );
