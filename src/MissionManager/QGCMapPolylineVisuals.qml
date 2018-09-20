@@ -141,21 +141,28 @@ Item {
             text:           qsTr("删除点" )
             onTriggered:    mapPolyline.removeVertex(menu._removeVertexIndex)
         }
-        MenuItem {
-            id:             editVertexItem
-            text:           qsTr("编辑位置..." )
-            onTriggered:    {
-                  qgcView.showDialog(editPositionDialog, qsTr("编辑位置"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
-            }
-        }
 
         MenuSeparator {
             visible:        removeVertexItem.visible
         }
 
         MenuItem {
+            text:           qsTr("编辑位置..." )
+            onTriggered:    qgcView.showDialog(editPositionDialog, qsTr("Edit Position"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+        }
+
+        MenuItem {
             text:           qsTr("加载 KML...")
             onTriggered:    kmlLoadDialog.openForLoad()
+        }
+    }
+
+    Component {
+        id: editPositionDialog
+
+        EditPositionDialog {
+            Component.onCompleted: coordinate = mapPolyline.path[menu._removeVertexIndex]
+            onCoordinateChanged:  mapPolyline.adjustVertex(menu._removeVertexIndex,coordinate)
         }
     }
 
@@ -318,14 +325,6 @@ Item {
                     _visuals = [ ]
                 }
             }
-        }
-    }
-    Component {
-        id: editPositionDialog
-
-        EditPositionDialog {
-            Component.onCompleted: coordinate = mapPolyline.path[menu._removeVertexIndex]
-            onCoordinateChanged:  mapPolyline.adjustVertex(menu._removeVertexIndex,coordinate)
         }
     }
 }

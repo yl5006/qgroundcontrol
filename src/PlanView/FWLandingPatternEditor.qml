@@ -31,8 +31,12 @@ Rectangle {
     //property real   availableWidth    ///< Width for control
     //property var    missionItem       ///< Mission Item for editor
 
-    property real _margin: ScreenTools.defaultFontPixelWidth / 2
-    property real _spacer: ScreenTools.defaultFontPixelWidth / 2
+    property real   _margin:                    ScreenTools.defaultFontPixelWidth / 2
+    property real   _spacer:                    ScreenTools.defaultFontPixelWidth / 2
+    property var    _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
+    property string _setToVehicleHeadingStr:    qsTr("Set to vehicle heading")
+    property string _setToVehicleLocationStr:   qsTr("Set to vehicle location")
+
 
     ExclusiveGroup { id: distanceGlideGroup }
 
@@ -45,34 +49,57 @@ Rectangle {
         visible:            missionItem.landingCoordSet
 
         SectionHeader {
-            text: qsTr("盘旋点")
+            id:     loiterPointSection
+            text:   qsTr("盘旋点")
         }
 
-        Item { width: 1; height: _spacer }
+        Column {
+            anchors.left:       parent.left
+            anchors.right:      parent.right
+            spacing:            _margin
+            visible:            loiterPointSection.checked
 
-        FactTextFieldGrid {
-            anchors.left:   parent.left
-            anchors.right:  parent.right
-            factList:       [ missionItem.loiterAltitude, missionItem.loiterRadius ]
-            factLabels:     [ qsTr("高度"), qsTr("半径") ]
+            Item { width: 1; height: _spacer }
+
+            FactTextFieldGrid {
+                anchors.left:   parent.left
+                anchors.right:  parent.right
+                factList:       [ missionItem.loiterAltitude, missionItem.loiterRadius ]
+            	factLabels:     [ qsTr("高度"), qsTr("半径") ]
+            }
+
+            Item { width: 1; height: _spacer }
+
+            QGCCheckBox {
+            	text:           qsTr("顺时针盘旋")
+                checked:        missionItem.loiterClockwise
+                onClicked:      missionItem.loiterClockwise = checked
+            }
+
+            QGCButton {
+                text:       _setToVehicleHeadingStr
+                visible:    _activeVehicle
+                onClicked:  missionItem.landingHeading.rawValue = _activeVehicle.heading.rawValue
+            }
         }
 
-        Item { width: 1; height: _spacer }
-
-        QGCCheckBox {
-            text:           qsTr("顺时针盘旋")
-            checked:        missionItem.loiterClockwise
-            onClicked:      missionItem.loiterClockwise = checked
+        SectionHeader {
+            id:     landingPointSection
+            text:   qsTr("降落点")
         }
 
-        SectionHeader { text: qsTr("降落点") }
+        Column {
+            anchors.left:       parent.left
+            anchors.right:      parent.right
+            spacing:            _margin
+            visible:            landingPointSection.checked
 
-        Item { width: 1; height: _spacer }
+            Item { width: 1; height: _spacer }
 
-        GridLayout {
-            anchors.left:    parent.left
-            anchors.right:   parent.right
-            columns:         2
+            GridLayout {
+                anchors.left:    parent.left
+                anchors.right:   parent.right
+                columns:         2
 
                 QGCLabel { text: qsTr("方向") }
 
@@ -88,34 +115,42 @@ Rectangle {
                     fact:               missionItem.landingAltitude
                 }
 
-            QGCRadioButton {
-                id:                 specifyLandingDistance
-                text:               qsTr("降落距离")
-                checked:            missionItem.valueSetIsDistance
-                exclusiveGroup:     distanceGlideGroup
-                onClicked:          missionItem.valueSetIsDistance = checked
-                Layout.fillWidth:   true
-            }
+                QGCRadioButton {
+                    id:                 specifyLandingDistance
+                    text:               qsTr("降落距离")
+                    checked:            missionItem.valueSetIsDistance
+                    exclusiveGroup:     distanceGlideGroup
+                    onClicked:          missionItem.valueSetIsDistance = checked
+                    Layout.fillWidth:   true
+                }
 
-            FactTextField {
-                fact:               missionItem.landingDistance
-                enabled:            specifyLandingDistance.checked
-                Layout.fillWidth:   true
-            }
+                FactTextField {
+                    fact:               missionItem.landingDistance
+                    enabled:            specifyLandingDistance.checked
+                    Layout.fillWidth:   true
+                }
 
-            QGCRadioButton {
-                id:                 specifyGlideSlope
-                text:               qsTr("Glide Slope")
-                checked:            !missionItem.valueSetIsDistance
-                exclusiveGroup:     distanceGlideGroup
-                onClicked:          missionItem.valueSetIsDistance = !checked
-                Layout.fillWidth:   true
-            }
+                QGCRadioButton {
+                    id:                 specifyGlideSlope
+                    text:               qsTr("斜率")
+                    checked:            !missionItem.valueSetIsDistance
+                    exclusiveGroup:     distanceGlideGroup
+                    onClicked:          missionItem.valueSetIsDistance = !checked
+                    Layout.fillWidth:   true
+                }
 
-            FactTextField {
-                fact:               missionItem.glideSlope
-                enabled:            specifyGlideSlope.checked
-                Layout.fillWidth:   true
+                FactTextField {
+                    fact:               missionItem.glideSlope
+                    enabled:            specifyGlideSlope.checked
+                    Layout.fillWidth:   true
+                }
+
+                QGCButton {
+                    text:               _setToVehicleLocationStr
+                    visible:            _activeVehicle
+                    Layout.columnSpan:  2
+                    onClicked:          missionItem.landingCoordinate = _activeVehicle.coordinate
+                }
             }
         }
 
@@ -140,10 +175,30 @@ Rectangle {
         spacing:            ScreenTools.defaultFontPixelHeight
 
         QGCLabel {
-            anchors.left:   parent.left
-            anchors.right:  parent.right
-            wrapMode:       Text.WordWrap
+            anchors.left:           parent.left
+            anchors.right:          parent.right
+            wrapMode:               Text.WordWrap
+            horizontalAlignment:    Text.AlignHCenter
             text:           qsTr("点击地图设置降落点")
+        }
+
+        QGCLabel {
+            anchors.left:           parent.left
+            anchors.right:          parent.right
+            horizontalAlignment:    Text.AlignHCenter
+            text:                   qsTr("- or -")
+            visible:                _activeVehicle
+        }
+
+        QGCButton {
+            anchors.horizontalCenter:   parent.horizontalCenter
+            text:                       _setToVehicleLocationStr
+            visible:                    _activeVehicle
+
+            onClicked: {
+                missionItem.landingCoordinate = _activeVehicle.coordinate
+                missionItem.landingHeading.rawValue = _activeVehicle.heading.rawValue
+            }
         }
     }
 }

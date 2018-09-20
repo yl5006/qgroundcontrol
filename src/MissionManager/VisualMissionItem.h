@@ -152,7 +152,7 @@ public:
     virtual void appendMissionItems(QList<MissionItem*>& items, QObject* missionItemParent) = 0;
 
     /// Adjust the altitude of the item if appropriate to the new altitude.
-    virtual void applyNewAltitude(double newAltitude) = 0;
+    Q_INVOKABLE virtual void applyNewAltitude(double newAltitude) = 0;
 
     /// @return Amount of additional time delay in seconds needed to fly this item
     virtual double additionalTimeDelay(void) const = 0;

@@ -30,15 +30,15 @@ Rectangle {
     }
     function clearcheck() {
         for(var i = 1; i < reperter.count; i++)
-            reperter.itemAt(i).checked=false
+            reperter.itemAt(i).checked = false
         allcheck.checked=false
     }
     function setcheck() {
         for(var i = 1; i < reperter.count; i++)
         {
-            if(reperter.itemAt(i).checked==true)
+            if(reperter.itemAt(i).checked === true)
             {
-                missionItems.get(i).coordinate.altitude=Number(altField.text)
+                missionItems.get(i).applyNewAltitude(Number(altField.text));
                 missionItems.get(i).param1=Number(timeField.text);
                 missionItems.get(i).param3=Number(speedField.text);
             }

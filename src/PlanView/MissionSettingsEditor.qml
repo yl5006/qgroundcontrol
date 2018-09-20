@@ -39,8 +39,9 @@ Rectangle {
     property var    _fileExtension:                 QGroundControl.settingsManager.appSettings.missionFileExtension
     property var    _appSettings:                   QGroundControl.settingsManager.appSettings
     property bool   _waypointsOnlyMode:             QGroundControl.corePlugin.options.missionWaypointsOnly
-    property bool   _showCameraSection:             !_waypointsOnlyMode || QGroundControl.corePlugin.showAdvancedUI
+    property bool   _showCameraSection:             (!_waypointsOnlyMode || QGroundControl.corePlugin.showAdvancedUI) && !_missionVehicle.apmFirmware
     property bool   _simpleMissionStart:            QGroundControl.corePlugin.options.showSimpleMissionStart
+    property bool   _showFlightSpeed:               !_missionVehicle.vtol && !_simpleMissionStart && !_missionVehicle.apmFirmware
 
     property Fact   _offlinespeed:              _showCruiseSpeed ? QGroundControl.settingsManager.appSettings.offlineEditingCruiseSpeed : QGroundControl.settingsManager.appSettings.offlineEditingHoverSpeed
     readonly property string _firmwareLabel:    qsTr("Firmware")
@@ -84,7 +85,7 @@ Rectangle {
                     QGCCheckBox {
                         id:         flightSpeedCheckBox
                         text:       qsTr("Flight speed")
-                        visible:    !_missionVehicle.vtol
+                	visible:    _showFlightSpeed
                         checked:    missionItem.speedSection.specifyFlightSpeed
                         onClicked:  missionItem.speedSection.specifyFlightSpeed = checked
                     }
@@ -95,7 +96,7 @@ Rectangle {
                     FactTextField {
                         Layout.fillWidth:   true
                         fact:               missionItem.speedSection.flightSpeed
-                        visible:            flightSpeedCheckBox.visible
+                	visible:            _showFlightSpeed
                         enabled:            flightSpeedCheckBox.checked
                     }
 */

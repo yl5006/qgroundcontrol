@@ -65,6 +65,7 @@ Item {
         anchors.top:        parent.top
         width:              parent.width
         height:             _valuesWidget.height
+        visible:            widgetRoot.showValues
 /*
         Rectangle {
             anchors.fill:   _valuesWidget

@@ -28,6 +28,7 @@ QGCViewDialog {
     property bool   showonlyhelp:   false
     property bool   validate:       false
     property string validateValue
+    property bool   setFocus:       true    ///< true: focus is set to text field on display, false: focus not set (works around strange virtual keyboard bug with FactValueSlider
 
     signal valueChanged
 
@@ -128,7 +129,7 @@ QGCViewDialog {
                     unitsLabel:         fact.units
                     showUnits:          fact.units != ""
                     Layout.fillWidth:   true
-                    focus:              true
+                    focus:              setFocus
                     inputMethodHints:   (fact.typeIsString || ScreenTools.isiOS) ?
                                           Qt.ImhNone :                // iOS numeric keyboard has no done button, we can't use it
                                           Qt.ImhFormattedNumbersOnly  // Forces use of virtual numeric keyboard

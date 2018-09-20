@@ -15,23 +15,27 @@ import QtLocation               5.3
 import QtPositioning            5.3
 import QtQuick.Layouts          1.2
 
-import QGroundControl                           1.0
-import QGroundControl.ScreenTools               1.0
-import QGroundControl.Controls                  1.0
-import QGroundControl.Palette                   1.0
-import QGroundControl.Vehicle                   1.0
-import QGroundControl.FlightMap                 1.0
+import QGroundControl               1.0
+import QGroundControl.ScreenTools   1.0
+import QGroundControl.Controls      1.0
+import QGroundControl.Palette       1.0
+import QGroundControl.Vehicle       1.0
+import QGroundControl.FlightMap     1.0
+import QGroundControl.Airspace      1.0
+import QGroundControl.Airmap        1.0
 
 Item {
-    id: _root
+    id: widgetRoot
 
     property var    qgcView
     property bool   useLightColors
     property var    missionController
+    property bool   showValues:             !QGroundControl.airspaceManager.airspaceVisible
     property var    orbitMapCircle
-
+    property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     property bool   _isSatellite:           _mainIsMap ? (_flightMap ? _flightMap.isSatelliteMap : true) : true
     property bool   _lightWidgetBorders:    _isSatellite
+    property bool   _airspaceEnabled:       QGroundControl.airmapSupported ? QGroundControl.settingsManager.airMapSettings.enableAirMap.rawValue : false
 
     readonly property real _margins:        ScreenTools.defaultFontPixelHeight * 0.5
     readonly property real _toolButtonTopMargin:    parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
@@ -61,7 +65,6 @@ Item {
     property bool guidedUIVisible:      guidedModeConfirm.visible //|| guidedActionList.visible
 
     property bool   _guidedActionsEnabled:  (!ScreenTools.isDebug && QGroundControl.corePlugin.options.guidedActionsRequireRCRSSI && _activeVehicle) ? _rcRSSIAvailable : _activeVehicle
-    property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
     property string _flightMode:            _activeVehicle ? _activeVehicle.flightMode : ""
     property bool   _missionAvailable:      missionController.containsItems
     property bool   _missionActive:         _activeVehicle ? _vehicleArmed && (_vehicleInLandMode || _vehicleInRTLMode || _vehicleInMissionMode) : false
@@ -270,12 +273,10 @@ Item {
     }
 
     function getPreferredInstrumentWidth() {
-        if(ScreenTools.isMobile) {
-            return mainWindow.width * 0.15
-        } else if(ScreenTools.isHugeScreen) {
-            return mainWindow.width * 0.11
-        }
-        return ScreenTools.defaultFontPixelWidth * 30
+        // Don't allow instrument panel to chew more than 1/4 of full window
+        var defaultWidth = ScreenTools.defaultFontPixelWidth * 30
+        var maxWidth = mainWindow.width * 0.25
+        return Math.min(maxWidth, defaultWidth)
     }
 
     function _setInstrumentWidget() {
@@ -321,6 +322,13 @@ Item {
 //        onValueChanged: _setInstrumentWidget()
     }
 
+    Connections {
+        target: QGroundControl.airspaceManager
+        onAirspaceVisibleChanged: {
+             widgetRoot.showValues = !QGroundControl.airspaceManager.airspaceVisible
+        }
+    }
+
     Component.onCompleted: {
         _setInstrumentWidget()
     }
@@ -361,83 +369,98 @@ Item {
             text:                       "The vehicle has failed a pre-arm check. In order to arm the vehicle, resolve the failure."
         }
     }
-
-    //-- Instrument Panel
-    Loader {
-        id:                     instrumentsLoader
-        anchors.margins:        ScreenTools.defaultFontPixelHeight / 2
-        anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
-        z:                      QGroundControl.zOrderWidgets
-        property var  qgcView:  _root.qgcView
-        property real maxHeight:parent.height - (anchors.margins * 2)
-        states: [
-            State {
-                name:   "topRightMode"
-                AnchorChanges {
-                    target:                 instrumentsLoader
-                    anchors.verticalCenter: undefined
-                    anchors.bottom:         undefined
-                    anchors.top:            _root ? _root.top : undefined
-                    anchors.right:          _root ? _root.right : undefined
-                    anchors.left:           undefined
+    Column {
+        id:                     instrumentsColumn
+        spacing:                ScreenTools.defaultFontPixelHeight * 0.25
+        anchors.top:            parent.top
+        anchors.topMargin:      QGroundControl.corePlugin.options.instrumentWidget.widgetTopMargin + (ScreenTools.defaultFontPixelHeight * 0.5)
+        anchors.margins:        ScreenTools.defaultFontPixelHeight * 0.5
+        anchors.right:          parent.right
+        //-------------------------------------------------------
+        // Airmap Airspace Control
+        AirspaceControl {
+            id:                 airspaceControl
+            width:              getPreferredInstrumentWidth()
+            planView:           false
+            visible:            _airspaceEnabled
+            anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
+        }
+        //-------------------------------------------------------
+        //-- Instrument Panel
+        Loader {
+            id:                         instrumentsLoader
+            anchors.margins:            ScreenTools.defaultFontPixelHeight * 0.5
+            property var  qgcView:      widgetRoot.qgcView
+            property real maxHeight:    widgetRoot ? widgetRoot.height - instrumentsColumn.y - airspaceControl.height - (ScreenTools.defaultFontPixelHeight * 4) : 0
+            states: [
+                State {
+                    name:   "topRightMode"
+                    AnchorChanges {
+                        target:                 instrumentsLoader
+                        anchors.verticalCenter: undefined
+                        anchors.bottom:         undefined
+                        anchors.top:            _root ? _root.top : undefined
+                        anchors.right:          _root ? _root.right : undefined
+                        anchors.left:           undefined
+                    }
+                },
+                State {
+                    name:   "centerRightMode"
+                    AnchorChanges {
+                        target:                 instrumentsLoader
+                        anchors.top:            undefined
+                        anchors.bottom:         undefined
+                        anchors.verticalCenter: _root ? _root.verticalCenter : undefined
+                        anchors.right:          _root ? _root.right : undefined
+                        anchors.left:           undefined
+                    }
+                },
+                State {
+                    name:   "bottomRightMode"
+                    AnchorChanges {
+                        target:                 instrumentsLoader
+                        anchors.top:            undefined
+                        anchors.verticalCenter: undefined
+                        anchors.bottom:         _root ? _root.bottom : undefined
+                        anchors.right:          _root ? _root.right : undefined
+                        anchors.left:           undefined
+                    }
+                },
+                State {
+                    name:   "topLeftMode"
+                    AnchorChanges {
+                        target:                 instrumentsLoader
+                        anchors.verticalCenter: undefined
+                        anchors.bottom:         undefined
+                        anchors.top:            _root ? _root.top : undefined
+                        anchors.right:          undefined
+                        anchors.left:           _root ? _root.left : undefined
+                    }
+                },
+                State {
+                    name:   "centerLeftMode"
+                    AnchorChanges {
+                        target:                 instrumentsLoader
+                        anchors.top:            undefined
+                        anchors.bottom:         undefined
+                        anchors.verticalCenter: _root ? _root.verticalCenter : undefined
+                        anchors.right:          undefined
+                        anchors.left:           _root ? _root.left : undefined
+                    }
+                },
+                State {
+                    name:   "bottomLeftMode"
+                    AnchorChanges {
+                        target:                 instrumentsLoader
+                        anchors.top:            undefined
+                        anchors.verticalCenter: undefined
+                        anchors.bottom:         _root ? _root.bottom : undefined
+                        anchors.right:          undefined
+                        anchors.left:           _root ? _root.left : undefined
+                    }
                 }
-            },
-            State {
-                name:   "centerRightMode"
-                AnchorChanges {
-                    target:                 instrumentsLoader
-                    anchors.top:            undefined
-                    anchors.bottom:         undefined
-                    anchors.verticalCenter: _root ? _root.verticalCenter : undefined
-                    anchors.right:          _root ? _root.right : undefined
-                    anchors.left:           undefined
-                }
-            },
-            State {
-                name:   "bottomRightMode"
-                AnchorChanges {
-                    target:                 instrumentsLoader
-                    anchors.top:            undefined
-                    anchors.verticalCenter: undefined
-                    anchors.bottom:         _root ? _root.bottom : undefined
-                    anchors.right:          _root ? _root.right : undefined
-                    anchors.left:           undefined
-                }
-            },
-            State {
-                name:   "topLeftMode"
-                AnchorChanges {
-                    target:                 instrumentsLoader
-                    anchors.verticalCenter: undefined
-                    anchors.bottom:         undefined
-                    anchors.top:            _root ? _root.top : undefined
-                    anchors.right:          undefined
-                    anchors.left:           _root ? _root.left : undefined
-                }
-            },
-            State {
-                name:   "centerLeftMode"
-                AnchorChanges {
-                    target:                 instrumentsLoader
-                    anchors.top:            undefined
-                    anchors.bottom:         undefined
-                    anchors.verticalCenter: _root ? _root.verticalCenter : undefined
-                    anchors.right:          undefined
-                    anchors.left:           _root ? _root.left : undefined
-                }
-            },
-            State {
-                name:   "bottomLeftMode"
-                AnchorChanges {
-                    target:                 instrumentsLoader
-                    anchors.top:            undefined
-                    anchors.verticalCenter: undefined
-                    anchors.bottom:         _root ? _root.bottom : undefined
-                    anchors.right:          undefined
-                    anchors.left:           _root ? _root.left : undefined
-                }
-            }
-        ]
+            ]
+        }
     }
     //-- Instrument Panel
     QGCInstrumentWidgetBottom {
@@ -446,7 +469,7 @@ Item {
         anchors.right:          altitudeSlider.visible ? altitudeSlider.left : parent.right
         anchors.bottom:         parent.bottom
         z:                      QGroundControl.zOrderWidgets
-        _qgcView:                _root.qgcView
+        _qgcView:                widgetRoot.qgcView
         _maxHeight:              parent.height - (anchors.margins * 2)
     }
     //-- Guided mode buttons
@@ -533,7 +556,7 @@ Item {
                     visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.pauseVehicleSupported && _activeVehicle.flying
                     onClicked:  {
                         guidedModeHideTimer.restart()
-                        _root.confirmAction(_root.actionPause)
+                        widgetRoot.confirmAction(widgetRoot.actionPause)
                     }
                 }
 
@@ -547,7 +570,7 @@ Item {
                     onClicked:  {
                         guidedModeHideTimer.restart()
                         orbitMapCircle.hide()
-                        _root.confirmAction(_root.actionEmergencyStop)
+                        widgetRoot.confirmAction(widgetRoot.actionEmergencyStop)
                     }
                 }
 
@@ -561,7 +584,7 @@ Item {
                     visible:    _activeVehicle
                     onClicked:  {
                          orbitMapCircle.hide()
-                        _root.confirmAction(_activeVehicle.flying ? _root.actionContinueMission : _root.actionStartMission)
+                        widgetRoot.confirmAction(_activeVehicle.flying ? widgetRoot.actionContinueMission : widgetRoot.actionStartMission)
                     }
                 }
 
@@ -574,7 +597,7 @@ Item {
                     visible:    _activeVehicle && _activeVehicle.guidedModeSupported
                     onClicked:  {
                          orbitMapCircle.hide()
-                        _root.confirmAction(_activeVehicle.flying ? _root.actionLand : _root.actionTakeoff)
+                         widgetRoot.confirmAction(_activeVehicle.flying ? widgetRoot.actionLand : widgetRoot.actionTakeoff)
                     }
                 }
                 RoundImageButton{
@@ -585,7 +608,7 @@ Item {
                     text:       qsTr("RTL")
                     visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.guidedModeSupported && _activeVehicle.flying
                     onClicked:  {
-                                _root.confirmAction(_root.actionRTL)
+                                widgetRoot.confirmAction(widgetRoot.actionRTL)
                                 orbitMapCircle.hide()
                     }
 
@@ -598,21 +621,21 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     imageResource: "/qmlimages/high.svg"
                     visible:    (_activeVehicle && _activeVehicle.flying) && _activeVehicle.guidedModeSupported && _activeVehicle.armed
-                    onClicked:  _root.confirmAction(_root.actionChangeAlt)
+                    onClicked:  widgetRoot.confirmAction(widgetRoot.actionChangeAlt)
                 }
 
                 QGCButton {
-                    pointSize:  _root._fontPointSize
+                    pointSize:  widgetRoot._fontPointSize
                     text:       qsTr("热点环绕")
                     visible:    false
-                    onClicked:  _root.confirmAction(_root.actionOrbit)
+                    onClicked:  widgetRoot.confirmAction(widgetRoot.actionOrbit)
                 }
 
                 QGCButton {
-                    pointSize:  _root._fontPointSize
+                    pointSize:  widgetRoot._fontPointSize
                     text:       qsTr("取消降落")
                     visible:    showLandAbort
-                    onClicked:  _root.confirmAction(_root.actionAbort)
+                    onClicked:  widgetRoot.confirmAction(widgetRoot.actionAbort)
                 }
                 RoundImageButton{
                     width:       ScreenTools.defaultFontPixelHeight*4
@@ -621,7 +644,7 @@ Item {
                     imageResource: _activeVehicle.vtolInFwdFlight ? "/qmlimages/change_coper.svg" : "/qmlimages/change_fixwing.svg"
                     text:       qsTr("模式切换")       
                     visible:    _activeVehicle ? _activeVehicle.vtol && _activeVehicle.px4Firmware : false
-                    onClicked:  _root.confirmAction(_activeVehicle.vtolInFwdFlight ? _root.actionVtolTransitionToMRFlight:_root.actionVtolTransitionToFwdFlight)
+                    onClicked:  widgetRoot.confirmAction(_activeVehicle.vtolInFwdFlight ? widgetRoot.actionVtolTransitionToMRFlight:widgetRoot.actionVtolTransitionToFwdFlight)
                 }
 
             } // Row
@@ -631,7 +654,7 @@ Item {
     MouseArea {
         anchors.fill:   parent
         enabled:        guidedModeConfirm.visible && ! orbitMapCircle.visible
-        onClicked:      _root.rejectGuidedModeConfirm()
+        onClicked:      widgetRoot.rejectGuidedModeConfirm()
     }
 
     // Action confirmation control
@@ -642,7 +665,7 @@ Item {
         anchors.horizontalCenter:   parent.horizontalCenter
         visible:                    false
         z:                          QGroundControl.zOrderWidgets
-        fontPointSize:              _root._fontPointSize
+        fontPointSize:              widgetRoot._fontPointSize
 
         onAccept: {
             guidedModeConfirm.visible = false
@@ -652,11 +675,11 @@ Item {
                 altitudeChange = altitudeSlider.getAltitudeChangeValue()
                 altitudeSlider.visible = false
             }
-            _root.actionConfirmed(_root._actionData,altitudeChange)
+            widgetRoot.actionConfirmed(widgetRoot._actionData,altitudeChange)
             guidedModeHideTimer.restart()
         }
 
-        onReject: _root.rejectGuidedModeConfirm()
+        onReject: widgetRoot.rejectGuidedModeConfirm()
     }
 
     GuidedAltitudeSlider {
@@ -666,7 +689,7 @@ Item {
         anchors.topMargin:  ScreenTools.toolbarHeight + _margins
         anchors.top:        parent.top
         anchors.bottom:     parent.bottom
-        z:                  _root.z
+        z:                  widgetRoot.z
         radius:             ScreenTools.defaultFontPixelWidth / 2
         width:              ScreenTools.defaultFontPixelWidth * 10
         color:              qgcPal.window

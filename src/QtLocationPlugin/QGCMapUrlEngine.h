@@ -56,9 +56,13 @@ public:
         MapQuestSat             = 701,
         */
 
-        GaodeMap                 = 801,
-        GaodeSatellite           = 802,
-        GaodeTerrain             = 803,
+        VWorldMap                = 800,
+        VWorldSatellite          = 801,
+        VWorldStreet             = 802,
+
+	    GaodeMap                 = 901,
+        GaodeSatellite           = 902,
+        GaodeTerrain             = 903,
         MapboxStreets           = 6000,
         MapboxLight             = 6001,
         MapboxDark              = 6002,
@@ -78,7 +82,7 @@ public:
         EsriWorldSatellite      = 7001,
         EsriTerrain             = 7002,
 
-        AirmapElevation         = 8000
+        AirmapElevation         = 8001
     };
 
     UrlFactory      ();

@@ -13,6 +13,7 @@ Item {
     property bool   yAxisThrottle:  false               ///< true: yAxis used for throttle, range [1,0], positive value are stick up
     property real   xPositionDelta: 0                   ///< Amount to move the control on x axis
     property real   yPositionDelta: 0                   ///< Amount to move the control on y axis
+    property bool   throttle:       false
 
     property real   _centerXY:              width / 2
     property bool   _processTouchPoints:    false
@@ -83,11 +84,60 @@ Item {
         smooth:             true
     }
 
-    Image {
-        anchors.fill:       parent
-        source:             "/res/Joystickback.svg"
-        mipmap:             true
-        smooth:             true
+    QGCColoredImage {
+        color:                      lightColors ? "white" : "black"
+        visible:                    throttle
+        height:                     ScreenTools.defaultFontPixelHeight
+        width:                      height
+        sourceSize.height:          height
+        mipmap:                     true
+        fillMode:                   Image.PreserveAspectFit
+        source:                     "/res/clockwise-arrow.svg"
+        anchors.right:              parent.right
+        anchors.rightMargin:        ScreenTools.defaultFontPixelWidth
+        anchors.verticalCenter:     parent.verticalCenter
+    }
+
+    QGCColoredImage {
+        color:                      lightColors ? "white" : "black"
+        visible:                    throttle
+        height:                     ScreenTools.defaultFontPixelHeight
+        width:                      height
+        sourceSize.height:          height
+        mipmap:                     true
+        fillMode:                   Image.PreserveAspectFit
+        source:                     "/res/counter-clockwise-arrow.svg"
+        anchors.left:               parent.left
+        anchors.leftMargin:         ScreenTools.defaultFontPixelWidth
+        anchors.verticalCenter:     parent.verticalCenter
+    }
+
+    QGCColoredImage {
+        color:                      lightColors ? "white" : "black"
+        visible:                    throttle
+        height:                     ScreenTools.defaultFontPixelHeight
+        width:                      height
+        sourceSize.height:          height
+        mipmap:                     true
+        fillMode:                   Image.PreserveAspectFit
+        source:                     "/res/chevron-up.svg"
+        anchors.top:                parent.top
+        anchors.topMargin:          ScreenTools.defaultFontPixelWidth
+        anchors.horizontalCenter:   parent.horizontalCenter
+    }
+
+    QGCColoredImage {
+        color:                      lightColors ? "white" : "black"
+        visible:                    throttle
+        height:                     ScreenTools.defaultFontPixelHeight
+        width:                      height
+        sourceSize.height:          height
+        mipmap:                     true
+        fillMode:                   Image.PreserveAspectFit
+        source:                     "/res/chevron-down.svg"
+        anchors.bottom:             parent.bottom
+        anchors.bottomMargin:       ScreenTools.defaultFontPixelWidth
+        anchors.horizontalCenter:   parent.horizontalCenter
     }
 
     Rectangle {
@@ -96,7 +146,7 @@ Item {
         radius:             width / 2
         border.color:       mapPal.thumbJoystick
         border.width:       2
-        color:              "transparent"
+        color:              Qt.rgba(0,0,0,0)
     }
 
 //    Rectangle {
@@ -113,8 +163,10 @@ Item {
         source:             "/res/Joystickcenter.svg"
         mipmap:             true
         smooth:             true
-   //    radius: hatWidthHalf
-   //     color:  mapPal.thumbJoystick
+//    	radius: hatWidthHalf
+//      border.color: lightColors ? "white" : "black"
+//      border.width: 1
+//     	color:  mapPal.thumbJoystick
         x:      stickPositionX - hatWidthHalf
         y:      stickPositionY - hatWidthHalf
 

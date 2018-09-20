@@ -53,7 +53,6 @@ void OpenCVcamera::setRun(bool r)
         // Obtain video attributes from created ID
          startVideoStreamFromDevice(0, bufferSize);
          getVideoFrameAttributes(id, &width, &height, &rowPitch);
-         qDebug()<<width<<height;
 
     } else {
 //        if (m_Capture.isOpened()) {
@@ -74,7 +73,6 @@ Mat OpenCVcamera::getFrame()
 //    }
 // Obtain video frame from created ID
     getVideoFrameAttributes(id, &width, &height, &rowPitch);
-    qDebug()<<width<<height;
 
     bool isKeyframe = false;
     char* buffer = getVideoBuffer(id, &bufferSize, &frameNo, &isKeyframe);

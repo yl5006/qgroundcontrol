@@ -259,7 +259,7 @@ void MissionSettingsItem::setHomePositionFromVehicle(const QGeoCoordinate& coord
 void MissionSettingsItem::setCoordinate(const QGeoCoordinate& coordinate)
 {
     if (_plannedHomePositionCoordinate != coordinate) {
-        // ArduPilot tends to send crap home positions at initial vehicel boot, discard them
+        // ArduPilot tends to send crap home positions at initial vehicle boot, discard them
         if (coordinate.isValid() && (coordinate.latitude() != 0 || coordinate.longitude() != 0)) {
             _plannedHomePositionCoordinate = coordinate;
             emit coordinateChanged(coordinate);
@@ -297,7 +297,6 @@ void MissionSettingsItem::_updateAltitudeInCoordinate(QVariant value)
     double newAltitude = value.toDouble();
 
     if (!qFuzzyCompare(_plannedHomePositionCoordinate.altitude(), newAltitude)) {
-
         _plannedHomePositionCoordinate.setAltitude(newAltitude);
         emit coordinateChanged(_plannedHomePositionCoordinate);
         emit exitCoordinateChanged(_plannedHomePositionCoordinate);
@@ -323,7 +322,7 @@ void MissionSettingsItem::setMissionEndRTL(bool missionEndRTL)
 
 void MissionSettingsItem::_setHomeAltFromTerrain(double terrainAltitude)
 {
-    if (!_plannedHomePositionFromVehicle) {
+    if (!_plannedHomePositionFromVehicle && !qIsNaN(terrainAltitude)) {
         _plannedHomePositionAltitudeFact.setRawValue(terrainAltitude);
     }
 }

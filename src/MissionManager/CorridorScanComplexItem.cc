@@ -169,7 +169,8 @@ void CorridorScanComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& i
     bool firstOverallPoint =        true;
 
     MAV_FRAME mavFrame = followTerrain() || !_cameraCalc.distanceToSurfaceRelative() ? MAV_FRAME_GLOBAL : MAV_FRAME_GLOBAL_RELATIVE_ALT;
-
+    //找到航点前一个速度
+    float speed = items.last()->param3();
     //qDebug() << "_buildAndAppendMissionItems";
     foreach (const QList<TransectStyleComplexItem::CoordInfo_t>& transect, _transects) {
         bool entryPoint = true;
@@ -185,7 +186,7 @@ void CorridorScanComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& i
                                        mavFrame,
                                        0,                                          // No hold time
                                        0.0,                                        // No acceptance radius specified
-                                       0.0,                                        // Pass through waypoint
+                                       speed,                                      // Pass through waypoint
                                        std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                        transectCoordInfo.coord.latitude(),
                                        transectCoordInfo.coord.longitude(),
@@ -207,7 +208,7 @@ void CorridorScanComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& i
                                                mavFrame,
                                                0,                                          // No hold time
                                                0.0,                                        // No acceptance radius specified
-                                               0.0,                                        // Pass through waypoint
+                                               speed,                                        // Pass through waypoint
                                                std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                                transectCoordInfo.coord.latitude(),
                                                transectCoordInfo.coord.longitude(),
@@ -226,7 +227,7 @@ void CorridorScanComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& i
                                                mavFrame,
                                                0,                                          // No hold time
                                                0.0,                                        // No acceptance radius specified
-                                               0.0,                                        // Pass through waypoint
+                                               speed,                                        // Pass through waypoint
                                                std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                                transectCoordInfo.coord.latitude(),
                                                transectCoordInfo.coord.longitude(),
@@ -247,7 +248,7 @@ void CorridorScanComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& i
                                            mavFrame,
                                            0,                                          // No hold time
                                            0.0,                                        // No acceptance radius specified
-                                           0.0,                                        // Pass through waypoint
+                                           speed,                                        // Pass through waypoint
                                            std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                            transectCoordInfo.coord.latitude(),
                                            transectCoordInfo.coord.longitude(),
@@ -273,7 +274,7 @@ void CorridorScanComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& i
                                             mavFrame,
                                             0,                                          // No hold time
                                             0.0,                                        // No acceptance radius specified
-                                            0.0,                                        // Pass through waypoint
+                                            speed,                                        // Pass through waypoint
                                             std::numeric_limits<double>::quiet_NaN(),   // Yaw unchanged
                                             lastitem->param5(),
                                             lastitem->param6(),

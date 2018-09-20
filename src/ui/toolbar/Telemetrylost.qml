@@ -38,8 +38,8 @@ Item {
         id:          telemcircle
         anchors.left:  parent.left
         width:       mainWindow.tbHeight*1.5
-        value:       activeVehicle ? (100-activeVehicle.telemetryLost)/100:0
-        valuecolor:  activeVehicle?getRSSIColor(100-activeVehicle.telemetryLost):qgcPal.text
+        value:       activeVehicle ? (100 - activeVehicle.mavlinkLossPercent ) /100 : 0
+        valuecolor:  activeVehicle ? getRSSIColor(100-activeVehicle.mavlinkLossPercent):qgcPal.text
         anchors.verticalCenter: parent.verticalCenter
     }
     QGCColoredImage {
@@ -58,6 +58,6 @@ Item {
         anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
         anchors.verticalCenter: parent.verticalCenter
         color:          qgcPal.buttonText
-        text:            activeVehicle ?(100-activeVehicle.telemetryLost).toFixed(1)+" %":"0"
+        text:            activeVehicle ?(100- activeVehicle.mavlinkLossPercent ).toFixed(1)+" %":"0"
     }
 }

@@ -142,9 +142,6 @@ public:
     void save               (QJsonArray&  missionItems) final;
     void setparam1          (double param1);
     void setparam3          (double param3);
-public slots:
-    void setDefaultsForCommand(void);
-
 
 signals:
     void commandChanged             (int command);
@@ -171,6 +168,7 @@ private slots:
     void _rebuildFacts                      (void);
     void _rebuildTextFieldFacts             (void);
     void _possibleAdditionalTimeDelayChanged(void);
+    void _setDefaultsForCommand              (void);
 
 private:
     void _connectSignals        (void);

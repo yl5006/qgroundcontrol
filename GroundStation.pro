@@ -44,29 +44,6 @@ MacBuild {
     }
 }
 
-iOSBuild {
-    LIBS               += -framework AVFoundation
-    #-- Info.plist (need an "official" one for the App Store)
-    ForAppStore {
-        message(App Store Build)
-        #-- Create official, versioned Info.plist
-        APP_STORE = $$system(cd $${BASEDIR} && $${BASEDIR}/tools/update_ios_version.sh $${BASEDIR}/ios/iOSForAppStore-Info-Source.plist $${BASEDIR}/ios/iOSForAppStore-Info.plist)
-        APP_ERROR = $$find(APP_STORE, "Error")
-        count(APP_ERROR, 1) {
-            error("Error building .plist file. 'ForAppStore' builds are only possible through the official build system.")
-        }
-        QT               += qml-private
-        QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOSForAppStore-Info.plist
-        OTHER_FILES      += $${BASEDIR}/ios/iOSForAppStore-Info.plist
-    } else {
-        QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOS-Info.plist
-        OTHER_FILES      += $${BASEDIR}/ios/iOS-Info.plist
-    }
-    BUNDLE.files        = $$files($$PWD/ios/AppIcon*.png) $$PWD/ios/QGCLaunchScreen.xib $$QMAKE_INFO_PLIST
-    QMAKE_BUNDLE_DATA  += BUNDLE
-    #-- TODO: Add iTunesArtwork
-}
-
 LinuxBuild {
     CONFIG  += qesp_linux_udev
 }
@@ -131,6 +108,36 @@ WindowsBuild {
     QMAKE_TARGET_DESCRIPTION    = "$${QGC_APP_DESCRIPTION}"
     QMAKE_TARGET_COPYRIGHT      = "$${QGC_APP_COPYRIGHT}"
     QMAKE_TARGET_PRODUCT        = "$${QGC_APP_NAME}"
+}
+
+#-------------------------------------------------------------------------------------
+# iOS
+
+iOSBuild {
+    contains (CONFIG, DISABLE_BUILTIN_IOS) {
+        message("Skipping builtin support for iOS")
+    } else {
+        LIBS                 += -framework AVFoundation
+        #-- Info.plist (need an "official" one for the App Store)
+        ForAppStore {
+            message(App Store Build)
+            #-- Create official, versioned Info.plist
+            APP_STORE = $$system(cd $${BASEDIR} && $${BASEDIR}/tools/update_ios_version.sh $${BASEDIR}/ios/iOSForAppStore-Info-Source.plist $${BASEDIR}/ios/iOSForAppStore-Info.plist)
+            APP_ERROR = $$find(APP_STORE, "Error")
+            count(APP_ERROR, 1) {
+                error("Error building .plist file. 'ForAppStore' builds are only possible through the official build system.")
+            }
+            QT               += qml-private
+            QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOSForAppStore-Info.plist
+            OTHER_FILES      += $${BASEDIR}/ios/iOSForAppStore-Info.plist
+        } else {
+            QMAKE_INFO_PLIST  = $${BASEDIR}/ios/iOS-Info.plist
+            OTHER_FILES      += $${BASEDIR}/ios/iOS-Info.plist
+        }
+        QMAKE_ASSET_CATALOGS += ios/Images.xcassets
+        BUNDLE.files          = ios/QGCLaunchScreen.xib $$QMAKE_INFO_PLIST
+        QMAKE_BUNDLE_DATA    += BUNDLE
+    }
 }
 
 #
@@ -593,6 +600,7 @@ HEADERS += \
     src/QmlControls/QGCImageProvider.h \
     src/QmlControls/QGroundControlQmlGlobal.h \
     src/QmlControls/QmlObjectListModel.h \
+    src/QmlControls/QGCGeoBoundingCube.h \
     src/QmlControls/RCChannelMonitorController.h \
     src/QmlControls/ScreenToolsController.h \
     src/QtLocationPlugin/QMLControl/QGCMapEngineManager.h \
@@ -622,6 +630,7 @@ HEADERS += \
     src/uas/UASInterface.h \
     src/uas/UASMessageHandler.h \
     src/UTM.h \
+
 
 AndroidBuild {
 HEADERS += \
@@ -790,6 +799,7 @@ SOURCES += \
     src/QmlControls/QGCImageProvider.cc \
     src/QmlControls/QGroundControlQmlGlobal.cc \
     src/QmlControls/QmlObjectListModel.cc \
+    src/QmlControls/QGCGeoBoundingCube.cc \
     src/QmlControls/RCChannelMonitorController.cc \
     src/QmlControls/ScreenToolsController.cc \
     src/QtLocationPlugin/QMLControl/QGCMapEngineManager.cc \
@@ -1100,6 +1110,92 @@ SOURCES += \
     src/FactSystem/FactValueSliderListModel.cc \
     src/FactSystem/ParameterManager.cc \
     src/FactSystem/SettingsFact.cc \
+
+#-------------------------------------------------------------------------------------
+# AirMap
+
+contains (DEFINES, QGC_AIRMAP_ENABLED) {
+
+    #-- These should be always enabled but not yet
+    INCLUDEPATH += \
+        src/AirspaceManagement
+
+    HEADERS += \
+        src/AirspaceManagement/AirspaceAdvisoryProvider.h \
+        src/AirspaceManagement/AirspaceFlightPlanProvider.h \
+        src/AirspaceManagement/AirspaceManager.h \
+        src/AirspaceManagement/AirspaceRestriction.h \
+        src/AirspaceManagement/AirspaceRestrictionProvider.h \
+        src/AirspaceManagement/AirspaceRulesetsProvider.h \
+        src/AirspaceManagement/AirspaceVehicleManager.h \
+        src/AirspaceManagement/AirspaceWeatherInfoProvider.h \
+
+    SOURCES += \
+        src/AirspaceManagement/AirspaceAdvisoryProvider.cc \
+        src/AirspaceManagement/AirspaceFlightPlanProvider.cc \
+        src/AirspaceManagement/AirspaceManager.cc \
+        src/AirspaceManagement/AirspaceRestriction.cc \
+        src/AirspaceManagement/AirspaceRestrictionProvider.cc \
+        src/AirspaceManagement/AirspaceRulesetsProvider.cc \
+        src/AirspaceManagement/AirspaceVehicleManager.cc \
+        src/AirspaceManagement/AirspaceWeatherInfoProvider.cc \
+
+    #-- This is the AirMap implementation of the above
+    RESOURCES += \
+        src/Airmap/airmap.qrc
+
+    INCLUDEPATH += \
+        src/Airmap
+
+    HEADERS += \
+        src/Airmap/AirMapAdvisoryManager.h \
+        src/Airmap/AirMapFlightManager.h \
+        src/Airmap/AirMapFlightPlanManager.h \
+        src/Airmap/AirMapManager.h \
+        src/Airmap/AirMapRestrictionManager.h \
+        src/Airmap/AirMapRulesetsManager.h \
+        src/Airmap/AirMapSettings.h \
+        src/Airmap/AirMapSharedState.h \
+        src/Airmap/AirMapTelemetry.h \
+        src/Airmap/AirMapTrafficMonitor.h \
+        src/Airmap/AirMapVehicleManager.h \
+        src/Airmap/AirMapWeatherInfoManager.h \
+        src/Airmap/LifetimeChecker.h \
+
+    SOURCES += \
+        src/Airmap/AirMapAdvisoryManager.cc \
+        src/Airmap/AirMapFlightManager.cc \
+        src/Airmap/AirMapFlightPlanManager.cc \
+        src/Airmap/AirMapManager.cc \
+        src/Airmap/AirMapRestrictionManager.cc \
+        src/Airmap/AirMapRulesetsManager.cc \
+        src/Airmap/AirMapSettings.cc \
+        src/Airmap/AirMapSharedState.cc \
+        src/Airmap/AirMapTelemetry.cc \
+        src/Airmap/AirMapTrafficMonitor.cc \
+        src/Airmap/AirMapVehicleManager.cc \
+        src/Airmap/AirMapWeatherInfoManager.cc \
+
+    #-- Do we have an API key?
+    exists(src/Airmap/Airmap_api_key.h) {
+        HEADERS += \
+            src/Airmap/Airmap_api_key.h
+        DEFINES += QGC_AIRMAP_KEY_AVAILABLE
+    }
+
+    include(src/Airmap/QJsonWebToken/src/qjsonwebtoken.pri)
+
+} else {
+    #-- Dummies
+    INCLUDEPATH += \
+        src/Airmap/dummy
+    RESOURCES += \
+        src/Airmap/dummy/airmap_dummy.qrc
+    HEADERS += \
+        src/Airmap/dummy/AirspaceManager.h
+    SOURCES += \
+        src/Airmap/dummy/AirspaceManager.cc
+}
 
 #-------------------------------------------------------------------------------------
 # Video Streaming

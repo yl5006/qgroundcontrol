@@ -75,17 +75,18 @@ Rectangle {
         }
 
         SectionHeader {
-            id:     corridorHeader
+            id:     transectsHeader
             text:   qsTr("飞行区域")
         }
 
         GridLayout {
+            id:             transectsGrid
             anchors.left:   parent.left
             anchors.right:  parent.right
             columnSpacing:  _margin
             rowSpacing:     _margin
             columns:        2
-            visible:        corridorHeader.checked
+            visible:        transectsHeader.checked
 
             QGCLabel { text: qsTr("角度") }
             FactTextField {
@@ -109,8 +110,8 @@ Rectangle {
 
             QGCLabel { text: qsTr("转弯距离") }
             FactTextField {
-                fact:                   missionItem.turnAroundDistance
-                Layout.fillWidth:       true
+                fact:               missionItem.turnAroundDistance
+                Layout.fillWidth:   true
             }
 
             QGCButton {
