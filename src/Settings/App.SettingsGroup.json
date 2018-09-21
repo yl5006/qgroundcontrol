@@ -198,5 +198,12 @@
     "enumStrings":      "Never,Always,When in Follow Me Flight Mode",
     "enumValues":       "0,1,2",
     "defaultValue":     0
+},
+{
+    "name":             "Language",
+    "shortDescription": "App Language",
+    "longDescription":  "If this option is enabled all audio output will be muted.",
+    "type":             "bool",
+    "defaultValue":     true
 }
 ]

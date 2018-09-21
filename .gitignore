@@ -58,6 +58,10 @@ GeneratedFiles/
 gstreamer-1.0-android*
 src/Airmap/Airmap_api_key.h
 
+src/LibusbVideo/*
+src/OpencvStreaming/*
+libs/QSimpleUpdater/*
+
 *.autosave
 .settings/
 
