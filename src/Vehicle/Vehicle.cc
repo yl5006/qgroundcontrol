@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -82,7 +82,7 @@ const char* Vehicle::_temperatureFactGroupName =        "temperature";
 const char* Vehicle::_clockFactGroupName =              "clock";
 const char* Vehicle::_distanceSensorFactGroupName =     "distanceSensor";
 const char* Vehicle::_estimatorStatusFactGroupName =    "estimatorStatus";
-extern int language;
+QLocale locale = QLocale::system();
 Vehicle::Vehicle(LinkInterface*             link,
                  int                        vehicleId,
                  int                        defaultComponentId,
@@ -90,7 +90,7 @@ Vehicle::Vehicle(LinkInterface*             link,
                  MAV_TYPE                   vehicleType,
                  FirmwarePluginManager*     firmwarePluginManager,
                  JoystickManager*           joystickManager)
-    : FactGroup(_vehicleUIUpdateRateMSecs, language==0?":/json/Vehicle/VehicleFactCn.json":":/json/Vehicle/VehicleFact.json")
+    : FactGroup(_vehicleUIUpdateRateMSecs, (locale.country() == QLocale::China) ? ":/json/Vehicle/VehicleFactCn.json":":/json/Vehicle/VehicleFact.json")
     , _id(vehicleId)
     , _defaultComponentId(defaultComponentId)
     , _active(false)
@@ -294,7 +294,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
                  MAV_TYPE                   vehicleType,
                  FirmwarePluginManager*     firmwarePluginManager,
                  QObject*                   parent)
-    : FactGroup(_vehicleUIUpdateRateMSecs, language==0 ? ":/json/Vehicle/VehicleFactCn.json":":/json/Vehicle/VehicleFact.json", parent)
+    : FactGroup(_vehicleUIUpdateRateMSecs, (locale.country() == QLocale::China) ? ":/json/Vehicle/VehicleFactCn.json":":/json/Vehicle/VehicleFact.json", parent)
     , _id(0)
     , _defaultComponentId(MAV_COMP_ID_ALL)
     , _active(false)
@@ -597,11 +597,6 @@ void Vehicle::resetCounters()
     _heardFrom          = false;
 }
 
-void Vehicle::_telemetryLostChanged(LinkInterface*, float percent)
-{
-    _telemetryLost=percent;
-    emit telemetryLostChanged(_telemetryLost);
-}
 void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message)
 {
     // if the minimum supported version of MAVLink is already 2.0
@@ -1443,7 +1438,7 @@ void Vehicle::_handleSysStatus(mavlink_message_t& message)
     if (sysStatus.battery_remaining > 0) {
         if (sysStatus.battery_remaining < _settingsManager->appSettings()->batteryPercentRemainingAnnounce()->rawValue().toInt() &&
                 sysStatus.battery_remaining < _lastAnnouncedLowBatteryPercent) {
-            	_say(QString(tr("%1 低电压: 剩下百分之 %2")).arg(_vehicleIdSpeech()).arg(sysStatus.battery_remaining));
+            _say(QString(tr("%1 low battery: %2 percent remaining")).arg(_vehicleIdSpeech()).arg(sysStatus.battery_remaining));
         }
         _lastAnnouncedLowBatteryPercent = sysStatus.battery_remaining;
     }
@@ -2394,7 +2389,7 @@ void Vehicle::sendMessageMultiple(mavlink_message_t message)
 void Vehicle::_missionManagerError(int errorCode, const QString& errorMsg)
 {
     Q_UNUSED(errorCode);
-    qgcApp()->showMessage(tr("任务上传下载错误: %1").arg(errorMsg));
+    qgcApp()->showMessage(tr("Mission transfer failed. Retry transfer. Error: %1").arg(errorMsg));
 }
 
 void Vehicle::_geoFenceManagerError(int errorCode, const QString& errorMsg)
@@ -2724,7 +2719,7 @@ void Vehicle::_linkActiveChanged(LinkInterface *link, bool active, int vehicleID
     QString commSpeech;
     bool multiVehicle = _toolbox->multiVehicleManager()->vehicles()->count() > 1;
     if (communicationRegained) {
-        commSpeech = tr("重新连接");
+        commSpeech = tr("Communication regained");
         if (_links.count() > 1) {
 //            qgcApp()->showMessage(tr("Communication regained to vehicle %1 on %2 link %3").arg(_id).arg(_links.count() > 1 ? tr("priority") : tr("auxiliary")).arg(link->getName()));
         } else if (multiVehicle) {
@@ -2732,7 +2727,7 @@ void Vehicle::_linkActiveChanged(LinkInterface *link, bool active, int vehicleID
         }
     }
     if (communicationLost) {
-        commSpeech = tr("连接丢失");
+        commSpeech = tr("Communication lost");
         if (_links.count() > 1) {
 //            qgcApp()->showMessage(tr("Communication lost to vehicle %1 on %2 link %3").arg(_id).arg(_links.count() > 1 ? tr("priority") : tr("auxiliary")).arg(link->getName()));
         } else if (multiVehicle) {
@@ -2740,7 +2735,7 @@ void Vehicle::_linkActiveChanged(LinkInterface *link, bool active, int vehicleID
         }
     }
     if (multiVehicle && (communicationLost || communicationRegained)) {
-        commSpeech.append(tr(" 无人机 %1").arg(_id));
+        commSpeech.append(tr(" to vehicle %1").arg(_id));
     }
     if (!commSpeech.isEmpty()) {
         _say(commSpeech);
@@ -2853,13 +2848,13 @@ QString Vehicle::_vehicleIdSpeech(void)
 
 void Vehicle::_handleFlightModeChanged(const QString& flightMode)
 {
-    _say(QString(tr("%1 %2 飞行模式")).arg(_vehicleIdSpeech()).arg(flightMode));
+    _say(QString(tr("%1 %2 flight mode")).arg(_vehicleIdSpeech()).arg(flightMode));
     emit guidedModeChanged(_firmwarePlugin->isGuidedMode(this));
 }
 
 void Vehicle::_announceArmedChanged(bool armed)
 {
-    _say(QString("%1 %2").arg(_vehicleIdSpeech()).arg(armed ? QString(tr("解锁")) : QString(tr("加锁"))));
+    _say(QString("%1 %2").arg(_vehicleIdSpeech()).arg(armed ? QString(tr("armed")) : QString(tr("disarmed"))));
 }
 
 void Vehicle::_setFlying(bool flying)
@@ -2946,7 +2941,7 @@ void Vehicle::guidedModeGotoLocation(const QGeoCoordinate& gotoCoord)
     }
     double maxDistance = 1000.0;
     if (coordinate().distanceTo(gotoCoord) > maxDistance) {
-        qgcApp()->showMessage(QString("新位置太远. 需要设置少与 %1 %2").arg(qRound(FactMetaData::metersToAppSettingsDistanceUnits(maxDistance).toDouble())).arg(FactMetaData::appSettingsDistanceUnitsString()));
+        qgcApp()->showMessage(QString("New location is too far. Must be less than %1 %2").arg(qRound(FactMetaData::metersToAppSettingsDistanceUnits(maxDistance).toDouble())).arg(FactMetaData::appSettingsDistanceUnitsString()));
         return;
     }
     _firmwarePlugin->guidedModeGotoLocation(this, gotoCoord);
@@ -2964,7 +2959,7 @@ void Vehicle::guidedModeChangeAltitude(double altitudeChange)
 void Vehicle::guidedModeOrbit(const QGeoCoordinate& centerCoord, double radius, double amslAltitude)
 {
     if (!orbitModeSupported()) {
-        qgcApp()->showMessage(QStringLiteral("Orbit不支持"));//"Orbit mode not supported by Vehicle."
+        qgcApp()->showMessage(QStringLiteral("Orbit mode not supported by Vehicle."));
         return;
     }
     if (capabilityBits() && MAV_PROTOCOL_CAPABILITY_COMMAND_INT) {
@@ -2992,7 +2987,7 @@ void Vehicle::guidedModeOrbit(const QGeoCoordinate& centerCoord, double radius, 
 void Vehicle::pauseVehicle(void)
 {
     if (!pauseVehicleSupported()) {
-        qgcApp()->showMessage(QStringLiteral("不支持暂停模式."));//Pause not supported by vehicle.
+        qgcApp()->showMessage(QStringLiteral("Pause not supported by vehicle."));
         return;
     }
     _firmwarePlugin->pauseVehicle(this);

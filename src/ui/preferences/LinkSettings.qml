@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -59,7 +59,7 @@ Rectangle {
         height:     ScreenTools.defaultFontPixelHeight*2.5
         width:      height
         sourceSize.width: width
-        source:     "/res/connect.svg"
+        source:     "/qmlimages/connect.svg"
         fillMode:   Image.PreserveAspectFit
         color:      qgcPal.text
         anchors.horizontalCenter:setcircle.horizontalCenter
@@ -77,7 +77,7 @@ Rectangle {
         id:             idset
         anchors.left:   setimg.left
         anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-        text:           qsTr("连接")//"Systemseting"
+        text:           qsTr("Connection")//"Systemseting"
         font.pointSize: ScreenTools.mediumFontPointSize
         font.bold:      true
         color:          qgcPal.text
@@ -195,8 +195,8 @@ Rectangle {
                                     visible:    false
                                     icon:       StandardIcon.Warning
                                     standardButtons: StandardButton.Yes | StandardButton.No
-                                    title:      qsTr("删除连接")//Remove Link Configuration
-                                    text:       object ? qsTr("删除 %1. 确认删除?").arg(object.name) : ""//"Remove %1. Is this really what you want?"
+                		    title:      qsTr("Remove Link Configuration")
+               			    text:       _currentSelection ? qsTr("Remove %1. Is this really what you want?").arg(_currentSelection.name) : ""
                                     onYes: {
                                         if(object)
                                             QGroundControl.linkManager.removeConfiguration(object)
@@ -334,7 +334,7 @@ Rectangle {
                     anchors.margins:    ScreenTools.defaultFontPixelWidth
                     spacing:            ScreenTools.defaultFontPixelHeight / 2
                     QGCLabel {
-                        text:   linkConfig ? qsTr("编辑连接")/*qsTr("Edit Link Configuration Settings (WIP)") */: qsTr("创建连接")/*qsTr("Create New Link Configuration (WIP)")*/
+                        text:   linkConfig ? qsTr("Edit Link Configuration")/*qsTr("Edit Link Configuration Settings (WIP)") */: qsTr("Create New Link Configuration")/*qsTr("Create New Link Configuration (WIP)")*/
                         font.pointSize: ScreenTools.mediumFontPointSize
                     }
                     Rectangle {
@@ -349,7 +349,7 @@ Rectangle {
                     Row {
                         spacing:    ScreenTools.defaultFontPixelWidth
                         QGCLabel {
-                            text:    qsTr("名称:")//qsTr("Name:")
+                            text:   qsTr("Name:")
                             width:  _firstColumn
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -363,7 +363,7 @@ Rectangle {
                     Row {
                         spacing:        ScreenTools.defaultFontPixelWidth
                         QGCLabel {
-                            text:       qsTr("类型:")//("Type:")
+                            text:       qsTr("Type:")
                             width:      _firstColumn
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -420,7 +420,7 @@ Rectangle {
                     }
                     //-- Auto Connect on Start
                     QGCCheckBox {
-                        text:       qsTr("启动自动连接:")//"Automatically Connect on Start"
+                        text:       qsTr("Automatically Connect on Start:")//"Automatically Connect on Start"
                         checked:    false
                         visible:    editConfig ? editConfig.autoConnectAllowed : false
                         onCheckedChanged: {
@@ -453,7 +453,7 @@ Rectangle {
                 anchors.right:      parent.right
                 QGCButton {
                     width:      ScreenTools.defaultFontPixelWidth * 10
-                    text:       qsTr("确定")//qsTr("OK")
+                    text:       qsTr("OK")
                     enabled:    nameField.text !== ""
                     onClicked: {
                         // Save editting
@@ -473,7 +473,7 @@ Rectangle {
                 }
                 QGCButton {
                     width:      ScreenTools.defaultFontPixelWidth * 10
-                    text:       qsTr("取消")//qsTr("Cancel")
+                    text:       qsTr("Cancel")
                     onClicked: {
                         QGroundControl.linkManager.cancelConfigurationEditing(editConfig)
                         editConfig = null

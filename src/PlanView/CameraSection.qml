@@ -24,7 +24,7 @@ Column {
 
     SectionHeader {
         id:             cameraSectionHeader
-        text:           qsTr("云台相机")
+        text:           qsTr("Camera")
         checked:        false
     }
 
@@ -49,7 +49,7 @@ Column {
             visible:        _camera.cameraAction.rawValue === 1
 
             QGCLabel {
-                text:               qsTr("时间")
+                text:               qsTr("Time")
                 Layout.fillWidth:   true
             }
             FactTextField {
@@ -65,7 +65,7 @@ Column {
             visible:        _camera.cameraAction.rawValue === 2
 
             QGCLabel {
-                text:               qsTr("距离")
+                text:               qsTr("Distance")
                 Layout.fillWidth:   true
             }
             FactTextField {
@@ -102,12 +102,12 @@ Column {
             columns:        3
 
             Item { width: 1; height: 1 }
-            QGCLabel { text: qsTr("仰俯") }
-            QGCLabel { text: qsTr("航向") }
+            QGCLabel { text: qsTr("Pitch") }
+            QGCLabel { text: qsTr("Yaw") }
 
             QGCCheckBox {
                 id:                 gimbalCheckBox
-                text:               qsTr("云台")
+                text:               qsTr("Gimbal")
                 checked:            _camera.specifyGimbal
                 onClicked:          _camera.specifyGimbal = checked
                 Layout.fillWidth:   true

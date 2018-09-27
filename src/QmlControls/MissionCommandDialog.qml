@@ -30,7 +30,7 @@ QGCViewDialog {
         anchors.left:       parent.left
         anchors.margins:    ScreenTools.defaultFontPixelWidth*2
         anchors.baseline:   categoryCombo.baseline
-        text:               qsTr("类别:")//qsTr("Category:")
+        text:               qsTr("Category:")
     }
 
     QGCComboBox {

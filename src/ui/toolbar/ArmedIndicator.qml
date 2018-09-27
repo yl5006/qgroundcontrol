@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -23,7 +23,7 @@ QGCLabel {
     anchors.top:        parent.top
     anchors.bottom:     parent.bottom
     verticalAlignment:  Text.AlignVCenter
-    text:               _armed ? qsTr("解锁中") : qsTr("加锁中")
+    text:               _armed ? qsTr("Armed") : qsTr("Disarmed")
     font.pointSize:     ScreenTools.mediumFontPointSize
     color:              _armed ? qgcPal.warningText:qgcPal.buttonText
 
@@ -32,8 +32,8 @@ QGCLabel {
 
     QGCPalette { id: qgcPal }
 
-    QGCMouseArea {
-        fillItem: parent
-        onClicked: _armed ? toolBar.disarmVehicle() : toolBar.armVehicle()
-    }
+//    QGCMouseArea {
+//        fillItem: parent
+//        onClicked: _armed ? toolBar.disarmVehicle() : toolBar.armVehicle()
+//    }
 }

@@ -77,7 +77,7 @@ Item {
 
                 QGCLabel {
                     id:             battLabel
-                    text:           qsTr("电池状态")//qsTr("Battery Status")
+                    text:           qsTr("Battery Status")
                     font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -89,9 +89,9 @@ Item {
                     columns:            2
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    QGCLabel { text: qsTr("电压:") /*qsTr("Voltage:")*/ }
+                    QGCLabel { text: qsTr("Voltage:") }
                     QGCLabel { text: (_activeVehicle && _activeVehicle.battery.voltage.value != -1) ? (_activeVehicle.battery.voltage.valueString + " " + _activeVehicle.battery.voltage.units) : "N/A" }
-                    QGCLabel { text: qsTr("消耗:")/*qsTr("Accumulated Consumption:")*/ }
+                    QGCLabel { text: qsTr("Accumulated Consumption:") }
                     QGCLabel { text: (_activeVehicle && _activeVehicle.battery.mahConsumed.value != -1) ? (_activeVehicle.battery.mahConsumed.valueString + " " + _activeVehicle.battery.mahConsumed.units) : "N/A" }
                 }
             }

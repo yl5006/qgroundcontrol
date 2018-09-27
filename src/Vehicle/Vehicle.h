@@ -941,7 +941,6 @@ public:
     unsigned int    telemetryTXBuffer       () { return _telemetryTXBuffer; }
     int             telemetryLNoise         () { return _telemetryLNoise; }
     int             telemetryRNoise         () { return _telemetryRNoise; }
-    float           telemetryLost           () { return _telemetryLost; }
     bool            autoDisarm              ();
     bool            highLatencyLink         () const { return _highLatencyLink; }
     /// Get the maximum MAVLink protocol version supported
@@ -1138,7 +1137,6 @@ signals:
     void telemetryTXBufferChanged   (unsigned int value);
     void telemetryLNoiseChanged     (int value);
     void telemetryRNoiseChanged     (int value);
-    void telemetryLostChanged       (float value);
     void autoDisarmChanged          (void);
     void flightModesChanged         (void);
     void sensorsPresentBitsChanged  (int sensorsPresentBits);
@@ -1185,7 +1183,6 @@ signals:
 
 private slots:
     void _mavlinkMessageReceived(LinkInterface* link, mavlink_message_t message);
-    void _telemetryLostChanged(LinkInterface* link, float percent);
     void _linkInactiveOrDeleted(LinkInterface* link);
     void _sendMessageOnLink(LinkInterface* link, mavlink_message_t message);
     void _sendMessageMultipleNext(void);
@@ -1340,7 +1337,6 @@ private:
     uint32_t        _telemetryTXBuffer;
     int             _telemetryLNoise;
     int             _telemetryRNoise;
-	float           _telemetryLost;
     unsigned        _maxProtoVersion;
     bool            _vehicleCapabilitiesKnown;
     uint64_t        _capabilityBits;

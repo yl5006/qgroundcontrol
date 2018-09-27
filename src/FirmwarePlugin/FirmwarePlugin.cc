@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -22,7 +22,7 @@ const QString guided_mode_not_supported_by_vehicle = QObject::tr("Guided mode no
 
 QVariantList FirmwarePlugin::_cameraList;
 
-const QString FirmwarePlugin::px4FollowMeFlightMode(QObject::tr("跟随"));
+const QString FirmwarePlugin::px4FollowMeFlightMode(QObject::tr("Follow Me"));
 
 FirmwarePluginFactory::FirmwarePluginFactory(void)
 {
@@ -49,7 +49,7 @@ AutoPilotPlugin* FirmwarePlugin::autopilotPlugin(Vehicle* vehicle)
 {
     return new GenericAutoPilotPlugin(vehicle, vehicle);
 }
-//extern int language;
+
 bool FirmwarePlugin::isCapable(const Vehicle *vehicle, FirmwareCapabilities capabilities)
 {
     Q_UNUSED(vehicle);
@@ -195,13 +195,10 @@ QList<MAV_CMD> FirmwarePlugin::supportedMissionCommands(void)
 
 QString FirmwarePlugin::missionCommandOverrides(MAV_TYPE vehicleType) const
 {
-    int language;
-    QSettings::setDefaultFormat(QSettings::IniFormat);
-    QSettings settings;
-    language=settings.value("language","0").toInt();
+    QLocale locale = QLocale::system();
     switch (vehicleType) {
     case MAV_TYPE_GENERIC:
-        if(language==0)
+        if(locale.country() == QLocale::China)
         {
             return QStringLiteral(":/json/MavCmdInfoCommonCn.json");
         }else

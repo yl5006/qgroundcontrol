@@ -72,7 +72,7 @@ Rectangle {
         font.family:            ScreenTools.demiboldFontFamily
         font.bold:              true
         color:                  "White"
-        text:                   qsTr("飞行数据")
+        text:                   qsTr("Fly Date")
     }
     QGCLabel {
         id:                     picker

@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -85,14 +85,14 @@ SetupPage {
                 id:         controller
                 factPanel:  powerPage.viewPanel
 
-                onOldFirmware:          showMessage(qsTr("ESC Calibration"), qsTr("QGroundControl cannot perform ESC Calibration with this version of firmware. You will need to upgrade to a newer firmware."), StandardButton.Ok)
-                onNewerFirmware:        showMessage(qsTr("ESC Calibration"), qsTr("QGroundControl cannot perform ESC Calibration with this version of firmware. You will need to upgrade QGroundControl."), StandardButton.Ok)
-                onBatteryConnected:     showMessage(qsTr("ESC Calibration"), qsTr("Performing calibration. This will take a few seconds.."), 0)
-                onCalibrationFailed:    showMessage(qsTr("ESC Calibration failed"), errorMessage, StandardButton.Ok)
-                onCalibrationSuccess:   showMessage(qsTr("ESC Calibration"), qsTr("Calibration complete. You can disconnect your battery now if you like."), StandardButton.Ok)
-                onConnectBattery:       showMessage(qsTr("ESC Calibration"), highlightPrefix + qsTr("WARNING: Props must be removed from vehicle prior to performing ESC calibration.") + highlightSuffix + qsTr(" Connect the battery now and calibration will begin."), 0)
-                onDisconnectBattery:    showMessage(qsTr("ESC Calibration failed"), qsTr("You must disconnect the battery prior to performing ESC Calibration. Disconnect your battery and try again."), StandardButton.Ok)
-            }
+                    onOldFirmware:          showMessage(qsTr("ESC Calibration"), qsTr("%1 cannot perform ESC Calibration with this version of firmware. You will need to upgrade to a newer firmware.").arg(QGroundControl.appName), StandardButton.Ok)
+                    onNewerFirmware:        showMessage(qsTr("ESC Calibration"), qsTr("%1 cannot perform ESC Calibration with this version of firmware. You will need to upgrade %1.").arg(QGroundControl.appName), StandardButton.Ok)
+                    onBatteryConnected:     showMessage(qsTr("ESC Calibration"), qsTr("Performing calibration. This will take a few seconds.."), 0)
+                    onCalibrationFailed:    showMessage(qsTr("ESC Calibration failed"), errorMessage, StandardButton.Ok)
+                    onCalibrationSuccess:   showMessage(qsTr("ESC Calibration"), qsTr("Calibration complete. You can disconnect your battery now if you like."), StandardButton.Ok)
+                    onConnectBattery:       showMessage(qsTr("ESC Calibration"), highlightPrefix + qsTr("WARNING: Props must be removed from vehicle prior to performing ESC calibration.") + highlightSuffix + qsTr(" Connect the battery now and calibration will begin."), 0)
+                    onDisconnectBattery:    showMessage(qsTr("ESC Calibration failed"), qsTr("You must disconnect the battery prior to performing ESC Calibration. Disconnect your battery and try again."), StandardButton.Ok)
+                }
 
             Component {
                 id: calcVoltageDividerDlgComponent
@@ -110,47 +110,47 @@ SetupPage {
                             width:      calcVoltageDividerDlg.width
                             spacing:    ScreenTools.defaultFontPixelHeight
 
-                            QGCLabel {
-                                width:      parent.width
-                                wrapMode:   Text.WordWrap
-                                text:       "Measure battery voltage using an external voltmeter and enter the value below. Click Calculate to set the new voltage multiplier."
-                            }
-
-                            Grid {
-                                columns: 2
-                                spacing: ScreenTools.defaultFontPixelHeight / 2
-                                verticalItemAlignment: Grid.AlignVCenter
-
                                 QGCLabel {
-                                    text: "Measured voltage:"
+                                    width:      parent.width
+                                    wrapMode:   Text.WordWrap
+                                    text:       qsTr("Measure battery voltage using an external voltmeter and enter the value below. Click Calculate to set the new voltage multiplier.")
                                 }
-                                QGCTextField { id: measuredVoltage }
 
-                                QGCLabel { text: "Vehicle voltage:" }
-                                QGCLabel { text: controller.vehicle.battery.voltage.valueString }
+                                Grid {
+                                    columns: 2
+                                    spacing: ScreenTools.defaultFontPixelHeight / 2
+                                    verticalItemAlignment: Grid.AlignVCenter
 
-                                QGCLabel { text: "Voltage divider:" }
-                                FactLabel { fact: battVoltageDivider }
-                            }
+                                    QGCLabel {
+                                        text: qsTr("Measured voltage:")
+                                    }
+                                    QGCTextField { id: measuredVoltage }
+
+                                    QGCLabel { text: qsTr("Vehicle voltage:") }
+                                    QGCLabel { text: controller.vehicle.battery.voltage.valueString }
+
+                                    QGCLabel { text: qsTr("Voltage divider:") }
+                                    FactLabel { fact: battVoltageDivider }
+                                }
 
                             QGCButton {
-                                text: "Calculate"
+                                   text: qsTr("Calculate")
 
-                                onClicked:  {
-                                    var measuredVoltageValue = parseFloat(measuredVoltage.text)
-                                    if (measuredVoltageValue == 0 || isNaN(measuredVoltageValue)) {
-                                        return
-                                    }
-                                    var newVoltageDivider = (measuredVoltageValue * battVoltageDivider.value) / controller.vehicle.battery.voltage.value
-                                    if (newVoltageDivider > 0) {
-                                        battVoltageDivider.value = newVoltageDivider
+                                    onClicked:  {
+                                        var measuredVoltageValue = parseFloat(measuredVoltage.text)
+                                        if (measuredVoltageValue === 0 || isNaN(measuredVoltageValue)) {
+                                            return
+                                        }
+                                        var newVoltageDivider = (measuredVoltageValue * battVoltageDivider.value) / controller.vehicle.battery.voltage.value
+                                        if (newVoltageDivider > 0) {
+                                            battVoltageDivider.value = newVoltageDivider
+                                        }
                                     }
                                 }
-                            }
-                        } // Column
-                    } // QGCFlickable
-                } // QGCViewDialog
-            } // Component - calcVoltageDividerDlgComponent
+                            } // Column
+                        } // QGCFlickable
+                    } // QGCViewDialog
+                } // Component - calcVoltageDividerDlgComponent
 
             Component {
                 id: calcAmpsPerVoltDlgComponent
@@ -171,7 +171,7 @@ SetupPage {
                             QGCLabel {
                                 width:      parent.width
                                 wrapMode:   Text.WordWrap
-                                text:       "Measure current draw using an external current meter and enter the value below. Click Calculate to set the new amps per volt value."
+                                    text:       qsTr("Measure current draw using an external current meter and enter the value below. Click Calculate to set the new amps per volt value.")
                             }
 
                             Grid {
@@ -179,20 +179,20 @@ SetupPage {
                                 spacing: ScreenTools.defaultFontPixelHeight / 2
                                 verticalItemAlignment: Grid.AlignVCenter
 
-                                QGCLabel {
-                                    text: "Measured current:"
+                                    QGCLabel {
+                                        text: qsTr("Measured current:")
+                                    }
+                                    QGCTextField { id: measuredCurrent }
+
+                                    QGCLabel { text: qsTr("Vehicle current:") }
+                                    QGCLabel { text: controller.vehicle.battery.current.valueString }
+
+                                    QGCLabel { text: qsTr("Amps per volt:") }
+                                    FactLabel { fact: battAmpsPerVolt }
                                 }
-                                QGCTextField { id: measuredCurrent }
 
-                                QGCLabel { text: "Vehicle current:" }
-                                QGCLabel { text: controller.vehicle.battery.current.valueString }
-
-                                QGCLabel { text: "Amps per volt:" }
-                                FactLabel { fact: battAmpsPerVolt }
-                            }
-
-                            QGCButton {
-                                text: "Calculate"
+                                QGCButton {
+                                    text: qsTr("Calculate")
 
                                 onClicked:  {
                                     var measuredCurrentValue = parseFloat(measuredCurrent.text)
@@ -241,7 +241,7 @@ SetupPage {
                     id:             idset
                     anchors.left:   img.left
                     anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-                    text:           qsTr("电池")//"safe"
+                    text:           qsTr("Battery")
                     font.pointSize: ScreenTools.mediumFontPointSize
                     font.bold:              true
                     color:          qgcPal.text
@@ -314,7 +314,7 @@ SetupPage {
                         anchors.leftMargin:     ScreenTools.defaultFontPixelHeight
                         spacing:            ScreenTools.defaultFontPixelHeight/2
                         QGCLabel {
-                            text:   qsTr("最大电压:")//qsTr("Battery Max:")
+                            text:   qsTr("Battery Max:")
                             font.family:                    ScreenTools.demiboldFontFamily
                             font.pointSize:                 ScreenTools.mediumFontPointSize
                             font.bold:      true
@@ -335,7 +335,7 @@ SetupPage {
                         anchors.leftMargin:     -ScreenTools.defaultFontPixelHeight
                         spacing:                ScreenTools.defaultFontPixelHeight/2
                         QGCLabel {
-                            text:               qsTr("最小电压:")//qsTr("Battery Min:")
+                            text:   qsTr("Battery Min:")
                             font.family:                    ScreenTools.demiboldFontFamily
                             font.pointSize:                 ScreenTools.mediumFontPointSize
                             font.bold:      true
@@ -345,8 +345,8 @@ SetupPage {
                             text:   (battNumCells.value * battLowVolt.value).toFixed(1) + ' V'
                             font.family:                    ScreenTools.demiboldFontFamily
                             font.pointSize:                 ScreenTools.mediumFontPointSize
-                            color:                  "red"
-                            font.bold:      true
+                            color:                          "red"
+                            font.bold:                      true
                         }
                     }
                     GridLayout {
@@ -358,7 +358,7 @@ SetupPage {
                         columnSpacing:      ScreenTools.defaultFontPixelHeight*3
 
                         QGCLabel {
-                            text:              qsTr("电池芯数") //qsTr("Number of Cells (in Series)")
+                            text:              qsTr("Number of Cells (in Series)")
                         }
 
                         FactTextField {
@@ -369,7 +369,7 @@ SetupPage {
                         }
                         QGCLabel {
                             id:                 battHighLabel
-                            text:               qsTr("单芯电池满电压") //qsTr("Full Voltage (per cell)")
+                            text:               qsTr("Full Voltage (per cell)")
                         }
 
                         FactTextField {
@@ -380,7 +380,7 @@ SetupPage {
                         }
                         QGCLabel {
                             id:                 battLowLabel
-                            text:               qsTr("单芯电池空电压") //qsTr("Empty Voltage (per cell)")
+                            text:               qsTr("Empty Voltage (per cell)")
                         }
 
                         FactTextField {
@@ -410,7 +410,7 @@ SetupPage {
                         spacing:    ScreenTools.defaultFontPixelHeight *0.5
 
                         QGCLabel {
-                            text:            qsTr("电调最大值最小值校准")//qsTr("ESC PWM Minimum and Maximum Calibration")
+                            text:            qsTr("ESC PWM Minimum and Maximum Calibration")//qsTr("ESC PWM Minimum and Maximum Calibration")
                             font.family:    ScreenTools.demiboldFontFamily
                         }
                         Rectangle {
@@ -434,18 +434,17 @@ SetupPage {
                                 wrapMode:   Text.WordWrap
                                 font.pointSize:                 ScreenTools.mediumFontPointSize
                                 font.bold:      true
-                                text:       qsTr("警告: 在校准前去除螺旋桨")//qsTr("WARNING: Propellers must be removed from vehicle prior to performing ESC calibration.")
+                           	text:               qsTr("WARNING: Propellers must be removed from vehicle prior to performing ESC calibration.")
                             }
                         }
 
                         QGCLabel {
-                            text:      qsTr("请连接USB")// qsTr("You must use USB connection for this operation.")
+                            text: qsTr("You must use USB connection for this operation.")
                         }
 
                         QGCButton {
-                            text:      qsTr("校准")// qsTr("Calibrate")
+                            text:       qsTr("Calibrate")
                             width:      ScreenTools.defaultFontPixelWidth * 20
-                            enabled:     true
                             onClicked:  controller.calibrateEsc()
                         }
 
@@ -453,7 +452,7 @@ SetupPage {
 
                         QGCCheckBox {
                             id:         showUAVCAN
-                            text:        qsTr("UAVCAN设置")//qsTr("Show UAVCAN Settings")
+                    	    text:       qsTr("Show UAVCAN Settings")
                             enabled:    false
                     	    checked:    uavcanEnable ? uavcanEnable.rawValue !== 0 : false
                         }

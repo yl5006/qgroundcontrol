@@ -96,7 +96,7 @@ bool LogReplayLink::_connect(void)
 {
     // Disallow replay when any links are connected
     if (qgcApp()->toolbox()->multiVehicleManager()->activeVehicle()) {
-        emit communicationError(_errorTitle, "你需要关闭所有连接来播放log.");//"You must close all connections prior to replaying a log."
+        emit communicationError(_errorTitle, tr("You must close all connections prior to replaying a log."));
         return false;
     }
 
@@ -240,7 +240,7 @@ bool LogReplayLink::_loadLogFile(void)
     QString errorMsg;
     QString logFilename = _logReplayConfig->logFilename();
     QFileInfo logFileInfo;
-    uint logDurationSecondsTotal;
+    int logDurationSecondsTotal;
     
     if (_logFile.isOpen()) {
         errorMsg = tr("Attempt to load new log while log being played");
@@ -262,6 +262,7 @@ bool LogReplayLink::_loadLogFile(void)
         // This should be a big-endian uint64.
         QByteArray timestamp = _logFile.read(cbTimestamp);
         quint64 startTimeUSecs = _parseTimestamp(timestamp);
+        
         // Now find the last timestamp by scanning for the last MAVLink packet and
         // find the timestamp before it. To do this we start searchin a little before
         // the end of the file, specifically the maximum MAVLink packet size + the
@@ -281,6 +282,7 @@ bool LogReplayLink::_loadLogFile(void)
             errorMsg = tr("The log file '%1' is corrupt. No valid timestamps were found at the end of the file.").arg(logFilename);
             goto Error;
         }
+        
         // Remember the start and end time so we can move around this _logFile with the slider.
         _logEndTimeUSecs = endTimeUSecs;
         _logStartTimeUSecs = startTimeUSecs;
@@ -312,7 +314,7 @@ bool LogReplayLink::_loadLogFile(void)
             }
         }
         
-        logDurationSecondsTotal = logFileInfo.size() / (_binaryBaudRate / 10); 
+        logDurationSecondsTotal = logFileInfo.size() / (_binaryBaudRate / 10);
     }
     
     emit logFileStats(_logTimestamped, logDurationSecondsTotal, _binaryBaudRate);

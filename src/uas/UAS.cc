@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -134,7 +134,7 @@ UAS::UAS(MAVLinkProtocol* protocol, Vehicle* vehicle, FirmwarePluginManager * fi
 #ifndef __mobile__
     connect(_vehicle, &Vehicle::mavlinkMessageReceived, &fileManager, &FileManager::receiveMessage);
 #endif
-
+    locale = QLocale::system();
     _criticalmsg = createMapFromJsonFile(QStringLiteral(":/json/Vehicle/CriticalMsgIdCn.json"));
 }
 
@@ -381,9 +381,17 @@ void UAS::receiveMessage(mavlink_message_t message)
             if (text.startsWith("#") || severity <= MAV_SEVERITY_NOTICE)
             {
                 text.remove("#");
-                emit textMessageReceived(uasId, message.compid, severity, _criticalmsg[msgid]);
-//              do not say
-                _say(_criticalmsg[msgid].toLower(), severity);
+                if(locale.country() == QLocale::China){
+                    emit textMessageReceived(uasId, message.compid, severity, _criticalmsg[msgid]);
+    //              do not say
+                    _say(_criticalmsg[msgid].toLower(), severity);
+                }else
+                {
+                    emit textMessageReceived(uasId, message.compid, severity, text);
+    //              do not say
+                    _say(text.toLower(), severity);
+                }
+
             }
             else
             {

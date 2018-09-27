@@ -53,7 +53,7 @@ Rectangle {
             id:             idset
             anchors.left:   img.left
             anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
-            text:           qsTr("相对航点生成")//"safe"
+            text:           qsTr("Relative waypoint generation")//"safe"
             color:          qgcPal.text
             anchors.verticalCenter: img.verticalCenter
         }
@@ -77,7 +77,7 @@ Rectangle {
                 spacing:    ScreenTools.defaultFontPixelHeight
                 QGCLabel {
                     anchors.baseline:   distance.baseline
-                    text:               qsTr("距离:")
+                    text:               qsTr("Distance:")
                     width:              ScreenTools.defaultFontPixelHeight*4
                 }
                 QGCTextField {
@@ -94,7 +94,7 @@ Rectangle {
                 spacing:    ScreenTools.defaultFontPixelHeight
                 QGCLabel {
                     anchors.baseline:   angle.baseline
-                    text:               qsTr("偏移角度:")
+                    text:               qsTr("Offset angle:")
                     width:              ScreenTools.defaultFontPixelHeight*4
                 }
                 QGCTextField {
@@ -104,7 +104,7 @@ Rectangle {
                     text:               "90"
                 }
                 QGCLabel {
-                    text:               qsTr("度")
+                    text:               qsTr("deg")
                 }
             }
             Row {
@@ -112,7 +112,7 @@ Rectangle {
                 visible:    false
                 QGCLabel {
                     anchors.baseline:   height.baseline
-                    text:               qsTr("高度差:")
+                    text:               qsTr("Height difference:")
                     width:              ScreenTools.defaultFontPixelHeight*5
                 }
                 QGCTextField {
@@ -130,7 +130,7 @@ Rectangle {
             spacing: ScreenTools.defaultFontPixelHeight*2
             anchors.verticalCenter: setitem.verticalCenter
         QGCButton {
-            text:               qsTr("添加")
+            text:               qsTr("Add")
 //            Layout.fillWidth:   true
             onClicked: {
                 var coordinate =_missionController.currentPlanViewItem.coordinate
@@ -139,7 +139,7 @@ Rectangle {
             }
         }
         QGCButton {
-            text:               qsTr("取消")
+            text:               qsTr("Cancel")
 //            Layout.fillWidth:   true
 
             onClicked: {

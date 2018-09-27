@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -127,7 +127,7 @@ QGCView {
         target:                 QGroundControl.multiVehicleManager
         onActiveVehicleChanged: {
             if (_activeVehicle) {
-                root.showDialog(flightcheck, qsTr("请谨慎检查飞机,确保安全飞行"), showDialogDefaultWidth)
+                root.showDialog(flightcheck, qsTr("please check the Vehicle, be sure safe to fly"), showDialogDefaultWidth)
             }
         }
     }
@@ -192,7 +192,7 @@ QGCView {
 
                     QGCButton {
                         Layout.fillWidth:   true
-                        text:               qsTr("删除任务")
+                        text:               qsTr("Remove plan from vehicle")
                         onClicked: {
                             _planMasterController.removeAllFromVehicle()
                             hideDialog()
@@ -202,7 +202,7 @@ QGCView {
                     QGCButton {
                         Layout.fillWidth:   true
                         Layout.alignment:   Qt.AlignHCenter
-                        text:               qsTr("保留任务")
+                        text:               qsTr("Leave plan on vehicle")
                         onClicked:          hideDialog()
                     }
                 }
@@ -248,7 +248,7 @@ QGCView {
 
         QGCViewDialog {
             width:          ScreenTools.defaultFontPixelHeight*40
-            height:         ScreenTools.defaultFontPixelHeight*30
+            height:         ScreenTools.defaultFontPixelHeight*40
             QGCFlickable {
                 anchors.fill:   parent
                 contentHeight:  column.height
@@ -269,12 +269,12 @@ QGCView {
                         }
                         QGCLabel {
                             anchors.verticalCenter: box.verticalCenter
-                            text:           qsTr("姿态检查")//"safe"
+                            text:           qsTr("Attitude Check")//"safe"
                             color:          qgcPal.warningText
                         }
                     }
                     QGCLabel {
-                        text:           qsTr("按图移动飞机，查看姿态仪显示是否正常")//"safe"
+                        text:           qsTr("Move the vehicle according to the bellow to see if the attitude display is normal.")//"safe"
                         color:          qgcPal.text
                     }
                     Row{
@@ -292,7 +292,7 @@ QGCView {
                                 anchors.top:                    parent.top
                                 anchors.left:                   parent.left
                                 anchors.margins:                ScreenTools.defaultFontPixelHeight
-                                text:                           qsTr("横滚确认")// qsTr("RC Loss Failsafe Trigger")
+                                text:                           qsTr("Roll check")
                             }
                             Image {
                                 anchors.fill:               parent
@@ -313,7 +313,7 @@ QGCView {
                                 anchors.top:                    parent.top
                                 anchors.left:                   parent.left
                                 anchors.margins:                ScreenTools.defaultFontPixelHeight
-                                text:                           qsTr("仰俯确认")// qsTr("RC Loss Failsafe Trigger")
+                                text:                           qsTr("Pitch check")
                             }
                             Image {
                                 anchors.fill:               parent
@@ -334,7 +334,7 @@ QGCView {
                                 anchors.top:                    parent.top
                                 anchors.left:                   parent.left
                                 anchors.margins:                ScreenTools.defaultFontPixelHeight
-                                text:                           qsTr("航向确认")// qsTr("RC Loss Failsafe Trigger")
+                                text:                           qsTr("Yaw check")
                             }
                             Image {
                                 anchors.fill:               parent
@@ -355,12 +355,12 @@ QGCView {
                         }
                         QGCLabel {
                             anchors.verticalCenter: parent.verticalCenter
-                            text:           qsTr("姿态增稳输出反馈检查")//"safe"
+                            text:           qsTr("Attitude stabilization output feedback check")
                             color:          qgcPal.warningText
                         }
                     }
                     QGCLabel {
-                        text:           qsTr("切换模式至增稳状态，按图移动飞机，分别确认副翼升降航向舵面反馈，")//"safe"
+                        text:           qsTr("Switch the mode to the stabilization state, move the vehicle according to the figure, and confirm the feedback of the aileron lifting direction to the rudder surface respectively.")
                         color:          qgcPal.text
                     }
                     Image {
@@ -384,13 +384,13 @@ QGCView {
                         }
                         QGCLabel {
                             anchors.verticalCenter: parent.verticalCenter
-                            text:           qsTr("遥控输出反馈检查")//"safe"
+                            text:           qsTr("Radio control feedback check")//"safe"
                             color:          qgcPal.warningText
                         }
                     }
                     QGCLabel {
                         //  anchors.verticalCenter: box.verticalCenter
-                        text:           qsTr("切换模式至手动或增稳状态，移动遥控摇杆，分别确认副翼升降航向舵面反馈，")//"safe"
+                        text:           qsTr("Switch the mode to manual or stabilization state, move the remote joystick, and confirm the feedback of the aileron lifting direction to the rudder surface.")//"safe"
                         color:          qgcPal.text
                     }
                     Row{
@@ -405,12 +405,12 @@ QGCView {
                         }
                         QGCLabel {
                             anchors.verticalCenter: parent.verticalCenter
-                            text:           qsTr("安全设置检查")//"safe"
+                            text:           qsTr("Safe setting check")//"safe"
                             color:          qgcPal.warningText
                         }
                     }
                     QGCLabel {
-                        text:           qsTr("在保护栏检查失控保护，低电压保护，返航保护设置等")//"safe"
+                        text:           qsTr("Check out the control protection in the protection bar, low voltage protection, return protection settings, etc.")//"safe"
                         color:          qgcPal.text
                     }
                     Row{
@@ -425,12 +425,12 @@ QGCView {
                         }
                         QGCLabel {
                             anchors.verticalCenter: parent.verticalCenter
-                            text:           qsTr("空速计检查")//"safe"
+                            text:           qsTr("Air speed sensor check")//"safe"
                             color:          qgcPal.warningText
                         }
                     }
                     QGCLabel {
-                        text:           qsTr("检查空速计读数是否正常，吹气是否读数是否升高")//"safe"
+                        text:           qsTr("Check if the airspeed meter reading is normal, and if the air blow is reading, is it high?")//"safe"
                         color:          qgcPal.text
                     }
 
@@ -446,16 +446,16 @@ QGCView {
                         }
                         QGCLabel {
                             anchors.verticalCenter: parent.verticalCenter
-                            text:           qsTr("拍照开伞开关检查")//"safe"
+                            text:           qsTr("Photo and umbrella switch check")
                             color:          qgcPal.warningText
                         }
                     }
                     QGCLabel {
-                        text:           qsTr("检查拍照和开伞通道接线是否正常")//"safe"
+                        text:           qsTr("Check if the photo and umbrella wiring are normal.")
                         color:          qgcPal.text
                     }
                     QGCButton {
-                        text:               qsTr("确认检查")
+                        text:               qsTr("Confirm check")
                         anchors.horizontalCenter:   parent.horizontalCenter
                         onClicked:                  hideDialog()
                     }
@@ -507,43 +507,6 @@ QGCView {
                 scaleState:                 (_mainIsMap && flyViewOverlay.item) ? (flyViewOverlay.item.scaleState ? flyViewOverlay.item.scaleState : "bottomMode") : "bottomMode"
             }
         }
-
-        //-- Video View
-        //        OpenCVcamera {
-        //            id:opencvCamera
-        //            m_cameraId: 1
-        //            m_run: false
-        //        }
-
-        //        OpenCVshowFrame {
-        //            //anchors.centerIn: parent
-        //            id:_flightVideo
-        //            anchors.left:   _panel.left
-        //            anchors.bottom: _panel.bottom
-        //            visible:        QGroundControl.videoManager.hasVideo && (!_mainIsMap || _isPipVisible)
-        //            m_capture: opencvCamera
-        //            m_frameRate: 16
-        //            m_run: true
-        //            z:               _mainIsMap ? _panel.z + 2 : _panel.z + 1
-        //            width:          !_mainIsMap ? _panel.width  : pipSize
-        //            height:         !_mainIsMap ? _panel.height : pipSize * (9/16)
-        //            states: [
-        //                State {
-        //                    name:   "pipMode"
-        //                    PropertyChanges {
-        //                        target: _flightVideo
-        //                        anchors.margins:    ScreenTools.defaultFontPixelHeight
-        //                    }
-        //                },
-        //                State {
-        //                    name:   "fullMode"
-        //                    PropertyChanges {
-        //                        target: _flightVideo
-        //                        anchors.margins:    0
-        //                    }
-        //                }
-        //            ]
-        //        }
 
         //-- Video View
         Item {

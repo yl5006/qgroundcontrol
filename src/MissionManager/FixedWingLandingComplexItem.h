@@ -69,8 +69,8 @@ public:
     bool            isStandaloneCoordinate  (void) const final { return false; }
     bool            specifiesCoordinate     (void) const final;
     bool            specifiesAltitudeOnly   (void) const final { return false; }
-    QString         commandDescription      (void) const final { return tr("盘旋降落"); }
-    QString         commandName             (void) const final { return tr("盘旋降落"); }
+    QString         commandDescription      (void) const final { return "Landing Pattern"; }
+    QString         commandName             (void) const final { return "Landing Pattern"; }
     QString         abbreviation            (void) const final { return "L"; }
     QGeoCoordinate  coordinate              (void) const final { return _loiterCoordinate; }
     QGeoCoordinate  exitCoordinate          (void) const final { return _landingCoordinate; }

@@ -1,4 +1,4 @@
-﻿import QtQuick 2.3
+import QtQuick 2.3
 import QtQuick.Controls 1.2
 
 import QGroundControl.FactSystem 1.0
@@ -28,48 +28,48 @@ FactPanel {
         anchors.fill:       parent
 
         VehicleSummaryRow {
-            labelText: qsTr("低电压保护")
+            labelText: qsTr("Low Battery Failsafe")
             valueText: lowBattAction ? lowBattAction.enumStringValue : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("遥控丢失保护")
+            labelText: qsTr("RC Loss Failsafe")
             valueText: rcLossAction ? rcLossAction.enumStringValue : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("遥控丢失时间")
+            labelText: qsTr("RC Loss Timeout")
             valueText: commRCLossFact ? commRCLossFact.valueString + " " + commRCLossFact.units : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("数据链丢失保护")
+            labelText: qsTr("Data Link Loss Failsafe")
             valueText: dataLossAction ? dataLossAction.enumStringValue : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("返航高度")
+            labelText: qsTr("RTL Climb To")
             valueText: returnAltFact ? returnAltFact.valueString + " " + returnAltFact.units : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("返航后")
+            labelText: qsTr("RTL, Then")
             valueText: _rtlLandDelayValue === 0 ?
-                           qsTr("立即降落") :
+                           qsTr("Land immediately") :
                            (_rtlLandDelayValue < 0 ?
-                                qsTr("悬停(盘旋)") :
-                                qsTr("等待一定时间后降落"))
+                                qsTr("Loiter and do not land") :
+                                qsTr("Loiter and land after specified time"))
 
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("悬停高度")
+            labelText: qsTr("Loiter Alt")
             valueText: _descendAltFact.valueString + " " + _descendAltFact.units
             visible:    _rtlLandDelayValue !== 0
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("降落延时")
+            labelText: qsTr("Land Delay")
             valueText: _rtlLandDelayValue + " " + _rtlLandDelayFact.units
             visible:    _rtlLandDelayValue > 0
         }

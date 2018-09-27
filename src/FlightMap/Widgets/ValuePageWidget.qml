@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -37,7 +37,7 @@ Column {
     }
 
     function showSettings() {
-        qgcView.showDialog(propertyPicker, qsTr("显示值设置"), qgcView.showDialogDefaultWidth, StandardButton.Ok)
+        qgcView.showDialog(propertyPicker, qsTr("Value Widget Setup"), qgcView.showDialogDefaultWidth, StandardButton.Ok)
     }
 
     function listContains(list, value) {

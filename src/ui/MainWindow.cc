@@ -242,10 +242,6 @@ MainWindow::MainWindow()
 #ifdef __mobile__
         menuBar()->hide();
 #endif
-
-//#ifndef QT_DEBUG
-//        menuBar()->hide();
-//#endif
         show();
     }
 
@@ -452,7 +448,7 @@ void MainWindow::connectCommonActions()
 void MainWindow::_openUrl(const QString& url, const QString& errorMessage)
 {
     if(!QDesktopServices::openUrl(QUrl(url))) {
-        qgcApp()->showMessage(QString(tr("不能打开信息: %1")/*"Could not open information in browser: %1"*/).arg(errorMessage));
+        qgcApp()->showMessage(QString("Could not open information in browser: %1").arg(errorMessage));
     }
 }
 

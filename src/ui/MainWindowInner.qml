@@ -174,7 +174,7 @@ Item {
     MessageDialog {
         id:                 unsavedMissionCloseDialog
         title:              qsTr("%1 close").arg(QGroundControl.appName)
-        text:               qsTr("有未保存任务，关闭后会丢失，确认关闭?")//qsTr("You have a mission edit in progress which has not been saved/sent. If you close you will lose changes. Are you sure you want to close?")
+        text:               qsTr("You have a mission edit in progress which has not been saved/sent. If you close you will lose changes. Are you sure you want to close?")
         standardButtons:    StandardButton.Yes | StandardButton.No
         modality:           Qt.ApplicationModal
         visible:            false
@@ -193,7 +193,7 @@ Item {
     MessageDialog {
         id:                 activeConnectionsCloseDialog
         title:              qsTr("%1 close").arg(QGroundControl.appName)
-        text:               qsTr("无人机仍在连接中， 关闭并断开连接?")//qsTr("There are still active connections to vehicles. Do you want to disconnect these before closing?")
+        text:               qsTr("There are still active connections to vehicles. Are you sure you want to exit?")
         standardButtons:    StandardButton.Yes | StandardButton.Cancel
         modality:           Qt.ApplicationModal
         visible:            false
@@ -352,7 +352,7 @@ Item {
                         }
                     }
                     QGCLabel {
-                        text:           qsTr("自动连接")
+                        text:           qsTr("Auto Connect")
                         }
                 }
 
@@ -738,7 +738,7 @@ Item {
             }
         }
         QGCLabel {
-            text:           qsTr("知道了")//"Systemseting"
+            text:           qsTr("I got it")//"Systemseting"
             font.pointSize: ScreenTools.mediumFontPointSize
             font.bold:             true
             color:          qgcPal.text

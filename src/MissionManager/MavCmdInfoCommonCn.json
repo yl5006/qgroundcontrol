@@ -73,7 +73,7 @@
             "friendlyEdit":         true,
             "category":             "Loiter",
             "param1": {
-                "label":            "Turns:",
+                "label":            "Turns",
                 "default":          1,
                 "decimalPlaces":    0
             },
@@ -157,6 +157,7 @@
                 "label":            "机头:",
                 "units":            "radians",
                 "nanUnchanged":     true,
+                "default":          null,
                 "decimalPlaces":    2
             }
         },
@@ -178,6 +179,7 @@
                 "label":            "机头:",
                 "units":            "radians",
                 "nanUnchanged":     true,
+                "default":          null,
                 "decimalPlaces":    2
             }
         },
@@ -270,7 +272,7 @@
             "friendlyEdit":         true,
             "category":             "Basic",
             "param1": {
-                "label":            "Hold:",
+                "label":            "Hold",
                 "units":            "secs",
                 "default":          0,
                 "decimalPlaces":    0
@@ -289,6 +291,7 @@
                 "label":            "机头:",
                 "units":            "deg",
                 "nanUnchanged":     true,
+                "default":          null,
                 "decimalPlaces":    2
             }
         },
@@ -669,6 +672,7 @@
             "friendlyName":         "ROI to next waypoint" ,
             "description":          "Sets the region of interest to point towards the next waypoint with optional offsets.",
             "specifiesCoordinate":  false,
+            "standaloneCoordinate": true,
             "friendlyEdit":         true,
             "category":             "相机",
             "param5": {

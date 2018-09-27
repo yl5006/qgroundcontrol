@@ -211,29 +211,29 @@ QGCViewDialog {
 
                 QGCLabel {
                     id:         minValueDisplay
-                    text:       qsTr("最小值:")/*qsTr("Min: ")*/ + fact.minString
+                    text:       qsTr("Min: ") + fact.minString
                     visible:    !fact.minIsDefaultForType
                 }
 
                 QGCLabel {
-                    text:       qsTr("最大值:")/*qsTr("Max: ")*/ + fact.maxString
+                    text:       qsTr("Max: ") + fact.maxString
                     visible:    !fact.maxIsDefaultForType
                 }
 
                 QGCLabel {
-                    text:       qsTr("默认值:")/*qsTr("Default: ")*/ + fact.defaultValueString
+                    text:       qsTr("Default: ") + fact.defaultValueString
                     visible:    _allowDefaultReset
                 }
             }
 
             QGCLabel {
-                text:       qsTr("参数名:")/*qsTr("Parameter name: ")*/ + fact.name
-                visible:    showonlyhelp ? false : fact.componentId > 0 // > 0 means it's a parameter fact
+                text:       qsTr("Parameter name: ") + fact.name
+                visible:    fact.componentId > 0 // > 0 means it's a parameter fact
             }
 
             QGCLabel {
                 visible:    fact.rebootRequired
-                text:       qsTr("改变后需要重启")//"Reboot required after change"
+                text:       qsTr("Reboot required after change")//"Reboot required after change"
             }
 
             QGCLabel {
@@ -247,7 +247,7 @@ QGCViewDialog {
             QGCCheckBox {
                 id:         forceSave
                 visible:    false
-                text:       qsTr("强制保存(危险)")//qsTr("Force save (dangerous!)")
+                text:       qsTr("Force save (dangerous!)")
             }
 
             Row {

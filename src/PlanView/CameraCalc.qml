@@ -1,4 +1,4 @@
-﻿import QtQuick          2.3
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Layouts  1.2
 
@@ -57,7 +57,7 @@ Column {
 
     SectionHeader {
         id:         cameraHeader
-        text:       qsTr("拍照设置")
+        text:       qsTr("Camera")
         showSpacer: false
     }
 
@@ -90,7 +90,7 @@ Column {
 
                 QGCRadioButton {
                     width:          _editFieldWidth
-                    text:           qsTr("景观")
+                    text:            qsTr("Landscape")
                     checked:        !!cameraCalc.landscape.value
                     exclusiveGroup: cameraOrientationGroup
                     onClicked:      cameraCalc.landscape.value = 1
@@ -98,7 +98,7 @@ Column {
 
                 QGCRadioButton {
                     id:             cameraOrientationPortrait
-                    text:           qsTr("影像")
+                    text:            qsTr("Portrait")
                     checked:        !cameraCalc.landscape.value
                     exclusiveGroup: cameraOrientationGroup
                     onClicked:      cameraCalc.landscape.value = 0
@@ -120,11 +120,11 @@ Column {
                     Item { Layout.fillWidth: true }
                     QGCLabel {
                         Layout.preferredWidth:  _root._fieldWidth
-                        text:                   qsTr("宽")
+                        text:                   qsTr("Width")
                     }
                     QGCLabel {
                         Layout.preferredWidth:  _root._fieldWidth
-                        text:                   qsTr("高")
+                        text:                   qsTr("Height")
                     }
                 }
 
@@ -132,7 +132,7 @@ Column {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     spacing:        _margin
-                    QGCLabel { text: qsTr("传感器"); Layout.fillWidth: true }
+                    QGCLabel { text: qsTr("Sensor"); Layout.fillWidth: true }
                     FactTextField {
                         Layout.preferredWidth:  _root._fieldWidth
                         fact:                   cameraCalc.sensorWidth
@@ -147,7 +147,7 @@ Column {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
                     spacing:        _margin
-                    QGCLabel { text: qsTr("图像"); Layout.fillWidth: true }
+                    QGCLabel { text: qsTr("Image"); Layout.fillWidth: true }
                     FactTextField {
                         Layout.preferredWidth:  _root._fieldWidth
                         fact:                   cameraCalc.imageWidth
@@ -163,7 +163,7 @@ Column {
                     anchors.right:  parent.right
                     spacing:        _margin
                     QGCLabel {
-                        text:                   qsTr("焦距")
+                        text:                   qsTr("Focal length")
                         Layout.fillWidth:       true
                     }
                     FactTextField {
@@ -181,11 +181,11 @@ Column {
                 Item { Layout.fillWidth: true }
                 QGCLabel {
                     Layout.preferredWidth:  _root._fieldWidth
-                    text:                   qsTr("前向重叠度")
+                    text:                   qsTr("Front Lap")
                 }
                 QGCLabel {
                     Layout.preferredWidth:  _root._fieldWidth
-                    text:                   qsTr("旁向重叠度")
+                    text:                   qsTr("Side Lap")
                 }
             }
 
@@ -193,7 +193,7 @@ Column {
                 anchors.left:   parent.left
                 anchors.right:  parent.right
                 spacing:        _margin
-                QGCLabel { text: qsTr("重叠度"); Layout.fillWidth: true }
+                QGCLabel { text: qsTr("Overlap"); Layout.fillWidth: true }
                 FactTextField {
                     Layout.preferredWidth:  _root._fieldWidth
                     fact:                   cameraCalc.frontalOverlap
@@ -206,7 +206,7 @@ Column {
 
             QGCLabel {
                 wrapMode:               Text.WordWrap
-                text:                   qsTr("选择其一:")
+                text:                   qsTr("Select one:")
                 Layout.preferredWidth:  parent.width
                 Layout.columnSpan:      2
             }
@@ -234,7 +234,7 @@ Column {
 
                 QGCRadioButton {
                     id:                     fixedImageDensityRadio
-                    text:                   qsTr("地面参考系")
+                    text:                   qsTr("Ground Res")
                     checked:                !cameraCalc.valueSetIsDistance.value
                     exclusiveGroup:         fixedValueGroup
                     onClicked:              cameraCalc.valueSetIsDistance.value = 0

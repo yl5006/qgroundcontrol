@@ -57,7 +57,7 @@ Rectangle {
             id:             idset
             anchors.left:   img.left
             anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
-            text:           qsTr("圆形航线")//"safe"
+            text:           qsTr("Circle plan")//"safe"
             color:          qgcPal.text
             anchors.verticalCenter: img.verticalCenter
         }
@@ -81,7 +81,7 @@ Rectangle {
                 spacing:    ScreenTools.defaultFontPixelHeight
                 QGCLabel {
                     anchors.baseline:   radius.baseline
-                    text:               qsTr("半径:")
+                    text:               qsTr("Raidus:")
                     width:              ScreenTools.defaultFontPixelHeight*4
                 }
                 QGCTextField {
@@ -98,7 +98,7 @@ Rectangle {
                 spacing:    ScreenTools.defaultFontPixelHeight
                 QGCLabel {
                     anchors.baseline:   number.baseline
-                    text:               qsTr("航点个数:")
+                    text:               qsTr("Number of waypoints:")
                     width:              ScreenTools.defaultFontPixelHeight*4
                 }
                 QGCTextField {
@@ -112,7 +112,7 @@ Rectangle {
                 spacing:    ScreenTools.defaultFontPixelHeight
                 QGCLabel {
                     anchors.baseline:   startangle.baseline
-                    text:               qsTr("起始点角度:")
+                    text:               qsTr("Start angle:")
                     width:              ScreenTools.defaultFontPixelHeight*4
                 }
                 QGCTextField {
@@ -122,7 +122,7 @@ Rectangle {
                     text:               "0"
                 }
                 QGCLabel {
-                    text:               qsTr("度")
+                    text:               qsTr("deg")
                 }
             }
             Row {
@@ -133,13 +133,13 @@ Rectangle {
                 QGCRadioButton {
                     id:             start
                     exclusiveGroup: modeGroup
-                    text:           qsTr("顺时针")//"Mode 1"
+                    text:           qsTr("Clockwise")//"Mode 1"
                     checked:        true
                 }
 
                 QGCRadioButton {
                     exclusiveGroup: modeGroup
-                    text:           qsTr("逆时针")//"Mode 2"
+                    text:           qsTr("Counterclockwise")//"Mode 2"
                 }
             }
         }
@@ -147,7 +147,7 @@ Rectangle {
             spacing: ScreenTools.defaultFontPixelHeight/2
             anchors.verticalCenter: setitem.verticalCenter
             QGCButton {
-                text:               qsTr("生成")
+                text:               qsTr("Generate")
                 onClicked: {
                     var coordinate =_missionController.currentPlanViewItem.coordinate
                     var sequenceNumber
@@ -166,7 +166,7 @@ Rectangle {
                 }
             }
             QGCButton {
-                text:               qsTr("一键8字")
+                text:               qsTr("8 words")
                 onClicked: {
                     var coordinate =_missionController.currentPlanViewItem.coordinate
                     var sequenceNumber
@@ -196,7 +196,7 @@ Rectangle {
                 }
             }
             QGCButton {
-                text:               qsTr("取消")
+                text:               qsTr("Cancel")
                 onClicked: {
                     _root.visible=false
                 }

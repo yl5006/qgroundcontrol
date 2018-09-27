@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -55,7 +55,7 @@ Item {
 
                     QGCLabel {
                         id:             flightModeLabel
-                        text:           qsTr("飞行模式设置")//qsTr("Flight Mode Settings")
+                        text:           qsTr("Flight Mode Settings")
                         font.family:    ScreenTools.demiboldFontFamily
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -91,7 +91,7 @@ Item {
 
                                 QGCLabel {
                                     Layout.fillWidth:   true
-                                    text:               qsTr("模式通道: ")//qsTr("Mode channel:")
+                                    text:               qsTr("Mode channel:")
                                 }
 
                                 FactComboBox {
@@ -112,7 +112,7 @@ Item {
 
                                     QGCLabel {
                                         Layout.fillWidth:   true
-                                        text:               qsTr("飞行模式 %1").arg(index)//qsTr("Flight Mode %1").arg(index)
+                                        text:               qsTr("Flight Mode %1").arg(index)
                                         color:              controller.activeFlightMode == index ? "yellow" : qgcPal.text
                                     }
 
@@ -132,7 +132,7 @@ Item {
                     spacing:    _margins
 
                     QGCLabel {
-                        text:          qsTr("开关设置")// qsTr("Switch Settings")
+                        text:           qsTr("Switch Settings")
                         font.family:    ScreenTools.demiboldFontFamily
                          anchors.horizontalCenter: parent.horizontalCenter
                     }

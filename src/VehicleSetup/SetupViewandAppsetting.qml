@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -35,9 +35,9 @@ Rectangle {
     readonly property real      _horizontalMargin:  _defaultTextWidth / 2
     readonly property real      _verticalMargin:    _defaultTextHeight / 2
     readonly property real      _buttonWidth:       _defaultTextWidth * 18
-    readonly property string    _armedVehicleText:  qsTr("不能在解锁情况下操作")//"This operation cannot be performed while vehicle is armed."
+    readonly property string    _armedVehicleText:  qsTr("This operation cannot be performed while vehicle is armed.")//"This operation cannot be performed while vehicle is armed."
 
-    property string _messagePanelText:              qsTr("任务消息")//"missing message panel text"
+    property string _messagePanelText:              qsTr("missing message panel text")//"missing message panel text"
     property bool   _fullParameterVehicleAvailable: QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && !QGroundControl.multiVehicleManager.activeVehicle.missingParameters
     property var    _corePlugin:                    QGroundControl.corePlugin
 
@@ -121,7 +121,7 @@ Rectangle {
             var autopilotPlugin = QGroundControl.multiVehicleManager.activeVehicle.autopilot
             var prereq = autopilotPlugin.prerequisiteSetup(vehicleComponent)
             if (prereq != "") {
-                _messagePanelText = prereq + qsTr("设置需在") + vehicleComponent.name + qsTr("之前")
+                _messagePanelText = qsTr("%1 setup must be completed prior to %2 setup.").arg(prereq).arg(vehicleComponent.name)
                 panelLoader.setSourceComponent(messagePanelComponent)
             } else {
                 panelLoader.setSource(vehicleComponent.setupSource, vehicleComponent)
@@ -190,7 +190,7 @@ Rectangle {
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
                 font.pointSize:         ScreenTools.largeFontPointSize
-                text:                   qsTr("连接你的飞控系统，地面会自动连接")+//"Connect vehicle to your device and QGroundControl will automatically detect it." +
+                text:                   qsTr("Connect vehicle to your device and QGroundControl will automatically detect it.")+//"Connect vehicle to your device and QGroundControl will automatically detect it." +
                                         (ScreenTools.isMobile ? "" : ""/*" Click Firmware on the left to upgrade your vehicle."*/)
 
                 onLinkActivated: Qt.openUrlExternally(link)
@@ -344,7 +344,7 @@ Rectangle {
             height:         width
             imageResource:  "/qmlimages/tool-01.svg"
             exclusiveGroup: setupButtonGroup
-            text:           qsTr("系统")//"General"
+            text:           qsTr("System set")//"General"
             onClicked:
                 {   if(!loader.visible)
                         showGeneralPanel()
@@ -352,11 +352,11 @@ Rectangle {
         }
         SubMenuButtonModify {
             id:             linksButton
-            imageResource:  "/res/connect.svg"
+            imageResource:  "/qmlimages/connect.svg"
             width:          _defaultTextHeight*8
             height:         width
             exclusiveGroup: setupButtonGroup
-            text:           qsTr("连接")//"Comm Links"
+            text:           qsTr("Comm Links")//"Comm Links"
             onClicked:
             {
                  if(!loader.visible)
@@ -369,7 +369,7 @@ Rectangle {
             width:          _defaultTextHeight*8
             height:         width
             exclusiveGroup: setupButtonGroup
-            text:           qsTr("离线地图")//"Offline Maps"
+            text:           qsTr("Offline Maps")//"Offline Maps"
             visible:        false//!ScreenTools.isMobile
             onClicked:
             {
@@ -384,7 +384,7 @@ Rectangle {
              imageResource:  "/qmlimages/FirmwareUpgradeIcon.svg"
              exclusiveGroup: setupButtonGroup
              visible:        !ScreenTools.isMobile//&&ScreenTools.isDebug
-             text:           qsTr("固件下载")//"Firmware"
+             text:           qsTr("Firmware update")//"Firmware"
              onClicked:
              {
                   if(!loader.visible)
@@ -440,7 +440,7 @@ Rectangle {
               height:         width
               exclusiveGroup: setupButtonGroup
               visible:        QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable
-              text:           qsTr("后台调试")//"Firmware""Parameters"
+              text:           qsTr("Back Parameters")//"Firmware""Parameters"
               onClicked:
               {
                    if(!loader.visible)
@@ -453,7 +453,7 @@ Rectangle {
               exclusiveGroup: setupButtonGroup
               imageResource:  "/qmlimages/Analyze.svg"
               visible:        !ScreenTools.isMobile&&QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable
-              text:           qsTr("日志")//"Firmware"
+              text:           qsTr("Logs")//"Firmware"
               onClicked:
               {
                    if(!loader.visible)

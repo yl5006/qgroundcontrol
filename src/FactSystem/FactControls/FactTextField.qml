@@ -1,4 +1,4 @@
-﻿import QtQuick                  2.3
+import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 import QtQuick.Dialogs          1.2
@@ -52,7 +52,7 @@ QGCTextField {
         }
     }
 
-    onHelpClicked:  showHelp ? qgcView.showDialog(helpDialogComponent, qsTr("详细信息"), qgcView.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel):0
+    onHelpClicked:  showHelp ? qgcView.showDialog(helpDialogComponent, qsTr("Value Details"), qgcView.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel):0
 
 
     Component {

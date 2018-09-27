@@ -59,21 +59,21 @@ Rectangle {
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("回中")
+                text:          qsTr("Back")
                 checkable:     true
                 primary:       true
             }
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("跟头")
+                text:          qsTr("Follow head")
                 checkable:     true
                 primary:       true
             }
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("锁头")
+                text:          qsTr("Fix head")
                 checkable:     true
                 primary:       true
             }
@@ -83,7 +83,7 @@ Rectangle {
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("变大")
+                text:          qsTr("Bigger")
                 checkable:     true
                 primary:       true
             }
@@ -91,7 +91,7 @@ Rectangle {
                 id:            takepic
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("变小")
+                text:          qsTr("Smaller")
                 checkable:     true
                 primary:       true
             }
@@ -101,38 +101,14 @@ Rectangle {
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("远焦")
+                text:          qsTr("Far focus")
                 checkable:     true
                 primary:       true
             }
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("近焦")
-                checkable:     true
-                primary:       true
-            }
-        }
-        Row{
-            spacing:    ScreenTools.defaultFontPixelHeight/2
-            QGCButton {
-                width:         ScreenTools.defaultFontPixelHeight*5
-                height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("自动对焦")
-                checkable:     true
-                primary:       true
-            }
-            QGCButton {
-                width:         ScreenTools.defaultFontPixelHeight*5
-                height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("暂停对焦")
-                checkable:     true
-                primary:       true
-            }
-            QGCButton {
-                width:         ScreenTools.defaultFontPixelHeight*5
-                height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("记忆对焦")
+                text:          qsTr("Near focus")
                 checkable:     true
                 primary:       true
             }
@@ -142,20 +118,44 @@ Rectangle {
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("录像")
+                text:          qsTr("Auto focus")
                 checkable:     true
                 primary:       true
             }
             QGCButton {
                 width:         ScreenTools.defaultFontPixelHeight*5
                 height:        ScreenTools.defaultFontPixelHeight*2
-                text:          qsTr("结束录像")
+                text:          qsTr("Pause focus")
+                checkable:     true
+                primary:       true
+            }
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("Memory focus")
+                checkable:     true
+                primary:       true
+            }
+        }
+        Row{
+            spacing:    ScreenTools.defaultFontPixelHeight/2
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("Recording")
+                checkable:     true
+                primary:       true
+            }
+            QGCButton {
+                width:         ScreenTools.defaultFontPixelHeight*5
+                height:        ScreenTools.defaultFontPixelHeight*2
+                text:          qsTr("Stop Recording")
                 checkable:     true
                 primary:       true
             }
             SubMenuButton {
                 imageResource:      "/qmlimages/camera.svg"
-                text:               qsTr("拍照")//"Send to vehicle"
+                text:               qsTr("Take a photo")//"Send to vehicle"
                 checkable:          true
                 onClicked:          _activeVehicle.triggerCamera()
                 enabled:            _activeVehicle
@@ -166,7 +166,7 @@ Rectangle {
             spacing:    ScreenTools.defaultFontPixelHeight/2
             SubMenuButton {
                 imageResource:      "/qmlimages/camera.svg"
-                text:               qsTr("定时拍照")//"Send to vehicle"
+                text:               qsTr("Interval photo")//"Send to vehicle"
                 onClicked:           _activeVehicle.triggerCameraTime(Number(intertime.text))
                 enabled:            _activeVehicle
             }
@@ -180,7 +180,7 @@ Rectangle {
             spacing:    ScreenTools.defaultFontPixelHeight/2
             SubMenuButton {
                 imageResource:      "/qmlimages/camera.svg"
-                text:               qsTr("定距拍照")//"Send to vehicle"
+                text:               qsTr("Distance photo")//"Send to vehicle"
                 onClicked:           _activeVehicle.triggerCameraDist(Number(distance.text))
                 enabled:            _activeVehicle
             }

@@ -89,7 +89,7 @@ void SerialLink::_writeBytes(const QByteArray data)
     } else {
         // Error occurred
         qWarning() << "Serial port not writeable";
-        _emitLinkError(tr("不能发送数据 - 连接 %1 已断开!").arg(getName()));
+        _emitLinkError(tr("Could not send data - link %1 is disconnected!").arg(getName()));
     }
 }
 
@@ -139,7 +139,7 @@ bool SerialLink::_connect(void)
             }
         }
 
-        _emitLinkError(tr("连接错误: 不能创建端口. %1").arg(errorString));
+        _emitLinkError(tr("Error connecting: Could not create port. %1").arg(errorString));
         return false;
     }
     return true;
@@ -372,9 +372,9 @@ void SerialLink::_resetConfiguration()
 
 void SerialLink::_emitLinkError(const QString& errorMsg)
 {
-    QString msg(tr("错误 %1. %2"));
+    QString msg("Error on link %1. %2");
     qDebug() << errorMsg;
-    emit communicationError(tr("连接错误"), msg.arg(getName()).arg(errorMsg));
+    emit communicationError(tr("Link Error"), msg.arg(getName()).arg(errorMsg));
 }
 
 //--------------------------------------------------------------------------

@@ -101,8 +101,8 @@ public:
     double          specifiedGimbalPitch    (void) final { return std::numeric_limits<double>::quiet_NaN(); }
     void            setMissionFlightStatus  (MissionController::MissionFlightStatus_t& missionFlightStatus) final;
     bool            readyForSave            (void) const override;
-    QString         commandDescription      (void) const override { return tr("带状扫描"); }
-    QString         commandName             (void) const override { return tr("带状扫描"); }
+    QString         commandDescription      (void) const override { return tr("Transect"); }
+    QString         commandName             (void) const override { return tr("Transect"); }
     QString         abbreviation            (void) const override { return tr("T"); }
 
     bool coordinateHasRelativeAltitude      (void) const final;

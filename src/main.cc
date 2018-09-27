@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -99,7 +99,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
     return JNI_VERSION_1_6;
 }
 #endif
-int language;
+
 /**
  * @brief Starts the application
  *
@@ -226,28 +226,13 @@ int main(int argc, char *argv[])
     QSettings settings;
     QSettings::setDefaultFormat(QSettings::IniFormat);
 //******************
-/**********************
-            language add by yaoling
-***********************/
-        //  settings.beginGroup("GS_EWT_Language");
-        language=settings.value("language","0").toInt();
-            if(language==1)
-            {
-                QString   strLanguageFile= app->applicationDirPath()+QString("/app_en.qm");
-                qDebug()<<strLanguageFile<<"   "<<language;
-                QTranslator m_translator;//=new QTranslator();
-                m_translator.load(strLanguageFile);
-                app->installTranslator(&m_translator);
-            }
-//**************************************
-//************
 //    显示启动界面信息
 #ifndef __mobile__
     QSplashScreen *splash = new QSplashScreen;
     splash->setPixmap(QPixmap(":/res/startpage.png"));
     splash->show();
     Qt::Alignment topRight = Qt::AlignRight | Qt::AlignTop;
-    splash->showMessage(QObject::tr("检查更新..."),topRight, Qt::white);
+    splash->showMessage(QObject::tr("Check update..."),topRight, Qt::white);
 #endif
 //****************
 //check for update
@@ -307,7 +292,7 @@ if (checkupdate)
 #endif /* Q_OS_LINUX */
 
 #ifndef __mobile__
-    splash->showMessage(QObject::tr("初始化..."),topRight, Qt::white);
+    splash->showMessage(QObject::tr("Init..."),topRight, Qt::white);
 #endif
     // There appears to be a threading issue in qRegisterMetaType which can cause it to throw a qWarning
     // about duplicate type converters. This is caused by a race condition in the Qt code. Still working

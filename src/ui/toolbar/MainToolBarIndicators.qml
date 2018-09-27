@@ -141,7 +141,7 @@ Item {
         QGCLabel {
             id:                     connectionLost
             anchors.verticalCenter: parent.verticalCenter
-            text:                   qsTr("连接丢失")
+            text:                   qsTr("COMMUNICATION LOST")
             font.pointSize:         ScreenTools.largeFontPointSize
             font.family:            ScreenTools.demiboldFontFamily
             color:                  qgcPal.colorRed

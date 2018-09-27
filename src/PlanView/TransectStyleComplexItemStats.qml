@@ -16,15 +16,15 @@ Grid {
     columnSpacing:  ScreenTools.defaultFontPixelWidth
     visible:        statsHeader.checked
 
-    QGCLabel { text: qsTr("扫描面积") }
+    QGCLabel { text: qsTr("Survey Area") }
     QGCLabel { text: QGroundControl.squareMetersToAppSettingsAreaUnits(missionItem.coveredArea).toFixed(2) + " " + QGroundControl.appSettingsAreaUnitsString }
 
-    QGCLabel { text: qsTr("拍照数") }
+    QGCLabel { text: qsTr("Photo Count") }
     QGCLabel { text: missionItem.cameraShots }
 
-    QGCLabel { text: qsTr("拍照间隔") }
-    QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("s") }
+    QGCLabel { text: qsTr("Photo Interval") }
+    QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("secs") }
 
-    QGCLabel { text: qsTr("触发距离") }
+    QGCLabel { text: qsTr("Trigger Distance") }
     QGCLabel { text: missionItem.cameraCalc.adjustedFootprintFrontal.valueString + " " + missionItem.cameraCalc.adjustedFootprintFrontal.units }
 }

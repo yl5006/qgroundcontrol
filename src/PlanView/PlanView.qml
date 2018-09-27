@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -133,7 +133,7 @@ QGCView {
 
         onRawValueChanged: {
             if (_visualItems.count > 1) {
-                _qgcView.showDialog(applyNewAltitude, qsTr("修改高度"), showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
+                _qgcView.showDialog(applyNewAltitude, qsTr("Apply new alititude"), showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
             }
         }
     }
@@ -142,7 +142,7 @@ QGCView {
         id: applyNewAltitude
 
         QGCViewMessage {
-            message:    qsTr("你以改变任务默认高度. 你希望改变当前任务所有高度吗?")
+            message:    qsTr("You have changed the default altitude for mission items. Would you like to apply that altitude to all the items in the current mission?")
 
             function accept() {
                 hideDialog()
@@ -163,17 +163,17 @@ QGCView {
                 QGCLabel {
                     width:      parent.width
                     wrapMode:   Text.WordWrap
-                    text:       qsTr("你的飞机正在执行任务. 上传或修改任务会暂停飞机.")
+                    text:       qsTr("Your vehicle is currently flying a mission. In order to upload a new or modified mission the current mission will be paused.")
                 }
 
                 QGCLabel {
                     width:      parent.width
                     wrapMode:   Text.WordWrap
-                    text:       qsTr("当任务上传成功后， 你可以选择当前航点继续任务.")
+                    text:       qsTr("After the mission is uploaded you can adjust the current waypoint and start the mission.")
                 }
 
                 QGCButton {
-                    text:       qsTr("暂停任务后上传")
+                    text:       qsTr("Pause and Upload")
                     onClicked: {
                         _activeVehicle.flightMode = _activeVehicle.pauseFlightMode
                         _planMasterController.sendToVehicle()
@@ -217,14 +217,14 @@ QGCView {
                 return
             }
             if (_activeVehicle && _activeVehicle.armed && _activeVehicle.flightMode === _activeVehicle.missionFlightMode) {
-                _qgcView.showDialog(activeMissionUploadDialogComponent, qsTr("任务上传"), _qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+                _qgcView.showDialog(activeMissionUploadDialogComponent, qsTr("Plan Upload"), _qgcView.showDialogDefaultWidth, StandardButton.Cancel)
             } else {
                 sendToVehicle()
             }
         }
 
         function loadFromSelectedFile() {
-            fileDialog.title =          qsTr("选择飞行计划")
+            fileDialog.title =          qsTr("Select Plan File")
             fileDialog.planFiles =      true
             fileDialog.selectExisting = true
             fileDialog.nameFilters =    masterController.loadNameFilters
@@ -238,7 +238,7 @@ QGCView {
                 waitingOnDataMessage()
                 return
             }
-            fileDialog.title =          qsTr("保存 计划")
+            fileDialog.title =          qsTr("Save Plan")
             fileDialog.planFiles =      true
             fileDialog.selectExisting = false
             fileDialog.nameFilters =    masterController.saveNameFilters
@@ -252,7 +252,7 @@ QGCView {
         }
 
         function loadKmlFromSelectedFile() {
-            fileDialog.title =          qsTr("加载kml")
+            fileDialog.title =          qsTr("Load KML")
             fileDialog.planFiles =      false
             fileDialog.selectExisting = true
             fileDialog.nameFilters =    masterController.fileKmlFilters
@@ -266,7 +266,7 @@ QGCView {
                 waitingOnDataMessage()
                 return
             }
-            fileDialog.title =          qsTr("保存 KML")
+            fileDialog.title =          qsTr("Save KML")
             fileDialog.planFiles =      false
             fileDialog.selectExisting = false
             fileDialog.nameFilters =    masterController.fileKmlFilters
@@ -407,7 +407,7 @@ QGCView {
                     id:             idset
                     anchors.left:   img.left
                     anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
-                    text:           qsTr("生成航线参数")//"safe"
+                    text:           qsTr("Generate plan setting")//"safe"
                     font.pointSize: ScreenTools.mediumFontPointSize
                     font.bold:              true
                     color:          qgcPal.text
@@ -433,7 +433,7 @@ QGCView {
                         spacing:    ScreenTools.defaultFontPixelHeight
                         QGCLabel {
                             anchors.baseline:   wayangle.baseline
-                            text:               qsTr("偏移角度:")
+                            text:               qsTr("Offset angle:")
                             width:              ScreenTools.defaultFontPixelHeight*5
                         }
                         QGCTextField {
@@ -444,14 +444,14 @@ QGCView {
                             text:               "90"
                         }
                         QGCLabel {
-                            text:               qsTr("度")
+                            text:               qsTr("deg")
                         }
                     }
                     Row {
                         spacing:    ScreenTools.defaultFontPixelHeight
                         QGCLabel {
                             anchors.baseline:   wayspace.baseline
-                            text:               qsTr("偏移距离:")
+                            text:               qsTr("Offset distance:")
                             width:              ScreenTools.defaultFontPixelHeight*5
                         }
                         QGCTextField {
@@ -462,7 +462,7 @@ QGCView {
                             text:               "0.0"
                         }
                         QGCLabel {
-                            text:               qsTr("米")
+                            text:               qsTr("m")
                         }
                     }
                 }
@@ -474,20 +474,20 @@ QGCView {
                     QGCRadioButton {
                         id:             relalt
                         exclusiveGroup: modeGroup
-                        text:           qsTr("相对高度")//"Mode 1"
+                        text:           qsTr("Relative altitude")//"Mode 1"
                         checked:        true
                     }
 
                     QGCRadioButton {
                         exclusiveGroup: modeGroup
-                        text:           qsTr("海拔高度")//"Mode 2"
+                        text:           qsTr("Altitude")//"Mode 2"
                     }
                 }
                 Row {
                     spacing:    ScreenTools.defaultFontPixelHeight
                     QGCLabel {
                         anchors.baseline:   addalt.baseline
-                        text:               qsTr("增加高度:")
+                        text:               qsTr("Increase height:")
                         width:              ScreenTools.defaultFontPixelHeight*5
                     }
                     QGCTextField {
@@ -498,19 +498,19 @@ QGCView {
                         text:               "0.0"
                     }
                     QGCLabel {
-                        text:               qsTr("米")
+                        text:               qsTr("m")
                     }
                 }
                 QGCCheckBox {
                     id:         camer
-                    text:       qsTr("是否拍照:")//qsTr("Enable Flow Control")
+                    text:       qsTr("Take a photo:")//qsTr("Enable Flow Control")
                 }
 
                 Row {
                     spacing:    ScreenTools.defaultFontPixelHeight
                     QGCLabel {
                         anchors.baseline:   waynum.baseline
-                        text:               qsTr("路径条数:")
+                        text:               qsTr("Number of paths:")
                         width:              ScreenTools.defaultFontPixelHeight*5
                     }
                     QGCTextField {
@@ -991,7 +991,7 @@ QGCView {
                             SubMenuButton {
                                 imageResource:      "/qmlimages/nextwaypoint.svg"
                                 Layout.fillWidth:   true
-                                text:               qsTr("相对航点")//"Send to vehicle"
+                                text:               qsTr("Relative waypoint")//"Send to vehicle"
                                 onClicked:  {
                                     setMissionItemsButton.hideDropDown()
                                     setmissionItem.visible=true//qgcView.showDialog(setmissionItemDialog, qsTr(""), qgcView.showDialogDefaultWidth*0.6, StandardButton.Cancel)
@@ -1000,7 +1000,7 @@ QGCView {
                             SubMenuButton {
                                 imageResource:      "/qmlimages/circlepoint.svg"
                                 Layout.fillWidth:   true
-                                text:               qsTr("圆形航线")//"Send to vehicle"
+                                text:               qsTr("Round route")//"Send to vehicle"
                                 onClicked:  {
                                     setMissionItemsButton.hideDropDown()
                                     setCircleItem.visible=true
@@ -1173,7 +1173,7 @@ QGCView {
                 anchors.top:          toolColumn.bottom
                 anchors.horizontalCenter:   toolColumn.horizontalCenter
                 visible:            ruler.checked
-                text:               "距离:"+coordinateruler1.distanceTo(coordinateruler2).toFixed(1)+"m 角度:"+Math.round(coordinateruler1.azimuthTo(coordinateruler2))
+                text:              qsTr("Distance:")+coordinateruler1.distanceTo(coordinateruler2).toFixed(1)+qsTr(" Angle:")+Math.round(coordinateruler1.azimuthTo(coordinateruler2))
                 color:              qgcPal.warningText
             }
         }
@@ -1453,7 +1453,7 @@ QGCView {
         id: syncLoadFromVehicleOverwrite
         QGCViewMessage {
             id:         syncLoadFromVehicleCheck
-            message:   qsTr("你有未保存或发送任务. 从飞机载入会丢失，确认载入?")
+            message:   qsTr("You have unsaved/unsent changes. Loading from the Vehicle will lose these changes. Are you sure you want to load from the Vehicle?")
             function accept() {
                 hideDialog()
                 masterController.loadFromVehicle()
@@ -1465,7 +1465,7 @@ QGCView {
         id: syncLoadFromFileOverwrite
         QGCViewMessage {
             id:         syncLoadFromVehicleCheck
-            message:   qsTr("你有未保存或发送任务. 从文件载入会丢失，确认载入?")
+            message:   qsTr("You have unsaved/unsent changes. Loading from a file will lose these changes. Are you sure you want to load from a file?")
             function accept() {
                 hideDialog()
                 masterController.loadFromSelectedFile()
@@ -1476,8 +1476,8 @@ QGCView {
     Component {
         id: removeAllPromptDialog
         QGCViewMessage {
-            message: qsTr("确认删除所有航点?") +
-                     (_planMasterController.offline ? "" : qsTr("这同时会删除飞控内所有航点."))
+            message: qsTr("Are you sure you want to remove all items and create a new plan? ") +
+                     (_planMasterController.offline ? "" : qsTr("This will also remove all items from the vehicle."))
             function accept() {
                 if (_planMasterController.offline) {
                     masterController.removeAll()
@@ -1544,14 +1544,14 @@ QGCView {
             id:         columnHolder
             spacing:    _margin/2
 
-            property string _overwriteText: (_editingLayer == _layerMission) ? qsTr("覆盖任务") : ((_editingLayer == _layerGeoFence) ? qsTr("GeoFence 覆盖") : qsTr("Rally Points 覆盖"))
+            property string _overwriteText: (_editingLayer == _layerMission) ? qsTr("Mission overwrite") : ((_editingLayer == _layerGeoFence) ? qsTr("GeoFence overwrite") : qsTr("Rally Points overwrite"))
             anchors.margins:    _margin
 
             SubMenuButton {
                 imageResource:      "/qmlimages/sendvehicle.svg"
                 visible:            masterController.offline && !masterController.syncInProgress
                 Layout.fillWidth:   true
-                text:               qsTr("生成任务")//"Send to vehicle"
+                text:               qsTr("Generate plan")//"Send to vehicle"
                 onClicked:  {
                     syncButton.hideDropDown()
                     _missionController.applyoffboardmission()
@@ -1561,7 +1561,7 @@ QGCView {
                 imageResource:      "/qmlimages/sendvehicle.svg"
                 enabled:             !masterController.offline && !masterController.syncInProgress
                 Layout.fillWidth:   true
-                text:               qsTr("发送任务..")//"Send to vehicle"
+                text:               qsTr("Send to vehicle..")//"Send to vehicle"
                 onClicked:  {
                     syncButton.hideDropDown()
                     masterController.upload()
@@ -1577,7 +1577,7 @@ QGCView {
                 imageResource:      "/qmlimages/loadvehicle.svg"
                 enabled:           !masterController.offline && !masterController.syncInProgress
                 Layout.fillWidth:   true
-                text:                qsTr("载入任务..")//"Load from vehicle"
+                text:                qsTr("Load from vehicle..")//"Load from vehicle"
                 onClicked:  {
                     syncButton.hideDropDown()
                     if (masterController.dirty) {
@@ -1596,7 +1596,7 @@ QGCView {
                 imageResource:      "/qmlimages/savetofile.svg"
                 enabled:            !masterController.syncInProgress
                 Layout.fillWidth:   true
-                text:                qsTr("存储到文件")//"Save to file..."
+                text:                qsTr("Save to file...")//"Save to file..."
                 onClicked:  {
                     syncButton.hideDropDown()
                     masterController.saveToSelectedFile()
@@ -1611,7 +1611,7 @@ QGCView {
                 imageResource:      "/qmlimages/loadfromfile.svg"
                 enabled:            !masterController.syncInProgress
                 Layout.fillWidth:   true
-                text:               qsTr("从文件载入")//"Load from file..."
+                text:               qsTr("Load from file...")//"Load from file..."
                 onClicked:  {
                     syncButton.hideDropDown()
                     if (masterController.dirty) {
@@ -1629,10 +1629,10 @@ QGCView {
             SubMenuButton {
                 imageResource:      "/qmlimages/clearmission.svg"
                 Layout.fillWidth:   true
-                text:               qsTr("删除所有航点")//"Remove all"
+                text:               qsTr("Remove all")//"Remove all"
                 onClicked:  {
                     syncButton.hideDropDown()
-                    _qgcView.showDialog(removeAllPromptDialog, qsTr("删除所有航点")/*qsTr("Remove all")*/, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
+                    _qgcView.showDialog(removeAllPromptDialog, qsTr("Remove all")/*qsTr("Remove all")*/, qgcView.showDialogDefaultWidth, StandardButton.Yes | StandardButton.No)
                 }
 
 
@@ -1643,7 +1643,7 @@ QGCView {
                 color:      "grey"
             }
             QGCButton {
-                text:               qsTr("加载KML...")
+            	text:               qsTr("Load KML...")
                 Layout.fillWidth:   true
                 enabled:            !masterController.syncInProgress
                 onClicked: {
@@ -1652,7 +1652,7 @@ QGCView {
                 }
             }
             QGCButton {
-                text:               qsTr("保存至KML文件")
+                text:               qsTr("Save KML...")
                 Layout.fillWidth:   true
                 enabled:            !masterController.syncInProgress && _visualItems.count > 1
                 onClicked: {

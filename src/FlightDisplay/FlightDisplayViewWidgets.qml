@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -198,71 +198,71 @@ Item {
             if (_vehicleFlying || !_guidedActionsEnabled) {
                 return
             }
-            guidedModeConfirm.confirmText = qsTr("解锁")
+            guidedModeConfirm.confirmText = qsTr("Arming")
             break;
         case actionDisarm:
             if (_vehicleFlying) {
                 return
             }
-            guidedModeConfirm.confirmText = qsTr("加锁")
+            guidedModeConfirm.confirmText = qsTr("Disarm")
             break;
         case actionEmergencyStop:
-            guidedModeConfirm.confirmText = qsTr("!电机加锁，开伞")
+            guidedModeConfirm.confirmText = qsTr("!Disarm and Open umbrella")
             break;
         case actionTakeoff:
             altitudeSlider.setToMinimumTakeoff()
             altitudeSlider.visible = true
-            guidedModeConfirm.confirmText = qsTr("起飞")
+            guidedModeConfirm.confirmText = qsTr("Take off")
             break;
         case actionLand:
-            guidedModeConfirm.confirmText = qsTr("降落")
+            guidedModeConfirm.confirmText = qsTr("Land")
             break;
         case actionRTL:
-            guidedModeConfirm.confirmText = qsTr("返航")
+            guidedModeConfirm.confirmText = qsTr("Retrun home")
             break;
         case actionChangeAlt:
             altitudeSlider.reset()
             altitudeSlider.visible = true
-            guidedModeConfirm.confirmText = qsTr("改变高度")
+            guidedModeConfirm.confirmText = qsTr("Change height")
             break;
         case actionGoto:
-            guidedModeConfirm.confirmText = qsTr("移动至引导点")
+            guidedModeConfirm.confirmText = qsTr("Go here")
             break;
         case actionSetWaypoint:
-            guidedModeConfirm.confirmText = qsTr("改变飞行航点")
+            guidedModeConfirm.confirmText = qsTr("Change waypoint")
             break;
         case actionOrbit:
             altitudeSlider.reset()
             altitudeSlider.visible = true
-            guidedModeConfirm.confirmText = qsTr("进入热点模式")
+            guidedModeConfirm.confirmText = qsTr("Go around")
             break;
         case actionLandAbort:
             guidedModeConfirm.confirmText = qsTr("abort landing")
             break;
         case actionResumeMission:
-             guidedModeConfirm.confirmText = qsTr("恢复任务")
+             guidedModeConfirm.confirmText = qsTr("Resume mission")
             break
         case actionResumeMissionReady:
-             guidedModeConfirm.confirmText = qsTr("恢复任务")
+             guidedModeConfirm.confirmText = qsTr("Resume mission")
             break
         case actionResumeMissionUploadFail:
              guidedModeConfirm.confirmText = qsTr("Resume FAILED")
             break
         case actionStartMission:
-             guidedModeConfirm.confirmText = qsTr("开始任务")
+             guidedModeConfirm.confirmText = qsTr("Start mission")
             break
         case actionContinueMission:
-             guidedModeConfirm.confirmText = qsTr("继续任务")
+             guidedModeConfirm.confirmText = qsTr("Continue mission")
             break
         case actionPause:
             altitudeSlider.reset()
-             guidedModeConfirm.confirmText = qsTr("暂停(悬停或盘旋)")
+             guidedModeConfirm.confirmText = qsTr("Pause")
             break
         case actionVtolTransitionToFwdFlight:
-             guidedModeConfirm.confirmText = qsTr("切换固定翼")
+             guidedModeConfirm.confirmText = qsTr("Transition To Fw")
             break
         case actionVtolTransitionToMRFlight:
-             guidedModeConfirm.confirmText = qsTr("切换旋翼")
+             guidedModeConfirm.confirmText = qsTr("Transition To MR")
             break
         default:
             console.warn(qsTr("Internal error: unknown actionCode"), actionCode)
@@ -345,7 +345,7 @@ Item {
             z:                          QGroundControl.zOrderTopMost
             color:                      mapPal.text
             font.pointSize:             ScreenTools.largeFontPointSize
-            text:                       qsTr("GPS未锁定")//"No GPS Lock for Vehicle"
+            text:                       qsTr("No GPS Lock for Vehicle")
         }
 
         QGCLabel {
@@ -540,7 +540,7 @@ Item {
             QGCLabel {
                 anchors.horizontalCenter: parent.horizontalCenter
                 color:      qgcPal.mapWidgetBorderDark
-                text:       qsTr("点击地图引导飞行")//"Click in map to move vehicle"
+                text:       qsTr("Click in map to move vehicle")
                 visible:    _activeVehicle && _activeVehicle.guidedMode && _activeVehicle.flying
             }
 
@@ -578,7 +578,7 @@ Item {
                     width:       ScreenTools.defaultFontPixelHeight*6
                     height:      width
                     showborder:  true
-                    text:        (_activeVehicle && _activeVehicle.flying) ? qsTr("继续任务"):  qsTr("开始任务")
+                    text:        (_activeVehicle && _activeVehicle.flying) ? qsTr("Continue mission"):  qsTr("Start mission")
                     imageResource:  "/res/action.svg"
                     bordercolor:    qgcPal.buttonHighlight
                     visible:    _activeVehicle
@@ -626,14 +626,14 @@ Item {
 
                 QGCButton {
                     pointSize:  widgetRoot._fontPointSize
-                    text:       qsTr("热点环绕")
+                    text:       qsTr("Orbit")
                     visible:    false
                     onClicked:  widgetRoot.confirmAction(widgetRoot.actionOrbit)
                 }
 
                 QGCButton {
                     pointSize:  widgetRoot._fontPointSize
-                    text:       qsTr("取消降落")
+                    text:       qsTr("Land Abort")
                     visible:    showLandAbort
                     onClicked:  widgetRoot.confirmAction(widgetRoot.actionAbort)
                 }
@@ -642,7 +642,7 @@ Item {
                     height:      width
                     anchors.verticalCenter: parent.verticalCenter
                     imageResource: _activeVehicle.vtolInFwdFlight ? "/qmlimages/change_coper.svg" : "/qmlimages/change_fixwing.svg"
-                    text:       qsTr("模式切换")       
+                    text:       qsTr("Transition")       
                     visible:    _activeVehicle ? _activeVehicle.vtol && _activeVehicle.px4Firmware : false
                     onClicked:  widgetRoot.confirmAction(_activeVehicle.vtolInFwdFlight ? widgetRoot.actionVtolTransitionToMRFlight:widgetRoot.actionVtolTransitionToFwdFlight)
                 }

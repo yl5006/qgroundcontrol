@@ -17,8 +17,7 @@
 
 PowerComponent::PowerComponent(Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent) :
     VehicleComponent(vehicle, autopilot, parent),
-//    _name(tr("Power"))
-      _name(tr("电源"))
+    _name(tr("Power"))
 {
 }
 

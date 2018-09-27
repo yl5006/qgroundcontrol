@@ -76,8 +76,6 @@ public:
     Q_INVOKABLE bool                endCreateConfiguration      (LinkConfiguration* config);
     Q_INVOKABLE void                removeConfiguration         (LinkConfiguration* config);
 
-    Q_INVOKABLE void                updateSerialPorts           (void);
-
     // Property accessors
 
     bool isBluetoothAvailable       (void);
@@ -110,7 +108,6 @@ public:
 
     // This should only be used by Qml code
     Q_INVOKABLE void createConnectedLink(LinkConfiguration* config);
-    Q_INVOKABLE void createConnectedSerialLink(const QString& name);
 
     /// Creates, connects (and adds) a link  based on the given configuration name.
     LinkInterface* createConnectedLink(const QString& name);

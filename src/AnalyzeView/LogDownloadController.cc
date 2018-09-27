@@ -182,11 +182,11 @@ LogDownloadController::_logEntry(UASInterface* uas, uint32_t time_utc, uint32_t 
                 entry->_type=type;
                 switch(type)
                 {
-                case 0: entry->setTypestr(tr("飞行日志"));
+                case 0: entry->setTypestr(tr("fly log"));
                     break ;
-                case 1: entry->setTypestr(tr("飞行日志"));
+                case 1: entry->setTypestr(tr("fly log"));
                     break ;
-                case 2: entry->setTypestr(tr("拍照日志"));
+                case 2: entry->setTypestr(tr("pos log"));
                     break ;
                 }
                 entry->setTime(QDateTime::fromTime_t(time_utc));

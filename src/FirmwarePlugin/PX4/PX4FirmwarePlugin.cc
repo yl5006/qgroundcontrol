@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -35,24 +35,23 @@ PX4FirmwarePluginInstanceData::PX4FirmwarePluginInstanceData(QObject* parent)
 }
 
 PX4FirmwarePlugin::PX4FirmwarePlugin(void)
-    : _manualFlightMode(tr("手动"))
-    , _acroFlightMode(tr("运动"))
-    , _stabilizedFlightMode(tr("增稳"))
+    : _manualFlightMode(tr("Manual"))
+    , _acroFlightMode(tr("Acro"))
+    , _stabilizedFlightMode(tr("Stabilized"))
     , _rattitudeFlightMode(tr("Rattitude"))
-    , _altCtlFlightMode(tr("定高"))
-    , _posCtlFlightMode(tr("GPS"))
+    , _altCtlFlightMode(tr("Altitude"))
+    , _posCtlFlightMode(tr("Position"))
     , _offboardFlightMode(tr("Offboard"))
     , _readyFlightMode(tr("Ready"))
-    , _takeoffFlightMode(tr("起飞"))
-    , _holdFlightMode(tr("悬停"))
-    , _missionFlightMode(tr("任务"))
-    , _rtlFlightMode(tr("返航"))
-    , _landingFlightMode(tr("降落"))
-    , _preclandFlightMode(tr("精准降落"))
-    , _circleFlightMode(tr("绕圈"))
+    , _takeoffFlightMode(tr("Takeoff"))
+    , _holdFlightMode(tr("Hold"))
+    , _missionFlightMode(tr("Mission"))
+    , _rtlFlightMode(tr("Return"))
+    , _landingFlightMode(tr("Land"))
+    , _preclandFlightMode(tr("Precision Land"))
     , _rtgsFlightMode(tr("Return to Groundstation"))
-    , _followMeFlightMode(tr("跟随"))
-    , _simpleFlightMode(tr("简单"))
+    , _followMeFlightMode(tr("Follow Me"))
+    , _simpleFlightMode(tr("Simple"))
 {
     qmlRegisterType<PX4AdvancedFlightModesController>   ("QGroundControl.Controllers", 1, 0, "PX4AdvancedFlightModesController");
     qmlRegisterType<PX4SimpleFlightModesController>     ("QGroundControl.Controllers", 1, 0, "PX4SimpleFlightModesController");
@@ -83,7 +82,6 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,       true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,           true,   true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET, true,   false,  true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_CIRCLE,        true,   false,  true },
         { PX4_CUSTOM_MAIN_MODE_OFFBOARD,    0,                                      false,  false,  true },
         // modes that can't be directly set by the user
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,          false,  true,   true },
@@ -106,7 +104,6 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
         &_missionFlightMode,
         &_rtlFlightMode,
         &_followMeFlightMode,
-        &_circleFlightMode,
         &_offboardFlightMode,
         &_landingFlightMode,
         &_preclandFlightMode,
@@ -405,7 +402,7 @@ void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double takeoffAltRel
 {
     double vehicleAltitudeAMSL = vehicle->altitudeAMSL()->rawValue().toDouble();
     if (qIsNaN(vehicleAltitudeAMSL)) {
-        qgcApp()->showMessage(tr("不能起飞，机体位置未知."));//"Unable to takeoff, vehicle position not known.")
+        qgcApp()->showMessage(tr("Unable to takeoff, vehicle position not known."));
         return;
     }
 
@@ -427,7 +424,7 @@ void PX4FirmwarePlugin::guidedModeTakeoff(Vehicle* vehicle, double takeoffAltRel
 void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoordinate& gotoCoord)
 {
     if (qIsNaN(vehicle->altitudeAMSL()->rawValue().toDouble())) {
-        qgcApp()->showMessage(tr("不能去改航点，机体位置未知."));//"Unable to go to location, vehicle position not known."
+        qgcApp()->showMessage(tr("Unable to go to location, vehicle position not known."));//"Unable to go to location, vehicle position not known."
         return;
     }
 
@@ -460,11 +457,11 @@ void PX4FirmwarePlugin::guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoord
 void PX4FirmwarePlugin::guidedModeChangeAltitude(Vehicle* vehicle, double altitudeChange)
 {
     if (!vehicle->homePosition().isValid()) {
-        qgcApp()->showMessage(tr("不能改变机体高度, home点未知."));
+        qgcApp()->showMessage(tr("Unable to change altitude, home position unknown."));
         return;
     }
     if (qIsNaN(vehicle->homePosition().altitude())) {
-        qgcApp()->showMessage(tr("不能改变机体高度, 机体高度未知."));//Unable to change altitude, vehicle altitude not known.
+        qgcApp()->showMessage(tr("Unable to change altitude, home position altitude unknown."));
         return;
     }
 
@@ -488,11 +485,11 @@ void PX4FirmwarePlugin::startMission(Vehicle* vehicle)
 
     if (_setFlightModeAndValidate(vehicle, missionFlightMode())) {
         if (!_armVehicleAndValidate(vehicle)) {
-            qgcApp()->showMessage(tr("不能开始任务: 不能解锁."));
+            qgcApp()->showMessage(tr("Unable to start mission: Vehicle rejected arming."));
             return;
         }
     } else {
-        qgcApp()->showMessage(tr("不能开始任务,飞机未准备完全"));
+        qgcApp()->showMessage(tr("Unable to start mission: Vehicle not ready."));
     }
 }
 
@@ -536,7 +533,7 @@ void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_messag
     if (!instanceData->versionNotified) {
         bool notifyUser = false;
         int supportedMajorVersion = 1;
-        int supportedMinorVersion = 7;
+        int supportedMinorVersion = 8;
         int supportedPatchVersion = 0;
         int supportedlastVersion = 1185;
 
@@ -565,7 +562,7 @@ void PX4FirmwarePlugin::_handleAutopilotVersion(Vehicle* vehicle, mavlink_messag
 
         if (notifyUser) {
             instanceData->versionNotified = true;
-            qgcApp()->showMessage(tr("地面站需版本 %1.%2.%3.%4和以上飞控固件. 请更新固件.").arg(supportedMajorVersion).arg(supportedMinorVersion).arg(supportedPatchVersion).arg(supportedlastVersion));//QGroundControl supports PX4 Pro firmware Version %1.%2.%3 and above. You are using a version prior to that which will lead to unpredictable results. Please upgrade your firmware.
+            qgcApp()->showMessage(tr("QGroundControl supports PX4 Pro firmware Version %1.%2.%3 and above. You are using a version prior to that which will lead to unpredictable results. Please upgrade your firmware.").arg(supportedMajorVersion).arg(supportedMinorVersion).arg(supportedPatchVersion));
         }
     }
 }

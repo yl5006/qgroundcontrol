@@ -1,4 +1,4 @@
-﻿import QtQuick                  2.3
+import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 import QtQuick.Dialogs          1.2
@@ -99,34 +99,34 @@ Rectangle {
 
                 QGCLabel {
                     font.pointSize: ScreenTools.smallFontPointSize
-                    text:           qsTr("高度")
+                    text:           qsTr("Altitude")
                 }
 
                 RowLayout {
                     QGCRadioButton {
-                        text:           qsTr("参考Home")
+                        text:           qsTr("Rel")
                         exclusiveGroup: altRadios
                         checked:        missionItem.altitudeMode === altModeValue
 
                         readonly property int       altModeValue:   _altModeRelative
-                        readonly property string    helpText:       qsTr("参考home点高度")
+                        readonly property string    helpText:       qsTr("Relative to home altitude")
 					}
                     QGCRadioButton {
-                        text:           qsTr("绝对")
+                        text:           qsTr("Abs")
                         exclusiveGroup: altRadios
                         checked:        missionItem.altitudeMode === altModeValue
                         visible:        QGroundControl.corePlugin.options.showMissionAbsoluteAltitude || missionItem.altitudeMode === altModeValue
 
                         readonly property int       altModeValue:   _altModeAbsolute
-                        readonly property string    helpText:       qsTr("绝对 WGS84")
+                        readonly property string    helpText:       qsTr("Absolute WGS84")
                     }
                     QGCRadioButton {
-                        text:           qsTr("地形高度")
+                        text:           qsTr("AGL")
                         exclusiveGroup: altRadios
                         checked:        missionItem.altitudeMode === altModeValue
 
                         readonly property int   altModeValue: _altModeAboveTerrain
-                        property string         helpText:     qsTr("Calculated from terrain data\nAbs Alt ") + missionItem.amslAltAboveTerrain.valueString + " " + missionItem.amslAltAboveTerrain.units
+                        property string         helpText:     qsTr("Calculated from terrain data Abs Alt ") + missionItem.amslAltAboveTerrain.valueString + " " + missionItem.amslAltAboveTerrain.units
                     }
                     QGCRadioButton {
                         text:           qsTr("TerrF")

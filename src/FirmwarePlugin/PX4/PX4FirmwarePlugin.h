@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -18,7 +18,6 @@
 #include "ParameterManager.h"
 #include "PX4ParameterMetaData.h"
 
-extern int language;
 class PX4FirmwarePlugin : public FirmwarePlugin
 {
     Q_OBJECT
@@ -59,7 +58,7 @@ public:
     FactMetaData*       getMetaDataForFact              (QObject* parameterMetaData, const QString& name, MAV_TYPE vehicleType) override;
     QString             missionCommandOverrides         (MAV_TYPE vehicleType) const override;
     QString             getVersionParam                 (void) override { return QString("SYS_PARAM_VER"); }
-    QString             internalParameterMetaDataFile   (Vehicle* vehicle) override { Q_UNUSED(vehicle); return (language==0? QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaDatacn.xml"):QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaData.xml")); }
+    QString             internalParameterMetaDataFile   (Vehicle* vehicle) override { Q_UNUSED(vehicle); QLocale locale = QLocale::system(); return  (locale.country() == QLocale::China ? QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaDatacn.xml"):QString(":/FirmwarePlugin/PX4/PX4ParameterFactMetaData.xml")); }
     void                getParameterMetaDataVersionInfo (const QString& metaDataFile, int& majorVersion, int& minorVersion) override;
     QObject*            loadParameterMetaData           (const QString& metaDataFile) final;
     bool                adjustIncomingMavlinkMessage    (Vehicle* vehicle, mavlink_message_t* message) override;
@@ -104,7 +103,6 @@ protected:
     QString _rtlFlightMode;
     QString _landingFlightMode;
     QString _preclandFlightMode;
-    QString _circleFlightMode;
     QString _rtgsFlightMode;
     QString _followMeFlightMode;
     QString _simpleFlightMode;

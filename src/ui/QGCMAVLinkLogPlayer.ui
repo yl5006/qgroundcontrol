@@ -39,10 +39,10 @@
       <string>Start to replay Flight Data</string>
      </property>
      <property name="statusTip">
-      <string>开始播放飞行数据</string>
+      <string>Start to replay Flight Data</string>
      </property>
      <property name="whatsThis">
-      <string>开始播放飞行数据</string>
+      <string>Start to replay Flight Data</string>
      </property>
      <property name="text">
       <string>...</string>
@@ -62,7 +62,7 @@
    <item>
     <widget class="QLabel" name="timeLabel">
      <property name="text">
-      <string>时间</string>
+      <string>Time</string>
      </property>
     </widget>
    </item>
@@ -85,7 +85,7 @@
    <item>
     <widget class="QLabel" name="logFileNameLabel">
      <property name="text">
-      <string>选择飞行数据...</string>
+      <string>No Flight Data selected..</string>
      </property>
     </widget>
    </item>
@@ -99,16 +99,16 @@
    <item>
     <widget class="QPushButton" name="selectFileButton">
      <property name="toolTip">
-      <string>选择飞行数据回放</string>
+      <string>Select the Flight Data to replay</string>
      </property>
      <property name="statusTip">
-      <string>选择飞行数据回放</string>
+      <string>Select the Flight Data to replay</string>
      </property>
      <property name="whatsThis">
-      <string>选择飞行数据回放</string>
+      <string>Select the Flight Data to replay</string>
      </property>
      <property name="text">
-      <string>回放飞行数据</string>
+      <string>Replay Flight Data</string>
      </property>
     </widget>
    </item>

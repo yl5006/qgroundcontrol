@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -60,10 +60,10 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, bool flyView, QObject* pa
     , _speedSection                     (NULL)
     , _cameraSection                    (NULL)
     , _commandTree                      (qgcApp()->toolbox()->missionCommandTree())
-    , _takepictureFact                  (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
+    , _takepictureFact                  (0, tr("Take a picture"), 	FactMetaData::valueTypeUint32)
     , _supportedCommandFact             (0, "Command:",             FactMetaData::valueTypeUint32)
     , _altitudeMode                     (AltitudeRelative)
-    , _altitudeFact                     (0, tr("高度"),             FactMetaData::valueTypeDouble)
+    , _altitudeFact                     (0, tr("Altitude"),         FactMetaData::valueTypeDouble)
     , _amslAltAboveTerrainFact          (0, "Alt above terrain",    FactMetaData::valueTypeDouble)
     , _param1MetaData                   (FactMetaData::valueTypeDouble)
     , _param2MetaData                   (FactMetaData::valueTypeDouble)
@@ -100,9 +100,9 @@ SimpleMissionItem::SimpleMissionItem(Vehicle* vehicle, bool flyView, const Missi
     , _speedSection             (NULL)
     , _cameraSection            (NULL)
     , _commandTree              (qgcApp()->toolbox()->missionCommandTree())
-    , _takepictureFact          (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
+    , _takepictureFact          (0,			tr("Take a picture"), 	FactMetaData::valueTypeUint32)
     , _supportedCommandFact     (0,         "Command:",             FactMetaData::valueTypeUint32)
-    , _altitudeFact             (0,         tr("高度"),             FactMetaData::valueTypeDouble)
+    , _altitudeFact             (0,         tr("Altitude"),         FactMetaData::valueTypeDouble)
     , _amslAltAboveTerrainFact  (0,         "Alt above terrain",    FactMetaData::valueTypeDouble)
     , _param1MetaData           (FactMetaData::valueTypeDouble)
     , _param2MetaData           (FactMetaData::valueTypeDouble)
@@ -169,10 +169,10 @@ SimpleMissionItem::SimpleMissionItem(const SimpleMissionItem& other, bool flyVie
     , _speedSection             (NULL)
     , _cameraSection            (NULL)
     , _commandTree              (qgcApp()->toolbox()->missionCommandTree())
-    , _takepictureFact          (0, tr("拍照")/*"take a picture at this waypoint"*/      , FactMetaData::valueTypeUint32)
+    , _takepictureFact          (0, 		tr("Take a picture"), 	FactMetaData::valueTypeUint32)
     , _supportedCommandFact     (0,         "Command:",             FactMetaData::valueTypeUint32)
     , _altitudeMode             (other._altitudeMode)
-    , _altitudeFact             (0,         tr("高度"),             FactMetaData::valueTypeDouble)
+    , _altitudeFact             (0,         tr("Altitude"),         FactMetaData::valueTypeDouble)
     , _amslAltAboveTerrainFact  (qQNaN(),   "Alt above terrain",    FactMetaData::valueTypeDouble)
     , _param1MetaData           (FactMetaData::valueTypeDouble)
     , _param2MetaData           (FactMetaData::valueTypeDouble)
@@ -448,13 +448,13 @@ QString SimpleMissionItem::abbreviation() const
 
     switch(command()) {
     case MAV_CMD_NAV_TAKEOFF:
-        return tr("起飞");
+        return tr("Takeoff");
     case MAV_CMD_NAV_LAND:
-        return tr("降落");
+        return tr("Land");
     case MAV_CMD_NAV_VTOL_TAKEOFF:
-        return tr("垂直起飞");
+        return tr("VTOL Takeoff");
     case MAV_CMD_NAV_VTOL_LAND:
-        return tr("垂直降落");
+        return tr("VTOL Land");
     case MAV_CMD_DO_SET_ROI:
         return tr("ROI");
     default:
@@ -512,13 +512,13 @@ void SimpleMissionItem::_rebuildTextFieldFacts(void)
         const MissionCommandUIInfo* uiInfo = _commandTree->getUIInfo(_vehicle, command);
         if (uiInfo->specifiesCoordinate())
         {
-            _missionItem._param5Fact._setName(tr("纬度:"));
+            _missionItem._param5Fact._setName(tr("Latitude:"));
             _missionItem._param5Fact.setMetaData(_latitudeMetaData);
             _textFieldFacts.append(&_missionItem._param5Fact);
-            _missionItem._param6Fact._setName(tr("经度:"));
+            _missionItem._param6Fact._setName(tr("Longitude:"));
             _missionItem._param6Fact.setMetaData(_longitudeMetaData);
             _textFieldFacts.append(&_missionItem._param6Fact);
-            _missionItem._param7Fact._setName(tr("高度:"));
+            _missionItem._param7Fact._setName(tr("Altitude:"));
             _missionItem._param7Fact.setMetaData(_altitudeMetaData);
             _textFieldFacts.append(&_missionItem._param7Fact);
         }
@@ -538,7 +538,7 @@ void SimpleMissionItem::_rebuildTextFieldFacts(void)
             }
         }
         if (uiInfo->specifiesCoordinate()) {
-            _missionItem._param3Fact._setName("速度");
+            _missionItem._param3Fact._setName(tr("Speed:"));
             _missionItem._param3Fact.setMetaData(_speedMetaData);
             _textFieldFacts.append(&_missionItem._param3Fact);
         }

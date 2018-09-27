@@ -32,7 +32,7 @@ Item {
         spacing:    ScreenTools.defaultFontPixelHeight / 2
         QGCLabel {
             id:     serialLabel
-            text:   qsTr("串口设置")/*Serial Link Settings*/
+            text:   qsTr("Serial Link Settings")
         }
         Rectangle {
             height: 1
@@ -46,12 +46,12 @@ Item {
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
             QGCLabel {
-                text:   qsTr("端口:")/*Serial Port*/
+                text:   qsTr("Serial Port:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
             QGCLabel {
-                text:       qsTr("无可用串口");/*No serial ports available*/
+                text:       qsTr("No serial ports available");
                 visible:    QGroundControl.linkManager.serialPortStrings.length == 0
             }
 
@@ -100,7 +100,7 @@ Item {
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
             QGCLabel {
-                text:   qsTr("波特率:")/*Baud Rate*/
+                text:   qsTr("Baud Rate:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -144,7 +144,7 @@ Item {
         }
         //-- Flow Control
         QGCCheckBox {
-            text:       qsTr("启用流控制:")//qsTr("Enable Flow Control")
+            text:       qsTr("Enable Flow Control")
             checked:    subEditConfig ? subEditConfig.flowControl !== 0 : false
 //            visible:    showAdvanced.checked
             onCheckedChanged: {
@@ -158,7 +158,7 @@ Item {
             spacing:    ScreenTools.defaultFontPixelWidth
 //            visible:    showAdvanced.checked
             QGCLabel {
-                text:   qsTr("校验:")//Parity
+                text:   qsTr("Parity:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -195,7 +195,7 @@ Item {
             spacing:    ScreenTools.defaultFontPixelWidth
 //            visible:    showAdvanced.checked
             QGCLabel {
-                text:   qsTr("数据位:")//"Data Bits:"
+                text:   qsTr("Data Bits::")//"Data Bits:"
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -225,7 +225,7 @@ Item {
             spacing:    ScreenTools.defaultFontPixelWidth
 //            visible:    showAdvanced.checked
             QGCLabel {
-                text:   qsTr("停止位:")//qsTr("Stop Bits:")
+                text:   qsTr("Stop Bits:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }

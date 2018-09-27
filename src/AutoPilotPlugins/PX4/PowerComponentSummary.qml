@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -44,7 +44,7 @@ FactPanel {
                     id:     label
                     font.bold:   true
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text:   qsTr("满电压")//"Battery Full:"
+                    text:   qsTr("Battery Full:")
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
@@ -60,7 +60,7 @@ FactPanel {
                     id:     label1
                     font.bold:   true
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text:   qsTr("空电压")//"Battery Empty:"
+                    text:   qsTr("Battery Empty:")
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
@@ -76,7 +76,7 @@ FactPanel {
                     font.bold:   true
                     id:     label2
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text:   qsTr("电芯数")//"Number of Cells:"
+                    text:   qsTr("Number of Cells:")
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {

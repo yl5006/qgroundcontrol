@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -168,6 +168,7 @@ private:
     bool _waitingForCancel;
     
     static const int _supportedFirmwareCalVersion = 2;
+    QLocale locale;
     QMap<short, QString>    _aircalmsg;
 };
 

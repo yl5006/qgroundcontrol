@@ -117,7 +117,7 @@ Rectangle {
         QGCLabel {
             id:                     waitForVehicle
             anchors.verticalCenter: parent.verticalCenter
-            text:                   qsTr("等待连接")
+            text:                   qsTr("Wait for connect")
             font.pointSize:         ScreenTools.mediumFontPointSize
             font.family:            ScreenTools.demiboldFontFamily
             color:                  colorRed

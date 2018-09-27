@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -33,12 +33,12 @@ QGCView {
     readonly property string firwaretitle:             "FIRMWARE"
     readonly property string highlightPrefix:   "<font color=\"" + qgcPal.warningText + "\">"
     readonly property string highlightSuffix:   "</font>"
-    readonly property string welcomeText:       qsTr("地面站下载固件")//GroundStation can upgrade the firmware on EWT2.0 devices
+    readonly property string welcomeTextSingle: qsTr("Update the autopilot firmware to the latest version")
     readonly property string plugInText:        "<big>" + highlightPrefix + qsTr("通过USB接入你的设备")+"</big>"//"Plug in your device"+ highlightSuffix + " via USB to " + highlightPrefix + "start" + highlightSuffix + " firmware upgrade.</big>"
     readonly property string flashFailText:     "If upgrade failed, make sure to connect " + highlightPrefix + "directly" + highlightSuffix + " to a powered USB port on your computer, not through a USB hub. " +
                                                 "Also make sure you are only powered via USB " + highlightPrefix + "not battery" + highlightSuffix + "."
-    readonly property string qgcUnplugText1:    "<big>"+ highlightPrefix+qsTr("通过USB接入你的设备")+"<big>" //////"All GroundStation connections to vehicles must be " + highlightPrefix + " disconnected " + highlightSuffix + "prior to firmware upgrade."
-    readonly property string qgcUnplugText2:    highlightPrefix + "<big>"+qsTr("重新连接USB设备.")+"</big>" + highlightSuffix
+    readonly property string qgcUnplugText1:    qsTr("All %1 connections to vehicles must be ").arg(QGroundControl.appName) + highlightPrefix + " disconnected " + highlightSuffix + "prior to firmware upgrade."
+    readonly property string qgcUnplugText2:    highlightPrefix + "<big>Please unplug your Pixhawk and/or Radio from USB.</big>" + highlightSuffix
 
     readonly property int _defaultFimwareTypePX4:   12
     readonly property int _defaultFimwareTypeAPM:   3
@@ -54,7 +54,7 @@ QGCView {
     property bool _singleFirmwareMode: QGroundControl.corePlugin.options.firmwareUpgradeSingleURL.length != 0   ///< true: running in special single firmware download mode
 
     function cancelFlash() {
-        statusTextArea.append(highlightPrefix + qsTr("更新固件取消") + highlightSuffix)//Upgrade cancelled
+        statusTextArea.append(highlightPrefix + qsTr("Upgrade cancelled") + highlightSuffix)
         statusTextArea.append("------------------------------------------")
         controller.cancel()
     }
@@ -104,7 +104,7 @@ QGCView {
                 QGroundControl.multiVehicleManager.activeVehicle.autoDisconnect = true
             } else {
                 // We end up here when we detect a board plugged in after we've started upgrade
-                statusTextArea.append(highlightPrefix + qsTr("找到设备") + highlightSuffix + ": " + controller.boardType)
+                statusTextArea.append(highlightPrefix + qsTr("Found device") + highlightSuffix + ": " + controller.boardType)
                 if (controller.pixhawkBoard || controller.px4FlowBoard) {
                     controller.flash(FirmwareUpgradeController.AutoPilotStackPX4, FirmwareUpgradeController.StableFirmware, FirmwareUpgradeController.DefaultVehicleFirmware)
                     //showDialog(pixhawkFirmwareSelectDialogComponent, firwaretitle, qgcView.showDialogDefaultWidth, StandardButton.Ok | StandardButton.Cancel)
@@ -149,7 +149,7 @@ QGCView {
                 } else {
                     versionString = controller.px4StableVersion
                 }
-                px4FlightStack.text = qsTr("EWT2.0 Flight Stack ") + versionString
+                px4FlightStack.text = qsTr("EWT Flight Stack ") + versionString
             }
 
             Component.onCompleted: updatePX4VersionDisplay()
@@ -265,7 +265,7 @@ QGCView {
                 QGCRadioButton {
                     id:             px4FlightStack
                     exclusiveGroup: firmwareGroup
-                    text:           qsTr("EWT2.0 Flight Stack ")
+                    text:           qsTr("EWT Flight Stack ")
                     visible:        !_singleFirmwareMode && !px4Flow
 
                     onClicked: {
@@ -435,7 +435,7 @@ QGCView {
                 id:             idset
                 anchors.left:   setimg.left
                 anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-                text:           qsTr("固件下载")//"Systemseting"
+                text:           qsTr("Firmware update")//"Systemseting"
                 font.pointSize: ScreenTools.mediumFontPointSize
                 font.bold:              true
                 color:          qgcPal.text

@@ -68,7 +68,7 @@ Column {
         spacing:    ScreenTools.defaultFontPixelHeight/2
         SubMenuButton {
             imageResource:      "/qmlimages/camera.svg"
-            text:               qsTr("定时拍照")//"Send to vehicle"
+            text:               qsTr("Interval photo")
             onClicked:           _activeVehicle.triggerCameraTime(Number(intertime.text))
             enabled:            _activeVehicle
         }
@@ -85,7 +85,7 @@ Column {
         spacing:    ScreenTools.defaultFontPixelHeight/2
         SubMenuButton {
             imageResource:      "/qmlimages/camera.svg"
-            text:               qsTr("定距拍照")//"Send to vehicle"
+            text:               qsTr("Distance photo")//"Send to vehicle"
             onClicked:           _activeVehicle.triggerCameraDist(Number(distance.text))
             enabled:            _activeVehicle
         }
@@ -102,7 +102,7 @@ Column {
         spacing:    ScreenTools.defaultFontPixelHeight/2
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("回中")
+            text:          qsTr("Back to")
             enabled:       _activeVehicle
             MouseArea {
                 anchors.fill: parent
@@ -116,13 +116,13 @@ Column {
         }
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("跟头")
+            text:          qsTr("Follow head")
             enabled:            _activeVehicle
             onClicked:      _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,3,1024)
         }
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("锁头")
+            text:          qsTr("Fix head")
             enabled:            _activeVehicle
             MouseArea {
                 anchors.fill: parent
@@ -139,7 +139,7 @@ Column {
         spacing:    ScreenTools.defaultFontPixelHeight/2
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("变大")
+            text:          qsTr("Bigger")
             enabled:            _activeVehicle
             MouseArea {
                 anchors.fill: parent
@@ -155,7 +155,7 @@ Column {
         QGCButton {
             id:            takepic
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("变小")
+            text:          qsTr("Smaller")
             enabled:            _activeVehicle
            MouseArea {
                 anchors.fill: parent
@@ -172,7 +172,7 @@ Column {
         spacing:    ScreenTools.defaultFontPixelHeight/2
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("远焦")
+            text:          qsTr("Far focus")
             enabled:            _activeVehicle
             MouseArea {
                 anchors.fill: parent
@@ -187,7 +187,7 @@ Column {
         Item { width: ScreenTools.defaultFontPixelHeight*4; height: 1 }
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("近焦")
+            text:          qsTr("Near focus")
             enabled:            _activeVehicle
            MouseArea {
                 anchors.fill: parent
@@ -204,7 +204,7 @@ Column {
         spacing:    ScreenTools.defaultFontPixelHeight/2
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("自动对焦")
+            text:          qsTr("Auto focus")
             enabled:            _activeVehicle
             MouseArea {
                 anchors.fill: parent
@@ -218,7 +218,7 @@ Column {
         }
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("暂停对焦")
+            text:          qsTr("Pause focus")
             enabled:            _activeVehicle
             onClicked:      _activeVehicle.virtualTabletRCValue(rightStick.xAxis, rightStick.yAxis,8,1024)
             MouseArea {
@@ -230,7 +230,7 @@ Column {
         }
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("记忆对焦")
+            text:          qsTr("Memory focus")
             enabled:            _activeVehicle
             MouseArea {
                 anchors.fill: parent
@@ -247,7 +247,7 @@ Column {
         spacing:    ScreenTools.defaultFontPixelHeight/2
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("录像")
+            text:          qsTr("Recording")
             enabled:            _activeVehicle
            MouseArea {
                 anchors.fill: parent
@@ -261,7 +261,7 @@ Column {
         }
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
-            text:          qsTr("结束录像")
+            text:          qsTr("Stop Recording")
             MouseArea {
                 anchors.fill: parent
                 onPressed: {
@@ -274,7 +274,7 @@ Column {
         }
         SubMenuButton {
             imageResource:      "/qmlimages/camera.svg"
-            text:               qsTr("拍照")//"Send to vehicle"
+            text:               qsTr("Photo")//"Send to vehicle"
             checkable:          true
             onClicked:          _activeVehicle.triggerCamera()
             enabled:            _activeVehicle

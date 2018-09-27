@@ -29,30 +29,30 @@ FactPanel {
         anchors.fill:       parent
 
         VehicleSummaryRow {
-            labelText: qsTr("磁罗盘")//"Compass:"
-            valueText: mag0IdFact ? (mag0IdFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : qsTr("已校准")/*"Ready"*/) : ""
+            labelText: qsTr("Compass 0")
+            valueText: mag0IdFact ? (mag0IdFact.value === 0 ? qsTr("Setup required") : qsTr("Ready")) : ""
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("磁罗盘1")//"Compass 1:"
+            labelText:  qsTr("Compass 1")
             visible:    mag1IdFact.value !== 0
-            valueText:  qsTr("已校准")//"Ready"
+            valueText:  qsTr("Ready")
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("磁罗盘2")//"Compass 2:"
+            labelText:  qsTr("Compass 2")
             visible:    mag2IdFact.value !== 0
-            valueText:  qsTr("已校准")//"Ready"
+            valueText:  qsTr("Ready")
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("角速度计")//"Gyro:"
-            valueText: gyro0IdFact ? (gyro0IdFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : qsTr("已校准")/*"Ready"*/) : ""
+            labelText: qsTr("Gyro")
+            valueText: gyro0IdFact ? (gyro0IdFact.value === 0 ? qsTr("Setup required") : qsTr("Ready")) : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("加速度计")//"Accelerometer:"
-            valueText: accel0IdFact ? (accel0IdFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : qsTr("已校准")/*"Ready"*/) : ""
+            labelText: qsTr("Accelerometer")
+            valueText: accel0IdFact ? (accel0IdFact.value === 0 ? qsTr("Setup required") : qsTr("Ready")) : ""
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -60,7 +60,7 @@ SetupPage {
                     id:             idset
                     anchors.left:   img.left
                     anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-                    text:           qsTr("飞行模式")//"sensors"
+                    text:           qsTr("Flight Mode")
                     font.pointSize: ScreenTools.mediumFontPointSize
                     font.bold:              true
                     color:          qgcPal.text

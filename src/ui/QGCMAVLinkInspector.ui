@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>数据分析</string>
+   <string>MAVLink Inspector</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="2,0,0,0,0">
    <property name="leftMargin">

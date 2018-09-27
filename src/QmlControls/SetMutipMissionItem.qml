@@ -1,4 +1,4 @@
-﻿import QtQuick          2.3
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs  1.2
 
@@ -67,7 +67,7 @@ Rectangle {
                 anchors.left:           parent.left
                 anchors.leftMargin:     ScreenTools.defaultFontPixelHeight
                 anchors.verticalCenter: parent.verticalCenter
-                text:               qsTr("批量修改航点")//"Alt diff"// + _altText
+                text:               qsTr("All modify")
             }
         }
         Canvas {
@@ -140,7 +140,7 @@ Rectangle {
         }
         QGCCheckBox{
             id:     allcheck
-            text:   qsTr("全选")
+            text:   qsTr("All")
             onClicked: {
                 for(var i = 1; i < reperter.count; i++)
                 {
@@ -194,7 +194,7 @@ Rectangle {
                 spacing:            ScreenTools.defaultFontPixelWidth
                 QGCLabel {
                     width:          ScreenTools.defaultFontPixelHeight*5
-                    text:            qsTr("高度m")
+                    text:            qsTr("Height(m)")
                 }
                 QGCTextField {
                     id:             altField
@@ -207,7 +207,7 @@ Rectangle {
                 visible:            _activeVehicle&&!_activeVehicle.fixedWing
                 QGCLabel {
                     width:          ScreenTools.defaultFontPixelHeight*5
-                    text:           qsTr("停留时间s")
+                    text:           qsTr("Stop time(s)")
                 }
                 QGCTextField {
                     id:             timeField
@@ -219,7 +219,7 @@ Rectangle {
                 spacing:            ScreenTools.defaultFontPixelWidth
                 QGCLabel {
                     width:          ScreenTools.defaultFontPixelHeight*5
-                    text:           qsTr("飞行速度m/s")
+                    text:           qsTr("Flight speed(m/s)")
                 }
                 QGCTextField {
                     id:             speedField
@@ -232,7 +232,7 @@ Rectangle {
                 QGCButton {
                     width:         ScreenTools.defaultFontPixelHeight*4
                     height:        ScreenTools.defaultFontPixelHeight*2
-                    text:          "确认修改"
+                    text:          qsTr("Confirm")
                     checkable:     false
                     primary:       true
                     onClicked:  {
@@ -246,7 +246,7 @@ Rectangle {
                 QGCButton {
                     width:         ScreenTools.defaultFontPixelHeight*4
                     height:        ScreenTools.defaultFontPixelHeight*2
-                    text:          "取消"
+                    text:           qsTr("Cancel")
                     checkable:     false
                     primary:       true
                     onClicked:  {

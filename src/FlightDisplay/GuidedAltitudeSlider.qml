@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -61,7 +61,7 @@ Rectangle {
             anchors.right:          parent.right
             wrapMode:               Text.WordWrap
             horizontalAlignment:    Text.AlignHCenter
-            text:                   qsTr("新参考高度")
+            text:                   qsTr("New Alt(rel)")
         }
 
         QGCLabel {

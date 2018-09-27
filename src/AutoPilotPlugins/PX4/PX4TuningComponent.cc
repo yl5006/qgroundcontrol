@@ -14,8 +14,7 @@
 
 PX4TuningComponent::PX4TuningComponent(Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent)
     : VehicleComponent(vehicle, autopilot, parent)
-//    , _name(tr("Tuning"))
-      , _name(tr("感度"))
+    , _name(tr("Tuning"))
 {
 }
 

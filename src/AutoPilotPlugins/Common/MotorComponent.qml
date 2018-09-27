@@ -66,7 +66,7 @@ SetupPage {
                     id:             idset
                     anchors.left:   img.left
                     anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-                    text:           qsTr("电机测试")//"sensors"
+                    text:           qsTr("Motor test")//"sensors"
                     font.pointSize: ScreenTools.mediumFontPointSize
                     font.bold:              true
                     color:          qgcPal.text
@@ -92,7 +92,7 @@ SetupPage {
                     color:  qgcPal.warningText
                     font.pointSize: ScreenTools.mediumFontPointSize
                     font.bold:     true
-                    text:   qsTr("注意！请出除螺旋桨，然后按下安全开关口，拖动滚动条，点击电机测试")
+                    text:   qsTr("note! Please remove the propeller, then press the safety switch port, drag the scroll bar, and click the motor test.")
                 }
 
                 Row {

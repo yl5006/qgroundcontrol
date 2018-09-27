@@ -25,8 +25,7 @@ const char* SensorsComponent::_magCalParam =  "CAL_MAG0_ID";
 
 SensorsComponent::SensorsComponent(Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent) :
     VehicleComponent(vehicle, autopilot, parent),
-//    _name(tr("Sensors"))
-      _name(tr("传感器"))
+    _name(tr("Sensors"))
 {
     _deviceIds << QStringLiteral("CAL_GYRO0_ID") << QStringLiteral("CAL_ACC0_ID");
 }

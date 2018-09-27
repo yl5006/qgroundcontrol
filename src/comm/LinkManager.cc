@@ -11,6 +11,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QSignalSpy>
+
 #ifndef NO_SERIAL_LINK
 #include "QGCSerialPortInfo.h"
 #endif
@@ -32,7 +33,7 @@
 QGC_LOGGING_CATEGORY(LinkManagerLog, "LinkManagerLog")
 QGC_LOGGING_CATEGORY(LinkManagerVerboseLog, "LinkManagerVerboseLog")
 
-const char* LinkManager::_defaultUPDLinkName =       QT_TR_NOOP("默认UDP连接");//"UDP Link (AutoConnect)"
+const char* LinkManager::_defaultUPDLinkName =       QT_TR_NOOP("UDP Link");//"UDP Link (AutoConnect)"
 
 const int LinkManager::_autoconnectUpdateTimerMSecs =   1000;
 #ifdef Q_OS_WIN
@@ -94,22 +95,6 @@ void LinkManager::createConnectedLink(LinkConfiguration* config)
         if (sharedConf->name() == config->name())
             createConnectedLink(sharedConf);
     }
-}
-
-// This should only be used by Qml code
-void LinkManager::createConnectedSerialLink(const QString& name)
-{
-     SerialConfiguration * pSerialConfig = new SerialConfiguration(name);
-     if(pSerialConfig)
-     {
-         pSerialConfig->setBaud(57600);
-         pSerialConfig->setDynamic(true);
-         pSerialConfig->setPortName(name);
-         _sharedConfigurations.append(SharedLinkConfigurationPointer(pSerialConfig));
-         createConnectedLink(_sharedConfigurations.last());
-         qDebug()<<name;
-     }
-
 }
 
 LinkInterface* LinkManager::createConnectedLink(SharedLinkConfigurationPointer& config, bool isPX4Flow)
@@ -692,7 +677,7 @@ QStringList LinkManager::linkTypeStrings(void) const
     if(!list.size())
     {
 #ifndef NO_SERIAL_LINK
-        list += tr("串口");
+        list += tr("Serial");
 #endif
         list += "UDP";
         list += "TCP";
@@ -703,7 +688,7 @@ QStringList LinkManager::linkTypeStrings(void) const
         list += "Mock Link";
 #endif
 #ifndef __mobile__
-        list += tr("日志回放");
+        list += tr("Log Replay");
 #endif
         if (list.size() != (int)LinkConfiguration::TypeLast) {
             qWarning() << "Internal error";
@@ -727,12 +712,6 @@ void LinkManager::_updateSerialPorts()
 #endif
 }
 
-void LinkManager::updateSerialPorts()
-{
-    _updateSerialPorts();
-    emit commPortStringsChanged();
-    emit commPortsChanged();
-}
 QStringList LinkManager::serialPortStrings(void)
 {
     if(!_commPortDisplayList.size())
@@ -828,7 +807,7 @@ void LinkManager::_fixUnnamed(LinkConfiguration* config)
                 tname.replace("/dev/cu.", "");
                 tname.replace("/dev/", "");
 #endif
-                config->setName(tr("串口 %1").arg(tname));//"Serial Device on %1"
+                config->setName(tr("Serial Device on  %1").arg(tname));//"Serial Device on %1"
                 break;
             }
 #endif
@@ -947,9 +926,9 @@ void LinkManager::_activeLinkCheck(void)
             }
         }
 
-//        qgcApp()->showMessage(foundNSHPrompt ?
-//                                  tr("Please check to make sure you have an SD Card inserted in your Vehicle and try again.") :
-//                                  tr("数据无响应，如果持续无响应，关闭GroundStation，重启飞控，然后重启GroundStation")/*("Your Vehicle is not responding. If this continues shutdown QGroundControl, restart the Vehicle letting it boot completely, then start QGroundControl.")*/);
+ //       qgcApp()->showMessage(foundNSHPrompt ?
+ //                                 tr("Please check to make sure you have an SD Card inserted in your Vehicle and try again.") :
+ //                                 tr("Your Vehicle is not responding. If this continues, shutdown %1, restart the Vehicle letting it boot completely, then start %1.").arg(qgcApp()->applicationName()));
     }
 }
 #endif

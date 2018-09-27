@@ -100,7 +100,7 @@ Rectangle {
                 model: ListModel {
                     ListElement {
                         buttonImage:        "/qmlimages/LogDownloadIcon"
-                        buttonText:         qsTr("日志下载")
+                        buttonText:         qsTr("Log Download")
                         pageSource:         "LogDownloadPage.qml"
                     }
                     ListElement {
@@ -110,7 +110,7 @@ Rectangle {
                     }
                     ListElement {
                         buttonImage:        "/qmlimages/MavlinkConsoleIcon"
-                        buttonText:         qsTr("终端")
+                        buttonText:         qsTr("Mavlink Console")
                         pageSource:         "MavlinkConsolePage.qml"
                     }
                 }

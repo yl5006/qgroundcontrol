@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -28,7 +28,7 @@ ColumnLayout {
 
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
 
-    QGCLabel { text: qsTr("地图中心:") }
+    QGCLabel { text: qsTr("Center map on:") }
     Row {
         spacing: ScreenTools.defaultFontPixelWidth*0.5
         RoundImageButton {

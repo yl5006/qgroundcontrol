@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -34,7 +34,7 @@ Item {
         color:          Qt.rgba(0,0,0,0.75)
         visible:        !(_videoReceiver && _videoReceiver.videoRunning)
         QGCLabel {
-            text:               QGroundControl.settingsManager.videoSettings.streamEnabled.rawValue ? qsTr("等待视频") : qsTr("视频禁用")
+            text:               QGroundControl.settingsManager.videoSettings.streamEnabled.rawValue ? qsTr("WAITING FOR VIDEO") : qsTr("VIDEO DISABLED")
             font.family:        ScreenTools.demiboldFontFamily
             color:              "white"
             font.pointSize:     _mainIsMap ? ScreenTools.smallFontPointSize : ScreenTools.largeFontPointSize

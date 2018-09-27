@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -468,8 +468,8 @@ bool QGCApplication::_initForNormalAppBoot(void)
     toolbox()->joystickManager()->init();
 
     if (_settingsUpgraded) {
-        showMessage(tr("GroundStation配置文件被修改，恢复默认配置"));/*"The format for QGroundControl saved settings has been modified. "*/
-        //   "Your saved settings have been reset to defaults.");
+        showMessage(tr("The format for QGroundControl saved settings has been modified. "
+                    "Your saved settings have been reset to defaults."));
     }
 
     // Connect links with flag AutoconnectLink
@@ -555,7 +555,7 @@ void QGCApplication::saveTelemetryLogOnMainThread(QString tempLogfile)
 
         QFile tempFile(tempLogfile);
         if (!tempFile.copy(saveFilePath)) {
-            QString error = tr("数据链文件错误. 不能保存数据链文件从 '%1': '%2'.").arg(saveFilePath).arg(tempFile.errorString());
+            QString error = tr("Unable to save telemetry log. Error copying telemetry to '%1': '%2'.").arg(saveFilePath).arg(tempFile.errorString());
 #ifndef __mobile__
             QGCMessageBox::warning(tr("Telemetry Save Error"), error);
 #else
@@ -574,11 +574,11 @@ void QGCApplication::checkTelemetrySavePathOnMainThread(void)
 
 bool QGCApplication::_checkTelemetrySavePath(bool useMessageBox)
 {
-    QString errorTitle = tr("数据链文件保存错误");
+    QString errorTitle = tr("Telemetry save error");
 
     QString saveDirPath = _toolbox->settingsManager()->appSettings()->telemetrySavePath();
     if (saveDirPath.isEmpty()) {
-        QString error = tr("数据链文件保存错误，路径未设置");
+        QString error = tr("Unable to save telemetry log. Application save directory is not set.");
 #ifndef __mobile__
         if (useMessageBox) {
             QGCMessageBox::warning(errorTitle, error);

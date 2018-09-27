@@ -32,7 +32,7 @@ Rectangle {
     readonly property real      _horizontalMargin:  _defaultTextWidth / 2
     readonly property real      _verticalMargin:    _defaultTextHeight / 2
     readonly property real      _buttonWidth:       _defaultTextWidth * 18
-    readonly property string    _armedVehicleText:  qsTr("解锁情况下禁止操作.")
+    readonly property string    _armedVehicleText:  qsTr("This operation cannot be performed while the vehicle is armed.")
 
     property bool   _vehicleArmed:                  QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.armed : false
     property string _messagePanelText:              qsTr("missing message panel text")
@@ -148,8 +148,8 @@ Rectangle {
                 horizontalAlignment:    Text.AlignHCenter
                 wrapMode:               Text.WordWrap
                 font.pointSize:         ScreenTools.largeFontPointSize
-                text:                   qsTr("Connect vehicle to your device and %1 will automatically detect it.").arg(QGroundControl.appName) +
-                                        (ScreenTools.isMobile ? "" : ""/*" Click Firmware on the left to upgrade your vehicle."*/)
+                text:                   qsTr("Vehicle settings and info will display after connecting your vehicle.") +
+                                        (ScreenTools.isMobile ? "" : " Click Firmware on the left to upgrade your vehicle.")
 
                 onLinkActivated: Qt.openUrlExternally(link)
             }

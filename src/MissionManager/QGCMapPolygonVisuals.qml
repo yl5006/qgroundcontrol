@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -199,7 +199,7 @@ Item {
 
         MenuItem {
             id:             removeVertexItem
-            text:           qsTr("删除顶点")
+            text:           qsTr("Remove vertex")
             onTriggered: {
                 if(menu._removeVertexIndex >= 0) {
                     mapPolygon.removeVertex(menu._removeVertexIndex)
@@ -212,30 +212,30 @@ Item {
         }
 
         MenuItem {
-            text:           qsTr("圆形" )
+            text:           qsTr("Circle" )
             onTriggered:    resetCircle()
         }
 
         MenuItem {
-            text:           qsTr("多边形")
+            text:           qsTr("Polygon")
             onTriggered:    resetPolygon()
         }
 
         MenuItem {
-            text:           qsTr("设置半径..." )
+            text:           qsTr("Set radius..." )
             visible:        _circle
             onTriggered:    _editCircleRadius = true
         }
 
         MenuItem {
-            text:           qsTr("编辑位置..." )
+            text:           qsTr("Edit position..." )
             onTriggered:    {
-                  qgcView.showDialog(editPositionDialog, qsTr("编辑位置"), qgcView.showDialogDefaultWidth, StandardButton.Close)
+                  qgcView.showDialog(editPositionDialog, qsTr("Edit Position"), qgcView.showDialogDefaultWidth, StandardButton.Close)
             }
         }
 
         MenuItem {
-            text:           qsTr("载入 KML...")
+            text:           qsTr("Load KML...")
             onTriggered:    kmlLoadDialog.openForLoad()
         }
     }
@@ -481,7 +481,7 @@ Item {
                     anchors.top:        parent.top
                     spacing:            _margin
 
-                    QGCLabel { text: qsTr("半径:") }
+                    QGCLabel { text: qsTr("Radius:") }
 
                     QGCTextField {
                         id:                 radiusField

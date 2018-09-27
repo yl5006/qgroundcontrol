@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -111,14 +111,14 @@ Item {
         }
 
         MenuItem {
-            text:           qsTr("设置半径..." )
+            text:           qsTr("Set radius..." )
             onTriggered:    _editCircleRadius = true
         }
 
         MenuItem {
-            text:           qsTr("编辑位置..." )
+            text:           qsTr("Edit position..." )
             onTriggered:    {
-                  qgcView.showDialog(editPositionDialog, qsTr("编辑位置"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+                  qgcView.showDialog(editPositionDialog, qsTr("Edit position"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
             }
         }
     }
@@ -183,7 +183,7 @@ Item {
                     anchors.top:        parent.top
                     spacing:            ScreenTools.defaultFontPixelHeight * 0.5
 
-                    QGCLabel { text: qsTr("半径:") }
+                    QGCLabel { text: qsTr("radius:") }
 
                     QGCTextField {
                         id:                 radiusField

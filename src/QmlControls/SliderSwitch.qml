@@ -28,7 +28,7 @@ Rectangle {
         id:                         label
         anchors.horizontalCenter:   parent.horizontalCenter
         anchors.verticalCenter:     parent.verticalCenter
-        text:                       qsTr("确认 %1").arg(confirmText)
+        text:                       qsTr("Confirm %1").arg(confirmText)
         color:                      qgcPal.window
     }
 

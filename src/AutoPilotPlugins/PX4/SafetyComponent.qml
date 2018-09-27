@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -89,18 +89,17 @@ SetupPage {
                     height:     ScreenTools.defaultFontPixelHeight*3
                     anchors.verticalCenter: circle.verticalCenter
                     anchors.left:          circle.right
-                    //                fillMode: Image.PreserveAspectFit
                 }
                 QGCLabel {
                     id:             idset
                     anchors.left:   img.left
                     anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-                    text:           qsTr("安全")//"safe"
+                    text:           qsTr("Safe")
                     font.pointSize: ScreenTools.mediumFontPointSize
                     font.bold:              true
                     color:          qgcPal.text
                     anchors.verticalCenter: img.verticalCenter
-                }               
+                }
             }
             Flow {
                 id:                                     mainCol
@@ -136,7 +135,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.right:                  disimg.left
-                      //  fillMode:                       Image.PreserveAspectFit
+                        //  fillMode:                       Image.PreserveAspectFit
                         height:                         ScreenTools.defaultFontPixelHeight*2.4
                         anchors.topMargin:              ScreenTools.defaultFontPixelHeight/2
                         mipmap:                         true
@@ -147,7 +146,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.margins:                ScreenTools.defaultFontPixelHeight
-                        text:                           qsTr("安全距离")//  qsTr("safe distance")
+                        text:                           qsTr("Safe distance")
                         font.family:                    ScreenTools.demiboldFontFamily
                         font.pointSize:                 ScreenTools.mediumFontPointSize
                     }
@@ -161,7 +160,7 @@ SetupPage {
                             QGCLabel {
                                 id:                 disActionLabel
                                 anchors.baseline:   disActionCombo.baseline
-                                text:               qsTr("安全距离启用")//qsTr("Action on safe distance")
+                                text:               qsTr("Safe Distance enable")
                                 Layout.fillWidth:   true
                             }
                             FactComboBox {
@@ -174,9 +173,9 @@ SetupPage {
                         Row {
                             QGCLabel {
                                 anchors.baseline:   disField.baseline
-                                 Layout.fillWidth:   true
+                                Layout.fillWidth:   true
                                 //       font.pointSize:     ScreenTools.mediumFontPointSize
-                                text:               qsTr("安全距离")//qsTr("Battery Warn Level:")
+                                text:               qsTr("Safe distance")
                             }
                             FactTextField {
                                 id:                 disField
@@ -215,7 +214,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.right:                  baimg.left
-                      //  fillMode:                       Image.PreserveAspectFit
+                        //  fillMode:                       Image.PreserveAspectFit
                         height:                         ScreenTools.defaultFontPixelHeight*2.4
                         anchors.topMargin:              ScreenTools.defaultFontPixelHeight/2
                         mipmap:                         true
@@ -226,7 +225,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.margins:                ScreenTools.defaultFontPixelHeight
-                        text:                           qsTr("低电压安全触发")// qsTr("Low Battery Failsafe Trigger")
+                        text:                           qsTr("Low Battery Failsafe Trigger")
                         font.family:                    ScreenTools.demiboldFontFamily
                         font.pointSize:                 ScreenTools.mediumFontPointSize
                     }
@@ -239,9 +238,9 @@ SetupPage {
                         Row {
                             QGCLabel {
                                 anchors.baseline:   lowBattCombo.baseline
-                                 Layout.fillWidth:   true
+                                Layout.fillWidth:   true
                                 //        font.pointSize:     ScreenTools.mediumFontPointSize
-                                text:               qsTr("触发动作")//qsTr("Failsafe Action:")
+                                text:               qsTr("Failsafe Action:")
                             }
                             FactComboBox {
                                 id:                 lowBattCombo
@@ -255,7 +254,7 @@ SetupPage {
                                 anchors.baseline:   batLowLevelField.baseline
                                 Layout.fillWidth:   true
                                 //       font.pointSize:     ScreenTools.mediumFontPointSize
-                                text:               qsTr("低电压警告")//qsTr("Battery Warn Level:")
+                                text:               qsTr("Battery Warn Level:")
                             }
                             FactTextField {
                                 id:                 batLowLevelField
@@ -270,7 +269,7 @@ SetupPage {
                                 anchors.baseline:   batCritLevelField.baseline
                                 Layout.fillWidth:   true
                                 //        font.pointSize:     ScreenTools.mediumFontPointSize
-                                text:               qsTr("低电压安全")//qsTr("Battery Failsafe Level:")
+                                text:               qsTr("Battery Failsafe Level:")
                             }
                             FactTextField {
                                 id:                 batCritLevelField
@@ -284,7 +283,7 @@ SetupPage {
                             property Fact _percentRemainingAnnounce:    QGroundControl.settingsManager.appSettings.batteryPercentRemainingAnnounce
                             QGCCheckBox {
                                 id:                 announcePercentCheckbox
-                                text:               qsTr("地面站报警:")
+                                text:               qsTr("GoundStation Warn:")
                                 checked:            parent._percentRemainingAnnounce.value !== 0
                                 width:              (_editFieldWidth) * 0.65
                                 anchors.verticalCenter: parent.verticalCenter
@@ -333,7 +332,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.right:                  rcimg.left
-                      //  fillMode:                       Image.PreserveAspectFit
+                        //  fillMode:                       Image.PreserveAspectFit
                         height:                         ScreenTools.defaultFontPixelHeight*2.4
                         anchors.topMargin:              ScreenTools.defaultFontPixelHeight/2
                         mipmap:                         true
@@ -344,7 +343,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.margins:                ScreenTools.defaultFontPixelHeight
-                        text:                           qsTr("遥控丢失触发行为")// qsTr("RC Loss Failsafe Trigger")
+                        text:                           qsTr("RC Loss Failsafe Trigger")
                         font.family:                    ScreenTools.demiboldFontFamily
                         font.pointSize:                 ScreenTools.mediumFontPointSize
                     }
@@ -358,7 +357,7 @@ SetupPage {
                             QGCLabel {
                                 anchors.baseline:   rcLossCombo.baseline
                                 Layout.fillWidth:   true
-                                text:               qsTr("遥控丢失触发行为")// qsTr("Failsafe Action:")
+                                text:               qsTr("Failsafe Action:")
                             }
                             FactComboBox {
                                 id:                 rcLossCombo
@@ -371,7 +370,7 @@ SetupPage {
                             QGCLabel {
                                 anchors.baseline:   rcLossField.baseline
                                 Layout.fillWidth:   true
-                                text:               qsTr("遥控丢失超时时间:")// qsTr("RC Loss Timeout:")
+                                text:               qsTr("RC Loss Timeout:")
                             }
                             FactTextField {
                                 id:                 rcLossField
@@ -381,7 +380,6 @@ SetupPage {
                             }
                         }
                     }
-
                 }
 
                 /*
@@ -410,7 +408,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.right:                  dlimg.left
-                      //  fillMode:                       Image.PreserveAspectFit
+                        //  fillMode:                       Image.PreserveAspectFit
                         height:                         ScreenTools.defaultFontPixelHeight*2.4
                         anchors.topMargin:              ScreenTools.defaultFontPixelHeight/2
                         mipmap:                         true
@@ -421,7 +419,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.margins:                ScreenTools.defaultFontPixelHeight
-                        text:                           qsTr("数据链丢失")// qsTr("Data Link Loss Failsafe Trigger")
+                        text:                           qsTr("Data Link Loss Failsafe Trigger")
                         font.family:                    ScreenTools.demiboldFontFamily
                         font.pointSize:                 ScreenTools.mediumFontPointSize
                     }
@@ -434,21 +432,21 @@ SetupPage {
                         Row {
                             QGCLabel {
                                 anchors.baseline:   dlLossCombo.baseline
-                                 Layout.fillWidth:   true
-                                text:              qsTr("触发行为:")// qsTr("Failsafe Action:")
+                                Layout.fillWidth:   true
+                                text:               qsTr("Failsafe Action:")
+                                }
+                                FactComboBox {
+                                    id:                 dlLossCombo
+                                    width:              _editFieldWidth
+                                    fact:               _dlLossAction
+                                    indexModel:         false
+                                }
                             }
-                            FactComboBox {
-                                id:                 dlLossCombo
-                                width:              _editFieldWidth
-                                fact:               _dlLossAction
-                                indexModel:         false
-                            }
-                        }
                         Row {
                             QGCLabel {
                                 anchors.baseline:   dlLossField.baseline
                                 Layout.fillWidth:   true
-                                text:              qsTr("数据链丢失超时:")//  qsTr("Data Link Loss Timeout:")
+                                text:               qsTr("Data Link Loss Timeout:")
                             }
                             FactTextField {
                                 id:                 dlLossField
@@ -458,9 +456,7 @@ SetupPage {
                             }
                         }
                     }
-
                 }
-
                 /*
                    **** Geofence ****
                 */
@@ -487,7 +483,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.right:                  geoimg.left
-                      //  fillMode:                       Image.PreserveAspectFit
+                        //  fillMode:                       Image.PreserveAspectFit
                         height:                         ScreenTools.defaultFontPixelHeight*2.4
                         anchors.topMargin:              ScreenTools.defaultFontPixelHeight/2
                         mipmap:                         true
@@ -498,7 +494,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.margins:                ScreenTools.defaultFontPixelHeight
-                        text:                           qsTr("围栏设置")//  qsTr("Geofence Failsafe Trigger")
+                        text:                           qsTr("Geofence Failsafe Trigger")
                         font.family:                    ScreenTools.demiboldFontFamily
                         font.pointSize:                 ScreenTools.mediumFontPointSize
                     }
@@ -512,7 +508,7 @@ SetupPage {
                             QGCLabel {
                                 id:                 fenceActionLabel
                                 anchors.baseline:   fenceActionCombo.baseline
-                                text:               qsTr("违反设置")//qsTr("Action on breach:")
+                                text:               qsTr("Action on breach:")
                                 Layout.fillWidth:   true
                             }
                             FactComboBox {
@@ -526,7 +522,7 @@ SetupPage {
                             QGCCheckBox {
                                 id:                 fenceRadiusCheckBox
                                 anchors.baseline:   fenceRadiusField.baseline
-                                text:               qsTr("最大半径")//qsTr("Max radius:")
+                                text:               qsTr("Max Radius:")
                                 checked:            _fenceRadius.value > 0
                                 onClicked:          _fenceRadius.value = checked ? 100 : 0
                                 Layout.fillWidth:   true
@@ -543,7 +539,7 @@ SetupPage {
                             QGCCheckBox {
                                 id:                 fenceAltMaxCheckBox
                                 anchors.baseline:   fenceAltMaxField.baseline
-                                text:               qsTr("最大高度")//qsTr("Max altitude:")
+                                text:               qsTr("Max Altitude:")
                                 checked:            _fenceAlt.value > 0
                                 onClicked:          _fenceAlt.value = checked ? 100 : 0
                                 Layout.fillWidth:   true
@@ -559,7 +555,6 @@ SetupPage {
                     }
 
                 }
-
                 /*
                    **** Return Home Settings ****
                 */
@@ -587,7 +582,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.right:                  rtlimg.left
-                      //  fillMode:                       Image.PreserveAspectFit
+                        //  fillMode:                       Image.PreserveAspectFit
                         height:                         ScreenTools.defaultFontPixelHeight*2.4
                         anchors.topMargin:              ScreenTools.defaultFontPixelHeight/2
                         mipmap:                         true
@@ -598,7 +593,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.margins:                ScreenTools.defaultFontPixelHeight
-                        text:                           qsTr("返航设置")//   qsTr("Return Home Settings")
+                        text:                           qsTr("Return Home Settings")
                         font.family:                    ScreenTools.demiboldFontFamily
                         font.pointSize:                 ScreenTools.mediumFontPointSize
                     }
@@ -613,7 +608,7 @@ SetupPage {
                                 id:                 climbLabel
                                 anchors.baseline:   climbField.baseline
                                 Layout.fillWidth:   true
-                                text:               qsTr("上升高度")//qsTr("Climb to altitude of:")
+                                text:               qsTr("Climb to altitude of:")
                             }
                             FactTextField {
                                 id:                 climbField
@@ -626,7 +621,7 @@ SetupPage {
                             QGCLabel {
                                 id:                     returnHomeLabel
                                 width:                 _editFieldWidth
-                                text:                   qsTr("返航后:")// "Return home, then:"
+                                text:                   qsTr("Return home, then:")
                             }
                             Column {
                                 spacing:            _margins * 0.5
@@ -634,28 +629,28 @@ SetupPage {
                                     id:             homeLandRadio
                                     checked:        _rtlLandDelay.value === 0
                                     exclusiveGroup: homeLoiterGroup
-                                    text:            qsTr("立即降落")//"Land immediately"
+                                    text:           qsTr("Land immediately")
                                     onClicked:      _rtlLandDelay.value = 0
                                 }
                                 QGCRadioButton {
                                     id:             homeLoiterNoLandRadio
                                     checked:        _rtlLandDelay.value < 0
                                     exclusiveGroup: homeLoiterGroup
-                                    text:           qsTr("悬停(盘旋)")//"Loiter and do not land"
+                                    text:           qsTr("Loiter and do not land")
                                     onClicked:      _rtlLandDelay.value = -1
                                 }
                                 QGCRadioButton {
                                     id:             homeLoiterLandRadio
                                     checked:        _rtlLandDelay.value > 0
                                     exclusiveGroup: homeLoiterGroup
-                                    text:           qsTr("悬停(盘旋)一定时间后降落")//qsTr("Loiter and land after specified time")
+                                    text:           qsTr("Loiter and land after specified time")
                                     onClicked:      _rtlLandDelay.value = 60
                                 }
                             }
                         }
                         Row {
                             QGCLabel {
-                                text:                qsTr("悬停(盘旋)时间")//qsTr("Loiter Time")
+                                text:               qsTr("Loiter Time")
                                 Layout.fillWidth:   true
                                 anchors.baseline:   landDelayField.baseline
                                 color:              qgcPal.text
@@ -671,7 +666,7 @@ SetupPage {
                         }
                         Row {
                             QGCLabel {
-                                text:               qsTr("悬停(盘旋)高度")//qsTr("Loiter Altitude")
+                                text:               qsTr("Loiter Altitude")
                                 Layout.fillWidth:   true
                                 anchors.baseline:   descendField.baseline
                                 color:              qgcPal.text
@@ -831,7 +826,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.right:                  landimg.left
-                      //  fillMode:                       Image.PreserveAspectFit
+                        //  fillMode:                       Image.PreserveAspectFit
                         height:                         ScreenTools.defaultFontPixelHeight*2.4
                         anchors.topMargin:              ScreenTools.defaultFontPixelHeight/2
                         mipmap:                         true
@@ -842,7 +837,7 @@ SetupPage {
                         anchors.top:                    parent.top
                         anchors.left:                   parent.left
                         anchors.margins:                ScreenTools.defaultFontPixelHeight
-                        text:                           qsTr("降落设置")//   qsTr("Land Mode Settings")
+                        text:                           qsTr("Land Mode Settings")
                         font.family:                    ScreenTools.demiboldFontFamily
                         font.pointSize:                 ScreenTools.mediumFontPointSize
                     }
@@ -857,7 +852,7 @@ SetupPage {
                             QGCLabel {
                                 anchors.baseline:   landVelField.baseline
                                 Layout.fillWidth:   true
-                                text:               qsTr("降落速度")//  qsTr("Landing Velocity:")
+                                text:               qsTr("Landing Descent Rate:")
                             }
                             FactTextField {
                                 id:                 landVelField
@@ -870,7 +865,7 @@ SetupPage {
                             QGCCheckBox {
                                 id:                 disarmDelayCheckBox
                                 anchors.baseline:   disarmField.baseline
-                                text:               qsTr("加锁时间")//qsTr("Disarm After:")
+                                text:               qsTr("Disarm After:")
                                 checked:            _disarmLandDelay.value > 0
                                 onClicked:          _disarmLandDelay.value = checked ? 2 : 0
                                 Layout.fillWidth:   true

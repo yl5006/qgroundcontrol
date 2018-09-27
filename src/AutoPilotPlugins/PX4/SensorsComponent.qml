@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -34,16 +34,16 @@ SetupPage {
             // Help text which is shown both in the status text area prior to pressing a cal button and in the
             // pre-calibration dialog.
 
-            readonly property string boardRotationText: qsTr("飞控安装方向如何和机头一直，则选择NONE.")//qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
-            readonly property string compassRotationText: qsTr("磁罗盘安装方向如何和机头一直，则选择NONE.")//qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
+            readonly property string boardRotationText: qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
+            readonly property string compassRotationText: qsTr("If the orientation is in the direction of flight, select ROTATION_NONE.")
 
             readonly property string compassHelp:   qsTr("For Compass calibration you will need to rotate your vehicle through a number of positions.")
             readonly property string gyroHelp:      qsTr("For Gyroscope calibration you will need to place your vehicle on a surface and leave it still.")
             readonly property string accelHelp:     qsTr("For Accelerometer calibration you will need to place your vehicle on all six sides on a perfectly level surface and hold it still in each orientation for a few seconds.")
-            readonly property string levelHelp:     qsTr("水平校准校准机体飞行平面.")//qsTr("To level the horizon you need to place the vehicle in its level flight position and press OK.")
-            readonly property string airspeedHelp:  qsTr("空速校准先在无风下校准.然后对传感器吹气或风")//qsTr("For Airspeed calibration you will need to keep your airspeed sensor out of any wind and then blow across the sensor.")
+            readonly property string levelHelp:     qsTr("To level the horizon you need to place the vehicle in its level flight position and press OK.")
+            readonly property string airspeedHelp:  qsTr("For Airspeed calibration you will need to keep your airspeed sensor out of any wind and then blow across the sensor.")
 
-            readonly property string statusTextAreaDefaultText: qsTr("选择传感器开始校准")/*qsTr("Start the individual calibration steps by clicking one of the buttons to the left.")*/
+            readonly property string statusTextAreaDefaultText: qsTr("Start the individual calibration steps by clicking one of the buttons")
 
             // Used to pass what type of calibration is being performed to the preCalibrationDialog
             property string preCalibrationDialogType
@@ -61,36 +61,36 @@ SetupPage {
 
 
             readonly property var rotations: [
-                qsTr("旋转_NONE"),
-                qsTr("旋转_YAW_45"),
-                qsTr("旋转_YAW_90"),
-                qsTr("旋转_YAW_135"),
-                qsTr("旋转_YAW_180"),
-                qsTr("旋转_YAW_225"),
-                qsTr("旋转_YAW_270"),
-                qsTr("旋转_YAW_315"),
-                qsTr("旋转_ROLL_180"),
-                qsTr("旋转_ROLL_180_YAW_45"),
-                qsTr("旋转_ROLL_180_YAW_90"),
-                qsTr("旋转_ROLL_180_YAW_135"),
-                qsTr("旋转_PITCH_180"),
-                qsTr("旋转_ROLL_180_YAW_225"),
-                qsTr("旋转_ROLL_180_YAW_270"),
-                qsTr("旋转_ROLL_180_YAW_315"),
-                qsTr("旋转_ROLL_90"),
-                qsTr("旋转_ROLL_90_YAW_45"),
-                qsTr("旋转_ROLL_90_YAW_90"),
-                qsTr("旋转_ROLL_90_YAW_135"),
-                qsTr("旋转_ROLL_270"),
-                qsTr("旋转_ROLL_270_YAW_45"),
-                qsTr("旋转_ROLL_270_YAW_90"),
-                qsTr("旋转_ROLL_270_YAW_135"),
-                qsTr("旋转_PITCH_90"),
-                qsTr("旋转_PITCH_270"),
-                qsTr("旋转_ROLL_270_YAW_270"),
-                qsTr("旋转_ROLL_180_PITCH_270"),
-                qsTr("旋转_PITCH_90_YAW_180"),
-                qsTr("旋转_ROLL_90_PITCH_90")
+                qsTr("ROTATION_NONE"),
+                qsTr("ROTATION_YAW_45"),
+                qsTr("ROTATION_YAW_90"),
+                qsTr("ROTATION_YAW_135"),
+                qsTr("ROTATION_YAW_180"),
+                qsTr("ROTATION_YAW_225"),
+                qsTr("ROTATION_YAW_270"),
+                qsTr("ROTATION_YAW_315"),
+                qsTr("ROTATION_ROLL_180"),
+                qsTr("ROTATION_ROLL_180_YAW_45"),
+                qsTr("ROTATION_ROLL_180_YAW_90"),
+                qsTr("ROTATION_ROLL_180_YAW_135"),
+                qsTr("ROTATION_PITCH_180"),
+                qsTr("ROTATION_ROLL_180_YAW_225"),
+                qsTr("ROTATION_ROLL_180_YAW_270"),
+                qsTr("ROTATION_ROLL_180_YAW_315"),
+                qsTr("ROTATION_ROLL_90"),
+                qsTr("ROTATION_ROLL_90_YAW_45"),
+                qsTr("ROTATION_ROLL_90_YAW_90"),
+                qsTr("ROTATION_ROLL_90_YAW_135"),
+                qsTr("ROTATION_ROLL_270"),
+                qsTr("ROTATION_ROLL_270_YAW_45"),
+                qsTr("ROTATION_ROLL_270_YAW_90"),
+                qsTr("ROTATION_ROLL_270_YAW_135"),
+                qsTr("ROTATION_PITCH_90"),
+                qsTr("ROTATION_PITCH_270"),
+                qsTr("ROTATION_ROLL_270_YAW_270"),
+                qsTr("ROTATION_ROLL_180_PITCH_270"),
+                qsTr("ROTATION_PITCH_90_YAW_180"),
+                qsTr("ROTATION_ROLL_90_PITCH_90")
             ]
 
             property Fact cal_mag0_id:      controller.getParameterFact(-1, "CAL_MAG0_ID")
@@ -140,13 +140,13 @@ SetupPage {
                 onSetCompassRotations: {
                     if (!_sensorsHaveFixedOrientation && (showCompass0Rot || showCompass1Rot || showCompass2Rot)) {
                         setOrientationsDialogShowBoardOrientation = false
-                        showDialog(setOrientationsDialogComponent, qsTr("设置磁罗盘安装反向"), sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
+                        showDialog(setOrientationsDialogComponent, qsTr("Set Compass Orientation"), sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
                     }
                 }
 
                 onWaitingForCancelChanged: {
                     if (controller.waitingForCancel) {
-                        showMessage(qsTr("校准取消")/*qsTr("Calibration Cancel")*/, qsTr("等待大概几秒，机体响应取消校准")/*qsTr("Waiting for Vehicle to response to Cancel. This may take a few seconds.")*/, 0)
+                        showMessage(qsTr("Calibration Cancel"), qsTr("Waiting for Vehicle to response to Cancel. This may take a few seconds."), 0)
                     } else {
                         hideDialog()
                     }
@@ -157,7 +157,7 @@ SetupPage {
             Component.onCompleted: {
                 var usingUDP = controller.usingUDPLink()
                 if (usingUDP && !_wifiReliableForCalibration) {
-                    showMessage(qsTr("传感器校准"), "Performing sensor calibration over a WiFi connection is known to be unreliable. You should disconnect and perform calibration using a direct USB connection instead.", StandardButton.Ok)
+                    showMessage(qsTr("Calibration Sensor"), "Performing sensor calibration over a WiFi connection is known to be unreliable. You should disconnect and perform calibration using a direct USB connection instead.", StandardButton.Ok)
                 }
             }
 
@@ -208,7 +208,7 @@ SetupPage {
                                 visible:    boardRotationHelp.visible
                             	spacing:        ScreenTools.defaultFontPixelHeight
                                 QGCLabel {
-                                    text: qsTr("飞控安装方向:")
+                                    text: qsTr("Autopilot Orientation:")
                                 }
 
                                 FactComboBox {
@@ -254,7 +254,7 @@ SetupPage {
                                 visible: setOrientationsDialogShowBoardOrientation
                                 spacing:        ScreenTools.defaultFontPixelHeight
                                 QGCLabel {
-                                    text: qsTr("飞控安装方向:")//Autopilot Orientation
+                                    text: qsTr("Autopilot Orientation:")
                                 }
 
                                 FactComboBox {
@@ -271,7 +271,7 @@ SetupPage {
                                     id: compass0ComponentLabel2
 
                                     QGCLabel {
-                                        text: qsTr("外部磁罗盘安装方向:")//qsTr("External Compass Orientation:")
+                                        text: qsTr("External Compass Orientation:")
                                     }
                                 }
 
@@ -296,7 +296,7 @@ SetupPage {
                                     id: compass1ComponentLabel2
 
                                     QGCLabel {
-                                        text: qsTr("外部磁罗盘1安装方向:")//qsTr("External Compass 1 Orientation:")
+                                        text: qsTr("External Compass 1 Orientation:")
                                     }
                                 }
 
@@ -323,7 +323,7 @@ SetupPage {
                                     id: compass2ComponentLabel2
 
                                     QGCLabel {
-                                        text: qsTr("磁罗盘2安装方向:")//qsTr("Compass 2 Orientation")
+                                        text: qsTr("Compass 2 Orientation")
                                     }
                                 }
 
@@ -383,7 +383,7 @@ SetupPage {
                     id:             idset
                     anchors.left:   setimg.left
                     anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-                    text:           qsTr("传感器")//"sensors"
+                    text:           qsTr("Sensors")//"sensors"
                     font.pointSize: ScreenTools.mediumFontPointSize
                     font.bold:              true
                     color:          qgcPal.text
@@ -403,7 +403,7 @@ SetupPage {
                     height:         ScreenTools.defaultFontPixelWidth * 5
                     exclusiveGroup: calGroup
                     checkable:          true
-                    text:           qsTr("磁罗盘")//qsTr("Compass")
+                    text:           qsTr("Compass")
                     primary:        true
                     bordercolor:    cal_mag0_id.value !== 0?qgcPal.primaryButton:"red"
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationCompass
@@ -422,7 +422,7 @@ SetupPage {
                     height:         ScreenTools.defaultFontPixelWidth * 5
                     exclusiveGroup: calGroup
                     checkable:          true
-                    text:           qsTr("加速度")//qsTr("Accelerometer")
+                    text:           qsTr("Accelerometer")
                     primary:        true
                     bordercolor:    cal_acc0_id.value != 0 ? qgcPal.primaryButton:"red"
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationGyro
@@ -442,7 +442,7 @@ SetupPage {
                     height:         ScreenTools.defaultFontPixelWidth * 5
                     exclusiveGroup: calGroup
                     checkable:          true
-                    text:           qsTr("角速度")//qsTr("Gyroscope")
+                    text:           qsTr("Gyroscope")
                     primary:        true
                     bordercolor:    (cal_gyro0_id.value != 0) ? qgcPal.primaryButton:"red"
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationAccel
@@ -461,7 +461,7 @@ SetupPage {
                     height:         ScreenTools.defaultFontPixelWidth * 5
                     exclusiveGroup: calGroup
                     checkable:          true
-                    text:           qsTr("水平")//qsTr("Level Horizon")
+                    text:           qsTr("Level Horizon")
                     primary:        true
                     bordercolor:    (sens_board_x_off.value != 0 || sens_board_y_off != 0 | sens_board_z_off != 0)?qgcPal.primaryButton:"red"
                     _showBorder:    true
@@ -480,7 +480,7 @@ SetupPage {
                     id:             airspeedButton
                     width:          parent.buttonWidth
                     height:         ScreenTools.defaultFontPixelWidth * 5
-                    text:           qsTr("空速计")//qsTr("Airspeed")
+                    text:           qsTr("Airspeed")
                     checkable:      true
                     primary:        true
                     visible:        (controller.vehicle.fixedWing || controller.vehicle.vtol) && controller.getParameterFact(-1, "CBRK_AIRSPD_CHK").value != 162128 && QGroundControl.corePlugin.options.showSensorCalibrationAirspeed
@@ -507,12 +507,12 @@ SetupPage {
                     id:         setOrientationsButton
                     width:      parent.buttonWidth
                     height:         ScreenTools.defaultFontPixelWidth * 5
-                    text:       qsTr("安装方向")//qsTr("Set Orientations")
+                    text:       qsTr("Set Orientations")
                     visible:    !_sensorsHaveFixedOrientation
                     primary:        true
                     onClicked:  {
                         setOrientationsDialogShowBoardOrientation = true
-                        showDialog(setOrientationsDialogComponent, qsTr("设置安装方向")/*qsTr("Set Orientations")*/, sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
+                        showDialog(setOrientationsDialogComponent, qsTr("Set Orientations"), sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
                     }
                 }
             } // Column - Buttons
@@ -594,7 +594,7 @@ SetupPage {
                                 calValid:           controller.orientationCalDownSideDone
                                 calInProgress:      controller.orientationCalDownSideInProgress
                                 rotate:             calmagtime ? 5 :1
-                                calInProgressText:  controller.orientationCalDownSideRotate ? qsTr("旋转"):qsTr("保持静止")/*qsTr("Rotate") : qsTr("Hold Still")*/
+                                calInProgressText:  controller.orientationCalDownSideRotate ? qsTr("Rotate") : qsTr("Hold Still")
                                 imageSource:        controller.orientationCalDownSideRotate ? "qrc:///qmlimages/VehicleDownRotate.png" : "qrc:///qmlimages/VehicleDown.png"
                                 Rectangle {
                                     id:       pro
@@ -616,7 +616,7 @@ SetupPage {
                                 calValid:           controller.orientationCalUpsideDownSideDone
                                 calInProgress:      controller.orientationCalUpsideDownSideInProgress
                                 rotate:             calmagtime ? 5: 1
-                                calInProgressText:  controller.orientationCalUpsideDownSideRotate ? qsTr("旋转"):qsTr("保持静止")//qsTr("Rotate") : qsTr("Hold Still")
+                                calInProgressText:  controller.orientationCalUpsideDownSideRotate ? qsTr("Rotate") : qsTr("Hold Still")
                                 imageSource:        controller.orientationCalUpsideDownSideRotate ? "qrc:///qmlimages/VehicleUpsideDownRotate.png" : "qrc:///qmlimages/VehicleUpsideDown.png"
                             }
                             VehicleRotationCal {
@@ -626,7 +626,7 @@ SetupPage {
                                 calValid:           controller.orientationCalNoseDownSideDone
                                 calInProgress:      controller.orientationCalNoseDownSideInProgress
                                 rotate:             calmagtime ? 5 : 1
-                                calInProgressText:  controller.orientationCalNoseDownSideRotate ? qsTr("旋转"):qsTr("保持静止")//qsTr("Rotate") : qsTr("Hold Still")
+                                calInProgressText:  controller.orientationCalNoseDownSideRotate ? qsTr("Rotate") : qsTr("Hold Still")
                                 imageSource:        controller.orientationCalNoseDownSideRotate ? "qrc:///qmlimages/VehicleNoseDownRotate.png" : "qrc:///qmlimages/VehicleNoseDown.png"
                             }
                             VehicleRotationCal {
@@ -636,7 +636,7 @@ SetupPage {
                                 calValid:           controller.orientationCalTailDownSideDone
                                 calInProgress:      controller.orientationCalTailDownSideInProgress
                                 rotate:             calmagtime ? 5 : 1
-                                calInProgressText:  controller.orientationCalTailDownSideRotate ? qsTr("旋转"):qsTr("保持静止")//qsTr("Rotate") : qsTr("Hold Still")
+                                calInProgressText:  controller.orientationCalTailDownSideRotate ? qsTr("Rotate") : qsTr("Hold Still")
                                 imageSource:        controller.orientationCalTailDownSideRotate ? "qrc:///qmlimages/VehicleTailDownRotate.png" : "qrc:///qmlimages/VehicleTailDown.png"
                             }
                             VehicleRotationCal {
@@ -646,7 +646,7 @@ SetupPage {
                                 calValid:           controller.orientationCalLeftSideDone
                                 calInProgress:      controller.orientationCalLeftSideInProgress
                                 rotate:             calmagtime ? 5 : 1
-                                calInProgressText:  controller.orientationCalLeftSideRotate ? qsTr("旋转"):qsTr("保持静止")//qsTr("Rotate") : qsTr("Hold Still")
+                                calInProgressText:  controller.orientationCalLeftSideRotate ? qsTr("Rotate") : qsTr("Hold Still")
                                 imageSource:        controller.orientationCalLeftSideRotate ? "qrc:///qmlimages/VehicleLeftRotate.png" : "qrc:///qmlimages/VehicleLeft.png"
                             }
                             VehicleRotationCal {
@@ -656,7 +656,7 @@ SetupPage {
                                 calValid:           controller.orientationCalRightSideDone
                                 calInProgress:      controller.orientationCalRightSideInProgress
                                 rotate:             calmagtime ? 5 : 1
-                                calInProgressText:  controller.orientationCalRightSideRotate ? qsTr("旋转"):qsTr("保持静止")//qsTr("Rotate") : qsTr("Hold Still")
+                                calInProgressText:  controller.orientationCalRightSideRotate ? qsTr("Rotate") : qsTr("Hold Still")
                                 imageSource:        controller.orientationCalRightSideRotate ? "qrc:///qmlimages/VehicleRightRotate.png" : "qrc:///qmlimages/VehicleRight.png"
                             }
                         }
@@ -675,7 +675,7 @@ SetupPage {
                 QGCButton {
                     width:      ScreenTools.defaultFontPixelWidth * 15
                     height:         ScreenTools.defaultFontPixelWidth * 5
-                    text:       qsTr("6面校准")//qsTr("Set Orientations")
+                    text:       qsTr("Six sides calibration")//qsTr("Set Orientations")
                     primary:        true
                     onClicked:  {
                         cal_mag_sides.value=calmagsides[1]
@@ -687,7 +687,7 @@ SetupPage {
                 QGCButton {
                     width:      ScreenTools.defaultFontPixelWidth * 15
                     height:         ScreenTools.defaultFontPixelWidth * 5
-                    text:       qsTr("3面校准")//qsTr("Set Orientations")
+                    text:       qsTr("Three sides calibration")//qsTr("Set Orientations")
                     primary:        true
                     onClicked:  {
                         cal_mag_sides.value=calmagsides[2]
@@ -699,7 +699,7 @@ SetupPage {
                 QGCButton {
                     width:      ScreenTools.defaultFontPixelWidth * 15
                     height:     ScreenTools.defaultFontPixelWidth * 5
-                    text:       qsTr("2面校准")//qsTr("Set Orientations")
+                    text:       qsTr("Two sides calibration")//qsTr("Set Orientations")
                     primary:        true
                     onClicked:  {
                         cal_mag_sides.value=calmagsides[0]

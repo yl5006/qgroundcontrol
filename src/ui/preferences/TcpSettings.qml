@@ -35,7 +35,7 @@ Item {
         spacing:    ScreenTools.defaultFontPixelHeight / 2
         QGCLabel {
             id:     tcpLabel
-            text:   qsTr("TCP 连接设置")
+            text:   qsTr("TCP Link Settings")
         }
         Rectangle {
             height: 1
@@ -49,7 +49,7 @@ Item {
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
             QGCLabel {
-                text:   qsTr("Host 地址:")
+                text:   qsTr("Host Address:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -63,7 +63,7 @@ Item {
         Row {
             spacing:    ScreenTools.defaultFontPixelWidth
             QGCLabel {
-                text:   qsTr("TCP 端口:")
+                text:   qsTr("TCP Port:")
                 width:  _firstColumn
                 anchors.verticalCenter: parent.verticalCenter
             }

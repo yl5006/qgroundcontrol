@@ -155,7 +155,7 @@ void StructureScanComplexItem::save(QJsonArray&  missionItems)
     saveObject[ComplexMissionItem::jsonComplexItemTypeKey] =    jsonComplexItemTypeValue;
 
     saveObject[altitudeName] =              _altitudeFact.rawValue().toDouble();
-    saveObject[speedName] =            _speedFact.rawValue().toDouble();
+    saveObject[speedName] =            		_speedFact.rawValue().toDouble();
     saveObject[structureHeightName] =      _structureHeightFact.rawValue().toDouble();
     saveObject[_jsonAltitudeRelativeKey] =   _altitudeRelative;
     saveObject[layersName] =                _layersFact.rawValue().toDouble();

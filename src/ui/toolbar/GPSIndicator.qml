@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -45,7 +45,7 @@ Item {
 
                 QGCLabel {
                     id:             gpsLabel
-                    text:           (activeVehicle && activeVehicle.gps.count.value >= 0) ? qsTr("GPS 状态") /*qsTr("GPS Status")*/ : qsTr("GPS 信息不可用") /*qsTr("GPS Data Unavailable")*/
+                    text:           (activeVehicle && activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("GPS Data Unavailable")
                     font.family:    ScreenTools.demiboldFontFamily
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -58,15 +58,15 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     columns: 2
 
-                    QGCLabel { text: qsTr("卫星颗数:")/*qsTr("GPS Count:")*/ }
+                    QGCLabel { text: qsTr("GPS Count:") }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.count.valueString : qsTr("N/A", "No data to display") }
-                    QGCLabel { text: qsTr("锁定模式:")/*qsTr("GPS Lock:")*/ }
+                    QGCLabel { text: qsTr("GPS Lock:") }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.lock.enumStringValue : qsTr("N/A", "No data to display") }
-                    QGCLabel { text: qsTr("水平精度:")/*qsTr("HDOP:")*/ }
+                    QGCLabel { text: qsTr("HDOP:") }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.hdop.valueString : qsTr("--.--", "No data to display") }
-                    QGCLabel { text: qsTr("垂直精度:")/*qsTr("VDOP:")*/ }
+                    QGCLabel { text: qsTr("VDOP:") }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.vdop.valueString : qsTr("--.--", "No data to display") }
-                    QGCLabel { text: qsTr("地面速度:") /*qsTr("Course Over Ground:")*/ }
+                    QGCLabel { text: qsTr("Course Over Ground:") }
                     QGCLabel { text: activeVehicle ? activeVehicle.gps.courseOverGround.valueString : qsTr("--.--", "No data to display") }
                 }
             }

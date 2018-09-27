@@ -1,4 +1,4 @@
-﻿import QtQuick          2.3
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Layouts  1.2
 import QtQuick.Dialogs  1.2
@@ -129,7 +129,7 @@ Rectangle {
             }
         }
 
-        onClicked:              qgcView.showDialog(commandDialog,qsTr("选择任务") /*"Select Mission Command"*/, qgcView.showDialogDefaultWidth, StandardButton.Cancel)
+        onClicked:              qgcView.showDialog(commandDialog,qsTr("Select Mission Command"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
 
     }
     Rectangle {
@@ -156,7 +156,7 @@ Rectangle {
         anchors.left:       parent.left
         anchors.top:        commandPicker.bottom
         color:              Qt.rgba(0.555,0.648,0.691,1)
-        text:               qsTr("距离")//"Distance" //+ _distanceText
+        text:               qsTr("Distance")//"Distance" //+ _distanceText
     }
 
     QGCLabel {
@@ -164,7 +164,7 @@ Rectangle {
         anchors.verticalCenter: distanceLabel.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
         color:              Qt.rgba(0.555,0.648,0.691,1)
-        text:               qsTr("高度差")//"Alt diff"// + _altText
+        text:               qsTr("Alt diff")
     }
 
     QGCLabel {
@@ -173,7 +173,7 @@ Rectangle {
         anchors.right:          parent.right
         anchors.rightMargin: _margin*5
         color:              Qt.rgba(0.555,0.648,0.691,1)
-        text:               qsTr("方位角")//"Azimuth" //+ _azimuthText
+        text:               qsTr("Azimuth")
     }
 
     QGCLabel {

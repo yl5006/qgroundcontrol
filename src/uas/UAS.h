@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -330,6 +330,7 @@ private:
     Vehicle*                _vehicle;
     FirmwarePluginManager*  _firmwarePluginManager;
     QMap<short, QString>    _criticalmsg;
+    QLocale locale;
 };
 
 

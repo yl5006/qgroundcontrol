@@ -17,8 +17,7 @@
 
 AirframeComponent::AirframeComponent(Vehicle* vehicle, AutoPilotPlugin* autopilot, QObject* parent) :
     VehicleComponent(vehicle, autopilot, parent),
-//    _name(tr("Airframe"))
-    _name(tr("机体"))
+    _name(tr("Airframe"))
 {
 
 }

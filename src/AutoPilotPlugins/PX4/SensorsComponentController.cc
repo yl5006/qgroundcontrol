@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -65,6 +65,7 @@ SensorsComponentController::SensorsComponentController(void)
     , _unknownFirmwareVersion                   (false)
     , _waitingForCancel                         (false)
 {
+    locale = QLocale::system();
     _aircalmsg= createMapFromJsonFile(QStringLiteral(":/json/Vehicle/calMsgIdCn.json"));
 }
 QMap<short, QString>  SensorsComponentController::createMapFromJsonFile(const QString& jsonFilename)
@@ -217,7 +218,7 @@ void SensorsComponentController::_stopCalibration(SensorsComponentController::St
     
     switch (code) {
         case StopCalibrationSuccess:
-            _orientationCalAreaHelpText->setProperty("text", tr("校准完成"));
+            _orientationCalAreaHelpText->setProperty("text", tr("Calibration complete"));
             if (!_airspeedCalInProgress && !_levelCalInProgress) {
                 emit resetStatusTextArea();
             }
@@ -235,7 +236,7 @@ void SensorsComponentController::_stopCalibration(SensorsComponentController::St
             // Assume failed
             emit resetStatusTextArea();   //不显示log
             _hideAllCalAreas();
-            qgcApp()->showMessage(tr("校准失败")/*"Calibration failed. Calibration log will be displayed."*/);
+            qgcApp()->showMessage(tr("Calibration failed. Calibration log will be displayed."));
             break;
     }
     
@@ -319,8 +320,14 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
         text = text.right(text.length() - calAirspeedfix.length());
         int msgid=text.left(2).toInt();
         qDebug()<<msgid<<_aircalmsg[msgid];
-        _orientationCalAreaHelpText->setProperty("text", _aircalmsg[msgid]);
-        text=text.right(text.length()-2);
+        text = text.right(text.length()-2);
+        if(locale.country() == QLocale::China)
+        {
+           _orientationCalAreaHelpText->setProperty("text", _aircalmsg[msgid]);
+        }else
+        {
+           _orientationCalAreaHelpText->setProperty("text", text);
+        }
         _appendStatusLog(text);
     }
 
@@ -364,7 +371,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
             _orientationCalTailDownSideVisible = false;
             _orientationCalNoseDownSideVisible = false;
             
-            _orientationCalAreaHelpText->setProperty("text", tr("按照下面图放置你的机体，并保持静止")/*"Place your vehicle into one of the Incomplete orientations shown below and hold it still"*/);
+            _orientationCalAreaHelpText->setProperty("text", tr("Place your vehicle into one of the Incomplete orientations shown below and hold it still"));
             
             if (text == "accel") {
                 _accelCalInProgress = true;
@@ -459,9 +466,9 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
         }
         
         if (_magCalInProgress) {
-            _orientationCalAreaHelpText->setProperty("text", tr("旋转机体，直到完成")/*"Rotate the vehicle continuously as shown in the diagram until marked as Completed"*/);
+            _orientationCalAreaHelpText->setProperty("text", tr("Rotate the vehicle continuously as shown in the diagram until marked as Completed"));
         } else {
-            _orientationCalAreaHelpText->setProperty("text", tr("保持该方向，保持静止")/*"Hold still in the current orientation"*/);
+            _orientationCalAreaHelpText->setProperty("text", tr("Hold still in the current orientation"));
         }
         
         emit orientationCalSidesInProgressChanged();
@@ -499,7 +506,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
             _orientationCalTailDownSideRotate = false;
         }
         
-        _orientationCalAreaHelpText->setProperty("text", tr("按照下面图放置你的机体，并保持静止"/*"Place you vehicle into one of the orientations shown below and hold it still"*/));
+        _orientationCalAreaHelpText->setProperty("text", tr("Place you vehicle into one of the orientations shown below and hold it still"));
 
         emit orientationCalSidesInProgressChanged();
         emit orientationCalSidesDoneChanged();
@@ -508,7 +515,7 @@ void SensorsComponentController::_handleUASTextMessage(int uasId, int compId, in
     }
 
     if (text.endsWith("side already completed")) {
-        _orientationCalAreaHelpText->setProperty("text", tr("该方向已经完成，按照下图所示的未完成的方向之一放置机体，并保持静止")/*"Orientation already completed, place you vehicle into one of the incomplete orientations shown below and hold it still"*/);
+        _orientationCalAreaHelpText->setProperty("text", tr("Orientation already completed, place you vehicle into one of the incomplete orientations shown below and hold it still"));
         return;
     }
     

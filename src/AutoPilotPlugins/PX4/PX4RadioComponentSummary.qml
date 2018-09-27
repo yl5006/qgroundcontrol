@@ -1,4 +1,4 @@
-﻿import QtQuick 2.3
+import QtQuick 2.3
 import QtQuick.Controls 1.2
 
 import QGroundControl.FactSystem 1.0
@@ -35,13 +35,13 @@ FactPanel {
                     id:     label
                     font.bold:   true
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text:   qsTr("横滚:")//"Roll:"
+                    text:   qsTr("Roll:")
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
                     font.bold:   true
                     anchors.horizontalCenter: label.horizontalCenter
-                    text:   mapRollFact ? (mapRollFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapRollFact.valueString) : ""
+                    text:   mapRollFact ? (mapRollFact.value === 0 ? qsTr("Setup required") : mapRollFact.valueString) : ""
                 }
             }
             Column {
@@ -51,13 +51,13 @@ FactPanel {
                     id:     label1
                     font.bold:   true
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text:   qsTr("仰俯:")//"Pitch:"
+                    text:   qsTr("Pitch:")//"Pitch:"
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
                     font.bold:   true
                     anchors.horizontalCenter: label1.horizontalCenter
-                    text:  mapPitchFact ? (mapPitchFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapPitchFact.valueString) : ""
+                    text:  mapPitchFact ? (mapPitchFact.value === 0 ? qsTr("Setup required")/*"Setup required"*/ : mapPitchFact.valueString) : ""
                 }
             }
             Column {
@@ -67,13 +67,13 @@ FactPanel {
                     id:     label2
                     font.bold:   true
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text:   qsTr("航角:")//"Yaw:"
+                    text:   qsTr("Yaw:")
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
                     font.bold:   true
                     anchors.horizontalCenter: label2.horizontalCenter
-                    text:   mapYawFact ? (mapYawFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapYawFact.valueString) : ""
+                    text:   mapYawFact ? (mapYawFact.value === 0 ? qsTr("Setup required") : mapYawFact.valueString) : ""
                 }
             }
             Column {
@@ -83,13 +83,13 @@ FactPanel {
                     id:     label3
                     font.bold:   true
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text:   qsTr("油门:")//"Throttle:"
+                    text:   qsTr("Throttle:")
                     color:  qgcPal.buttonHighlight
                 }
                 QGCLabel {
                     font.bold:   true
                     anchors.horizontalCenter: label3.horizontalCenter
-                    text:   mapThrottleFact ? (mapThrottleFact.value === 0 ? qsTr("未设置")/*"Setup required"*/ : mapThrottleFact.valueString) : ""
+                    text:   mapThrottleFact ? (mapThrottleFact.value === 0 ? qsTr("Setup required") : mapThrottleFact.valueString) : ""
                 }
             }
         }
@@ -120,19 +120,19 @@ FactPanel {
 //        }
 
         VehicleSummaryRow {
-            labelText: qsTr("附翼:")//"Flaps:"
-            valueText: mapFlapsFact ? (mapFlapsFact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : mapFlapsFact.valueString) : ""
+            labelText:  qsTr("Flaps")
+            valueText:  mapFlapsFact ? (mapFlapsFact.value === 0 ? qsTr("Disabled") : mapFlapsFact.valueString) : ""
             visible:    !controller.vehicle.multiRotor
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("辅助1:")//"Aux1:"
-            valueText: mapAux1Fact ? (mapAux1Fact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : mapAux1Fact.valueString) : ""
+            labelText: qsTr("Aux1")
+            valueText: mapAux1Fact ? (mapAux1Fact.value === 0 ? qsTr("Disabled") : mapAux1Fact.valueString) : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("辅助2:")//"Aux2:"
-            valueText: mapAux2Fact ? (mapAux2Fact.value === 0 ? qsTr("未使能")/*"Disabled"*/ : mapAux2Fact.valueString) : ""
+            labelText: qsTr("Aux2")
+            valueText: mapAux2Fact ? (mapAux2Fact.value === 0 ? qsTr("Disabled") : mapAux2Fact.valueString) : ""
         }
     }
 }

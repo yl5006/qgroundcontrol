@@ -67,14 +67,14 @@ Rectangle {
             columns:        2
 
             QGCLabel {
-                text:               qsTr("航点高度:")
+                text:       qsTr("Waypoint alt")
             }
             FactTextField {
                 fact:               QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude
                 Layout.fillWidth:   true
             }
             QGCLabel {
-                text:               qsTr("飞行速度")
+                text:               qsTr("Flight speed")
                 Layout.fillWidth:   true
             }
             FactTextField {
@@ -116,7 +116,7 @@ Rectangle {
             QGCLabel {
                 anchors.left:           parent.left
                 anchors.right:          parent.right
-                text:                   qsTr("相机控制命令在任务开始时立即执行.")
+                text:                   qsTr("Above camera commands will take affect immediately upon mission start.")
                 wrapMode:               Text.WordWrap
                 horizontalAlignment:    Text.AlignHCenter
                 font.pointSize:         ScreenTools.smallFontPointSize
@@ -135,17 +135,17 @@ Rectangle {
             //                spacing:        _margin
             //                visible:        missionEndHeader.checked
 
-            QGCCheckBox {
-                text:       qsTr("任务结束后返航")
-                checked:    missionItem.missionEndRTL
-                onClicked:  missionItem.missionEndRTL = checked
-            }
+                QGCCheckBox {
+                    text:       qsTr("Return To Launch")
+                    checked:    missionItem.missionEndRTL
+                    onClicked:  missionItem.missionEndRTL = checked
+                }
         }
 
 
         SectionHeader {
             id:         vehicleInfoSectionHeader
-            text:       qsTr("机体信息")
+            text:       qsTr("Vehicle Info")
             visible:    false//_offlineEditing && !_waypointsOnlyMode
             checked:    false
         }
@@ -185,7 +185,7 @@ Rectangle {
             }
 
             QGCLabel {
-                text:               qsTr("巡航速度")
+                    text:               qsTr("Cruise speed")
                 visible:            _showCruiseSpeed
                 Layout.fillWidth:   true
             }
@@ -209,7 +209,7 @@ Rectangle {
 
         SectionHeader {
             id:         plannedHomePositionSection
-            text:       qsTr("Home点位置")
+                text:       qsTr("Planned Home Position")
             visible:    !_vehicleHasHomePosition
             checked:    false
         }
@@ -228,7 +228,7 @@ Rectangle {
                 columns:        2
 
                 QGCLabel {
-                    text: qsTr("高度")
+                        text: qsTr("Altitude")
                 }
                 FactTextField {
                     fact:               missionItem.plannedHomePositionAltitude
@@ -240,12 +240,12 @@ Rectangle {
                 width:                  parent.width
                 wrapMode:               Text.WordWrap
                 font.pointSize:         ScreenTools.smallFontPointSize
-                text:                   qsTr("实际位置由飞行确定.")
+                    text:               qsTr("Actual position set by vehicle at flight time.")
                 horizontalAlignment:    Text.AlignHCenter
             }
 
             QGCButton {
-                text:                       qsTr("移动Home到地图中心")
+                text:                       qsTr("Set Home To Map Center")
                 onClicked:                  missionItem.coordinate = map.center
                 anchors.horizontalCenter:   parent.horizontalCenter
             }

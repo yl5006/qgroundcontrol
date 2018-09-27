@@ -63,10 +63,10 @@ MissionController::MissionController(PlanMasterController* masterController, QOb
     , _firstItemsFromVehicle        (false)
     , _itemsRequested               (false)
     , _inRecalcSequence             (false)
-    , _surveyMissionItemName(tr("扫描航线"))
-    , _fwLandingMissionItemName(tr("固定翼降落"))
-    , _structureScanMissionItemName(tr("垂直扫描航线"))
-    , _corridorScanMissionItemName(tr("带状航线"))
+    , _surveyMissionItemName        (tr("Survey"))
+    , _fwLandingMissionItemName     (tr("Fixed Wing Landing"))
+    , _structureScanMissionItemName (tr("Structure Scan"))
+    , _corridorScanMissionItemName  (tr("Corridor Scan"))
     , _appSettings                  (qgcApp()->toolbox()->settingsManager()->appSettings())
     , _progressPct                  (0)
     , _currentPlanViewIndex         (-1)
@@ -1059,20 +1059,6 @@ void MissionController::loadFromTxtFile(const QString& filename,double angle,dou
     _visualItems = newVisualItems;
     _initAllVisualItems();
 }
-#if 0
-QString MissionController::getFromFilePicker(void)
-{
-#ifndef __mobile__
-    QString filename = QGCFileDialog::getOpenFileName(MainWindow::instance(), tr("选择任务文件")/*"Select Mission File to load"*/, QString(), "Mission file (*.mission);;Txt file (*.txt);;Txt file (*.kml);;All Files (*.*)");
-
-    if (filename.isEmpty()) {
-        return "";
-    }
-    return filename;
-#endif
-    return "";
-}
-#endif
 bool MissionController::loadTextFile(QFile& file, QString& errorString)
 {
     QString     errorStr;

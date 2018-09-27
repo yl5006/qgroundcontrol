@@ -123,24 +123,23 @@ RadioComponentController::~RadioComponentController()
 /// @brief Returns the state machine entry for the specified state.
 const RadioComponentController::stateMachineEntry* RadioComponentController::_getStateMachineEntry(int step) const
 {
-
-    static const char* msgBeginPX4 =        QT_TR_NOOP("移动油门摇杆到如图所示，推荐去掉电机连接，电机下一步继续");//"Lower the Throttle stick all the way down as shown in diagram.\n\n"
-                                            //"It is recommended to disconnect all motors for additional safety, however, the system is designed to not arm during the calibration.\n\n"
-                                            //"Click Next to continue";
-    static const char* msgBeginAPM =        "Lower the Throttle stick all the way down as shown in diagram.\nReset all transmitter trims to center.\n\n"
+    static const char* msgBeginPX4 =        QT_TR_NOOP("Lower the Throttle stick all the way down as shown in diagram.\n\n"
+                                            "It is recommended to disconnect all motors for additional safety, however, the system is designed to not arm during the calibration.\n\n"
+                                            "Click Next to continue");
+    static const char* msgBeginAPM =        QT_TR_NOOP("Lower the Throttle stick all the way down as shown in diagram.\nReset all transmitter trims to center.\n\n"
                                             "Please ensure all motor power is disconnected AND all props are removed from the vehicle.\n\n"
-                                            "Click Next to continue";
-    static const char* msgThrottleUp =      QT_TR_NOOP("移动油门摇杆到上");//tr("Move the Throttle stick all the way up and hold it there...");
-    static const char* msgThrottleDown =    QT_TR_NOOP("移动油门摇杆到下");//"Move the Throttle stick all the way down and leave it there...";
-    static const char* msgYawLeft =         QT_TR_NOOP("移动航向角摇杆到左");//"Move the Yaw stick all the way to the left and hold it there...";
-    static const char* msgYawRight =        QT_TR_NOOP("移动航向角摇杆到右");//"Move the Yaw stick all the way to the right and hold it there...";
-    static const char* msgRollLeft =        QT_TR_NOOP("移动翻滚摇杆到左");//"Move the Roll stick all the way to the left and hold it there...";
-    static const char* msgRollRight =       QT_TR_NOOP("移动翻滚摇杆到右");//"Move the Roll stick all the way to the right and hold it there...";
-    static const char* msgPitchDown =       QT_TR_NOOP("移动仰俯摇杆到下");//"Move the Pitch stick all the way down and hold it there...";
-    static const char* msgPitchUp =         QT_TR_NOOP("移动仰俯摇杆到上");//"Move the Pitch stick all the way up and hold it there...";
-    static const char* msgPitchCenter =     QT_TR_NOOP("移动仰俯摇杆回中");//"Allow the Pitch stick to move back to center...";
-    static const char* msgSwitchMinMax =    QT_TR_NOOP("摇杆开关到极限位置");//"Move all the transmitter switches and/or dials back and forth to their extreme positions.";
-    static const char* msgComplete =        QT_TR_NOOP("所有设置以映射，点击下一步");//"All settings have been captured. Click Next to write the new parameters to your board.";
+                                            "Click Next to continue");
+    static const char* msgThrottleUp =      QT_TR_NOOP("Move the Throttle stick all the way up and hold it there...");
+    static const char* msgThrottleDown =    QT_TR_NOOP("Move the Throttle stick all the way down and leave it there...");
+    static const char* msgYawLeft =         QT_TR_NOOP("Move the Yaw stick all the way to the left and hold it there...");
+    static const char* msgYawRight =        QT_TR_NOOP("Move the Yaw stick all the way to the right and hold it there...");
+    static const char* msgRollLeft =        QT_TR_NOOP("Move the Roll stick all the way to the left and hold it there...");
+    static const char* msgRollRight =       QT_TR_NOOP("Move the Roll stick all the way to the right and hold it there...");
+    static const char* msgPitchDown =       QT_TR_NOOP("Move the Pitch stick all the way down and hold it there...");
+    static const char* msgPitchUp =         QT_TR_NOOP("Move the Pitch stick all the way up and hold it there...");
+    static const char* msgPitchCenter =     QT_TR_NOOP("Allow the Pitch stick to move back to center...");
+    static const char* msgSwitchMinMax =    QT_TR_NOOP("Move all the transmitter switches and/or dials back and forth to their extreme positions.");
+    static const char* msgComplete =        QT_TR_NOOP("All settings have been captured. Click Next to write the new parameters to your board.");
     
     static const stateMachineEntry rgStateMachinePX4[] = {
         //Function
@@ -293,7 +292,7 @@ void RadioComponentController::nextButtonClicked(void)
             if (_unitTestMode) {
                 emit nextButtonMessageBoxDisplayed();
             } else {
-                qgcApp()->showMessage(QStringLiteral("检测到 %1 遥控通道.至少需要 %2 通道.").arg(_chanCount).arg(_chanMinimum));//Detected %1 radio channels. To operate PX4, you need at least %2 channels.
+                qgcApp()->showMessage(QString("Detected %1 radio channels. To operate PX4, you need at least %2 channels.").arg(_chanCount).arg(_chanMinimum));
             }
             return;
         }
@@ -839,7 +838,7 @@ void RadioComponentController::_stopCalibration(void)
     
     _statusText->setProperty("text", "");
 
-    _nextButton->setProperty("text", tr("校准"));
+    _nextButton->setProperty("text", tr("Calibrate"));
     _nextButton->setEnabled(true);
     _cancelButton->setEnabled(false);
     _skipButton->setEnabled(false);

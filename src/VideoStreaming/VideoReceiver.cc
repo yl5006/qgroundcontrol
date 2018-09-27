@@ -629,7 +629,7 @@ VideoReceiver::startRecording(const QString &videoFile)
 
     uint32_t muxIdx = _videoSettings->recordingFormat()->rawValue().toUInt();
     if(muxIdx >= NUM_MUXES) {
-        qgcApp()->showMessage(tr("错误视频格式."));
+        qgcApp()->showMessage(tr("Invalid video format defined."));
         return;
     }
 

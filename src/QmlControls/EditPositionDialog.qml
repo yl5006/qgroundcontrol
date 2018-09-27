@@ -47,13 +47,13 @@ QGCViewDialog {
                 rowSpacing:     _margin
                 columns:        2
 
-                QGCLabel { text: qsTr("纬度") }
+                QGCLabel { text: qsTr("Latitude") }
                 FactTextField {
                     fact:               controller.latitude
                     Layout.fillWidth:   true
                 }
 
-                QGCLabel { text: qsTr("经度") }
+                QGCLabel { text: qsTr("Longitude") }
                 FactTextField {
                     fact:               controller.longitude
                     Layout.fillWidth:   true
@@ -62,7 +62,7 @@ QGCViewDialog {
 
             QGCButton {
                 anchors.right:  parent.right
-                text:           qsTr("根据位置设置")
+                text:           qsTr("Set Geographic")
 
                 onClicked: {
                     controller.setFromGeo()
@@ -105,7 +105,7 @@ QGCViewDialog {
 
             QGCButton {
                 anchors.right:  parent.right
-                text:           qsTr("根据UTM 设置")
+                text:           qsTr("Set UTM")
 
                 onClicked: {
                     controller.setFromUTM()
@@ -115,7 +115,7 @@ QGCViewDialog {
 
             QGCButton {
                 anchors.right:  parent.right
-                text:           qsTr("设置为当前无人机位置")
+                text:           qsTr("Set From Vehicle Position")
                 visible:        QGroundControl.multiVehicleManager.activeVehicle && QGroundControl.multiVehicleManager.activeVehicle.coordinate.isValid
 
                 onClicked: {

@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -263,7 +263,7 @@ FlightMap {
                     SubMenuButton {
                         imageResource:      "/qmlimages/clearmission.svg"
                         enabled:    QGroundControl.multiVehicleManager.activeVehicle
-                        text:               qsTr("清除飞行路线")//qsTr("Clear Flight Trails")
+                        text:               qsTr("Clear Flight Trails")
                         onClicked:  {
                             QGroundControl.multiVehicleManager.activeVehicle.clearTrajectoryPoints()
                             dropButtonsExclusiveGroup.current = null
@@ -540,7 +540,7 @@ FlightMap {
             property var coord
 
             MenuItem {
-                text:           qsTr("到这里")
+                text:           qsTr("Goto here")
                 visible:        flightWidgets.showGotoLocation
 
                 onTriggered: {
@@ -551,7 +551,7 @@ FlightMap {
             }
 
             MenuItem {
-                text:           qsTr("绕圈")
+                text:           qsTr("Orbit at location")
                 visible:        flightWidgets.showOrbit
 
                 onTriggered: {

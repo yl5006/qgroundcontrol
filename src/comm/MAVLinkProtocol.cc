@@ -254,7 +254,7 @@ void MAVLinkProtocol::receiveBytes(LinkInterface* link, QByteArray b)
                 if(_tempLogFile.write(b) != len)
                 {
                     // If there's an error logging data, raise an alert and stop logging.
-                    emit protocolStatusMessage(tr("数据链"), tr("数据记录失败. 不能写入 %1, 记录失败.").arg(_tempLogFile.fileName()));
+                    emit protocolStatusMessage(tr("MLink Protocol"), tr("MLink Logging failed. Could not write to file %1, logging disabled.").arg(_tempLogFile.fileName()));
                     _stopLogging();
                     _logSuspendError = true;
                 }
@@ -342,7 +342,7 @@ void MAVLinkProtocol::receiveBytes(LinkInterface* link, QByteArray b)
  **/
 QString MAVLinkProtocol::getName()
 {
-    return QString(tr("数据链"));
+    return QString(tr("MLink protocol"));
 }
 
 /** @return System id of this application */
@@ -412,8 +412,8 @@ void MAVLinkProtocol::_startLogging(void)
     if (!_tempLogFile.isOpen()) {
         if (!_logSuspendReplay) {
             if (!_tempLogFile.open()) {
-                emit protocolStatusMessage(tr("数据链"), tr("打开飞行数据失败"
-                                                                      "请选择另外一个位置%s").arg(_tempLogFile.fileName()));
+                emit protocolStatusMessage(tr("MLink Protocol"), tr("Opening Flight Data file for writing failed. "
+                                                                      "Unable to write to %1. Please choose a different file location.").arg(_tempLogFile.fileName()));
                 _closeLogFile();
                 _logSuspendError = true;
                 return;

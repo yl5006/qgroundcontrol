@@ -87,20 +87,20 @@ Rectangle {
                     width:              parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
                     color:              Qt.rgba(0.555,0.648,0.691,1)
-                    text:               qsTr("任务距离")//"Distance" //+ _distanceText
+                    text:               qsTr("Plan Distance")//"Distance" //+ _distanceText
                 }
                 QGCLabel {
                     width:              parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
                     color:              Qt.rgba(0.555,0.648,0.691,1)
-                    text:               qsTr("任务时间")//"Alt diff"// + _altText
+                    text:               qsTr("Plan time")//"Alt diff"// + _altText
                 }
 
                 QGCLabel {
                     width:              parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
                     color:              Qt.rgba(0.555,0.648,0.691,1)
-                    text:               qsTr("最大距离")//"Azimuth" //+ _azimuthText
+                    text:               qsTr("Max Distance")//"Azimuth" //+ _azimuthText
                 }
             }
             Row{

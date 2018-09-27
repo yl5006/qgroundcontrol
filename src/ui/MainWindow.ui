@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
@@ -56,7 +56,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>文件</string>
+     <string>File</string>
     </property>
     <addaction name="separator"/>
     <addaction name="actionStatusBar"/>
@@ -64,8 +64,13 @@
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuWidgets">
+    <property name="font">
+     <font>
+      <pointsize>6</pointsize>
+     </font>
+    </property>
     <property name="title">
-     <string>工具</string>
+     <string>Tools</string>
     </property>
    </widget>
    <addaction name="menuFile"/>
@@ -74,7 +79,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
    <property name="text">
-    <string>退出</string>
+    <string>Exit</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -98,7 +103,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>数据回放</string>
+    <string>Replay Flight Data</string>
    </property>
   </action>
  </widget>

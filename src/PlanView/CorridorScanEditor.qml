@@ -59,7 +59,7 @@ Rectangle {
         QGCLabel {
             anchors.left:   parent.left
             anchors.right:  parent.right
-            text:           qsTr("注意: 相机最小拍照间隔 (%1 secs) .").arg(missionItem.cameraMinTriggerInterval.toFixed(1))
+            text:           qsTr("WARNING: Photo interval is below minimum interval (%1 secs) supported by camera.").arg(_cameraMinTriggerInterval.toFixed(1))
             wrapMode:       Text.WordWrap
             color:          qgcPal.warningText
             visible:        missionItem.cameraShots > 0 && _cameraMinTriggerInterval !== 0 && _cameraMinTriggerInterval > missionItem.timeBetweenShots
@@ -69,14 +69,14 @@ Rectangle {
         CameraCalc {
             cameraCalc:             missionItem.cameraCalc
             vehicleFlightIsFrontal: true
-            distanceToSurfaceLabel: qsTr("高度")
-            frontalDistanceLabel:   qsTr("触发距离")
-            sideDistanceLabel:      qsTr("间距")
+            distanceToSurfaceLabel: qsTr("Altitude")
+            frontalDistanceLabel:   qsTr("Trigger Distance")
+            sideDistanceLabel:      qsTr("Spacing")
         }
 
         SectionHeader {
             id:     corridorHeader
-            text:   qsTr("带状航线")
+            text:   qsTr("Corridor")
         }
 
         GridLayout {
@@ -87,20 +87,20 @@ Rectangle {
             columns:        2
             visible:        corridorHeader.checked
 
-            QGCLabel { text: qsTr("宽") }
+            QGCLabel { text: qsTr("Width") }
             FactTextField {
                 fact:                   missionItem.corridorWidth
                 Layout.fillWidth:       true
             }
 
-            QGCLabel { text: qsTr("转弯距离") }
+            QGCLabel { text: qsTr("Turnaround dist") }
             FactTextField {
                 fact:                   missionItem.turnAroundDistance
                 Layout.fillWidth:       true
             }
 
             FactCheckBox {
-                text:               qsTr("转弯时也拍照")
+                text:               qsTr("Take images in turnarounds")
                 fact:               missionItem.cameraTriggerInTurnAround
                 enabled:            missionItem.hoverAndCaptureAllowed ? !missionItem.hoverAndCapture.rawValue : true
                 Layout.columnSpan:  2
@@ -108,7 +108,7 @@ Rectangle {
 
             QGCCheckBox {
                 id:                 relAlt
-                text:               qsTr("参考高度")
+                text:               qsTr("Relative altitude")
                 checked:            missionItem.cameraCalc.distanceToSurfaceRelative
                 enabled:            missionItem.cameraCalc.isManualCamera && !missionItem.followTerrain
                 visible:            QGroundControl.corePlugin.options.showMissionAbsoluteAltitude || (!missionItem.cameraCalc.distanceToSurfaceRelative && !missionItem.followTerrain)
@@ -124,13 +124,13 @@ Rectangle {
         }
 
         QGCButton {
-            text:       qsTr("改变起始点")
+            text:       qsTr("Rotate Entry Point")
             onClicked:  missionItem.rotateEntryPoint()
         }
 
         SectionHeader {
             id:         terrainHeader
-            text:       qsTr("地形")
+            text:       qsTr("Terrain")
             checked:    missionItem.followTerrain
         }
 
@@ -142,7 +142,7 @@ Rectangle {
 
             QGCCheckBox {
                 id:         followsTerrainCheckBox
-                text:       qsTr("跟随地形")
+                text:       qsTr("Vehicle follows terrain")
                 checked:    missionItem.followTerrain
                 onClicked:  missionItem.followTerrain = checked
             }
@@ -154,19 +154,19 @@ Rectangle {
                 columns:            2
                 visible:            followsTerrainCheckBox.checked
 
-                QGCLabel { text: qsTr("公差") }
+                QGCLabel { text: qsTr("Tolerance") }
                 FactTextField {
                     fact:               missionItem.terrainAdjustTolerance
                     Layout.fillWidth:   true
                 }
 
-                QGCLabel { text: qsTr("最大爬升率") }
+                QGCLabel { text: qsTr("Max Climb Rate") }
                 FactTextField {
                     fact:               missionItem.terrainAdjustMaxClimbRate
                     Layout.fillWidth:   true
                 }
 
-                QGCLabel { text: qsTr("最大下降率") }
+                QGCLabel { text: qsTr("Max Descent Rate") }
                 FactTextField {
                     fact:               missionItem.terrainAdjustMaxDescentRate
                     Layout.fillWidth:   true
@@ -176,7 +176,7 @@ Rectangle {
 
         SectionHeader {
             id:     statsHeader
-            text:   qsTr("统计")
+            text:   qsTr("Statistics")
         }
 
         TransectStyleComplexItemStats { }

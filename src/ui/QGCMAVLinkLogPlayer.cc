@@ -68,15 +68,15 @@ void QGCMAVLinkLogPlayer::_selectLogFileForPlayback(void)
 {
     // Disallow replay when any links are connected
     if (qgcApp()->toolbox()->multiVehicleManager()->activeVehicle()) {
-        QGCMessageBox::information(tr("Log 回放"/*"Log Replay"*/), tr("你需要关闭所有连接来播放log."));//You must close all connections prior to replaying a log.
+        QGCMessageBox::information(tr("Log Replay"), tr("You must close all connections prior to replaying a log."));
         return;
     }
 
     QString logFilename = QGCQFileDialog::getOpenFileName(
         this,
-        tr("Load Flight Log File"),
+        tr("Load Telemetry Log File"),
         qgcApp()->toolbox()->settingsManager()->appSettings()->telemetrySavePath(),
-        tr("Flight Log Files (*.tlog);;All Files (*)"));
+        tr("MLink Log Files (*.tlog);;All Files (*)"));
 
     if (logFilename.isEmpty()) {
         return;
@@ -110,11 +110,11 @@ void QGCMAVLinkLogPlayer::_playbackError(void)
     _enablePlaybackControls(false);
 }
 
-QString QGCMAVLinkLogPlayer::_secondsToHMS(uint seconds)
+QString QGCMAVLinkLogPlayer::_secondsToHMS(int seconds)
 {
-    uint secondsPart  = seconds;
-    uint minutesPart  = secondsPart / 60;
-    uint hoursPart    = minutesPart / 60;
+    int secondsPart  = seconds;
+    int minutesPart  = secondsPart / 60;
+    int hoursPart    = minutesPart / 60;
     secondsPart -= 60 * minutesPart;
     minutesPart -= 60 * hoursPart;
 
@@ -123,7 +123,7 @@ QString QGCMAVLinkLogPlayer::_secondsToHMS(uint seconds)
 
 /// Signalled from LogReplayLink once log file information is known
 void QGCMAVLinkLogPlayer::_logFileStats(bool    logTimestamped,         ///< true: timestamped log
-                                        uint    logDurationSeconds,     ///< Log duration
+                                        int     logDurationSeconds,     ///< Log duration
                                         int     binaryBaudRate)         ///< Baud rate for non-timestamped log
 {
     Q_UNUSED(logTimestamped);

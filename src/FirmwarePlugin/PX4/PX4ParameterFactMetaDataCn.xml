@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <parameters>
   <version>3</version>
   <parameter_version_major>1</parameter_version_major>
@@ -7392,25 +7392,25 @@ the setpoint will be capped to MPC_XY_VEL_MAX</short_desc>
       <max>18</max>
       <scope>modules/sensors</scope>
       <values>
-        <value code="0">Unassigned</value>
-        <value code="1">Channel 1</value>
-        <value code="2">Channel 2</value>
-        <value code="3">Channel 3</value>
-        <value code="4">Channel 4</value>
-        <value code="5">Channel 5</value>
-        <value code="6">Channel 6</value>
-        <value code="7">Channel 7</value>
-        <value code="8">Channel 8</value>
-        <value code="9">Channel 9</value>
-        <value code="10">Channel 10</value>
-        <value code="11">Channel 11</value>
-        <value code="12">Channel 12</value>
-        <value code="13">Channel 13</value>
-        <value code="14">Channel 14</value>
-        <value code="15">Channel 15</value>
-        <value code="16">Channel 16</value>
-        <value code="17">Channel 17</value>
-        <value code="18">Channel 18</value>
+      <value code="0">未分配</value>
+      <value code="1">通道 1</value>
+      <value code="2">通道 2</value>
+      <value code="3">通道 3</value>
+      <value code="4">通道 4</value>
+      <value code="5">通道 5</value>
+      <value code="6">通道 6</value>
+      <value code="7">通道 7</value>
+      <value code="8">通道 8</value>
+      <value code="9">通道 9</value>
+      <value code="10">通道 10</value>
+      <value code="11">通道 11</value>
+      <value code="12">通道 12</value>
+      <value code="13">通道 13</value>
+      <value code="14">通道 14</value>
+      <value code="15">通道 15</value>
+      <value code="16">通道 16</value>
+      <value code="17">通道 17</value>
+      <value code="18">通道 18</value>
       </values>
     </parameter>
     <parameter default="0" name="RC_MAP_TRANS_SW" type="INT32">

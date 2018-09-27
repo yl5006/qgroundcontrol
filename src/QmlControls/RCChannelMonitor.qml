@@ -76,7 +76,7 @@ FactPanel {
                 anchors.fill:           parent
                 horizontalAlignment:    Text.AlignHCenter
                 verticalAlignment:      Text.AlignVCenter
-                text:                   qsTr("未配置")//"Not Mapped"
+                text:                   qsTr("Not Mapped")//"Not Mapped"
                 visible:                !mapped
             }
 
@@ -97,7 +97,7 @@ FactPanel {
 
     QGCLabel {
         anchors.horizontalCenter:   parent.horizontalCenter
-        text: qsTr(" 遥控通道监控")/*"Channel Monitor"*/
+        text: qsTr(" Channel Monitor")/*"Channel Monitor"*/
     }
 
     Flow {
@@ -149,7 +149,7 @@ FactPanel {
                     id:                 revCheckBox
                  //   width:              ScreenTools.defaultFontPixelWidth * 20
                     fact:               controller.getParameterFact(-1, "RC"+(index+1).toString()+"_REV")
-                    text:               qsTr("反向")
+                    text:               qsTr("Reverse")
                 }
 
             }

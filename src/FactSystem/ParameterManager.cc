@@ -1151,7 +1151,7 @@ void ParameterManager::_checkInitialLoadComplete(void)
                               "If you are using modified firmware, you may need to resolve any vehicle startup errors to resolve the issue. "
                               "If you are using standard firmware, you may need to upgrade to a newer version to resolve the issue.").arg(qgcApp()->applicationName()).arg(_vehicle->id());
         qCDebug(ParameterManagerLog) << errorMsg;
-        qgcApp()->showMessage(QStringLiteral("参数不完整"));
+        qgcApp()->showMessage(errorMsg);
         if (!qgcApp()->runningUnitTests()) {
             qCWarning(ParameterManagerLog) << _logVehiclePrefix() << "The following parameter indices could not be loaded after the maximum number of retries: " << indexList;
         }
@@ -1175,7 +1175,7 @@ void ParameterManager::_initialRequestTimeout(void)
             QString errorMsg = tr("Vehicle %1 did not respond to request for parameters. "
                                   "This will cause %2 to be unable to display its full user interface.").arg(_vehicle->id()).arg(qgcApp()->applicationName());
             qCDebug(ParameterManagerLog) << errorMsg;
-            qgcApp()->showMessage(QStringLiteral("机体未响应参数，请重试"));
+            qgcApp()->showMessage(errorMsg);
         }
     }
 }

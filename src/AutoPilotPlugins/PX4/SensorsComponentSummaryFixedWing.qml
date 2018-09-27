@@ -1,4 +1,4 @@
-﻿import QtQuick 2.3
+import QtQuick 2.3
 import QtQuick.Controls 1.2
 
 import QGroundControl.FactSystem 1.0
@@ -32,24 +32,24 @@ FactPanel {
         anchors.fill:       parent
 
         VehicleSummaryRow {
-            labelText: qsTr("磁罗盘:")//qsTr("Compass:")
-            valueText: mag0IdFact ? (mag0IdFact.value  === 0 ? qsTr("未校准")/*qsTr("Setup required")*/ :qsTr("已校准") /*qsTr("Ready")*/) : ""
+            labelText: qsTr("Compass:")
+            valueText: mag0IdFact ? (mag0IdFact.value  === 0 ? qsTr("Setup required") : qsTr("Ready")) : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("角速度:")//qsTr("Gyro:")
-            valueText: gyro0IdFact ? (gyro0IdFact.value === 0 ? qsTr("未校准")/*qsTr("Setup required") */: qsTr("已校准") /*qsTr("Ready")*/) : ""
+            labelText: qsTr("Gyro:")
+            valueText: gyro0IdFact ? (gyro0IdFact.value === 0 ? qsTr("Setup required") : qsTr("Ready")) : ""
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("加速度:")//qsTr("Accelerometer:")
-            valueText: accel0IdFact ? (accel0IdFact.value === 0 ? qsTr("未校准")/*qsTr("Setup required")*/ : qsTr("已校准") /*qsTr("Ready")*/) : ""
+            labelText: qsTr("Accelerometer:")
+            valueText: accel0IdFact ? (accel0IdFact.value === 0 ? qsTr("Setup required") : qsTr("Ready")) : ""
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("空速计:")//qsTr("Airspeed:")
+            labelText:  qsTr("Airspeed:")
             visible:    _airspeedVisible
-            valueText: _airspeedCalRequired ? qsTr("未校准") : qsTr("已校准")
+            valueText: _airspeedCalRequired ? qsTr("Setup required")  : qsTr("Ready")
         }
     }
 }

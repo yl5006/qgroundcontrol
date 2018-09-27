@@ -213,7 +213,7 @@
 	<file alias="stopCamRecording.svg">src/FlightMap/Images/stopCamRecording.svg</file>
         <file alias="Armed.svg">src/ui/toolbar/Images/Armed.svg</file>
         <file alias="Battery.svg">src/ui/toolbar/Images/Battery.svg</file>
-        <file alias="connect.svg">src/ui/toolbar/Images/connect.svg</file>
+        <file alias="connect.svg">resources/connect.svg</file>
 	<file alias="connectedit.svg">src/ui/toolbar/Images/connectedit.svg</file>
 	<file alias="connectdel.svg">src/ui/toolbar/Images/connectdel.svg</file>
 	<file alias="connectadd.svg">src/ui/toolbar/Images/connectadd.svg</file>

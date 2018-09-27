@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -161,11 +161,11 @@ DropButton {
         ColumnLayout {
             spacing: ScreenTools.defaultFontPixelWidth * 0.5
 
-            QGCLabel { text: qsTr("地图中心:") }
+            QGCLabel { text: qsTr("Center map on:") }
 
             QGCCheckBox {
                 id:         followVehicleCheckBox
-                text:       qsTr("跟随无人机")
+                text:       qsTr("Follow Vehicle")
                 checked:    followVehicle
                 visible:    showFollowVehicle
 
@@ -249,7 +249,7 @@ DropButton {
             SubMenuButton {
                 imageResource:      "/qmlimages/clearmission.svg"
                 enabled:    QGroundControl.multiVehicleManager.activeVehicle
-                text:               qsTr("清除飞行路线")//qsTr("Clear Flight Trails")
+                text:               qsTr("Clear Flight Trails")
                 onClicked:  {
                     QGroundControl.multiVehicleManager.activeVehicle.clearTrajectoryPoints()
                     dropButtonsExclusiveGroup.current = null

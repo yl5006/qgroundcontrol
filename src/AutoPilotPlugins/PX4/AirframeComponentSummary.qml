@@ -24,20 +24,20 @@ FactPanel {
         anchors.fill:       parent
         spacing:            ScreenTools.defaultFontPointSize*0.5
         VehicleSummaryRow {
-            labelText: qsTr("固件ID")//"System ID:"
+            labelText: qsTr("System ID")
             valueText: activeVehicle.firmwareidString//sysIdFact ? sysIdFact.valueString : ""
         }
         VehicleSummaryRow {
-            labelText: qsTr("飞机类型")//"Airframe type:"
-            valueText: autoStartSet ? controller.currentAirframeType : qsTr("未设置")
+            labelText: qsTr("Airframe type")
+            valueText: autoStartSet ? controller.currentAirframeType : qsTr("Setup required")
         }
         VehicleSummaryRow {
-            labelText: qsTr("机体名称:")//"Vehicle:"
-            valueText: autoStartSet ? controller.currentVehicleName : qsTr("未设置")
+            labelText: qsTr("Vehicle")
+            valueText: autoStartSet ? controller.currentVehicleName : qsTr("Setup required")
         }
         VehicleSummaryRow {
-            labelText: qsTr("固件版本")
-            valueText: activeVehicle.firmwareMajorVersion === -1 ? qsTr("Unknown") : activeVehicle.firmwareMajorVersion + "." + activeVehicle.firmwareMinorVersion + "." + activeVehicle.firmwarePatchVersion + "." + activeVehicle.firmwareLastVersion + activeVehicle.firmwareVersionTypeString
+            labelText: qsTr("Firmware Version")
+            valueText: activeVehicle.firmwareMajorVersion === -1 ? qsTr("Unknown") : activeVehicle.firmwareMajorVersion + "." + activeVehicle.firmwareMinorVersion + "." + activeVehicle.firmwarePatchVersion + activeVehicle.firmwareVersionTypeString
         }
     }
 }

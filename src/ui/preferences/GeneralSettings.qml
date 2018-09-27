@@ -93,7 +93,7 @@ QGCView {
                 id:             idset
                 anchors.left:   setimg.left
                 anchors.leftMargin: ScreenTools.defaultFontPixelHeight*5
-                text:           qsTr("系统设置")//"Systemseting"
+                text:           qsTr("System seting")//"Systemseting"
                 font.pointSize: ScreenTools.mediumFontPointSize
                 font.bold:              true
                 color:          qgcPal.text
@@ -200,7 +200,7 @@ QGCView {
                             visible:    _mapProvider.visible
                             QGCLabel {
                                 anchors.verticalCenter: parent.verticalCenter
-                                text:               qsTr("地图")//qsTr("Map Provider:")
+                                text:               qsTr("Map Provider:")//qsTr("Map Provider:")
                             }
                             ExclusiveGroup { id: mapActionGroup }
                             ImageButton{
@@ -247,7 +247,7 @@ QGCView {
                             spacing:    ScreenTools.defaultFontPixelWidth
                             visible:    false//_mapProvider.visible
                             QGCLabel {
-                                text:       qsTr("地图提供商:")
+                                text:       qsTr("Map Provider::")
                                 width:      _labelWidth
                                 anchors.verticalCenter: parent.verticalCenter
                             }
@@ -351,14 +351,14 @@ QGCView {
 
                                 FactCheckBox {
                                     id:         promptSaveLog
-                            	    text:       qsTr("在每次飞行中存储飞行日志")//"Prompt to save Flight Data Log after each flight"
+                                    text:       qsTr("Save telemetry log after each flight")
                                     fact:       _telemetrySave
                                     visible:    _telemetrySave.visible
                                     property Fact _telemetrySave: QGroundControl.settingsManager.appSettings.telemetrySave
                                 }
 
                                 FactCheckBox {
-                            	    text:       qsTr("即使未解锁也存储飞行日志")//"Prompt to save Flight Data Log even if vehicle was not armed"
+                                    text:       qsTr("Save telemetry log even if vehicle was not armed")
                                     fact:       _telemetrySaveNotArmed
                                     visible:    _telemetrySaveNotArmed.visible
                                     enabled:    promptSaveLog.checked
@@ -505,14 +505,13 @@ QGCView {
                             anchors.horizontalCenter:   parent.horizontalCenter
                             columns:                    2
 
-                            QGCLabel { text: qsTr("RTK精确度:") }
+                            QGCLabel { text: qsTr("Survey in accuracy (U-blox only)") }
                             FactTextField {
                                 Layout.preferredWidth:  _valueFieldWidth
                                 fact:                   QGroundControl.settingsManager.rtkSettings.surveyInAccuracyLimit
                             }
-                            QGCLabel {
-                                text:               qsTr("RTK最小平均观察时间:")
-                            }
+
+                            QGCLabel { text: qsTr("Minimum observation duration") }
                             FactTextField {
                                 Layout.preferredWidth:  _valueFieldWidth
                                 fact:                   QGroundControl.settingsManager.rtkSettings.surveyInMinObservationDuration
@@ -554,7 +553,7 @@ QGCView {
                                     QGroundControl.settingsManager.autoConnectSettings.autoConnectRTKGPS
                                 ]
 
-                                property var names: [ /*qsTr("Pixhawk"),*/ qsTr("自动连接数传"), qsTr("UDP"), /* qsTr("PX4 Flow"), qsTr("LibrePilot"), qsTr("UDP"), */qsTr("自动连接 RTK GPS") ]
+                                property var names: [ /*qsTr("Pixhawk"),*/ qsTr("Radio"), qsTr("UDP"), /* qsTr("PX4 Flow"), qsTr("LibrePilot"), qsTr("UDP"), */qsTr("RTK GPS") ]
 
                                     FactCheckBox {
                                         text:       autoConnectRepeater.names[index]

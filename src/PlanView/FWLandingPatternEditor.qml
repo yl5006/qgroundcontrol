@@ -50,7 +50,7 @@ Rectangle {
 
         SectionHeader {
             id:     loiterPointSection
-            text:   qsTr("盘旋点")
+            text:   qsTr("Loiter point")
         }
 
         Column {
@@ -65,13 +65,13 @@ Rectangle {
                 anchors.left:   parent.left
                 anchors.right:  parent.right
                 factList:       [ missionItem.loiterAltitude, missionItem.loiterRadius ]
-            	factLabels:     [ qsTr("高度"), qsTr("半径") ]
+                factLabels:     [ qsTr("Altitude"), qsTr("Radius") ]
             }
 
             Item { width: 1; height: _spacer }
 
             QGCCheckBox {
-            	text:           qsTr("顺时针盘旋")
+                text:           qsTr("Loiter clockwise")
                 checked:        missionItem.loiterClockwise
                 onClicked:      missionItem.loiterClockwise = checked
             }
@@ -85,7 +85,7 @@ Rectangle {
 
         SectionHeader {
             id:     landingPointSection
-            text:   qsTr("降落点")
+            text:   qsTr("Landing point")
         }
 
         Column {
@@ -101,14 +101,14 @@ Rectangle {
                 anchors.right:   parent.right
                 columns:         2
 
-                QGCLabel { text: qsTr("方向") }
+                QGCLabel { text: qsTr("Heading") }
 
                 FactTextField {
                     Layout.fillWidth:   true
                     fact:               missionItem.landingHeading
                 }
 
-                QGCLabel { text: qsTr("高度") }
+                QGCLabel { text: qsTr("Altitude") }
 
                 FactTextField {
                     Layout.fillWidth:   true
@@ -117,7 +117,7 @@ Rectangle {
 
                 QGCRadioButton {
                     id:                 specifyLandingDistance
-                    text:               qsTr("降落距离")
+                    text:               qsTr("Landing Dist")
                     checked:            missionItem.valueSetIsDistance
                     exclusiveGroup:     distanceGlideGroup
                     onClicked:          missionItem.valueSetIsDistance = checked
@@ -132,7 +132,7 @@ Rectangle {
 
                 QGCRadioButton {
                     id:                 specifyGlideSlope
-                    text:               qsTr("斜率")
+                    text:               qsTr("Glide Slope")
                     checked:            !missionItem.valueSetIsDistance
                     exclusiveGroup:     distanceGlideGroup
                     onClicked:          missionItem.valueSetIsDistance = !checked
@@ -158,7 +158,7 @@ Rectangle {
 
         QGCCheckBox {
             anchors.right:  parent.right
-            text:           qsTr("高度参考Home点")
+            text:           qsTr("Altitudes relative to home")
             checked:        missionItem.altitudesAreRelative
             visible:        QGroundControl.corePlugin.options.showMissionAbsoluteAltitude || !missionItem.altitudesAreRelative
             onClicked:      missionItem.altitudesAreRelative = checked
@@ -179,7 +179,7 @@ Rectangle {
             anchors.right:          parent.right
             wrapMode:               Text.WordWrap
             horizontalAlignment:    Text.AlignHCenter
-            text:           qsTr("点击地图设置降落点")
+            text:                   qsTr("Click in map to set landing point.")
         }
 
         QGCLabel {

@@ -1,4 +1,4 @@
-﻿import QtQuick          2.3
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs  1.2
@@ -26,7 +26,6 @@ Rectangle {
 
     property real   _margin:                    ScreenTools.defaultFontPixelWidth / 2
     property real   _fieldWidth:                ScreenTools.defaultFontPixelWidth * 10.5
-    property var    _cameraList:        	[ qsTr("手动扫描参数"), qsTr("自定义相机参数") ]
     property var    _vehicle:                   QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle : QGroundControl.multiVehicleManager.offlineEditingVehicle
     property real   _cameraMinTriggerInterval:  missionItem.cameraCalc.minTriggerInterval.rawValue
 
@@ -69,14 +68,14 @@ Rectangle {
         CameraCalc {
             cameraCalc:             missionItem.cameraCalc
             vehicleFlightIsFrontal: true
-            distanceToSurfaceLabel: qsTr("高度")
-            frontalDistanceLabel:   qsTr("触发距离")
-            sideDistanceLabel:      qsTr("行间距")
+            distanceToSurfaceLabel: qsTr("Altitude")
+            frontalDistanceLabel:   qsTr("Trigger Distance")
+            sideDistanceLabel:      qsTr("Spacing")
         }
 
         SectionHeader {
             id:     transectsHeader
-            text:   qsTr("飞行区域")
+            text:   qsTr("Transects")
         }
 
         GridLayout {
@@ -88,7 +87,7 @@ Rectangle {
             columns:        2
             visible:        transectsHeader.checked
 
-            QGCLabel { text: qsTr("角度") }
+            QGCLabel { text: qsTr("Angle") }
             FactTextField {
                 fact:                   missionItem.gridAngle
                 Layout.fillWidth:       true
@@ -108,7 +107,7 @@ Rectangle {
                 updateValueWhileDragging: true
             }
 
-            QGCLabel { text: qsTr("转弯距离") }
+            QGCLabel { text: qsTr("Turnaround dist") }
             FactTextField {
                 fact:               missionItem.turnAroundDistance
                 Layout.fillWidth:   true
@@ -116,12 +115,12 @@ Rectangle {
 
             QGCButton {
                 Layout.columnSpan:  2
-                text:               qsTr("旋转起始点")
+                text:               qsTr("Rotate Entry Point")
                 onClicked:          missionItem.rotateEntryPoint();
             }
 
             FactCheckBox {
-                text:               qsTr("悬停 拍照")
+                text:               qsTr("Hover and capture image")
                 fact:               missionItem.hoverAndCapture
                 visible:            missionItem.hoverAndCaptureAllowed
                 enabled:            !missionItem.followTerrain
@@ -134,21 +133,21 @@ Rectangle {
             }
 
             FactCheckBox {
-                text:               qsTr("转90度复飞")
+                text:               qsTr("Refly at 90 deg offset")
                 fact:               missionItem.refly90Degrees
                 enabled:            !missionItem.followTerrain
                 Layout.columnSpan:  2
             }
 
             FactCheckBox {
-                text:               qsTr("任何地方都拍照")
+                text:               qsTr("Images in turnarounds")
                 fact:               missionItem.cameraTriggerInTurnAround
                 enabled:            missionItem.hoverAndCaptureAllowed ? !missionItem.hoverAndCapture.rawValue : true
                 Layout.columnSpan:  2
             }
 
             FactCheckBox {
-                text:               qsTr("交替飞行")
+                text:               qsTr("Fly alternate transects")
                 fact:               missionItem.flyAlternateTransects
                 visible:            _vehicle.fixedWing || _vehicle.vtol
                 Layout.columnSpan:  2
@@ -157,7 +156,7 @@ Rectangle {
             QGCCheckBox {
                 id:                 relAlt
                 Layout.alignment:   Qt.AlignLeft
-                text:               qsTr("参考高度")
+                text:               qsTr("Relative altitude")
                 checked:            missionItem.cameraCalc.distanceToSurfaceRelative
                 enabled:            missionItem.cameraCalc.isManualCamera && !missionItem.followTerrain
                 visible:            QGroundControl.corePlugin.options.showMissionAbsoluteAltitude || (!missionItem.cameraCalc.distanceToSurfaceRelative && !missionItem.followTerrain)
@@ -173,7 +172,7 @@ Rectangle {
 
         SectionHeader {
             id:         terrainHeader
-            text:       qsTr("地形")
+            text:       qsTr("Terrain")
             checked:    missionItem.followTerrain
         }
 
@@ -185,7 +184,7 @@ Rectangle {
 
             QGCCheckBox {
                 id:         followsTerrainCheckBox
-                text:       qsTr("无人机跟随地形")
+                text:       qsTr("Vehicle follows terrain")
                 checked:    missionItem.followTerrain
                 onClicked:  missionItem.followTerrain = checked
             }
@@ -197,19 +196,19 @@ Rectangle {
                 columns:            2
                 visible:            followsTerrainCheckBox.checked
 
-                QGCLabel { text: qsTr("公差") }
+                QGCLabel { text: qsTr("Tolerance") }
                 FactTextField {
                     fact:               missionItem.terrainAdjustTolerance
                     Layout.fillWidth:   true
                 }
 
-                QGCLabel { text: qsTr("最大爬升率") }
+                QGCLabel { text: qsTr("Max Climb Rate") }
                 FactTextField {
                     fact:               missionItem.terrainAdjustMaxClimbRate
                     Layout.fillWidth:   true
                 }
 
-                QGCLabel { text: qsTr("最大下降率") }
+                QGCLabel { text: qsTr("Max Descent Rate") }
                 FactTextField {
                     fact:               missionItem.terrainAdjustMaxDescentRate
                     Layout.fillWidth:   true
@@ -219,7 +218,7 @@ Rectangle {
 
         SectionHeader {
             id:     statsHeader
-            text:   qsTr("统计")
+            text:   qsTr("Statistics")
         }
 
         TransectStyleComplexItemStats { }

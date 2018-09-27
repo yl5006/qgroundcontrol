@@ -138,7 +138,7 @@ Item {
 
         MenuItem {
             id:             removeVertexItem
-            text:           qsTr("删除点" )
+            text:           qsTr("Remove vertex" )
             onTriggered:    mapPolyline.removeVertex(menu._removeVertexIndex)
         }
 
@@ -147,12 +147,12 @@ Item {
         }
 
         MenuItem {
-            text:           qsTr("编辑位置..." )
+            text:           qsTr("Edit position..." )
             onTriggered:    qgcView.showDialog(editPositionDialog, qsTr("Edit Position"), qgcView.showDialogDefaultWidth, StandardButton.Cancel)
         }
 
         MenuItem {
-            text:           qsTr("加载 KML...")
+            text:           qsTr("Load KML...")
             onTriggered:    kmlLoadDialog.openForLoad()
         }
     }
