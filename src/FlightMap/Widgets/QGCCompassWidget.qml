@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -30,7 +30,7 @@ Item {
     property real size:     _defaultSize
     property var  vehicle:  null
 
-    property real _defaultSize: ScreenTools.defaultFontPixelHeight * (10)
+    property real _defaultSize: ScreenTools.defaultFontPointSize * (10)
     property real _sizeRatio:   ScreenTools.isTinyScreen ? (size / _defaultSize) * 0.5 : size / _defaultSize
     property int  _fontSize:    ScreenTools.defaultFontPointSize * _sizeRatio
     property real _heading:     vehicle ? vehicle.heading.rawValue : 0

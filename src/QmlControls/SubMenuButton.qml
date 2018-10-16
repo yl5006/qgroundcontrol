@@ -1,4 +1,4 @@
-﻿import QtQuick                  2.3
+import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 import QtGraphicalEffects       1.0
@@ -17,7 +17,7 @@ Button {
     property bool   showcolor: true
     property color  imgcolor: qgcPal.text
     checkable:      false
-    implicitHeight: ScreenTools.isTinyScreen ? ScreenTools.defaultFontPixelHeight * 3 : ScreenTools.defaultFontPixelHeight * 2
+    implicitHeight: ScreenTools.defaultFontPixelHeight * 2
     implicitWidth:  __panel.implicitWidth
 
     style: ButtonStyle {

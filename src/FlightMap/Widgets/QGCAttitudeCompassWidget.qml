@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -19,7 +19,7 @@ import QtGraphicalEffects 1.0
 
 import QGroundControl          1.0
 import QGroundControl.Controls 1.0
-
+import QGroundControl.ScreenTools       1.0
 Item {
     id: root
 
@@ -102,7 +102,7 @@ Item {
             anchors.leftMargin:  size*0.55
             horizontalAlignment: Text.AlignRight;
             text:               vehicle ? heading.toFixed(0)+"°" :qsTr("OFF")
-            font.pointSize:     size*0.07
+            font.pointSize:     ScreenTools.defaultFontPointSize
             font.bold:          true
         }
     }

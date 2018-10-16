@@ -1,4 +1,4 @@
-﻿import QtQuick          2.3
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Layouts  1.2
 import QtQuick.Dialogs  1.2
@@ -71,7 +71,7 @@ Rectangle {
     Rectangle {
         id:                 total
         width:              parent.width
-        height:             ScreenTools.defaultFontPixelHeight*5
+        height:             ScreenTools.defaultFontPointSize * 7
         anchors.top:        parent.top
         color:              Qt.rgba(0.102,0.122,0.133,0.9)//qgcPal.windowShade
         radius:             _margin
@@ -80,55 +80,55 @@ Rectangle {
             anchors.top:        parent.top
             width:              parent.width
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing:          ScreenTools.defaultFontPixelHeight/2
+            spacing:          ScreenTools.defaultFontPointSize/2
             Row{
                 width:                   parent.width
                 QGCLabel {
-                    width:              parent.width/3
+                    width:                  parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
-                    color:              Qt.rgba(0.555,0.648,0.691,1)
-                    text:               qsTr("Plan Distance")//"Distance" //+ _distanceText
+                    color:                  Qt.rgba(0.555,0.648,0.691,1)
+                    text:                   qsTr("Plan Distance")//"Distance" //+ _distanceText
                 }
                 QGCLabel {
-                    width:              parent.width/3
+                    width:                  parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
-                    color:              Qt.rgba(0.555,0.648,0.691,1)
-                    text:               qsTr("Plan time")//"Alt diff"// + _altText
+                    color:                  Qt.rgba(0.555,0.648,0.691,1)
+                    text:                   qsTr("Plan time")//"Alt diff"// + _altText
                 }
 
                 QGCLabel {
-                    width:              parent.width/3
+                    width:                  parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
-                    color:              Qt.rgba(0.555,0.648,0.691,1)
-                    text:               qsTr("Max Distance")//"Azimuth" //+ _azimuthText
+                    color:                  Qt.rgba(0.555,0.648,0.691,1)
+                    text:                   qsTr("Max Distance")//"Azimuth" //+ _azimuthText
                 }
             }
             Row{
                 width:                   parent.width
                 QGCLabel {
-                    width:              parent.width/3
+                    width:                  parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
-                    font.pointSize:     ScreenTools.defaultFontPixelHeight*0.8
-                    font.bold:          true
-                    color:              Qt.rgba(0.102,0.887,0.609,1)
-                    text:               _missionDistanceText
+                    font.pointSize:         ScreenTools.mediumFontPointSize
+                    font.bold:              true
+                    color:                  Qt.rgba(0.102,0.887,0.609,1)
+                    text:                   _missionDistanceText
                 }
 
                 QGCLabel {
-                    width:              parent.width/3
+                    width:                  parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
-                    font.pointSize:     ScreenTools.defaultFontPixelHeight*0.8
-                    font.bold:          true
-                    color:              Qt.rgba(0.102,0.887,0.609,1)
-                    text:               getMissionTime()
+                    font.pointSize:         ScreenTools.mediumFontPointSize
+                    font.bold:              true
+                    color:                  Qt.rgba(0.102,0.887,0.609,1)
+                    text:                   getMissionTime()
                 }
                 QGCLabel {
-                    width:              parent.width/3
+                    width:                  parent.width/3
                     horizontalAlignment:    Text.AlignHCenter
-                    font.pointSize:     ScreenTools.defaultFontPixelHeight*0.8
-                    font.bold:          true
-                    color:              Qt.rgba(0.102,0.887,0.609,1)
-                    text:               _missionMaxTelemetryText
+                    font.pointSize:         ScreenTools.mediumFontPointSize
+                    font.bold:              true
+                    color:                  Qt.rgba(0.102,0.887,0.609,1)
+                    text:                   _missionMaxTelemetryText
                 }
             }
         }

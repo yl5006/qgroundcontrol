@@ -1,4 +1,4 @@
-﻿import QtQuick                  2.3
+import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Layouts          1.2
 
@@ -15,7 +15,7 @@ Rectangle {
     property var    qgcView         ///< QGCView to use for showing dialogs
     property real   maxHeight       ///< Maximum height that should be taken, smaller than this is ok
 
-    property real   _margins:           ScreenTools.defaultFontPixelWidth / 2
+    property real   _margins:           ScreenTools.defaultFontPixelWidth
     property real   _pageWidth:         _root.width
     property var    _instrumentPages:   QGroundControl.corePlugin.instrumentPages
     property int    checkindex:         0
@@ -27,7 +27,7 @@ Rectangle {
 
     Rectangle {
         id:         selectdis
-        height:     ScreenTools.defaultFontPixelHeight*3
+        height:     ScreenTools.defaultFontPixelHeight * 2.5
         width:      parent.width
         color:      qgcPal.window
         radius:     ScreenTools.defaultFontPixelHeight
@@ -35,14 +35,14 @@ Rectangle {
           anchors.top:  parent.top
           anchors.left: parent.left
           anchors.leftMargin: ScreenTools.defaultFontPixelHeight
-          height:       ScreenTools.defaultFontPixelHeight*3
-          spacing:      ScreenTools.defaultFontPixelHeight
+          height:       ScreenTools.defaultFontPixelHeight * 2.5
+          spacing:      ScreenTools.defaultFontPixelHeight / 2
           Repeater{
                     model:  _instrumentPages
                     QGCColoredImage   {
                         anchors.verticalCenter: parent.verticalCenter
                         source:     modelData.icon
-                        height:     ScreenTools.defaultFontPixelHeight*2
+                        height:     ScreenTools.defaultFontPixelHeight  * 2
                         width:      height
                         color:      checkindex == index? qgcPal.buttonHighlight : qgcPal.button
                         QGCMouseArea {
@@ -107,7 +107,7 @@ Rectangle {
     }
     QGCFlickable {
         id:                 pageFlickable
-        anchors.topMargin:     _margins*8
+        anchors.topMargin:     _margins
         anchors.top:        selectdis.bottom
         anchors.left:       parent.left
         anchors.right:      parent.right

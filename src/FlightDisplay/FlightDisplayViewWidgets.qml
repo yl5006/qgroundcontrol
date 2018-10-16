@@ -275,7 +275,7 @@ Item {
     function getPreferredInstrumentWidth() {
         // Don't allow instrument panel to chew more than 1/4 of full window
         var defaultWidth = ScreenTools.defaultFontPixelWidth * 30
-        var maxWidth = mainWindow.width * 0.25
+        var maxWidth = mainWindow.width * 0.20
         return Math.min(maxWidth, defaultWidth)
     }
 

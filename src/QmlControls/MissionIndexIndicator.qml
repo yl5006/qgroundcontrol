@@ -29,14 +29,14 @@ Rectangle {
     property var    _missionController:         _masterController.missionController
     property bool   _currentItem:               missionItem.isCurrentItem
 
-    readonly property real  _editFieldWidth:    Math.min(width - _margin * 2, ScreenTools.defaultFontPixelWidth * 12)
-    readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
-    readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
+    readonly property real  _editFieldWidth:    Math.min(width - _margin * 2, ScreenTools.defaultFontPointSize * 12)
+    readonly property real  _margin:            ScreenTools.defaultFontPointSize / 2
+    readonly property real  _radius:            ScreenTools.defaultFontPointSize / 2
     readonly property real  _hamburgerSize:     commandPicker.height * 0.7
     readonly property bool  _waypointsOnlyMode: QGroundControl.corePlugin.options.missionWaypointsOnly
-    property real   _largeValueWidth:           ScreenTools.defaultFontPixelWidth * 8
-    property real   _smallValueWidth:           ScreenTools.defaultFontPixelWidth * 4
-    property real   _labelToValueSpacing:       ScreenTools.defaultFontPixelWidth
+    property real   _largeValueWidth:           ScreenTools.defaultFontPointSize * 8
+    property real   _smallValueWidth:           ScreenTools.defaultFontPointSize * 4
+    property real   _labelToValueSpacing:       ScreenTools.defaultFontPointSize
 
     property real   _distance:                  _statusValid ? missionItem.distance : NaN
     property real   _altDifference:             _statusValid ? missionItem.altDifference : NaN
@@ -74,7 +74,7 @@ Rectangle {
         id:                     label
         anchors.verticalCenter: commandPicker.verticalCenter
         anchors.leftMargin:     _margin*2
-        font.pointSize:         ScreenTools.defaultFontPixelHeight*2
+        font.pointSize:         ScreenTools.largeFontPointSize*1.5
         font.bold:              true
         anchors.left:           parent.left
         text:                   missionItem.sequenceNumber
@@ -83,11 +83,11 @@ Rectangle {
 
     Image {
         id:                     insertpoint
-        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
+        anchors.rightMargin:    ScreenTools.defaultFontPointSize
         anchors.right:          parent.right
         anchors.verticalCenter: commandPicker.verticalCenter
-        width:                  ScreenTools.defaultFontPixelHeight*2
-        height:                 ScreenTools.defaultFontPixelHeight*2
+        width:                  ScreenTools.largeFontPointSize*1.5
+        height:                 ScreenTools.largeFontPointSize*1.5
         source:                 "qrc:/qmlimages/insertpoint.svg"
         visible:                _currentItem && missionItem.sequenceNumber != 0
         MouseArea {
@@ -97,11 +97,11 @@ Rectangle {
     }
     Image {
         id:                     deletepoint
-        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth*2
+        anchors.rightMargin:    ScreenTools.defaultFontPointSize
         anchors.right:          insertpoint.left
         anchors.verticalCenter: commandPicker.verticalCenter
-        width:                  ScreenTools.defaultFontPixelHeight*2
-        height:                 ScreenTools.defaultFontPixelHeight*2
+        width:                  ScreenTools.largeFontPointSize * 1.5
+        height:                 ScreenTools.largeFontPointSize * 1.5
         source:                 "qrc:/qmlimages/deletepoint.svg"
         visible:                missionItem.sequenceNumber != 0
         MouseArea {
@@ -112,9 +112,9 @@ Rectangle {
 
     QGCButton {
         id:                     commandPicker
-        anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 1
-        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth * 1
-        anchors.topMargin:      ScreenTools.defaultFontPixelWidth * 2
+        anchors.leftMargin:     ScreenTools.defaultFontPointSize * 2
+        anchors.rightMargin:    ScreenTools.defaultFontPointSize * 1
+        anchors.topMargin:      ScreenTools.defaultFontPointSize
         anchors.top:            parent.top
         anchors.left:           label.right
         anchors.right:          deletepoint.left
@@ -133,7 +133,7 @@ Rectangle {
 
     }
     Rectangle {
-        width:           commandPicker.width*0.8
+        width:           commandPicker.width * 0.8
         height:          1
         visible:         missionItem.isCurrentItem && !missionItem.rawEdit && missionItem.isSimpleItem
         anchors.top:     commandPicker.bottom
@@ -181,7 +181,7 @@ Rectangle {
         anchors.horizontalCenter: distanceLabel.horizontalCenter
         anchors.topMargin:  _margin*2
         anchors.top:        distanceLabel.bottom
-        font.pointSize:     ScreenTools.defaultFontPixelHeight
+        font.pointSize:     ScreenTools.mediumFontPointSize
         font.bold:          true
         color:              Qt.rgba(0.102,0.887,0.609,1)
         text:               _distanceText
@@ -192,7 +192,7 @@ Rectangle {
         anchors.horizontalCenter: altLabel.horizontalCenter
         anchors.topMargin:  _margin*2
         anchors.top:        altLabel.bottom
-        font.pointSize:     ScreenTools.defaultFontPixelHeight
+        font.pointSize:     ScreenTools.mediumFontPointSize
         font.bold:          true
         color:              Qt.rgba(0.102,0.887,0.609,1)
         text:               _altDifferenceText
@@ -204,7 +204,7 @@ Rectangle {
         anchors.horizontalCenter: azimuthLabel.horizontalCenter
         anchors.topMargin:  _margin*2
         anchors.top:        azimuthLabel.bottom
-        font.pointSize:     ScreenTools.defaultFontPixelHeight
+        font.pointSize:     ScreenTools.mediumFontPointSize
         font.bold:          true
         color:              Qt.rgba(0.102,0.887,0.609,1)
         text:               _azimuthText

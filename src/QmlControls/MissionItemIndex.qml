@@ -1,4 +1,4 @@
-﻿import QtQuick                  2.2
+import QtQuick                  2.2
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.2
 import QtQuick.Dialogs          1.2
@@ -20,10 +20,10 @@ Rectangle {
     property bool   _currentItem:       missionItem.isCurrentItem
     property color  _outerTextColor:    _currentItem ? "black" : qgcPal.text
 
-    readonly property real  _editFieldWidth:    ScreenTools.defaultFontPixelWidth * 16
-    readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
-    readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
-    readonly property real  _PointFieldWidth:   ScreenTools.defaultFontPixelWidth * 9
+    readonly property real  _editFieldWidth:    ScreenTools.defaultFontPointSize * 16
+    readonly property real  _margin:            ScreenTools.defaultFontPointSize / 2
+    readonly property real  _radius:            ScreenTools.defaultFontPointSize / 2
+    readonly property real  _PointFieldWidth:   ScreenTools.defaultFontPointSize * 9
     property real   _distance:          _statusValid ? missionItem.distance : 0
     property bool   _statusValid:       missionItem.sequenceNumber != 0
     property string _distanceText:      _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(0) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(1) + "k" + QGroundControl.appSettingsDistanceUnitsString
@@ -61,7 +61,7 @@ Rectangle {
             anchors.top:            parent.top
             width:                  parent.width
             horizontalAlignment:    Text.AlignHCenter
-            font.pointSize:         ScreenTools.defaultFontPixelHeight*1.2
+            font.pointSize:         ScreenTools.largeFontPointSize
             font.bold:              true
             fontSizeMode:           Text.HorizontalFit
             color:                  "white"
@@ -77,16 +77,15 @@ Rectangle {
            visible:                  missionItem.sequenceNumber != 0
            Image{
                anchors.verticalCenter: parent.verticalCenter
-               width:    ScreenTools.defaultFontPixelHeight
-               height:   ScreenTools.defaultFontPixelHeight
+               width:    ScreenTools.mediumFontPointSize
+               height:   ScreenTools.mediumFontPointSize
                source:   "/qmlimages/altitudeRelativewhite.svg"
            }
 
            QGCLabel {
                width:                  parent.width*0.5
                horizontalAlignment:    Text.AlignHCenter
-               font.pointSize:         ScreenTools.defaultFontPixelHeight*0.8
-               font.family:            ScreenTools.demiboldFontFamily
+               font.pointSize:         ScreenTools.mediumFontPointSize
                font.bold:              true
                color:                  "white"
 //             fontSizeMode:           Text.HorizontalFit
@@ -103,16 +102,15 @@ Rectangle {
               visible:                  _statusValid
               Image{
                   anchors.verticalCenter: parent.verticalCenter
-                  width:    ScreenTools.defaultFontPixelHeight
-                  height:   ScreenTools.defaultFontPixelHeight
+                  width:    ScreenTools.mediumFontPointSize
+                  height:   ScreenTools.mediumFontPointSize
                   source:   "/qmlimages/distance.svg"
               }
 
               QGCLabel {
                   width:                  parent.width*0.5
                   horizontalAlignment:    Text.AlignHCenter
-                  font.pointSize:         ScreenTools.defaultFontPixelHeight*0.8
-                  font.family:            ScreenTools.demiboldFontFamily
+                  font.pointSize:         ScreenTools.mediumFontPointSize
                   font.bold:              true
                   color:                  "white"
 //                fontSizeMode:           Text.HorizontalFit

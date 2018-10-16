@@ -30,8 +30,8 @@ Rectangle {
 
     ExclusiveGroup { id: setupButtonGroup }
 
-    readonly property real      _defaultTextHeight: ScreenTools.isMobile?ScreenTools.defaultFontPixelHeight*0.8:ScreenTools.defaultFontPixelHeight
-    readonly property real      _defaultTextWidth:  ScreenTools.isMobile?ScreenTools.defaultFontPixelWidth*0.8:ScreenTools.defaultFontPixelWidth
+    readonly property real      _defaultTextHeight: ScreenTools.isMobile?ScreenTools.defaultFontPixelHeight * 0.6:ScreenTools.defaultFontPixelHeight
+    readonly property real      _defaultTextWidth:  ScreenTools.isMobile?ScreenTools.defaultFontPixelWidth * 0.6:ScreenTools.defaultFontPixelWidth
     readonly property real      _horizontalMargin:  _defaultTextWidth / 2
     readonly property real      _verticalMargin:    _defaultTextHeight / 2
     readonly property real      _buttonWidth:       _defaultTextWidth * 18

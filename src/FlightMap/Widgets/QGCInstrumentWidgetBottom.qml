@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -68,7 +68,7 @@ Rectangle {
         anchors.left:           mask.left
         anchors.leftMargin:     _spacing*10
         horizontalAlignment:    Text.AlignHCenter
-        font.pointSize:         ScreenTools.defaultFontPixelHeight
+        font.pointSize:         ScreenTools.mediumFontPointSize
         font.family:            ScreenTools.demiboldFontFamily
         font.bold:              true
         color:                  "White"
@@ -81,7 +81,7 @@ Rectangle {
         anchors.left:           lable.right
         anchors.leftMargin:     _spacing*12
         horizontalAlignment:    Text.AlignHCenter
-        font.pointSize:         ScreenTools.defaultFontPixelHeight
+        font.pointSize:         ScreenTools.mediumFontPointSize
         font.family:            ScreenTools.demiboldFontFamily
         font.bold:              true
         color:                  "White"

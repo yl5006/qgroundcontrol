@@ -11387,129 +11387,129 @@ Is this really what you want?</source>
         <translation>将所有已选项目移动到以下任务之后：</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="994"/>
+        <location filename="../src/PlanView/PlanView.qml" line="995"/>
         <source>Relative waypoint</source>
         <translation>相对航点</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1003"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1004"/>
         <source>Round route</source>
         <translation>圆形航线</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1176"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1177"/>
         <source>Distance:</source>
         <translation>距离：</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1176"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1177"/>
         <source> Angle:</source>
         <translation>角度</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1235"/>
-        <location filename="../src/PlanView/PlanView.qml" line="1294"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1236"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1295"/>
         <source>Plan</source>
         <translation>规划</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1554"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1556"/>
         <source>Generate plan</source>
         <translation>生成任务</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1564"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1566"/>
         <source>Send to vehicle..</source>
         <translation>发送任务</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1580"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1582"/>
         <source>Load from vehicle..</source>
         <translation>加载任务</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1599"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1601"/>
         <source>Save to file...</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1614"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1616"/>
         <source>Load from file...</source>
         <translation>加载文件</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1632"/>
-        <location filename="../src/PlanView/PlanView.qml" line="1635"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1634"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1637"/>
         <source>Remove all</source>
         <translation>删除所有</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1318"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1319"/>
         <source>Mission</source>
         <translation>任务</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1326"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1327"/>
         <source>Fence</source>
         <translation>围栏</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1333"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1334"/>
         <source>Rally</source>
         <translation>集结</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1456"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1458"/>
         <source>You have unsaved/unsent changes. Loading from the Vehicle will lose these changes. Are you sure you want to load from the Vehicle?</source>
         <translation>您有未保存/未发送的更改。从驾驶器加载的操作将会失去这些变更。确定要从驾驶器上加载吗？</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1468"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1470"/>
         <source>You have unsaved/unsent changes. Loading from a file will lose these changes. Are you sure you want to load from a file?</source>
         <translation>您有未保存/未发送的更改。从文件加载的操作将会失去这些变更。确定要从文件中加载吗？</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1479"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1481"/>
         <source>Are you sure you want to remove all items and create a new plan? </source>
         <translation>确实要删除所有航点并创建新规划吗？ </translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1646"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1648"/>
         <source>Load KML...</source>
         <translation>加载KML</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1480"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1482"/>
         <source>This will also remove all items from the vehicle.</source>
         <translation>这也将删除驾驶器上的所有航点。</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1495"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1497"/>
         <source>Are you sure you want to remove all mission items and clear the mission from the vehicle?</source>
         <translation>是否确实要删除所有任务航点并清除该驾驶器上的任务？</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1547"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1549"/>
         <source>Mission overwrite</source>
         <translation>任务覆盖</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1547"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1549"/>
         <source>GeoFence overwrite</source>
         <translation>GeoFence 覆盖</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1547"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1549"/>
         <source>Rally Points overwrite</source>
         <translation>集合点覆盖</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1655"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1657"/>
         <source>Save KML...</source>
         <translation>保存KML</translation>
     </message>
     <message>
-        <location filename="../src/PlanView/PlanView.qml" line="1661"/>
+        <location filename="../src/PlanView/PlanView.qml" line="1663"/>
         <source>KML</source>
         <translation>高程</translation>
     </message>
@@ -15802,6 +15802,19 @@ Click Ok to start calibration.</source>
         <location filename="../src/PlanView/SurveyItemEditor.qml" line="221"/>
         <source>Statistics</source>
         <translation>统计</translation>
+    </message>
+</context>
+<context>
+    <name>SurveyMapVisual</name>
+    <message>
+        <location filename="../src/PlanView/SurveyMapVisual.qml" line="127"/>
+        <source>Entry</source>
+        <translation type="unfinished">开始点</translation>
+    </message>
+    <message>
+        <location filename="../src/PlanView/SurveyMapVisual.qml" line="148"/>
+        <source>Exit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

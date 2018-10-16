@@ -406,7 +406,7 @@ SetupPage {
                 spacing:            ScreenTools.defaultFontPixelHeight
                 QGCLabel {
                     text: qsTr("Attitude Controls")
-                    font.pointSize:     ScreenTools.defaultFontPixelHeight*1.1
+                    font.pointSize:     ScreenTools.mediumFontPointSiz
                     font.family:        ScreenTools.demiboldFontFamily
                     font.bold:          true
                     anchors.horizontalCenter: parent.horizontalCenter

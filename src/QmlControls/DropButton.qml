@@ -1,4 +1,4 @@
-﻿import QtQuick                  2.3
+import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 
@@ -15,7 +15,7 @@ Item {
     property alias  imgcolor:           roundButton.imgcolor
     property alias  rotateImage:        roundButton.rotateImage
     property alias  animateImage:       roundButton.animateImage
-    property real   radius:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.75 : ScreenTools.defaultFontPixelHeight * 1.25
+    property real   radius:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelWidth * 2.5 : ScreenTools.defaultFontPixelWidth * 2.5
     property int    dropDirection:      dropDown
     property alias  dropDownComponent:  dropDownLoader.sourceComponent
     property real   viewportMargins:    0

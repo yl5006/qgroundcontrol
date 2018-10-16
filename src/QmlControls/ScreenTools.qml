@@ -1,4 +1,4 @@
-﻿pragma Singleton
+pragma Singleton
 
 import QtQuick 2.3
 import QtQuick.Controls 1.2
@@ -84,11 +84,11 @@ Item {
 
     // The implicit heights/widths for our custom control set
     property real implicitButtonWidth:              Math.round(defaultFontPixelWidth *  (isMobile ? 7.0 : 5.0))
-    property real implicitButtonHeight:             Math.round(defaultFontPixelHeight * (isMobile ? 2.0 : 1.6))
-    property real implicitCheckBoxHeight:           Math.round(defaultFontPixelHeight * (isMobile ? 2.0 : 1.0))
+    property real implicitButtonHeight:             Math.round(defaultFontPixelHeight * (isMobile ? 1.8 : 1.6))
+    property real implicitCheckBoxHeight:           Math.round(defaultFontPixelHeight * (isMobile ? 1.8 : 1.0))
     property real implicitRadioButtonHeight:        implicitCheckBoxHeight
-    property real implicitTextFieldHeight:          Math.round(defaultFontPixelHeight * (isMobile ? 2.0 : 1.6))
-    property real implicitComboBoxHeight:           Math.round(defaultFontPixelHeight * (isMobile ? 2.0 : 1.6))
+    property real implicitTextFieldHeight:          Math.round(defaultFontPixelHeight * (isMobile ? 1.8 : 1.6))
+    property real implicitComboBoxHeight:           Math.round(defaultFontPixelHeight * (isMobile ? 1.8 : 1.6))
     property real implicitComboBoxWidth:            Math.round(defaultFontPixelWidth *  (isMobile ? 7.0 : 5.0))
     property real implicitSliderHeight:             isMobile ? Math.max(defaultFontPixelHeight, minTouchPixels) : defaultFontPixelHeight
     property real checkBoxIndicatorSize:            Math.round(defaultFontPixelHeight * (isMobile ? 1.5 : 1.0))

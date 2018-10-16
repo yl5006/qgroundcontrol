@@ -1,4 +1,4 @@
-﻿import QtQuick          2.3
+import QtQuick          2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs  1.2
 
@@ -11,7 +11,7 @@ import QGroundControl               1.0
 Rectangle {
     id:             _root
     anchors.top:    parent.top
-    anchors.topMargin:  ScreenTools.toolbarHeight*1.8 + ScreenTools.defaultFontPixelWidth
+    anchors.topMargin:  ScreenTools.toolbarHeight*1.5 + ScreenTools.defaultFontPixelWidth
     anchors.right:  parent.right
     anchors.rightMargin: ScreenTools.defaultFontPixelHeight+_rightPanelWidth
     width:          ScreenTools.defaultFontPixelHeight*18

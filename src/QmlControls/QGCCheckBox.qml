@@ -1,4 +1,4 @@
-﻿import QtQuick                  2.3
+import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 
@@ -65,6 +65,8 @@ CheckBox {
 
             Image {
                 source: "/qmlimages/check.png"
+                height: ScreenTools.checkBoxIndicatorSize *0.6
+                width:  ScreenTools.checkBoxIndicatorSize *0.6
                 opacity: control.checkedState === Qt.Checked ? control.enabled ? 1 : 0.5 : 0
                 anchors.centerIn: parent
                 anchors.verticalCenterOffset: 1

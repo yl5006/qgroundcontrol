@@ -1,4 +1,4 @@
-﻿import QtQuick                  2.3
+import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 
@@ -10,7 +10,7 @@ Item {
 
     signal          clicked()
     property alias  buttonImage:    button.source
-    property real   radius:         ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.75 : ScreenTools.defaultFontPixelHeight * 1.25
+    property real   radius:         ScreenTools.isMobile ? ScreenTools.defaultFontPixelWidth * 2.5 : ScreenTools.defaultFontPixelWidth * 2.5
     property bool   rotateImage:    false
     property bool   animateImage:   false
     property bool   lightBorders:   true
