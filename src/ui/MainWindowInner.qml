@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -295,7 +295,7 @@ Item {
         id:                 logo
         y:                  0
         width:              parent.width
-        height:             tbHeight*1.5
+        height:             tbHeight*1.2
         color:              qgcPal.windowShade
         z:                  QGroundControl.zOrderTopMost
         Image {
@@ -312,32 +312,15 @@ Item {
             anchors.rightMargin: ScreenTools.defaultFontPixelWidth*3
             spacing:    ScreenTools.defaultFontPixelWidth*2
             Column{
-                spacing:    ScreenTools.defaultFontPixelWidth
+                spacing:    ScreenTools.defaultFontPixelWidth/2
                 QGCComboBox {
                     id:                     commPortCombo
                     width:                  ScreenTools.defaultFontPixelWidth * 12
-                    model:                  QGroundControl.linkManager.serialPortStrings
+                    model:                  QGroundControl.linkManager.serialPorts
                     onActivated: {
-                        if (index != -1) {
-                            subEditConfig.portName = QGroundControl.linkManager.serialPorts[index]
-                        }
                     }
                     onClicked: {
-                        QGroundControl.linkManager.updateSerialPorts()
-                    }
-                    Component.onCompleted: {
-                        if(subEditConfig != null) {
-                            if(subEditConfig.portDisplayName === "" && QGroundControl.linkManager.serialPorts.length > 0)
-                                subEditConfig.portName = QGroundControl.linkManager.serialPorts[0]
-                            var index = commPortCombo.find(subEditConfig.portDisplayName)
-                            if (index === -1) {
-                                console.warn(qsTr("Serial Port not present"), subEditConfig.portName)
-                            } else {
-                                commPortCombo.currentIndex = index
-                            }
-                        } else {
-                            commPortCombo.currentIndex = 0
-                        }
+                        QGCComboBox.model = QGroundControl.linkManager.serialPorts
                     }
                 }
                 Row{
@@ -363,14 +346,17 @@ Item {
 
             Image {
                 id:                     connect
-                width:                  ScreenTools.defaultFontPixelHeight * 4
-                height:                 ScreenTools.defaultFontPixelHeight * 4
+                width:                  ScreenTools.defaultFontPixelHeight * 2.5
+                height:                 ScreenTools.defaultFontPixelHeight * 2.5
                 fillMode:               Image.PreserveAspectFit
                 source:                 activeVehicle ? "/qmlimages/connecting.svg":"/qmlimages/initconnect.svg"
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                       QGroundControl.linkManager.createConnectedSerialLink(QGroundControl.linkManager.serialPortStrings[commPortCombo.currentIndex])
+                        if(commPortCombo.currentIndex >= 0)
+                        {
+                            QGroundControl.linkManager.createConnectedLink(QGroundControl.linkManager.serialPortStrings[commPortCombo.currentIndex])
+                        }
                     }
                 }
             }
@@ -378,7 +364,7 @@ Item {
 
         NumberAnimation on y{
             id: myAn1
-            to:  -tbHeight*1.5
+            to:  -tbHeight*1.2
             duration: 1000
             running: vehicleConnectionLost||(QGroundControl.multiVehicleManager.parameterReadyVehicleAvailable && !QGroundControl.multiVehicleManager.activeVehicle.missingParameters)
         }
@@ -393,7 +379,7 @@ Item {
 
     MainTool {
         id:                 toolBar
-        height:             ScreenTools.toolbarHeight * 1.8
+        height:             ScreenTools.toolbarHeight * 1.5
         anchors.left:       parent.left
         mainWindow:         mainWindow
         anchors.right:      parent.right
@@ -409,8 +395,8 @@ Item {
     }
     RightToolBar {
         id:                     rightBar
-        width:                  mainWindow.tbHeight*2
-        height:                 mainWindow.tbHeight*5
+        width:                  mainWindow.tbHeight * 1.6
+        height:                 mainWindow.tbHeight * 5
         mainWindow:             mainWindow
         anchors.left:           parent.left
         anchors.leftMargin:     _barMargin
@@ -443,7 +429,7 @@ Item {
             id:             hideAnimation
             duration:       150
             easing.type:    Easing.InOutQuad
-            to:             -mainWindow.tbHeight*1.6
+            to:             -mainWindow.tbHeight * 1.2
         }
 //        onVtolTransitionToFwdFlight:    flightView.guidedController.confirmAction(flightView.guidedController.actionVtolTransitionToFwdFlight)
 //        onVtolTransitionToMRFlight:     flightView.guidedController.confirmAction(flightView.guidedController.actionVtolTransitionToMRFlight)

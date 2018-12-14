@@ -39,11 +39,11 @@ QGCView {
 
     readonly property int   _decimalPlaces:             8
     readonly property real  _horizontalMargin:          ScreenTools.defaultFontPixelWidth  * 0.5
-    readonly property real  _margin:                    ScreenTools.defaultFontPixelHeight * 0.5
+    readonly property real  _margin:                    ScreenTools.defaultFontPixelWidth  * 0.5
     readonly property real  _radius:                    ScreenTools.defaultFontPixelWidth  * 0.5
     readonly property var   _activeVehicle:             QGroundControl.multiVehicleManager.activeVehicle
-    readonly property real      _PointFieldWidth:       ScreenTools.defaultFontPixelWidth * 11
-    readonly property real      _rightPanelWidth:       Math.min(parent.width / 3, ScreenTools.defaultFontPixelWidth * 35)
+    readonly property real  _PointFieldWidth:           ScreenTools.defaultFontPointSize * 9
+    readonly property real  _rightPanelWidth:           Math.min(parent.width / 4, ScreenTools.defaultFontPixelWidth * 35)
     readonly property real  _toolButtonTopMargin:       parent.height - ScreenTools.availableHeight + (ScreenTools.defaultFontPixelHeight / 2)
     readonly property var   _defaultVehicleCoordinate:  QtPositioning.coordinate(37.803784, -122.462276)
     readonly property bool  _waypointsOnlyMode:         QGroundControl.corePlugin.options.missionWaypointsOnly
@@ -388,13 +388,13 @@ QGCView {
                     id:                     circle
                     anchors.left:           parent.left
                     anchors.top:            parent.top
-                    anchors.leftMargin:     ScreenTools.defaultFontPixelHeight*3
-                    width:                  ScreenTools.defaultFontPixelHeight*3
+                    anchors.leftMargin:     ScreenTools.defaultFontPixelHeight * 3
+                    width:                  ScreenTools.defaultFontPixelHeight * 3
                     value:                  0
                 }
                 QGCColoredImage {
                     id:                     img
-                    height:                 ScreenTools.defaultFontPixelHeight*1.5
+                    height:                 ScreenTools.defaultFontPixelHeight * 1.5
                     width:                  height
                     sourceSize.width: width
                     source:     "/qmlimages/loadfromfile.svg"
@@ -406,7 +406,7 @@ QGCView {
                 QGCLabel {
                     id:             idset
                     anchors.left:   img.left
-                    anchors.leftMargin: ScreenTools.defaultFontPixelHeight*3
+                    anchors.leftMargin: ScreenTools.defaultFontPixelHeight * 3
                     text:           qsTr("Generate plan setting")//"safe"
                     font.pointSize: ScreenTools.mediumFontPointSize
                     font.bold:              true
@@ -867,8 +867,8 @@ QGCView {
                 height:             _PointFieldWidth+ScreenTools.defaultFontPixelWidth//mainWindow.availableHeight/5  //change by yaoling
                 anchors.bottom:     parent.bottom
                 anchors.horizontalCenter:           parent.horizontalCenter
-                width:          mainWindow.availableWidth*0.9   //change by yaoling
-                z:              QGroundControl.zOrderTopMost
+                width:              mainWindow.availableWidth*0.9   //change by yaoling
+                z:                  QGroundControl.zOrderTopMost + 100
                 visible:            _editingLayer == _layerMission
 
                 QGCListView {
@@ -913,7 +913,7 @@ QGCView {
                 anchors.verticalCenter: missionItemIndex.verticalCenter
                 anchors.right:          parent.right
                 anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
-                height:                 _PointFieldWidth.width/2
+                height:                 _PointFieldWidth.width
                 fillMode: Image.TileVertically
                 width:                  allsetimg.height
                 smooth:                 true
@@ -940,7 +940,7 @@ QGCView {
             {
                 id:                     setmissionItem
                 anchors.top:            parent.top
-                anchors.topMargin:      ScreenTools.toolbarHeight*1.8 + ScreenTools.defaultFontPixelWidth
+                anchors.topMargin:      ScreenTools.toolbarHeight * 1.5 + ScreenTools.defaultFontPixelWidth
                 anchors.right:          parent.right
                 anchors.rightMargin:    ScreenTools.defaultFontPixelHeight+_rightPanelWidth
                 z:                      QGroundControl.zOrderTopMost
@@ -949,7 +949,7 @@ QGCView {
             {
                 id:                     setCircleItem
                 anchors.top:            setmissionItem.visible?setmissionItem.bottom:parent.top
-                anchors.topMargin:      setmissionItem.visible?ScreenTools.defaultFontPixelWidth:ScreenTools.toolbarHeight*1.8 + ScreenTools.defaultFontPixelWidth
+                anchors.topMargin:      setmissionItem.visible?ScreenTools.defaultFontPixelWidth:ScreenTools.toolbarHeight * 1.5 + ScreenTools.defaultFontPixelWidth
                 anchors.right:          parent.right
                 anchors.rightMargin:    ScreenTools.defaultFontPixelHeight+_rightPanelWidth
                 z:                      QGroundControl.zOrderTopMost
@@ -960,7 +960,7 @@ QGCView {
             //-- horizontal Tool Buttons
             Row {
                 id:                 toolColumn
-                anchors.topMargin:  ScreenTools.toolbarHeight*1.8 + ScreenTools.defaultFontPixelWidth
+                anchors.topMargin:  ScreenTools.toolbarHeight * 1.5 + ScreenTools.defaultFontPixelWidth  * 0.5
                 anchors.top:        parent.top//ScreenTools.isShortScreen ? parent.top : planLabel.bottom
                 anchors.horizontalCenter:   parent.horizontalCenter
                 z:                  QGroundControl.zOrderWidgets
@@ -1187,7 +1187,7 @@ QGCView {
             opacity:            planExpanded.visible ? 0.2 : 0
             anchors.bottom:     parent.bottom
             anchors.right:      parent.right
-            anchors.rightMargin: ScreenTools.defaultFontPixelWidth
+            anchors.rightMargin: ScreenTools.defaultFontPixelWidth/2
         }
         //-------------------------------------------------------
         // Right Panel Controls
@@ -1264,7 +1264,7 @@ QGCView {
                     height:     (!planControlColapsed || !_airspaceEnabled) ? expandedCol.height + ScreenTools.defaultFontPixelHeight : 0
                     color:      qgcPal.missionItemEditor
                     radius:     _radius
-                    visible:    !planControlColapsed || !_airspaceEnabled
+                    visible:    false//!planControlColapsed || !_airspaceEnabled
                     Item {
                         height:             expandedCol.height
                         anchors.left:       parent.left
@@ -1343,8 +1343,9 @@ QGCView {
             MissionAllItemIndicator {
                 id:              allIndicator
                 anchors.right:   parent.right
-                anchors.top:     planElementSelectorRow.bottom
-                anchors.rightMargin: _margin*2
+                anchors.topMargin: ScreenTools.defaultFontPixelWidth / 2
+                anchors.top:     expandedRow.bottom
+                anchors.rightMargin: _margin
                 width:               _rightPanelWidth
                 missionController:   _missionController
                 visible:       _editingLayer == _layerMission
@@ -1355,11 +1356,11 @@ QGCView {
                 anchors.top:         allIndicator.bottom
                 anchors.topMargin:   _margin
                 anchors.bottom:      parent.bottom
-                anchors.bottomMargin:_PointFieldWidth+ScreenTools.defaultFontPixelWidth*2
-                anchors.rightMargin: _margin
-                width:               _rightPanelWidth-_margin
-                z:                   QGroundControl.zOrderTopMost+1
-                visible:                _editingLayer == _layerMission && !planControlColapsed
+                anchors.bottomMargin:_PointFieldWidth + ScreenTools.defaultFontPixelWidth * 2
+             //   anchors.rightMargin: _margin
+                width:               _rightPanelWidth
+                z:                   QGroundControl.zOrderTopMost + 1
+                visible:             _editingLayer == _layerMission && !planControlColapsed
                 QGCListView {
                     id:             indexIndicatorListView
                     anchors.fill:    parent

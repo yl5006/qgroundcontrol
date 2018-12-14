@@ -41,7 +41,7 @@ Rectangle {
         anchors.left:       parent.left
         anchors.right:      parent.right
         anchors.top:        parent.top
-        spacing:            _margin
+        spacing:            ScreenTools.isMobile ? _margin / 2 :_margin
 
         QGCLabel {
             width:          parent.width
@@ -95,11 +95,12 @@ Rectangle {
                 anchors.top:        parent.top
                 anchors.left:       parent.left
                 anchors.right:      parent.right
-                spacing:            _margin
+                spacing:            ScreenTools.isMobile ? _margin / 2 :_margin
 
                 QGCLabel {
                     font.pointSize: ScreenTools.smallFontPointSize
                     text:           qsTr("Altitude")
+                    visible:        !ScreenTools.isMobile
                 }
 
                 RowLayout {

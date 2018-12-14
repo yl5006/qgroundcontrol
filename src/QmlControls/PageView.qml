@@ -35,14 +35,14 @@ Rectangle {
           anchors.top:  parent.top
           anchors.left: parent.left
           anchors.leftMargin: ScreenTools.defaultFontPixelHeight
-          height:       ScreenTools.defaultFontPixelHeight * 2.5
-          spacing:      ScreenTools.defaultFontPixelHeight / 2
+          height:       ScreenTools.defaultFontPixelWidth * 5
+          spacing:      ScreenTools.defaultFontPixelWidth / 2
           Repeater{
                     model:  _instrumentPages
                     QGCColoredImage   {
                         anchors.verticalCenter: parent.verticalCenter
                         source:     modelData.icon
-                        height:     ScreenTools.defaultFontPixelHeight  * 2
+                        height:     ScreenTools.defaultFontPixelWidth  * 4
                         width:      height
                         color:      checkindex == index? qgcPal.buttonHighlight : qgcPal.button
                         QGCMouseArea {

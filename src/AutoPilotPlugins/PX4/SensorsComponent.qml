@@ -137,11 +137,9 @@ SetupPage {
 
                 onResetStatusTextArea: statusLog.text = statusTextAreaDefaultText
 
-                onSetCompassRotations: {
-                    if (!_sensorsHaveFixedOrientation && (showCompass0Rot || showCompass1Rot || showCompass2Rot)) {
-                        setOrientationsDialogShowBoardOrientation = false
-                        showDialog(setOrientationsDialogComponent, qsTr("Set Compass Orientation"), sensorsPage.showDialogDefaultWidth, StandardButton.Ok)
-                    }
+                onMagCalComplete: {
+                    setOrientationsDialogShowBoardOrientation = false
+                    showDialog(setOrientationsDialogComponent, qsTr("Compass Calibration Complete"), qgcView.showDialogDefaultWidth, StandardButton.Ok)
                 }
 
                 onWaitingForCancelChanged: {
@@ -407,7 +405,7 @@ SetupPage {
                     primary:        true
                     bordercolor:    cal_mag0_id.value !== 0?qgcPal.primaryButton:"red"
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationCompass
-                    _showBorder:    true
+                    showBorder:    true
                     onClicked: {
                          calmagtime=true
                          magcal.visible=true//  controller.calibrateCompass()
@@ -426,7 +424,7 @@ SetupPage {
                     primary:        true
                     bordercolor:    cal_acc0_id.value != 0 ? qgcPal.primaryButton:"red"
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationGyro
-                    _showBorder:    true
+                    showBorder:    true
                     onClicked: {
                         calmagtime=false
                         controller.calibrateAccel()
@@ -446,7 +444,7 @@ SetupPage {
                     primary:        true
                     bordercolor:    (cal_gyro0_id.value != 0) ? qgcPal.primaryButton:"red"
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationAccel
-                    _showBorder:    true
+                    showBorder:    true
                     onClicked: {                           
                         controller.calibrateGyro()
                         //    preCalibrationDialogType = "gyro"
@@ -464,7 +462,7 @@ SetupPage {
                     text:           qsTr("Level Horizon")
                     primary:        true
                     bordercolor:    (sens_board_x_off.value != 0 || sens_board_y_off != 0 | sens_board_z_off != 0)?qgcPal.primaryButton:"red"
-                    _showBorder:    true
+                    showBorder:    true
                     enabled:        cal_acc0_id.value != 0 && cal_gyro0_id.value != 0
                     visible:        QGroundControl.corePlugin.options.showSensorCalibrationLevel
 
@@ -485,7 +483,7 @@ SetupPage {
                     primary:        true
                     visible:        (controller.vehicle.fixedWing || controller.vehicle.vtol) && controller.getParameterFact(-1, "CBRK_AIRSPD_CHK").value != 162128 && QGroundControl.corePlugin.options.showSensorCalibrationAirspeed
                     bordercolor:    (sens_dpres_off.value !== 0)?qgcPal.primaryButton:"red"
-                    _showBorder:    true
+                    showBorder:    true
                     onClicked: {
                         controller.calibrateAirspeed()
                         //     preCalibrationDialogType = "airspeed"

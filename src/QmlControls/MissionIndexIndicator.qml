@@ -86,8 +86,8 @@ Rectangle {
         anchors.rightMargin:    ScreenTools.defaultFontPointSize
         anchors.right:          parent.right
         anchors.verticalCenter: commandPicker.verticalCenter
-        width:                  ScreenTools.largeFontPointSize*1.5
-        height:                 ScreenTools.largeFontPointSize*1.5
+        width:                  ScreenTools.largeFontPointSize*3
+        height:                 ScreenTools.largeFontPointSize*3
         source:                 "qrc:/qmlimages/insertpoint.svg"
         visible:                _currentItem && missionItem.sequenceNumber != 0
         MouseArea {
@@ -100,8 +100,8 @@ Rectangle {
         anchors.rightMargin:    ScreenTools.defaultFontPointSize
         anchors.right:          insertpoint.left
         anchors.verticalCenter: commandPicker.verticalCenter
-        width:                  ScreenTools.largeFontPointSize * 1.5
-        height:                 ScreenTools.largeFontPointSize * 1.5
+        width:                  ScreenTools.largeFontPointSize * 3
+        height:                 ScreenTools.largeFontPointSize * 3
         source:                 "qrc:/qmlimages/deletepoint.svg"
         visible:                missionItem.sequenceNumber != 0
         MouseArea {

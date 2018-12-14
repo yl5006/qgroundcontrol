@@ -25,7 +25,7 @@ import QGroundControl.Palette       1.0
 import QtGraphicalEffects 1.0
 Rectangle {
     id:     instrumentPanel
-    height: getPreferredInstrumentWidth()
+    height: ScreenTools.isMobile ? getPreferredInstrumentWidth() * 0.8 :getPreferredInstrumentWidth()
     width:  attitudeWidget.width + mask.width+_topBottomMargin
     color:          Qt.rgba(0,0,0,0)
 

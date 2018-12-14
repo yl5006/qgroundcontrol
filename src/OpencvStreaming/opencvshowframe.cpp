@@ -1,9 +1,8 @@
-﻿#include "opencvshowframe.h"
+#include "opencvshowframe.h"
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <opencv2/contrib/contrib.hpp>
 #include "opencvcapture.h"
-#include <QSGTexture>
 #include <QSGSimpleTextureNode>
 #include <QQuickWindow>
 
@@ -19,16 +18,17 @@ OpenCVshowFrame::OpenCVshowFrame(QQuickItem *parent) : QQuickItem(parent),
     m_bMoved(false),
     x_scale(1.0),
     y_scale(1.0),
+    texture(nullptr),
     m_capture(NULL)
 {
-    m_timer.setInterval(1000 / m_frameRate);
+    m_timer.setInterval( 1000 / m_frameRate);
     connect(&m_timer, &QTimer::timeout, this, &OpenCVshowFrame::updateFrame);
     setAcceptedMouseButtons(Qt::LeftButton);
     setFlag(QQuickItem::ItemHasContents);
    // m_actions.push_back(new OpenCVcommonAction());
-    f = new Tracker();
+//    f = new OpenCVcommonAction();
    // f.Rectbox
-    m_actions.push_back(f);
+//   m_actions.push_back(f);
 
  /*OpenCVfaceDetectAction **/
  //   f = new OpenCVfaceDetectAction();
@@ -74,7 +74,7 @@ void OpenCVshowFrame::mouseReleaseEvent(QMouseEvent* event)
     //    qDebug() << "mouse released"<<event->pos();
         m_bPressed = false;
         m_bMoved = false;
-        f->select=true;
+//        f->select=true;
     }
 }
 void OpenCVshowFrame:: mouseMoveEvent(QMouseEvent* event)
@@ -85,10 +85,10 @@ void OpenCVshowFrame:: mouseMoveEvent(QMouseEvent* event)
         }
         else
         {
-            f->Rectbox.x = MIN(event->x()/x_scale, currPt.x()/x_scale);
-            f->Rectbox.y = MIN(event->y()/y_scale, currPt.y()/y_scale);
-            f->Rectbox.width =  std::abs(event->x()/x_scale - currPt.x()/x_scale);
-            f->Rectbox.height = std::abs(event->y()/y_scale - currPt.y()/y_scale);
+//            f->Rectbox.x = MIN(event->x()/x_scale, currPt.x()/x_scale);
+//            f->Rectbox.y = MIN(event->y()/y_scale, currPt.y()/y_scale);
+//            f->Rectbox.width =  std::abs(event->x()/x_scale - currPt.x()/x_scale);
+//            f->Rectbox.height = std::abs(event->y()/y_scale - currPt.y()/y_scale);
    //         qDebug() << "mouse move"<<event->pos();
         }
 }
@@ -176,8 +176,7 @@ void OpenCVshowFrame::addAction(QObject *act)
 }
 
 Mat  OpenCVshowFrame::doActions(Mat &img)
-{
-    Mat out;
+{    
     if (m_actions.empty()) {
     } else {
         for (auto ite = m_actions.begin(); ite != m_actions.end(); ++ite) {
@@ -188,55 +187,73 @@ Mat  OpenCVshowFrame::doActions(Mat &img)
     return out;
 }
 
-
-QImage::Format OpenCVshowFrame::format(int depth, int nChannels)
-{
-    QImage::Format re = QImage::Format_Invalid;
-    do {
-        if (depth == 8 && nChannels == 1) {
-            re = QImage::Format_RGB888;
-            break;
-        }
-        if (nChannels == 3) {
-            re = QImage::Format_RGB888;
-            break;
-        }
-
-    }while(0);
-
-    return re;
-}
-
-
 QSGNode* OpenCVshowFrame::updatePaintNode(QSGNode *old, UpdatePaintNodeData *)
 {
-    QSGSimpleTextureNode *texture = static_cast<QSGSimpleTextureNode*>(old);
-    if (texture == NULL) {
-        texture = new QSGSimpleTextureNode();
+
+    QSGSimpleTextureNode *storedTextureNode  = static_cast<QSGSimpleTextureNode*>(old);
+    if (storedTextureNode  == NULL) {
+        storedTextureNode  = new QSGSimpleTextureNode();
     }
-    QImage img;
-    Mat frame;
     if (m_capture) {
         frame = static_cast<OpenCVcapture*>(m_capture)->getFrame();
     }
     if (!frame.empty()) {
-        frame = doActions(frame);
-        uchar *imgData = frame.data;
-        x_scale=(float)window()->width()/frame.cols;
-        y_scale=(float)window()->height()/frame.rows;
-   //     qDebug()<<"x_scale"<<x_scale<<"y_scale"<<y_scale;
-        img = QImage(imgData, frame.cols, frame.rows, QImage::Format_RGB888);
+//        frame = doActions(frame);
+        cvtColor(frame, out, CV_BGR2RGB);
+        imgData = out.data;
+//      x_scale=(float)window()->width()/frame.cols;
+//      y_scale=(float)window()->height()/frame.rows;
+        imgshow = QImage(const_cast<const uchar *>(imgData), frame.cols, frame.rows, QImage::Format_RGB888);
     } else {
-        img = QImage(boundingRect().size().toSize(), QImage::Format_RGB888);
+        imgshow.load(":/res/thumb.png");
     }
-    QSGTexture *t = window()->createTextureFromImage(img.scaled(boundingRect().size().toSize()));
-    if (t) {
-        QSGTexture *tt = texture->texture();
-        if (tt) {
-            tt->deleteLater();
-        }
-        texture->setRect(boundingRect());
-        texture->setTexture(t);
+//    if( texture ) {
+//        texture->deleteLater();
+//        texture = nullptr;
+//    }
+    //.scaled(boundingRect().size().toSize())
+    //会出现QImage: out of memory, returning null image
+ //   if(boundingRect().size().toSize().width()<600)
+    {
+        texture = window()->createTextureFromImage(imgshow.scaled(boundingRect().size().toSize(),Qt::KeepAspectRatioByExpanding));
     }
-    return texture;
+    if (texture) {
+           QSGTexture *tt = storedTextureNode->texture();
+           if (tt) {
+               tt->deleteLater();
+           }
+           storedTextureNode->setRect(boundingRect());
+           storedTextureNode->setTexture(texture);
+       }
+//    else
+//    {
+//        texture = window()->createTextureFromImage(imgshow.scaled(QSize(600,338)), QQuickWindow::TextureOwnsGLTexture);
+//    }
+//    if(texture)
+//    {
+//        QSGTexture *tt = storedTextureNode->texture();
+//        if(tt) {
+//            tt->deleteLater();
+//        }
+//    }
+    // Ensure texture lives in rendering thread so it will be deleted only once it's no longer associated with
+    // the texture node
+//    texture->moveToThread( window()->openglContext()->thread() );
+
+//    // Put this new texture into our QSG node and mark the node dirty so it'll be redrawn
+//    storedTextureNode->setTexture( texture );
+//    storedTextureNode->setRect( boundingRect() );
+//    storedTextureNode->setTextureCoordinatesTransform(QSGSimpleTextureNode::NoTransform);
+
+//    storedTextureNode->markDirty( QSGNode::DirtyForceUpdate );
+//    if (texture) {
+//        QSGTexture *tt = texture->texture();
+//        if (tt) {
+//            tt->deleteLater();
+//        }
+//        texture->setRect(boundingRect());
+//        texture->setTexture(t);
+//    }
+//    return storedTextureNode;
+    return storedTextureNode;
 }

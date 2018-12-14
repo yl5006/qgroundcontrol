@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -107,7 +107,7 @@ Item {
     QGCCircleProgress{
         id:             batterycircle
         anchors.left:   parent.left
-        width:          mainWindow.tbHeight*1.5
+        width:          mainWindow.tbHeight * 1.4
         value:          (_activeVehicle && _activeVehicle.battery.percentRemaining.value > 0 )? _activeVehicle.battery.percentRemaining.value/100:0
         valuecolor:     getBatteryColor()
         anchors.verticalCenter: parent.verticalCenter

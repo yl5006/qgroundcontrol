@@ -91,7 +91,6 @@ Rectangle {
 
     Image{
         anchors.fill:   parent
-        fillMode:       Image.PreserveAspectFit
         source:          "/qmlimages/sidebar.svg"
     }
     Image {

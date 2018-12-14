@@ -71,7 +71,7 @@ Rectangle {
     Rectangle {
         id:                 total
         width:              parent.width
-        height:             ScreenTools.defaultFontPointSize * 7
+        height:             ScreenTools.defaultFontPixelWidth * 7
         anchors.top:        parent.top
         color:              Qt.rgba(0.102,0.122,0.133,0.9)//qgcPal.windowShade
         radius:             _margin

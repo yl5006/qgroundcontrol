@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -545,7 +545,8 @@ QGCView {
 
                                 Repeater {
                                     id:     autoConnectRepeater
-                                model:  [// QGroundControl.settingsManager.autoConnectSettings.autoConnectPixhawk,
+                                model:  [
+                                    QGroundControl.settingsManager.autoConnectSettings.autoConnectPixhawk,
                                     QGroundControl.settingsManager.autoConnectSettings.autoConnectSiKRadio,
                                     //QGroundControl.settingsManager.autoConnectSettings.autoConnectPX4Flow,
                                     //QGroundControl.settingsManager.autoConnectSettings.autoConnectLibrePilot,

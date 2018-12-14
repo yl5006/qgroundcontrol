@@ -1,4 +1,4 @@
-﻿#ifndef OPENCVCAMERA_H
+#ifndef OPENCVCAMERA_H
 #define OPENCVCAMERA_H
 
 #include <QObject>
@@ -41,14 +41,16 @@ private:
     int m_cameraId;
     int m_openedCameraId;
     Mat m_frame;
+    char* buffer;
 //    VideoCapture m_Capture;
+    int bufferSize;
     int lastFrameNo;
     int width;
     int height;
     int rowPitch;
-    int bufferSize;
     int frameNo;
     int id;
+    bool isKeyframe;
 };
 
 #endif // OPENCVCAMERA_H

@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <airframes>
   <version>1</version>
   <airframe_version_major>1</airframe_version_major>
@@ -385,6 +385,11 @@
       <type>Quadrotor x</type>
     </airframe>
     <airframe id="4900" maintainer="Dennis Shtatov &lt;densht@gmail.com&gt;" name="Crazyflie 2.0">
+      <class>Copter</class>
+      <maintainer>Dennis Shtatov &lt;densht@gmail.com&gt;</maintainer>
+      <type>Quadrotor x</type>
+    </airframe>
+    <airframe id="4901" maintainer="Dennis Shtatov &lt;densht@gmail.com&gt;" name="Crazyflie yl">
       <class>Copter</class>
       <maintainer>Dennis Shtatov &lt;densht@gmail.com&gt;</maintainer>
       <type>Quadrotor x</type>

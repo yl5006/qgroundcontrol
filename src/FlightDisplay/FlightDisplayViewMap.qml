@@ -196,7 +196,7 @@ FlightMap {
     //--Tool Buttons
     Row {
         id:                 toolColumn
-        anchors.topMargin:  ScreenTools.toolbarHeight * 1.5 + ScreenTools.defaultFontPixelWidth
+        anchors.topMargin:  ScreenTools.toolbarHeight * 1.5 + ScreenTools.defaultFontPixelWidth / 2
         anchors.top:        parent.top
         anchors.horizontalCenter:   parent.horizontalCenter
         visible:            _mainIsMap

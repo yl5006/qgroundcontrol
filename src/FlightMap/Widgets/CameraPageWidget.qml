@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -27,6 +27,7 @@ import QGroundControl.FactControls      1.0
 Column {
     width:      pageWidth
     spacing:    ScreenTools.defaultFontPixelHeight * 0.25
+    anchors.topMargin: ScreenTools.defaultFontPixelHeight * 0.25
     anchors.leftMargin: ScreenTools.defaultFontPixelHeight * 0.5
     property bool   showSettingsIcon:       _camera !== null
 
@@ -62,10 +63,11 @@ Column {
             }
         }
     }
-
+     Item { width: 1; height: ScreenTools.defaultFontPointSize/2    }
     //-- Dumb camera trigger if no actual camera interface exists
     Row{
         spacing:    ScreenTools.defaultFontPixelHeight/2
+        anchors.horizontalCenter: parent.horizontalCenter
         SubMenuButton {
             imageResource:      "/qmlimages/camera.svg"
             text:               qsTr("Interval photo")
@@ -83,6 +85,7 @@ Column {
     }
     Row{
         spacing:    ScreenTools.defaultFontPixelHeight/2
+        anchors.horizontalCenter: parent.horizontalCenter
         SubMenuButton {
             imageResource:      "/qmlimages/camera.svg"
             text:               qsTr("Distance photo")//"Send to vehicle"
@@ -100,6 +103,7 @@ Column {
     }
     Row{
         spacing:    ScreenTools.defaultFontPixelHeight/2
+        anchors.horizontalCenter: parent.horizontalCenter
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
             text:          qsTr("Back to")
@@ -137,6 +141,7 @@ Column {
     }
     Row{
         spacing:    ScreenTools.defaultFontPixelHeight/2
+        anchors.horizontalCenter: parent.horizontalCenter
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
             text:          qsTr("Bigger")
@@ -170,6 +175,7 @@ Column {
     }
     Row{
         spacing:    ScreenTools.defaultFontPixelHeight/2
+        anchors.horizontalCenter: parent.horizontalCenter
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
             text:          qsTr("Far focus")
@@ -202,6 +208,7 @@ Column {
     }
     Row{
         spacing:    ScreenTools.defaultFontPixelHeight/2
+        anchors.horizontalCenter: parent.horizontalCenter
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
             text:          qsTr("Auto focus")
@@ -245,6 +252,7 @@ Column {
     }
     Row{
         spacing:    ScreenTools.defaultFontPixelHeight/2
+        anchors.horizontalCenter: parent.horizontalCenter
         QGCButton {
             width:         ScreenTools.defaultFontPixelHeight*4
             text:          qsTr("Recording")

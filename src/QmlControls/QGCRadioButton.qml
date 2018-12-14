@@ -1,4 +1,4 @@
-﻿import QtQuick                  2.3
+import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 
@@ -14,18 +14,20 @@ RadioButton {
 
     style: RadioButtonStyle {
         indicator: Rectangle {
-                implicitWidth:  16
-                implicitHeight: 16
-                radius: 9
+                width:  ScreenTools.radioButtonIndicatorSize
+                height: width
+                radius: width/2
                 border.color: qgcPal.primaryButton
                 border.width: 2
                 color: "transparent"
                 Rectangle {
-                    anchors.fill: parent
-                    anchors.margins: 4
+                    anchors.centerIn:   parent
+                    width:              Math.round(parent.width * 0.5)
+                    height:             width
+                    antialiasing:       true
+                    radius:             height / 2
                     visible: control.checked
                     color:  qgcPal.primaryButton
-                    radius: width/2
                 }
         }
         label: Item {

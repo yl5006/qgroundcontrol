@@ -1,7 +1,9 @@
-﻿#ifndef OPENCVSHOWFRAME_H
+#ifndef OPENCVSHOWFRAME_H
 #define OPENCVSHOWFRAME_H
 
 #include <QQuickItem>
+#include <QOpenGLContext>
+#include <QSGTexture>
 #include <QTimer>
 #include <list>
 #include <QImage>
@@ -69,12 +71,15 @@ private:
     QTimer m_timer;
     std::list<QObject*> m_actions;
     Mat  doActions(Mat &img);
-//    OpencvFaceRecognizer *fr;
-    Tracker *f;
+    QSGTexture *texture;
+//    OpencvFaceRecognizer *f;
+//    Tracker *f;
 //    OpenCVfaceDetectAction *f;
-    QImage::Format format(int depth, int nChannels);
-
-
+    OpenCVcommonAction *f;
+    QImage imgshow;
+    uchar *imgData;
+    Mat frame;
+    Mat out;
 };
 
 #endif // OPENCVSHOWFRAME_H

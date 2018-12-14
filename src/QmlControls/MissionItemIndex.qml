@@ -20,10 +20,9 @@ Rectangle {
     property bool   _currentItem:       missionItem.isCurrentItem
     property color  _outerTextColor:    _currentItem ? "black" : qgcPal.text
 
-    readonly property real  _editFieldWidth:    ScreenTools.defaultFontPointSize * 16
-    readonly property real  _margin:            ScreenTools.defaultFontPointSize / 2
-    readonly property real  _radius:            ScreenTools.defaultFontPointSize / 2
-    readonly property real  _PointFieldWidth:   ScreenTools.defaultFontPointSize * 9
+    readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
+    readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
+    readonly property real  _PointFieldWidth:   ScreenTools.defaultFontPointSize * 8
     property real   _distance:          _statusValid ? missionItem.distance : 0
     property bool   _statusValid:       missionItem.sequenceNumber != 0
     property string _distanceText:      _distance<1000 ? QGroundControl.metersToAppSettingsDistanceUnits(_distance).toFixed(0) + QGroundControl.appSettingsDistanceUnitsString : QGroundControl.metersToAppSettingsDistanceUnits(_distance/1000).toFixed(1) + "k" + QGroundControl.appSettingsDistanceUnitsString
@@ -61,7 +60,7 @@ Rectangle {
             anchors.top:            parent.top
             width:                  parent.width
             horizontalAlignment:    Text.AlignHCenter
-            font.pointSize:         ScreenTools.largeFontPointSize
+            font.pointSize:         ScreenTools.largeFontPointSize*1.25
             font.bold:              true
             fontSizeMode:           Text.HorizontalFit
             color:                  "white"
@@ -77,8 +76,8 @@ Rectangle {
            visible:                  missionItem.sequenceNumber != 0
            Image{
                anchors.verticalCenter: parent.verticalCenter
-               width:    ScreenTools.mediumFontPointSize
-               height:   ScreenTools.mediumFontPointSize
+               width:    ScreenTools.largeFontPointSize * 1.25
+               height:   ScreenTools.largeFontPointSize * 1.25
                source:   "/qmlimages/altitudeRelativewhite.svg"
            }
 
@@ -102,8 +101,8 @@ Rectangle {
               visible:                  _statusValid
               Image{
                   anchors.verticalCenter: parent.verticalCenter
-                  width:    ScreenTools.mediumFontPointSize
-                  height:   ScreenTools.mediumFontPointSize
+                  width:    ScreenTools.largeFontPointSize * 1.25
+                  height:   ScreenTools.largeFontPointSize * 1.25
                   source:   "/qmlimages/distance.svg"
               }
 

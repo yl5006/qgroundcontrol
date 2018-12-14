@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -61,7 +61,6 @@ Item {
 */
     Item {
         id:                 _valuesItem
-        anchors.topMargin:  ScreenTools.defaultFontPixelHeight / 4
         anchors.top:        parent.top
         width:              parent.width
         height:             _valuesWidget.height

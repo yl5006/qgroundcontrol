@@ -1164,11 +1164,11 @@ void Vehicle::_setCapabilities(uint64_t capabilityBits)
     QString supports("supports");
     QString doesNotSupport("does not support");
 
-    qCDebug(VehicleLog) << QString("Vehicle %1 Mavlink 2.0").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MAVLINK2 ? supports : doesNotSupport);
-    qCDebug(VehicleLog) << QString("Vehicle %1 MISSION_ITEM_INT").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_INT ? supports : doesNotSupport);
-    qCDebug(VehicleLog) << QString("Vehicle %1 MISSION_COMMAND_INT").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_COMMAND_INT ? supports : doesNotSupport);
-    qCDebug(VehicleLog) << QString("Vehicle %1 GeoFence").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_FENCE ? supports : doesNotSupport);
-    qCDebug(VehicleLog) << QString("Vehicle %1 RallyPoints").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_RALLY ? supports : doesNotSupport);
+   /* qCDebug(VehicleLog)*/ qDebug()<< QString("Vehicle %1 Mavlink 2.0").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MAVLINK2 ? supports : doesNotSupport);
+  /*  qCDebug(VehicleLog) */qDebug()<< QString("Vehicle %1 MISSION_ITEM_INT").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_INT ? supports : doesNotSupport);
+   /* qCDebug(VehicleLog)*/ qDebug()<< QString("Vehicle %1 MISSION_COMMAND_INT").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_COMMAND_INT ? supports : doesNotSupport);
+  /*  qCDebug(VehicleLog) */qDebug()<< QString("Vehicle %1 GeoFence").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_FENCE ? supports : doesNotSupport);
+  /*  qCDebug(VehicleLog)*/ qDebug()<< QString("Vehicle %1 RallyPoints").arg(_capabilityBits & MAV_PROTOCOL_CAPABILITY_MISSION_RALLY ? supports : doesNotSupport);
 }
 
 void Vehicle::_handleAutopilotVersion(LinkInterface *link, mavlink_message_t& message)
@@ -3341,10 +3341,10 @@ void Vehicle::motorTest(int motor, int percent, int timeoutSecs)
 }
 //#endif
 
-void Vehicle::mountCONTROL(float pitch_offset, float roll_offset, float yaw_offset)
+void Vehicle::mountControlAdd(float pitch_offset, float roll_offset, float yaw_offset)
 
 {
-    sendMavCommand(defaultComponentId(), MAV_CMD_DO_MOUNT_CONTROL,true ,yaw_offset*120,pitch_offset*120,roll_offset*120,0,0,0,2);
+    sendMavCommand(defaultComponentId(), MAV_CMD_DO_MOUNT_CONTROL,true ,pitch_offset*120,roll_offset*120,yaw_offset*120,0,0,0,3);
     qDebug()<<pitch_offset*120<<roll_offset*120<<yaw_offset*120;
 }
 

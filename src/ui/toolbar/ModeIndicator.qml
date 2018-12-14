@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -46,7 +46,7 @@ Item {
     QGCCircleProgress{
         id:                     modeircle
         anchors.left:           parent.left
-        width:                  mainWindow.tbHeight*1.5
+        width:                  mainWindow.tbHeight*1.4
         value:                  0
         valuecolor:             colorGrey
         anchors.verticalCenter: parent.verticalCenter

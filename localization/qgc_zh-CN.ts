@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN" sourcelanguage="en">
 <context>
@@ -10767,7 +10767,7 @@ Is this really what you want?</source>
     <message>
         <location filename="../src/QmlControls/ParameterEditor.qml" line="289"/>
         <source>Parameter Files (*.%1)</source>
-        <translation>参数文件 (*。%1)</translation>
+        <translation>参数文件 (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/QmlControls/ParameterEditor.qml" line="289"/>
@@ -16429,8 +16429,7 @@ Click Ok to start calibration.</source>
     <message>
         <location filename="../src/ui/toolbar/VTOLModeIndicator.qml" line="26"/>
         <source>VTOL: Multi-Rotor</source>
-        <translation>VTOL：多旋翼
-</translation>
+        <translation type="unfinished">VTOL：多旋翼</translation>
     </message>
 </context>
 <context>

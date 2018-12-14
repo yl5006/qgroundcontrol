@@ -1282,3 +1282,6 @@ contains (CONFIG, QGC_DISABLE_BUILD_SETUP) {
 #
 
 include(QGCInstaller.pri)
+
+DISTFILES += \
+    报警id.xlsx

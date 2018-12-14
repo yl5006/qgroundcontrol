@@ -102,7 +102,7 @@ Item {
             anchors.leftMargin:  size*0.55
             horizontalAlignment: Text.AlignRight;
             text:               vehicle ? heading.toFixed(0)+"°" :qsTr("OFF")
-            font.pointSize:     ScreenTools.defaultFontPointSize
+            font.pointSize:     ScreenTools.mediumFontPointSize
             font.bold:          true
         }
     }

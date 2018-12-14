@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -37,7 +37,7 @@ Item {
     QGCCircleProgress{
         id:          telemcircle
         anchors.left:  parent.left
-        width:       mainWindow.tbHeight*1.5
+        width:       mainWindow.tbHeight * 1.4
         value:       activeVehicle ? (100 - activeVehicle.mavlinkLossPercent ) /100 : 0
         valuecolor:  activeVehicle ? getRSSIColor(100-activeVehicle.mavlinkLossPercent):qgcPal.text
         anchors.verticalCenter: parent.verticalCenter

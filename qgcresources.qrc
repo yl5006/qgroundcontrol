@@ -343,6 +343,7 @@
         <file>resources/icons/qgroundcontrol.ico</file>
 	<file alias="buttoncircle.svg">resources/buttoncircle.svg</file>
         <file alias="startpage.png">resources/startpage.png</file>
+	<file alias="thumb.png">resources/thumb.png</file>
 	<file alias="radiocalibration.svg">resources/radiocalibration.svg</file>
 	<file alias="radioskip.svg">resources/radioskip.svg</file>
     </qresource>

@@ -1,4 +1,4 @@
-﻿#include "opencvfacedetectaction.h"
+#include "opencvfacedetectaction.h"
 #include <QDebug>
 #include <QTime>
 
@@ -17,7 +17,6 @@ OpenCVfaceDetectAction::~OpenCVfaceDetectAction()
 void OpenCVfaceDetectAction::action(Mat &imgin, Mat &imgout)
 {
       std::vector<Rect> faces;
-      Mat frame_gray;
 
       cvtColor(imgin, imgout, CV_BGR2RGB);
       cvtColor(imgin, frame_gray, CV_BGR2GRAY );

@@ -1,4 +1,4 @@
-﻿#ifndef OPENCVFACEDETECTACTION_H
+#ifndef OPENCVFACEDETECTACTION_H
 #define OPENCVFACEDETECTACTION_H
 #include "opencvaction.h"
 #include <vector>
@@ -16,7 +16,7 @@ public:
 
 private:
     CascadeClassifier m_cascade;
-
+    Mat frame_gray;
 
 };
 

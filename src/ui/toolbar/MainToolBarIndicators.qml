@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -33,7 +33,7 @@ Item {
             if (_clickCount == 5 && !QGroundControl.corePlugin.showAdvancedUI) {
                 advancedModeConfirmation.visible = true
             } else if (_clickCount == 7) {
-                QGroundControl.corePlugin.showTouchAreas = true
+//                QGroundControl.corePlugin.showTouchAreas = true
             }
         }
 
@@ -126,8 +126,8 @@ Item {
 
         Image {
             id:                     connect
-            width:                  ScreenTools.defaultFontPixelHeight * 4
-            height:                 ScreenTools.defaultFontPixelHeight * 4
+            width:                  ScreenTools.defaultFontPixelHeight * 2.5
+            height:                 ScreenTools.defaultFontPixelHeight * 2.5
             fillMode:               Image.PreserveAspectFit
             source:                 "/qmlimages/unconnect.svg"
             MouseArea{

@@ -82,7 +82,7 @@ Item {
     QGCCircleProgress{
         id:       gpsycircle
         anchors.left:  parent.left
-        width:    mainWindow.tbHeight*1.5
+        width:    mainWindow.tbHeight * 1.4
         value:    activeVehicle ? activeVehicle.gps.count>15?0.99:activeVehicle.gps.count/15:0
         valuecolor:     colorGrey
         anchors.verticalCenter: parent.verticalCenter

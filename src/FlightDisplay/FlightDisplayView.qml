@@ -598,21 +598,19 @@ QGCView {
                     }
                 }
             ]
-
+/*
             OpenCVcamera {
                 id:opencvCamera
-                m_cameraId: 0
                 m_run: true
-
             }
             OpenCVshowFrame {
                 id:             usbStreaming
                 anchors.fill:   parent
                 m_capture: opencvCamera
-                m_frameRate: 24
+                m_frameRate: 16
                 m_run: true
             }
-
+*/
             //-- Video Streaming
             FlightDisplayViewVideo {
                 id:             videoStreaming
@@ -620,14 +618,14 @@ QGCView {
                 visible:        QGroundControl.videoManager.isGStreamer
             }
             //-- UVC Video (USB Camera or Video Device)
-//            Loader {
-//                id:             cameraLoader
-//                anchors.fill:   parent
-//                visible:        !QGroundControl.videoManager.isGStreamer
-//                source:         QGroundControl.videoManager.uvcEnabled ? "qrc:/qml/FlightDisplayViewUVC.qml" : "qrc:/qml/FlightDisplayViewDummy.qml"
-//            }
+            Loader {
+                id:             cameraLoader
+                anchors.fill:   parent
+                visible:        !QGroundControl.videoManager.isGStreamer
+                source:         QGroundControl.videoManager.uvcEnabled ? "qrc:/qml/FlightDisplayViewUVC.qml" : "qrc:/qml/FlightDisplayViewDummy.qml"
+            }
 
-     /*       MouseArea{
+            MouseArea{
                 id:                 itemDrag
                 anchors.fill:       parent
                 property var        preMousex
@@ -639,11 +637,11 @@ QGCView {
                 onReleased:{
                     var movex = mouse.x-preMousex
                     var movey = mouse.y-preMousey
-                    _activeVehicle.mountCONTROL(movey/videoWindow.height,0.0,movex/videoWindow.width)
+                    _activeVehicle.mountControlAdd(movey/videoWindow.height,0.0,movex/videoWindow.width)
                     console.log(movex/videoWindow.width)
                     console.log(movey/videoWindow.height)
                 }
-            }*/
+            }
         }
 
         QGCPipable {
