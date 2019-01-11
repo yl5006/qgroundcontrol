@@ -290,7 +290,7 @@ Item {
         }
     }
 
-    //logo
+    /*logo
     Rectangle {
         id:                 logo
         y:                  0
@@ -374,7 +374,7 @@ Item {
             duration: 1000
             running: !activeVehicle
         }
-    }
+    }*/
     //-- Main UI
 
     MainTool {
@@ -383,7 +383,7 @@ Item {
         anchors.left:       parent.left
         mainWindow:         mainWindow
         anchors.right:      parent.right
-        anchors.top:        logo.bottom
+        anchors.top:        parent.top
         z:                  QGroundControl.zOrderTopMost
         visible:            activeVehicle && !QGroundControl.videoManager.fullScreen
         Component.onCompleted:  ScreenTools.availableHeight = parent.height - toolBar.height
@@ -478,7 +478,7 @@ Item {
         anchors.left:       parent.left
         anchors.leftMargin: mainWindow.tbHeight*2
         anchors.right:      parent.right
-        anchors.top:        toolBar.visible?toolBar.bottom:logo.bottom
+        anchors.top:        toolBar.visible?toolBar.bottom:parent.top
         anchors.bottom:     parent.bottom
         visible:            false
 

@@ -72,7 +72,7 @@ Item {
         id:             indicatorRow
         anchors.top:    parent.top
         anchors.bottom: parent.bottom
-        spacing:        ScreenTools.defaultFontPixelWidth * 8
+        spacing:        ScreenTools.defaultFontPixelWidth * 4
         visible:        _activeVehicle && !_communicationLost
         anchors.horizontalCenter: parent.horizontalCenter
         Repeater {
@@ -119,11 +119,22 @@ Item {
     }
 */
     Row {
-        anchors.fill:       parent
-        layoutDirection:    Qt.RightToLeft
+//        anchors.fill:       parent
+        anchors.right:      parent.right
+        anchors.rightMargin:  ScreenTools.defaultFontPixelWidth/2
+        anchors.verticalCenter: parent.verticalCenter
+//        layoutDirection:    Qt.RightToLeft
         spacing:            ScreenTools.defaultFontPixelWidth
         visible:            _communicationLost
 
+        QGCLabel {
+            id:                     connectionLost
+            anchors.verticalCenter: parent.verticalCenter
+            text:                   qsTr("COMMUNICATION LOST")
+            font.pointSize:         ScreenTools.largeFontPointSize
+            font.family:            ScreenTools.demiboldFontFamily
+            color:                  qgcPal.colorRed
+        }
         Image {
             id:                     connect
             width:                  ScreenTools.defaultFontPixelHeight * 2.5
@@ -136,15 +147,6 @@ Item {
                     _activeVehicle.disconnectInactiveVehicle()
                 }
             }
-        }
-
-        QGCLabel {
-            id:                     connectionLost
-            anchors.verticalCenter: parent.verticalCenter
-            text:                   qsTr("COMMUNICATION LOST")
-            font.pointSize:         ScreenTools.largeFontPointSize
-            font.family:            ScreenTools.demiboldFontFamily
-            color:                  qgcPal.colorRed
-        }
+        }        
     }
 }

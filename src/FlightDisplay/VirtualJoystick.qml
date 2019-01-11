@@ -33,24 +33,25 @@ Item {
     JoystickThumbPad {
         id:                     leftStick
         anchors.leftMargin:     xPositionDelta
-        anchors.bottomMargin:   -yPositionDelta
+      //  anchors.bottomMargin:   -yPositionDelta
         anchors.left:           parent.left
-        anchors.bottom:         parent.bottom
+     //   anchors.bottom:         parent.bottom
         width:                  parent.height
         height:                 parent.height
         yAxisThrottle:          true
         lightColors:            useLightColors
-        throttle:               true
+        //throttle:               true
     }
 
     JoystickThumbPad {
         id:                     rightStick
         anchors.rightMargin:    -xPositionDelta
-        anchors.bottomMargin:   -yPositionDelta
+     //   anchors.bottomMargin:   -yPositionDelta
         anchors.right:          parent.right
-        anchors.bottom:         parent.bottom
+     //   anchors.bottom:         parent.bottom
         width:                  parent.height
         height:                 parent.height
         lightColors:            useLightColors
+        throttle:               true
     }
 }

@@ -201,9 +201,9 @@ Item {
             guidedModeConfirm.confirmText = qsTr("Arming")
             break;
         case actionDisarm:
-            if (_vehicleFlying) {
+            /*if (_vehicleFlying) {
                 return
-            }
+            }*/
             guidedModeConfirm.confirmText = qsTr("Disarm")
             break;
         case actionEmergencyStop:
@@ -330,7 +330,7 @@ Item {
     }
 
     Component.onCompleted: {
-        _setInstrumentWidget()
+        //_setInstrumentWidget()
     }
 
     //-- Map warnings
@@ -553,7 +553,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     imageResource: "/qmlimages/PauseUav.svg"
                     text:       qsTr("Pause")
-                    visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.pauseVehicleSupported && _activeVehicle.flying
+                    visible:    false//(_activeVehicle && _activeVehicle.armed) && _activeVehicle.pauseVehicleSupported && _activeVehicle.flying
                     onClicked:  {
                         guidedModeHideTimer.restart()
                         widgetRoot.confirmAction(widgetRoot.actionPause)
@@ -566,7 +566,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     imageResource: "/qmlimages/parachute.svg"
                     text:       qsTr("Stop")
-                    visible:    _activeVehicle && _activeVehicle.flying && (_activeVehicle.fixedWing || _activeVehicle.vtol)
+                    visible:    false//_activeVehicle && _activeVehicle.flying && (_activeVehicle.fixedWing || _activeVehicle.vtol)
                     onClicked:  {
                         guidedModeHideTimer.restart()
                         orbitMapCircle.hide()
@@ -584,7 +584,7 @@ Item {
                     visible:    _activeVehicle
                     onClicked:  {
                          orbitMapCircle.hide()
-                        widgetRoot.confirmAction(_activeVehicle.flying ? widgetRoot.actionContinueMission : widgetRoot.actionStartMission)
+                        widgetRoot.confirmAction(_activeVehicle.armed ? widgetRoot.actionDisarm : widgetRoot.actionArm)
                     }
                 }
 
@@ -606,7 +606,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     imageResource: "/qmlimages/Returnhome.svg"
                     text:       qsTr("RTL")
-                    visible:    (_activeVehicle && _activeVehicle.armed) && _activeVehicle.guidedModeSupported && _activeVehicle.flying
+                    visible:    false//(_activeVehicle && _activeVehicle.armed) && _activeVehicle.guidedModeSupported && _activeVehicle.flying
                     onClicked:  {
                                 widgetRoot.confirmAction(widgetRoot.actionRTL)
                                 orbitMapCircle.hide()
@@ -620,7 +620,7 @@ Item {
                     height:      width
                     anchors.verticalCenter: parent.verticalCenter
                     imageResource: "/qmlimages/high.svg"
-                    visible:    (_activeVehicle && _activeVehicle.flying) && _activeVehicle.guidedModeSupported && _activeVehicle.armed
+                    visible:    false//(_activeVehicle && _activeVehicle.flying) && _activeVehicle.guidedModeSupported && _activeVehicle.armed
                     onClicked:  widgetRoot.confirmAction(widgetRoot.actionChangeAlt)
                 }
 

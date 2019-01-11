@@ -28,7 +28,7 @@ import QGroundControl.FlightMap     1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
-import OpenCV 1.0
+//import OpenCV 1.0
 
 /// Flight Display View
 QGCView {
@@ -127,7 +127,7 @@ QGCView {
         target:                 QGroundControl.multiVehicleManager
         onActiveVehicleChanged: {
             if (_activeVehicle) {
-                root.showDialog(flightcheck, qsTr("please check the Vehicle, be sure safe to fly"), showDialogDefaultWidth)
+            //    root.showDialog(flightcheck, qsTr("please check the Vehicle, be sure safe to fly"), showDialogDefaultWidth)
             }
         }
     }
@@ -761,10 +761,11 @@ QGCView {
             id:                         virtualJoystickMultiTouch
             z:                          _panel.z + 5
             width:                      parent.width  - (_flightVideoPipControl.width / 2)
-            height:                     Math.min(ScreenTools.availableHeight * 0.25, ScreenTools.defaultFontPixelWidth * 20)//
+            height:                     Math.max(ScreenTools.availableHeight * 0.6, ScreenTools.defaultFontPixelWidth * 30)//
             visible:                    (_virtualJoystick ? _virtualJoystick.value : false) && !QGroundControl.videoManager.fullScreen && !(_activeVehicle ? _activeVehicle.highLatencyLink : false)
-            anchors.bottom:             _flightVideoPipControl.top
-            anchors.bottomMargin:       ScreenTools.defaultFontPixelHeight * 2
+         //   anchors.bottom:             _flightVideoPipControl.top
+         //   anchors.bottomMargin:       ScreenTools.defaultFontPixelHeight * 2
+            anchors.verticalCenter:     flightWidgets.verticalCenter
             anchors.horizontalCenter:   flightWidgets.horizontalCenter
             source:                     "qrc:/qml/VirtualJoystick.qml"
             active:                     _virtualJoystick ? _virtualJoystick.value : false

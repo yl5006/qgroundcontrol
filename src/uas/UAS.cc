@@ -957,10 +957,10 @@ void UAS::setExternalControlSetpoint(float roll, float pitch, float yaw, float t
     }
 
     // Store the previous manual commands
-    static float manualRollAngle = 0.0;
-    static float manualPitchAngle = 0.0;
-    static float manualYawAngle = 0.0;
-    static float manualThrust = 0.0;
+    /*static*/ float manualRollAngle = 0.0;
+    /*static*/ float manualPitchAngle = 0.0;
+   /* static*/ float manualYawAngle = 0.0;
+    /*static*/ float manualThrust = 0.0;
     static quint16 manualButtons = 0;
     static quint8 countSinceLastTransmission = 0; // Track how many calls to this function have occurred since the last MAVLink transmission
 
@@ -981,7 +981,7 @@ void UAS::setExternalControlSetpoint(float roll, float pitch, float yaw, float t
         // Ensure that another message will be sent the next time this function is called
         countSinceLastTransmission = 10;
     }
-
+    sendCommand = true;
     // Now if we should trigger an update, let's do that
     if (sendCommand) {
         // Save the new manual control inputs
@@ -1120,7 +1120,7 @@ void UAS::setExternalControlSetpoint(float roll, float pitch, float yaw, float t
             const float newYawCommand = yaw * axesScaling;
             const float newThrustCommand = thrust * axesScaling;
 
-            //qDebug() << newRollCommand << newPitchCommand << newYawCommand << newThrustCommand;
+//            qDebug() << newRollCommand << newPitchCommand << newYawCommand << newThrustCommand;
 
             // Send the MANUAL_COMMAND message
             mavlink_msg_manual_control_pack_chan(mavlink->getSystemId(),

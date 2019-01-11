@@ -554,7 +554,7 @@ QGCView {
                                     QGroundControl.settingsManager.autoConnectSettings.autoConnectRTKGPS
                                 ]
 
-                                property var names: [ /*qsTr("Pixhawk"),*/ qsTr("Radio"), qsTr("UDP"), /* qsTr("PX4 Flow"), qsTr("LibrePilot"), qsTr("UDP"), */qsTr("RTK GPS") ]
+                                property var names: [ qsTr("usb"), qsTr("Radio"), qsTr("UDP"), /* qsTr("PX4 Flow"), qsTr("LibrePilot"), qsTr("UDP"), */qsTr("RTK GPS") ]
 
                                     FactCheckBox {
                                         text:       autoConnectRepeater.names[index]

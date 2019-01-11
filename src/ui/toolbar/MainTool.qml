@@ -114,7 +114,7 @@ Rectangle {
             visible:            _activeVehicle
         }
 
-        QGCLabel {
+       /* QGCLabel {
             id:                     waitForVehicle
             anchors.verticalCenter: parent.verticalCenter
             text:                   qsTr("Wait for connect")
@@ -122,7 +122,7 @@ Rectangle {
             font.family:            ScreenTools.demiboldFontFamily
             color:                  colorRed
             visible:                !_activeVehicle
-        }
+        }*/
     }
 
 //    Item {

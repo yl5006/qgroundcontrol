@@ -282,6 +282,7 @@ Set to 2 to use heading from motion capture</short_desc>
       <scope>lib/battery</scope>
       <values>
         <value code="0">Unconfigured</value>
+        <value code="1">1S Battery</value>
         <value code="2">2S Battery</value>
         <value code="3">3S Battery</value>
         <value code="4">4S Battery</value>

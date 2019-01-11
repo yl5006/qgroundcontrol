@@ -1,4 +1,4 @@
-﻿[
+[
 {
     "name":             "OfflineEditingFirmwareType",
     "shortDescription": "Offline editing firmware type",
@@ -101,7 +101,7 @@
     "shortDescription": "Show virtual joystick",
     "longDescription":  "If this option is enabled the virtual joystick will be shown on the Fly view.",
     "type":             "bool",
-    "defaultValue":     false
+    "defaultValue":     true
 },
 {
     "name":             "GstreamerDebugLevel",
@@ -132,7 +132,7 @@
     "units":            "pt",
     "min":              6,
     "max":              48,
-    "defaultValue":     0
+    "defaultValue":     10
 },
 {
     "name":             "StyleIsDark",
@@ -141,7 +141,7 @@
     "type":             "uint32",
     "enumStrings":      "Indoor,Outdoor",
     "enumValues":       "1,0",
-    "defaultValue":     0
+    "defaultValue":     1
 },
 {
     "name":             "ShowLargeCompass",
