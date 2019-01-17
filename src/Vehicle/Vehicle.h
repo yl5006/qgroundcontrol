@@ -753,6 +753,7 @@ public:
     Q_INVOKABLE void triggerCamera(void);
     Q_INVOKABLE void triggerCameraTime(float mstime);
     Q_INVOKABLE void triggerCameraDist(float mstime);
+    Q_INVOKABLE void setLedLineStatus(int mode,float interval,int onoff);
     Q_INVOKABLE void sendPlan(QString planFile);
 
 //#if 0

@@ -55,6 +55,16 @@ FlightMap {
     property bool   _disableVehicleTracking:    false
     property bool   _keepVehicleCentered:       _mainIsMap ? false : true
 
+    property int lineA: 0
+    property int lineB: 1
+    property int lineC: 2
+    property int lineA_B_C: 3
+    property int lineAB_BC_CA: 4
+    property int lineABC: 5
+    property int ledOff: 0
+    property int ledOn: 1
+
+
     function updateAirspace(reset) {
         if(_airspaceEnabled) {
             var coordinateNW = flightMap.toCoordinate(Qt.point(0,0), false /* clipToViewPort */)
@@ -330,7 +340,7 @@ FlightMap {
             color:      "grey"
         }
         //-- 虚拟遥控
-        RoundButton {
+      /*  RoundButton {
             id:                 yaokong
             buttonImage:        "/qmlimages/yaokong.svg"
             lightBorders:       isSatelliteMap
@@ -343,10 +353,66 @@ FlightMap {
             onClicked: {
                 _virtualJoystick.value = checked ? 1 : 0
             }
+        }*/
+
+        //-- Map Type Control
+        DropButton {
+            id:                 ledline
+            dropDirection:      dropDown
+            buttonImage:        "/qmlimages/MapType.svg"
+            viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
+            exclusiveGroup:     dropButtonsExclusiveGroup
+            z:                  QGroundControl.zOrderWidgets
+            lightBorders:       isSatelliteMap
+            dropDownComponent: Component {
+                Column {
+                    spacing: ScreenTools.defaultFontPixelWidth/2
+                    SubMenuButton {
+                        imageResource:      "/qmlimages/clearmission.svg"
+                        enabled:    QGroundControl.multiVehicleManager.activeVehicle
+                        text:               qsTr("Line A-B Alternate Flashing")
+                        onClicked:  {
+                            dropButtonsExclusiveGroup.current = null
+                        }
+                    }
+                    SubMenuButton {
+                        imageResource:      "/qmlimages/clearmission.svg"
+                        enabled:    QGroundControl.multiVehicleManager.activeVehicle
+                        text:               qsTr("Line AB Flashing")
+                        onClicked:  {
+                            dropButtonsExclusiveGroup.current = null
+                        }
+                    }
+                    SubMenuButton {
+                        imageResource:      "/qmlimages/clearmission.svg"
+                        enabled:    QGroundControl.multiVehicleManager.activeVehicle
+                        text:               qsTr("Line AB ON")
+                        onClicked:  {
+                            _activeVehicle.setLedLineStatus(lineABC,0.0,ledOn)
+                          dropButtonsExclusiveGroup.current = null
+                        }
+                    }
+                    SubMenuButton {
+                        imageResource:      "/qmlimages/clearmission.svg"
+                        enabled:    QGroundControl.multiVehicleManager.activeVehicle
+                        text:               qsTr("Line AB OFF")
+                        onClicked:  {
+                          _activeVehicle.setLedLineStatus(lineABC,0.0,ledOff)
+                          dropButtonsExclusiveGroup.current = null
+                        }
+                    }
+                    SubMenuButton {
+                        imageResource:      "/qmlimages/clearmission.svg"
+                        enabled:    QGroundControl.multiVehicleManager.activeVehicle
+                        text:               qsTr("User define")
+                        onClicked:  {
+                           dropButtonsExclusiveGroup.current = null
+                        }
+                    }
+                }
+            }
         }
     }
-
-
 
 
     // Add trajectory points to the map

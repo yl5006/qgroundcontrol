@@ -35,7 +35,7 @@ Rectangle {
     property real   _defaultSize:   ScreenTools.defaultFontPixelHeight * (9)
 
     property color  _backgroundColor:   qgcPal.window
-    property real   _spacing:           ScreenTools.defaultFontPixelHeight * 0.33
+    property real   _spacing:           ScreenTools.defaultFontPointSize * 0.33
     property real   _topBottomMargin:   (instrumentPanel.height * 0.05) / 2
  //   property real   _availableValueHeight: _maxHeight - (attitudeWidget.height + _spacer1.height + _spacer2.height + (_spacing * 4)) - (_showCompass ? compass.height : 0)
     property real   _availableValueHeight: _maxHeight - (_spacing * 4)

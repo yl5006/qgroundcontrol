@@ -476,6 +476,9 @@ void LinkManager::_updateAutoConnectLinks(void)
         // Default UDPConfiguration is set up for autoconnect
         UDPConfiguration* udpConfig = new UDPConfiguration(_defaultUPDLinkName);
         udpConfig->setDynamic(true);
+#ifdef __mobile__
+        udpConfig->setHighLatency(true);
+#endif
         SharedLinkConfigurationPointer config = addConfiguration(udpConfig);
         createConnectedLink(config);
         emit linkConfigurationsChanged();

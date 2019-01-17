@@ -2607,7 +2607,7 @@ void Vehicle::_remoteControlRSSIChanged(uint8_t rssi)
 void Vehicle::virtualTabletJoystickValue(double roll, double pitch, double yaw, double thrust)
 {
     // The following if statement prevents the virtualTabletJoystick from sending values if the standard joystick is enabled
-    if ( !_joystickEnabled && !_highLatencyLink) {
+    if ( !_joystickEnabled/* && !_highLatencyLink*/) {
         _uas->setExternalControlSetpoint(yaw, pitch,roll , thrust, 0, JoystickModeRC);
     }
 }
@@ -3456,6 +3456,17 @@ void Vehicle::triggerCameraDist(float dist)
                    0.0,                             // trigger camera
                    0.0,                             // param 6 unused
                    0.0);                            // param 1 test shot flag
+}
+
+void Vehicle::setLedLineStatus(int mode,float interval,int onoff)
+{
+    sendMavCommand(_defaultComponentId,
+                   MAV_CMD_SET_LED_LINE_STATUS,
+                   false,                            // show errors
+                   (float)mode, interval, (float)onoff, 0.0,      // param 1-4
+                   0.0,                             // param 5 unused
+                   0.0,                             // param 6 unused
+                   0.0);                            // param 7 unused
 }
 
 void Vehicle::setVtolInFwdFlight(bool vtolInFwdFlight)

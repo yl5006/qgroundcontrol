@@ -171,6 +171,11 @@ Item {
         }
     }
 
+    Component.onCompleted: {
+        mainWindow.showFlyView()
+    }
+
+
     MessageDialog {
         id:                 unsavedMissionCloseDialog
         title:              qsTr("%1 close").arg(QGroundControl.appName)
@@ -406,6 +411,7 @@ Item {
         onShowPlanView:         mainWindow.showPlanView()
         onShowFlyView:          mainWindow.showFlyView()
         onShowAnalyzeView:      mainWindow.showAnalyzeView()
+        visible:                !ScreenTools.isMobile
         z:                      QGroundControl.zOrderTopMost
         state:                  "Init"
         property real   _barMargin:     0

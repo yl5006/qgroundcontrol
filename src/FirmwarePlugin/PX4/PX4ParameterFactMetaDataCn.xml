@@ -4183,9 +4183,9 @@ Used to calculate increased terrain random walk nosie due to movement</short_des
         <value code="1">悬停(盘旋)</value>
         <value code="2">返航</value>
         <value code="3">降落</value>
-<!--        <value code="4">Data Link Auto Recovery (CASA Outback Challenge rules)</value>
-        <value code="5">Terminate</value>
-        <value code="6">Lockdown</value>-->
+        <value code="4">Data Link Auto Recovery (CASA Outback Challenge rules)</value>
+        <value code="5">终止</value>
+        <value code="6">Lockdown</value>
       </values>
     </parameter>
     <parameter default="1" name="NAV_FORCE_VT" type="INT32">
@@ -4241,9 +4241,9 @@ Used to calculate increased terrain random walk nosie due to movement</short_des
         <value code="1">悬停(盘旋)</value>
         <value code="2">返航</value>
         <value code="3">降落</value>
-<!--    <value code="4">RC Auto Recovery (CASA Outback Challenge rules)</value>
-        <value code="5">Terminate</value>
-        <value code="6">Lockdown</value>-->
+        <value code="4">RC Auto Recovery (CASA Outback Challenge rules)</value>
+        <value code="5">终止</value>
+        <value code="6">Lockdown</value>
       </values>
     </parameter>
     <parameter default="120.0" name="NAV_RCL_LT" type="FLOAT">

@@ -70,22 +70,22 @@ PX4FirmwarePlugin::PX4FirmwarePlugin(void)
 
     static const struct Modes2Name rgModes2Name[] = {
         //main_mode                         sub_mode                                canBeSet  FW      MC
-        { PX4_CUSTOM_MAIN_MODE_MANUAL,      0,                                      true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_STABILIZED,  0,                                      true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_ACRO,        0,                                      true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_RATTITUDE,   0,                                      false,  true,   true },
-        { PX4_CUSTOM_MAIN_MODE_ALTCTL,      0,                                      true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_POSCTL,      0,                                      true,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_MANUAL,      0,                                      true,    true,   true },
+        { PX4_CUSTOM_MAIN_MODE_STABILIZED,  0,                                      false,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_ACRO,        0,                                      false,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_RATTITUDE,   0,                                      false,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_ALTCTL,      0,                                      true,    true,   true },
+        { PX4_CUSTOM_MAIN_MODE_POSCTL,      0,                                      false,   true,   true },
         // simple can't be set by the user right now
         { PX4_CUSTOM_MAIN_MODE_SIMPLE,      0,                                      false,   false,  true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LOITER,        true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,       true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,           true,   true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET, true,   false,  true },
-        { PX4_CUSTOM_MAIN_MODE_OFFBOARD,    0,                                      false,  false,  true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LOITER,        false,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_MISSION,       false,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTL,           false,   true,   true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET, false,   false,  true },
+        { PX4_CUSTOM_MAIN_MODE_OFFBOARD,    0,                                      false,   false,  true },
         // modes that can't be directly set by the user
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_LAND,          false,  true,   true },
-        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND,      true,   false,  true },
+        { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND,      false,  false,  true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_READY,         false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_RTGS,          false,  true,   true },
         { PX4_CUSTOM_MAIN_MODE_AUTO,        PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF,       false,  true,   true },
@@ -296,6 +296,7 @@ QList<MAV_CMD> PX4FirmwarePlugin::supportedMissionCommands(void)
          << MAV_CMD_DO_SET_ROI_LOCATION << MAV_CMD_DO_SET_ROI_WPNEXT_OFFSET << MAV_CMD_DO_SET_ROI_NONE
          << MAV_CMD_DO_MOUNT_CONFIGURE
          << MAV_CMD_DO_MOUNT_CONTROL
+         << MAV_CMD_SET_LED_LINE_STATUS
     //     << MAV_CMD_SET_CAMERA_MODE
          << MAV_CMD_IMAGE_START_CAPTURE << MAV_CMD_IMAGE_STOP_CAPTURE << MAV_CMD_VIDEO_START_CAPTURE << MAV_CMD_VIDEO_STOP_CAPTURE
          << MAV_CMD_NAV_DELAY
