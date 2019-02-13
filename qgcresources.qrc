@@ -156,6 +156,7 @@
         <file alias="airplanePlane.svg">src/FlightMap/Images/airplanePlane.svg</file>
         <file alias="ZoomPlus.svg">src/FlightMap/Images/ZoomPlus.svg</file>
         <file alias="ZoomMinus.svg">src/FlightMap/Images/ZoomMinus.svg</file>
+	<file alias="lightled.svg">src/FlightMap/Images/lightled.svg</file>
 	<file alias="setCammer.svg">src/FlightMap/Images/setCammer.svg</file>
 	<file alias="hide.svg">src/FlightMap/Images/hide.svg</file>
 	<file alias="tool.svg">src/FlightMap/Images/tool.svg</file>	

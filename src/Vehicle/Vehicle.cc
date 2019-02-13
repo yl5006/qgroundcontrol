@@ -206,6 +206,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _clockFactGroup(this)
     , _distanceSensorFactGroup(this)
     , _estimatorStatusFactGroup(this)
+    , _led(NULL)
 {
     connect(_joystickManager, &JoystickManager::activeJoystickChanged, this, &Vehicle::_loadSettings);
     connect(qgcApp()->toolbox()->multiVehicleManager(), &MultiVehicleManager::activeVehicleAvailableChanged, this, &Vehicle::_loadSettings);
@@ -287,6 +288,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     connect(&_adsbTimer, &QTimer::timeout, this, &Vehicle::_adsbTimerTimeout);
     _adsbTimer.setSingleShot(false);
     _adsbTimer.start(1000);
+    _led =new LedControl(this);
 }
 
 // Disconnected Vehicle for offline editing
@@ -3458,12 +3460,12 @@ void Vehicle::triggerCameraDist(float dist)
                    0.0);                            // param 1 test shot flag
 }
 
-void Vehicle::setLedLineStatus(int mode,float interval,int onoff)
+void Vehicle::setLedLineStatus(int mode,float interval,int onoff,float activetime)
 {
     sendMavCommand(_defaultComponentId,
                    MAV_CMD_SET_LED_LINE_STATUS,
                    false,                            // show errors
-                   (float)mode, interval, (float)onoff, 0.0,      // param 1-4
+                   (float)mode, interval, (float)onoff, activetime,      // param 1-4
                    0.0,                             // param 5 unused
                    0.0,                             // param 6 unused
                    0.0);                            // param 7 unused
@@ -3717,6 +3719,21 @@ void Vehicle::forceInitialPlanRequestComplete(void)
 void Vehicle::sendPlan(QString planFile)
 {
     PlanMasterController::sendPlanToVehicle(this, planFile);
+}
+
+void Vehicle::setLedLineStatusbytext(QString planFile)
+{
+    if(_led->isRunning()){
+        qDebug()<<"runing";
+        _led->SetLoop(true);
+        _led->quit();
+        _led->wait();
+    }else
+    {
+        _led->SetLoop(false);
+        _led->SetText(planFile);
+        _led->start();
+    }
 }
 
 QString Vehicle::hobbsMeter()

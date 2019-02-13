@@ -57,10 +57,8 @@ FlightMap {
 
     property int lineA: 0
     property int lineB: 1
-    property int lineC: 2
-    property int lineA_B_C: 3
-    property int lineAB_BC_CA: 4
-    property int lineABC: 5
+    property int lineAB: 2
+    property int lineA_B: 3
     property int ledOff: 0
     property int ledOn: 1
 
@@ -359,7 +357,7 @@ FlightMap {
         DropButton {
             id:                 ledline
             dropDirection:      dropDown
-            buttonImage:        "/qmlimages/MapType.svg"
+            buttonImage:        "/qmlimages/lightled.svg"
             viewportMargins:    ScreenTools.defaultFontPixelWidth / 2
             exclusiveGroup:     dropButtonsExclusiveGroup
             z:                  QGroundControl.zOrderWidgets
@@ -368,44 +366,47 @@ FlightMap {
                 Column {
                     spacing: ScreenTools.defaultFontPixelWidth/2
                     SubMenuButton {
-                        imageResource:      "/qmlimages/clearmission.svg"
+                        imageResource:      "/qmlimages/lightled.svg"
                         enabled:    QGroundControl.multiVehicleManager.activeVehicle
                         text:               qsTr("Line A-B Alternate Flashing")
                         onClicked:  {
+                             _activeVehicle.setLedLineStatus(lineA_B,1.0,ledOn)
                             dropButtonsExclusiveGroup.current = null
                         }
                     }
                     SubMenuButton {
-                        imageResource:      "/qmlimages/clearmission.svg"
+                        imageResource:      "/qmlimages/lightled.svg"
                         enabled:    QGroundControl.multiVehicleManager.activeVehicle
                         text:               qsTr("Line AB Flashing")
                         onClicked:  {
+                            _activeVehicle.setLedLineStatus(lineAB,1.0,ledOn)
                             dropButtonsExclusiveGroup.current = null
                         }
                     }
                     SubMenuButton {
-                        imageResource:      "/qmlimages/clearmission.svg"
+                        imageResource:      "/qmlimages/lightled.svg"
                         enabled:    QGroundControl.multiVehicleManager.activeVehicle
                         text:               qsTr("Line AB ON")
                         onClicked:  {
-                            _activeVehicle.setLedLineStatus(lineABC,0.0,ledOn)
+                            _activeVehicle.setLedLineStatus(lineAB,0.0,ledOn)
                           dropButtonsExclusiveGroup.current = null
                         }
                     }
                     SubMenuButton {
-                        imageResource:      "/qmlimages/clearmission.svg"
+                        imageResource:      "/qmlimages/lightled.svg"
                         enabled:    QGroundControl.multiVehicleManager.activeVehicle
                         text:               qsTr("Line AB OFF")
                         onClicked:  {
-                          _activeVehicle.setLedLineStatus(lineABC,0.0,ledOff)
+                          _activeVehicle.setLedLineStatus(lineAB,0.0,ledOff)
                           dropButtonsExclusiveGroup.current = null
                         }
                     }
                     SubMenuButton {
-                        imageResource:      "/qmlimages/clearmission.svg"
+                        imageResource:      "/qmlimages/lightled.svg"
                         enabled:    QGroundControl.multiVehicleManager.activeVehicle
                         text:               qsTr("User define")
                         onClicked:  {
+                            _activeVehicle.setLedLineStatusbytext("A on B off")
                            dropButtonsExclusiveGroup.current = null
                         }
                     }

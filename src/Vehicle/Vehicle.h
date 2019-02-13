@@ -20,6 +20,7 @@
 #include "MAVLinkProtocol.h"
 #include "UASMessageHandler.h"
 #include "SettingsFact.h"
+#include "LedControlText.h"
 
 class UAS;
 class UASInterface;
@@ -35,6 +36,7 @@ class UASMessage;
 class SettingsManager;
 class ADSBVehicle;
 class QGCCameraManager;
+class LedControl;
 #if defined(QGC_AIRMAP_ENABLED)
 class AirspaceVehicleManager;
 #endif
@@ -753,7 +755,8 @@ public:
     Q_INVOKABLE void triggerCamera(void);
     Q_INVOKABLE void triggerCameraTime(float mstime);
     Q_INVOKABLE void triggerCameraDist(float mstime);
-    Q_INVOKABLE void setLedLineStatus(int mode,float interval,int onoff);
+    Q_INVOKABLE void setLedLineStatus(int mode,float interval,int onoff,float activetime = 0.2);
+    Q_INVOKABLE void setLedLineStatusbytext(QString planFile);
     Q_INVOKABLE void sendPlan(QString planFile);
 
 //#if 0
@@ -1522,5 +1525,5 @@ private:
     static const char* _settingsGroup;
     static const char* _joystickModeSettingsKey;
     static const char* _joystickEnabledSettingsKey;
-
+    LedControl *_led;
 };

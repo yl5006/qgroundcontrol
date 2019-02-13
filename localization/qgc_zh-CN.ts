@@ -2883,6 +2883,11 @@ propellers on the green thrusters and counter-clockwise propellers on the blue t
         <translation type="unfinished">常规</translation>
     </message>
     <message>
+        <location filename="../src/Airmap/AirmapSettings.qml" line="216"/>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../src/Airmap/AirmapSettings.qml" line="92"/>
         <source>Enable AirMap Services</source>
         <translation type="unfinished"></translation>
@@ -2934,11 +2939,6 @@ propellers on the green thrusters and counter-clockwise propellers on the blue t
         <location filename="../src/Airmap/AirmapSettings.qml" line="300"/>
         <source>User Name:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Airmap/AirmapSettings.qml" line="216"/>
-        <source></source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../src/Airmap/AirmapSettings.qml" line="218"/>
@@ -3067,11 +3067,6 @@ propellers on the green thrusters and counter-clockwise propellers on the blue t
     </message>
     <message>
         <location filename="../src/Airmap/AirmapSettings.qml" line="494"/>
-        <source>Active</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Airmap/AirmapSettings.qml" line="494"/>
         <source>Completed</source>
         <translation type="unfinished">已完成</translation>
     </message>
@@ -3079,6 +3074,11 @@ propellers on the green thrusters and counter-clockwise propellers on the blue t
         <location filename="../src/Airmap/AirmapSettings.qml" line="494"/>
         <source>Unknown</source>
         <translation type="unfinished">未知</translation>
+    </message>
+    <message>
+        <location filename="../src/Airmap/AirmapSettings.qml" line="494"/>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Airmap/AirmapSettings.qml" line="508"/>
@@ -3397,14 +3397,14 @@ propellers on the green thrusters and counter-clockwise propellers on the blue t
 <context>
     <name>AttitudeControlCopter</name>
     <message>
-        <location filename="../src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml" line="48"/>
-        <source>帮助</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml" line="50"/>
         <source></source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml" line="48"/>
+        <source>帮助</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/PX4/AttitudeControlCopter.qml" line="90"/>
@@ -3587,14 +3587,14 @@ IMAX(积分部的部分被限制在这个值)
 <context>
     <name>AttitudeControlPlane</name>
     <message>
-        <location filename="../src/AutoPilotPlugins/PX4/AttitudeControlPlane.qml" line="48"/>
-        <source>帮助</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/AutoPilotPlugins/PX4/AttitudeControlPlane.qml" line="50"/>
         <source></source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/AutoPilotPlugins/PX4/AttitudeControlPlane.qml" line="48"/>
+        <source>帮助</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/PX4/AttitudeControlPlane.qml" line="94"/>
@@ -5540,7 +5540,7 @@ IMAX(积分部的部分被限制在这个值)
     <message>
         <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="37"/>
         <source>通过USB接入你的设备</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/VehicleSetup/FirmwareUpgrade.qml" line="40"/>
@@ -6112,18 +6112,43 @@ IMAX(积分部的部分被限制在这个值)
 <context>
     <name>FlightDisplayViewMap</name>
     <message>
-        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="266"/>
+        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="274"/>
         <source>Clear Flight Trails</source>
         <translation>清除飞行轨迹</translation>
     </message>
     <message>
-        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="440"/>
+        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="371"/>
+        <source>Line A-B Alternate Flashing</source>
+        <translation>线A-B交替闪烁</translation>
+    </message>
+    <message>
+        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="380"/>
+        <source>Line AB Flashing</source>
+        <translation>线AB闪烁</translation>
+    </message>
+    <message>
+        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="389"/>
+        <source>Line AB ON</source>
+        <translation>线AB常亮</translation>
+    </message>
+    <message>
+        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="398"/>
+        <source>Line AB OFF</source>
+        <translation>线AB灭</translation>
+    </message>
+    <message>
+        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="407"/>
+        <source>User define</source>
+        <translation>用户编程</translation>
+    </message>
+    <message>
+        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="506"/>
         <source>R</source>
         <comment>rally point map item label</comment>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="486"/>
+        <location filename="../src/FlightDisplay/FlightDisplayViewMap.qml" line="552"/>
         <source>G</source>
         <comment>Goto here waypoint</comment>
         <translatorcomment>到这里</translatorcomment>
@@ -7106,7 +7131,7 @@ IMAX(积分部的部分被限制在这个值)
     <message>
         <location filename="../src/FlightDisplay/GuidedActionConfirm.qml" line="98"/>
         <source>-&gt;&gt;&gt;</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8021,30 +8046,30 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
         <translation>不允许连接: %1</translation>
     </message>
     <message>
-        <location filename="../src/comm/LinkManager.cc" line="565"/>
-        <location filename="../src/comm/LinkManager.cc" line="571"/>
-        <location filename="../src/comm/LinkManager.cc" line="576"/>
-        <location filename="../src/comm/LinkManager.cc" line="581"/>
+        <location filename="../src/comm/LinkManager.cc" line="568"/>
+        <location filename="../src/comm/LinkManager.cc" line="574"/>
+        <location filename="../src/comm/LinkManager.cc" line="579"/>
+        <location filename="../src/comm/LinkManager.cc" line="584"/>
         <source>%1 on %2 (AutoConnect)</source>
         <translation>%1 %2 (自动连接)</translation>
     </message>
     <message>
-        <location filename="../src/comm/LinkManager.cc" line="669"/>
+        <location filename="../src/comm/LinkManager.cc" line="672"/>
         <source>Shutdown</source>
         <translation>关机</translation>
     </message>
     <message>
-        <location filename="../src/comm/LinkManager.cc" line="680"/>
+        <location filename="../src/comm/LinkManager.cc" line="683"/>
         <source>Serial</source>
         <translation>串口</translation>
     </message>
     <message>
-        <location filename="../src/comm/LinkManager.cc" line="691"/>
+        <location filename="../src/comm/LinkManager.cc" line="694"/>
         <source>Log Replay</source>
         <translation>日志回放</translation>
     </message>
     <message>
-        <location filename="../src/comm/LinkManager.cc" line="810"/>
+        <location filename="../src/comm/LinkManager.cc" line="813"/>
         <source>Serial Device on  %1</source>
         <translation>串口 %1</translation>
     </message>
@@ -8390,9 +8415,8 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
 <context>
     <name>MainTool</name>
     <message>
-        <location filename="../src/ui/toolbar/MainTool.qml" line="120"/>
         <source>Wait for connect</source>
-        <translation>等待连接</translation>
+        <translation type="vanished">等待连接</translation>
     </message>
 </context>
 <context>
@@ -8421,7 +8445,7 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
         <translation>等待连接无人机</translation>
     </message>
     <message>
-        <location filename="../src/ui/toolbar/MainToolBarIndicators.qml" line="144"/>
+        <location filename="../src/ui/toolbar/MainToolBarIndicators.qml" line="133"/>
         <source>COMMUNICATION LOST</source>
         <translation>通讯丢失</translation>
     </message>
@@ -8508,23 +8532,23 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
 <context>
     <name>MainWindowInner</name>
     <message>
-        <location filename="../src/ui/MainWindowInner.qml" line="176"/>
-        <location filename="../src/ui/MainWindowInner.qml" line="195"/>
+        <location filename="../src/ui/MainWindowInner.qml" line="181"/>
+        <location filename="../src/ui/MainWindowInner.qml" line="200"/>
         <source>%1 close</source>
         <translation>%1 关闭</translation>
     </message>
     <message>
-        <location filename="../src/ui/MainWindowInner.qml" line="177"/>
+        <location filename="../src/ui/MainWindowInner.qml" line="182"/>
         <source>You have a mission edit in progress which has not been saved/sent. If you close you will lose changes. Are you sure you want to close?</source>
         <translation>您的任务编辑正在进行中, 尚未保存/发送。如果你关闭你将失去改变。确实要关闭吗？</translation>
     </message>
     <message>
-        <location filename="../src/ui/MainWindowInner.qml" line="196"/>
+        <location filename="../src/ui/MainWindowInner.qml" line="201"/>
         <source>There are still active connections to vehicles. Are you sure you want to exit?</source>
         <translation>仍有与飞行器的有效连接。确实要退出吗？</translation>
     </message>
     <message>
-        <location filename="../src/ui/MainWindowInner.qml" line="268"/>
+        <location filename="../src/ui/MainWindowInner.qml" line="273"/>
         <source>No Messages</source>
         <translation>没有讯息</translation>
     </message>
@@ -8533,12 +8557,11 @@ Click the Next button to upload calibration to board. Click Cancel if you don&ap
         <translation type="vanished">无可用串口</translation>
     </message>
     <message>
-        <location filename="../src/ui/MainWindowInner.qml" line="338"/>
         <source>Auto Connect</source>
-        <translation>自动连接</translation>
+        <translation type="vanished">自动连接</translation>
     </message>
     <message>
-        <location filename="../src/ui/MainWindowInner.qml" line="727"/>
+        <location filename="../src/ui/MainWindowInner.qml" line="733"/>
         <source>I got it</source>
         <translation>我知道了</translation>
     </message>
@@ -10128,37 +10151,37 @@ Is this really what you want?</source>
         <translation>未知 %1/%2</translation>
     </message>
     <message>
-        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="405"/>
+        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="406"/>
         <source>Unable to takeoff, vehicle position not known.</source>
         <translation>无法起飞，无人机位置未知</translation>
     </message>
     <message>
-        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="488"/>
+        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="489"/>
         <source>Unable to start mission: Vehicle rejected arming.</source>
         <translation>无法开始任务：飞行器拒绝解锁。</translation>
     </message>
     <message>
-        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="492"/>
+        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="493"/>
         <source>Unable to start mission: Vehicle not ready.</source>
         <translation>无法开始任务：无人机未准备就绪。</translation>
     </message>
     <message>
-        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="565"/>
+        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="566"/>
         <source>QGroundControl supports PX4 Pro firmware Version %1.%2.%3 and above. You are using a version prior to that which will lead to unpredictable results. Please upgrade your firmware.</source>
         <translation>QGroundControl 支持 PX4 Pro 固件版本 %1。%2。%3 和以上。您使用的版本之前, 这将导致不可预知的结果。请升级固件。</translation>
     </message>
     <message>
-        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="427"/>
+        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="428"/>
         <source>Unable to go to location, vehicle position not known.</source>
         <translation>无法到达指定位置，无人机位置未知</translation>
     </message>
     <message>
-        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="460"/>
+        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="461"/>
         <source>Unable to change altitude, home position unknown.</source>
         <translation>无法改变高度，Home点的高度未知。</translation>
     </message>
     <message>
-        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="464"/>
+        <location filename="../src/FirmwarePlugin/PX4/PX4FirmwarePlugin.cc" line="465"/>
         <source>Unable to change altitude, home position altitude unknown.</source>
         <translation>无法改变高度，Home点的高度未知。</translation>
     </message>
@@ -12144,7 +12167,7 @@ sudo apt-获取删除modemmanager</translation>
     <message>
         <location filename="../src/QGCApplication.cc" line="271"/>
         <source>EWATT</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/QGCApplication.cc" line="471"/>
@@ -12182,7 +12205,7 @@ sudo apt-获取删除modemmanager</translation>
     <message>
         <location filename="../src/FlightMap/Widgets/QGCAttitudeCompassWidget.qml" line="104"/>
         <source>OFF</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12190,7 +12213,7 @@ sudo apt-获取删除modemmanager</translation>
     <message>
         <location filename="../src/FlightMap/Widgets/QGCCompassWidget.qml" line="88"/>
         <source>OFF</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13462,16 +13485,6 @@ Errors:
         <translation>跟随</translation>
     </message>
     <message>
-        <location filename="../src/Airmap/QJsonWebToken/src/qjsonwebtoken.cpp" line="189"/>
-        <source>{&quot;typ&quot;: &quot;JWT&quot;, &quot;alg&quot; : &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Airmap/QJsonWebToken/src/qjsonwebtoken.cpp" line="191"/>
-        <source>&quot;}</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main.cc" line="235"/>
         <source>Check update...</source>
         <translation>检查更新</translation>
@@ -13480,6 +13493,16 @@ Errors:
         <location filename="../src/main.cc" line="295"/>
         <source>Init...</source>
         <translation>初始化</translation>
+    </message>
+    <message>
+        <location filename="../src/Airmap/QJsonWebToken/src/qjsonwebtoken.cpp" line="189"/>
+        <source>{&quot;typ&quot;: &quot;JWT&quot;, &quot;alg&quot; : &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Airmap/QJsonWebToken/src/qjsonwebtoken.cpp" line="191"/>
+        <source>&quot;}</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -15895,14 +15918,25 @@ Click Ok to start calibration.</source>
 <context>
     <name>TECSControlPlane</name>
     <message>
+        <location filename="../src/AutoPilotPlugins/PX4/TECSControlPlane.qml" line="47"/>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../src/AutoPilotPlugins/PX4/TECSControlPlane.qml" line="45"/>
         <source>帮助</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/AutoPilotPlugins/PX4/TECSControlPlane.qml" line="47"/>
-        <source></source>
-        <translation></translation>
+        <location filename="../src/AutoPilotPlugins/PX4/TECSControlPlane.qml" line="65"/>
+        <source>* - 融合速度和高度，用油门来控制总能量和俯仰角来控制势能和动能可选择的速度或高度优先模式之间的能量交换计算俯仰角
+
+* - 后备模式，当没有空速测量是可用的根据身高速率要求设置油门开关和俯仰角控制，以高度优先
+
+* - 低速保护，要求最大油门切换俯仰角控制速度优先模式
+
+* - 通过使用直观的时间常数的调整，相对容易一些，修剪率和阻尼参数和使用容易衡量飞机性能数据</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/PX4/TECSControlPlane.qml" line="101"/>
@@ -15939,17 +15973,6 @@ Click Ok to start calibration.</source>
     <message>
         <location filename="../src/AutoPilotPlugins/PX4/TECSControlPlane.qml" line="141"/>
         <source>巡航空速</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/AutoPilotPlugins/PX4/TECSControlPlane.qml" line="65"/>
-        <source>* - 融合速度和高度，用油门来控制总能量和俯仰角来控制势能和动能可选择的速度或高度优先模式之间的能量交换计算俯仰角
-
-* - 后备模式，当没有空速测量是可用的根据身高速率要求设置油门开关和俯仰角控制，以高度优先
-
-* - 低速保护，要求最大油门切换俯仰角控制速度优先模式
-
-* - 通过使用直观的时间常数的调整，相对容易一些，修剪率和阻尼参数和使用容易衡量飞机性能数据</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16197,7 +16220,7 @@ Click Ok to start calibration.</source>
     <message>
         <location filename="../src/MissionManager/TransectStyleComplexItem.h" line="106"/>
         <source>T</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -926,6 +926,7 @@ HEADERS+= \
     src/Vehicle/MultiVehicleManager.h \
     src/Vehicle/GPSRTKFactGroup.h \
     src/Vehicle/Vehicle.h \
+    src/Vehicle/LedControlText.h \
     src/VehicleSetup/VehicleComponent.h \
 
 !MobileBuild {
@@ -952,6 +953,7 @@ SOURCES += \
     src/Vehicle/MultiVehicleManager.cc \
     src/Vehicle/GPSRTKFactGroup.cc \
     src/Vehicle/Vehicle.cc \
+    src/Vehicle/LedControlText.cc \
     src/VehicleSetup/VehicleComponent.cc \
 
 !MobileBuild {
