@@ -776,8 +776,20 @@
       <output name="MAIN8">Elevon left</output>
     </airframe>
   </airframe_group>
+  <airframe_group image="VTOLPlane" name="nimbus1800" type="19">
+    <airframe id="13014" maintainer="Samay Siga &lt;samay_s@icloud.com&gt;" name="nimbus1800">
+      <maintainer>Samay Siga &lt;samay_s@icloud.com&gt;</maintainer>
+      <type>VTOL Tiltrotor</type>
+    </airframe>
+  </airframe_group>
   <airframe_group image="VTOLPlane" name="E3垂直起降" type="19">
-    <airframe id="13014" maintainer="Samay Siga &lt;samay_s@icloud.com&gt;" name="E3垂直起降">
+    <airframe id="13020" maintainer="Samay Siga &lt;samay_s@icloud.com&gt;" name="E3垂直起降">
+      <maintainer>Samay Siga &lt;samay_s@icloud.com&gt;</maintainer>
+      <type>VTOL Tiltrotor</type>
+    </airframe>
+  </airframe_group>
+  <airframe_group image="VTOLPlane" name="VTOL_hexa" type="19">
+    <airframe id="13021" maintainer="Samay Siga &lt;samay_s@icloud.com&gt;" name="VTOL_hexa">
       <maintainer>Samay Siga &lt;samay_s@icloud.com&gt;</maintainer>
       <type>VTOL Tiltrotor</type>
     </airframe>
