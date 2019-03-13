@@ -923,6 +923,7 @@ QGCView {
                     anchors.fill:       parent
                     onClicked: {
                         setimg.visible=!setimg.visible
+                        setimg.drawalt()
                     }
                 }
             }

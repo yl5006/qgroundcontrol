@@ -286,6 +286,7 @@
 	<file alias="Survey.FactMetaDatacn.json">src/MissionManager/Survey.FactMetaDatacn.json</file>
         <file alias="Generate.FactMetaDatacn.json">src/MissionManager/Generate.FactMetaDatacn.json</file>
         <file alias="Vehicle/WindFact.json">src/Vehicle/WindFact.json</file>
+	<file alias="Vehicle/WindFactCn.json">src/Vehicle/WindFactCn.json</file>
         <file alias="Video.SettingsGroup.json">src/Settings/Video.SettingsGroup.json</file>
     </qresource>
     <qresource prefix="/MockLink">

@@ -1242,19 +1242,19 @@ contains (CONFIG, DISABLE_VIDEOSTREAMING) {
 
 #-------------------------------------------------------------------------------------
 # Video Opencv Streaming
-WindowsBuild {
-    INCLUDEPATH += \
-        src/OpencvStreaming
+#WindowsBuild {
+#    INCLUDEPATH += \
+#        src/OpencvStreaming
 
-    contains (CONFIG, DISABLE_OPENCVVIDEO) {
-        message("Skipping support for video opencv streaming (manual override from command line)")
-# Otherwise the user can still disable this feature in the user_config.pri file.
-    } else:exists(user_config.pri):infile(user_config.pri, DEFINES, DISABLE_LIBUSBVIDEO) {
-        message("Skipping support for video opencv streaming (manual override from user_config.pri)")
-    } else {
-        include(src/OpencvStreaming/OpencvStreaming.pri)
-    }
-}
+#    contains (CONFIG, DISABLE_OPENCVVIDEO) {
+#        message("Skipping support for video opencv streaming (manual override from command line)")
+## Otherwise the user can still disable this feature in the user_config.pri file.
+#    } else:exists(user_config.pri):infile(user_config.pri, DEFINES, DISABLE_LIBUSBVIDEO) {
+#        message("Skipping support for video opencv streaming (manual override from user_config.pri)")
+#    } else {
+#        include(src/OpencvStreaming/OpencvStreaming.pri)
+#    }
+#}
 #-------------------------------------------------------------------------------------
 # Android
 

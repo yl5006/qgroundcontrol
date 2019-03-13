@@ -467,7 +467,7 @@ void Vehicle::_commonInit(void)
 //   _addFactGroup(&_gpsFactGroup,               _gpsFactGroupName);
 //   _addFactGroup(&_battery1FactGroup,          _battery1FactGroupName);
 //   _addFactGroup(&_battery2FactGroup,          _battery2FactGroupName);
-//    _addFactGroup(&_windFactGroup,              _windFactGroupName);
+    _addFactGroup(&_windFactGroup,              _windFactGroupName);
 //    _addFactGroup(&_vibrationFactGroup,         _vibrationFactGroupName);
     _addFactGroup(&_temperatureFactGroup,       _temperatureFactGroupName);
 //    _addFactGroup(&_clockFactGroup,             _clockFactGroupName);
@@ -3858,7 +3858,7 @@ const char* VehicleWindFactGroup::_speedFactName =          "speed";
 const char* VehicleWindFactGroup::_verticalSpeedFactName =  "verticalSpeed";
 
 VehicleWindFactGroup::VehicleWindFactGroup(QObject* parent)
-    : FactGroup(1000, ":/json/Vehicle/WindFact.json", parent)
+    : FactGroup(1000, (locale.country() == QLocale::China) ?":/json/Vehicle/WindFactCn.json" : ":/json/Vehicle/WindFact.json", parent)
     , _directionFact    (0, _directionFactName,     FactMetaData::valueTypeDouble)
     , _speedFact        (0, _speedFactName,         FactMetaData::valueTypeDouble)
     , _verticalSpeedFact(0, _verticalSpeedFactName, FactMetaData::valueTypeDouble)

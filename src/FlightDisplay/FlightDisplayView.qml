@@ -28,7 +28,7 @@ import QGroundControl.FlightMap     1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
-import OpenCV 1.0
+//import OpenCV 1.0
 
 /// Flight Display View
 QGCView {

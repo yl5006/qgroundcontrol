@@ -22,6 +22,9 @@ Rectangle {
     readonly property real  _editFieldWidth:    Math.min(width - _margin * 2, ScreenTools.defaultFontPixelWidth * 16)
     readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
     readonly property real  _radius:            ScreenTools.defaultFontPixelWidth / 2
+
+    signal showAMSLAlt
+
     MouseArea {
         anchors.fill: parent
         onClicked: {
@@ -32,6 +35,9 @@ Rectangle {
         for(var i = 1; i < reperter.count; i++)
             reperter.itemAt(i).checked = false
         allcheck.checked=false
+    }
+    function drawalt() {
+        canvas.clearCanvas()
     }
     function setcheck() {
         for(var i = 1; i < reperter.count; i++)
@@ -78,7 +84,7 @@ Rectangle {
             function drawBackground(ctx) {        // 界面的绘制由onPaint开始，这是绘制背景的一个函数。ctx作为传参，类似C++中的painter
                        ctx.save();                                     // 保存之前绘制内容
                        ctx.fillStyle = "transparent";                      // 填充颜色，之所以叫Style是因为它还可以使用渐变等等...
-                       ctx.fillRect(0, 0, canvas.width, canvas.height);  // fillRect是一个便利函数，用来填充一个矩形区域
+                       ctx.fillRect(0, 0, canvas.width+1, canvas.height);  // fillRect是一个便利函数，用来填充一个矩形区域
                        ctx.strokeStyle = "white";                    // 描边颜色
                        ctx.beginPath();
                                                                         // 水平网格线
@@ -111,7 +117,7 @@ Rectangle {
                     var y = canvas.height - missionItems.get(i).altPercent * canvas.height
                     var x = missionItems.get(i).distance / missionDistance * canvas.width
                     addx = addx + x
-                    ctx.lineTo(addx, y);
+                    ctx.lineTo(addx, y); 
                 }
                 ctx.stroke();
                 ctx.restore();
@@ -126,6 +132,8 @@ Rectangle {
                     var x = missionItems.get(i).distance / missionDistance * canvas.width
                     addx = addx + x
                     ctx.lineTo(addx, y);
+                    ctx.font = "20px Georgia";
+                    ctx.strokeText(i.toString(), addx, y);
                 }
                 ctx.stroke();
                 ctx.closePath();
