@@ -762,13 +762,13 @@ QGCView {
             z:                          _panel.z + 5
             width:                      parent.width  - (_flightVideoPipControl.width / 2)
             height:                     Math.max(ScreenTools.availableHeight * 0.6, ScreenTools.defaultFontPixelWidth * 30)//
-            visible:                    (_virtualJoystick ? _virtualJoystick.value : false) && !QGroundControl.videoManager.fullScreen //&& !(_activeVehicle ? _activeVehicle.highLatencyLink : false)
+            visible:                    true//(_virtualJoystick ? _virtualJoystick.value : false) && !QGroundControl.videoManager.fullScreen //&& !(_activeVehicle ? _activeVehicle.highLatencyLink : false)
          //   anchors.bottom:             _flightVideoPipControl.top
          //   anchors.bottomMargin:       ScreenTools.defaultFontPixelHeight * 2
             anchors.verticalCenter:     flightWidgets.verticalCenter
             anchors.horizontalCenter:   flightWidgets.horizontalCenter
             source:                     "qrc:/qml/VirtualJoystick.qml"
-            active:                     _virtualJoystick ? _virtualJoystick.value : false
+            active:                     true//_virtualJoystick ? _virtualJoystick.value : false
 
             property bool useLightColors: isBackgroundDark
 
