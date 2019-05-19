@@ -3349,7 +3349,7 @@ void Vehicle::mountControlAdd(float pitch_offset, float roll_offset, float yaw_o
 }
 
 
-// RE    POSITION 应急航点
+// RE    POSITION
 void Vehicle::reposition(double lat, double lon,float alt,float yaw)
 {
     sendMavCommand(defaultComponentId(), MAV_CMD_DO_REPOSITION, 0.0, 0.0, 0.0, yaw,alt,lat,lon);
