@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -284,7 +284,7 @@ void FirmwareUpgradeController::_initFirmwareHash()
 #endif
 
 //    QString px4Url          ("http://px4-travis.s3.amazonaws.com/Firmware/%1/px4fmu-%2_default.px4");
-	QString px4Url          ("http://91aerfa.vip:7070/update/firmware%1_nuttx.bin");
+    QString px4Url          ("http://91aerfa.vip:7070/update/firmware3_nuttx.bin");
     QString apmUrl          ("http://firmware.ardupilot.org/%1/%2/%3/%4-v%5.px4");
     QString apmChibiOSUrl   ("http://firmware.ardupilot.org/%1/%2/fmuv%3%4/%5.apj");
 
