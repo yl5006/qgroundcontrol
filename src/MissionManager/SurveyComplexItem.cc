@@ -1,4 +1,3 @@
-﻿
 /****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
@@ -820,7 +819,7 @@ void SurveyComplexItem::_buildAndAppendMissionItems(QList<MissionItem*>& items, 
 
     MAV_FRAME mavFrame = followTerrain() || !_cameraCalc.distanceToSurfaceRelative() ? MAV_FRAME_GLOBAL : MAV_FRAME_GLOBAL_RELATIVE_ALT;
     //找到航点前一个速度
-    float speed= items.last()->param3();
+    double speed= items.last()->param3();
     foreach (const QList<TransectStyleComplexItem::CoordInfo_t>& transect, _transects) {
         bool entryPoint = true;
 

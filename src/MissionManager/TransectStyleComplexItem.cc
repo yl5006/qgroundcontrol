@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -158,6 +158,7 @@ void TransectStyleComplexItem::_save(QJsonObject& complexObject)
     innerObject[_jsonVisualTransectPointsKey] = transectPointsJson;
 
     // Save the interal mission items
+/*
     QJsonArray  missionItemsJsonArray;
     QObject* missionItemParent = new QObject();
     QList<MissionItem*> missionItems;
@@ -169,7 +170,7 @@ void TransectStyleComplexItem::_save(QJsonObject& complexObject)
     }
     missionItemParent->deleteLater();
     innerObject[_jsonItemsKey] = missionItemsJsonArray;
-
+*/
     complexObject[_jsonTransectStyleComplexItemKey] = innerObject;
 }
 
@@ -210,8 +211,8 @@ bool TransectStyleComplexItem::_load(const QJsonObject& complexObject, QString& 
         { hoverAndCaptureName,              QJsonValue::Bool,   true },
         { refly90DegreesName,               QJsonValue::Bool,   true },
         { _jsonCameraCalcKey,               QJsonValue::Object, true },
-        { _jsonVisualTransectPointsKey,           QJsonValue::Array,  true },
-        { _jsonItemsKey,                    QJsonValue::Array,  true },
+        { _jsonVisualTransectPointsKey,     QJsonValue::Array,  true },
+//        { _jsonItemsKey,                    QJsonValue::Array,  true },
         { _jsonFollowTerrainKey,            QJsonValue::Bool,   true },
     };
     if (!JsonHelper::validateKeys(innerObject, innerKeyInfoList, errorString)) {
@@ -226,17 +227,18 @@ bool TransectStyleComplexItem::_load(const QJsonObject& complexObject, QString& 
     _exitCoordinate = _visualTransectPoints.count() ? _visualTransectPoints.last().value<QGeoCoordinate>() : QGeoCoordinate();
 
     // Load generated mission items
-    _loadedMissionItemsParent = new QObject(this);
-    QJsonArray missionItemsJsonArray = innerObject[_jsonItemsKey].toArray();
-    foreach (const QJsonValue& missionItemJson, missionItemsJsonArray) {
-        MissionItem* missionItem = new MissionItem(_loadedMissionItemsParent);
-        if (!missionItem->load(missionItemJson.toObject(), 0 /* sequenceNumber */, errorString)) {
-            _loadedMissionItemsParent->deleteLater();
-            _loadedMissionItemsParent = NULL;
-            return false;
-        }
-        _loadedMissionItems.append(missionItem);
-    }
+
+//    _loadedMissionItemsParent = new QObject(this);
+//    QJsonArray missionItemsJsonArray = innerObject[_jsonItemsKey].toArray();
+//    foreach (const QJsonValue& missionItemJson, missionItemsJsonArray) {
+//        MissionItem* missionItem = new MissionItem(_loadedMissionItemsParent);
+//        if (!missionItem->load(missionItemJson.toObject(), 0 /* sequenceNumber */, errorString)) {
+//            _loadedMissionItemsParent->deleteLater();
+//            _loadedMissionItemsParent = NULL;
+//            return false;
+//        }
+//        _loadedMissionItems.append(missionItem);
+//    }
 
     // Load CameraCalc data
     if (!_cameraCalc.load(innerObject[_jsonCameraCalcKey].toObject(), errorString)) {

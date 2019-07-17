@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  *
  *   (c) 2009-2016 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
@@ -182,7 +182,7 @@ void MissionItem::save(QJsonObject& json) const
     json[_jsonAutoContinueKey] = autoContinue();
     json[_jsonDoJumpIdKey] = _sequenceNumber;
 
-    QJsonArray rgParams =  { param1(), param2(), param3(), param4(), param5(), param6(), param7(),param8(),param9(),param10() };
+    QJsonArray rgParams =  { param1(), param2(), param3(), param4(), param5(), param6(), param7(), param8(), param9(), param10() };
     json[_jsonParamsKey] = rgParams;
 }
 

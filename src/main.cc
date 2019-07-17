@@ -226,7 +226,6 @@ int main(int argc, char *argv[])
     QSettings settings;
     QSettings::setDefaultFormat(QSettings::IniFormat);
 //******************
-//    显示启动界面信息
 #ifndef __mobile__
     QSplashScreen *splash = new QSplashScreen;
     splash->setPixmap(QPixmap(":/res/startpage.png"));
